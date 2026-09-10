@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.MultiService.Tests;
 using Azure.ResourceManager.Models;
@@ -23,7 +21,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
         /// <returns> A new <see cref="Models.CheckAvailabilityRequest"/> instance for mocking. </returns>
         public static CheckAvailabilityRequest CheckAvailabilityRequest(string name = default)
         {
-            return new CheckAvailabilityRequest(name, additionalBinaryDataProperties: null);
+            return new CheckAvailabilityRequest(name, default);
         }
 
         /// <summary> The CheckAvailabilityResponse. </summary>
@@ -32,7 +30,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
         /// <returns> A new <see cref="Models.CheckAvailabilityResponse"/> instance for mocking. </returns>
         public static CheckAvailabilityResponse CheckAvailabilityResponse(bool isAvailable = default, string reason = default)
         {
-            return new CheckAvailabilityResponse(isAvailable, reason, additionalBinaryDataProperties: null);
+            return new CheckAvailabilityResponse(isAvailable, reason, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -53,10 +51,19 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
+        }
+
+        /// <summary> The FooProperties. </summary>
+        /// <param name="displayName"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
+        public static FooProperties FooProperties(string displayName = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new FooProperties(displayName, provisioningState, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -77,10 +84,19 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
+        }
+
+        /// <summary> The BarProperties. </summary>
+        /// <param name="description"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
+        public static BarProperties BarProperties(string description = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new BarProperties(description, provisioningState, default);
         }
     }
 }

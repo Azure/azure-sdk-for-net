@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class GeoBackupPolicyResource : IJsonModel<GeoBackupPolicyData>
     {
-        private static GeoBackupPolicyData s_dataDeserializationInstance;
-        private static GeoBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GeoBackupPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GeoBackupPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GeoBackupPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GeoBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)Data).Write(writer, options);
 
-        GeoBackupPolicyData IJsonModel<GeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GeoBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GeoBackupPolicyData IJsonModel<GeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GeoBackupPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GeoBackupPolicyData IPersistableModel<GeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GeoBackupPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<GeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GeoBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

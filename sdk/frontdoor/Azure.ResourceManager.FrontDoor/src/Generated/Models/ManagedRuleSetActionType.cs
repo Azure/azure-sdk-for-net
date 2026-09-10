@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct ManagedRuleSetActionType : IEquatable<ManagedRuleSetActionType>
     {
         private readonly string _value;
+        /// <summary> Block. </summary>
+        private const string BlockValue = "Block";
+        /// <summary> Log. </summary>
+        private const string LogValue = "Log";
+        /// <summary> Redirect. </summary>
+        private const string RedirectValue = "Redirect";
 
         /// <summary> Initializes a new instance of <see cref="ManagedRuleSetActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedRuleSetActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BlockValue = "Block";
-        private const string LogValue = "Log";
-        private const string RedirectValue = "Redirect";
+            _value = value;
+        }
 
         /// <summary> Block. </summary>
         public static ManagedRuleSetActionType Block { get; } = new ManagedRuleSetActionType(BlockValue);
+
         /// <summary> Log. </summary>
         public static ManagedRuleSetActionType Log { get; } = new ManagedRuleSetActionType(LogValue);
+
         /// <summary> Redirect. </summary>
         public static ManagedRuleSetActionType Redirect { get; } = new ManagedRuleSetActionType(RedirectValue);
+
         /// <summary> Determines if two <see cref="ManagedRuleSetActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedRuleSetActionType left, ManagedRuleSetActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedRuleSetActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedRuleSetActionType left, ManagedRuleSetActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedRuleSetActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedRuleSetActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedRuleSetActionType(string value) => new ManagedRuleSetActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedRuleSetActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedRuleSetActionType?(string value) => value == null ? null : new ManagedRuleSetActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedRuleSetActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedRuleSetActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

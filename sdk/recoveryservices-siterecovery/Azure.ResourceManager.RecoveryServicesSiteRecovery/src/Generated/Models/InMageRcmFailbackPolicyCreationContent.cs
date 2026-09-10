@@ -14,25 +14,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageRcmFailbackPolicyCreationContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPolicyCreationContent"/>. </summary>
-        public InMageRcmFailbackPolicyCreationContent()
+        public InMageRcmFailbackPolicyCreationContent() : base("InMageRcmFailback")
         {
-            InstanceType = "InMageRcmFailback";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPolicyCreationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="crashConsistentFrequencyInMinutes"> The crash consistent snapshot frequency (in minutes). </param>
         /// <param name="appConsistentFrequencyInMinutes"> The app consistent snapshot frequency (in minutes). </param>
-        internal InMageRcmFailbackPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmFailbackPolicyCreationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? crashConsistentFrequencyInMinutes, int? appConsistentFrequencyInMinutes) : base(instanceType, additionalBinaryDataProperties)
         {
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
-            InstanceType = instanceType ?? "InMageRcmFailback";
         }
 
         /// <summary> The crash consistent snapshot frequency (in minutes). </summary>
         public int? CrashConsistentFrequencyInMinutes { get; set; }
+
         /// <summary> The app consistent snapshot frequency (in minutes). </summary>
         public int? AppConsistentFrequencyInMinutes { get; set; }
     }

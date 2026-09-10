@@ -275,7 +275,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
     {
         public QueryPreferences() { }
         public Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy MatchingPolicy { get { throw null; } set { } }
-        public Azure.AI.Language.QuestionAnswering.Inference.Scorer? Scorer { get { throw null; } set { } }
+        public Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer? Scorer { get { throw null; } set { } }
         protected virtual Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -330,11 +330,12 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult>> GetAnswersFromTextAsync(string question, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Inference.TextDocument> textDocuments, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Language.QuestionAnswering.Inference.AnswersFromTextResult>> GetAnswersFromTextAsync(string question, System.Collections.Generic.IEnumerable<string> textDocuments, string language = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public static partial class QuestionAnsweringClientBuilderExtensions
+    public static partial class QuestionAnsweringClientHostExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClient, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientOptions> AddQuestionAnsweringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddQuestionAnsweringClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringClientSettings> configureSettings) { throw null; }
     }
     public partial class QuestionAnsweringClientOptions : Azure.Core.ClientOptions
     {
@@ -370,7 +371,7 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static Azure.AI.Language.QuestionAnswering.Inference.MetadataRecord MetadataRecord(string key = null, string value = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.PrebuiltQueryMatchingPolicy PrebuiltQueryMatchingPolicy(System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicyFieldsType> fields = null, bool? disableFullMatch = default(bool?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.QueryFilters QueryFilters(Azure.AI.Language.QuestionAnswering.Inference.MetadataFilter metadataFilter = null, System.Collections.Generic.IEnumerable<string> sourceFilter = null, Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind? logicalOperation = default(Azure.AI.Language.QuestionAnswering.Inference.LogicalOperationKind?)) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences QueryPreferences(Azure.AI.Language.QuestionAnswering.Inference.Scorer? scorer = default(Azure.AI.Language.QuestionAnswering.Inference.Scorer?), Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy matchingPolicy = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Inference.QueryPreferences QueryPreferences(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer? scorer = default(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer?), Azure.AI.Language.QuestionAnswering.Inference.MatchingPolicy matchingPolicy = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions ShortAnswerOptions(bool enable = false, double? confidenceThreshold = default(double?), int? size = default(int?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.TextAnswer TextAnswer(string answer = null, double? confidence = default(double?), string id = null, Azure.AI.Language.QuestionAnswering.Inference.AnswerSpan shortAnswer = null, int? offset = default(int?), int? length = default(int?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Inference.TextDocument TextDocument(string id = null, string text = null) { throw null; }
@@ -380,6 +381,24 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public QuestionAnsweringProject(string projectName, string deploymentName) { }
         public string DeploymentName { get { throw null; } }
         public string ProjectName { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct QuestionAnsweringScorer : System.IEquatable<Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public QuestionAnsweringScorer(string value) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer Classic { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer Semantic { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer Transformer { get { throw null; } }
+        public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer left, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer right) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer (string value) { throw null; }
+        public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer? (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer left, Azure.AI.Language.QuestionAnswering.Inference.QuestionAnsweringScorer right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RankerKind : System.IEquatable<Azure.AI.Language.QuestionAnswering.Inference.RankerKind>
@@ -396,24 +415,6 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.RankerKind (string value) { throw null; }
         public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.RankerKind? (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.QuestionAnswering.Inference.RankerKind left, Azure.AI.Language.QuestionAnswering.Inference.RankerKind right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Scorer : System.IEquatable<Azure.AI.Language.QuestionAnswering.Inference.Scorer>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Scorer(string value) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Inference.Scorer Classic { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Inference.Scorer Semantic { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Inference.Scorer Transformer { get { throw null; } }
-        public bool Equals(Azure.AI.Language.QuestionAnswering.Inference.Scorer other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.QuestionAnswering.Inference.Scorer left, Azure.AI.Language.QuestionAnswering.Inference.Scorer right) { throw null; }
-        public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.Scorer (string value) { throw null; }
-        public static implicit operator Azure.AI.Language.QuestionAnswering.Inference.Scorer? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.QuestionAnswering.Inference.Scorer left, Azure.AI.Language.QuestionAnswering.Inference.Scorer right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ShortAnswerOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Inference.ShortAnswerOptions>

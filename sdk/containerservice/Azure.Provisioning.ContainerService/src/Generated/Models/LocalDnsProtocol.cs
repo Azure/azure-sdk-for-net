@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Prefer UDP protocol for connections from localDNS to upstream DNS server. </summary>
         [DataMember(Name = "PreferUDP")]
-        PreferUdp,
+        PreferUdp = 0,
         /// <summary> Enforce TCP protocol for connections from localDNS to upstream DNS server. </summary>
         [DataMember(Name = "ForceTCP")]
-        ForceTcp
+        ForceTcp = 1
     }
 }

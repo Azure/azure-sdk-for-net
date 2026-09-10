@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabFormulaResource.ResourceType, out string devTestLabFormulaApiVersion);
             _formulasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabFormulaResource.ResourceType.Namespace, Diagnostics);
-            _formulasRestClient = new Formulas(_formulasClientDiagnostics, Pipeline, Endpoint, devTestLabFormulaApiVersion ?? "2018-09-15");
+            _formulasRestClient = new Formulas(_formulasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabFormulaApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
-                    new DevTestLabFormulaOperationSource(Client),
+                    new DevTestLabFormulaResourceOperationSource(Client),
                     _formulasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _formulasRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabFormulaData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabFormulaResource> operation = new DevTestLabsArmOperation<DevTestLabFormulaResource>(
-                    new DevTestLabFormulaOperationSource(Client),
+                    new DevTestLabFormulaResourceOperationSource(Client),
                     _formulasClientDiagnostics,
                     Pipeline,
                     message.Request,

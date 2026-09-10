@@ -8,44 +8,13 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Common resource representation. </summary>
-    public partial class NetworkWritableResourceData
+    /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
+    public partial class NetworkWritableResourceData : NetworkSubResource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
-
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         public NetworkWritableResourceData()
         {
@@ -53,23 +22,19 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkWritableResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkWritableResourceData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(id, additionalBinaryDataProperties)
         {
-            Id = id;
             Name = name;
             ResourceType = resourceType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource ID. </summary>
-        [WirePath("id")]
-        public ResourceIdentifier Id { get; set; }
         /// <summary> Resource name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
+
         /// <summary> Resource type. </summary>
         [WirePath("type")]
         public ResourceType? ResourceType { get; set; }

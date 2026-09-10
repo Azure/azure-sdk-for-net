@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_Sharepoint : ProjectsOpenAITestBase
 {
@@ -41,7 +42,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointPreviewTool(sharepointToolOption), }
+            Tools = { new SharePointPreviewTool(sharepointToolOption), }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -92,7 +93,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = { new SharepointPreviewTool(sharepointToolOption), }
+            Tools = { new SharePointPreviewTool(sharepointToolOption), }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
             agentName: "myAgent",

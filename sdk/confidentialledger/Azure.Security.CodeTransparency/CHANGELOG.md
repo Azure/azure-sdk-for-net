@@ -1,18 +1,73 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0 (2026-09-11)
+
+### Breaking Changes
+
+- Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
+- Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type and hid the retained obsolete overloads from IntelliSense.
+- Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
+- Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.
+- Replaced the generated JWK/JWKS wire models with normalized, verification-oriented public types `CodeTransparencyVerificationKey` and `CodeTransparencyVerificationKeySet`, which store only public asymmetric key material. The `/jwks` (`GetPublicKeys`), COSE_Key_Set (`GetScittKeys`), and single-key (`GetScittKey`) operations now expose `CancellationToken` convenience overloads returning these normalized types, alongside the exact-wire `RequestContext` protocol overloads.
+- Added `CcfReceiptVerifier.Verify` overloads that accept a `CodeTransparencyVerificationKey`, a `string` key ID plus a caller-owned `ECDsa`, or a `CodeTransparencyVerificationKeySet`.
+- Replaced `CodeTransparencyOfflineKeys` and `OfflineKeysBehavior` with `CodeTransparencyTrustStore` and `CodeTransparencyKeyResolutionMode`, using an SDK-owned, versioned, public-only serialization format. `CodeTransparencyVerificationOptions.OfflineKeys`/`OfflineKeysBehavior` are now `TrustStore`/`KeyResolutionMode`.
+
+### Bugs Fixed
+
+- Corrected P-521 receipt verification to use the standard JOSE curve name and COSE ES512 algorithm identifier.
+- Fixed the retained `WaitUntil.Started` create-entry overloads to return before commitment and poll the entry resource for completion.
+- Fixed public-key retrieval and `ToECDsa` on .NET Framework 4.6.2.
+
+### Other Changes
+
+- Removed the unnecessary dependency on `Azure.Security.KeyVault.Keys`.
+
+## 1.0.0-beta.12 (2026-07-31)
+
+### Bugs Fixed
+
+- Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
+  write is routed to a backup node the service replies with a redirect whose `Location` (for example
+  `/entries/{entryId}`) omits the `api-version`. `CodeTransparencyRedirectPolicy` now carries the
+  originating request's `api-version` onto followed `303`/`307`/`308` redirect targets, so the
+  subsequent read stays on the versioned API instead of falling back to the service's unversioned
+  (legacy) behavior. On the versioned API a read of a not-yet-committed entry is answered with a
+  `302 Found` whose `Location` points back at the same entry URL; the followed read now treats that
+  `302` as retriable, and the client's default retry settings were raised (more, exponentially
+  backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
+  All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
+
+## 1.0.0-beta.11 (2026-07-15)
+
+### Bugs Fixed
+
+- Hardened receipt verification to reject empty inclusion-proof collections.
+
+## 1.0.0-beta.10 (2026-07-14)
+
+### Features Added
+
+- General availability release targeting REST API version `2026-03-26`
+- Added a utility method `CcfReceipt.GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)` to extract the entry ID (registration transaction id) from a receipt
+
+### Other Changes
+
+- Removed namespace `Azure.Security.CodeTransparency.Receipt`, all classes have been moved to `Azure.Security.CodeTransparency`.
+- Updated `CodeTransparencyRedirectPolicy` to also allow 303 redirects which is returned in the case of the entry create operation.
+
+## 1.0.0-beta.9 (2026-05-26)
 
 ### Features Added
 
 - Added `CodeTransparencyClientSettings` to support creating a `CodeTransparencyClient` from `IConfiguration`, including configuration-based credential resolution and dependency injection registration.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
 
 ### Other Changes
+
+- Hardened redirect handling in the Code Transparency client. Credentials and request bodies are now only forwarded on HTTPS redirects whose target hostname matches the configured service endpoint or one of its subdomains, with the same port. Redirects to any other target are refused. Write-URL cache writes are now staged per-call and only committed after a successful trusted redirect chain.
 
 ## 1.0.0-beta.8 (2026-03-02)
 

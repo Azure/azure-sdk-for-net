@@ -9,14 +9,17 @@ namespace Azure.ResourceManager.Compute.Models
 {
     public partial class GalleryImageVersionStorageProfile
     {
-        /// <summary>
-        /// The gallery artifact version source.
-        /// This is no longer supported. Please use <see cref="GallerySource"/> instead.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public GalleryArtifactVersionSource Source { get; set; } // the old property to keep backward compatiblility, working as a backing property of GallerySource
-
+        // Backward compatibility: previous AutoRest-generated shape exposed both `Source`
+        // (typed as the base GalleryArtifactVersionSource) and `GallerySource` (typed as
+        // GalleryArtifactVersionFullSource). The TypeSpec rename produces `GallerySource`
+        // only; this shim preserves the deprecated `Source` accessor by forwarding to the
+        // same underlying storage as `GallerySource`.
         /// <summary> The source of the gallery artifact version. </summary>
-        public GalleryArtifactVersionFullSource GallerySource { get => Source as GalleryArtifactVersionFullSource; set => Source = value; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public GalleryArtifactVersionSource Source
+        {
+            get => GallerySource;
+            set => GallerySource = value as GalleryArtifactVersionFullSource;
+        }
     }
 }

@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ImpactReporting
                     yield break;
                 }
                 ConnectorListResult result = ConnectorListResult.FromResponse(response);
-                yield return Page<ImpactConnectorData>.FromValues((IReadOnlyList<ImpactConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ImpactConnectorData>.FromValues((IReadOnlyList<ImpactConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

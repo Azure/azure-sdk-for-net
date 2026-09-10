@@ -1,5 +1,5 @@
-commit: 5fda13cee42cecc2e7da20bb4fd82bec5be9d0c7
+commit: 14cbce944f39ee4b41088d7944c407d95ad44cbd
 directory: specification/communication/Communication.Messages
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: eng/legacy-emitter-package.json
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"

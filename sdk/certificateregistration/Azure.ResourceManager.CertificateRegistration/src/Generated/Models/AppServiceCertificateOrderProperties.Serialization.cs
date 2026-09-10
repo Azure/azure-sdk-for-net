@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WriteNumberValue(KeySize.Value);
             }
             writer.WritePropertyName("productType"u8);
-            writer.WriteStringValue(ProductType.ToSerialString());
+            writer.WriteStringValue(CertificateProductType.ToSerialString());
             if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew"u8);
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 writer.WritePropertyName("lastCertificateIssuanceTime"u8);
                 writer.WriteStringValue(LastCertificateIssuedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsPrivateKeyExternal))
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             string domainVerificationToken = default;
             int? validityInYears = default;
             int? keySize = default;
-            CertificateProductType productType = default;
+            CertificateProductType certificateProductType = default;
             bool? isAutoRenew = default;
             CertificateRegistrationProvisioningState? provisioningState = default;
             CertificateOrderStatus? status = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
             AppServiceCertificateDetails root = default;
             string serialNumber = default;
             DateTimeOffset? lastCertificateIssuedOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             bool? isPrivateKeyExternal = default;
             IReadOnlyList<AppServiceCertificateNotRenewableReason> appServiceCertificateNotRenewableReasons = default;
             DateTimeOffset? nextAutoRenewOn = default;
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 }
                 if (prop.NameEquals("productType"u8))
                 {
-                    productType = prop.Value.GetString().ToCertificateProductType();
+                    certificateProductType = prop.Value.GetString().ToCertificateProductType();
                     continue;
                 }
                 if (prop.NameEquals("autoRenew"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isPrivateKeyExternal"u8))
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 domainVerificationToken,
                 validityInYears,
                 keySize,
-                productType,
+                certificateProductType,
                 isAutoRenew,
                 provisioningState,
                 status,
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.CertificateRegistration.Models
                 root,
                 serialNumber,
                 lastCertificateIssuedOn,
-                expireOn,
+                expiresOn,
                 isPrivateKeyExternal,
                 appServiceCertificateNotRenewableReasons ?? new ChangeTrackingList<AppServiceCertificateNotRenewableReason>(),
                 nextAutoRenewOn,

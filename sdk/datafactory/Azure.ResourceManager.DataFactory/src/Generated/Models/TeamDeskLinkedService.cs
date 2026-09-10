@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,13 +19,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authenticationType"> The authentication type to use. </param>
         /// <param name="uri"> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public TeamDeskLinkedService(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri)
+        public TeamDeskLinkedService(TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri) : base("TeamDesk")
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AuthenticationType = authenticationType;
-            Uri = uri;
-            LinkedServiceType = "TeamDesk";
+            TypeProperties = new TeamDeskLinkedServiceTypeProperties(authenticationType, uri);
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedService"/>. </summary>
@@ -34,40 +33,84 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="authenticationType"> The authentication type to use. </param>
-        /// <param name="uri"> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </param>
-        /// <param name="userName"> The username of the TeamDesk source. Type: string (or Expression with resultType string). </param>
-        /// <param name="password"> The password of the TeamDesk source. </param>
-        /// <param name="apiToken"> The api token for the TeamDesk source. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal TeamDeskLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TeamDeskAuthenticationType authenticationType, DataFactoryElement<string> uri, DataFactoryElement<string> userName, DataFactorySecret password, DataFactorySecret apiToken, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> TeamDesk linked service properties. </param>
+        /// <param name="password"></param>
+        internal TeamDeskLinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, TeamDeskLinkedServiceTypeProperties typeProperties, DataFactorySecret password) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
-            AuthenticationType = authenticationType;
-            Uri = uri;
-            UserName = userName;
+            TypeProperties = typeProperties;
             Password = password;
-            ApiToken = apiToken;
-            EncryptedCredential = encryptedCredential;
-            LinkedServiceType = linkedServiceType ?? "TeamDesk";
         }
 
-        /// <summary> Initializes a new instance of <see cref="TeamDeskLinkedService"/> for deserialization. </summary>
-        internal TeamDeskLinkedService()
-        {
-        }
+        /// <summary> TeamDesk linked service properties. </summary>
+        internal TeamDeskLinkedServiceTypeProperties TypeProperties { get; set; }
 
         /// <summary> The authentication type to use. </summary>
-        public TeamDeskAuthenticationType AuthenticationType { get; set; }
+        public TeamDeskAuthenticationType AuthenticationType
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.AuthenticationType;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeamDeskLinkedServiceTypeProperties();
+                }
+                TypeProperties.AuthenticationType = value;
+            }
+        }
+
         /// <summary> The url to connect TeamDesk source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Uri { get; set; }
+        public DataFactoryElement<string> Uri
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Uri;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeamDeskLinkedServiceTypeProperties();
+                }
+                TypeProperties.Uri = value;
+            }
+        }
+
         /// <summary> The username of the TeamDesk source. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> UserName { get; set; }
-        /// <summary> The password of the TeamDesk source. </summary>
-        public DataFactorySecret Password { get; set; }
-        /// <summary> The api token for the TeamDesk source. </summary>
-        public DataFactorySecret ApiToken { get; set; }
+        public DataFactoryElement<string> UserName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.UserName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeamDeskLinkedServiceTypeProperties();
+                }
+                TypeProperties.UserName = value;
+            }
+        }
+
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
-        public string EncryptedCredential { get; set; }
+        public string EncryptedCredential
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EncryptedCredential;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new TeamDeskLinkedServiceTypeProperties();
+                }
+                TypeProperties.EncryptedCredential = value;
+            }
+        }
     }
 }

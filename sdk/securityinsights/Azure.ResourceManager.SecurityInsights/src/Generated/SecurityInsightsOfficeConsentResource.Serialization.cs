@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
+    /// <summary></summary>
     public partial class SecurityInsightsOfficeConsentResource : IJsonModel<SecurityInsightsOfficeConsentData>
     {
-        private static SecurityInsightsOfficeConsentData s_dataDeserializationInstance;
-        private static SecurityInsightsOfficeConsentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityInsightsOfficeConsentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityInsightsOfficeConsentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityInsightsOfficeConsentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityInsightsOfficeConsentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)Data).Write(writer, options);
 
-        SecurityInsightsOfficeConsentData IJsonModel<SecurityInsightsOfficeConsentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsOfficeConsentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityInsightsOfficeConsentData IJsonModel<SecurityInsightsOfficeConsentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityInsightsOfficeConsentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsOfficeConsentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityInsightsOfficeConsentData IPersistableModel<SecurityInsightsOfficeConsentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsOfficeConsentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<SecurityInsightsOfficeConsentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsOfficeConsentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityInsightsOfficeConsentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

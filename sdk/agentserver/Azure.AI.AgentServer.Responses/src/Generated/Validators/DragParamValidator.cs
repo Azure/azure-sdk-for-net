@@ -31,6 +31,13 @@ internal static partial class DragParamValidator
             return ValidationResult.Failure(errors);
         }
 
+        // Optional: keys
+        if (element.TryGetProperty("keys", out var keysProp) && keysProp.ValueKind != JsonValueKind.Null)
+        {
+            if (keysProp.ValueKind != JsonValueKind.Array)
+                errors.Add(new ValidationError("$.keys", $"Expected array, got {keysProp.ValueKind}"));
+        }
+
         // Required: path
         if (!element.TryGetProperty("path", out var pathProp))
             errors.Add(new ValidationError("$.path", "Required property 'path' is missing"));

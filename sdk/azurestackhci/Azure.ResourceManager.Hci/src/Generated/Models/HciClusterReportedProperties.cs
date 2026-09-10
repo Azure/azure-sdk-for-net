@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Properties reported by cluster agent. </summary>
     public partial class HciClusterReportedProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterReportedProperties"/>. </summary>
         internal HciClusterReportedProperties()
@@ -58,61 +30,83 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="clusterVersion"> Version of the cluster software. </param>
         /// <param name="nodes"> List of nodes reported by the cluster. </param>
         /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
+        /// <param name="msiExpirationTimeStamp"> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
         /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
-        /// <param name="clusterType"> The node type of all the nodes of the cluster. </param>
+        /// <param name="clusterType"> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </param>
         /// <param name="manufacturer"> The manufacturer of all the nodes of the cluster. </param>
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationTimeStamp, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HardwareClass? hardwareClass, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
             ClusterVersion = clusterVersion;
             Nodes = nodes;
             LastUpdatedOn = lastUpdatedOn;
+            MsiExpirationTimeStamp = msiExpirationTimeStamp;
             ImdsAttestation = imdsAttestation;
             DiagnosticLevel = diagnosticLevel;
             SupportedCapabilities = supportedCapabilities;
             ClusterType = clusterType;
             Manufacturer = manufacturer;
             OemActivation = oemActivation;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            HardwareClass = hardwareClass;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the on-prem cluster connected to this resource. </summary>
         [WirePath("clusterName")]
         public string ClusterName { get; }
+
         /// <summary> Unique id generated by the on-prem cluster. </summary>
         [WirePath("clusterId")]
         public Guid? ClusterId { get; }
+
         /// <summary> Version of the cluster software. </summary>
         [WirePath("clusterVersion")]
         public string ClusterVersion { get; }
+
         /// <summary> List of nodes reported by the cluster. </summary>
         [WirePath("nodes")]
         public IReadOnlyList<HciClusterNode> Nodes { get; }
+
         /// <summary> Last time the cluster reported the data. </summary>
         [WirePath("lastUpdated")]
         public DateTimeOffset? LastUpdatedOn { get; }
+
+        /// <summary> Specifies the expiration timestamp of the cluster's Managed Service Identity (MSI). The value is expressed in Coordinated Universal Time (UTC). </summary>
+        [WirePath("msiExpirationTimeStamp")]
+        public DateTimeOffset? MsiExpirationTimeStamp { get; }
+
         /// <summary> IMDS attestation status of the cluster. </summary>
         [WirePath("imdsAttestation")]
         public ImdsAttestationState? ImdsAttestation { get; }
+
         /// <summary> Level of diagnostic data emitted by the cluster. </summary>
         [WirePath("diagnosticLevel")]
         public HciClusterDiagnosticLevel? DiagnosticLevel { get; }
+
         /// <summary> Capabilities supported by the cluster. </summary>
         [WirePath("supportedCapabilities")]
         public IReadOnlyList<string> SupportedCapabilities { get; }
-        /// <summary> The node type of all the nodes of the cluster. </summary>
+
+        /// <summary> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </summary>
         [WirePath("clusterType")]
         public ClusterNodeType? ClusterType { get; }
+
         /// <summary> The manufacturer of all the nodes of the cluster. </summary>
         [WirePath("manufacturer")]
         public string Manufacturer { get; }
+
         /// <summary> OEM activation status of the cluster. </summary>
         [WirePath("oemActivation")]
         public OemActivation? OemActivation { get; }
+
+        /// <summary> Hardware class of the cluster. </summary>
+        [WirePath("hardwareClass")]
+        public HardwareClass? HardwareClass { get; }
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class ProvisioningStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ProvisioningState value) => value switch
         {
             ProvisioningState.Succeeded => "Succeeded",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProvisioningState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ProvisioningState ToProvisioningState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return ProvisioningState.Succeeded;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return ProvisioningState.Failed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled")) return ProvisioningState.Canceled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress")) return ProvisioningState.InProgress;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return ProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded"))
+            {
+                return ProvisioningState.Succeeded;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed"))
+            {
+                return ProvisioningState.Failed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Canceled"))
+            {
+                return ProvisioningState.Canceled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InProgress"))
+            {
+                return ProvisioningState.InProgress;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting"))
+            {
+                return ProvisioningState.Deleting;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ProvisioningState value.");
         }
     }

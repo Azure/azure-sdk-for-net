@@ -86,7 +86,7 @@ namespace Azure.Storage.Blobs.Tests
                     break;
                 }
 
-                string blockId = Shared.StorageExtensions.GenerateBlockId(position);
+                string blockId = BlobHelpers.GenerateBlockId();
                 await client.StageBlockAsync(blockId, new MemoryStream(buffer, 0, lastReadSize));
                 blockIds.Add(blockId);
             }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CostManagement
 {
+    /// <summary></summary>
     public partial class CostManagementExportResource : IJsonModel<CostManagementExportData>
     {
-        private static CostManagementExportData s_dataDeserializationInstance;
-        private static CostManagementExportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CostManagementExportData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CostManagementExportData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CostManagementExportData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CostManagementExportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementExportData>)Data).Write(writer, options);
 
-        CostManagementExportData IJsonModel<CostManagementExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CostManagementExportData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CostManagementExportData IJsonModel<CostManagementExportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CostManagementExportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CostManagementExportData>(Data, options, AzureResourceManagerCostManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CostManagementExportData IPersistableModel<CostManagementExportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CostManagementExportData>(data, options, AzureResourceManagerCostManagementContext.Default);
 
-        string IPersistableModel<CostManagementExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CostManagementExportData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CostManagementExportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

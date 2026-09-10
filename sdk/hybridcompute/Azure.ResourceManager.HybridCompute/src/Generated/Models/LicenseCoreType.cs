@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct LicenseCoreType : IEquatable<LicenseCoreType>
     {
         private readonly string _value;
+        /// <summary> pCore. </summary>
+        private const string PCoreValue = "pCore";
+        /// <summary> vCore. </summary>
+        private const string VCoreValue = "vCore";
 
         /// <summary> Initializes a new instance of <see cref="LicenseCoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LicenseCoreType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PCoreValue = "pCore";
-        private const string VCoreValue = "vCore";
+            _value = value;
+        }
 
         /// <summary> pCore. </summary>
         public static LicenseCoreType PCore { get; } = new LicenseCoreType(PCoreValue);
+
         /// <summary> vCore. </summary>
         public static LicenseCoreType VCore { get; } = new LicenseCoreType(VCoreValue);
+
         /// <summary> Determines if two <see cref="LicenseCoreType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LicenseCoreType left, LicenseCoreType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LicenseCoreType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LicenseCoreType left, LicenseCoreType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LicenseCoreType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LicenseCoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LicenseCoreType(string value) => new LicenseCoreType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LicenseCoreType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LicenseCoreType?(string value) => value == null ? null : new LicenseCoreType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LicenseCoreType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LicenseCoreType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

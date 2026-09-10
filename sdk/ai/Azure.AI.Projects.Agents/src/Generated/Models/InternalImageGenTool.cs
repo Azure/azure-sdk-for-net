@@ -13,6 +13,7 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
         public InternalImageGenTool() : base(ToolType.ImageGeneration)
         {
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalImageGenTool"/>. </summary>
@@ -23,10 +24,7 @@ namespace OpenAI
         /// The quality of the generated image. One of `low`, `medium`, `high`,
         ///   or `auto`. Default: `auto`.
         /// </param>
-        /// <param name="size">
-        /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        ///   `1536x1024`, or `auto`. Default: `auto`.
-        /// </param>
+        /// <param name="size"> The size of the generated images. For `gpt-image-2` and `gpt-image-2-2026-04-21`, arbitrary resolutions are supported as `WIDTHxHEIGHT` strings, for example `1536x864`. Width and height must both be divisible by 16 and the requested aspect ratio must be between 1:3 and 3:1. Resolutions above `2560x1440` are experimental, and the maximum supported resolution is `3840x2160`. The requested size must also satisfy the model's current pixel and edge limits. The standard sizes `1024x1024`, `1536x1024`, and `1024x1536` are supported by the GPT image models; `auto` is supported for models that allow automatic sizing. For `dall-e-2`, use one of `256x256`, `512x512`, or `1024x1024`. For `dall-e-3`, use one of `1024x1024`, `1792x1024`, or `1024x1792`. </param>
         /// <param name="outputFormat">
         /// The output format of the generated image. One of `png`, `webp`, or
         ///   `jpeg`. Default: `png`.
@@ -44,9 +42,10 @@ namespace OpenAI
         /// </param>
         /// <param name="partialImages"> Number of partial images to generate in streaming mode, from 0 (default value) to 3. </param>
         /// <param name="action"> Whether to generate a new image or edit an existing image. Default: `auto`. </param>
-        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
-        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
-        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description) : base(@type, additionalBinaryDataProperties)
+        /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
+        internal InternalImageGenTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageGenToolModel? model, ImageGenToolQuality? quality, ImageGenToolSize? size, ImageGenToolOutputFormat? outputFormat, long? outputCompression, ImageGenToolModeration? moderation, ImageGenToolBackground? background, InputFidelity? inputFidelity, InternalImageGenToolInputImageMask inputImageMask, long? partialImages, ImageGenActionEnum? action, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Model = model;
             Quality = quality;
@@ -61,6 +60,7 @@ namespace OpenAI
             Action = action;
             Name = name;
             Description = description;
+            ToolConfigs = toolConfigs;
         }
 
         /// <summary> Gets or sets the Model. </summary>
@@ -72,10 +72,7 @@ namespace OpenAI
         /// </summary>
         public ImageGenToolQuality? Quality { get; set; }
 
-        /// <summary>
-        /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        ///   `1536x1024`, or `auto`. Default: `auto`.
-        /// </summary>
+        /// <summary> The size of the generated images. For `gpt-image-2` and `gpt-image-2-2026-04-21`, arbitrary resolutions are supported as `WIDTHxHEIGHT` strings, for example `1536x864`. Width and height must both be divisible by 16 and the requested aspect ratio must be between 1:3 and 3:1. Resolutions above `2560x1440` are experimental, and the maximum supported resolution is `3840x2160`. The requested size must also satisfy the model's current pixel and edge limits. The standard sizes `1024x1024`, `1536x1024`, and `1024x1536` are supported by the GPT image models; `auto` is supported for models that allow automatic sizing. For `dall-e-2`, use one of `256x256`, `512x512`, or `1024x1024`. For `dall-e-3`, use one of `1024x1024`, `1792x1024`, or `1024x1792`. </summary>
         public ImageGenToolSize? Size { get; set; }
 
         /// <summary>
@@ -111,10 +108,13 @@ namespace OpenAI
         /// <summary> Whether to generate a new image or edit an existing image. Default: `auto`. </summary>
         public ImageGenActionEnum? Action { get; set; }
 
-        /// <summary> Optional user-defined name for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }
 
-        /// <summary> Optional user-defined description for this tool or configuration. </summary>
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Description { get; set; }
+
+        /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        public IDictionary<string, ToolConfig> ToolConfigs { get; }
     }
 }

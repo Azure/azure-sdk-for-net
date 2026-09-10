@@ -21,6 +21,7 @@ namespace Azure.Storage.Files.Shares.Models
 
         /// <summary> Settings for SMB protocol. </summary>
         public ShareSmbSettings Smb { get; set; }
+
         /// <summary> Settings for NFS protocol. </summary>
         public ShareNfsSettings Nfs { get; set; }
     }

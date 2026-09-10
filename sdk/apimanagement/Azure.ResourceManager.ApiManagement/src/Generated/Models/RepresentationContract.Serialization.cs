@@ -8,17 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class RepresentationContract : IUtf8JsonSerializable, IJsonModel<RepresentationContract>
+    /// <summary> Operation request/response representation details. </summary>
+    public partial class RepresentationContract : IJsonModel<RepresentationContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RepresentationContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/> for deserialization. </summary>
+        internal RepresentationContract()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RepresentationContract PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeRepresentationContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RepresentationContract)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(RepresentationContract)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<RepresentationContract>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RepresentationContract IPersistableModel<RepresentationContract>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RepresentationContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RepresentationContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RepresentationContract)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType);
             if (Optional.IsDefined(SchemaId))
@@ -52,7 +95,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 writer.WritePropertyName("formParameters"u8);
                 writer.WriteStartArray();
-                foreach (var item in FormParameters)
+                foreach (ParameterContract item in FormParameters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,15 +112,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +129,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        RepresentationContract IJsonModel<RepresentationContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RepresentationContract IJsonModel<RepresentationContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual RepresentationContract JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RepresentationContract)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRepresentationContract(document.RootElement, options);
         }
 
-        internal static RepresentationContract DeserializeRepresentationContract(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static RepresentationContract DeserializeRepresentationContract(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,230 +159,64 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string typeName = default;
             IList<ParameterContract> formParameters = default;
             IDictionary<string, ParameterExampleContract> examples = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("contentType"u8))
+                if (prop.NameEquals("contentType"u8))
                 {
-                    contentType = property.Value.GetString();
+                    contentType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("schemaId"u8))
+                if (prop.NameEquals("schemaId"u8))
                 {
-                    schemaId = property.Value.GetString();
+                    schemaId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("typeName"u8))
+                if (prop.NameEquals("typeName"u8))
                 {
-                    typeName = property.Value.GetString();
+                    typeName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("formParameters"u8))
+                if (prop.NameEquals("formParameters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ParameterContract> array = new List<ParameterContract>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ParameterContract.DeserializeParameterContract(item, options));
                     }
                     formParameters = array;
                     continue;
                 }
-                if (property.NameEquals("examples"u8))
+                if (prop.NameEquals("examples"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, ParameterExampleContract> dictionary = new Dictionary<string, ParameterExampleContract>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value, options));
+                        dictionary.Add(prop0.Name, ParameterExampleContract.DeserializeParameterExampleContract(prop0.Value, options));
                     }
                     examples = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new RepresentationContract(
                 contentType,
                 schemaId,
                 typeName,
                 formParameters ?? new ChangeTrackingList<ParameterContract>(),
                 examples ?? new ChangeTrackingDictionary<string, ParameterExampleContract>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  contentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContentType))
-                {
-                    builder.Append("  contentType: ");
-                    if (ContentType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContentType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContentType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SchemaId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  schemaId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SchemaId))
-                {
-                    builder.Append("  schemaId: ");
-                    if (SchemaId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SchemaId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SchemaId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TypeName))
-                {
-                    builder.Append("  typeName: ");
-                    if (TypeName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{TypeName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{TypeName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FormParameters), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  formParameters: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(FormParameters))
-                {
-                    if (FormParameters.Any())
-                    {
-                        builder.Append("  formParameters: ");
-                        builder.AppendLine("[");
-                        foreach (var item in FormParameters)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  formParameters: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Examples), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  examples: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Examples))
-                {
-                    if (Examples.Any())
-                    {
-                        builder.Append("  examples: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Examples)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  examples: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<RepresentationContract>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(RepresentationContract)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        RepresentationContract IPersistableModel<RepresentationContract>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<RepresentationContract>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeRepresentationContract(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(RepresentationContract)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<RepresentationContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

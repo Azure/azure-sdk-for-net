@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dynatrace;
 using Azure.ResourceManager.Models;
@@ -33,8 +32,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Dynatrace monitor resource. </summary>
@@ -46,7 +45,18 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             monitoredSubscriptionList ??= new ChangeTrackingList<DynatraceMonitoredSubscriptionStatus>();
 
-            return new DynatraceMonitoredSubscriptionProperties(operation, monitoredSubscriptionList.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new DynatraceMonitoredSubscriptionProperties(operation, (monitoredSubscriptionList ?? new ChangeTrackingList<DynatraceMonitoredSubscriptionStatus>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> The list of subscriptions and it's monitoring status by current Dynatrace monitor. </summary>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> Properties for the Tag rules resource of a Monitor account. </param>
+        /// <returns> A new <see cref="Models.DynatraceMonitoredSubscriptionStatus"/> instance for mocking. </returns>
+        public static DynatraceMonitoredSubscriptionStatus DynatraceMonitoredSubscriptionStatus(Guid subscriptionId = default, DynatraceMonitoringState? status = default, string error = default, DynatraceTagRuleProperties tagRules = default)
+        {
+            return new DynatraceMonitoredSubscriptionStatus(subscriptionId, status, error, tagRules, default);
         }
 
         /// <summary> Properties for the Tag rules resource of a Monitor account. </summary>
@@ -56,7 +66,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceTagRuleProperties"/> instance for mocking. </returns>
         public static DynatraceTagRuleProperties DynatraceTagRuleProperties(DynatraceMonitorResourceLogRules logRules = default, DynatraceMonitorResourceMetricRules metricRules = default, DynatraceProvisioningState? provisioningState = default)
         {
-            return new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, additionalBinaryDataProperties: null);
+            return new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, default);
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
@@ -72,7 +82,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             filteringTags ??= new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
 
-            return new DynatraceMonitorResourceLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMonitorResourceLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, (filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>()).ToList(), default);
+        }
+
+        /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
+        /// <param name="name"> The name (also known as the key) of the tag. </param>
+        /// <param name="value"> The value of the tag. </param>
+        /// <param name="action"> Valid actions for a filtering tag. Exclusion takes priority over inclusion. </param>
+        /// <returns> A new <see cref="Models.DynatraceMonitorResourceFilteringTag"/> instance for mocking. </returns>
+        public static DynatraceMonitorResourceFilteringTag DynatraceMonitorResourceFilteringTag(string name = default, string value = default, DynatraceMonitorResourceTagAction? action = default)
+        {
+            return new DynatraceMonitorResourceFilteringTag(name, value, action, default);
         }
 
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
@@ -83,7 +103,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             filteringTags ??= new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>();
 
-            return new DynatraceMonitorResourceMetricRules(sendingMetrics, filteringTags.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMonitorResourceMetricRules(sendingMetrics, (filteringTags ?? new ChangeTrackingList<DynatraceMonitorResourceFilteringTag>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -101,8 +121,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                logRules is null && metricRules is null && provisioningState is null ? default : new DynatraceTagRuleProperties(logRules, metricRules, provisioningState, null));
+                default,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -131,21 +151,53 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                monitoringStatus is null && marketplaceSubscriptionStatus is null && marketplaceSaasAutoRenew is null && dynatraceEnvironmentProperties is null && userInfo is null && planData is null && liftrResourceCategory is null && liftrResourcePreference is null && provisioningState is null ? default : new DynatraceMonitorProperties(
-                    monitoringStatus,
-                    marketplaceSubscriptionStatus,
-                    marketplaceSaasAutoRenew,
+                dynatraceEnvironmentProperties is null ? default : new DynatraceMonitorProperties(
+                    default,
+                    default,
+                    default,
                     dynatraceEnvironmentProperties,
-                    userInfo,
-                    planData,
-                    liftrResourceCategory,
-                    liftrResourcePreference,
-                    provisioningState,
-                    null),
-                identity);
+                    default,
+                    default,
+                    default,
+                    default,
+                    default,
+                    default),
+                identity,
+                default);
+        }
+
+        /// <summary> Properties of the Dynatrace environment. </summary>
+        /// <param name="userId"> User id. </param>
+        /// <param name="accountInfo"> Dynatrace Account Information. </param>
+        /// <param name="environmentInfo"> Dynatrace Environment Information. </param>
+        /// <param name="singleSignOnProperties"> The details of a Dynatrace single sign-on. </param>
+        /// <returns> A new <see cref="Models.DynatraceEnvironmentProperties"/> instance for mocking. </returns>
+        public static DynatraceEnvironmentProperties DynatraceEnvironmentProperties(string userId = default, DynatraceAccountInfo accountInfo = default, DynatraceEnvironmentInfo environmentInfo = default, DynatraceSingleSignOnProperties singleSignOnProperties = default)
+        {
+            return new DynatraceEnvironmentProperties(userId, accountInfo, environmentInfo, singleSignOnProperties, default);
+        }
+
+        /// <summary> Dynatrace Account Information. </summary>
+        /// <param name="accountId"> Account Id of the account this environment is linked to. </param>
+        /// <param name="regionId"> Region in which the account is created. </param>
+        /// <param name="companyName"> Name of the customer account / company. </param>
+        /// <returns> A new <see cref="Models.DynatraceAccountInfo"/> instance for mocking. </returns>
+        public static DynatraceAccountInfo DynatraceAccountInfo(string accountId = default, string regionId = default, string companyName = default)
+        {
+            return new DynatraceAccountInfo(accountId, regionId, companyName, default);
+        }
+
+        /// <summary> Dynatrace Environment Information. </summary>
+        /// <param name="environmentId"> Id of the environment created. </param>
+        /// <param name="ingestionKey"> Ingestion key of the environment. </param>
+        /// <param name="logsIngestionEndpoint"> Ingestion endpoint used for sending logs. </param>
+        /// <param name="landingUri"> Landing URL for Dynatrace environment. </param>
+        /// <returns> A new <see cref="Models.DynatraceEnvironmentInfo"/> instance for mocking. </returns>
+        public static DynatraceEnvironmentInfo DynatraceEnvironmentInfo(string environmentId = default, string ingestionKey = default, Uri logsIngestionEndpoint = default, Uri landingUri = default)
+        {
+            return new DynatraceEnvironmentInfo(environmentId, ingestionKey, logsIngestionEndpoint, landingUri, default);
         }
 
         /// <summary> The details of a Dynatrace single sign-on. </summary>
@@ -163,9 +215,38 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 singleSignOnState,
                 enterpriseAppId,
                 singleSignOnUri,
-                aadDomains.ToList(),
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> User info. </summary>
+        /// <param name="firstName"> First Name of the user. </param>
+        /// <param name="lastName"> Last Name of the user. </param>
+        /// <param name="emailAddress"> Email of the user used by Dynatrace for contacting them if needed. </param>
+        /// <param name="phoneNumber"> Phone number of the user used by Dynatrace for contacting them if needed. </param>
+        /// <param name="country"> Country of the user. </param>
+        /// <returns> A new <see cref="Models.DynatraceMonitorUserInfo"/> instance for mocking. </returns>
+        public static DynatraceMonitorUserInfo DynatraceMonitorUserInfo(string firstName = default, string lastName = default, string emailAddress = default, string phoneNumber = default, string country = default)
+        {
+            return new DynatraceMonitorUserInfo(
+                firstName,
+                lastName,
+                emailAddress,
+                phoneNumber,
+                country,
+                default);
+        }
+
+        /// <summary> Billing plan information. </summary>
+        /// <param name="usageType"> different usage type like PAYG/COMMITTED. this could be enum. </param>
+        /// <param name="billingCycle"> different billing cycles like MONTHLY/WEEKLY. this could be enum. </param>
+        /// <param name="planDetails"> plan id as published by Dynatrace. </param>
+        /// <param name="effectiveOn"> date when plan was applied. </param>
+        /// <returns> A new <see cref="Models.DynatraceBillingPlanInfo"/> instance for mocking. </returns>
+        public static DynatraceBillingPlanInfo DynatraceBillingPlanInfo(string usageType = default, string billingCycle = default, string planDetails = default, DateTimeOffset? effectiveOn = default)
+        {
+            return new DynatraceBillingPlanInfo(usageType, billingCycle, planDetails, effectiveOn, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -176,7 +257,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DynatraceMonitorPatch(tags, monitorUpdatePlanData is null ? default : new MonitorUpdateProperties(monitorUpdatePlanData, null), identity, additionalBinaryDataProperties: null);
+            return new DynatraceMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), monitorUpdatePlanData is null ? default : new MonitorUpdateProperties(monitorUpdatePlanData, default), identity, default);
         }
 
         /// <summary> Request for getting log status for given monitored resource Ids. </summary>
@@ -186,7 +267,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             monitoredResourceIds ??= new ChangeTrackingList<string>();
 
-            return new DynatraceMonitoredResourceContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMonitoredResourceContent((monitoredResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Details of resource being monitored by Dynatrace monitor resource. </summary>
@@ -204,7 +285,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 reasonForMetricsStatus,
                 sendingLogsStatus,
                 reasonForLogsStatus,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Response of payload to be passed while installing VM agent. </summary>
@@ -213,7 +294,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.DynatraceVmExtensionPayload"/> instance for mocking. </returns>
         public static DynatraceVmExtensionPayload DynatraceVmExtensionPayload(string ingestionKey = default, string environmentId = default)
         {
-            return new DynatraceVmExtensionPayload(ingestionKey, environmentId, additionalBinaryDataProperties: null);
+            return new DynatraceVmExtensionPayload(ingestionKey, environmentId, default);
         }
 
         /// <summary> Request for performing Dynatrace agent install/uninstall action through the Azure Dynatrace resource on the provided list of agent resources. </summary>
@@ -224,7 +305,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             manageAgentInstallationList ??= new ChangeTrackingList<DynatraceManageAgentDetails>();
 
-            return new ManageAgentInstallationContent(manageAgentInstallationList.ToList(), action, additionalBinaryDataProperties: null);
+            return new ManageAgentInstallationContent((manageAgentInstallationList ?? new ChangeTrackingList<DynatraceManageAgentDetails>()).ToList(), action, default);
+        }
+
+        /// <summary> Details of resource that has Dynatrace agent installed through the Azure Dynatrace resource. </summary>
+        /// <param name="id"> The ARM id of the resource to install/uninstall agent. </param>
+        /// <returns> A new <see cref="Models.DynatraceManageAgentDetails"/> instance for mocking. </returns>
+        public static DynatraceManageAgentDetails DynatraceManageAgentDetails(ResourceIdentifier id = default)
+        {
+            return new DynatraceManageAgentDetails(id, default);
         }
 
         /// <summary> Details of VM Resource having Dynatrace OneAgent installed. </summary>
@@ -250,7 +339,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 logModule,
                 hostGroup,
                 hostName,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Request for getting metric status for given monitored resource Ids. </summary>
@@ -260,7 +349,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             monitoredResourceIds ??= new ChangeTrackingList<string>();
 
-            return new DynatraceMetricStatusContent(monitoredResourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMetricStatusContent((monitoredResourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Response of get metrics status operation. </summary>
@@ -270,7 +359,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         {
             azureResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new DynatraceMetricsStatusResult(azureResourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DynatraceMetricsStatusResult((azureResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
         /// <summary> Details of App Services having Dynatrace OneAgent installed. </summary>
@@ -296,7 +385,23 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 logModule,
                 hostGroup,
                 hostName,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The billing plan properties for the upgrade plan call. </summary>
+        /// <param name="planData"> The new Billing plan information. </param>
+        /// <returns> A new <see cref="Models.DynatraceUpgradePlanContent"/> instance for mocking. </returns>
+        public static DynatraceUpgradePlanContent DynatraceUpgradePlanContent(DynatraceBillingPlanInfo planData = default)
+        {
+            return new DynatraceUpgradePlanContent(planData, default);
+        }
+
+        /// <summary> Request for getting sso details for a user. </summary>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <returns> A new <see cref="Models.DynatraceSsoDetailsContent"/> instance for mocking. </returns>
+        public static DynatraceSsoDetailsContent DynatraceSsoDetailsContent(string userPrincipal = default)
+        {
+            return new DynatraceSsoDetailsContent(userPrincipal, default);
         }
 
         /// <summary> SSO details from the Dynatrace partner. </summary>
@@ -315,9 +420,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 isSsoEnabled,
                 metadataUri,
                 singleSignOnUri,
-                aadDomains.ToList(),
-                adminUsers.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                (adminUsers ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <summary> Request for getting all the linkable environments for a user. </summary>
+        /// <param name="tenantId"> Tenant Id of the user in which they want to link the environment. </param>
+        /// <param name="userPrincipal"> user principal id of the user. </param>
+        /// <param name="region"> Azure region in which we want to link the environment. </param>
+        /// <returns> A new <see cref="Models.LinkableEnvironmentContent"/> instance for mocking. </returns>
+        public static LinkableEnvironmentContent LinkableEnvironmentContent(Guid? tenantId = default, string userPrincipal = default, AzureLocation? region = default)
+        {
+            return new LinkableEnvironmentContent(tenantId, userPrincipal, region, default);
         }
 
         /// <summary> Response for getting all the linkable environments. </summary>
@@ -327,7 +442,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.LinkableEnvironmentResult"/> instance for mocking. </returns>
         public static LinkableEnvironmentResult LinkableEnvironmentResult(string environmentId = default, string environmentName = default, DynatraceBillingPlanInfo planData = default)
         {
-            return new LinkableEnvironmentResult(environmentId, environmentName, planData, additionalBinaryDataProperties: null);
+            return new LinkableEnvironmentResult(environmentId, environmentName, planData, default);
         }
 
         /// <summary> Request for getting Marketplace SaaS resource details for a tenant Id. </summary>
@@ -335,7 +450,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsContent"/> instance for mocking. </returns>
         public static MarketplaceSaaSResourceDetailsContent MarketplaceSaaSResourceDetailsContent(Guid tenantId = default)
         {
-            return new MarketplaceSaaSResourceDetailsContent(tenantId, additionalBinaryDataProperties: null);
+            return new MarketplaceSaaSResourceDetailsContent(tenantId, default);
         }
 
         /// <summary> Marketplace SaaS resource details linked to the given tenant Id. </summary>
@@ -346,7 +461,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <returns> A new <see cref="Models.MarketplaceSaaSResourceDetailsResult"/> instance for mocking. </returns>
         public static MarketplaceSaaSResourceDetailsResult MarketplaceSaaSResourceDetailsResult(ResourceIdentifier marketplaceSaaSResourceId = default, string planId = default, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, string marketplaceSaaSResourceName = default)
         {
-            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, additionalBinaryDataProperties: null);
+            return new MarketplaceSaaSResourceDetailsResult(marketplaceSaaSResourceId, planId, marketplaceSubscriptionStatus, marketplaceSaaSResourceName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -366,14 +481,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                singleSignOnState is null && enterpriseAppId is null && singleSignOnUri is null && aadDomains is null && provisioningState is null ? default : new DynatraceSingleSignOnProperties(
+                singleSignOnState is null && singleSignOnUri is null ? default : new DynatraceSingleSignOnProperties(
                     singleSignOnState,
-                    enterpriseAppId,
+                    default,
                     singleSignOnUri,
-                    (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    null));
+                    default,
+                    default,
+                    default),
+                default);
         }
     }
 }

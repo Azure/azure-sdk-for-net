@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _webAppRouting = DefineModelProperty<ManagedClusterIngressProfileWebAppRouting>(nameof(WebAppRouting), new string[] { "webAppRouting" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterIngressProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

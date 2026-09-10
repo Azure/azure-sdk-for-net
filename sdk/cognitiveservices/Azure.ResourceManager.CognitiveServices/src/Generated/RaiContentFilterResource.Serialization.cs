@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
+    /// <summary></summary>
     public partial class RaiContentFilterResource : IJsonModel<RaiContentFilterData>
     {
-        private static RaiContentFilterData s_dataDeserializationInstance;
-        private static RaiContentFilterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RaiContentFilterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RaiContentFilterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RaiContentFilterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RaiContentFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)Data).Write(writer, options);
 
-        RaiContentFilterData IJsonModel<RaiContentFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RaiContentFilterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RaiContentFilterData IJsonModel<RaiContentFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RaiContentFilterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RaiContentFilterData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RaiContentFilterData IPersistableModel<RaiContentFilterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RaiContentFilterData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
 
-        string IPersistableModel<RaiContentFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RaiContentFilterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RaiContentFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

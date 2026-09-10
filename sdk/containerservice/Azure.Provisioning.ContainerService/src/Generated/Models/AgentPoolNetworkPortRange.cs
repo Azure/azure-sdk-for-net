@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerService
             _portStart = DefineProperty<int>(nameof(PortStart), new string[] { "portStart" });
             _portEnd = DefineProperty<int>(nameof(PortEnd), new string[] { "portEnd" });
             _protocol = DefineProperty<AgentPoolNetworkPortProtocol>(nameof(Protocol), new string[] { "protocol" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AgentPoolNetworkPortRange that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

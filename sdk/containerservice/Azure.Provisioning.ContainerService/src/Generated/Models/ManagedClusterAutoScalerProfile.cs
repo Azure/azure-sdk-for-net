@@ -363,6 +363,10 @@ namespace Azure.Provisioning.ContainerService
             _scaleDownUtilizationThreshold = DefineProperty<string>(nameof(ScaleDownUtilizationThreshold), new string[] { "scale-down-utilization-threshold" });
             _skipNodesWithLocalStorage = DefineProperty<string>(nameof(SkipNodesWithLocalStorage), new string[] { "skip-nodes-with-local-storage" });
             _skipNodesWithSystemPods = DefineProperty<string>(nameof(SkipNodesWithSystemPods), new string[] { "skip-nodes-with-system-pods" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAutoScalerProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

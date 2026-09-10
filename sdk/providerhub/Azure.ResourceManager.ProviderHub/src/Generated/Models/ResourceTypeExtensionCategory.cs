@@ -7,21 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeExtensionCategory. </summary>
+    /// <summary></summary>
     public readonly partial struct ResourceTypeExtensionCategory : IEquatable<ResourceTypeExtensionCategory>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionCategory"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ResourceTypeExtensionCategory(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string ResourceCreationValidateValue = "ResourceCreationValidate";
         private const string ResourceCreationBeginValue = "ResourceCreationBegin";
@@ -41,59 +34,100 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private const string BestMatchOperationBeginValue = "BestMatchOperationBegin";
         private const string SubscriptionLifecycleNotificationDeletionValue = "SubscriptionLifecycleNotificationDeletion";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeExtensionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ResourceTypeExtensionCategory(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static ResourceTypeExtensionCategory NotSpecified { get; } = new ResourceTypeExtensionCategory(NotSpecifiedValue);
-        /// <summary> ResourceCreationValidate. </summary>
+
+        /// <summary> Gets the ResourceCreationValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationValidate { get; } = new ResourceTypeExtensionCategory(ResourceCreationValidateValue);
-        /// <summary> ResourceCreationBegin. </summary>
+
+        /// <summary> Gets the ResourceCreationBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationBegin { get; } = new ResourceTypeExtensionCategory(ResourceCreationBeginValue);
-        /// <summary> ResourceCreationCompleted. </summary>
+
+        /// <summary> Gets the ResourceCreationCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceCreationCompleted { get; } = new ResourceTypeExtensionCategory(ResourceCreationCompletedValue);
-        /// <summary> ResourceReadValidate. </summary>
+
+        /// <summary> Gets the ResourceReadValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceReadValidate { get; } = new ResourceTypeExtensionCategory(ResourceReadValidateValue);
-        /// <summary> ResourceReadBegin. </summary>
+
+        /// <summary> Gets the ResourceReadBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceReadBegin { get; } = new ResourceTypeExtensionCategory(ResourceReadBeginValue);
-        /// <summary> ResourcePatchValidate. </summary>
+
+        /// <summary> Gets the ResourcePatchValidate. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchValidate { get; } = new ResourceTypeExtensionCategory(ResourcePatchValidateValue);
-        /// <summary> ResourcePatchCompleted. </summary>
+
+        /// <summary> Gets the ResourcePatchCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchCompleted { get; } = new ResourceTypeExtensionCategory(ResourcePatchCompletedValue);
-        /// <summary> ResourceDeletionValidate. </summary>
+
+        /// <summary> Gets the ResourceDeletionValidate. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionValidate { get; } = new ResourceTypeExtensionCategory(ResourceDeletionValidateValue);
-        /// <summary> ResourceDeletionBegin. </summary>
+
+        /// <summary> Gets the ResourceDeletionBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionBegin { get; } = new ResourceTypeExtensionCategory(ResourceDeletionBeginValue);
-        /// <summary> ResourceDeletionCompleted. </summary>
+
+        /// <summary> Gets the ResourceDeletionCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceDeletionCompleted { get; } = new ResourceTypeExtensionCategory(ResourceDeletionCompletedValue);
-        /// <summary> ResourcePostAction. </summary>
+
+        /// <summary> Gets the ResourcePostAction. </summary>
         public static ResourceTypeExtensionCategory ResourcePostAction { get; } = new ResourceTypeExtensionCategory(ResourcePostActionValue);
-        /// <summary> SubscriptionLifecycleNotification. </summary>
+
+        /// <summary> Gets the SubscriptionLifecycleNotification. </summary>
         public static ResourceTypeExtensionCategory SubscriptionLifecycleNotification { get; } = new ResourceTypeExtensionCategory(SubscriptionLifecycleNotificationValue);
-        /// <summary> ResourcePatchBegin. </summary>
+
+        /// <summary> Gets the ResourcePatchBegin. </summary>
         public static ResourceTypeExtensionCategory ResourcePatchBegin { get; } = new ResourceTypeExtensionCategory(ResourcePatchBeginValue);
-        /// <summary> ResourceMoveBegin. </summary>
+
+        /// <summary> Gets the ResourceMoveBegin. </summary>
         public static ResourceTypeExtensionCategory ResourceMoveBegin { get; } = new ResourceTypeExtensionCategory(ResourceMoveBeginValue);
-        /// <summary> ResourceMoveCompleted. </summary>
+
+        /// <summary> Gets the ResourceMoveCompleted. </summary>
         public static ResourceTypeExtensionCategory ResourceMoveCompleted { get; } = new ResourceTypeExtensionCategory(ResourceMoveCompletedValue);
-        /// <summary> BestMatchOperationBegin. </summary>
+
+        /// <summary> Gets the BestMatchOperationBegin. </summary>
         public static ResourceTypeExtensionCategory BestMatchOperationBegin { get; } = new ResourceTypeExtensionCategory(BestMatchOperationBeginValue);
-        /// <summary> SubscriptionLifecycleNotificationDeletion. </summary>
+
+        /// <summary> Gets the SubscriptionLifecycleNotificationDeletion. </summary>
         public static ResourceTypeExtensionCategory SubscriptionLifecycleNotificationDeletion { get; } = new ResourceTypeExtensionCategory(SubscriptionLifecycleNotificationDeletionValue);
+
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceTypeExtensionCategory left, ResourceTypeExtensionCategory right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceTypeExtensionCategory"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceTypeExtensionCategory left, ResourceTypeExtensionCategory right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceTypeExtensionCategory"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceTypeExtensionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceTypeExtensionCategory(string value) => new ResourceTypeExtensionCategory(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceTypeExtensionCategory"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceTypeExtensionCategory?(string value) => value == null ? null : new ResourceTypeExtensionCategory(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceTypeExtensionCategory other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceTypeExtensionCategory other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

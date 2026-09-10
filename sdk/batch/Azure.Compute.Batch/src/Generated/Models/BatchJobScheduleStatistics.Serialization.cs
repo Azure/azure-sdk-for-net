@@ -89,7 +89,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("kernelCPUTime"u8);
             writer.WriteStringValue(KernelCpuTime, "P");
             writer.WritePropertyName("wallClockTime"u8);
-            writer.WriteStringValue(WallClockTime, "P");
+            writer.WriteStringValue(Duration, "P");
             writer.WritePropertyName("readIOps"u8);
             writer.WriteStringValue(ReadIops.ToString());
             writer.WritePropertyName("writeIOps"u8);
@@ -153,7 +153,7 @@ namespace Azure.Compute.Batch
             DateTimeOffset lastUpdateTime = default;
             TimeSpan userCpuTime = default;
             TimeSpan kernelCpuTime = default;
-            TimeSpan wallClockTime = default;
+            TimeSpan duration = default;
             long readIops = default;
             long writeIops = default;
             float readIoGiB = default;
@@ -192,7 +192,7 @@ namespace Azure.Compute.Batch
                 }
                 if (prop.NameEquals("wallClockTime"u8))
                 {
-                    wallClockTime = prop.Value.GetTimeSpan("P");
+                    duration = prop.Value.GetTimeSpan("P");
                     continue;
                 }
                 if (prop.NameEquals("readIOps"u8))
@@ -246,7 +246,7 @@ namespace Azure.Compute.Batch
                 lastUpdateTime,
                 userCpuTime,
                 kernelCpuTime,
-                wallClockTime,
+                duration,
                 readIops,
                 writeIops,
                 readIoGiB,

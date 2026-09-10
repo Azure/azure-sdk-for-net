@@ -88,11 +88,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
             writer.WriteStringValue(TimeGrain);
             writer.WritePropertyName("aggregationType"u8);
             writer.WriteStringValue(AggregationType.ToString());
-            if (Optional.IsDefined(Dimension))
-            {
-                writer.WritePropertyName("dimension"u8);
-                writer.WriteStringValue(Dimension);
-            }
             if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
@@ -129,16 +124,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
             string displayName = default;
             EntitySignalKind signalKind = default;
             EntitySignalRefreshInterval? refreshInterval = default;
-            IDictionary<string, string> labels = default;
+            IDictionary<string, string> tags = default;
             string dataUnit = default;
             EntitySignalEvaluationRule evaluationRules = default;
-            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string metricNamespace = default;
             string metricName = default;
             string timeGrain = default;
             MetricAggregationType aggregationType = default;
-            string dimension = default;
             string dimensionFilter = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +163,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     refreshInterval = new EntitySignalRefreshInterval(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("labels"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -188,7 +181,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                             dictionary.Add(prop0.Name, prop0.Value.GetString());
                         }
                     }
-                    labels = dictionary;
+                    tags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("dataUnit"u8))
@@ -199,15 +192,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 if (prop.NameEquals("evaluationRules"u8))
                 {
                     evaluationRules = EntitySignalEvaluationRule.DeserializeEntitySignalEvaluationRule(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("deletionDate"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("metricNamespace"u8))
@@ -230,11 +214,6 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     aggregationType = new MetricAggregationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("dimension"u8))
-                {
-                    dimension = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("dimensionFilter"u8))
                 {
                     dimensionFilter = prop.Value.GetString();
@@ -250,16 +229,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 displayName,
                 signalKind,
                 refreshInterval,
-                labels ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 dataUnit,
                 evaluationRules,
-                deletedOn,
                 additionalBinaryDataProperties,
                 metricNamespace,
                 metricName,
                 timeGrain,
                 aggregationType,
-                dimension,
                 dimensionFilter);
         }
     }

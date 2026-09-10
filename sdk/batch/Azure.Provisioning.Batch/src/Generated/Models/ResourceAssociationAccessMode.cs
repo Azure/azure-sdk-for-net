@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Batch
     public enum ResourceAssociationAccessMode
     {
         /// <summary> Enforced access mode - traffic to the resource that failed access checks is blocked. </summary>
-        Enforced,
+        Enforced = 0,
         /// <summary> Learning access mode - traffic to the resource is enabled for analysis but not blocked. </summary>
-        Learning,
+        Learning = 1,
         /// <summary> Audit access mode - traffic to the resource that fails access checks is logged but not blocked. </summary>
-        Audit
+        Audit = 2
     }
 }

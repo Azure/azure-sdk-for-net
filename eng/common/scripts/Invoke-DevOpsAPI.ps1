@@ -51,7 +51,9 @@ function Start-DevOpsBuild {
     $Base64EncodedToken=$null,
     $BearerToken=$null,
     [Parameter(Mandatory = $false)]
-    [string]$BuildParametersJson
+    [string]$BuildParametersJson,
+    [Parameter(Mandatory = $false)]
+    [string]$TemplateParametersJson
   )
 
   $uri = "$DevOpsAPIBaseURI" -F $Organization, $Project , "build" , "builds", ""
@@ -60,6 +62,10 @@ function Start-DevOpsBuild {
     sourceBranch = $SourceBranch
     definition = @{ id = $DefinitionId }
     parameters = $BuildParametersJson
+  }
+
+  if (![string]::IsNullOrWhiteSpace($TemplateParametersJson)) {
+    $parameters["templateParameters"] = ($TemplateParametersJson | ConvertFrom-Json)
   }
 
   $headers = (Get-DevOpsApiHeaders -Base64EncodedToken $Base64EncodedToken -BearerToken $BearerToken)

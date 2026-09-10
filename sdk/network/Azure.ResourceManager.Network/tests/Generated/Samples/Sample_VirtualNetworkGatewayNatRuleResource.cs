@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayNatRuleResource virtualNetworkGatewayNatRule = client.GetVirtualNetworkGatewayNatRuleResource(virtualNetworkGatewayNatRuleResourceId);
 
             // invoke the operation
-            await virtualNetworkGatewayNatRule.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkGatewayNatRule.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -112,7 +112,7 @@ PortRange = "300-400",
 }},
                 IPConfigurationId = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/gateway1/ipConfigurations/default",
             };
-            ArmOperation<VirtualNetworkGatewayNatRuleResource> lro = await virtualNetworkGatewayNatRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VirtualNetworkGatewayNatRuleResource> lro = await virtualNetworkGatewayNatRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayNatRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

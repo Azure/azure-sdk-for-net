@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderCapabilities. </summary>
     public partial class ResourceProviderCapabilities
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
         /// <param name="quotaId"> The quota id. </param>
@@ -62,24 +34,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="quotaId"> The quota id. </param>
         /// <param name="effect"> The effect. </param>
         /// <param name="requiredFeatures"> The required features. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuotaId = quotaId;
             Effect = effect;
             RequiredFeatures = requiredFeatures;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/> for deserialization. </summary>
-        internal ResourceProviderCapabilities()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The quota id. </summary>
         public string QuotaId { get; set; }
+
         /// <summary> The effect. </summary>
         public ResourceProviderCapabilitiesEffect Effect { get; set; }
+
         /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
     }

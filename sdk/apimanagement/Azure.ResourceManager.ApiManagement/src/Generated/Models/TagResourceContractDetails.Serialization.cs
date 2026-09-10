@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class TagResourceContractDetails : IUtf8JsonSerializable, IJsonModel<TagResourceContractDetails>
+    /// <summary> TagResource contract properties. </summary>
+    public partial class TagResourceContractDetails : IJsonModel<TagResourceContractDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TagResourceContractDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="TagResourceContractDetails"/> for deserialization. </summary>
+        internal TagResourceContractDetails()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TagResourceContractDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTagResourceContractDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TagResourceContractDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TagResourceContractDetails IPersistableModel<TagResourceContractDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TagResourceContractDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TagResourceContractDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("tag"u8);
             writer.WriteObjectValue(Tag, options);
             if (Optional.IsDefined(Api))
@@ -52,15 +96,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("product"u8);
                 writer.WriteObjectValue(Product, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -69,22 +113,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        TagResourceContractDetails IJsonModel<TagResourceContractDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TagResourceContractDetails IJsonModel<TagResourceContractDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TagResourceContractDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTagResourceContractDetails(document.RootElement, options);
         }
 
-        internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TagResourceContractDetails DeserializeTagResourceContractDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,157 +142,47 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AssociatedApiProperties api = default;
             AssociatedOperationProperties operation = default;
             AssociatedProductProperties product = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("tag"u8))
+                if (prop.NameEquals("tag"u8))
                 {
-                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(property.Value, options);
+                    tag = AssociatedTagProperties.DeserializeAssociatedTagProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("api"u8))
+                if (prop.NameEquals("api"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(property.Value, options);
+                    api = AssociatedApiProperties.DeserializeAssociatedApiProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("operation"u8))
+                if (prop.NameEquals("operation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(property.Value, options);
+                    operation = AssociatedOperationProperties.DeserializeAssociatedOperationProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("product"u8))
+                if (prop.NameEquals("product"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(property.Value, options);
+                    product = AssociatedProductProperties.DeserializeAssociatedProductProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
+            return new TagResourceContractDetails(tag, api, operation, product, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Tag))
-                {
-                    builder.Append("  tag: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Tag, options, 2, false, "  tag: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Api), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  api: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Api))
-                {
-                    builder.Append("  api: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Api, options, 2, false, "  api: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  operation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Operation))
-                {
-                    builder.Append("  operation: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Operation, options, 2, false, "  operation: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Product), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  product: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Product))
-                {
-                    builder.Append("  product: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Product, options, 2, false, "  product: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TagResourceContractDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TagResourceContractDetails IPersistableModel<TagResourceContractDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTagResourceContractDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TagResourceContractDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

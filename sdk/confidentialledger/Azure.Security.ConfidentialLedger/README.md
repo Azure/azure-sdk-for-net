@@ -45,11 +45,13 @@ Then, `DefaultAzureCredential` will be able to authenticate the `ConfidentialLed
 
 Constructing the client also requires your confidential ledger's URI, which you can obtain from the Azure Portal page for your confidential ledger in the `Ledger URI` field under the `Properties` section. When you have retrieved the `Ledger URI`, please use it to replace `"https://my-ledger-url.confidential-ledger.azure.com"` in the example below.
 
-```C# Snippet:CreateClient
+```C# Snippet:ConfidentialLedger_CreateClient
 var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.confidential-ledger.azure.com"), new DefaultAzureCredential());
 ```
 
 > Security Note: By default when a confidential ledger Client is created it will connect to Azure's confidential ledger Identity Service to obtain the latest TLS service certificate for your Ledger in order to secure connections to Ledger Nodes. The details of this process are available in [this sample][client_construction_sample]. This behavior can be overridden by setting the `options` argument when creating the Ledger Client.
+>
+> `ConfidentialLedgerClientOptions.VerifyConnection` defaults to `true`, which verifies node TLS certificates against the trusted identity service certificate. Set `VerifyConnection = false` only for development or testing scenarios.
 
 ## Key concepts
 
@@ -57,7 +59,7 @@ var ledgerClient = new ConfidentialLedgerClient(new Uri("https://my-ledger-url.c
 
 Every write to Azure confidential ledger generates an immutable ledger entry in the service. Writes are uniquely identified by transaction ids that increment with each write.
 
-```C# Snippet:AppendToLedger
+```C# Snippet:ConfidentialLedger_AppendToLedger
 Operation postOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
@@ -69,8 +71,8 @@ Console.WriteLine($"Appended transaction with Id: {transactionId}");
 
 Since Azure confidential ledger is a distributed system, rare transient failures may cause writes to be lost. For entries that must be preserved, it is advisable to verify that the write became durable. Note: It may be necessary to call `GetTransactionStatus` multiple times until it returns a "Committed" status. However, when calling `PostLedgerEntry`, a successful result indicates that the status is "Committed".
 
-```C# Snippet:GetStatus
-Response statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+```C# Snippet:ConfidentialLedger_GetStatus
+Response statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
 
 string status = JsonDocument.Parse(statusResponse.Content)
     .RootElement
@@ -82,7 +84,7 @@ Console.WriteLine($"Transaction status: {status}");
 // Wait for the entry to be committed
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -92,12 +94,53 @@ while (status == "Pending")
 Console.WriteLine($"Transaction status: {status}");
 ```
 
+### Redirect handling
+
+The `ConfidentialLedgerClient` automatically follows HTTP 307 and 308 redirects while preserving the `Authorization` header. This is required because Azure confidential ledger routes write operations to the primary node, and non-primary nodes may return redirects.
+
+The SDK also caches the latest primary node URL from redirect responses and reuses it for subsequent non-`GET` requests to reduce extra network round-trips for write-heavy workloads.
+
+No additional configuration is required to enable this behavior.
+
+### Read failover and retry behavior
+
+The client discovers failover ledgers through the configured confidential ledger Identity Service. Failover is limited to the synchronous and asynchronous `GetLedgerEntry` and `GetCurrentLedgerEntry` methods. Writes, receipts, governance operations, transaction status, ranged queries, and all other `GET` operations remain on the primary ledger.
+
+Failover occurs for HTTP 408, 429, and 5xx responses and for retryable transport failures such as connection failures and network timeouts. The primary endpoint first consumes its normal `Retry.MaxRetries` budget. Each discovered failover endpoint then receives a fresh, independent retry budget. Caller-requested cancellation stops immediately and never triggers discovery or failover. If discovery is unavailable, metadata is malformed, or every failover fails, the original primary response or exception is surfaced.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    Failover = ConfidentialLedgerClientOptions.FailoverSelection.Ordered,
+    FailoverNetworkTimeout = TimeSpan.FromSeconds(30),
+};
+options.Retry.MaxRetries = 3;
+
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
+
+`Ordered` uses the Identity Service order. `Random` shuffles candidates independently for each request. `FailoverNetworkTimeout`, when set, replaces the network timeout for each failover endpoint attempt; it does not create an overall operation deadline. Use the request `CancellationToken` for an overall deadline.
+
+`GetLedgerEntry` automatically re-polls a successful response whose state is `Loading`. The configured `Retry.MaxRetries` bounds the additional loading polls and `Retry.Delay` controls their spacing.
+
+Collection pruning can remove the live value while retaining its history. Archived fallback is disabled by default because the service returns the same 404 for a pruned collection and a collection that never existed, and searching ledger history can be expensive on a ledger with a long transaction history. To transparently query history and return the latest retained entry, including tags, explicitly set `EnableArchivedCollectionFallback = true`. A missing collection still surfaces the original 404 when history contains no entry.
+
+```C#
+var options = new ConfidentialLedgerClientOptions
+{
+    EnableArchivedCollectionFallback = true,
+};
+var ledgerClient = new ConfidentialLedgerClient(ledgerEndpoint, credential, options);
+```
+
+Each endpoint uses its own transport pipeline and the TLS identity certificate returned by the independently validated Identity Service is pinned specifically to that endpoint's ledger id. A certificate trusted for one ledger is not accepted for another ledger, including during concurrent failover. Custom transports remain in use; their TLS behavior remains the custom transport owner's responsibility. Do not disable `VerifyConnection` in production.
+
 #### Receipts
 
 State changes to the a confidential ledger are saved in a data structure called a Merkle tree. To cryptographically verify that writes were correctly saved, a Merkle proof, or receipt, can be retrieved for any transaction id.
 
-```C# Snippet:GetReceipt
-Response receiptResponse = ledgerClient.GetReceipt(transactionId);
+```C# Snippet:ConfidentialLedger_GetReceipt
+Response receiptResponse = ledgerClient.GetReceipt(transactionId, new RequestContext());
 string receiptJson = new StreamReader(receiptResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(receiptJson);
@@ -107,7 +150,7 @@ Console.WriteLine(receiptJson);
 
 While most use cases will involve one ledger, we provide the collections feature in case different logical groups of data need to be stored in the same confidential ledger.
 
-```C# Snippet:Collection
+```C# Snippet:ConfidentialLedger_Collection
 ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
@@ -121,7 +164,7 @@ ledgerClient.PostLedgerEntry(
 
 When no collection id is specified on method calls, the Azure confidential ledger service will assume a constant, service-determined collection id.
 
-```C# Snippet:NoCollectionId
+```C# Snippet:ConfidentialLedger_NoCollectionId
 postOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(
@@ -139,7 +182,7 @@ bool loaded = false;
 while (!loaded)
 {
     // Provide both the transactionId and collectionId.
-    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+    getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
     rootElement = JsonDocument.Parse(getByCollectionResponse.Content).RootElement;
     loaded = rootElement.GetProperty("state").GetString() != "Loading";
 }
@@ -152,7 +195,7 @@ string contents = rootElement
 Console.WriteLine(contents); // "Hello world!"
 
 // Now just provide the transactionId.
-getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId);
+getByCollectionResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
 string collectionId2 = JsonDocument.Parse(getByCollectionResponse.Content)
     .RootElement
@@ -165,7 +208,7 @@ Console.WriteLine($"{collectionId} == {collectionId2}");
 
 Ledger entries are retrieved from collections. When a transaction id is specified, the returned value is the value contained in the specified collection at the point in time identified by the transaction id. If no transaction id is specified, the latest available value is returned.
 
-```C# Snippet:GetEnteryWithNoTransactionId
+```C# Snippet:ConfidentialLedger_GetEnteryWithNoTransactionId
 Operation firstPostOperation = ledgerClient.PostLedgerEntry(
     waitUntil: WaitUntil.Completed,
     RequestContent.Create(new { contents = "Hello world 0" }));
@@ -187,7 +230,7 @@ transactionId = firstPostOperation.Id;
 status = "Pending";
 while (status == "Pending")
 {
-    statusResponse = ledgerClient.GetTransactionStatus(transactionId);
+    statusResponse = ledgerClient.GetTransactionStatus(transactionId, new RequestContext());
     status = JsonDocument.Parse(statusResponse.Content)
         .RootElement
         .GetProperty("state")
@@ -195,7 +238,7 @@ while (status == "Pending")
 }
 
 // The ledger entry written at the transactionId in firstResponse is retrieved from the default collection.
-Response getResponse = ledgerClient.GetLedgerEntry(transactionId);
+Response getResponse = ledgerClient.GetLedgerEntry(transactionId, null, new RequestContext());
 
 // Try until the entry is available.
 loaded = false;
@@ -212,7 +255,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId);
+        getResponse = ledgerClient.GetLedgerEntry(transactionId, collectionId, new RequestContext());
     }
 }
 
@@ -225,7 +268,7 @@ string firstEntryContents = JsonDocument.Parse(getResponse.Content)
 Console.WriteLine(firstEntryContents); // "Hello world 0"
 
 // This will return the latest entry available in the default collection.
-getResponse = ledgerClient.GetCurrentLedgerEntry();
+getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
 
 // Try until the entry is available.
 loaded = false;
@@ -242,7 +285,7 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetCurrentLedgerEntry();
+        getResponse = ledgerClient.GetCurrentLedgerEntry(null, new RequestContext());
     }
 }
 
@@ -251,7 +294,7 @@ Console.WriteLine($"The latest ledger entry from the default collection is {late
 // The ledger entry written at collectionTransactionId is retrieved from the collection 'collection'.
 string collectionTransactionId = collectionPostOperation.Id;
 
-getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
 // Try until the entry is available.
 loaded = false;
 element = default;
@@ -267,14 +310,14 @@ while (!loaded)
     }
     else
     {
-        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection");
+        getResponse = ledgerClient.GetLedgerEntry(collectionTransactionId, "my collection", new RequestContext());
     }
 }
 
 Console.WriteLine(collectionEntry); // "Hello world collection 0"
 
 // This will return the latest entry available in the collection.
-getResponse = ledgerClient.GetCurrentLedgerEntry("my collection");
+getResponse = ledgerClient.GetCurrentLedgerEntry("my collection", new RequestContext());
 string latestCollection = JsonDocument.Parse(getResponse.Content)
     .RootElement
     .GetProperty("contents")
@@ -288,7 +331,7 @@ Console.WriteLine($"The latest ledger entry from the collection is {latestCollec
 Ledger entries in a collection may be retrieved over a range of transaction ids.
 Note: Both ranges are optional; they can be provided individually or not at all.
 
-```C# Snippet:RangedQuery
+```C# Snippet:ConfidentialLedger_RangedQuery
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 ```
 #### Tags
@@ -296,27 +339,30 @@ It is possible to further organize data within a collection as part of the lates
 
 Specify the `tags` parameter as part of the create entry operation. Multiple tags can be specified using commas. There is a limit of five tags per transaction.
 
-```C#
+```C# Snippet:ConfidentialLedger_CreateLedgerEntryWithTags
+RequestContent content = RequestContent.Create(new { contents = "Hello world with tags!" });
+string collectionId = "my-collection";
 string tags = "tag1,tag2";
 
-Response result = await Client.CreateLedgerEntryAsync(content, collectionId, tags);
+Response result = await client.CreateLedgerEntryAsync(content, collectionId, tags);
 ```
 
-```C#
+```C# Snippet:ConfidentialLedger_GetLedgerEntriesWithTags
+string collectionIdForQuery = "my-collection";
 
 // Specify collection ID and tag. Optionally add a range of transaction IDs.
 // Only one tag is permitted in each retrieval operation.
-var result = Client.GetLedgerEntriesAsync(collectionId, "tag1");
+var queryResult = client.GetLedgerEntriesAsync(collectionIdForQuery, tag: "tag1");
 ```
 ### User management
 
 Users are managed directly with the confidential ledger instead of through Azure. New users may be AAD-based or certificate-based.
 
-```C# Snippet:NewUser
-string newUserAadObjectId = "<some AAD user or service princpal object Id>";
-ledgerClient.CreateOrUpdateUser(
+```C# Snippet:ConfidentialLedger_NewUser
+string newUserAadObjectId = "<some AAD user or service principal object Id>";
+ledgerClient.CreateOrUpdateLedgerUser(
     newUserAadObjectId,
-    RequestContent.Create(new { assignedRole = "Reader" }));
+    RequestContent.Create(new { assignedRoles = new[] { "Reader" } }));
 ```
 
 
@@ -324,8 +370,8 @@ ledgerClient.CreateOrUpdateUser(
 
 One may want to validate details about the confidential ledger for a variety of reasons. For example, you may want to view details about how Microsoft may manage your confidential ledger as part of [Confidential Consortium Framework governance](https://microsoft.github.io/CCF/main/governance/index.html), or verify that your confidential ledger is indeed running in SGX enclaves. A number of client methods are provided for these use cases.
 
-```C# Snippet:Consortium
-Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers();
+```C# Snippet:ConfidentialLedger_Consortium
+Pageable<BinaryData> consortiumResponse = ledgerClient.GetConsortiumMembers(new RequestContext());
 foreach (var page in consortiumResponse)
 {
     string membersJson = page.ToString();
@@ -335,19 +381,64 @@ foreach (var page in consortiumResponse)
 
 // The constitution is a collection of JavaScript code that defines actions available to members,
 // and vets proposals by members to execute those actions.
-Response constitutionResponse = ledgerClient.GetConstitution();
+Response constitutionResponse = ledgerClient.GetConstitution(new RequestContext());
 string constitutionJson = new StreamReader(constitutionResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(constitutionJson);
 
 // Enclave quotes contain material that can be used to cryptographically verify the validity and contents of an enclave.
-Response enclavesResponse = ledgerClient.GetEnclaveQuotes();
+Response enclavesResponse = ledgerClient.GetEnclaveQuotes(new RequestContext());
 string enclavesJson = new StreamReader(enclavesResponse.ContentStream).ReadToEnd();
 
 Console.WriteLine(enclavesJson);
 ```
 
 [Microsoft Azure Attestation Service](https://azure.microsoft.com/services/azure-attestation/) is one provider of SGX enclave quotes.
+
+### Ledger Gateway (opt-in)
+
+The confidential ledger can be fronted by the **Ledger Gateway**, which terminates TLS with publicly-rooted certificates and can queue write submissions so callers can submit-and-disconnect instead of holding a connection open against a CCF primary node. Opt in by setting `ConfidentialLedgerClientOptions.UseLedgerGateway = true`. When enabled, the SDK skips the CCF identity-service TLS bootstrap (the OS trust store is sufficient), and only `TokenCredential` authentication is supported (client-certificate / mTLS is rejected).
+
+```C# Snippet:CreateClientLedgerGateway
+var ledgerClient = new ConfidentialLedgerClient(
+    ledgerEndpoint: new Uri("https://my-ledger-url.confidential-ledger.azure.com"),
+    credential: new DefaultAzureCredential(),
+    options: new ConfidentialLedgerClientOptions { UseLedgerGateway = true });
+```
+
+When the underlying CCF cluster is temporarily unreachable, `PostLedgerEntry` may return `202 Accepted`: the write is queued and the returned `Operation.Id` is the gateway-assigned `operationId`. Submit with `WaitUntil.Started` and persist the `operationId` so you can resume later:
+
+```C# Snippet:PostLedgerEntryWaitUntilStarted
+// When UseLedgerGateway = true and waitUntil is Started, the SDK accepts a 202 Accepted
+// response and returns an operation whose Id is the gateway-assigned operationId.
+Operation operation = ledgerClient.PostLedgerEntry(
+    waitUntil: WaitUntil.Started,
+    RequestContent.Create(new { contents = "Hello from the Ledger Gateway!" }));
+
+string operationId = operation.Id;
+Console.WriteLine($"Submitted ledger entry. Operation Id: {operationId}");
+
+// The application can persist operationId and exit. The submission is durable on the
+// server for the gateway's operation-record retention period.
+```
+
+Later — in a different process or after a restart — resume polling with the saved `operationId`. Rehydration performs no I/O until you start polling, and once the write commits `Operation.Id` flips to the CCF transaction id. Always bound the wait with a `CancellationToken`:
+
+```C# Snippet:RehydratePostLedgerEntryOperation
+// Later, in a different process or after a restart, resume polling with the saved
+// operation Id. Rehydration performs no I/O until you start polling.
+Operation resumed = ledgerClient.RehydratePostLedgerEntryOperation(operationId);
+
+// The Ledger Gateway write queue can stay pending for an extended period during an outage.
+// Always bound the wait with a CancellationToken so the call cannot hang indefinitely.
+using var cts = new CancellationTokenSource(TimeSpan.FromMinutes(5));
+Response completed = resumed.WaitForCompletionResponse(cts.Token);
+
+// Once committed, Operation.Id flips to the CCF transaction Id.
+string transactionId = resumed.Id;
+Console.WriteLine($"Operation {operationId} committed as transaction {transactionId}");
+Console.WriteLine($"Final status: {completed.Status}");
+```
 
 ### Thread safety
 
@@ -367,7 +458,13 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-Coming Soon...
+The [samples directory][samples] includes end-to-end usage patterns:
+
+- [Hello World — Create a client, append entries and check status](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample1_HelloWorld.md)
+- [Collections — Organize entries by collection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample2_Collections.md)
+- [Tags — Create and query entries with tags](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample3_Tags.md)
+- [Users and Consortium — Manage users and view consortium info](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample4_UsersAndConsortium.md)
+- [Advanced — Custom TLS certificate validation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples/Sample5_Advanced.md)
 
 ## Troubleshooting
 
@@ -406,6 +503,7 @@ For more information see the [Code of Conduct FAQ][coc_faq] or contact
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger
 [client_nuget_package]: https://www.nuget.org/packages?q=Azure.Security.ConfidentialLedger
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/confidentialledger/Azure.Security.ConfidentialLedger/samples
 [azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_cloud_shell]: https://shell.azure.com/bash
 [azure_confidential_computing]: https://azure.microsoft.com/solutions/confidential-compute

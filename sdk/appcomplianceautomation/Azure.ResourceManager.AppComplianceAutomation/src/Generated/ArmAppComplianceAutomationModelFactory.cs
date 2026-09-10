@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppComplianceAutomation;
 using Azure.ResourceManager.Models;
@@ -32,8 +31,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="triggerOn"> Report collection trigger time. </param>
@@ -64,19 +63,37 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportProperties(
                 triggerOn,
                 timeZone,
-                resources.ToList(),
+                (resources ?? new ChangeTrackingList<ReportResourceMetadata>()).ToList(),
                 status,
-                errors.ToList(),
+                (errors ?? new ChangeTrackingList<string>()).ToList(),
                 tenantId,
                 offerGuid,
                 nextTriggerOn,
                 lastTriggerOn,
-                subscriptions.ToList(),
-                complianceStatusM365 is null ? default : new ReportComplianceStatus(complianceStatusM365, null),
+                (subscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                complianceStatusM365 is null ? default : new ReportComplianceStatus(complianceStatusM365, default),
                 storageInfo,
-                certRecords.ToList(),
+                (certRecords ?? new ChangeTrackingList<CertSyncRecord>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Single resource Id's metadata. </summary>
+        /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
+        /// <param name="resourceType"> Resource type. e.g. "Microsoft.Compute/virtualMachines". </param>
+        /// <param name="resourceKind"> Resource kind. </param>
+        /// <param name="resourceOrigin"> Resource Origin. </param>
+        /// <param name="accountId"> Account Id. For example - the AWS account id. </param>
+        /// <returns> A new <see cref="Models.ReportResourceMetadata"/> instance for mocking. </returns>
+        public static ReportResourceMetadata ReportResourceMetadata(ResourceIdentifier resourceId = default, ResourceType? resourceType = default, string resourceKind = default, ReportResourceOrigin? resourceOrigin = default, string accountId = default)
+        {
+            return new ReportResourceMetadata(
+                resourceId,
+                resourceType,
+                resourceKind,
+                resourceOrigin,
+                accountId,
+                default);
         }
 
         /// <summary> The overview of the compliance result for one report. </summary>
@@ -94,7 +111,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 manualCount,
                 notApplicableCount,
                 pendingCount,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> The information of 'bring your own storage' account binding to the report. </summary>
+        /// <param name="subscriptionId"> The subscription id which 'bring your own storage' account belongs to. </param>
+        /// <param name="resourceGroup"> The resourceGroup which 'bring your own storage' account belongs to. </param>
+        /// <param name="accountName"> 'bring your own storage' account name. </param>
+        /// <param name="location"> The region of 'bring your own storage' account. </param>
+        /// <returns> A new <see cref="Models.ReportStorageInfo"/> instance for mocking. </returns>
+        public static ReportStorageInfo ReportStorageInfo(string subscriptionId = default, string resourceGroup = default, string accountName = default, AzureLocation? location = default)
+        {
+            return new ReportStorageInfo(subscriptionId, resourceGroup, accountName, location, default);
         }
 
         /// <summary> A class represent the certification record synchronized from app compliance. </summary>
@@ -107,7 +135,24 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             controls ??= new ChangeTrackingList<ControlSyncRecord>();
 
-            return new CertSyncRecord(offerGuid, certificationStatus, ingestionStatus, controls.ToList(), additionalBinaryDataProperties: null);
+            return new CertSyncRecord(offerGuid, certificationStatus, ingestionStatus, (controls ?? new ChangeTrackingList<ControlSyncRecord>()).ToList(), default);
+        }
+
+        /// <summary> A class represent the control record synchronized from app compliance. </summary>
+        /// <param name="controlId"> The Id of the control. e.g. "Operational_Security_10". </param>
+        /// <param name="controlStatus"> Control status synchronized from app compliance. </param>
+        /// <returns> A new <see cref="Models.ControlSyncRecord"/> instance for mocking. </returns>
+        public static ControlSyncRecord ControlSyncRecord(string controlId = default, string controlStatus = default)
+        {
+            return new ControlSyncRecord(controlId, controlStatus, default);
+        }
+
+        /// <summary> A class represent a AppComplianceAutomation report resource update properties. </summary>
+        /// <param name="properties"> Report property. </param>
+        /// <returns> A new <see cref="Models.AppComplianceReportPatch"/> instance for mocking. </returns>
+        public static AppComplianceReportPatch AppComplianceReportPatch(AppComplianceReportPatchProperties properties = default)
+        {
+            return new AppComplianceReportPatch(properties, default);
         }
 
         /// <param name="triggerOn"> Report collection trigger time. </param>
@@ -138,19 +183,19 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportPatchProperties(
                 triggerOn,
                 timeZone,
-                resources.ToList(),
+                (resources ?? new ChangeTrackingList<ReportResourceMetadata>()).ToList(),
                 status,
-                errors.ToList(),
+                (errors ?? new ChangeTrackingList<string>()).ToList(),
                 tenantId,
                 offerGuid,
                 nextTriggerOn,
                 lastTriggerOn,
-                subscriptions.ToList(),
-                complianceStatusM365 is null ? default : new ReportComplianceStatus(complianceStatusM365, null),
+                (subscriptions ?? new ChangeTrackingList<string>()).ToList(),
+                complianceStatusM365 is null ? default : new ReportComplianceStatus(complianceStatusM365, default),
                 storageInfo,
-                certRecords.ToList(),
+                (certRecords ?? new ChangeTrackingList<CertSyncRecord>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Synchronize certification record request. </summary>
@@ -158,7 +203,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.SyncCertRecordContent"/> instance for mocking. </returns>
         public static SyncCertRecordContent SyncCertRecordContent(CertSyncRecord certRecord = default)
         {
-            return new SyncCertRecordContent(certRecord, additionalBinaryDataProperties: null);
+            return new SyncCertRecordContent(certRecord, default);
         }
 
         /// <summary> Synchronize certification record response. </summary>
@@ -166,7 +211,16 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.SyncCertRecordResult"/> instance for mocking. </returns>
         public static SyncCertRecordResult SyncCertRecordResult(CertSyncRecord certRecord = default)
         {
-            return new SyncCertRecordResult(certRecord, additionalBinaryDataProperties: null);
+            return new SyncCertRecordResult(certRecord, default);
+        }
+
+        /// <summary> The check availability request body. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.AppComplianceReportNameAvailabilityContent"/> instance for mocking. </returns>
+        public static AppComplianceReportNameAvailabilityContent AppComplianceReportNameAvailabilityContent(string name = default, ResourceType? resourceType = default)
+        {
+            return new AppComplianceReportNameAvailabilityContent(name, resourceType, default);
         }
 
         /// <summary> The check availability result. </summary>
@@ -176,7 +230,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.AppComplianceReportNameAvailabilityResult"/> instance for mocking. </returns>
         public static AppComplianceReportNameAvailabilityResult AppComplianceReportNameAvailabilityResult(bool? isNameAvailable = default, AppComplianceReportNameUnavailabilityReason? reason = default, string message = default)
         {
-            return new AppComplianceReportNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new AppComplianceReportNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> Report fix result. </summary>
@@ -185,7 +239,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ReportFixResult"/> instance for mocking. </returns>
         public static ReportFixResult ReportFixResult(ReportResult? result = default, string reason = default)
         {
-            return new ReportFixResult(result, reason, additionalBinaryDataProperties: null);
+            return new ReportFixResult(result, reason, default);
         }
 
         /// <summary> Scoping question list. </summary>
@@ -195,7 +249,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             questions ??= new ChangeTrackingList<ScopingQuestion>();
 
-            return new ScopingQuestions(questions.ToList(), additionalBinaryDataProperties: null);
+            return new ScopingQuestions((questions ?? new ChangeTrackingList<ScopingQuestion>()).ToList(), default);
         }
 
         /// <summary> The definition of a scoping question. </summary>
@@ -215,10 +269,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 questionId,
                 superiorQuestionId,
                 inputType,
-                optionIds.ToList(),
-                rules.ToList(),
+                (optionIds ?? new ChangeTrackingList<string>()).ToList(),
+                (rules ?? new ChangeTrackingList<QuestionRuleItem>()).ToList(),
                 showSubQuestionsValue,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Report health status verification result. </summary>
@@ -227,7 +281,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ReportVerificationResult"/> instance for mocking. </returns>
         public static ReportVerificationResult ReportVerificationResult(ReportResult? result = default, string reason = default)
         {
-            return new ReportVerificationResult(result, reason, additionalBinaryDataProperties: null);
+            return new ReportVerificationResult(result, reason, default);
         }
 
         /// <summary> A class represent an AppComplianceAutomation webhook resource. </summary>
@@ -244,8 +298,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Webhook properties. </summary>
@@ -272,7 +326,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 status,
                 tenantId,
                 sendAllEvents,
-                events.ToList(),
+                (events ?? new ChangeTrackingList<WebhookNotificationEvent>()).ToList(),
                 payloadUri,
                 contentType,
                 webhookKey,
@@ -281,7 +335,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 enableSslVerification,
                 deliveryStatus,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> A class represent a AppComplianceAutomation webhook resource update properties. </summary>
+        /// <param name="properties"> Webhook property. </param>
+        /// <returns> A new <see cref="Models.AppComplianceReportWebhookPatch"/> instance for mocking. </returns>
+        public static AppComplianceReportWebhookPatch AppComplianceReportWebhookPatch(AppComplianceReportWebhookProperties properties = default)
+        {
+            return new AppComplianceReportWebhookPatch(properties, default);
         }
 
         /// <summary> A class represent a AppComplianceAutomation snapshot resource. </summary>
@@ -298,8 +360,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Snapshot's properties. </summary>
@@ -320,8 +382,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 provisioningState,
                 reportProperties,
                 reportSystemData,
-                complianceResults.ToList(),
-                additionalBinaryDataProperties: null);
+                (complianceResults ?? new ChangeTrackingList<AppComplianceResult>()).ToList(),
+                default);
         }
 
         /// <summary> A class represent the compliance result. </summary>
@@ -332,7 +394,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             categories ??= new ChangeTrackingList<AppComplianceCategory>();
 
-            return new AppComplianceResult(complianceName, categories.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceResult(complianceName, (categories ?? new ChangeTrackingList<AppComplianceCategory>()).ToList(), default);
         }
 
         /// <summary> A class represent the compliance category. </summary>
@@ -344,7 +406,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             controlFamilies ??= new ChangeTrackingList<AppComplianceControlFamily>();
 
-            return new AppComplianceCategory(categoryName, categoryStatus, controlFamilies.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceCategory(categoryName, categoryStatus, (controlFamilies ?? new ChangeTrackingList<AppComplianceControlFamily>()).ToList(), default);
         }
 
         /// <summary> A class represent the control family. </summary>
@@ -356,7 +418,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             controls ??= new ChangeTrackingList<AppComplianceControl>();
 
-            return new AppComplianceControlFamily(controlFamilyName, controlFamilyStatus, controls.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceControlFamily(controlFamilyName, controlFamilyStatus, (controls ?? new ChangeTrackingList<AppComplianceControl>()).ToList(), default);
         }
 
         /// <summary> A class represent the control. </summary>
@@ -379,8 +441,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 controlDescription,
                 controlDescriptionHyperLink,
                 controlStatus,
-                responsibilities.ToList(),
-                additionalBinaryDataProperties: null);
+                (responsibilities ?? new ChangeTrackingList<CustomerResponsibility>()).ToList(),
+                default);
         }
 
         /// <summary> A class represent the customer responsibility. </summary>
@@ -415,12 +477,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 responsibilityEnvironment,
                 failedResourceCount,
                 totalResourceCount,
-                resourceList.ToList(),
-                recommendationList.ToList(),
+                (resourceList ?? new ChangeTrackingList<ResponsibilityResourceItem>()).ToList(),
+                (recommendationList ?? new ChangeTrackingList<RecommendationDetails>()).ToList(),
                 guidance,
                 justification,
-                evidenceFiles.ToList(),
-                additionalBinaryDataProperties: null);
+                (evidenceFiles ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> A class represent the resource. </summary>
@@ -443,8 +505,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 resourceOrigin,
                 resourceStatus,
                 resourceStatusChangedOn,
-                recommendationIds.ToList(),
-                additionalBinaryDataProperties: null);
+                (recommendationIds ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> A class represent the recommendation. </summary>
@@ -456,7 +518,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             recommendationSolutions ??= new ChangeTrackingList<RecommendationSolution>();
 
-            return new RecommendationDetails(recommendationId, recommendationShortName, recommendationSolutions.ToList(), additionalBinaryDataProperties: null);
+            return new RecommendationDetails(recommendationId, recommendationShortName, (recommendationSolutions ?? new ChangeTrackingList<RecommendationSolution>()).ToList(), default);
         }
 
         /// <summary> A class represent the recommendation solution. </summary>
@@ -466,7 +528,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.RecommendationSolution"/> instance for mocking. </returns>
         public static RecommendationSolution RecommendationSolution(string recommendationSolutionIndex = default, string recommendationSolutionContent = default, IsRecommendSolution? isRecommendSolution = default)
         {
-            return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, additionalBinaryDataProperties: null);
+            return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, default);
         }
 
         /// <summary> Snapshot's download request. </summary>
@@ -476,7 +538,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.SnapshotDownloadRequestContent"/> instance for mocking. </returns>
         public static SnapshotDownloadRequestContent SnapshotDownloadRequestContent(Guid? reportCreatorTenantId = default, AppComplianceDownloadType downloadType = default, string offerGuid = default)
         {
-            return new SnapshotDownloadRequestContent(reportCreatorTenantId, downloadType, offerGuid, additionalBinaryDataProperties: null);
+            return new SnapshotDownloadRequestContent(reportCreatorTenantId, downloadType, offerGuid, default);
         }
 
         /// <param name="resourceList"> Resource list of the report. </param>
@@ -489,7 +551,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             resourceList ??= new ChangeTrackingList<ReportResourceItem>();
             complianceReport ??= new ChangeTrackingList<AppComplianceReportItem>();
 
-            return new AppComplianceDownloadResult(resourceList.ToList(), complianceReport.ToList(), compliancePdfReportSasUri is null ? default : new AppCompliancePdfReport(compliancePdfReportSasUri, null), complianceDetailedPdfReportSasUri is null ? default : new AppComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri, null), additionalBinaryDataProperties: null);
+            return new AppComplianceDownloadResult((resourceList ?? new ChangeTrackingList<ReportResourceItem>()).ToList(), (complianceReport ?? new ChangeTrackingList<AppComplianceReportItem>()).ToList(), compliancePdfReportSasUri is null ? default : new AppCompliancePdfReport(compliancePdfReportSasUri, default), complianceDetailedPdfReportSasUri is null ? default : new AppComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri, default), default);
         }
 
         /// <summary> Resource Id. </summary>
@@ -500,7 +562,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ReportResourceItem"/> instance for mocking. </returns>
         public static ReportResourceItem ReportResourceItem(string subscriptionId = default, string resourceGroup = default, ResourceType? resourceType = default, ResourceIdentifier resourceId = default)
         {
-            return new ReportResourceItem(subscriptionId, resourceGroup, resourceType, resourceId, additionalBinaryDataProperties: null);
+            return new ReportResourceItem(subscriptionId, resourceGroup, resourceType, resourceId, default);
         }
 
         /// <summary> Object that includes all the content for single compliance result. </summary>
@@ -532,7 +594,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 resourceOrigin,
                 resourceStatus,
                 resourceStatusChangedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A class represent an AppComplianceAutomation scoping configuration resource. </summary>
@@ -549,8 +611,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> ScopingConfiguration's properties. </summary>
@@ -561,7 +623,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             answers ??= new ChangeTrackingList<ScopingAnswer>();
 
-            return new AppComplianceReportScopingConfigurationProperties(answers.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new AppComplianceReportScopingConfigurationProperties((answers ?? new ChangeTrackingList<ScopingAnswer>()).ToList(), provisioningState, default);
         }
 
         /// <summary> Scoping answer. </summary>
@@ -572,7 +634,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             answers ??= new ChangeTrackingList<string>();
 
-            return new ScopingAnswer(questionId, answers.ToList(), additionalBinaryDataProperties: null);
+            return new ScopingAnswer(questionId, (answers ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> A class represent an AppComplianceAutomation evidence resource. </summary>
@@ -589,8 +651,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Evidence's properties. </summary>
@@ -610,14 +672,31 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 controlId,
                 responsibilityId,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Evidence file's download request. </summary>
+        /// <param name="reportCreatorTenantId"> Tenant id. </param>
+        /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
+        /// <returns> A new <see cref="Models.EvidenceFileDownloadRequestContent"/> instance for mocking. </returns>
+        public static EvidenceFileDownloadRequestContent EvidenceFileDownloadRequestContent(Guid? reportCreatorTenantId = default, string offerGuid = default)
+        {
+            return new EvidenceFileDownloadRequestContent(reportCreatorTenantId, offerGuid, default);
         }
 
         /// <param name="evidenceFileUri"> The url of evidence file. </param>
         /// <returns> A new <see cref="Models.EvidenceFileDownloadResult"/> instance for mocking. </returns>
         public static EvidenceFileDownloadResult EvidenceFileDownloadResult(Uri evidenceFileUri = default)
         {
-            return new EvidenceFileDownloadResult(evidenceFileUri is null ? default : new EvidenceFileUrlInfo(evidenceFileUri, null), additionalBinaryDataProperties: null);
+            return new EvidenceFileDownloadResult(evidenceFileUri is null ? default : new EvidenceFileUrlInfo(evidenceFileUri, default), default);
+        }
+
+        /// <summary> Get collection count's request object. </summary>
+        /// <param name="getCollectionCountRequestType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.ReportCollectionGetCountContent"/> instance for mocking. </returns>
+        public static ReportCollectionGetCountContent ReportCollectionGetCountContent(string getCollectionCountRequestType = default)
+        {
+            return new ReportCollectionGetCountContent(getCollectionCountRequestType, default);
         }
 
         /// <summary> The get collection count response. </summary>
@@ -625,7 +704,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.ReportCollectionGetCountResult"/> instance for mocking. </returns>
         public static ReportCollectionGetCountResult ReportCollectionGetCountResult(int? count = default)
         {
-            return new ReportCollectionGetCountResult(count, additionalBinaryDataProperties: null);
+            return new ReportCollectionGetCountResult(count, default);
+        }
+
+        /// <summary> Get overview status request object. </summary>
+        /// <param name="getOverviewStatusRequestType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.AppComplianceGetOverviewStatusContent"/> instance for mocking. </returns>
+        public static AppComplianceGetOverviewStatusContent AppComplianceGetOverviewStatusContent(string getOverviewStatusRequestType = default)
+        {
+            return new AppComplianceGetOverviewStatusContent(getOverviewStatusRequestType, default);
         }
 
         /// <summary> The get overview status response. </summary>
@@ -635,7 +722,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             statusList ??= new ChangeTrackingList<OverviewStatusItem>();
 
-            return new AppComplianceGetOverviewStatusResult(statusList.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceGetOverviewStatusResult((statusList ?? new ChangeTrackingList<OverviewStatusItem>()).ToList(), default);
         }
 
         /// <summary> Single status. </summary>
@@ -644,7 +731,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.OverviewStatusItem"/> instance for mocking. </returns>
         public static OverviewStatusItem OverviewStatusItem(string statusName = default, string statusValue = default)
         {
-            return new OverviewStatusItem(statusName, statusValue, additionalBinaryDataProperties: null);
+            return new OverviewStatusItem(statusName, statusValue, default);
         }
 
         /// <summary> Parameters for onboard operation. </summary>
@@ -654,7 +741,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             subscriptionIds ??= new ChangeTrackingList<string>();
 
-            return new AppComplianceOnboardContent(subscriptionIds.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceOnboardContent((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Success. The response indicates given subscriptions has been onboarded. </summary>
@@ -664,7 +751,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             subscriptionIds ??= new ChangeTrackingList<string>();
 
-            return new AppComplianceOnboardResult(subscriptionIds.ToList(), additionalBinaryDataProperties: null);
+            return new AppComplianceOnboardResult((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Trigger evaluation request. </summary>
@@ -674,7 +761,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             resourceIds ??= new ChangeTrackingList<string>();
 
-            return new TriggerEvaluationContent(resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new TriggerEvaluationContent((resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Trigger evaluation response. </summary>
@@ -682,7 +769,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <returns> A new <see cref="Models.TriggerEvaluationResult"/> instance for mocking. </returns>
         public static TriggerEvaluationResult TriggerEvaluationResult(TriggerEvaluationProperty properties = default)
         {
-            return new TriggerEvaluationResult(properties, additionalBinaryDataProperties: null);
+            return new TriggerEvaluationResult(properties, default);
         }
 
         /// <summary> Trigger evaluation response. </summary>
@@ -696,7 +783,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             resourceIds ??= new ChangeTrackingList<string>();
             quickAssessments ??= new ChangeTrackingList<QuickAssessment>();
 
-            return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, resourceIds.ToList(), quickAssessments.ToList(), additionalBinaryDataProperties: null);
+            return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, (resourceIds ?? new ChangeTrackingList<string>()).ToList(), (quickAssessments ?? new ChangeTrackingList<QuickAssessment>()).ToList(), default);
         }
 
         /// <summary> A class represent the quick assessment. </summary>
@@ -718,7 +805,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 displayName,
                 description,
                 remediationLink,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Parameters for listing in use storage accounts operation. If subscription list is null, it will check the user's all subscriptions. </summary>
@@ -728,7 +815,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             subscriptionIds ??= new ChangeTrackingList<string>();
 
-            return new ReportListInUseStorageAccountsContent(subscriptionIds.ToList(), additionalBinaryDataProperties: null);
+            return new ReportListInUseStorageAccountsContent((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Parameters for listing in use storage accounts operation. If subscription list is null, it will check the user's all subscriptions. </summary>
@@ -738,7 +825,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             storageAccountList ??= new ChangeTrackingList<ReportStorageInfo>();
 
-            return new ReportListInUseStorageAccountsResult(storageAccountList.ToList(), additionalBinaryDataProperties: null);
+            return new ReportListInUseStorageAccountsResult((storageAccountList ?? new ChangeTrackingList<ReportStorageInfo>()).ToList(), default);
         }
     }
 }

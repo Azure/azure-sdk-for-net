@@ -19,18 +19,13 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the ErrorDetail. </summary>
+        /// <summary> Gets the ErrorDetail. </summary>
         public ManagedClusterPodIdentityProvisioningErrorDetail ErrorDetail
         {
             get
             {
                 Initialize();
                 return _errorDetail;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _errorDetail, value);
             }
         }
 
@@ -39,6 +34,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _errorDetail = DefineModelProperty<ManagedClusterPodIdentityProvisioningErrorDetail>(nameof(ErrorDetail), new string[] { "error" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterPodIdentityProvisioningError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

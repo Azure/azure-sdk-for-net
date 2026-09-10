@@ -4,6 +4,7 @@
 using System;
 using System.Reflection;
 using Azure.Generator.Management;
+using Azure.Generator.Management.Models;
 using Azure.Generator.Provisioning.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -22,56 +23,56 @@ namespace Azure.Generator.Provisioning
         private Dictionary<string, ProvisioningResourceProvider>? _resourcesByIdPattern;
         private Dictionary<InputModelType, List<ProvisioningResourceProvider>>? _resourcesByModel;
         private BuiltInRoleProvider? _builtInRole;
+        private CodeGenEnumValueAttributeDefinition? _codeGenEnumValueAttributeDefinition;
 
         /// <summary>
         /// Gets the BuiltInRole type provider if any resources define RBAC roles.
         /// </summary>
-        internal BuiltInRoleProvider? BuiltInRole => GetNullableValue(ref _builtInRole);
-
-        private T GetValue<T>(ref T? field) where T : class
+        internal BuiltInRoleProvider? BuiltInRole
         {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
-            return field!;
+            get
+            {
+                InitializeResources();
+                return _builtInRole;
+            }
         }
 
-        private T? GetNullableValue<T>(ref T? field) where T : class
-        {
-            InitializeResources(ref _resources, ref _resourcesByIdPattern, ref _resourcesByModel, ref _builtInRole);
-            return field;
-        }
+        internal CodeGenEnumValueAttributeDefinition CodeGenEnumValueAttributeDefinition => _codeGenEnumValueAttributeDefinition ??= new();
 
         /// <summary>
         /// Gets all provisioning resource providers.
         /// </summary>
-        internal IReadOnlyList<ProvisioningResourceProvider> Resources => GetValue(ref _resources);
-
-        private void InitializeResources(
-            ref IReadOnlyList<ProvisioningResourceProvider>? resources,
-            ref Dictionary<string, ProvisioningResourceProvider>? resourcesByIdPattern,
-            ref Dictionary<InputModelType, List<ProvisioningResourceProvider>>? resourcesByModel,
-            ref BuiltInRoleProvider? builtInRole)
+        internal IReadOnlyList<ProvisioningResourceProvider> Resources
         {
-            if (resources != null)
+            get
+            {
+                InitializeResources();
+                return _resources!;
+            }
+        }
+
+        private void InitializeResources()
+        {
+            if (_resources != null)
                 return;
 
-            var list = new List<ProvisioningResourceProvider>();
-            var byIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
-            var byModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
-
-            var allMetadata = ProvisioningGenerator.Instance.InputLibrary.ArmProviderSchema.Resources;
-            foreach (var metadata in allMetadata)
+            var inputLibrary = ProvisioningGenerator.Instance.InputLibrary;
+            var resources = new List<ProvisioningResourceProvider>();
+            var resourcesByIdPattern = new Dictionary<string, ProvisioningResourceProvider>();
+            var resourcesByModel = new Dictionary<InputModelType, List<ProvisioningResourceProvider>>();
+            foreach (var projection in inputLibrary.ResourceProjections)
             {
-                if (metadata.ResourceModel == null)
-                    continue;
+                var resource = new ProvisioningResourceProvider(projection);
+                resources.Add(resource);
+                foreach (var resourceIdPattern in projection.ResourceIdPatterns)
+                {
+                    resourcesByIdPattern[resourceIdPattern.SerializedPath] = resource;
+                }
 
-                var resource = new ProvisioningResourceProvider(metadata.ResourceModel, metadata);
-                list.Add(resource);
-                byIdPattern[metadata.ResourceIdPattern] = resource;
-
-                if (!byModel.TryGetValue(metadata.ResourceModel, out var modelList))
+                if (!resourcesByModel.TryGetValue(projection.ResourceModel, out var modelList))
                 {
                     modelList = new List<ProvisioningResourceProvider>();
-                    byModel[metadata.ResourceModel] = modelList;
+                    resourcesByModel[projection.ResourceModel] = modelList;
                 }
                 modelList.Add(resource);
             }
@@ -80,11 +81,11 @@ namespace Azure.Generator.Provisioning
             // it's constructed purely from input values, and must be available before any
             // resource provider's methods are materialized.
             var serviceName = ProvisioningGenerator.Instance.TypeFactory.ResourceProviderName;
-            builtInRole = BuiltInRoleProvider.TryCreate(serviceName, allMetadata);
+            _builtInRole = BuiltInRoleProvider.TryCreate(serviceName, inputLibrary.ArmProviderSchema.Resources);
 
-            resources = list;
-            resourcesByIdPattern = byIdPattern;
-            resourcesByModel = byModel;
+            _resources = resources;
+            _resourcesByIdPattern = resourcesByIdPattern;
+            _resourcesByModel = resourcesByModel;
         }
 
         /// <summary>
@@ -93,7 +94,8 @@ namespace Azure.Generator.Provisioning
         /// </summary>
         internal bool TryGetResourcesByModel(InputModelType model, out IReadOnlyList<ProvisioningResourceProvider> resources)
         {
-            if (GetValue(ref _resourcesByModel).TryGetValue(model, out var list))
+            InitializeResources();
+            if (_resourcesByModel!.TryGetValue(model, out var list))
             {
                 resources = list;
                 return true;
@@ -106,10 +108,24 @@ namespace Azure.Generator.Provisioning
         /// Gets a resource provider by its ARM resource ID pattern.
         /// Returns null if not found.
         /// </summary>
-        internal ProvisioningResourceProvider? GetResourceByIdPattern(string resourceIdPattern)
+        internal ProvisioningResourceProvider? GetResourceByIdPattern(RequestPathPattern resourceIdPattern)
         {
-            GetValue(ref _resourcesByIdPattern).TryGetValue(resourceIdPattern, out var resource);
+            InitializeResources();
+            _resourcesByIdPattern!.TryGetValue(resourceIdPattern.SerializedPath, out var resource);
             return resource;
+        }
+
+        /// <inheritdoc/>
+        protected override IReadOnlyList<ModelProvider> ResolveFlattenTargetModels(InputModelType inputModel)
+        {
+            if (TryGetResourcesByModel(inputModel, out var resources))
+            {
+                return resources;
+            }
+
+            return ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(inputModel)
+                ? base.ResolveFlattenTargetModels(inputModel)
+                : [];
         }
 
         /// <inheritdoc/>
@@ -125,36 +141,53 @@ namespace Azure.Generator.Provisioning
 
             var providers = new List<TypeProvider>();
 
-            // Add resource providers and mark them to survive post-processing.
-            foreach (var resource in Resources)
-            {
-                providers.Add(resource);
-                ProvisioningGenerator.Instance.AddTypeToKeep(resource.Name);
-            }
+            providers.AddRange(Resources);
 
             // Add BuiltInRole struct if any resources have RBAC roles defined.
             if (BuiltInRole != null)
             {
                 providers.Add(BuiltInRole);
             }
+            providers.Add(CodeGenEnumValueAttributeDefinition);
 
             // Build models and enums via TypeFactory — our overridden CreateModel/CreateEnum
             // return ProvisioningModelProvider/ProvisioningResourceProvider/EnumProvider.
-            var inputLib = ProvisioningGenerator.Instance.InputLibrary;
-            foreach (var inputModel in inputLib.InputNamespace.Models)
+            // Only emit models/enums reachable from resource models' property graphs. This
+            // avoids emitting dead types like list-result envelopes, patch/request wrappers,
+            // and error models that have no place in a Provisioning library.
+            foreach (var inputModel in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Models)
             {
+                if (TryGetResourcesByModel(inputModel, out _))
+                {
+                    // Resource providers were pre-created above, but resource models remain in
+                    // InputNamespace so management-plane metadata and customization caches can
+                    // inspect them.
+                    continue;
+                }
+
                 var model = ProvisioningGenerator.Instance.TypeFactory.CreateModel(inputModel);
-                if (model is not null && model is not ProvisioningResourceProvider)
+                if (model is not null)
                 {
                     providers.Add(model);
                 }
             }
 
-            foreach (var inputEnum in inputLib.InputNamespace.Enums)
+            foreach (var inputEnum in ProvisioningGenerator.Instance.InputLibrary.InputNamespace.Enums)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum);
                 if (enumProvider != null)
                 {
+                    // Provisioning manually builds the provider list instead of calling the base
+                    // OutputLibrary.BuildTypeProviders(), so we must preserve the base pipeline's
+                    // custom enum replacement behavior here. When a custom enum is decorated with
+                    // [CodeGenType("GeneratedEnumName")], the generated enum provider still exists
+                    // (often internalized), but C# cannot merge two enum declarations with the
+                    // same name. Skipping the generated provider lets the custom enum fully replace
+                    // it, matching the base/mgmt generator behavior.
+                    if (enumProvider.CustomCodeView != null)
+                    {
+                        continue;
+                    }
                     providers.Add(enumProvider);
                 }
             }

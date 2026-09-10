@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     yield break;
                 }
                 UpdateRunListResult result = UpdateRunListResult.FromResponse(response);
-                yield return Page<ContainerServiceFleetUpdateRunData>.FromValues((IReadOnlyList<ContainerServiceFleetUpdateRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerServiceFleetUpdateRunData>.FromValues((IReadOnlyList<ContainerServiceFleetUpdateRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

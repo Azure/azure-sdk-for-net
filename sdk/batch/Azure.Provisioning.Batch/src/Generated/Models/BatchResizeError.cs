@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Code. </summary>
+        /// <summary> Gets the Code. </summary>
         public BicepValue<string> Code
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _code;
             }
-            set
-            {
-                Initialize();
-                _code.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Message. </summary>
+        /// <summary> Gets the Message. </summary>
         public BicepValue<string> Message
         {
             get
@@ -45,14 +40,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _message;
             }
-            set
-            {
-                Initialize();
-                _message.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Details. </summary>
+        /// <summary> Gets the Details. </summary>
         public BicepList<BatchResizeError> Details
         {
             get
@@ -60,20 +50,19 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _details;
             }
-            set
-            {
-                Initialize();
-                _details.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for BatchResizeError. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _code = DefineProperty<string>(nameof(Code), new string[] { "code" }, isRequired: true);
-            _message = DefineProperty<string>(nameof(Message), new string[] { "message" }, isRequired: true);
+            _code = DefineProperty<string>(nameof(Code), new string[] { "code" });
+            _message = DefineProperty<string>(nameof(Message), new string[] { "message" });
             _details = DefineListProperty<BatchResizeError>(nameof(Details), new string[] { "details" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchResizeError that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

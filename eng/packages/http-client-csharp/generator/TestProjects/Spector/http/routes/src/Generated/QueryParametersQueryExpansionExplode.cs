@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes;
 
 namespace Routes._QueryParameters.QueryExpansion.Explode
 {
@@ -45,5 +46,13 @@ namespace Routes._QueryParameters.QueryExpansion.Explode
         public virtual Response Record(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> RecordAsync(IDictionary<string, int> @param, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Model(ExpandParameters @param, RequestContext context) => throw null;
+
+        public virtual Task<Response> ModelAsync(ExpandParameters @param, RequestContext context) => throw null;
+
+        public virtual Response Model(ExpandParameters @param, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> ModelAsync(ExpandParameters @param, CancellationToken cancellationToken = default) => throw null;
     }
 }

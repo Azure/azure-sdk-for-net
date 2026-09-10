@@ -27,5 +27,14 @@ namespace Azure.Storage.Files.Shares.Models
             PolicyExpiresOn = policyExpiresOn;
             Permissions = permissions;
         }
+
+        /// <summary> The date-time the policy is active. </summary>
+        public DateTimeOffset? PolicyStartsOn { get; set; }
+
+        /// <summary> The date-time the policy expires. </summary>
+        public DateTimeOffset? PolicyExpiresOn { get; set; }
+
+        /// <summary> The permissions for the ACL policy. </summary>
+        public string Permissions { get; set; }
     }
 }

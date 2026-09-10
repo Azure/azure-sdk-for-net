@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Azure;
 using NUnit.Framework;
 using Payload.Xml;
 
@@ -390,6 +392,16 @@ namespace TestProjects.Spector.Tests.Http.Payload.Xml
         });
 
         [SpectorTest]
+        public Task PutModelWithDatetime() => Test(async (host) =>
+        {
+            var model = new ModelWithDatetime(
+                DateTimeOffset.Parse("2022-08-26T18:38:00Z"),
+                DateTimeOffset.Parse("Fri, 26 Aug 2022 14:38:00 GMT"));
+            var response = await new XmlClient(host, null).GetModelWithDatetimeValueClient().PutAsync(model);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
         public Task GetModelWithRenamedProperty() => Test(async (host) =>
         {
             var response = await new XmlClient(host, null).GetModelWithRenamedPropertyValueClient().GetAsync();
@@ -604,6 +616,22 @@ namespace TestProjects.Spector.Tests.Http.Payload.Xml
             var model = new ModelWithNamespaceOnProperties(123, "The Great Gatsby", "F. Scott Fitzgerald");
             var response = await new XmlClient(host, null).GetModelWithNamespaceOnPropertiesValueClient().PutAsync(model);
             Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
+        public Task GetXmlError() => Test((host) =>
+        {
+            var exception = Assert.ThrowsAsync<RequestFailedException>(
+                () => new XmlClient(host, null).GetXmlErrorValueClient().GetAsync());
+
+            Assert.AreEqual(400, exception!.Status);
+            var response = exception.GetRawResponse();
+            Assert.IsNotNull(response);
+            var body = XDocument.Parse(response!.Content.ToString());
+            Assert.AreEqual("XmlErrorBody", body.Root!.Name.LocalName);
+            Assert.AreEqual("Something went wrong", body.Root.Element("message")?.Value);
+            Assert.AreEqual("400", body.Root.Element("code")?.Value);
+            return Task.CompletedTask;
         });
     }
 }

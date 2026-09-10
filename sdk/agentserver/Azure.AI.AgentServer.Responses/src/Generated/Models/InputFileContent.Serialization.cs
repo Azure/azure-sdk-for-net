@@ -85,15 +85,15 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
-            if (Optional.IsDefined(FileUrl))
-            {
-                writer.WritePropertyName("file_url"u8);
-                writer.WriteStringValue(FileUrl.AbsoluteUri);
-            }
             if (Optional.IsDefined(FileData))
             {
                 writer.WritePropertyName("file_data"u8);
                 writer.WriteStringValue(FileData);
+            }
+            if (Optional.IsDefined(FileUrl))
+            {
+                writer.WritePropertyName("file_url"u8);
+                writer.WriteStringValue(FileUrl.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -140,8 +140,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             string @type = default;
             string fileId = default;
             string filename = default;
-            Uri fileUrl = default;
             string fileData = default;
+            Uri fileUrl = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,6 +165,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                     filename = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("file_data"u8))
+                {
+                    fileData = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("file_url"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,11 +177,6 @@ namespace Azure.AI.AgentServer.Responses.Models
                         continue;
                     }
                     fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
-                if (prop.NameEquals("file_data"u8))
-                {
-                    fileData = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,8 +188,8 @@ namespace Azure.AI.AgentServer.Responses.Models
                 @type,
                 fileId,
                 filename,
-                fileUrl,
                 fileData,
+                fileUrl,
                 additionalBinaryDataProperties);
         }
     }

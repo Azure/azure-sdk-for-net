@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.NamespaceName;
+                return Relay is null ? default : Relay.NamespaceName;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.NamespaceNameSuffix;
+                return Relay is null ? default : Relay.NamespaceNameSuffix;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.HybridConnectionName;
+                return Relay is null ? default : Relay.HybridConnectionName;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.AccessKey;
+                return Relay is null ? default : Relay.AccessKey;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.ExpiresOn;
+                return Relay is null ? default : Relay.ExpiresOn;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Relay.ServiceConfigurationToken;
+                return Relay is null ? default : Relay.ServiceConfigurationToken;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         {
             get
             {
-                return Ingress.Hostname;
+                return Ingress is null ? default : Ingress.Hostname;
             }
         }
     }

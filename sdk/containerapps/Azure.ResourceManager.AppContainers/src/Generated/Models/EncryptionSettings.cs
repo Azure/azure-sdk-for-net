@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </summary>
     public partial class EncryptionSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EncryptionSettings"/>. </summary>
         public EncryptionSettings()
@@ -53,17 +25,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="EncryptionSettings"/>. </summary>
         /// <param name="containerAppAuthEncryptionSecretName"> The secret name which is referenced for EncryptionKey. </param>
         /// <param name="containerAppAuthSigningSecretName"> The secret name which is referenced for SigningKey. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionSettings(string containerAppAuthEncryptionSecretName, string containerAppAuthSigningSecretName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionSettings(string containerAppAuthEncryptionSecretName, string containerAppAuthSigningSecretName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContainerAppAuthEncryptionSecretName = containerAppAuthEncryptionSecretName;
             ContainerAppAuthSigningSecretName = containerAppAuthSigningSecretName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The secret name which is referenced for EncryptionKey. </summary>
         [WirePath("containerAppAuthEncryptionSecretName")]
         public string ContainerAppAuthEncryptionSecretName { get; set; }
+
         /// <summary> The secret name which is referenced for SigningKey. </summary>
         [WirePath("containerAppAuthSigningSecretName")]
         public string ContainerAppAuthSigningSecretName { get; set; }

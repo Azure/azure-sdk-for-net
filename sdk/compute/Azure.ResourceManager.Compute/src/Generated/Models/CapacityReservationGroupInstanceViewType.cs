@@ -7,42 +7,59 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The CapacityReservationGroupInstanceViewType. </summary>
+    /// <summary></summary>
     public readonly partial struct CapacityReservationGroupInstanceViewType : IEquatable<CapacityReservationGroupInstanceViewType>
     {
         private readonly string _value;
+        private const string InstanceViewValue = "instanceView";
 
         /// <summary> Initializes a new instance of <see cref="CapacityReservationGroupInstanceViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapacityReservationGroupInstanceViewType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InstanceViewValue = "instanceView";
-
-        /// <summary> instanceView. </summary>
+        /// <summary> Gets the InstanceView. </summary>
         public static CapacityReservationGroupInstanceViewType InstanceView { get; } = new CapacityReservationGroupInstanceViewType(InstanceViewValue);
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupInstanceViewType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityReservationGroupInstanceViewType left, CapacityReservationGroupInstanceViewType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityReservationGroupInstanceViewType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityReservationGroupInstanceViewType left, CapacityReservationGroupInstanceViewType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityReservationGroupInstanceViewType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityReservationGroupInstanceViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityReservationGroupInstanceViewType(string value) => new CapacityReservationGroupInstanceViewType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityReservationGroupInstanceViewType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityReservationGroupInstanceViewType?(string value) => value == null ? null : new CapacityReservationGroupInstanceViewType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityReservationGroupInstanceViewType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityReservationGroupInstanceViewType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -4,11 +4,13 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Risk category for the attack objective. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct RiskCategory : IEquatable<RiskCategory>
     {
         private readonly string _value;

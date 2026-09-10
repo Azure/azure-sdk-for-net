@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Peer authentication settings for the Managed Environment. </summary>
     internal partial class ManagedEnvironmentPropertiesPeerAuthentication
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         public ManagedEnvironmentPropertiesPeerAuthentication()
@@ -52,24 +24,31 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentPropertiesPeerAuthentication"/>. </summary>
         /// <param name="mtls"> Mutual TLS authentication settings for the Managed Environment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentPropertiesPeerAuthentication(Mtls mtls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentPropertiesPeerAuthentication(Mtls mtls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Mtls = mtls;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Mutual TLS authentication settings for the Managed Environment. </summary>
+        [WirePath("mtls")]
         internal Mtls Mtls { get; set; }
+
         /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
         [WirePath("mtls.enabled")]
         public bool? IsMtlsEnabled
         {
-            get => Mtls is null ? default : Mtls.IsMtlsEnabled;
+            get
+            {
+                return Mtls is null ? default : Mtls.IsMtlsEnabled;
+            }
             set
             {
                 if (Mtls is null)
+                {
                     Mtls = new Mtls();
+                }
                 Mtls.IsMtlsEnabled = value;
             }
         }

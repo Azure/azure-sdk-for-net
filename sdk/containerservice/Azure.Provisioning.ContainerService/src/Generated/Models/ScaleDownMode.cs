@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ScaleDownMode
     {
         /// <summary> Create new instances during scale up and remove instances during scale down. </summary>
-        Delete,
+        Delete = 0,
         /// <summary> Attempt to start deallocated instances (if they exist) during scale up and deallocate instances during scale down. </summary>
-        Deallocate
+        Deallocate = 1
     }
 }

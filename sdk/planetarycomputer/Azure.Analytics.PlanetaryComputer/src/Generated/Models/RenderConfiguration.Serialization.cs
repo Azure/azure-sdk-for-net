@@ -106,10 +106,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsDefined(Options))
             {
@@ -186,7 +186,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string id = default;
             string name = default;
             string description = default;
-            RenderOptionType? @type = default;
+            RenderOptionKind? kind = default;
             string options0 = default;
             RenderOptionVectorOptions vectorOptions = default;
             int? minZoom = default;
@@ -216,7 +216,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new RenderOptionType(prop.Value.GetString());
+                    kind = new RenderOptionKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("options"u8))
@@ -274,7 +274,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 id,
                 name,
                 description,
-                @type,
+                kind,
                 options0,
                 vectorOptions,
                 minZoom,

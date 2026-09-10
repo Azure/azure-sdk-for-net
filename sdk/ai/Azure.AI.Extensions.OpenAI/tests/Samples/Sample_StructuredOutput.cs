@@ -1,15 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Conversations;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -17,26 +18,31 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
 {
     #region Snippet:Sample_Schema_StructuredOutput
     private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
-        new {
+        new
+        {
             additionalProperties = false,
-            properties = new {
-                name = new {
+            properties = new
+            {
+                name = new
+                {
                     title = "Name",
                     type = "string"
                 },
-                date = new {
+                date = new
+                {
                     description = "Date in YYYY-MM-DD format",
                     title = "Date",
                     type = "string"
                 },
-                participants = new {
+                participants = new
+                {
                     items = new { type = "string" },
                     title = "Participants",
                     type = "array"
                 }
             },
             required = new List<string> { "name", "date", "participants" },
-            title ="CalendarEvent",
+            title = "CalendarEvent",
             type = "object",
         }
     );
@@ -79,11 +85,11 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_StructuredOutput_Async
-        ProjectConversationCreationOptions options = new()
+        ConversationCreationOptions options = new()
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = await responseClient.CreateResponseAsync(options: new());
         Console.WriteLine(response.GetOutputText());
@@ -129,11 +135,11 @@ public class Sample_StructuredOutput : ProjectsOpenAITestBase
         );
         #endregion
         #region Snippet:Sample_CreateResponse_StructuredOutput_Sync
-        ProjectConversationCreationOptions options = new()
+        ConversationCreationOptions options = new()
         {
             Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
         };
-        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
+        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
         ResponseResult response = responseClient.CreateResponse(options: new());
         Console.WriteLine(response.GetOutputText());

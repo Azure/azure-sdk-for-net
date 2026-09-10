@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabSecretResource.ResourceType, out string devTestLabSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabSecretResource.ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, devTestLabSecretApiVersion ?? "2018-09-15");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabSecretApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabSecretData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabSecretResource> operation = new DevTestLabsArmOperation<DevTestLabSecretResource>(
-                    new DevTestLabSecretOperationSource(Client),
+                    new DevTestLabSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _secretsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, DevTestLabSecretData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabSecretResource> operation = new DevTestLabsArmOperation<DevTestLabSecretResource>(
-                    new DevTestLabSecretOperationSource(Client),
+                    new DevTestLabSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,

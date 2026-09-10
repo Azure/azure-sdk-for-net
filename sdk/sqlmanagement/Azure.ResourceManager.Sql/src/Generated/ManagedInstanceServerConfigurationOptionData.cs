@@ -13,43 +13,11 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary>
-    /// A class representing the ManagedInstanceServerConfigurationOption data model.
-    /// A server configuration option
-    /// </summary>
+    /// <summary> A server configuration option. </summary>
     public partial class ManagedInstanceServerConfigurationOptionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceServerConfigurationOptionData"/>. </summary>
         public ManagedInstanceServerConfigurationOptionData()
@@ -57,25 +25,51 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedInstanceServerConfigurationOptionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverConfigurationOptionValue"> Value of the server configuration option. </param>
-        /// <param name="provisioningState"> Provisioning state of server configuration option. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? serverConfigurationOptionValue, JobExecutionProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedInstanceServerConfigurationOptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerConfigurationOptionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ServerConfigurationOptionValue = serverConfigurationOptionValue;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource properties. </summary>
+        [WirePath("properties")]
+        internal ServerConfigurationOptionProperties Properties { get; set; }
 
         /// <summary> Value of the server configuration option. </summary>
         [WirePath("properties.serverConfigurationOptionValue")]
-        public int? ServerConfigurationOptionValue { get; set; }
+        public int? ServerConfigurationOptionValue
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServerConfigurationOptionValue;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ServerConfigurationOptionProperties();
+                    }
+                    Properties.ServerConfigurationOptionValue = value.Value;
+                }
+            }
+        }
+
         /// <summary> Provisioning state of server configuration option. </summary>
         [WirePath("properties.provisioningState")]
-        public JobExecutionProvisioningState? ProvisioningState { get; }
+        public JobExecutionProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -80,7 +80,7 @@ public class ReasoningItemBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemReasoningItemStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.InProgress));
         Assert.That(item.Summary, Is.Empty);
     }
 
@@ -146,7 +146,7 @@ public class ReasoningItemBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemReasoningItemStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemReasoningItemStatus.Completed));
     }
 
     [Test]
@@ -159,12 +159,12 @@ public class ReasoningItemBuilderTests
         var s0 = builder.AddSummaryPart();
         s0.EmitAdded();
         s0.EmitTextDone("First summary");
-        builder.EmitSummaryPartDone(s0);
+        s0.EmitDone();
 
         var s1 = builder.AddSummaryPart();
         s1.EmitAdded();
         s1.EmitTextDone("Second summary");
-        builder.EmitSummaryPartDone(s1);
+        s1.EmitDone();
 
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemReasoningItem>(evt.Item);

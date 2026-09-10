@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct PrincipalPermissionsAction : IEquatable<PrincipalPermissionsAction>
     {
         private readonly string _value;
+        /// <summary> RetainPermissionOnScriptCompletion. </summary>
+        private const string RetainPermissionOnScriptCompletionValue = "RetainPermissionOnScriptCompletion";
+        /// <summary> RemovePermissionOnScriptCompletion. </summary>
+        private const string RemovePermissionOnScriptCompletionValue = "RemovePermissionOnScriptCompletion";
 
         /// <summary> Initializes a new instance of <see cref="PrincipalPermissionsAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PrincipalPermissionsAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string RetainPermissionOnScriptCompletionValue = "RetainPermissionOnScriptCompletion";
-        private const string RemovePermissionOnScriptCompletionValue = "RemovePermissionOnScriptCompletion";
+            _value = value;
+        }
 
         /// <summary> RetainPermissionOnScriptCompletion. </summary>
         public static PrincipalPermissionsAction RetainPermissionOnScriptCompletion { get; } = new PrincipalPermissionsAction(RetainPermissionOnScriptCompletionValue);
+
         /// <summary> RemovePermissionOnScriptCompletion. </summary>
         public static PrincipalPermissionsAction RemovePermissionOnScriptCompletion { get; } = new PrincipalPermissionsAction(RemovePermissionOnScriptCompletionValue);
+
         /// <summary> Determines if two <see cref="PrincipalPermissionsAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PrincipalPermissionsAction left, PrincipalPermissionsAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PrincipalPermissionsAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PrincipalPermissionsAction left, PrincipalPermissionsAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PrincipalPermissionsAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PrincipalPermissionsAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PrincipalPermissionsAction(string value) => new PrincipalPermissionsAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PrincipalPermissionsAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PrincipalPermissionsAction?(string value) => value == null ? null : new PrincipalPermissionsAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PrincipalPermissionsAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PrincipalPermissionsAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The CORS policy for the Cosmos DB database account. </summary>
     public partial class CosmosDBAccountCorsPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCorsPolicy"/>. </summary>
         /// <param name="allowedOrigins"> The origin domains that are permitted to make a request against the service via CORS. </param>
@@ -61,34 +33,33 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="allowedHeaders"> The request headers that the origin domain may specify on the CORS request. </param>
         /// <param name="exposedHeaders"> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </param>
         /// <param name="maxAgeInSeconds"> The maximum amount time that a browser should cache the preflight OPTIONS request. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBAccountCorsPolicy(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, long? maxAgeInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountCorsPolicy(string allowedOrigins, string allowedMethods, string allowedHeaders, string exposedHeaders, long? maxAgeInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
             AllowedHeaders = allowedHeaders;
             ExposedHeaders = exposedHeaders;
             MaxAgeInSeconds = maxAgeInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountCorsPolicy"/> for deserialization. </summary>
-        internal CosmosDBAccountCorsPolicy()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The origin domains that are permitted to make a request against the service via CORS. </summary>
         [WirePath("allowedOrigins")]
         public string AllowedOrigins { get; set; }
+
         /// <summary> The methods (HTTP request verbs) that the origin domain may use for a CORS request. </summary>
         [WirePath("allowedMethods")]
         public string AllowedMethods { get; set; }
+
         /// <summary> The request headers that the origin domain may specify on the CORS request. </summary>
         [WirePath("allowedHeaders")]
         public string AllowedHeaders { get; set; }
+
         /// <summary> The response headers that may be sent in the response to the CORS request and exposed by the browser to the request issuer. </summary>
         [WirePath("exposedHeaders")]
         public string ExposedHeaders { get; set; }
+
         /// <summary> The maximum amount time that a browser should cache the preflight OPTIONS request. </summary>
         [WirePath("maxAgeInSeconds")]
         public long? MaxAgeInSeconds { get; set; }

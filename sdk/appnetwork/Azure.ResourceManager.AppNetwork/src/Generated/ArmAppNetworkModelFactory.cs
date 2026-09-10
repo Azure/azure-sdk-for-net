@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.AppNetwork;
 using Azure.ResourceManager.Models;
@@ -37,11 +36,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                appLinkProvisioningState is null ? default : new AppLinkProperties(appLinkProvisioningState, null),
-                identity);
+                appLinkProvisioningState is null ? default : new AppLinkProperties(appLinkProvisioningState, default),
+                identity,
+                default);
         }
 
         /// <summary> The type used for update operations of the AppLink. </summary>
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AppLinkPatch(tags, additionalBinaryDataProperties: null);
+            return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> AppLink Member resource. </summary>
@@ -72,10 +71,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="clusterType"> Cluster type. </param>
@@ -89,12 +88,29 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             return new AppLinkMemberProperties(
                 clusterType,
-                metadataResourceId is null ? default : new Metadata(metadataResourceId, null),
+                metadataResourceId is null ? default : new Metadata(metadataResourceId, default),
                 upgradeProfile,
-                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, null), null),
+                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default),
                 connectivityProfile,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="mode"> Upgrade mode. </param>
+        /// <param name="fullyManagedUpgradeReleaseChannel"> Release channel. </param>
+        /// <param name="selfManagedUpgradeVersion"> Istio version. </param>
+        /// <returns> A new <see cref="Models.AppLinkUpgradeProfile"/> instance for mocking. </returns>
+        public static AppLinkUpgradeProfile AppLinkUpgradeProfile(AppLinkUpgradeMode mode = default, AppLinkUpgradeReleaseChannel? fullyManagedUpgradeReleaseChannel = default, string selfManagedUpgradeVersion = default)
+        {
+            return new AppLinkUpgradeProfile(mode, fullyManagedUpgradeReleaseChannel is null ? default : new FullyManagedUpgradeProfile(fullyManagedUpgradeReleaseChannel.GetValueOrDefault(), default), selfManagedUpgradeVersion is null ? default : new SelfManagedUpgradeProfile(selfManagedUpgradeVersion, default), default);
+        }
+
+        /// <param name="eastWestGatewayVisibility"> East-West gateway visibility. </param>
+        /// <param name="privateConnectSubnetResourceId"> Delegated Subnet to AppLink. </param>
+        /// <returns> A new <see cref="Models.AppLinkConnectivityProfile"/> instance for mocking. </returns>
+        public static AppLinkConnectivityProfile AppLinkConnectivityProfile(AppLinkEastWestGatewayVisibility? eastWestGatewayVisibility = default, ResourceIdentifier privateConnectSubnetResourceId = default)
+        {
+            return new AppLinkConnectivityProfile(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfile(eastWestGatewayVisibility.GetValueOrDefault(), default), privateConnectSubnetResourceId is null ? default : new PrivateConnectProfile(privateConnectSubnetResourceId, default), default);
         }
 
         /// <summary> The type used for update operations of the AppLinkMember. </summary>
@@ -105,7 +121,16 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AppLinkMemberPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new AppLinkMemberPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="upgradeProfile"> Upgrade profile. </param>
+        /// <param name="observabilityMetricsEndpoint"> Metrics endpoint URL. </param>
+        /// <param name="connectivityProfile"> Connectivity profile. </param>
+        /// <returns> A new <see cref="Models.AppLinkMemberUpdateProperties"/> instance for mocking. </returns>
+        public static AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default)
+        {
+            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
         }
 
         /// <summary> AppLinkMember upgrade history. </summary>
@@ -122,28 +147,28 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> AppLinkMember upgrade history properties. </summary>
-        /// <param name="startOn"> Start timestamp. </param>
-        /// <param name="endOn"> End timestamp. </param>
+        /// <param name="startsOn"> Start timestamp. </param>
+        /// <param name="endsOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AppLinkUpgradeHistoryProperties"/> instance for mocking. </returns>
-        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
+        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkUpgradeHistoryProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> AppLink available version resource. </summary>
@@ -160,8 +185,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="kubernetesVersion"> Kubernetes version. </param>
@@ -171,7 +196,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <returns> A new <see cref="Models.AppLinkAvailableVersionProperties"/> instance for mocking. </returns>
         public static AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
-            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), null), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), null), provisioningState, additionalBinaryDataProperties: null);
+            return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), default), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), default), provisioningState, default);
         }
 
         /// <summary> Release channel information. </summary>
@@ -180,7 +205,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <returns> A new <see cref="Models.AppLinkReleaseChannelInfo"/> instance for mocking. </returns>
         public static AppLinkReleaseChannelInfo AppLinkReleaseChannelInfo(string releaseChannel = default, string version = default)
         {
-            return new AppLinkReleaseChannelInfo(releaseChannel, version, additionalBinaryDataProperties: null);
+            return new AppLinkReleaseChannelInfo(releaseChannel, version, default);
         }
 
         /// <summary> Version information. </summary>
@@ -191,7 +216,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         {
             upgrades ??= new ChangeTrackingList<string>();
 
-            return new AppLinkVersionInfo(version, upgrades.ToList(), additionalBinaryDataProperties: null);
+            return new AppLinkVersionInfo(version, (upgrades ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

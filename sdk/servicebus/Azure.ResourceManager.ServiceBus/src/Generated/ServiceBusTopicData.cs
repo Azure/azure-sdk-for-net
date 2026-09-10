@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of topic resource. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, SBTopicProperties properties, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusTopicData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SBTopicProperties properties, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Location = location;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of topic resource. </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.DefaultMessageTimeToLive = value.Value;
+                Properties.DefaultMessageTimeToLive = value;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.MaxSizeInMegabytes = value.Value;
+                Properties.MaxSizeInMegabytes = value;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.MaxMessageSizeInKilobytes = value.Value;
+                Properties.MaxMessageSizeInKilobytes = value;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.RequiresDuplicateDetection = value.Value;
+                Properties.RequiresDuplicateDetection = value;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.DuplicateDetectionHistoryTimeWindow = value.Value;
+                Properties.DuplicateDetectionHistoryTimeWindow = value;
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.EnableBatchedOperations = value.Value;
+                Properties.EnableBatchedOperations = value;
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.Status = value.Value;
+                Properties.Status = value;
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.SupportOrdering = value.Value;
+                Properties.SupportOrdering = value;
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.AutoDeleteOnIdle = value.Value;
+                Properties.AutoDeleteOnIdle = value;
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.EnablePartitioning = value.Value;
+                Properties.EnablePartitioning = value;
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     Properties = new SBTopicProperties();
                 }
-                Properties.EnableExpress = value.Value;
+                Properties.EnableExpress = value;
             }
         }
 

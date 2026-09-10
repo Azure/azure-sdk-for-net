@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileDefender"/>. </summary>
         /// <param name="logAnalyticsWorkspaceResourceId"> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </param>
         /// <param name="securityMonitoring"> Microsoft Defender threat detection for Cloud settings for the security profile. </param>
-        /// <param name="securityGating"> Microsoft Defender settings for security gating, validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents the deployment of images that do not meet security standards. </param>
+        /// <param name="securityGating"> Microsoft Defender settings for security gating. This validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents deployment of images that do not meet security standards. For more information, see https://aka.ms/KubernetesDefenderAuditRule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterSecurityProfileDefender(ResourceIdentifier logAnalyticsWorkspaceResourceId, ManagedClusterSecurityProfileDefenderSecurityMonitoring securityMonitoring, ManagedClusterSecurityProfileDefenderSecurityGating securityGating, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         [WirePath("securityMonitoring")]
         internal ManagedClusterSecurityProfileDefenderSecurityMonitoring SecurityMonitoring { get; set; }
 
-        /// <summary> Microsoft Defender settings for security gating, validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents the deployment of images that do not meet security standards. </summary>
+        /// <summary> Microsoft Defender settings for security gating. This validates container images eligibility for deployment based on Defender for Containers security findings. Using Admission Controller, it either audits or prevents deployment of images that do not meet security standards. For more information, see https://aka.ms/KubernetesDefenderAuditRule. </summary>
         [WirePath("securityGating")]
         public ManagedClusterSecurityProfileDefenderSecurityGating SecurityGating { get; set; }
 

@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 trustModel is null && status is null && attestUri is null && publicNetworkAccess is null && privateEndpointConnections is null && tpmAttestationAuthentication is null ? default : new StatusResult(
                     trustModel,
@@ -50,7 +49,8 @@ namespace Azure.ResourceManager.Attestation.Models
                     publicNetworkAccess,
                     (privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnectionData>()).ToList(),
                     tpmAttestationAuthentication,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -68,8 +68,18 @@ namespace Azure.ResourceManager.Attestation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static AttestationPrivateLinkServiceConnectionState AttestationPrivateLinkServiceConnectionState(AttestationPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new AttestationPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <summary> Parameters for creating an attestation provider. </summary>
@@ -81,7 +91,22 @@ namespace Azure.ResourceManager.Attestation.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AttestationProviderCreateOrUpdateContent(location, tags, properties, additionalBinaryDataProperties: null);
+            return new AttestationProviderCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="policySigningCertificatesKeys">
+        /// The value of the "keys" parameter is an array of JWK values.  By
+        /// default, the order of the JWK values within the array does not imply
+        /// an order of preference among them, although applications of JWK Sets
+        /// can choose to assign a meaning to the order for their purposes, if
+        /// desired.
+        /// </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
+        /// <returns> A new <see cref="Models.AttestationServiceCreationSpecificParams"/> instance for mocking. </returns>
+        public static AttestationServiceCreationSpecificParams AttestationServiceCreationSpecificParams(AttestationPublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationJsonWebKey> policySigningCertificatesKeys = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
+        {
+            return new AttestationServiceCreationSpecificParams(publicNetworkAccess, policySigningCertificatesKeys is null ? default : new JsonWebKeySet((policySigningCertificatesKeys ?? new ChangeTrackingList<AttestationJsonWebKey>()).ToList(), default), tpmAttestationAuthentication, default);
         }
 
         /// <summary> The AttestationJsonWebKey. </summary>
@@ -158,9 +183,9 @@ namespace Azure.ResourceManager.Attestation.Models
                 qi,
                 use,
                 x,
-                x5C.ToList(),
+                (x5C ?? new ChangeTrackingList<string>()).ToList(),
                 y,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Parameters for patching an attestation provider. </summary>
@@ -171,7 +196,16 @@ namespace Azure.ResourceManager.Attestation.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AttestationProviderPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new AttestationProviderPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
+        /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
+        /// <returns> A new <see cref="Models.AttestationProviderPatchProperties"/> instance for mocking. </returns>
+        public static AttestationProviderPatchProperties AttestationProviderPatchProperties(AttestationPublicNetworkAccessType? publicNetworkAccess = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
+        {
+            return new AttestationProviderPatchProperties(publicNetworkAccess, tpmAttestationAuthentication, default);
         }
 
         /// <summary> A private link resource. </summary>
@@ -188,8 +222,8 @@ namespace Azure.ResourceManager.Attestation.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of a private link resource. </summary>
@@ -202,7 +236,7 @@ namespace Azure.ResourceManager.Attestation.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new AttestationPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new AttestationPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

@@ -14,14 +14,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a GuestConfigurationHcrpAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationHcrpAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGuestConfigurationHcrpAssignments method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationHcrpAssignments method.
     /// </summary>
     public partial class GuestConfigurationHcrpAssignmentResource : ArmResource
     {
@@ -54,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationHcrpAssignmentApiVersion);
             _guestConfigurationHCRPAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationHCRPAssignmentsRestClient = new GuestConfigurationHCRPAssignments(_guestConfigurationHCRPAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationHCRPAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHCRPAssignmentReports(_guestConfigurationHCRPAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationHCRPAssignmentReportsRestClient = new GuestConfigurationHCRPAssignmentReports(_guestConfigurationHCRPAssignmentReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationHcrpAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

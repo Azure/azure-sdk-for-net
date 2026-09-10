@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
@@ -115,8 +116,9 @@ namespace Azure.Storage.Blobs.Specialized
             _blobRestClient = new BlobRestClient(
                 clientDiagnostics: _client.ClientDiagnostics,
                 pipeline: _client.Pipeline,
-                url: uriBuilder.ToUri().AbsoluteUri,
-                version: _client.Version.ToVersionString());
+                endpoint: uriBuilder.ToUri(),
+                version: _client.Version.ToVersionString(),
+                snapshot: null);
         }
 
         /// <summary>
@@ -245,17 +247,18 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
-                blob: blobName.EscapePath(),
+                blob: blobName,
                 versionId: options?.VersionId,
                 timeout: null,
                 leaseId: options?.Conditions?.LeaseId,
-                deleteSnapshots: options?.SnapshotsOption.ToDeleteSnapshotsOptionType(),
-                ifModifiedSince: options?.Conditions?.IfModifiedSince,
-                ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
-                ifMatch: options?.Conditions?.IfMatch?.ToString(),
-                ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                deleteSnapshots: options?.SnapshotsOption.ToDeleteSnapshotsOptionType()?.ToSerialString(),
+                requestConditions: options?.Conditions,
                 ifTags: options?.Conditions?.TagConditions,
-                blobDeleteType: null);
+                accessTierIfModifiedSince: null,
+                accessTierIfUnmodifiedSince: null,
+                snapshot: null,
+                blobDeleteType: null,
+                context: CancellationToken.None.ToRequestContext());
 
             _messages.Add(message);
 
@@ -266,8 +269,7 @@ namespace Azure.Storage.Blobs.Specialized
                     switch (response.Status)
                     {
                         case 202:
-                            BlobDeleteHeaders blobDeleteHeaders = new BlobDeleteHeaders(response);
-                            return ResponseWithHeaders.FromValue(blobDeleteHeaders, response);
+                            return response;
                         default:
                             throw new RequestFailedException(response);
                     }
@@ -360,13 +362,15 @@ namespace Azure.Storage.Blobs.Specialized
 
             HttpMessage message = BlobRestClient.CreateSetAccessTierRequest(
                 containerName: blobContainerName,
-                blob: blobName.EscapePath(),
-                accessTier.ToBatchAccessTier(),
+                blob: blobName,
+                accessTier.ToBatchAccessTier().ToString(),
                 versionId: null,
                 timeout: null,
-                rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
+                rehydratePriority: rehydratePriority.ToBatchRehydratePriority()?.ToString(),
                 leaseId: leaseAccessConditions?.LeaseId,
-                ifTags: leaseAccessConditions?.TagConditions);
+                ifTags: leaseAccessConditions?.TagConditions,
+                snapshot: null,
+                context: CancellationToken.None.ToRequestContext());
 
             _messages.Add(message);
 
@@ -378,8 +382,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         case 200:
                         case 202:
-                            BlobSetAccessTierHeaders blobSetAccessTierHeaders = new BlobSetAccessTierHeaders(response);
-                            return ResponseWithHeaders.FromValue(blobSetAccessTierHeaders, response);
+                            return response;
                         default:
                             throw new RequestFailedException(response);
                     }

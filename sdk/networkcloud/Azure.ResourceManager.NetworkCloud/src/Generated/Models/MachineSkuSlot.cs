@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.BootstrapProtocol;
+                return Properties is null ? default : Properties.BootstrapProtocol;
             }
         }
 
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.CpuCores;
+                return Properties is null ? default : Properties.CpuCores;
             }
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.CpuSockets;
+                return Properties is null ? default : Properties.CpuSockets;
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.Disks;
+                return Properties is null ? default : Properties.Disks;
             }
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.Generation;
+                return Properties is null ? default : Properties.Generation;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.HardwareVersion;
+                return Properties is null ? default : Properties.HardwareVersion;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.MemoryCapacityGB;
+                return Properties is null ? default : Properties.MemoryCapacityGB;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.Model;
+                return Properties is null ? default : Properties.Model;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.NetworkInterfaces;
+                return Properties is null ? default : Properties.NetworkInterfaces;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.TotalThreads;
+                return Properties is null ? default : Properties.TotalThreads;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         {
             get
             {
-                return Properties.Vendor;
+                return Properties is null ? default : Properties.Vendor;
             }
         }
     }

@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoCluster;
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
-        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<MongoClusterPrivateEndpointConnection>();
             previewFeatures ??= new ChangeTrackingList<MongoClusterPreviewFeature>();
@@ -83,19 +84,56 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 provisioningState,
                 clusterStatus,
                 publicNetworkAccess,
-                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, null),
+                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, default),
                 storage,
-                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, null),
-                computeTier is null ? default : new ComputeProperties(computeTier, null),
-                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, null),
-                dataApiMode is null ? default : new DataApiProperties(dataApiMode, null),
-                privateEndpointConnections.ToList(),
-                previewFeatures.ToList(),
+                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, default),
+                computeTier is null ? default : new ComputeProperties(computeTier, default),
+                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, default),
+                dataApiMode is null ? default : new DataApiProperties(dataApiMode, default),
+                (privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>()).ToList(),
+                (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
                 replica,
                 infrastructureVersion,
-                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), null),
-                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, null),
-                additionalBinaryDataProperties: null);
+                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
+                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                networkBypassMode,
+                default);
+        }
+
+        /// <summary> Parameters used for restore operations. </summary>
+        /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
+        /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
+        /// <returns> A new <see cref="Models.MongoClusterRestoreContent"/> instance for mocking. </returns>
+        public static MongoClusterRestoreContent MongoClusterRestoreContent(DateTimeOffset? pointInTimeUTC = default, ResourceIdentifier sourceResourceId = default)
+        {
+            return new MongoClusterRestoreContent(pointInTimeUTC, sourceResourceId, default);
+        }
+
+        /// <summary> Parameters used for replica operations. </summary>
+        /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
+        /// <param name="sourceLocation"> The location of the source cluster. </param>
+        /// <returns> A new <see cref="Models.MongoClusterReplicaContent"/> instance for mocking. </returns>
+        public static MongoClusterReplicaContent MongoClusterReplicaContent(ResourceIdentifier sourceResourceId = default, AzureLocation sourceLocation = default)
+        {
+            return new MongoClusterReplicaContent(sourceResourceId, sourceLocation, default);
+        }
+
+        /// <summary> The local administrator login properties. </summary>
+        /// <param name="userName"> The administrator user name. </param>
+        /// <param name="password"> The administrator password. </param>
+        /// <returns> A new <see cref="Models.MongoClusterAdministratorProperties"/> instance for mocking. </returns>
+        public static MongoClusterAdministratorProperties MongoClusterAdministratorProperties(string userName = default, string password = default)
+        {
+            return new MongoClusterAdministratorProperties(userName, password, default);
+        }
+
+        /// <summary> The storage properties of the cluster. This includes the data storage size and scaling applied to servers in the cluster. </summary>
+        /// <param name="sizeGb"> The size of the data disk assigned to each server. </param>
+        /// <param name="type"> The type of storage to provision the cluster servers with. </param>
+        /// <returns> A new <see cref="Models.MongoClusterStorageProperties"/> instance for mocking. </returns>
+        public static MongoClusterStorageProperties MongoClusterStorageProperties(long? sizeGb = default, MongoClusterStorageType? @type = default)
+        {
+            return new MongoClusterStorageProperties(sizeGb, @type, default);
         }
 
         /// <summary> The private endpoint connection resource. </summary>
@@ -112,8 +150,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of the private endpoint connection. </summary>
@@ -126,7 +164,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new MongoClusterPrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new MongoClusterPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, default);
+        }
+
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static MongoClusterPrivateLinkServiceConnectionState MongoClusterPrivateLinkServiceConnectionState(MongoClusterPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new MongoClusterPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
         /// <summary> Replica properties of the mongo cluster. </summary>
@@ -136,7 +184,25 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterReplicationProperties"/> instance for mocking. </returns>
         public static MongoClusterReplicationProperties MongoClusterReplicationProperties(ResourceIdentifier sourceResourceId = default, MongoClusterReplicationRole? role = default, MongoClusterReplicationState? replicationState = default)
         {
-            return new MongoClusterReplicationProperties(sourceResourceId, role, replicationState, additionalBinaryDataProperties: null);
+            return new MongoClusterReplicationProperties(sourceResourceId, role, replicationState, default);
+        }
+
+        /// <summary> Customer managed key encryption settings. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> The identity used to access the key encryption key. </param>
+        /// <param name="keyEncryptionKeyUri"> The URI of the key vault key used for encryption. </param>
+        /// <returns> A new <see cref="Models.MongoClusterCmkEncryptionProperties"/> instance for mocking. </returns>
+        public static MongoClusterCmkEncryptionProperties MongoClusterCmkEncryptionProperties(MongoClusterKeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        {
+            return new MongoClusterCmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+        }
+
+        /// <summary> The identity used for key encryption key. </summary>
+        /// <param name="identityType"> The type of identity. Only 'UserAssignedIdentity' is supported. </param>
+        /// <param name="userAssignedIdentityResourceId"> The user assigned identity resource id. </param>
+        /// <returns> A new <see cref="Models.MongoClusterKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static MongoClusterKeyEncryptionKeyIdentity MongoClusterKeyEncryptionKeyIdentity(MongoClusterKeyEncryptionKeyIdentityType? identityType = default, string userAssignedIdentityResourceId = default)
+        {
+            return new MongoClusterKeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, default);
         }
 
         /// <summary> The type used for update operations of the MongoCluster. </summary>
@@ -148,7 +214,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MongoClusterPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new MongoClusterPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
@@ -163,8 +229,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
         /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <returns> A new <see cref="Models.MongoClusterUpdateProperties"/> instance for mocking. </returns>
-        public static MongoClusterUpdateProperties MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator = default, string serverVersion = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        public static MongoClusterUpdateProperties MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator = default, string serverVersion = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default, MongoClusterNetworkBypassMode? networkBypassMode = default)
         {
             previewFeatures ??= new ChangeTrackingList<MongoClusterPreviewFeature>();
 
@@ -172,16 +239,17 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 administrator,
                 serverVersion,
                 publicNetworkAccess,
-                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, null),
+                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, default),
                 storage,
-                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, null),
-                computeTier is null ? default : new ComputeProperties(computeTier, null),
-                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, null),
-                dataApiMode is null ? default : new DataApiProperties(dataApiMode, null),
-                previewFeatures.ToList(),
-                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), null),
-                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, null),
-                additionalBinaryDataProperties: null);
+                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, default),
+                computeTier is null ? default : new ComputeProperties(computeTier, default),
+                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, default),
+                dataApiMode is null ? default : new DataApiProperties(dataApiMode, default),
+                (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
+                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
+                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                networkBypassMode,
+                default);
         }
 
         /// <summary> The connection strings for the given mongo cluster. </summary>
@@ -191,7 +259,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         {
             connectionStrings ??= new ChangeTrackingList<MongoClusterConnectionString>();
 
-            return new MongoClusterConnectionStringsResult(connectionStrings.ToList(), additionalBinaryDataProperties: null);
+            return new MongoClusterConnectionStringsResult((connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>()).ToList(), default);
         }
 
         /// <summary> Connection string for the mongo cluster. </summary>
@@ -201,7 +269,16 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterConnectionString"/> instance for mocking. </returns>
         public static MongoClusterConnectionString MongoClusterConnectionString(string uri = default, string description = default, string name = default)
         {
-            return new MongoClusterConnectionString(uri, description, name, additionalBinaryDataProperties: null);
+            return new MongoClusterConnectionString(uri, description, name, default);
+        }
+
+        /// <summary> The check availability request body. </summary>
+        /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <returns> A new <see cref="Models.MongoClusterNameAvailabilityContent"/> instance for mocking. </returns>
+        public static MongoClusterNameAvailabilityContent MongoClusterNameAvailabilityContent(string name = default, string resourceType = default)
+        {
+            return new MongoClusterNameAvailabilityContent(name, resourceType, default);
         }
 
         /// <summary> The check availability result. </summary>
@@ -211,7 +288,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterNameAvailabilityResult"/> instance for mocking. </returns>
         public static MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? isNameAvailable = default, MongoClusterNameUnavailableReason? reason = default, string message = default)
         {
-            return new MongoClusterNameAvailabilityResult(isNameAvailable, reason, message, additionalBinaryDataProperties: null);
+            return new MongoClusterNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
         /// <summary> Promote replica request properties. </summary>
@@ -220,7 +297,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.PromoteReplicaContent"/> instance for mocking. </returns>
         public static PromoteReplicaContent PromoteReplicaContent(MongoClusterPromoteOption promoteOption = default, MongoClusterPromoteMode? mode = default)
         {
-            return new PromoteReplicaContent(promoteOption, mode, additionalBinaryDataProperties: null);
+            return new PromoteReplicaContent(promoteOption, mode, default);
         }
 
         /// <summary> Represents a mongo cluster firewall rule. </summary>
@@ -237,8 +314,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The properties of a mongo cluster firewall rule. </summary>
@@ -248,7 +325,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
         public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = default, string startIPAddress = default, string endIPAddress = default)
         {
-            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, additionalBinaryDataProperties: null);
+            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -265,8 +342,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -283,8 +360,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of a private link resource. </summary>
@@ -297,7 +374,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             requiredMembers ??= new ChangeTrackingList<string>();
             requiredZoneNames ??= new ChangeTrackingList<string>();
 
-            return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+            return new MongoClusterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Represents a mongo cluster replica. </summary>
@@ -314,8 +391,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Represents a Mongo cluster user. </summary>
@@ -332,8 +409,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Definition of Mongo user resource on a cluster. </summary>
@@ -345,7 +422,94 @@ namespace Azure.ResourceManager.MongoCluster.Models
         {
             roles ??= new ChangeTrackingList<MongoClusterDatabaseRole>();
 
-            return new MongoClusterUserProperties(provisioningState, identityProvider, roles.ToList(), additionalBinaryDataProperties: null);
+            return new MongoClusterUserProperties(provisioningState, identityProvider, (roles ?? new ChangeTrackingList<MongoClusterDatabaseRole>()).ToList(), default);
+        }
+
+        /// <summary>
+        /// Defines a user's identity provider definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MongoClusterEntraIdentityProvider"/>.
+        /// </summary>
+        /// <param name="type"> The type of identity provider that the user belongs to. </param>
+        /// <returns> A new <see cref="Models.MongoClusterIdentityProvider"/> instance for mocking. </returns>
+        public static MongoClusterIdentityProvider MongoClusterIdentityProvider(string @type = default)
+        {
+            return new UnknownMongoClusterIdentityProvider(default, default);
+        }
+
+        /// <param name="mongoClusterEntraIdentityProviderPrincipalType"> The principal type of the user. </param>
+        /// <returns> A new <see cref="Models.MongoClusterEntraIdentityProvider"/> instance for mocking. </returns>
+        public static MongoClusterEntraIdentityProvider MongoClusterEntraIdentityProvider(MongoClusterEntraPrincipalType mongoClusterEntraIdentityProviderPrincipalType = default)
+        {
+            return new MongoClusterEntraIdentityProvider(default, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
+        }
+
+        /// <summary> Microsoft Entra ID provider properties. </summary>
+        /// <param name="principalType"> The principal type of the user. </param>
+        /// <returns> A new <see cref="Models.MongoClusterEntraIdentityProviderProperties"/> instance for mocking. </returns>
+        public static MongoClusterEntraIdentityProviderProperties MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType = default)
+        {
+            return new MongoClusterEntraIdentityProviderProperties(principalType, default);
+        }
+
+        /// <summary> Database role definition that is assigned to a user. </summary>
+        /// <param name="db"> Database scope that the role is assigned to. </param>
+        /// <param name="role"> The role that is assigned to the user on the database scope. </param>
+        /// <returns> A new <see cref="Models.MongoClusterDatabaseRole"/> instance for mocking. </returns>
+        public static MongoClusterDatabaseRole MongoClusterDatabaseRole(string db = default, MongoClusterUserRole role = default)
+        {
+            return new MongoClusterDatabaseRole(db, role, default);
+        }
+
+        /// <summary> The properties of a mongo cluster. </summary>
+        /// <param name="createMode"> The mode to create a mongo cluster. </param>
+        /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
+        /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
+        /// <param name="administrator"> The local administrator properties for the mongo cluster. </param>
+        /// <param name="serverVersion"> The Mongo DB server version. Defaults to the latest available version if not specified. </param>
+        /// <param name="connectionString"> The default mongo connection string for the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
+        /// <param name="clusterStatus"> The status of the mongo cluster. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
+        /// <param name="highAvailabilityTargetMode"> The target high availability mode requested for the cluster. </param>
+        /// <param name="storage"> The storage properties of the mongo cluster. </param>
+        /// <param name="shardingShardCount"> Number of shards to provision on the cluster. </param>
+        /// <param name="computeTier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
+        /// <param name="backupEarliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
+        /// <param name="dataApiMode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="previewFeatures"> List of private endpoint connections. </param>
+        /// <param name="replica"> The replication properties for the mongo cluster. </param>
+        /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
+        /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
+        /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
+        /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)
+        {
+            return new MongoClusterProperties(
+                createMode,
+                restoreParameters,
+                replicaParameters,
+                administrator,
+                serverVersion,
+                connectionString,
+                provisioningState,
+                clusterStatus,
+                publicNetworkAccess,
+                highAvailabilityTargetMode is null ? default : new HighAvailabilityProperties(highAvailabilityTargetMode, default),
+                storage,
+                shardingShardCount is null ? default : new ShardingProperties(shardingShardCount, default),
+                computeTier is null ? default : new ComputeProperties(computeTier, default),
+                backupEarliestRestoreTime is null ? default : new BackupProperties(backupEarliestRestoreTime, default),
+                dataApiMode is null ? default : new DataApiProperties(dataApiMode, default),
+                (privateEndpointConnections ?? new ChangeTrackingList<MongoClusterPrivateEndpointConnection>()).ToList(),
+                (previewFeatures ?? new ChangeTrackingList<MongoClusterPreviewFeature>()).ToList(),
+                replica,
+                infrastructureVersion,
+                authConfigAllowedModes is null ? default : new AuthConfigProperties((authConfigAllowedModes ?? new ChangeTrackingList<MongoClusterAuthenticationMode>()).ToList(), default),
+                customerManagedKeyEncryption is null ? default : new EncryptionProperties(customerManagedKeyEncryption, default),
+                default,
+                default);
         }
     }
 }

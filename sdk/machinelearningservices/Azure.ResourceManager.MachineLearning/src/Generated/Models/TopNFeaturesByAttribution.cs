@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class TopNFeaturesByAttribution : MonitoringFeatureFilterBase
     {
         /// <summary> Initializes a new instance of <see cref="TopNFeaturesByAttribution"/>. </summary>
-        public TopNFeaturesByAttribution()
+        public TopNFeaturesByAttribution() : base(MonitoringFeatureFilterType.TopNByAttribution)
         {
-            FilterType = MonitoringFeatureFilterType.TopNByAttribution;
         }
 
         /// <summary> Initializes a new instance of <see cref="TopNFeaturesByAttribution"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="top"> The number of top features to include. </param>
-        internal TopNFeaturesByAttribution(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData, int? top) : base(filterType, serializedAdditionalRawData)
+        internal TopNFeaturesByAttribution(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? top) : base(filterType, additionalBinaryDataProperties)
         {
             Top = top;
-            FilterType = filterType;
         }
 
         /// <summary> The number of top features to include. </summary>

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationStatusDetails : IUtf8JsonSerializable, IJsonModel<DataMigrationStatusDetails>
+    /// <summary> Detailed status of current migration. </summary>
+    public partial class DataMigrationStatusDetails : IJsonModel<DataMigrationStatusDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationStatusDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationStatusDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationStatusDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationStatusDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationStatusDetails IPersistableModel<DataMigrationStatusDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationStatusDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationStatusDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(MigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
@@ -53,7 +93,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("activeBackupSets"u8);
                 writer.WriteStartArray();
-                foreach (var item in ActiveBackupSets)
+                foreach (DataMigrationSqlBackupSetInfo item in ActiveBackupSets)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,8 +103,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("invalidFiles"u8);
                 writer.WriteStartArray();
-                foreach (var item in InvalidFiles)
+                foreach (string item in InvalidFiles)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -93,8 +138,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("fileUploadBlockingErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in FileUploadBlockingErrors)
+                foreach (string item in FileUploadBlockingErrors)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -114,15 +164,15 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("pendingLogBackupsCount"u8);
                 writer.WriteNumberValue(PendingLogBackupsCount.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -131,22 +181,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationStatusDetails IJsonModel<DataMigrationStatusDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationStatusDetails IJsonModel<DataMigrationStatusDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataMigrationStatusDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationStatusDetails(document.RootElement, options);
         }
 
-        internal static DataMigrationStatusDetails DeserializeDataMigrationStatusDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationStatusDetails DeserializeDataMigrationStatusDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -164,124 +219,136 @@ namespace Azure.ResourceManager.DataMigration.Models
             string currentRestoringFilename = default;
             string lastRestoredFilename = default;
             int? pendingLogBackupsCount = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationState"u8))
+                if (prop.NameEquals("migrationState"u8))
                 {
-                    migrationState = property.Value.GetString();
+                    migrationState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fullBackupSetInfo"u8))
+                if (prop.NameEquals("fullBackupSetInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fullBackupSetInfo = DataMigrationSqlBackupSetInfo.DeserializeDataMigrationSqlBackupSetInfo(property.Value, options);
+                    fullBackupSetInfo = DataMigrationSqlBackupSetInfo.DeserializeDataMigrationSqlBackupSetInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lastRestoredBackupSetInfo"u8))
+                if (prop.NameEquals("lastRestoredBackupSetInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRestoredBackupSetInfo = DataMigrationSqlBackupSetInfo.DeserializeDataMigrationSqlBackupSetInfo(property.Value, options);
+                    lastRestoredBackupSetInfo = DataMigrationSqlBackupSetInfo.DeserializeDataMigrationSqlBackupSetInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("activeBackupSets"u8))
+                if (prop.NameEquals("activeBackupSets"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationSqlBackupSetInfo> array = new List<DataMigrationSqlBackupSetInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationSqlBackupSetInfo.DeserializeDataMigrationSqlBackupSetInfo(item, options));
                     }
                     activeBackupSets = array;
                     continue;
                 }
-                if (property.NameEquals("invalidFiles"u8))
+                if (prop.NameEquals("invalidFiles"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     invalidFiles = array;
                     continue;
                 }
-                if (property.NameEquals("blobContainerName"u8))
+                if (prop.NameEquals("blobContainerName"u8))
                 {
-                    blobContainerName = property.Value.GetString();
+                    blobContainerName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isFullBackupRestored"u8))
+                if (prop.NameEquals("isFullBackupRestored"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isFullBackupRestored = property.Value.GetBoolean();
+                    isFullBackupRestored = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("restoreBlockingReason"u8))
+                if (prop.NameEquals("restoreBlockingReason"u8))
                 {
-                    restoreBlockingReason = property.Value.GetString();
+                    restoreBlockingReason = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("completeRestoreErrorMessage"u8))
+                if (prop.NameEquals("completeRestoreErrorMessage"u8))
                 {
-                    completeRestoreErrorMessage = property.Value.GetString();
+                    completeRestoreErrorMessage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileUploadBlockingErrors"u8))
+                if (prop.NameEquals("fileUploadBlockingErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     fileUploadBlockingErrors = array;
                     continue;
                 }
-                if (property.NameEquals("currentRestoringFilename"u8))
+                if (prop.NameEquals("currentRestoringFilename"u8))
                 {
-                    currentRestoringFilename = property.Value.GetString();
+                    currentRestoringFilename = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("lastRestoredFilename"u8))
+                if (prop.NameEquals("lastRestoredFilename"u8))
                 {
-                    lastRestoredFilename = property.Value.GetString();
+                    lastRestoredFilename = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("pendingLogBackupsCount"u8))
+                if (prop.NameEquals("pendingLogBackupsCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pendingLogBackupsCount = property.Value.GetInt32();
+                    pendingLogBackupsCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataMigrationStatusDetails(
                 migrationState,
                 fullBackupSetInfo,
@@ -296,38 +363,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 currentRestoringFilename,
                 lastRestoredFilename,
                 pendingLogBackupsCount,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataMigrationStatusDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationStatusDetails IPersistableModel<DataMigrationStatusDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationStatusDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationStatusDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationStatusDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationStatusDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

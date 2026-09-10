@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
         private readonly string _value;
+        /// <summary> Default. </summary>
+        private const string DefaultValue = "Default";
 
         /// <summary> Initializes a new instance of <see cref="DefenderForServersScanningMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DefenderForServersScanningMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DefaultValue = "Default";
+            _value = value;
+        }
 
         /// <summary> Default. </summary>
         public static DefenderForServersScanningMode Default { get; } = new DefenderForServersScanningMode(DefaultValue);
+
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DefenderForServersScanningMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DefenderForServersScanningMode left, DefenderForServersScanningMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DefenderForServersScanningMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DefenderForServersScanningMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DefenderForServersScanningMode(string value) => new DefenderForServersScanningMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DefenderForServersScanningMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DefenderForServersScanningMode?(string value) => value == null ? null : new DefenderForServersScanningMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DefenderForServersScanningMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DefenderForServersScanningMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary>
-    /// A class representing the CosmosDBSqlRoleAssignment data model.
-    /// An Azure Cosmos DB Role Assignment
-    /// </summary>
+    /// <summary> An Azure Cosmos DB Role Assignment. </summary>
     public partial class CosmosDBSqlRoleAssignmentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
         public CosmosDBSqlRoleAssignmentData()
@@ -56,30 +25,74 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBSqlRoleAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="roleDefinitionId"> The unique identifier for the associated Role Definition. </param>
-        /// <param name="scope"> The data plane resource path for which access is being granted through this Role Assignment. </param>
-        /// <param name="principalId"> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier roleDefinitionId, string scope, Guid? principalId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties related to the Role Assignment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBSqlRoleAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlRoleAssignmentResource properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            RoleDefinitionId = roleDefinitionId;
-            Scope = scope;
-            PrincipalId = principalId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties related to the Role Assignment. </summary>
+        [WirePath("properties")]
+        internal SqlRoleAssignmentResource Properties { get; set; }
 
         /// <summary> The unique identifier for the associated Role Definition. </summary>
         [WirePath("properties.roleDefinitionId")]
-        public ResourceIdentifier RoleDefinitionId { get; set; }
+        public ResourceIdentifier RoleDefinitionId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleDefinitionId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.RoleDefinitionId = value;
+            }
+        }
+
         /// <summary> The data plane resource path for which access is being granted through this Role Assignment. </summary>
         [WirePath("properties.scope")]
-        public string Scope { get; set; }
+        public string Scope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Scope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.Scope = value;
+            }
+        }
+
         /// <summary> The unique identifier for the associated AAD principal in the AAD graph to which access is being granted through this Role Assignment. Tenant ID for the principal is inferred using the tenant associated with the subscription. </summary>
         [WirePath("properties.principalId")]
-        public Guid? PrincipalId { get; set; }
+        public Guid? PrincipalId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SqlRoleAssignmentResource();
+                }
+                Properties.PrincipalId = value;
+            }
+        }
     }
 }

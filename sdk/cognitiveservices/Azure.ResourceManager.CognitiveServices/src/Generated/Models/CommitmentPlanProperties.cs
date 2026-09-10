@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties of Cognitive Services account commitment plan. </summary>
     public partial class CommitmentPlanProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommitmentPlanProperties"/>. </summary>
         public CommitmentPlanProperties()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="next"> Cognitive Services account commitment period. </param>
         /// <param name="last"> Cognitive Services account commitment period. </param>
         /// <param name="provisioningIssues"> The list of ProvisioningIssue. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommitmentPlanProperties(CommitmentPlanProvisioningState? provisioningState, Guid? commitmentPlanGuid, ServiceAccountHostingModel? hostingModel, string planType, CommitmentPeriod current, bool? autoRenew, CommitmentPeriod next, CommitmentPeriod last, IReadOnlyList<string> provisioningIssues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CommitmentPlanGuid = commitmentPlanGuid;
@@ -73,33 +45,41 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Next = next;
             Last = last;
             ProvisioningIssues = provisioningIssues;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
         [WirePath("provisioningState")]
         public CommitmentPlanProvisioningState? ProvisioningState { get; }
+
         /// <summary> Commitment plan guid. </summary>
         [WirePath("commitmentPlanGuid")]
         public Guid? CommitmentPlanGuid { get; set; }
+
         /// <summary> Account hosting model. </summary>
         [WirePath("hostingModel")]
         public ServiceAccountHostingModel? HostingModel { get; set; }
+
         /// <summary> Commitment plan type. </summary>
         [WirePath("planType")]
         public string PlanType { get; set; }
+
         /// <summary> Cognitive Services account commitment period. </summary>
         [WirePath("current")]
         public CommitmentPeriod Current { get; set; }
+
         /// <summary> AutoRenew commitment plan. </summary>
         [WirePath("autoRenew")]
         public bool? AutoRenew { get; set; }
+
         /// <summary> Cognitive Services account commitment period. </summary>
         [WirePath("next")]
         public CommitmentPeriod Next { get; set; }
+
         /// <summary> Cognitive Services account commitment period. </summary>
         [WirePath("last")]
         public CommitmentPeriod Last { get; }
+
         /// <summary> The list of ProvisioningIssue. </summary>
         [WirePath("provisioningIssues")]
         public IReadOnlyList<string> ProvisioningIssues { get; }

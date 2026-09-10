@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Name. </summary>
+        /// <summary> Gets the Name. </summary>
         public BicepValue<string> Name
         {
             get
@@ -29,25 +29,15 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _name;
             }
-            set
-            {
-                Initialize();
-                _name.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Versions. </summary>
+        /// <summary> Gets the Versions. </summary>
         public BicepList<string> Versions
         {
             get
             {
                 Initialize();
                 return _versions;
-            }
-            set
-            {
-                Initialize();
-                _versions.Assign(value);
             }
         }
 
@@ -57,6 +47,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _versions = DefineListProperty<string>(nameof(Versions), new string[] { "versions" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for CompatibleVersions that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

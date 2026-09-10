@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.LambdaTestHyperExecute;
 using Azure.ResourceManager.Models;
@@ -38,28 +37,11 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
-        }
-
-        /// <param name="marketplace"> Marketplace details of the resource. </param>
-        /// <param name="user"> Details of the user. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="partnerLicensesSubscribed"> The number of licenses subscribed. </param>
-        /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOrganizationProperties"/> instance for mocking. </returns>
-        public static LambdaTestHyperExecuteOrganizationProperties LambdaTestHyperExecuteOrganizationProperties(LambdaTestHyperExecuteMarketplaceDetails marketplace = default, LambdaTestHyperExecuteUserDetails user = default, LambdaTestHyperExecuteOfferProvisioningState? provisioningState = default, int? partnerLicensesSubscribed = default, LambdaTestHyperExecuteSingleSignOnPropertiesV2 singleSignOnProperties = default)
-        {
-            return new LambdaTestHyperExecuteOrganizationProperties(
-                marketplace,
-                user,
-                provisioningState,
-                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, null),
-                singleSignOnProperties,
-                additionalBinaryDataProperties: null);
+                identity,
+                default);
         }
 
         /// <summary> Marketplace details for an organization. </summary>
@@ -69,7 +51,53 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         /// <returns> A new <see cref="Models.LambdaTestHyperExecuteMarketplaceDetails"/> instance for mocking. </returns>
         public static LambdaTestHyperExecuteMarketplaceDetails LambdaTestHyperExecuteMarketplaceDetails(string subscriptionId = default, LambdaTestHyperExecuteMarketplaceSubscriptionStatus? subscriptionStatus = default, LambdaTestHyperExecuteOfferDetails offerDetails = default)
         {
-            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+            return new LambdaTestHyperExecuteMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOfferDetails"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOfferDetails LambdaTestHyperExecuteOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new LambdaTestHyperExecuteOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <summary> User details for an organization. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteUserDetails"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteUserDetails LambdaTestHyperExecuteUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new LambdaTestHyperExecuteUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
+        /// <summary> Partner's specific Properties. </summary>
+        /// <param name="subscribedLicensesCount"> The number of licenses subscribed. </param>
+        /// <returns> A new <see cref="Models.LambdaTestHyperExecuteOfferPartnerProperties"/> instance for mocking. </returns>
+        public static LambdaTestHyperExecuteOfferPartnerProperties LambdaTestHyperExecuteOfferPartnerProperties(int subscribedLicensesCount = default)
+        {
+            return new LambdaTestHyperExecuteOfferPartnerProperties(subscribedLicensesCount, default);
         }
 
         /// <summary> Properties specific to Single Sign On Resource. </summary>
@@ -88,8 +116,8 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 state,
                 enterpriseAppId,
                 uri,
-                aadDomains.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> The type used for update operations of the Organization Resource. </summary>
@@ -100,7 +128,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new LambdaTestHyperExecuteOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new LambdaTestHyperExecuteOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

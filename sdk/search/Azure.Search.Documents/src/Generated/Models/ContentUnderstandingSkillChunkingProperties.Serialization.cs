@@ -74,6 +74,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 throw new FormatException($"The model {nameof(ContentUnderstandingSkillChunkingProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Method))
+            {
+                writer.WritePropertyName("method"u8);
+                writer.WriteStringValue(Method.Value.ToString());
+            }
             if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
@@ -131,12 +136,22 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            ContentUnderstandingSkillChunkingMethod? @method = default;
             ContentUnderstandingSkillChunkingUnit? unit = default;
             int? maximumLength = default;
             int? overlapLength = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("method"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @method = new ContentUnderstandingSkillChunkingMethod(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("unit"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,7 +187,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContentUnderstandingSkillChunkingProperties(unit, maximumLength, overlapLength, additionalBinaryDataProperties);
+            return new ContentUnderstandingSkillChunkingProperties(@method, unit, maximumLength, overlapLength, additionalBinaryDataProperties);
         }
     }
 }

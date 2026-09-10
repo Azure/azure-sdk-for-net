@@ -19,8 +19,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" PrivateAssets="All" />
     <PackageReference Update="NETStandard.Library" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Reserved type-name tables consumed by DuplicateTypeNameAnalyzer (AZC0034) -->
+    <EmbeddedResource Include="reserved-type-names.txt" />
+    <EmbeddedResource Include="reserved-type-qualified-names.txt" />
   </ItemGroup>
 
   <ItemGroup>

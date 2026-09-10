@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 return null;
             }
             DesktopVirtualizationDomainJoinType joinType = default;
-            ActiveDirectoryInfoProperties activeDirectoryInfo = default;
+            DesktopVirtualizationActiveDirectoryInfoProperties activeDirectoryInfo = default;
             AzureActiveDirectoryInfoProperties azureActiveDirectoryInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    activeDirectoryInfo = ActiveDirectoryInfoProperties.DeserializeActiveDirectoryInfoProperties(prop.Value, options);
+                    activeDirectoryInfo = DesktopVirtualizationActiveDirectoryInfoProperties.DeserializeDesktopVirtualizationActiveDirectoryInfoProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("azureActiveDirectoryInfo"u8))

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ServiceGroups
 {
+    /// <summary></summary>
     public partial class ServiceGroupResource : IJsonModel<ServiceGroupData>
     {
-        private static ServiceGroupData s_dataDeserializationInstance;
-        private static ServiceGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceGroupData>)Data).Write(writer, options);
 
-        ServiceGroupData IJsonModel<ServiceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceGroupData IJsonModel<ServiceGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceGroupData>(Data, options, AzureResourceManagerServiceGroupsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceGroupData IPersistableModel<ServiceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceGroupData>(data, options, AzureResourceManagerServiceGroupsContext.Default);
 
-        string IPersistableModel<ServiceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

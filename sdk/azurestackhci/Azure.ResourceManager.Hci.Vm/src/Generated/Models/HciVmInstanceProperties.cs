@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         {
             get
             {
-                return InstanceView.VmAgent;
+                return InstanceView is null ? default : InstanceView.VmAgent;
             }
         }
     }

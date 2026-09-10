@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "withBodyContentType",
+      "name": "WithBodyContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "withBodyContentType1",
+      "name": "WithBodyContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "withBodyContentType2",
+      "name": "WithBodyContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "getStandaloneContentType",
+      "name": "WithBodyContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,12 +68,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "getStandaloneContentType1",
+      "name": "WithBodyContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -81,7 +85,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -89,6 +94,7 @@
       "$id": "11",
       "kind": "model",
       "name": "Input",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.Input",
       "usage": "Input,Json",
@@ -98,11 +104,13 @@
           "name": "Input"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "13",
@@ -122,7 +130,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -130,6 +139,7 @@
       "$id": "14",
       "kind": "model",
       "name": "WithBodyRequest",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.withBody.Request.anonymous",
       "usage": "Input,Json",
@@ -139,11 +149,13 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "15",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "16",
@@ -163,7 +175,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -171,6 +184,7 @@
       "$id": "17",
       "kind": "model",
       "name": "BlobProperties",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobProperties",
       "usage": "Output,Json",
@@ -181,11 +195,13 @@
           "name": "BlobProperties"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "19",
@@ -205,12 +221,14 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "20",
           "kind": "property",
           "name": "size",
+          "apiVersions": [],
           "serializedName": "size",
           "type": {
             "$id": "21",
@@ -230,12 +248,14 @@
               "name": "size"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "22",
           "kind": "property",
           "name": "contentType",
+          "apiVersions": [],
           "serializedName": "contentType",
           "type": {
             "$id": "23",
@@ -255,12 +275,14 @@
               "name": "contentType"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "24",
           "kind": "property",
           "name": "createdOn",
+          "apiVersions": [],
           "serializedName": "createdOn",
           "type": {
             "$id": "25",
@@ -288,7 +310,8 @@
               "name": "createdOn"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -298,6 +321,7 @@
       "$id": "27",
       "kind": "client",
       "name": "HeaderParamClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Client for testing header parameter moved to client level.",
       "methods": [
@@ -305,11 +329,13 @@
           "$id": "28",
           "kind": "basic",
           "name": "withQuery",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "29",
             "name": "withQuery",
+            "isExactName": false,
             "resourceName": "HeaderParam",
             "accessibility": "public",
             "parameters": [
@@ -353,9 +379,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParamClientOptions.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "34",
@@ -396,9 +424,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParam.withQuery.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -407,7 +437,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -435,11 +466,13 @@
           "$id": "38",
           "kind": "basic",
           "name": "withBody",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "39",
             "name": "withBody",
+            "isExactName": false,
             "resourceName": "HeaderParam",
             "accessibility": "public",
             "parameters": [
@@ -466,7 +499,8 @@
                   {
                     "$ref": "32"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "42",
@@ -501,9 +535,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParam.withBody.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "44",
@@ -539,9 +575,16 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParam.withBody.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -550,7 +593,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -610,7 +654,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParam.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.HeaderParam.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "32"
@@ -626,6 +671,7 @@
       "$id": "49",
       "kind": "client",
       "name": "MultipleParamsClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Client for testing multiple parameters (header and query) moved to client level.",
       "methods": [
@@ -633,11 +679,13 @@
           "$id": "50",
           "kind": "basic",
           "name": "withQuery",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "51",
             "name": "withQuery",
+            "isExactName": false,
             "resourceName": "MultipleParams",
             "accessibility": "public",
             "parameters": [
@@ -681,9 +729,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParamsClientOptions.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "56",
@@ -725,9 +775,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParamsClientOptions.region",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -768,9 +820,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParams.withQuery.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -779,7 +833,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -807,11 +862,13 @@
           "$id": "64",
           "kind": "basic",
           "name": "withBody",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "65",
             "name": "withBody",
+            "isExactName": false,
             "resourceName": "MultipleParams",
             "accessibility": "public",
             "parameters": [
@@ -838,7 +895,8 @@
                   {
                     "$ref": "54"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "68",
@@ -863,7 +921,8 @@
                   {
                     "$ref": "58"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "70",
@@ -898,9 +957,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParams.withBody.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "72",
@@ -936,9 +997,16 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParams.withBody.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -947,7 +1015,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -1007,7 +1076,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParams.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MultipleParams.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "54"
@@ -1026,6 +1096,7 @@
       "$id": "77",
       "kind": "client",
       "name": "MixedParamsClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Client for testing a mix of client-level and method-level parameters.",
       "methods": [
@@ -1033,11 +1104,13 @@
           "$id": "78",
           "kind": "basic",
           "name": "withQuery",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "79",
             "name": "withQuery",
+            "isExactName": false,
             "resourceName": "MixedParams",
             "accessibility": "public",
             "parameters": [
@@ -1081,9 +1154,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParamsClientOptions.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "84",
@@ -1124,9 +1199,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.withQuery.region",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "88",
@@ -1167,9 +1244,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.withQuery.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1178,7 +1257,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -1209,11 +1289,13 @@
           "$id": "92",
           "kind": "basic",
           "name": "withBody",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "93",
             "name": "withBody",
+            "isExactName": false,
             "resourceName": "MixedParams",
             "accessibility": "public",
             "parameters": [
@@ -1240,7 +1322,8 @@
                   {
                     "$ref": "82"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "96",
@@ -1281,9 +1364,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.withBody.region",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "100",
@@ -1318,9 +1403,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.withBody.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "102",
@@ -1356,9 +1443,16 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.withBody.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -1367,7 +1461,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -1430,7 +1525,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.MixedParams.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "82"
@@ -1446,6 +1542,7 @@
       "$id": "107",
       "kind": "client",
       "name": "PathParamClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Blob operations with path parameter that should be moved to client level",
       "methods": [
@@ -1453,11 +1550,13 @@
           "$id": "108",
           "kind": "basic",
           "name": "withQuery",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "109",
             "name": "withQuery",
+            "isExactName": false,
             "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
@@ -1504,9 +1603,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParamClientOptions.blobName",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "114",
@@ -1547,9 +1648,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParam.withQuery.format",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1558,7 +1661,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -1586,11 +1690,13 @@
           "$id": "118",
           "kind": "basic",
           "name": "getStandalone",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "119",
             "name": "getStandalone",
+            "isExactName": false,
             "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
@@ -1620,7 +1726,8 @@
                   {
                     "$ref": "112"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "122",
@@ -1653,9 +1760,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParam.getStandalone.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1670,7 +1779,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1702,11 +1816,13 @@
           "$id": "124",
           "kind": "basic",
           "name": "deleteStandalone",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "125",
             "name": "deleteStandalone",
+            "isExactName": false,
             "resourceName": "PathParam",
             "accessibility": "public",
             "parameters": [
@@ -1736,7 +1852,8 @@
                   {
                     "$ref": "112"
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1745,7 +1862,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "DELETE",
@@ -1795,7 +1913,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParam.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.PathParam.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "112"
@@ -1811,6 +1930,7 @@
       "$id": "131",
       "kind": "client",
       "name": "ParamAliasClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Operations demonstrating the @paramAlias decorator for renaming parameters in client code",
       "methods": [
@@ -1818,11 +1938,13 @@
           "$id": "132",
           "kind": "basic",
           "name": "withAliasedName",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "133",
             "name": "withAliasedName",
+            "isExactName": false,
             "resourceName": "ParamAlias",
             "accessibility": "public",
             "parameters": [
@@ -1870,9 +1992,11 @@
                     "readOnly": false,
                     "access": "public",
                     "decorators": [],
-                    "paramAlias": "blob"
+                    "paramAlias": "blob",
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1881,7 +2005,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -1905,11 +2030,13 @@
           "$id": "138",
           "kind": "basic",
           "name": "withOriginalName",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "139",
             "name": "withOriginalName",
+            "isExactName": false,
             "resourceName": "ParamAlias",
             "accessibility": "public",
             "parameters": [
@@ -1939,7 +2066,8 @@
                   {
                     "$ref": "136"
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1948,7 +2076,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -1998,7 +2127,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAlias.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.ParamAlias.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "136"
@@ -2014,6 +2144,7 @@
       "$id": "145",
       "kind": "client",
       "name": "QueryParamClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient",
       "doc": "Blob operations with query parameter that should be moved to client level",
       "methods": [
@@ -2021,11 +2152,13 @@
           "$id": "146",
           "kind": "basic",
           "name": "withQuery",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "147",
             "name": "withQuery",
+            "isExactName": false,
             "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
@@ -2069,9 +2202,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.BlobQueryParamClientOptions.blobName",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "152",
@@ -2112,9 +2247,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParam.withQuery.format",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -2123,7 +2260,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -2151,11 +2289,13 @@
           "$id": "156",
           "kind": "basic",
           "name": "getStandalone",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "157",
             "name": "getStandalone",
+            "isExactName": false,
             "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
@@ -2182,7 +2322,8 @@
                   {
                     "$ref": "150"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "160",
@@ -2215,9 +2356,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParam.getStandalone.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -2232,7 +2375,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -2264,11 +2412,13 @@
           "$id": "162",
           "kind": "basic",
           "name": "deleteStandalone",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "163",
             "name": "deleteStandalone",
+            "isExactName": false,
             "resourceName": "QueryParam",
             "accessibility": "public",
             "parameters": [
@@ -2295,7 +2445,8 @@
                   {
                     "$ref": "150"
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -2304,7 +2455,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "DELETE",
@@ -2354,7 +2506,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParam.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient.QueryParam.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "150"

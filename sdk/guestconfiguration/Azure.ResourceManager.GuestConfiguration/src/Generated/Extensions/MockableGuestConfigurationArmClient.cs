@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration;
@@ -35,6 +39,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             return new GuestConfigurationVmAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="GuestConfigurationVmAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GuestConfigurationVmAssignmentResource"/> objects. </returns>
+        public virtual GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(ResourceIdentifier scope)
+        {
+            return new GuestConfigurationVmAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return GetGuestConfigurationVmAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return await GetGuestConfigurationVmAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource"/> object. </returns>
@@ -42,6 +82,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         {
             GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationHcrpAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="GuestConfigurationHcrpAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GuestConfigurationHcrpAssignmentResource"/> objects. </returns>
+        public virtual GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(ResourceIdentifier scope)
+        {
+            return new GuestConfigurationHcrpAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return GetGuestConfigurationHcrpAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return await GetGuestConfigurationHcrpAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -53,6 +129,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             return new GuestConfigurationVmssAssignmentResource(Client, id);
         }
 
+        /// <summary> Gets a collection of <see cref="GuestConfigurationVmssAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GuestConfigurationVmssAssignmentResource"/> objects. </returns>
+        public virtual GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(ResourceIdentifier scope)
+        {
+            return new GuestConfigurationVmssAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get information about a guest configuration assignment for VMSS. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetGuestConfigurationVmssAssignments(scope).Get(name, cancellationToken);
+        }
+
+        /// <summary> Get information about a guest configuration assignment for VMSS. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="name"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetGuestConfigurationVmssAssignments(scope).GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> object. </returns>
@@ -60,6 +172,42 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         {
             GuestConfigurationVMwarevSphereAssignmentResource.ValidateResourceId(id);
             return new GuestConfigurationVMwarevSphereAssignmentResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="GuestConfigurationVMwarevSphereAssignmentCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> objects. </returns>
+        public virtual GuestConfigurationVMwarevSphereAssignmentCollection GetGuestConfigurationVMwarevSphereAssignments(ResourceIdentifier scope)
+        {
+            return new GuestConfigurationVMwarevSphereAssignmentCollection(Client, scope);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<GuestConfigurationVMwarevSphereAssignmentResource> GetGuestConfigurationVMwarevSphereAssignment(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return GetGuestConfigurationVMwarevSphereAssignments(scope).Get(guestConfigurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary> Get information about a guest configuration assignment. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guest configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="guestConfigurationAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="guestConfigurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<GuestConfigurationVMwarevSphereAssignmentResource>> GetGuestConfigurationVMwarevSphereAssignmentAsync(ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(guestConfigurationAssignmentName, nameof(guestConfigurationAssignmentName));
+
+            return await GetGuestConfigurationVMwarevSphereAssignments(scope).GetAsync(guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

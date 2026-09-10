@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> Unknown version of UpdateMigrationItemProviderSpecificInput. </summary>
     internal partial class UnknownUpdateMigrationItemProviderSpecificContent : UpdateMigrationItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownUpdateMigrationItemProviderSpecificContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownUpdateMigrationItemProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
-        {
-            InstanceType = instanceType ?? "Unknown";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownUpdateMigrationItemProviderSpecificContent"/> for deserialization. </summary>
-        internal UnknownUpdateMigrationItemProviderSpecificContent()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownUpdateMigrationItemProviderSpecificContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

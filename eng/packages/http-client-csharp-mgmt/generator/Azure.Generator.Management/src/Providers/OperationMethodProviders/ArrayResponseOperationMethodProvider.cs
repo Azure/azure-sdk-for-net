@@ -26,7 +26,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ArrayResponseOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
-        private readonly OperationContext _operationContext;
         private readonly ClientProvider _restClient;
         private readonly InputServiceMethod _serviceMethod;
         private readonly MethodProvider _convenienceMethod;
@@ -41,22 +40,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
         private readonly ParameterContextRegistry _parameterMapping;
+        private readonly ParameterProvider? _scopeParameter;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
-            OperationContext operationContext,
+            ParameterContextRegistry parameterMapping,
             RestClientInfo restClientInfo,
             InputServiceMethod method,
             bool isAsync,
             string? methodName = null,
-            ResourceClientProvider? explicitResourceClient = null)
+            ResourceClientProvider? explicitResourceClient = null,
+            ParameterProvider? scopeParameter = null)
         {
             _enclosingType = enclosingType;
-            _operationContext = operationContext;
+            _scopeParameter = scopeParameter;
             _restClient = restClientInfo.RestClientProvider;
             _serviceMethod = method;
-            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
-            _parameterMapping = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
+            _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync, enclosingType);
+            _parameterMapping = parameterMapping;
             _isAsync = isAsync;
             _restClientField = restClientInfo.RestClient;
 
@@ -69,6 +70,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Check if the item type can be wrapped in a resource client
             InitializeTypeInfo(
                 _itemType,
+                _enclosingType,
                 ref _actualItemType!,
                 ref _itemResourceClient,
                 explicitResourceClient
@@ -83,6 +85,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
+            TypeProvider enclosingType,
             ref CSharpType actualItemType,
             ref ResourceClientProvider? resourceClient,
             ResourceClientProvider? explicitResourceClient = null
@@ -90,9 +93,21 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             actualItemType = itemType;
             // If explicit resource client is provided, use it to avoid incorrect lookup when multiple resources share same model
-            if (explicitResourceClient != null && explicitResourceClient.ResourceData.Type.Equals(itemType))
+            if (explicitResourceClient != null && explicitResourceClient.IsResourceDataType(itemType))
             {
                 resourceClient = explicitResourceClient;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceCollectionClientProvider collectionProvider &&
+                collectionProvider.Resource.IsResourceDataType(itemType))
+            {
+                resourceClient = collectionProvider.Resource;
+                actualItemType = resourceClient.Type;
+            }
+            else if (enclosingType is ResourceClientProvider resourceProvider &&
+                resourceProvider.IsResourceDataType(itemType))
+            {
+                resourceClient = resourceProvider;
                 actualItemType = resourceClient.Type;
             }
             else if (ManagementClientGenerator.Instance.OutputLibrary.TryGetResourceClientProvider(itemType, out resourceClient))
@@ -103,14 +118,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ArrayResponseOperationMethodProvider singlePageListOperationMethodProvider)
         {
-            var methodProvider = new ScmMethodProvider(
+            var methodProvider = new ManagementMethodProvider(
                 singlePageListOperationMethodProvider._signature,
                 singlePageListOperationMethodProvider._bodyStatements,
                 singlePageListOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
-                null,
-                singlePageListOperationMethodProvider._collectionResult,
-                singlePageListOperationMethodProvider._serviceMethod);
+                collectionDefinition: singlePageListOperationMethodProvider._collectionResult,
+                serviceMethod: singlePageListOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
@@ -141,7 +155,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 modifiers,
                 returnType,
                 returnDescription,
-                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType),
+                OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _convenienceMethod, _parameterMapping, _enclosingType, shouldApplyLroHandling: _serviceMethod.IsLongRunningOperation(), scopeParameter: _scopeParameter),
                 _convenienceMethod.Signature.Attributes,
                 _convenienceMethod.Signature.GenericArguments,
                 _convenienceMethod.Signature.GenericParameterConstraints,
@@ -166,7 +180,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _restClientField,
             };
 
-            arguments.AddRange(_parameterMapping.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
+            var idExpression = _scopeParameter != null
+                ? _scopeParameter.As<Azure.Core.ResourceIdentifier>()
+                : This.As<ArmResource>().Id();
+            arguments.AddRange(_parameterMapping.PopulateArguments(idExpression, requestMethod.Signature.Parameters, contextVariable, _signature.Parameters));
             arguments.Add(Literal(scopeName));
 
             // Handle ResourceData type conversion if needed
@@ -199,6 +216,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _itemType,
                 _isAsync,
                 constructorParams,
+                _enclosingType,
                 _methodName,  // Pass the actual method name for proper class naming
                 _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")
 

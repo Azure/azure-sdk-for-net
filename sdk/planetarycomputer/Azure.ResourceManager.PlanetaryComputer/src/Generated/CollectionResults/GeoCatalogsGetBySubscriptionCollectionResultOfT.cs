@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.PlanetaryComputer
                     yield break;
                 }
                 GeoCatalogListResult result = GeoCatalogListResult.FromResponse(response);
-                yield return Page<PlanetaryComputerGeoCatalogData>.FromValues((IReadOnlyList<PlanetaryComputerGeoCatalogData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PlanetaryComputerGeoCatalogData>.FromValues((IReadOnlyList<PlanetaryComputerGeoCatalogData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

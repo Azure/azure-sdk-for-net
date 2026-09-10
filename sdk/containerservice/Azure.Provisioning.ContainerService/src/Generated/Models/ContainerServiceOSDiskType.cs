@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceOSDiskType
     {
         /// <summary> Azure replicates the operating system disk for a virtual machine to Azure storage to avoid data loss should the VM need to be relocated to another host. Since containers aren't designed to have local state persisted, this behavior offers limited value while providing some drawbacks, including slower node provisioning and higher read/write latency. </summary>
-        Managed,
+        Managed = 0,
         /// <summary> Ephemeral OS disks are stored only on the host machine, just like a temporary disk. This provides lower read/write latency, along with faster node scaling and cluster upgrades. </summary>
-        Ephemeral
+        Ephemeral = 1
     }
 }

@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,48 +17,34 @@ namespace Azure.ResourceManager.Network.Models
     public partial class NetworkIPConfiguration : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
-        public NetworkIPConfiguration()
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of the IP configuration. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal NetworkIPConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, IPConfigurationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
+            Properties = properties;
+            ETag = eTag;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnet"> The reference to the subnet resource. </param>
-        /// <param name="publicIPAddress"> The reference to the public IP resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the IP configuration resource. </param>
-        internal NetworkIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, PublicIPAddressData publicIPAddress, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
-        {
-            ETag = etag;
-            PrivateIPAddress = privateIPAddress;
-            PrivateIPAllocationMethod = privateIPAllocationMethod;
-            Subnet = subnet;
-            PublicIPAddress = publicIPAddress;
-            ProvisioningState = provisioningState;
-        }
+        /// <summary> Properties of the IP configuration. </summary>
+        [WirePath("properties")]
+        internal IPConfigurationPropertiesFormat Properties { get; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The private IP address of the IP configuration. </summary>
-        [WirePath("properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-        /// <summary> The private IP address allocation method. </summary>
-        [WirePath("properties.privateIPAllocationMethod")]
-        public NetworkIPAllocationMethod? PrivateIPAllocationMethod { get; set; }
-        /// <summary> The reference to the subnet resource. </summary>
-        [WirePath("properties.subnet")]
-        public SubnetData Subnet { get; set; }
-        /// <summary> The reference to the public IP resource. </summary>
-        [WirePath("properties.publicIPAddress")]
-        public PublicIPAddressData PublicIPAddress { get; set; }
+
         /// <summary> The provisioning state of the IP configuration resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

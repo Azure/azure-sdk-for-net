@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     internal readonly partial struct VirtualNetworkFunctionNfviType : IEquatable<VirtualNetworkFunctionNfviType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualNetworkFunctionNfviType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string AzureCoreValue = "AzureCore";
         private const string AzureOperatorNexusValue = "AzureOperatorNexus";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VirtualNetworkFunctionNfviType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static VirtualNetworkFunctionNfviType Unknown { get; } = new VirtualNetworkFunctionNfviType(UnknownValue);
-        /// <summary> AzureCore. </summary>
+
+        /// <summary> Gets the AzureCore. </summary>
         public static VirtualNetworkFunctionNfviType AzureCore { get; } = new VirtualNetworkFunctionNfviType(AzureCoreValue);
-        /// <summary> AzureOperatorNexus. </summary>
+
+        /// <summary> Gets the AzureOperatorNexus. </summary>
         public static VirtualNetworkFunctionNfviType AzureOperatorNexus { get; } = new VirtualNetworkFunctionNfviType(AzureOperatorNexusValue);
+
         /// <summary> Determines if two <see cref="VirtualNetworkFunctionNfviType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VirtualNetworkFunctionNfviType left, VirtualNetworkFunctionNfviType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VirtualNetworkFunctionNfviType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VirtualNetworkFunctionNfviType left, VirtualNetworkFunctionNfviType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VirtualNetworkFunctionNfviType(string value) => new VirtualNetworkFunctionNfviType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VirtualNetworkFunctionNfviType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VirtualNetworkFunctionNfviType?(string value) => value == null ? null : new VirtualNetworkFunctionNfviType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VirtualNetworkFunctionNfviType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VirtualNetworkFunctionNfviType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

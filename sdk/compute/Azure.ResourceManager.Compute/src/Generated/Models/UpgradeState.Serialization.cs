@@ -11,21 +11,40 @@ namespace Azure.ResourceManager.Compute.Models
 {
     internal static partial class UpgradeStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UpgradeState value) => value switch
         {
             UpgradeState.RollingForward => "RollingForward",
+            UpgradeState.RollingBack => "RollingBack",
             UpgradeState.Cancelled => "Cancelled",
             UpgradeState.Completed => "Completed",
             UpgradeState.Faulted => "Faulted",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UpgradeState ToUpgradeState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward")) return UpgradeState.RollingForward;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return UpgradeState.Cancelled;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed")) return UpgradeState.Completed;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted")) return UpgradeState.Faulted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingForward"))
+            {
+                return UpgradeState.RollingForward;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RollingBack"))
+            {
+                return UpgradeState.RollingBack;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled"))
+            {
+                return UpgradeState.Cancelled;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Completed"))
+            {
+                return UpgradeState.Completed;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Faulted"))
+            {
+                return UpgradeState.Faulted;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UpgradeState value.");
         }
     }

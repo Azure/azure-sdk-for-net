@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ProbeProtocol : IEquatable<ProbeProtocol>
     {
         private readonly string _value;
+        /// <summary> Http. </summary>
+        private const string HttpValue = "Http";
+        /// <summary> Tcp. </summary>
+        private const string TcpValue = "Tcp";
+        /// <summary> Https. </summary>
+        private const string HttpsValue = "Https";
 
         /// <summary> Initializes a new instance of <see cref="ProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProbeProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "Http";
-        private const string TcpValue = "Tcp";
-        private const string HttpsValue = "Https";
+            _value = value;
+        }
 
         /// <summary> Http. </summary>
         public static ProbeProtocol Http { get; } = new ProbeProtocol(HttpValue);
+
         /// <summary> Tcp. </summary>
         public static ProbeProtocol Tcp { get; } = new ProbeProtocol(TcpValue);
+
         /// <summary> Https. </summary>
         public static ProbeProtocol Https { get; } = new ProbeProtocol(HttpsValue);
+
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProbeProtocol left, ProbeProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProbeProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProbeProtocol left, ProbeProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProbeProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProbeProtocol(string value) => new ProbeProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProbeProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProbeProtocol?(string value) => value == null ? null : new ProbeProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProbeProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProbeProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

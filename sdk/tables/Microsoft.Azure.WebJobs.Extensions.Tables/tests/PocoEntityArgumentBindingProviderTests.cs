@@ -29,7 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[0], converterMock.Object);
             // Assert
-            Assert.Null(binding);
+            Assert.That(binding, Is.Null);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[1], converterMock.Object);
             // Assert
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables.Tests
             // Act
             IArgumentBinding<TableEntityContext> binding = TableAttributeBindingProvider.TryCreatePocoBinding(_parameters[2], converterMock.Object);
             // Assert
-            Assert.NotNull(binding);
+            Assert.That(binding, Is.Not.Null);
         }
 
         private static Mock<IConverterManager> CreateConverterMock(Type converterType)

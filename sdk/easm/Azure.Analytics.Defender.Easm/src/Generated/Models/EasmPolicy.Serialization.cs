@@ -131,15 +131,15 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDate))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UpdatedDate))
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedDate"u8);
-                writer.WriteStringValue(UpdatedDate.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             writer.WritePropertyName("actionParameters"u8);
             writer.WriteObjectValue(ActionParameters, options);
@@ -193,8 +193,8 @@ namespace Azure.Analytics.Defender.Easm
             PolicyAction action = default;
             long? updatedAssetsCount = default;
             string user = default;
-            DateTimeOffset? createdDate = default;
-            DateTimeOffset? updatedDate = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             ActionParametersContent actionParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -249,7 +249,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    createdDate = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updatedDate"u8))
@@ -258,7 +258,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    updatedDate = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("actionParameters"u8))
@@ -280,8 +280,8 @@ namespace Azure.Analytics.Defender.Easm
                 action,
                 updatedAssetsCount,
                 user,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 actionParameters,
                 additionalBinaryDataProperties);
         }

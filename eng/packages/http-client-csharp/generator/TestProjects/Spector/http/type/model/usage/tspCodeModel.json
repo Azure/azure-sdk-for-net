@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "inputContentType",
+      "name": "InputContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "outputContentType",
+      "name": "InputContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "inputAndOutputContentType",
+      "name": "InputContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "inputAndOutputContentType1",
+      "name": "InputContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -73,6 +77,7 @@
       "$id": "9",
       "kind": "model",
       "name": "InputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord",
       "usage": "Input,Json",
@@ -83,11 +88,13 @@
           "name": "InputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "10",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "11",
@@ -107,7 +114,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -115,6 +123,7 @@
       "$id": "12",
       "kind": "model",
       "name": "OutputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord",
       "usage": "Output,Json",
@@ -125,11 +134,13 @@
           "name": "OutputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "13",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "14",
@@ -149,7 +160,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -157,6 +169,7 @@
       "$id": "15",
       "kind": "model",
       "name": "InputOutputRecord",
+      "apiVersions": [],
       "namespace": "Type.Model.Usage",
       "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord",
       "usage": "Input,Output,Json",
@@ -167,11 +180,13 @@
           "name": "InputOutputRecord"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "16",
           "kind": "property",
           "name": "requiredProp",
+          "apiVersions": [],
           "serializedName": "requiredProp",
           "type": {
             "$id": "17",
@@ -191,7 +206,8 @@
               "name": "requiredProp"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -201,6 +217,7 @@
       "$id": "18",
       "kind": "client",
       "name": "UsageClient",
+      "isExactName": false,
       "namespace": "Type.Model.Usage",
       "doc": "Illustrates usage of Record in different places(Operation parameters, return type or both).",
       "methods": [
@@ -208,11 +225,13 @@
           "$id": "19",
           "kind": "basic",
           "name": "input",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "20",
             "name": "input",
+            "isExactName": false,
             "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
@@ -249,9 +268,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.input.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "23",
@@ -287,9 +308,16 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.input.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -298,7 +326,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -332,11 +361,13 @@
           "$id": "25",
           "kind": "basic",
           "name": "output",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "26",
             "name": "output",
+            "isExactName": false,
             "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
@@ -371,9 +402,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.output.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -388,7 +421,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -420,11 +458,13 @@
           "$id": "29",
           "kind": "basic",
           "name": "inputAndOutput",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "30",
             "name": "inputAndOutput",
+            "isExactName": false,
             "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
@@ -461,9 +501,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "33",
@@ -496,9 +538,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "35",
@@ -534,9 +578,16 @@
                     "crossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -551,7 +602,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -618,7 +674,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Usage.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Usage.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

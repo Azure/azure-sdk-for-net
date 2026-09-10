@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Forward DNS queries from localDNS to cluster CoreDNS. </summary>
         [DataMember(Name = "ClusterCoreDNS")]
-        ClusterCoreDns,
+        ClusterCoreDns = 0,
         /// <summary> Forward DNS queries from localDNS to DNS server configured in the VNET. A VNET can have multiple DNS servers configured. </summary>
         [DataMember(Name = "VnetDNS")]
-        VnetDns
+        VnetDns = 1
     }
 }

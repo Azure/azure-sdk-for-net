@@ -11,19 +11,30 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementSkuCapacityScaleTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementSkuCapacityScaleType value) => value switch
         {
-            ApiManagementSkuCapacityScaleType.None => "None",
             ApiManagementSkuCapacityScaleType.Automatic => "Automatic",
             ApiManagementSkuCapacityScaleType.Manual => "Manual",
+            ApiManagementSkuCapacityScaleType.None => "None",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuCapacityScaleType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementSkuCapacityScaleType ToApiManagementSkuCapacityScaleType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ApiManagementSkuCapacityScaleType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic")) return ApiManagementSkuCapacityScaleType.Automatic;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual")) return ApiManagementSkuCapacityScaleType.Manual;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Automatic"))
+            {
+                return ApiManagementSkuCapacityScaleType.Automatic;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manual"))
+            {
+                return ApiManagementSkuCapacityScaleType.Manual;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return ApiManagementSkuCapacityScaleType.None;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuCapacityScaleType value.");
         }
     }

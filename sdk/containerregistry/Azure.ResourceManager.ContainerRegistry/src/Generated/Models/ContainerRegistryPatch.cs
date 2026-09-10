@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.IsAdminUserEnabled = value.Value;
+                Properties.IsAdminUserEnabled = value;
             }
         }
 
@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.IsDataEndpointEnabled = value.Value;
+                Properties.IsDataEndpointEnabled = value;
             }
         }
 
         /// <summary> Enable per-region endpoints for accessing registry. </summary>
         [WirePath("properties.regionalEndpoints")]
-        public RegionalEndpoint? RegionalEndpoints
+        public ContainerRegistryRegionalEndpointStatus? RegionalEndpoints
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.RegionalEndpoints = value.Value;
+                Properties.RegionalEndpoints = value;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.EndpointProtocol = value.Value;
+                Properties.EndpointProtocol = value;
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.NetworkRuleBypassOptions = value.Value;
+                Properties.NetworkRuleBypassOptions = value;
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.IsNetworkRuleBypassAllowedForTasks = value.Value;
+                Properties.IsNetworkRuleBypassAllowedForTasks = value;
             }
         }
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.IsAnonymousPullEnabled = value.Value;
+                Properties.IsAnonymousPullEnabled = value;
             }
         }
 
@@ -267,7 +267,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.MetadataSearch = value.Value;
+                Properties.MetadataSearch = value;
+            }
+        }
+
+        /// <summary> Whether to allow cache operations that write to repositories in this registry. </summary>
+        [WirePath("properties.writableCacheRepos")]
+        public ContainerRegistryWritableCacheRepositories? WritableCacheRepos
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WritableCacheRepos;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.WritableCacheRepos = value;
             }
         }
 
@@ -285,7 +303,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     Properties = new RegistryPropertiesUpdateParameters();
                 }
-                Properties.RoleAssignmentMode = value.Value;
+                Properties.RoleAssignmentMode = value;
             }
         }
     }

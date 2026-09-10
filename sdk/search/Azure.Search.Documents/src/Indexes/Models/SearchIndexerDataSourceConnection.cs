@@ -56,6 +56,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Type = type;
             ConnectionString = connectionString;
             Container = container;
+            IndexerPermissionOptions = new ChangeTrackingList<IndexerPermissionOption>();
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
             _etag = etag;

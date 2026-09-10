@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationInsightsComponentResource"/> and their operations.
     /// Each <see cref="ApplicationInsightsComponentResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ApplicationInsightsComponentCollection"/> instance call the GetApplicationInsightsComponents method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ApplicationInsightsComponentCollection"/> instance call the GetApplicationInsightsComponents method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ApplicationInsightsComponentCollection : ArmCollection, IEnumerable<ApplicationInsightsComponentResource>, IAsyncEnumerable<ApplicationInsightsComponentResource>
     {
-        private readonly ClientDiagnostics _applicationInsightsComponentComponentsClientDiagnostics;
-        private readonly ComponentsRestOperations _applicationInsightsComponentComponentsRestClient;
+        private readonly ClientDiagnostics _componentsClientDiagnostics;
+        private readonly Components _componentsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsComponentCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsComponentCollection for mocking. </summary>
         protected ApplicationInsightsComponentCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsComponentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsComponentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationInsightsComponentComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsComponentResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApplicationInsightsComponentResource.ResourceType, out string applicationInsightsComponentComponentsApiVersion);
-            _applicationInsightsComponentComponentsRestClient = new ComponentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentComponentsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApplicationInsightsComponentResource.ResourceType, out string applicationInsightsComponentApiVersion);
+            _componentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsComponentResource.ResourceType.Namespace, Diagnostics);
+            _componentsRestClient = new Components(_componentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsComponentApiVersion ?? "2020-02-02");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates (or updates) an Application Insights component. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="data"> Properties that need to be specified to create an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ApplicationInsightsComponentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ApplicationInsightsComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsComponentComponentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _applicationInsightsComponentComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation<ApplicationInsightsComponentResource>(Response.FromValue(new ApplicationInsightsComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsComponentData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsComponentData> response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation<ApplicationInsightsComponentResource> operation = new ApplicationInsightsArmOperation<ApplicationInsightsComponentResource>(Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Creates (or updates) an Application Insights component. Note: You cannot specify a different value for InstrumentationKey nor AppId in the Put operation.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="data"> Properties that need to be specified to create an Application Insights component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ApplicationInsightsComponentResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ApplicationInsightsComponentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationInsightsComponentComponentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
-                var uri = _applicationInsightsComponentComponentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation<ApplicationInsightsComponentResource>(Response.FromValue(new ApplicationInsightsComponentResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, ApplicationInsightsComponentData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsComponentData> response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation<ApplicationInsightsComponentResource> operation = new ApplicationInsightsArmOperation<ApplicationInsightsComponentResource>(Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Returns an Application Insights component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApplicationInsightsComponentResource>> GetAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Get");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsComponentComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsComponentData> response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Returns an Application Insights component.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApplicationInsightsComponentResource> Get(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Get");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationInsightsComponentComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsComponentData> response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Gets a list of Application Insights components within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetByResourceGroupAsyncCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
         /// Gets a list of Application Insights components within a resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsComponentComponentsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsComponentResource(Client, ApplicationInsightsComponentData.DeserializeApplicationInsightsComponentData(e)), _applicationInsightsComponentComponentsClientDiagnostics, Pipeline, "ApplicationInsightsComponentCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationInsightsComponentData, ApplicationInsightsComponentResource>(new ComponentsGetByResourceGroupCollectionResultOfT(_componentsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsComponentCollection.GetAll"), data => new ApplicationInsightsComponentResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Exists");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsComponentComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Exists");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.Exists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsComponentComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApplicationInsightsComponentResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsComponentComponentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/components/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Components_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ApplicationInsightsComponents_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2020-02-02</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2020-02-02. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the Application Insights component resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApplicationInsightsComponentResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            using var scope = _applicationInsightsComponentComponentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.GetIfExists");
+            using DiagnosticScope scope = _componentsClientDiagnostics.CreateScope("ApplicationInsightsComponentCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsComponentComponentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _componentsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, resourceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsComponentData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsComponentData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsComponentData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsComponentResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsComponentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationInsightsComponentResource> IAsyncEnumerable<ApplicationInsightsComponentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

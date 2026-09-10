@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -17,38 +18,57 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct PartnerTopicRoutingMode : IEquatable<PartnerTopicRoutingMode>
     {
         private readonly string _value;
+        /// <summary> SourceEventAttribute. </summary>
+        private const string SourceEventAttributeValue = "SourceEventAttribute";
+        /// <summary> ChannelNameHeader. </summary>
+        private const string ChannelNameHeaderValue = "ChannelNameHeader";
 
         /// <summary> Initializes a new instance of <see cref="PartnerTopicRoutingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PartnerTopicRoutingMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SourceEventAttributeValue = "SourceEventAttribute";
-        private const string ChannelNameHeaderValue = "ChannelNameHeader";
+            _value = value;
+        }
 
         /// <summary> SourceEventAttribute. </summary>
         public static PartnerTopicRoutingMode SourceEventAttribute { get; } = new PartnerTopicRoutingMode(SourceEventAttributeValue);
+
         /// <summary> ChannelNameHeader. </summary>
         public static PartnerTopicRoutingMode ChannelNameHeader { get; } = new PartnerTopicRoutingMode(ChannelNameHeaderValue);
+
         /// <summary> Determines if two <see cref="PartnerTopicRoutingMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PartnerTopicRoutingMode left, PartnerTopicRoutingMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PartnerTopicRoutingMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PartnerTopicRoutingMode left, PartnerTopicRoutingMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PartnerTopicRoutingMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PartnerTopicRoutingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PartnerTopicRoutingMode(string value) => new PartnerTopicRoutingMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PartnerTopicRoutingMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PartnerTopicRoutingMode?(string value) => value == null ? null : new PartnerTopicRoutingMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PartnerTopicRoutingMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PartnerTopicRoutingMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

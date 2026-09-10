@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string avsPureStoragePolicyApiVersion);
             _pureStoragePoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _pureStoragePoliciesRestClient = new PureStoragePolicies(_pureStoragePoliciesClientDiagnostics, Pipeline, Endpoint, avsPureStoragePolicyApiVersion ?? "2025-09-01");
+            _pureStoragePoliciesRestClient = new PureStoragePolicies(_pureStoragePoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPureStoragePolicyApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _pureStoragePoliciesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, AvsPureStoragePolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsPureStoragePolicyResource> operation = new AvsArmOperation<AvsPureStoragePolicyResource>(
-                    new AvsPureStoragePolicyOperationSource(Client),
+                    new AvsPureStoragePolicyResourceOperationSource(Client),
                     _pureStoragePoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

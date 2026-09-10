@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var mockResolver = new Mock<INameResolver>(MockBehavior.Strict);
             var options = new WebPubSubServiceAccessOptions();
             var accessFactory = new WebPubSubServiceAccessFactory(_configuration, TestAzureComponentFactory.Instance);
-            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options, accessFactory);
+            _provider = new WebPubSubContextBindingProvider(mockResolver.Object, _configuration, options, accessFactory, NullLogger.Instance);
         }
 
         [TestCase]
@@ -58,6 +59,63 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests
             var request = value as WebPubSubContext;
             Assert.AreEqual(typeof(PreflightRequest), request.Request.GetType());
             Assert.True((request.Request as PreflightRequest).IsValid);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_NullOrEmpty_DoesNotPopulateConnections()
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            var attributeWithNull = new WebPubSubContextAttribute
+            {
+                Connection = null,
+            };
+
+            var attributeWithEmpty = new WebPubSubContextAttribute
+            {
+                Connection = string.Empty,
+            };
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.IsNull(attributeWithNull.Connections);
+            Assert.IsNull(attributeWithEmpty.Connections);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_WithValue_PopulatesConnections()
+        {
+            var attribute = new WebPubSubContextAttribute();
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionA";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.NotNull(attribute.Connections);
+            Assert.AreEqual(1, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_DoesNotOverrideConnections_WhenAlreadySet()
+        {
+            var attribute = new WebPubSubContextAttribute("connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            attribute.Connection = "connectionC";
+#pragma warning restore CS0618 // Type or member is obsolete
+
+            Assert.AreEqual(2, attribute.Connections.Length);
+            Assert.AreEqual("connectionA", attribute.Connections[0]);
+            Assert.AreEqual("connectionB", attribute.Connections[1]);
+        }
+
+        [TestCase]
+        public void ContextAttribute_LegacyConnection_Getter_ReturnsFirstConnection()
+        {
+            var attribute = new WebPubSubContextAttribute("connectionA", "connectionB");
+
+#pragma warning disable CS0618 // Type or member is obsolete
+            Assert.AreEqual("connectionA", attribute.Connection);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         public static void TestFunc(

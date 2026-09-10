@@ -8,6 +8,7 @@
 using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
@@ -20,7 +21,6 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(ListQueryKeysResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
-    [ModelReaderWriterBuildable(typeof(OfferingsListResult))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionPropertiesPrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesResult))]
     [ModelReaderWriterBuildable(typeof(QuotaUsageResult))]
@@ -37,6 +37,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchManagementRequestOptions))]
     [ModelReaderWriterBuildable(typeof(SearchNetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(SearchOfferingsByRegion))]
+    [ModelReaderWriterBuildable(typeof(SearchOfferingsResult))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionResource))]
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownSearchDataIdentity))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerSearchContext : ModelReaderWriterContext
     {
     }

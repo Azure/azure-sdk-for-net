@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class SpringBootAdminComponent : IUtf8JsonSerializable, IJsonModel<SpringBootAdminComponent>
+    /// <summary> Spring Boot Admin properties. </summary>
+    public partial class SpringBootAdminComponent : JavaComponentProperties, IJsonModel<SpringBootAdminComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAdminComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override JavaComponentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSpringBootAdminComponent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SpringBootAdminComponent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpringBootAdminComponent IPersistableModel<SpringBootAdminComponent>.Create(BinaryData data, ModelReaderWriterOptions options) => (SpringBootAdminComponent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SpringBootAdminComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SpringBootAdminComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Ingress))
             {
@@ -44,264 +82,113 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        SpringBootAdminComponent IJsonModel<SpringBootAdminComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SpringBootAdminComponent IJsonModel<SpringBootAdminComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SpringBootAdminComponent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override JavaComponentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSpringBootAdminComponent(document.RootElement, options);
         }
 
-        internal static SpringBootAdminComponent DeserializeSpringBootAdminComponent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SpringBootAdminComponent DeserializeSpringBootAdminComponent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            JavaComponentIngress ingress = default;
             JavaComponentType componentType = default;
             JavaComponentProvisioningState? provisioningState = default;
             IList<JavaComponentConfigurationProperty> configurations = default;
             JavaComponentPropertiesScale scale = default;
             IList<JavaComponentServiceBind> serviceBinds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            JavaComponentIngress ingress = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ingress"u8))
+                if (prop.NameEquals("componentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    componentType = new JavaComponentType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ingress = JavaComponentIngress.DeserializeJavaComponentIngress(property.Value, options);
+                    provisioningState = new JavaComponentProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("componentType"u8))
+                if (prop.NameEquals("configurations"u8))
                 {
-                    componentType = new JavaComponentType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new JavaComponentProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("configurations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<JavaComponentConfigurationProperty> array = new List<JavaComponentConfigurationProperty>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(JavaComponentConfigurationProperty.DeserializeJavaComponentConfigurationProperty(item, options));
                     }
                     configurations = array;
                     continue;
                 }
-                if (property.NameEquals("scale"u8))
+                if (prop.NameEquals("scale"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scale = JavaComponentPropertiesScale.DeserializeJavaComponentPropertiesScale(property.Value, options);
+                    scale = JavaComponentPropertiesScale.DeserializeJavaComponentPropertiesScale(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("serviceBinds"u8))
+                if (prop.NameEquals("serviceBinds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<JavaComponentServiceBind> array = new List<JavaComponentServiceBind>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(JavaComponentServiceBind.DeserializeJavaComponentServiceBind(item, options));
                     }
                     serviceBinds = array;
                     continue;
                 }
+                if (prop.NameEquals("ingress"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ingress = JavaComponentIngress.DeserializeJavaComponentIngress(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SpringBootAdminComponent(
                 componentType,
                 provisioningState,
                 configurations ?? new ChangeTrackingList<JavaComponentConfigurationProperty>(),
                 scale,
                 serviceBinds ?? new ChangeTrackingList<JavaComponentServiceBind>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 ingress);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IngressFqdn", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ingress: ");
-                builder.AppendLine("{");
-                builder.Append("    fqdn: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Ingress))
-                {
-                    builder.Append("  ingress: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Ingress, options, 2, false, "  ingress: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComponentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  componentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  componentType: ");
-                builder.AppendLine($"'{ComponentType.ToString()}'");
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Configurations), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurations: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Configurations))
-                {
-                    if (Configurations.Any())
-                    {
-                        builder.Append("  configurations: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Configurations)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  configurations: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scale), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scale: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Scale))
-                {
-                    builder.Append("  scale: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Scale, options, 2, false, "  scale: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBinds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceBinds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ServiceBinds))
-                {
-                    if (ServiceBinds.Any())
-                    {
-                        builder.Append("  serviceBinds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in ServiceBinds)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  serviceBinds: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SpringBootAdminComponent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SpringBootAdminComponent IPersistableModel<SpringBootAdminComponent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAdminComponent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSpringBootAdminComponent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SpringBootAdminComponent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SpringBootAdminComponent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string callId = default;
             LocalShellExecAction action = default;
-            OutputItemLocalShellToolCallStatus status = default;
+            ItemLocalShellToolCallStatus status = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = prop.Value.GetString().ToOutputItemLocalShellToolCallStatus();
+                    status = prop.Value.GetString().ToItemLocalShellToolCallStatus();
                     continue;
                 }
                 if (options.Format != "W")

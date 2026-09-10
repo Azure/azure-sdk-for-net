@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Net.ServerSentEvents;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -16,28 +18,19 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// responsible only for SSE wire-format output, keep-alive heartbeats, and
 /// background-mode client-disconnect handling.
 /// </summary>
-/// <remarks>
-/// Takes ownership of the <see cref="Activity"/> created by
-/// <see cref="ResponsesActivitySource.StartCreateResponseActivity"/> so that the
-/// tracing span covers the full SSE streaming duration. The activity is disposed
-/// in the <c>finally</c> block of <see cref="ExecuteAsync"/>, matching Python's
-/// <c>trace_stream</c> / <c>end_span</c> pattern.
-/// </remarks>
 internal sealed class SseResult : IResult
 {
-    private readonly IAsyncEnumerable<ResponseStreamEvent> _events;
+    private readonly IAsyncEnumerable<SseItem<string>> _events;
     private readonly ResponseExecution _execution;
     private readonly CancellationTokenSource _linkedCts;
-    private readonly Activity? _activity;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly ILogger _logger;
     private readonly TimeSpan _keepAliveInterval;
 
     public SseResult(
-        IAsyncEnumerable<ResponseStreamEvent> events,
+        IAsyncEnumerable<SseItem<string>> events,
         ResponseExecution execution,
         CancellationTokenSource linkedCts,
-        Activity? activity,
         JsonSerializerOptions jsonOptions,
         ILogger logger,
         TimeSpan keepAliveInterval)
@@ -45,7 +38,6 @@ internal sealed class SseResult : IResult
         _events = events;
         _execution = execution;
         _linkedCts = linkedCts;
-        _activity = activity;
         _jsonOptions = jsonOptions;
         _logger = logger;
         _keepAliveInterval = keepAliveInterval;
@@ -62,40 +54,21 @@ internal sealed class SseResult : IResult
         var responseId = _execution.ResponseId;
         _logger.LogInformation("SSE stream started for response {ResponseId}", responseId);
 
-        using var sseWriter = new SseWriter(httpContext.Response.Body, _jsonOptions);
-
-        // Start keep-alive timer if interval is not infinite
-        Timer? keepAliveTimer = null;
-        if (_keepAliveInterval != Timeout.InfiniteTimeSpan && _keepAliveInterval > TimeSpan.Zero)
-        {
-            keepAliveTimer = new Timer(
-                async _ =>
-                {
-                    try
-                    {
-                        await sseWriter.WriteKeepAliveAsync(CancellationToken.None);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogDebug(ex, "Keep-alive write failed for response {ResponseId}", responseId);
-                    }
-                },
-                null,
-                _keepAliveInterval,
-                _keepAliveInterval);
-        }
+        await using var keepAliveSession = SseKeepAliveSession.Start(
+            httpContext.Response.Body, _keepAliveInterval, _logger, $"response {responseId}");
+        var sseWriter = new SseWriter(keepAliveSession, _jsonOptions);
 
         try
         {
             var sseDisconnected = false;
 
-            await foreach (var evt in _events)
+            await foreach (var item in _events)
             {
                 if (!sseDisconnected)
                 {
                     try
                     {
-                        await sseWriter.WriteEventAsync(evt, evt.SequenceNumber,
+                        await sseWriter.WriteRawEventAsync(item.EventType, item.Data,
                             _execution.IsBackground ? CancellationToken.None : httpContext.RequestAborted);
                     }
                     catch when (_execution.IsBackground && httpContext.RequestAborted.IsCancellationRequested)
@@ -122,7 +95,7 @@ internal sealed class SseResult : IResult
             // Any error (pre-created failure, cancellation before response.created, etc.)
             // — tag the Activity span and write a standalone SSE error event with
             // full fidelity from the exception.
-            ResponsesExceptionFilter.RecordException(_activity, ex);
+            ResponsesExceptionFilter.RecordException(Activity.Current, ex);
             _logger.LogWarning(ex,
                 "SSE stream error for response {ResponseId}", responseId);
             try
@@ -136,13 +109,7 @@ internal sealed class SseResult : IResult
         }
         finally
         {
-            if (keepAliveTimer is not null)
-            {
-                await keepAliveTimer.DisposeAsync();
-            }
-
             _linkedCts.Dispose();
-            _activity?.Dispose();
         }
     }
 }

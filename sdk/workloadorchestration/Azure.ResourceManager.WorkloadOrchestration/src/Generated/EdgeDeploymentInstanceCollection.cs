@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeDeploymentInstanceResource.ResourceType, out string edgeDeploymentInstanceApiVersion);
             _instancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeDeploymentInstanceResource.ResourceType.Namespace, Diagnostics);
-            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Endpoint, edgeDeploymentInstanceApiVersion ?? "2025-06-01");
+            _instancesRestClient = new Instances(_instancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeDeploymentInstanceApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, EdgeDeploymentInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource> operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(
-                    new EdgeDeploymentInstanceOperationSource(Client),
+                    new EdgeDeploymentInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _instancesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, instanceName, EdgeDeploymentInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource> operation = new WorkloadOrchestrationArmOperation<EdgeDeploymentInstanceResource>(
-                    new EdgeDeploymentInstanceOperationSource(Client),
+                    new EdgeDeploymentInstanceResourceOperationSource(Client),
                     _instancesClientDiagnostics,
                     Pipeline,
                     message.Request,

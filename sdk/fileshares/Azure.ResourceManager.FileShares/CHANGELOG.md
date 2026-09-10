@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,13 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-04-30)
+
+### Features Added
+
+- Upgraded API version to `2026-06-01` (GA)
+- General availability of the Azure.ResourceManager.FileShares package
 
 ## 1.0.0-beta.2 (2026-02-05)
 

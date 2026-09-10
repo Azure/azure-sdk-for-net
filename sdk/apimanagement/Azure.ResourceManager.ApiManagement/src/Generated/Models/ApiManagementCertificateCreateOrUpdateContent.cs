@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Certificate create or update details. </summary>
     public partial class ApiManagementCertificateCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
         public ApiManagementCertificateCreateOrUpdateContent()
@@ -51,26 +23,70 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementCertificateCreateOrUpdateContent"/>. </summary>
-        /// <param name="data"> Base 64 encoded certificate using the application/x-pkcs12 representation. </param>
-        /// <param name="password"> Password for the Certificate. </param>
-        /// <param name="keyVaultDetails"> KeyVault location details of the certificate. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementCertificateCreateOrUpdateContent(string data, string password, KeyVaultContractCreateProperties keyVaultDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Certificate create or update properties details. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementCertificateCreateOrUpdateContent(CertificateCreateOrUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Data = data;
-            Password = password;
-            KeyVaultDetails = keyVaultDetails;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Certificate create or update properties details. </summary>
+        [WirePath("properties")]
+        internal CertificateCreateOrUpdateProperties Properties { get; set; }
 
         /// <summary> Base 64 encoded certificate using the application/x-pkcs12 representation. </summary>
         [WirePath("properties.data")]
-        public string Data { get; set; }
+        public string Data
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Data;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.Data = value;
+            }
+        }
+
         /// <summary> Password for the Certificate. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
         /// <summary> KeyVault location details of the certificate. </summary>
         [WirePath("properties.keyVault")]
-        public KeyVaultContractCreateProperties KeyVaultDetails { get; set; }
+        public KeyVaultContractCreateProperties KeyVaultDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateCreateOrUpdateProperties();
+                }
+                Properties.KeyVaultDetails = value;
+            }
+        }
     }
 }

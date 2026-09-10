@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCrossConnectionRoutesTableSummary : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>
+    /// <summary> The routes table associated with the ExpressRouteCircuit. </summary>
+    public partial class ExpressRouteCrossConnectionRoutesTableSummary : IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteCrossConnectionRoutesTableSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeExpressRouteCrossConnectionRoutesTableSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCrossConnectionRoutesTableSummary IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Neighbor))
             {
                 writer.WritePropertyName("neighbor"u8);
@@ -55,15 +94,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("stateOrPrefixesReceived"u8);
                 writer.WriteStringValue(StateOrPrefixesReceived);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -72,22 +111,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ExpressRouteCrossConnectionRoutesTableSummary IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCrossConnectionRoutesTableSummary IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ExpressRouteCrossConnectionRoutesTableSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeExpressRouteCrossConnectionRoutesTableSummary(document.RootElement, options);
         }
 
-        internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,173 +140,39 @@ namespace Azure.ResourceManager.Network.Models
             int? asn = default;
             string upDown = default;
             string stateOrPrefixesReceived = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("neighbor"u8))
+                if (prop.NameEquals("neighbor"u8))
                 {
-                    neighbor = property.Value.GetString();
+                    neighbor = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asn"u8))
+                if (prop.NameEquals("asn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    asn = property.Value.GetInt32();
+                    asn = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upDown"u8))
+                if (prop.NameEquals("upDown"u8))
                 {
-                    upDown = property.Value.GetString();
+                    upDown = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("stateOrPrefixesReceived"u8))
+                if (prop.NameEquals("stateOrPrefixesReceived"u8))
                 {
-                    stateOrPrefixesReceived = property.Value.GetString();
+                    stateOrPrefixesReceived = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived, serializedAdditionalRawData);
+            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor, asn, upDown, stateOrPrefixesReceived, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Neighbor), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  neighbor: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Neighbor))
-                {
-                    builder.Append("  neighbor: ");
-                    if (Neighbor.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Neighbor}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Neighbor}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Asn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  asn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Asn))
-                {
-                    builder.Append("  asn: ");
-                    builder.AppendLine($"{Asn.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpDown), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  upDown: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UpDown))
-                {
-                    builder.Append("  upDown: ");
-                    if (UpDown.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UpDown}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UpDown}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StateOrPrefixesReceived), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  stateOrPrefixesReceived: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StateOrPrefixesReceived))
-                {
-                    builder.Append("  stateOrPrefixesReceived: ");
-                    if (StateOrPrefixesReceived.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{StateOrPrefixesReceived}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{StateOrPrefixesReceived}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ExpressRouteCrossConnectionRoutesTableSummary IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExpressRouteCrossConnectionRoutesTableSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

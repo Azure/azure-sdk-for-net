@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class WorkflowRunActionResource : IJsonModel<WorkflowRunActionData>
     {
-        private static WorkflowRunActionData s_dataDeserializationInstance;
-        private static WorkflowRunActionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<WorkflowRunActionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<WorkflowRunActionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new WorkflowRunActionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WorkflowRunActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionData>)Data).Write(writer, options);
 
-        WorkflowRunActionData IJsonModel<WorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WorkflowRunActionData IJsonModel<WorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<WorkflowRunActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         WorkflowRunActionData IPersistableModel<WorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             DomainInfoPatchProperties domainInfo = default;
             DesktopVirtualizationSecurityInfoPatchProperties securityInfo = default;
             DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials = default;
-            BootDiagnosticsInfoPatchProperties bootDiagnosticsInfo = default;
+            DesktopVirtualizationBootDiagnosticsInfoPatchProperties bootDiagnosticsInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    bootDiagnosticsInfo = BootDiagnosticsInfoPatchProperties.DeserializeBootDiagnosticsInfoPatchProperties(prop.Value, options);
+                    bootDiagnosticsInfo = DesktopVirtualizationBootDiagnosticsInfoPatchProperties.DeserializeDesktopVirtualizationBootDiagnosticsInfoPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

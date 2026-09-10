@@ -461,24 +461,17 @@ namespace Azure.Messaging.ServiceBus
                 };
 
         /// <summary>
-        /// Creates a new <see cref="TopicRuntimeProperties" /> instance for mocking.
+        /// Creates a new <see cref="Administration.TopicRuntimeProperties" /> instance for mocking.
         /// </summary>
-        /// <param name="name">The name to assign as the value of <see cref="TopicRuntimeProperties.Name"/>.</param>
-        /// <param name="scheduledMessageCount">The count to assign as the value of <see cref="TopicRuntimeProperties.ScheduledMessageCount"/>.</param>
-        /// <param name="sizeInBytes">The size to assign as the value of <see cref="TopicRuntimeProperties.SizeInBytes"/>.</param>
-        /// <param name="subscriptionCount">The count to assign as the value of <see cref="TopicRuntimeProperties.SubscriptionCount"/>.</param>
-        /// <param name="createdAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.CreatedAt"/>.</param>
-        /// <param name="updatedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.UpdatedAt"/>.</param>
-        /// <param name="accessedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.AccessedAt"/>.</param>
-        /// <returns>The populated <see cref="TopicRuntimeProperties"/> instance to use for mocking.</returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static TopicRuntimeProperties TopicRuntimeProperties(
             string name,
-            long scheduledMessageCount = default,
-            long sizeInBytes = default,
-            int subscriptionCount = default,
-            DateTimeOffset createdAt = default,
-            DateTimeOffset updatedAt = default,
-            DateTimeOffset accessedAt = default) =>
+            long scheduledMessageCount,
+            long sizeInBytes,
+            int subscriptionCount,
+            DateTimeOffset createdAt,
+            DateTimeOffset updatedAt,
+            DateTimeOffset accessedAt) =>
                 new(name)
                 {
                     ScheduledMessageCount = scheduledMessageCount,
@@ -487,6 +480,41 @@ namespace Azure.Messaging.ServiceBus
                     CreatedAt = createdAt,
                     UpdatedAt = updatedAt,
                     AccessedAt = accessedAt
+                };
+
+        /// <summary>
+        /// Creates a new <see cref="Administration.TopicRuntimeProperties" /> instance for mocking.
+        /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="TopicRuntimeProperties.Name"/>.</param>
+        /// <param name="scheduledMessageCount">The count to assign as the value of <see cref="TopicRuntimeProperties.ScheduledMessageCount"/>.</param>
+        /// <param name="sizeInBytes">The size to assign as the value of <see cref="TopicRuntimeProperties.SizeInBytes"/>.</param>
+        /// <param name="subscriptionCount">The count to assign as the value of <see cref="TopicRuntimeProperties.SubscriptionCount"/>.</param>
+        /// <param name="createdAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.CreatedAt"/>.</param>
+        /// <param name="updatedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.UpdatedAt"/>.</param>
+        /// <param name="accessedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.AccessedAt"/>.</param>
+        /// <param name="sqlFilterCount">The count to assign as the value of <see cref="TopicRuntimeProperties.SqlFilterCount"/>.</param>
+        /// <param name="correlationFilterCount">The count to assign as the value of <see cref="TopicRuntimeProperties.CorrelationFilterCount"/>.</param>
+        /// <returns>The populated <see cref="Administration.TopicRuntimeProperties"/> instance to use for mocking.</returns>
+        public static TopicRuntimeProperties TopicRuntimeProperties(
+            string name,
+            long scheduledMessageCount = default,
+            long sizeInBytes = default,
+            int subscriptionCount = default,
+            DateTimeOffset createdAt = default,
+            DateTimeOffset updatedAt = default,
+            DateTimeOffset accessedAt = default,
+            int sqlFilterCount = default,
+            int correlationFilterCount = default) =>
+                new(name)
+                {
+                    ScheduledMessageCount = scheduledMessageCount,
+                    SizeInBytes = sizeInBytes,
+                    SubscriptionCount = subscriptionCount,
+                    CreatedAt = createdAt,
+                    UpdatedAt = updatedAt,
+                    AccessedAt = accessedAt,
+                    SqlFilterCount = sqlFilterCount,
+                    CorrelationFilterCount = correlationFilterCount
                 };
 
         /// <summary>

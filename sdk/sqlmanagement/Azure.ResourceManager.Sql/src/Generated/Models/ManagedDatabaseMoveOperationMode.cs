@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct ManagedDatabaseMoveOperationMode : IEquatable<ManagedDatabaseMoveOperationMode>
     {
         private readonly string _value;
+        /// <summary> Move. </summary>
+        private const string MoveValue = "Move";
+        /// <summary> Copy. </summary>
+        private const string CopyValue = "Copy";
 
         /// <summary> Initializes a new instance of <see cref="ManagedDatabaseMoveOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedDatabaseMoveOperationMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MoveValue = "Move";
-        private const string CopyValue = "Copy";
+            _value = value;
+        }
 
         /// <summary> Move. </summary>
         public static ManagedDatabaseMoveOperationMode Move { get; } = new ManagedDatabaseMoveOperationMode(MoveValue);
+
         /// <summary> Copy. </summary>
         public static ManagedDatabaseMoveOperationMode Copy { get; } = new ManagedDatabaseMoveOperationMode(CopyValue);
+
         /// <summary> Determines if two <see cref="ManagedDatabaseMoveOperationMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedDatabaseMoveOperationMode left, ManagedDatabaseMoveOperationMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedDatabaseMoveOperationMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedDatabaseMoveOperationMode left, ManagedDatabaseMoveOperationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedDatabaseMoveOperationMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedDatabaseMoveOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedDatabaseMoveOperationMode(string value) => new ManagedDatabaseMoveOperationMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedDatabaseMoveOperationMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedDatabaseMoveOperationMode?(string value) => value == null ? null : new ManagedDatabaseMoveOperationMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedDatabaseMoveOperationMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedDatabaseMoveOperationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

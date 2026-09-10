@@ -6,7 +6,7 @@
     {
       "$id": "1",
       "kind": "constant",
-      "name": "postValidContentType",
+      "name": "PostValidContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -17,12 +17,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
       "kind": "constant",
-      "name": "getValidContentType",
+      "name": "PostValidContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "putValidContentType",
+      "name": "PostValidContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "putValidContentType1",
+      "name": "PostValidContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,7 +68,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -73,6 +77,7 @@
       "$id": "9",
       "kind": "model",
       "name": "Siamese",
+      "apiVersions": [],
       "namespace": "Type.Model.Inheritance.NotDiscriminated",
       "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Siamese",
       "usage": "Input,Output,Json",
@@ -83,10 +88,12 @@
           "name": "Siamese"
         }
       },
+      "isExactName": false,
       "baseModel": {
         "$id": "10",
         "kind": "model",
         "name": "Cat",
+        "apiVersions": [],
         "namespace": "Type.Model.Inheritance.NotDiscriminated",
         "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Cat",
         "usage": "Input,Output,Json",
@@ -97,10 +104,12 @@
             "name": "Cat"
           }
         },
+        "isExactName": false,
         "baseModel": {
           "$id": "11",
           "kind": "model",
           "name": "Pet",
+          "apiVersions": [],
           "namespace": "Type.Model.Inheritance.NotDiscriminated",
           "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.Pet",
           "usage": "Input,Output,Json",
@@ -111,11 +120,13 @@
               "name": "Pet"
             }
           },
+          "isExactName": false,
           "properties": [
             {
               "$id": "12",
               "kind": "property",
               "name": "name",
+              "apiVersions": [],
               "serializedName": "name",
               "type": {
                 "$id": "13",
@@ -135,7 +146,8 @@
                   "name": "name"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ]
         },
@@ -144,6 +156,7 @@
             "$id": "14",
             "kind": "property",
             "name": "age",
+            "apiVersions": [],
             "serializedName": "age",
             "type": {
               "$id": "15",
@@ -163,7 +176,8 @@
                 "name": "age"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           }
         ]
       },
@@ -172,6 +186,7 @@
           "$id": "16",
           "kind": "property",
           "name": "smart",
+          "apiVersions": [],
           "serializedName": "smart",
           "type": {
             "$id": "17",
@@ -191,7 +206,8 @@
               "name": "smart"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -207,6 +223,7 @@
       "$id": "18",
       "kind": "client",
       "name": "NotDiscriminatedClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.NotDiscriminated",
       "doc": "Illustrates not-discriminated inheritance model.",
       "methods": [
@@ -214,11 +231,13 @@
           "$id": "19",
           "kind": "basic",
           "name": "postValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "20",
             "name": "postValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -255,9 +274,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "23",
@@ -293,9 +314,16 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.postValid.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -304,7 +332,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "POST",
@@ -338,11 +367,13 @@
           "$id": "25",
           "kind": "basic",
           "name": "getValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "26",
             "name": "getValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -377,9 +408,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.getValid.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -394,7 +427,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -426,11 +464,13 @@
           "$id": "29",
           "kind": "basic",
           "name": "putValid",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "30",
             "name": "putValid",
+            "isExactName": false,
             "resourceName": "NotDiscriminated",
             "accessibility": "public",
             "parameters": [
@@ -467,9 +507,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "33",
@@ -502,9 +544,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "35",
@@ -540,9 +584,16 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.putValid.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -557,7 +608,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "PUT",
@@ -624,7 +680,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.NotDiscriminated.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

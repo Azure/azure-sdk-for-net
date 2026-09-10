@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {

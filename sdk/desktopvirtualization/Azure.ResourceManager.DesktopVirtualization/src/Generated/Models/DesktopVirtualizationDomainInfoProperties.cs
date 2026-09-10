@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="activeDirectoryInfo"> Active directory info. Only one should be populated based on the join type. </param>
         /// <param name="azureActiveDirectoryInfo"> Azure active directory info. Only one should be populated based on the join type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DesktopVirtualizationDomainInfoProperties(DesktopVirtualizationDomainJoinType joinType, ActiveDirectoryInfoProperties activeDirectoryInfo, AzureActiveDirectoryInfoProperties azureActiveDirectoryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DesktopVirtualizationDomainInfoProperties(DesktopVirtualizationDomainJoinType joinType, DesktopVirtualizationActiveDirectoryInfoProperties activeDirectoryInfo, AzureActiveDirectoryInfoProperties azureActiveDirectoryInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JoinType = joinType;
             ActiveDirectoryInfo = activeDirectoryInfo;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Active directory info. Only one should be populated based on the join type. </summary>
         [WirePath("activeDirectoryInfo")]
-        public ActiveDirectoryInfoProperties ActiveDirectoryInfo { get; set; }
+        public DesktopVirtualizationActiveDirectoryInfoProperties ActiveDirectoryInfo { get; set; }
 
         /// <summary> Azure active directory info. Only one should be populated based on the join type. </summary>
         [WirePath("azureActiveDirectoryInfo")]

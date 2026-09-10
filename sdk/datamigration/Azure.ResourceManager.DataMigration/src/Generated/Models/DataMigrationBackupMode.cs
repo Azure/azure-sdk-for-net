@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationBackupMode : IEquatable<DataMigrationBackupMode>
     {
         private readonly string _value;
+        /// <summary> CreateBackup. </summary>
+        private const string CreateBackupValue = "CreateBackup";
+        /// <summary> ExistingBackup. </summary>
+        private const string ExistingBackupValue = "ExistingBackup";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationBackupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationBackupMode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreateBackupValue = "CreateBackup";
-        private const string ExistingBackupValue = "ExistingBackup";
+            _value = value;
+        }
 
         /// <summary> CreateBackup. </summary>
         public static DataMigrationBackupMode CreateBackup { get; } = new DataMigrationBackupMode(CreateBackupValue);
+
         /// <summary> ExistingBackup. </summary>
         public static DataMigrationBackupMode ExistingBackup { get; } = new DataMigrationBackupMode(ExistingBackupValue);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationBackupMode left, DataMigrationBackupMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationBackupMode left, DataMigrationBackupMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationBackupMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationBackupMode(string value) => new DataMigrationBackupMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationBackupMode?(string value) => value == null ? null : new DataMigrationBackupMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationBackupMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationBackupMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

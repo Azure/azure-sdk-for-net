@@ -11,6 +11,8 @@ namespace Azure.AI.Projects
         /// <summary> High. </summary>
         High,
         /// <summary> Auto. </summary>
-        Auto
+        Auto,
+        /// <summary> Original. </summary>
+        Original
     }
 }

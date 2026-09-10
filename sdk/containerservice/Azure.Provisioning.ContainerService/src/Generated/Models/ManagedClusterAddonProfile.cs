@@ -69,6 +69,10 @@ namespace Azure.Provisioning.ContainerService
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" }, isRequired: true);
             _config = DefineDictionaryProperty<string>(nameof(Config), new string[] { "config" });
             _identity = DefineModelProperty<ManagedClusterAddonProfileIdentity>(nameof(Identity), new string[] { "identity" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAddonProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

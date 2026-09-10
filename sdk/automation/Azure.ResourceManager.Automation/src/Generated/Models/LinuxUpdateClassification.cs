@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct LinuxUpdateClassification : IEquatable<LinuxUpdateClassification>
     {
         private readonly string _value;
+        /// <summary> Unclassified. </summary>
+        private const string UnclassifiedValue = "Unclassified";
+        /// <summary> Critical. </summary>
+        private const string CriticalValue = "Critical";
+        /// <summary> Security. </summary>
+        private const string SecurityValue = "Security";
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="LinuxUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LinuxUpdateClassification(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnclassifiedValue = "Unclassified";
-        private const string CriticalValue = "Critical";
-        private const string SecurityValue = "Security";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> Unclassified. </summary>
         public static LinuxUpdateClassification Unclassified { get; } = new LinuxUpdateClassification(UnclassifiedValue);
+
         /// <summary> Critical. </summary>
         public static LinuxUpdateClassification Critical { get; } = new LinuxUpdateClassification(CriticalValue);
+
         /// <summary> Security. </summary>
         public static LinuxUpdateClassification Security { get; } = new LinuxUpdateClassification(SecurityValue);
+
         /// <summary> Other. </summary>
         public static LinuxUpdateClassification Other { get; } = new LinuxUpdateClassification(OtherValue);
+
         /// <summary> Determines if two <see cref="LinuxUpdateClassification"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LinuxUpdateClassification left, LinuxUpdateClassification right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LinuxUpdateClassification"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LinuxUpdateClassification left, LinuxUpdateClassification right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LinuxUpdateClassification"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LinuxUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LinuxUpdateClassification(string value) => new LinuxUpdateClassification(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LinuxUpdateClassification"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LinuxUpdateClassification?(string value) => value == null ? null : new LinuxUpdateClassification(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LinuxUpdateClassification other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LinuxUpdateClassification other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

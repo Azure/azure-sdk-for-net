@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class CopyLongTermRetentionBackupContent : IUtf8JsonSerializable, IJsonModel<CopyLongTermRetentionBackupContent>
+    /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
+    public partial class CopyLongTermRetentionBackupContent : IJsonModel<CopyLongTermRetentionBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyLongTermRetentionBackupContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CopyLongTermRetentionBackupContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCopyLongTermRetentionBackupContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CopyLongTermRetentionBackupContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CopyLongTermRetentionBackupContent IPersistableModel<CopyLongTermRetentionBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CopyLongTermRetentionBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="copyLongTermRetentionBackupContent"> The <see cref="CopyLongTermRetentionBackupContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CopyLongTermRetentionBackupContent copyLongTermRetentionBackupContent)
+        {
+            if (copyLongTermRetentionBackupContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(copyLongTermRetentionBackupContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CopyLongTermRetentionBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,54 +80,25 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TargetSubscriptionId))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("targetSubscriptionId"u8);
-                writer.WriteStringValue(TargetSubscriptionId);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(TargetResourceGroup))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("targetResourceGroup"u8);
-                writer.WriteStringValue(TargetResourceGroup);
-            }
-            if (Optional.IsDefined(TargetServerResourceId))
-            {
-                writer.WritePropertyName("targetServerResourceId"u8);
-                writer.WriteStringValue(TargetServerResourceId);
-            }
-            if (Optional.IsDefined(TargetServerFullyQualifiedDomainName))
-            {
-                writer.WritePropertyName("targetServerFullyQualifiedDomainName"u8);
-                writer.WriteStringValue(TargetServerFullyQualifiedDomainName);
-            }
-            if (Optional.IsDefined(TargetDatabaseName))
-            {
-                writer.WritePropertyName("targetDatabaseName"u8);
-                writer.WriteStringValue(TargetDatabaseName);
-            }
-            if (Optional.IsDefined(TargetBackupStorageRedundancy))
-            {
-                writer.WritePropertyName("targetBackupStorageRedundancy"u8);
-                writer.WriteStringValue(TargetBackupStorageRedundancy.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -84,131 +107,50 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        CopyLongTermRetentionBackupContent IJsonModel<CopyLongTermRetentionBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CopyLongTermRetentionBackupContent IJsonModel<CopyLongTermRetentionBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CopyLongTermRetentionBackupContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCopyLongTermRetentionBackupContent(document.RootElement, options);
         }
 
-        internal static CopyLongTermRetentionBackupContent DeserializeCopyLongTermRetentionBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CopyLongTermRetentionBackupContent DeserializeCopyLongTermRetentionBackupContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string targetSubscriptionId = default;
-            string targetResourceGroup = default;
-            ResourceIdentifier targetServerResourceId = default;
-            string targetServerFullyQualifiedDomainName = default;
-            string targetDatabaseName = default;
-            SqlBackupStorageRedundancy? targetBackupStorageRedundancy = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            CopyLongTermRetentionBackupParametersProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("targetSubscriptionId"u8))
-                        {
-                            targetSubscriptionId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetResourceGroup"u8))
-                        {
-                            targetResourceGroup = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetServerResourceId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetServerResourceId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("targetServerFullyQualifiedDomainName"u8))
-                        {
-                            targetServerFullyQualifiedDomainName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetDatabaseName"u8))
-                        {
-                            targetDatabaseName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("targetBackupStorageRedundancy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = CopyLongTermRetentionBackupParametersProperties.DeserializeCopyLongTermRetentionBackupParametersProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new CopyLongTermRetentionBackupContent(
-                targetSubscriptionId,
-                targetResourceGroup,
-                targetServerResourceId,
-                targetServerFullyQualifiedDomainName,
-                targetDatabaseName,
-                targetBackupStorageRedundancy,
-                serializedAdditionalRawData);
+            return new CopyLongTermRetentionBackupContent(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<CopyLongTermRetentionBackupContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        CopyLongTermRetentionBackupContent IPersistableModel<CopyLongTermRetentionBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CopyLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCopyLongTermRetentionBackupContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(CopyLongTermRetentionBackupContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<CopyLongTermRetentionBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class DeletedServerResource : IJsonModel<DeletedServerData>
     {
-        private static DeletedServerData s_dataDeserializationInstance;
-        private static DeletedServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeletedServerData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeletedServerData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeletedServerData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeletedServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)Data).Write(writer, options);
 
-        DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedServerData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedServerData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

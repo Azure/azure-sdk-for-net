@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.Linq;
@@ -128,7 +127,6 @@ namespace BasicTypeSpec
             string itemName = default;
             int itemValue = default;
             string itemId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
 
             foreach (var attr in element.Attributes())
             {
@@ -154,7 +152,7 @@ namespace BasicTypeSpec
                     continue;
                 }
             }
-            return new XmlItem(itemName, itemValue, itemId, additionalBinaryDataProperties);
+            return new XmlItem(itemName, itemValue, itemId);
         }
 
         /// <param name="writer"> The XML writer. </param>

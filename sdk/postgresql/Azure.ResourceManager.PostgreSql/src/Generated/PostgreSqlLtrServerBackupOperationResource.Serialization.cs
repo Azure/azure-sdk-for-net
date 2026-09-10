@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    /// <summary></summary>
     public partial class PostgreSqlLtrServerBackupOperationResource : IJsonModel<PostgreSqlLtrServerBackupOperationData>
     {
-        private static PostgreSqlLtrServerBackupOperationData s_dataDeserializationInstance;
-        private static PostgreSqlLtrServerBackupOperationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<PostgreSqlLtrServerBackupOperationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<PostgreSqlLtrServerBackupOperationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new PostgreSqlLtrServerBackupOperationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PostgreSqlLtrServerBackupOperationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)Data).Write(writer, options);
 
-        PostgreSqlLtrServerBackupOperationData IJsonModel<PostgreSqlLtrServerBackupOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlLtrServerBackupOperationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PostgreSqlLtrServerBackupOperationData IJsonModel<PostgreSqlLtrServerBackupOperationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<PostgreSqlLtrServerBackupOperationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlLtrServerBackupOperationData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         PostgreSqlLtrServerBackupOperationData IPersistableModel<PostgreSqlLtrServerBackupOperationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlLtrServerBackupOperationData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
 
-        string IPersistableModel<PostgreSqlLtrServerBackupOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlLtrServerBackupOperationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PostgreSqlLtrServerBackupOperationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ImpactReporting
                     yield break;
                 }
                 InsightListResult result = InsightListResult.FromResponse(response);
-                yield return Page<ImpactInsightData>.FromValues((IReadOnlyList<ImpactInsightData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ImpactInsightData>.FromValues((IReadOnlyList<ImpactInsightData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

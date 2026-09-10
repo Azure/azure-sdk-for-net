@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.DeleteAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["tag2"] = "value2"
 },
             };
-            ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.UpdateAsync(WaitUntil.Completed, networkTagsObject);
+            ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.UpdateAsync(WaitUntil.Completed, networkTagsObject, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.ResetAsync(WaitUntil.Completed);
+            ArmOperation<VirtualNetworkGatewayResource> lro = await virtualNetworkGateway.ResetAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.ResetVpnClientSharedKeyAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.ResetVpnClientSharedKeyAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             VpnClientContent content = new VpnClientContent();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnClientPackageAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             VpnClientContent content = new VpnClientContent();
-            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGateway.GenerateVpnProfileAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await virtualNetworkGateway.GetVpnProfilePackageUrlAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await virtualNetworkGateway.GetVpnProfilePackageUrlAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<BgpPeerStatusListResult> lro = await virtualNetworkGateway.GetBgpPeerStatusAsync(WaitUntil.Completed);
+            ArmOperation<BgpPeerStatusListResult> lro = await virtualNetworkGateway.GetBgpPeerStatusAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             BgpPeerStatusListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetLearnedRoutesAsync(WaitUntil.Completed);
+            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetLearnedRoutesAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             GatewayRouteListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string peer = "test";
-            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetAdvertisedRoutesAsync(WaitUntil.Completed, peer);
+            ArmOperation<GatewayRouteListResult> lro = await virtualNetworkGateway.GetAdvertisedRoutesAsync(WaitUntil.Completed, peer, cancellationToken: System.Threading.CancellationToken.None);
             GatewayRouteListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? attemptRefresh = true;
-            ArmOperation<GatewayResiliencyInformation> lro = await virtualNetworkGateway.GetResiliencyInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            ArmOperation<GatewayResiliencyInformation> lro = await virtualNetworkGateway.GetResiliencyInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh, cancellationToken: System.Threading.CancellationToken.None);
             GatewayResiliencyInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? attemptRefresh = false;
-            ArmOperation<GatewayRouteSetsInformation> lro = await virtualNetworkGateway.GetRoutesInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh);
+            ArmOperation<GatewayRouteSetsInformation> lro = await virtualNetworkGateway.GetRoutesInformationAsync(WaitUntil.Completed, attemptRefresh: attemptRefresh, cancellationToken: System.Threading.CancellationToken.None);
             GatewayRouteSetsInformation result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Network.Samples
                 IkeIntegrity.Sha384,
                 DHGroup.DHGroup2,
                 PfsGroup.Pfs2);
-            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.SetVpnclientIPsecParametersAsync(WaitUntil.Completed, vpnclientIPsecParams);
+            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.SetVpnclientIPsecParametersAsync(WaitUntil.Completed, vpnclientIPsecParams, cancellationToken: System.Threading.CancellationToken.None);
             VpnClientIPsecParameters result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.GetVpnclientIPsecParametersAsync(WaitUntil.Completed);
+            ArmOperation<VpnClientIPsecParameters> lro = await virtualNetworkGateway.GetVpnclientIPsecParametersAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VpnClientIPsecParameters result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartPacketCaptureAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGateway.StopPacketCaptureAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             string type = "SingleSiteFailover";
             bool fetchLatest = true;
-            ArmOperation<IList<ExpressRouteFailoverTestDetails>> lro = await virtualNetworkGateway.GetFailoverAllTestDetailsAsync(WaitUntil.Completed, type, fetchLatest);
+            ArmOperation<IList<ExpressRouteFailoverTestDetails>> lro = await virtualNetworkGateway.GetFailoverAllTestDetailsAsync(WaitUntil.Completed, type, fetchLatest, cancellationToken: System.Threading.CancellationToken.None);
             IList<ExpressRouteFailoverTestDetails> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Network.Samples
             // invoke the operation
             string peeringLocation = "Vancouver";
             string failoverTestId = "fe458ae8-d2ae-4520-a104-44bc233bde7e";
-            ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> lro = await virtualNetworkGateway.GetFailoverSingleTestDetailsAsync(WaitUntil.Completed, peeringLocation, failoverTestId);
+            ArmOperation<IList<ExpressRouteFailoverSingleTestDetails>> lro = await virtualNetworkGateway.GetFailoverSingleTestDetailsAsync(WaitUntil.Completed, peeringLocation, failoverTestId, cancellationToken: System.Threading.CancellationToken.None);
             IList<ExpressRouteFailoverSingleTestDetails> result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string peeringLocation = "Vancouver";
-            ArmOperation<string> lro = await virtualNetworkGateway.StartExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, peeringLocation);
+            ArmOperation<string> lro = await virtualNetworkGateway.StartExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, peeringLocation, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -779,7 +779,7 @@ FailoverLocation = "Amsterdam",
 IsVerified = true,
 }},
             };
-            ArmOperation<string> lro = await virtualNetworkGateway.StopExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, content);
+            ArmOperation<string> lro = await virtualNetworkGateway.StopExpressRouteSiteFailoverSimulationAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -806,7 +806,7 @@ IsVerified = true,
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<VpnClientConnectionHealthDetailListResult> lro = await virtualNetworkGateway.GetVpnclientConnectionHealthAsync(WaitUntil.Completed);
+            ArmOperation<VpnClientConnectionHealthDetailListResult> lro = await virtualNetworkGateway.GetVpnclientConnectionHealthAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             VpnClientConnectionHealthDetailListResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -837,7 +837,7 @@ IsVerified = true,
             {
                 VpnConnectionIds = { "vpnconnId1", "vpnconnId2" },
             };
-            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request);
+            await virtualNetworkGateway.DisconnectVirtualNetworkGatewayVpnConnectionsAsync(WaitUntil.Completed, request, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -867,7 +867,7 @@ IsVerified = true,
             {
                 ResourceUri = new Uri("testUrl"),
             };
-            await virtualNetworkGateway.InvokePrepareMigrationAsync(WaitUntil.Completed, content);
+            await virtualNetworkGateway.InvokePrepareMigrationAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -893,7 +893,7 @@ IsVerified = true,
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.InvokeExecuteMigrationAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.InvokeExecuteMigrationAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -919,7 +919,7 @@ IsVerified = true,
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.InvokeCommitMigrationAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.InvokeCommitMigrationAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -945,7 +945,7 @@ IsVerified = true,
             VirtualNetworkGatewayResource virtualNetworkGateway = client.GetVirtualNetworkGatewayResource(virtualNetworkGatewayResourceId);
 
             // invoke the operation
-            await virtualNetworkGateway.InvokeAbortMigrationAsync(WaitUntil.Completed);
+            await virtualNetworkGateway.InvokeAbortMigrationAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

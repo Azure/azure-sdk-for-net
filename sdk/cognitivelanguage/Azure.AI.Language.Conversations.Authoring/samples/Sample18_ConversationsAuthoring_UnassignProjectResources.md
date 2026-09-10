@@ -13,6 +13,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To unassign project resources, call `UnassignProjectResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
 // Define assigned resource ID to be unassigned
@@ -25,7 +27,7 @@ var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 };
 
 // Start the operation
-Operation sampleOperation = client.UnassignProjectResources(
+Operation sampleOperation = projectClient.UnassignProjectResources(
     WaitUntil.Started,
     sampleProjectName,
     sampleUnassignIds
@@ -50,6 +52,8 @@ else
 To unassign project resources asynchronously, call `UnassignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
 // Define assigned resource ID to be unassigned
@@ -62,7 +66,7 @@ var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 };
 
 // Call the operation
-Operation sampleOperation = await client.UnassignProjectResourcesAsync(
+Operation sampleOperation = await projectClient.UnassignProjectResourcesAsync(
     WaitUntil.Started,
     sampleProjectName,
     sampleUnassignIds

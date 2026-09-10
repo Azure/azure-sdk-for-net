@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(EdgeActionExecutionFilterResource.ResourceType, out string edgeActionExecutionFilterApiVersion);
             _edgeActionExecutionFiltersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionExecutionFilterResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
+            _edgeActionExecutionFiltersRestClient = new EdgeActionExecutionFilters(_edgeActionExecutionFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionExecutionFilterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
-                    new EdgeActionExecutionFilterOperationSource(Client),
+                    new EdgeActionExecutionFilterResourceOperationSource(Client),
                     _edgeActionExecutionFiltersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionExecutionFiltersRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, executionFilter, EdgeActionExecutionFilterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionExecutionFilterResource> operation = new EdgeActionsArmOperation<EdgeActionExecutionFilterResource>(
-                    new EdgeActionExecutionFilterOperationSource(Client),
+                    new EdgeActionExecutionFilterResourceOperationSource(Client),
                     _edgeActionExecutionFiltersClientDiagnostics,
                     Pipeline,
                     message.Request,

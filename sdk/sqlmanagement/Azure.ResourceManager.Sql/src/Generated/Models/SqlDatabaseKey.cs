@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Database level key used for encryption at rest. </summary>
     public partial class SqlDatabaseKey
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SqlDatabaseKey"/>. </summary>
         public SqlDatabaseKey()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="createdOn"> The database key creation date. </param>
         /// <param name="subregion"> Subregion of the server key. </param>
         /// <param name="keyVersion"> The database key's version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SqlDatabaseKey(SqlDatabaseKeyType? keyType, string thumbprint, DateTimeOffset? createdOn, string subregion, string keyVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyType = keyType;
             Thumbprint = thumbprint;
             CreatedOn = createdOn;
             Subregion = subregion;
             KeyVersion = keyVersion;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The database key type. Only supported value is 'AzureKeyVault'. </summary>
         [WirePath("type")]
         public SqlDatabaseKeyType? KeyType { get; }
+
         /// <summary> Thumbprint of the database key. </summary>
         [WirePath("thumbprint")]
         public string Thumbprint { get; }
+
         /// <summary> The database key creation date. </summary>
         [WirePath("creationDate")]
         public DateTimeOffset? CreatedOn { get; }
+
         /// <summary> Subregion of the server key. </summary>
         [WirePath("subregion")]
         public string Subregion { get; }
+
         /// <summary> The database key's version. </summary>
         [WirePath("keyVersion")]
         public string KeyVersion { get; }

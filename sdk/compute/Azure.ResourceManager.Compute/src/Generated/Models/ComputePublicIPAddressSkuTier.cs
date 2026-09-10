@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ComputePublicIPAddressSkuTier : IEquatable<ComputePublicIPAddressSkuTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputePublicIPAddressSkuTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegionalValue = "Regional";
         private const string GlobalValue = "Global";
 
-        /// <summary> Regional. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComputePublicIPAddressSkuTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Regional. </summary>
         public static ComputePublicIPAddressSkuTier Regional { get; } = new ComputePublicIPAddressSkuTier(RegionalValue);
-        /// <summary> Global. </summary>
+
+        /// <summary> Gets the Global. </summary>
         public static ComputePublicIPAddressSkuTier Global { get; } = new ComputePublicIPAddressSkuTier(GlobalValue);
+
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputePublicIPAddressSkuTier left, ComputePublicIPAddressSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputePublicIPAddressSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputePublicIPAddressSkuTier left, ComputePublicIPAddressSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputePublicIPAddressSkuTier(string value) => new ComputePublicIPAddressSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputePublicIPAddressSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputePublicIPAddressSkuTier?(string value) => value == null ? null : new ComputePublicIPAddressSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputePublicIPAddressSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputePublicIPAddressSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

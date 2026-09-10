@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,31 +15,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class AzureCoreNetworkFunctionTemplate : VirtualNetworkFunctionTemplate
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionTemplate"/>. </summary>
-        public AzureCoreNetworkFunctionTemplate()
+        public AzureCoreNetworkFunctionTemplate() : base(VirtualNetworkFunctionNfviType.AzureCore)
         {
             NetworkFunctionApplications = new ChangeTrackingList<AzureCoreNetworkFunctionApplication>();
-            NfviType = VirtualNetworkFunctionNfviType.AzureCore;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="networkFunctionApplications">
-        /// Network function applications.
-        /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
-        /// </param>
-        internal AzureCoreNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AzureCoreNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="networkFunctionApplications"> Network function applications. </param>
+        internal AzureCoreNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<AzureCoreNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, additionalBinaryDataProperties)
         {
             NetworkFunctionApplications = networkFunctionApplications;
-            NfviType = nfviType;
         }
 
-        /// <summary>
-        /// Network function applications.
-        /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
-        /// </summary>
+        /// <summary> Network function applications. </summary>
         public IList<AzureCoreNetworkFunctionApplication> NetworkFunctionApplications { get; }
     }
 }

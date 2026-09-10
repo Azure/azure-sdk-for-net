@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationServiceScalability : IEquatable<DataMigrationServiceScalability>
     {
         private readonly string _value;
+        /// <summary> none. </summary>
+        private const string NoneValue = "none";
+        /// <summary> manual. </summary>
+        private const string ManualValue = "manual";
+        /// <summary> automatic. </summary>
+        private const string AutomaticValue = "automatic";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationServiceScalability"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationServiceScalability(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "none";
-        private const string ManualValue = "manual";
-        private const string AutomaticValue = "automatic";
+            _value = value;
+        }
 
         /// <summary> none. </summary>
         public static DataMigrationServiceScalability None { get; } = new DataMigrationServiceScalability(NoneValue);
+
         /// <summary> manual. </summary>
         public static DataMigrationServiceScalability Manual { get; } = new DataMigrationServiceScalability(ManualValue);
+
         /// <summary> automatic. </summary>
         public static DataMigrationServiceScalability Automatic { get; } = new DataMigrationServiceScalability(AutomaticValue);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceScalability"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationServiceScalability left, DataMigrationServiceScalability right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationServiceScalability"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationServiceScalability left, DataMigrationServiceScalability right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationServiceScalability"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceScalability"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationServiceScalability(string value) => new DataMigrationServiceScalability(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationServiceScalability"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationServiceScalability?(string value) => value == null ? null : new DataMigrationServiceScalability(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationServiceScalability other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationServiceScalability other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

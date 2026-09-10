@@ -101,7 +101,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(Duration))
             {
                 writer.WritePropertyName("duration"u8);
-                writer.WriteNumberValue(Convert.ToInt32(Duration.Value.TotalSeconds));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(Duration.Value.TotalSeconds)));
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

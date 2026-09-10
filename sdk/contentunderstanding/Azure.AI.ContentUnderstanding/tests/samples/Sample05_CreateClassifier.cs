@@ -25,7 +25,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task CreateClassifierAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingCreateClassifier
@@ -39,7 +39,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 },
                 ["Invoice"] = new ContentCategoryDefinition
                 {
-                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms.",
+                    AnalyzerId = "prebuilt-invoice" // Route Invoice segments for field extraction
                 },
                 ["Bank_Statement"] = new ContentCategoryDefinition
                 {
@@ -67,12 +68,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            classifier.Models["completion"] = "gpt-5.2";
+#else
+            classifier.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             // Create the classifier
             string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
-            // Define content categories for classification
+            // Define content categories for classification.
+            // The Invoice category sets AnalyzerId = "prebuilt-invoice" so matched segments are
+            // routed to the prebuilt invoice analyzer for field extraction.
             var categories = new Dictionary<string, ContentCategoryDefinition>
             {
                 ["Loan_Application"] = new ContentCategoryDefinition
@@ -81,7 +88,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 },
                 ["Invoice"] = new ContentCategoryDefinition
                 {
-                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
+                    Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms.",
+                    AnalyzerId = "prebuilt-invoice" // Route Invoice segments for field extraction
                 },
                 ["Bank_Statement"] = new ContentCategoryDefinition
                 {
@@ -109,7 +117,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            classifier.Models["completion"] = "gpt-5.2";
+#else
+            classifier.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             // Generate a unique analyzer ID and record it for playback
             string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
@@ -195,7 +207,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(result.Models, "Models should not be null");
             Assert.IsTrue(result.Models.Count >= 1, "Should have at least 1 model mapping");
             Assert.IsTrue(result.Models.ContainsKey("completion"), "Should contain 'completion' model mapping");
-            Assert.AreEqual("gpt-4.1", result.Models["completion"], "Completion model should be 'gpt-4.1'");
+            Assert.AreEqual(ModelProfile.CompletionModel, result.Models["completion"], "Completion model should match the configured model");
             Console.WriteLine($"Model mappings verified: {result.Models.Count} model(s)");
 
             // Verify description
@@ -233,7 +245,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeCategoryAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First create a classifier without segmentation
@@ -255,7 +267,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization without segmentation",
                 Config = config
             };
-            classifier.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            classifier.Models["completion"] = "gpt-5.2";
+#else
+            classifier.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -411,6 +427,27 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 Console.WriteLine("All category analysis with segmentation properties validated successfully");
                 #endregion
+
+                #region Snippet:ContentUnderstandingClassifierToLlmInput
+                // Convert classification results to LLM-friendly text.
+                // ToLlmInput automatically detects classification results: it expands the parent
+                // into per-segment blocks, each with its category label in the YAML front matter.
+                // Segments are separated by a ***** divider.
+                string llmText = analyzeResult.ToLlmInput();
+                Console.WriteLine(llmText);
+                #endregion
+
+                #region Assertion:ContentUnderstandingClassifierToLlmInput
+                Assert.IsNotNull(llmText, "LLM input text should not be null");
+                Assert.That(llmText, Does.StartWith("---\n"));
+                Assert.That(llmText, Does.Contain("mimeType: application/pdf"));
+                if (documentContent.Segments != null && documentContent.Segments.Count > 1)
+                {
+                    Assert.That(llmText, Does.Contain("*****"));
+                    Assert.That(llmText, Does.Contain("category:"));
+                }
+                Console.WriteLine($"Classification LLM input text generated ({llmText.Length} characters)");
+                #endregion
             }
             finally
             {
@@ -430,7 +467,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         public async Task AnalyzeCategoryWithSegmentsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First create a classifier with segmentation
@@ -452,7 +489,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization with automatic segmentation",
                 Config = config
             };
-            classifier.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            classifier.Models["completion"] = "gpt-5.2";
+#else
+            classifier.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,

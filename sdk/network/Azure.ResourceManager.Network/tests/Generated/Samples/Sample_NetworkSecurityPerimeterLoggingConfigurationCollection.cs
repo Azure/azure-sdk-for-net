@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 EnabledLogCategories = { "NspPublicInboundPerimeterRulesDenied", "NspPublicOutboundPerimeterRulesDenied" },
             };
-            ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loggingConfigurationName, data);
+            ArmOperation<NetworkSecurityPerimeterLoggingConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loggingConfigurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkSecurityPerimeterLoggingConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

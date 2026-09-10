@@ -5,14 +5,15 @@ using System;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
-using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
-public class Sample_EvaluatorsCatalog : SamplesBase
+public class Sample_EvaluatorsCatalog : EvaluationSampleBase
 {
     #region Snippet:Sample_PromptEvaluator_EvaluatorsCatalog
     private static EvaluatorVersion GetPromptEvaluatorVersion()
@@ -138,7 +139,7 @@ public class Sample_EvaluatorsCatalog : SamplesBase
         Console.WriteLine("     Categories:");
         foreach (EvaluatorCategory category in evaluator.Categories)
         {
-            Console.WriteLine("         - ${category}");
+            Console.WriteLine($"         - {category}");
         }
     }
     #endregion

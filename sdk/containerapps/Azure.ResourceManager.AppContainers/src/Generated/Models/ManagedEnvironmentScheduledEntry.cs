@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Maintenance schedule entry for a managed environment. </summary>
     public partial class ManagedEnvironmentScheduledEntry
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentScheduledEntry"/>. </summary>
         /// <param name="weekDay"> Day of the week when a managed environment can be patched. </param>
@@ -60,26 +32,23 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="weekDay"> Day of the week when a managed environment can be patched. </param>
         /// <param name="startHourUtc"> Start hour after which managed environment maintenance can start from 0 to 23 hour. </param>
         /// <param name="durationHours"> Length of maintenance window range from 8 to 24 hours. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentScheduledEntry(ManagedEnvironmentWeekDay weekDay, int startHourUtc, int durationHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedEnvironmentScheduledEntry(ManagedEnvironmentWeekDay weekDay, int startHourUtc, int durationHours, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WeekDay = weekDay;
             StartHourUtc = startHourUtc;
             DurationHours = durationHours;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentScheduledEntry"/> for deserialization. </summary>
-        internal ManagedEnvironmentScheduledEntry()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Day of the week when a managed environment can be patched. </summary>
         [WirePath("weekDay")]
         public ManagedEnvironmentWeekDay WeekDay { get; set; }
+
         /// <summary> Start hour after which managed environment maintenance can start from 0 to 23 hour. </summary>
         [WirePath("startHourUtc")]
         public int StartHourUtc { get; set; }
+
         /// <summary> Length of maintenance window range from 8 to 24 hours. </summary>
         [WirePath("durationHours")]
         public int DurationHours { get; set; }

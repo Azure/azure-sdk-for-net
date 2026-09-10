@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sql.Tests
             ManagedInstanceEncryptionProtectorData data = new ManagedInstanceEncryptionProtectorData()
             {
                 ServerKeyName = "ServiceManaged",
-                ServerKeyType =  "ServiceManaged",
+                ServerKeyType = "ServiceManaged",
                 IsAutoRotationEnabled = false,
             };
             var encryption = await collection.CreateOrUpdateAsync(WaitUntil.Completed, encryptionProtectorName, data);

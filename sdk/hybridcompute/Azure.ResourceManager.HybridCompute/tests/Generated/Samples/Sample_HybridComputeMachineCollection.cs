@@ -46,12 +46,9 @@ namespace Azure.ResourceManager.HybridCompute.Samples
             {
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 LocationData = new HybridComputeLocation("Redmond"),
-                OSProfile = new HybridComputeOSProfile
+                OSProfile = new HybridComputeOSProfile()
                 {
-                    WindowsConfiguration = new HybridComputeWindowsConfiguration
-                    {
-                        IsHotpatchingEnabled = true,
-                    },
+                    WindowsConfiguration = new HybridComputeWindowsConfiguration(),
                 },
                 VmId = Guid.Parse("b7a098cc-b0b8-46e8-a205-62f301a62a8f"),
                 ClientPublicKey = "string",

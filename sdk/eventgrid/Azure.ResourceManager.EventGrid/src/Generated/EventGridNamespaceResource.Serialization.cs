@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.EventGrid
 {
+    /// <summary></summary>
     public partial class EventGridNamespaceResource : IJsonModel<EventGridNamespaceData>
     {
-        private static EventGridNamespaceData s_dataDeserializationInstance;
-        private static EventGridNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<EventGridNamespaceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<EventGridNamespaceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new EventGridNamespaceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventGridNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)Data).Write(writer, options);
 
-        EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespaceData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

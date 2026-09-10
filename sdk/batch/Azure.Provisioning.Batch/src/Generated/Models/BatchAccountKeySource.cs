@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> Batch creates and manages the encryption keys used to protect the account data. </summary>
         [DataMember(Name = "Microsoft.Batch")]
-        MicrosoftBatch,
+        MicrosoftBatch = 0,
         /// <summary> The encryption keys used to protect the account data are stored in an external key vault. If this is set then the Batch Account identity must be set to `SystemAssigned` and a valid Key Identifier must also be supplied under the keyVaultProperties. </summary>
         [DataMember(Name = "Microsoft.KeyVault")]
-        MicrosoftKeyVault
+        MicrosoftKeyVault = 1
     }
 }

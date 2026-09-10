@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationMongoDBConnectionInfo : IUtf8JsonSerializable, IJsonModel<DataMigrationMongoDBConnectionInfo>
+    /// <summary> Describes a connection to a MongoDB data source. </summary>
+    public partial class DataMigrationMongoDBConnectionInfo : ServerConnectionInfo, IJsonModel<DataMigrationMongoDBConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationMongoDBConnectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DataMigrationMongoDBConnectionInfo"/> for deserialization. </summary>
+        internal DataMigrationMongoDBConnectionInfo()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerConnectionInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataMigrationMongoDBConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataMigrationMongoDBConnectionInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBConnectionInfo IPersistableModel<DataMigrationMongoDBConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataMigrationMongoDBConnectionInfo)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataMigrationMongoDBConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataMigrationMongoDBConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
@@ -89,187 +134,159 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        DataMigrationMongoDBConnectionInfo IJsonModel<DataMigrationMongoDBConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataMigrationMongoDBConnectionInfo IJsonModel<DataMigrationMongoDBConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataMigrationMongoDBConnectionInfo)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServerConnectionInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataMigrationMongoDBConnectionInfo(document.RootElement, options);
         }
 
-        internal static DataMigrationMongoDBConnectionInfo DeserializeDataMigrationMongoDBConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataMigrationMongoDBConnectionInfo DeserializeDataMigrationMongoDBConnectionInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string @type = "MongoDbConnectionInfo";
+            string userName = default;
+            string password = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string connectionString = default;
             string dataSource = default;
-            bool? encryptConnection = default;
+            bool? shouldEncryptConnection = default;
             string serverBrandVersion = default;
             string serverVersion = default;
             string serverName = default;
-            bool? trustServerCertificate = default;
-            bool? enforceSSL = default;
+            bool? shouldTrustServerCertificate = default;
+            bool? doesEnforceSsl = default;
             int? port = default;
             string additionalSettings = default;
             DataMigrationAuthenticationType? authentication = default;
-            string type = default;
-            string userName = default;
-            string password = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("connectionString"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    connectionString = property.Value.GetString();
+                    @type = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataSource"u8))
+                if (prop.NameEquals("userName"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    userName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("encryptConnection"u8))
+                if (prop.NameEquals("password"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    password = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("connectionString"u8))
+                {
+                    connectionString = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dataSource"u8))
+                {
+                    dataSource = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("encryptConnection"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    encryptConnection = property.Value.GetBoolean();
+                    shouldEncryptConnection = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("serverBrandVersion"u8))
+                if (prop.NameEquals("serverBrandVersion"u8))
                 {
-                    serverBrandVersion = property.Value.GetString();
+                    serverBrandVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverVersion"u8))
+                if (prop.NameEquals("serverVersion"u8))
                 {
-                    serverVersion = property.Value.GetString();
+                    serverVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverName"u8))
+                if (prop.NameEquals("serverName"u8))
                 {
-                    serverName = property.Value.GetString();
+                    serverName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("trustServerCertificate"u8))
+                if (prop.NameEquals("trustServerCertificate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    trustServerCertificate = property.Value.GetBoolean();
+                    shouldTrustServerCertificate = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("enforceSSL"u8))
+                if (prop.NameEquals("enforceSSL"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enforceSSL = property.Value.GetBoolean();
+                    doesEnforceSsl = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("port"u8))
+                if (prop.NameEquals("port"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    port = property.Value.GetInt32();
+                    port = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("additionalSettings"u8))
+                if (prop.NameEquals("additionalSettings"u8))
                 {
-                    additionalSettings = property.Value.GetString();
+                    additionalSettings = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authentication = new DataMigrationAuthenticationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userName"u8))
-                {
-                    userName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("password"u8))
-                {
-                    password = property.Value.GetString();
+                    authentication = new DataMigrationAuthenticationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DataMigrationMongoDBConnectionInfo(
-                type,
+                @type,
                 userName,
                 password,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 connectionString,
                 dataSource,
-                encryptConnection,
+                shouldEncryptConnection,
                 serverBrandVersion,
                 serverVersion,
                 serverName,
-                trustServerCertificate,
-                enforceSSL,
+                shouldTrustServerCertificate,
+                doesEnforceSsl,
                 port,
                 additionalSettings,
                 authentication);
         }
-
-        BinaryData IPersistableModel<DataMigrationMongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataMigrationMongoDBConnectionInfo IPersistableModel<DataMigrationMongoDBConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationMongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataMigrationMongoDBConnectionInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataMigrationMongoDBConnectionInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataMigrationMongoDBConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

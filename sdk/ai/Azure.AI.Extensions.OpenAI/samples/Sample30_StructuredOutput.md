@@ -16,26 +16,31 @@ AIProjectClient projectClient = new(new Uri(RAW_FOUNDRY_PROJECT_ENDPOINT), new D
 
 ```C# Snippet:Sample_Schema_StructuredOutput
 private static readonly BinaryData s_calendarSchema = BinaryData.FromObjectAsJson(
-    new {
+    new
+    {
         additionalProperties = false,
-        properties = new {
-            name = new {
+        properties = new
+        {
+            name = new
+            {
                 title = "Name",
                 type = "string"
             },
-            date = new {
+            date = new
+            {
                 description = "Date in YYYY-MM-DD format",
                 title = "Date",
                 type = "string"
             },
-            participants = new {
+            participants = new
+            {
                 items = new { type = "string" },
                 title = "Participants",
                 type = "array"
             }
         },
         required = new List<string> { "name", "date", "participants" },
-        title ="CalendarEvent",
+        title = "CalendarEvent",
         type = "object",
     }
 );
@@ -89,11 +94,11 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_StructuredOutput_Sync
-ProjectConversationCreationOptions options = new()
+ConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
+ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation(options);
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = responseClient.CreateResponse(options: new());
 Console.WriteLine(response.GetOutputText());
@@ -101,11 +106,11 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_StructuredOutput_Async
-ProjectConversationCreationOptions options = new()
+ConversationCreationOptions options = new()
 {
     Items = { ResponseItem.CreateUserMessageItem("Alice and Bob are going to a science fair this Friday, November 7, 2025.") }
 };
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync(options);
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), defaultConversationId: conversation.Id);
 ResponseResult response = await responseClient.CreateResponseAsync(options: new());
 Console.WriteLine(response.GetOutputText());

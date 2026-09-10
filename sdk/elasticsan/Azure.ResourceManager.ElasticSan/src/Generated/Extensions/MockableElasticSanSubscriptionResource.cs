@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
 
         private ClientDiagnostics ElasticSansClientDiagnostics => _elasticSansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private ElasticSans ElasticSansRestClient => _elasticSansRestClient ??= new ElasticSans(ElasticSansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics SkusClientDiagnostics => _skusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ElasticSan.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
+        private Skus SkusRestClient => _skusRestClient ??= new Skus(SkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary>
         /// Gets a list of ElasticSans in a subscription

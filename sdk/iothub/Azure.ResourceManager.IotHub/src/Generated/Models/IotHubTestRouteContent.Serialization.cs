@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubTestRouteContent : IUtf8JsonSerializable, IJsonModel<IotHubTestRouteContent>
+    /// <summary> Input for testing route. </summary>
+    public partial class IotHubTestRouteContent : IJsonModel<IotHubTestRouteContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubTestRouteContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="IotHubTestRouteContent"/> for deserialization. </summary>
+        internal IotHubTestRouteContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubTestRouteContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotHubTestRouteContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubTestRouteContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubTestRouteContent IPersistableModel<IotHubTestRouteContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubTestRouteContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="iotHubTestRouteContent"> The <see cref="IotHubTestRouteContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IotHubTestRouteContent iotHubTestRouteContent)
+        {
+            if (iotHubTestRouteContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(iotHubTestRouteContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubTestRouteContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
@@ -46,15 +102,15 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("twin"u8);
                 writer.WriteObjectValue(Twin, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,22 +119,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        IotHubTestRouteContent IJsonModel<IotHubTestRouteContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubTestRouteContent IJsonModel<IotHubTestRouteContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubTestRouteContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotHubTestRouteContent(document.RootElement, options);
         }
 
-        internal static IotHubTestRouteContent DeserializeIotHubTestRouteContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotHubTestRouteContent DeserializeIotHubTestRouteContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,71 +147,38 @@ namespace Azure.ResourceManager.IotHub.Models
             RoutingMessage message = default;
             RoutingRuleProperties route = default;
             RoutingTwin twin = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("message"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    message = RoutingMessage.DeserializeRoutingMessage(property.Value, options);
+                    message = RoutingMessage.DeserializeRoutingMessage(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("route"u8))
+                if (prop.NameEquals("route"u8))
                 {
-                    route = RoutingRuleProperties.DeserializeRoutingRuleProperties(property.Value, options);
+                    route = RoutingRuleProperties.DeserializeRoutingRuleProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("twin"u8))
+                if (prop.NameEquals("twin"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    twin = RoutingTwin.DeserializeRoutingTwin(property.Value, options);
+                    twin = RoutingTwin.DeserializeRoutingTwin(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IotHubTestRouteContent(message, route, twin, serializedAdditionalRawData);
+            return new IotHubTestRouteContent(message, route, twin, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IotHubTestRouteContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotHubTestRouteContent IPersistableModel<IotHubTestRouteContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestRouteContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotHubTestRouteContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotHubTestRouteContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotHubTestRouteContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

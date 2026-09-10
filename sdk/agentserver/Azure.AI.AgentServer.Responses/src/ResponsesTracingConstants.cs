@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses;
 /// semantic conventions</see> where applicable.
 /// </para>
 /// </summary>
-public static class ResponsesTracingConstants
+internal static class ResponsesTracingConstants
 {
     // ── Well-Known Values ────────────────────────────────────────────────
 

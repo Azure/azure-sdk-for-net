@@ -215,6 +215,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("purviewEnabled"u8);
                 writer.WriteBooleanValue(PurviewEnabled.Value);
             }
+            if (Optional.IsDefined(SharePointConnectorAppRegistration))
+            {
+                writer.WritePropertyName("sharePointConnectorAppRegistration"u8);
+                writer.WriteObjectValue(SharePointConnectorAppRegistration, options);
+            }
             writer.WritePropertyName("fields"u8);
             writer.WriteStartArray();
             foreach (SearchField item in _fields)
@@ -286,6 +291,7 @@ namespace Azure.Search.Documents.Indexes.Models
             VectorSearch vectorSearch = default;
             SearchIndexPermissionFilterOption? permissionFilterOption = default;
             bool? purviewEnabled = default;
+            SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default;
             IList<SearchField> fields = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -473,6 +479,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     purviewEnabled = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("sharePointConnectorAppRegistration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sharePointConnectorAppRegistration = SharePointConnectorAppRegistration.DeserializeSharePointConnectorAppRegistration(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("fields"u8))
                 {
                     List<SearchField> array = new List<SearchField>();
@@ -511,6 +526,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 vectorSearch,
                 permissionFilterOption,
                 purviewEnabled,
+                sharePointConnectorAppRegistration,
                 fields,
                 etag,
                 additionalBinaryDataProperties);

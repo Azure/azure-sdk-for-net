@@ -7,170 +7,240 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary>
-    /// A class representing the FhirService data model.
-    /// The description of Fhir Service
-    /// </summary>
+    /// <summary> The description of Fhir Service. </summary>
     public partial class FhirServiceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public FhirServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FhirServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind"> The kind of the service. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="acrConfiguration"> Fhir Service Azure container registry configuration. </param>
-        /// <param name="authenticationConfiguration"> Fhir Service authentication configuration. </param>
-        /// <param name="corsConfiguration"> Fhir Service Cors configuration. </param>
-        /// <param name="exportConfiguration"> Fhir Service export configuration. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="eventState"> Fhir Service event support status. </param>
-        /// <param name="resourceVersionPolicyConfiguration"> Determines tracking of history for resources. </param>
-        /// <param name="importConfiguration"> Fhir Service import configuration. </param>
-        /// <param name="implementationGuidesConfiguration"> Implementation Guides configuration. </param>
-        /// <param name="encryption"> The encryption settings of the FHIR service. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Fhir Service configuration. </param>
+        /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ImplementationGuidesConfiguration implementationGuidesConfiguration, Encryption encryption, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceProperties properties, ETag? eTag, ManagedServiceIdentity identity, FhirServiceKind? kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            Kind = kind;
-            ProvisioningState = provisioningState;
-            AcrConfiguration = acrConfiguration;
-            AuthenticationConfiguration = authenticationConfiguration;
-            CorsConfiguration = corsConfiguration;
-            ExportConfiguration = exportConfiguration;
-            PrivateEndpointConnections = privateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
-            EventState = eventState;
-            ResourceVersionPolicyConfiguration = resourceVersionPolicyConfiguration;
-            ImportConfiguration = importConfiguration;
-            ImplementationGuidesConfiguration = implementationGuidesConfiguration;
-            Encryption = encryption;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirServiceData"/> for deserialization. </summary>
-        internal FhirServiceData()
-        {
-        }
+        /// <summary> Fhir Service configuration. </summary>
+        internal FhirServiceProperties Properties { get; set; }
+
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
+        public ETag? ETag { get; set; }
+
+        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The kind of the service. </summary>
         public FhirServiceKind? Kind { get; set; }
+
         /// <summary> The provisioning state. </summary>
-        public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary> Fhir Service Azure container registry configuration. </summary>
-        public FhirServiceAcrConfiguration AcrConfiguration { get; set; }
-        /// <summary> Fhir Service authentication configuration. </summary>
-        public FhirServiceAuthenticationConfiguration AuthenticationConfiguration { get; set; }
-        /// <summary> Fhir Service Cors configuration. </summary>
-        public FhirServiceCorsConfiguration CorsConfiguration { get; set; }
-        /// <summary> Fhir Service export configuration. </summary>
-        internal FhirServiceExportConfiguration ExportConfiguration { get; set; }
-        /// <summary> The name of the default export storage account. </summary>
-        public string ExportStorageAccountName
+        public HealthcareApisProvisioningState? ProvisioningState
         {
-            get => ExportConfiguration is null ? default : ExportConfiguration.StorageAccountName;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Fhir Service Azure container registry configuration. </summary>
+        public FhirServiceAcrConfiguration AcrConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AcrConfiguration;
+            }
             set
             {
-                if (ExportConfiguration is null)
-                    ExportConfiguration = new FhirServiceExportConfiguration();
-                ExportConfiguration.StorageAccountName = value;
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.AcrConfiguration = value;
+            }
+        }
+
+        /// <summary> Fhir Service authentication configuration. </summary>
+        public FhirServiceAuthenticationConfiguration AuthenticationConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.AuthenticationConfiguration = value;
+            }
+        }
+
+        /// <summary> Fhir Service Cors configuration. </summary>
+        public FhirServiceCorsConfiguration CorsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.CorsConfiguration = value;
             }
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
         /// <summary> Fhir Service event support status. </summary>
-        public FhirServiceEventState? EventState { get; }
+        public FhirServiceEventState? EventState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventState;
+            }
+        }
+
         /// <summary> Determines tracking of history for resources. </summary>
-        public FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get; set; }
+        public FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceVersionPolicyConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.ResourceVersionPolicyConfiguration = value;
+            }
+        }
+
         /// <summary> Fhir Service import configuration. </summary>
-        public FhirServiceImportConfiguration ImportConfiguration { get; set; }
-        /// <summary> Implementation Guides configuration. </summary>
-        internal ImplementationGuidesConfiguration ImplementationGuidesConfiguration { get; set; }
+        public FhirServiceImportConfiguration ImportConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ImportConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.ImportConfiguration = value;
+            }
+        }
+
+        /// <summary> The name of the default export storage account. </summary>
+        public string ExportStorageAccountName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExportStorageAccountName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.ExportStorageAccountName = value;
+            }
+        }
+
         /// <summary> If US Core Missing Data requirement is enabled. </summary>
         public bool? IsUsCoreMissingDataEnabled
         {
-            get => ImplementationGuidesConfiguration is null ? default : ImplementationGuidesConfiguration.IsUsCoreMissingDataEnabled;
+            get
+            {
+                return Properties is null ? default : Properties.IsUsCoreMissingDataEnabled;
+            }
             set
             {
-                if (ImplementationGuidesConfiguration is null)
-                    ImplementationGuidesConfiguration = new ImplementationGuidesConfiguration();
-                ImplementationGuidesConfiguration.IsUsCoreMissingDataEnabled = value;
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.IsUsCoreMissingDataEnabled = value;
             }
         }
 
-        /// <summary> The encryption settings of the FHIR service. </summary>
-        internal Encryption Encryption { get; set; }
         /// <summary> The URL of the key to use for encryption. </summary>
         public Uri KeyEncryptionKeyUri
         {
-            get => Encryption is null ? default : Encryption.KeyEncryptionKeyUri;
+            get
+            {
+                return Properties is null ? default : Properties.KeyEncryptionKeyUri;
+            }
             set
             {
-                if (Encryption is null)
-                    Encryption = new Encryption();
-                Encryption.KeyEncryptionKeyUri = value;
+                if (Properties is null)
+                {
+                    Properties = new FhirServiceProperties();
+                }
+                Properties.KeyEncryptionKeyUri = value;
             }
         }
-
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
     }
 }

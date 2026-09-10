@@ -7,48 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specification of data sources that will be collected. </summary>
     public partial class DataSourcesSpec
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataSourcesSpec"/>. </summary>
         public DataSourcesSpec()
         {
             PerformanceCounters = new ChangeTrackingList<PerfCounterDataSource>();
+            PerformanceCountersOtel = new ChangeTrackingList<PerformanceCountersOtelDataSource>();
             WindowsEventLogs = new ChangeTrackingList<WindowsEventLogDataSource>();
             Syslog = new ChangeTrackingList<SyslogDataSource>();
             Extensions = new ChangeTrackingList<ExtensionDataSource>();
@@ -57,10 +30,15 @@ namespace Azure.ResourceManager.Monitor.Models
             WindowsFirewallLogs = new ChangeTrackingList<WindowsFirewallLogsDataSource>();
             PrometheusForwarder = new ChangeTrackingList<PrometheusForwarderDataSource>();
             PlatformTelemetry = new ChangeTrackingList<PlatformTelemetryDataSource>();
+            OtelLogs = new ChangeTrackingList<OtelLogsDataSource>();
+            OtelTraces = new ChangeTrackingList<OtelTracesDataSource>();
+            OtelMetrics = new ChangeTrackingList<OtelMetricsDataSource>();
+            EtwProviders = new ChangeTrackingList<EtwProviderDataSource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataSourcesSpec"/>. </summary>
         /// <param name="performanceCounters"> The list of performance counter data source configurations. </param>
+        /// <param name="performanceCountersOtel"> The list of Open Telemetry performance counter data source configurations. </param>
         /// <param name="windowsEventLogs"> The list of Windows Event Log data source configurations. </param>
         /// <param name="syslog"> The list of Syslog data source configurations. </param>
         /// <param name="extensions"> The list of Azure VM extension data source configurations. </param>
@@ -70,10 +48,15 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="prometheusForwarder"> The list of Prometheus forwarder data source configurations. </param>
         /// <param name="platformTelemetry"> The list of platform telemetry configurations. </param>
         /// <param name="dataImports"> Specifications of pull based data sources. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="otelLogs"> The list of Otel Logs data source configurations. </param>
+        /// <param name="otelTraces"> The list of Otel traces data source configurations. </param>
+        /// <param name="otelMetrics"> The list of OTel metrics data source configurations. </param>
+        /// <param name="etwProviders"> The list of ETW providers data source configurations. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourcesSpec(IList<PerfCounterDataSource> performanceCounters, IList<PerformanceCountersOtelDataSource> performanceCountersOtel, IList<WindowsEventLogDataSource> windowsEventLogs, IList<SyslogDataSource> syslog, IList<ExtensionDataSource> extensions, IList<LogFilesDataSource> logFiles, IList<IisLogsDataSource> iisLogs, IList<WindowsFirewallLogsDataSource> windowsFirewallLogs, IList<PrometheusForwarderDataSource> prometheusForwarder, IList<PlatformTelemetryDataSource> platformTelemetry, DataSourcesSpecDataImports dataImports, IList<OtelLogsDataSource> otelLogs, IList<OtelTracesDataSource> otelTraces, IList<OtelMetricsDataSource> otelMetrics, IList<EtwProviderDataSource> etwProviders, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PerformanceCounters = performanceCounters;
+            PerformanceCountersOtel = performanceCountersOtel;
             WindowsEventLogs = windowsEventLogs;
             Syslog = syslog;
             Extensions = extensions;
@@ -83,37 +66,71 @@ namespace Azure.ResourceManager.Monitor.Models
             PrometheusForwarder = prometheusForwarder;
             PlatformTelemetry = platformTelemetry;
             DataImports = dataImports;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            OtelLogs = otelLogs;
+            OtelTraces = otelTraces;
+            OtelMetrics = otelMetrics;
+            EtwProviders = etwProviders;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of performance counter data source configurations. </summary>
         public IList<PerfCounterDataSource> PerformanceCounters { get; }
+
+        /// <summary> The list of Open Telemetry performance counter data source configurations. </summary>
+        public IList<PerformanceCountersOtelDataSource> PerformanceCountersOtel { get; }
+
         /// <summary> The list of Windows Event Log data source configurations. </summary>
         public IList<WindowsEventLogDataSource> WindowsEventLogs { get; }
+
         /// <summary> The list of Syslog data source configurations. </summary>
         public IList<SyslogDataSource> Syslog { get; }
+
         /// <summary> The list of Azure VM extension data source configurations. </summary>
         public IList<ExtensionDataSource> Extensions { get; }
+
         /// <summary> The list of Log files source configurations. </summary>
         public IList<LogFilesDataSource> LogFiles { get; }
+
         /// <summary> The list of IIS logs source configurations. </summary>
         public IList<IisLogsDataSource> IisLogs { get; }
+
         /// <summary> The list of Windows Firewall logs source configurations. </summary>
         public IList<WindowsFirewallLogsDataSource> WindowsFirewallLogs { get; }
+
         /// <summary> The list of Prometheus forwarder data source configurations. </summary>
         public IList<PrometheusForwarderDataSource> PrometheusForwarder { get; }
+
         /// <summary> The list of platform telemetry configurations. </summary>
         public IList<PlatformTelemetryDataSource> PlatformTelemetry { get; }
+
         /// <summary> Specifications of pull based data sources. </summary>
         internal DataSourcesSpecDataImports DataImports { get; set; }
+
+        /// <summary> The list of Otel Logs data source configurations. </summary>
+        public IList<OtelLogsDataSource> OtelLogs { get; }
+
+        /// <summary> The list of Otel traces data source configurations. </summary>
+        public IList<OtelTracesDataSource> OtelTraces { get; }
+
+        /// <summary> The list of OTel metrics data source configurations. </summary>
+        public IList<OtelMetricsDataSource> OtelMetrics { get; }
+
+        /// <summary> The list of ETW providers data source configurations. </summary>
+        public IList<EtwProviderDataSource> EtwProviders { get; }
+
         /// <summary> Definition of Event Hub configuration. </summary>
         public DataImportSourcesEventHub DataImportsEventHub
         {
-            get => DataImports is null ? default : DataImports.EventHub;
+            get
+            {
+                return DataImports is null ? default : DataImports.EventHub;
+            }
             set
             {
                 if (DataImports is null)
+                {
                     DataImports = new DataSourcesSpecDataImports();
+                }
                 DataImports.EventHub = value;
             }
         }

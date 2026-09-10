@@ -1,0 +1,12 @@
+parameters:
+  service-dir:
+    default: sdk/compute
+emit:
+  - "@azure-tools/typespec-autorest"
+options:
+  "@azure-tools/typespec-python":
+    package-dir: azure-mgmt-compute
+    flavor: azure
+  "@azure-tools/typespec-java":
+    package-dir: azure-resourcemanager-compute
+    flavor: azure

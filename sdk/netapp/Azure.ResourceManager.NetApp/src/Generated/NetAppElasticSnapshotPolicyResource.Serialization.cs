@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticSnapshotPolicyResource : IJsonModel<NetAppElasticSnapshotPolicyData>
+    /// <summary></summary>
+    public partial class NetAppElasticSnapshotPolicyResource : ArmResource, IJsonModel<NetAppElasticSnapshotPolicyData>
     {
-        private static NetAppElasticSnapshotPolicyData s_dataDeserializationInstance;
-        private static NetAppElasticSnapshotPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticSnapshotPolicyData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticSnapshotPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticSnapshotPolicyData>)Data).Write(writer, options);
-
-        NetAppElasticSnapshotPolicyData IJsonModel<NetAppElasticSnapshotPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticSnapshotPolicyData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticSnapshotPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticSnapshotPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticSnapshotPolicyData IPersistableModel<NetAppElasticSnapshotPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticSnapshotPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticSnapshotPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticSnapshotPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticSnapshotPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticSnapshotPolicyData();
     }
 }

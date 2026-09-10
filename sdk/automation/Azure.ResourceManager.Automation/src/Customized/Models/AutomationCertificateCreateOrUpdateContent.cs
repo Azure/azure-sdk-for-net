@@ -1,13 +1,40 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Automation.Models
 {
+    // Generated certificate content keeps optional values under CertificateCreateOrUpdateProperties and uses ThumbprintString.
+    // Keep GA top-level setters and the obsolete BinaryData Thumbprint API for source compatibility.
     public partial class AutomationCertificateCreateOrUpdateContent
     {
+        /// <summary> Gets or sets the description of the certificate. </summary>
+        public string Description
+        {
+            get => Properties.Description;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set => Properties.Description = value;
+        }
+
+        /// <summary> Gets or sets the thumbprint of the certificate. </summary>
+        public string ThumbprintString
+        {
+            get => Properties.ThumbprintString;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set => Properties.ThumbprintString = value;
+        }
+
+        /// <summary> Gets or sets the is exportable flag of the certificate. </summary>
+        public bool? IsExportable
+        {
+            get => Properties.IsExportable;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            set => Properties.IsExportable = value;
+        }
+
         /// <summary>
         /// Gets or sets the thumbprint of the certificate.
         /// <para>
@@ -43,6 +70,7 @@ namespace Azure.ResourceManager.Automation.Models
         public BinaryData Thumbprint
         {
             get { return BinaryData.FromString(ThumbprintString); }
+            [EditorBrowsable(EditorBrowsableState.Never)]
             set { ThumbprintString = value.ToString(); }
         }
     }

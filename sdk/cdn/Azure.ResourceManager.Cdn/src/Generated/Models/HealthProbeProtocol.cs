@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> Http. </summary>
         Http,
         /// <summary> Https. </summary>
-        Https
+        Https,
+        /// <summary> Grpc. </summary>
+        Grpc
     }
 }

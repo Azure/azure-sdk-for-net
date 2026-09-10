@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ExpressRouteCrossConnectionPeeringResource : IJsonModel<ExpressRouteCrossConnectionPeeringData>
     {
-        private static ExpressRouteCrossConnectionPeeringData s_dataDeserializationInstance;
-        private static ExpressRouteCrossConnectionPeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ExpressRouteCrossConnectionPeeringData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ExpressRouteCrossConnectionPeeringData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ExpressRouteCrossConnectionPeeringData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ExpressRouteCrossConnectionPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)Data).Write(writer, options);
 
-        ExpressRouteCrossConnectionPeeringData IJsonModel<ExpressRouteCrossConnectionPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCrossConnectionPeeringData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ExpressRouteCrossConnectionPeeringData IJsonModel<ExpressRouteCrossConnectionPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCrossConnectionPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ExpressRouteCrossConnectionPeeringData IPersistableModel<ExpressRouteCrossConnectionPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCrossConnectionPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ExpressRouteCrossConnectionPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCrossConnectionPeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ExpressRouteCrossConnectionPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

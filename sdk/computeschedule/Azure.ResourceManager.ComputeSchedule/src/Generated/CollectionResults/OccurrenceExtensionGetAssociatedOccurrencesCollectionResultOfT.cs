@@ -14,7 +14,7 @@ using Azure.ResourceManager.ComputeSchedule.Models;
 
 namespace Azure.ResourceManager.ComputeSchedule
 {
-    internal partial class OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT : Pageable<OccurrenceExtensionResourceData>
+    internal partial class OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT : Pageable<OccurrenceExtensionData>
     {
         private readonly OccurrenceExtension _client;
         private readonly string _resourceUri;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of OccurrenceExtensionGetAssociatedOccurrencesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<OccurrenceExtensionResourceData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<OccurrenceExtensionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ComputeSchedule
                     yield break;
                 }
                 OccurrenceExtensionResourceListResult result = OccurrenceExtensionResourceListResult.FromResponse(response);
-                yield return Page<OccurrenceExtensionResourceData>.FromValues((IReadOnlyList<OccurrenceExtensionResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<OccurrenceExtensionData>.FromValues((IReadOnlyList<OccurrenceExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

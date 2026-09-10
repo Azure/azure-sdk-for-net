@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningKubernetesProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningKubernetesProperties>
+    /// <summary> Kubernetes properties. </summary>
+    public partial class MachineLearningKubernetesProperties : IJsonModel<MachineLearningKubernetesProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningKubernetesProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningKubernetesProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningKubernetesProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningKubernetesProperties IPersistableModel<MachineLearningKubernetesProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningKubernetesProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningKubernetesProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,47 +69,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(RelayConnectionString))
             {
-                if (RelayConnectionString != null)
-                {
-                    writer.WritePropertyName("relayConnectionString"u8);
-                    writer.WriteStringValue(RelayConnectionString);
-                }
-                else
-                {
-                    writer.WriteNull("relayConnectionString");
-                }
+                writer.WritePropertyName("relayConnectionString"u8);
+                writer.WriteStringValue(RelayConnectionString);
             }
             if (Optional.IsDefined(ServiceBusConnectionString))
             {
-                if (ServiceBusConnectionString != null)
-                {
-                    writer.WritePropertyName("serviceBusConnectionString"u8);
-                    writer.WriteStringValue(ServiceBusConnectionString);
-                }
-                else
-                {
-                    writer.WriteNull("serviceBusConnectionString");
-                }
+                writer.WritePropertyName("serviceBusConnectionString"u8);
+                writer.WriteStringValue(ServiceBusConnectionString);
             }
             if (Optional.IsDefined(ExtensionPrincipalId))
             {
-                if (ExtensionPrincipalId != null)
-                {
-                    writer.WritePropertyName("extensionPrincipalId"u8);
-                    writer.WriteStringValue(ExtensionPrincipalId);
-                }
-                else
-                {
-                    writer.WriteNull("extensionPrincipalId");
-                }
+                writer.WritePropertyName("extensionPrincipalId"u8);
+                writer.WriteStringValue(ExtensionPrincipalId);
             }
             if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
             {
@@ -103,15 +120,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -120,22 +137,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningKubernetesProperties IJsonModel<MachineLearningKubernetesProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningKubernetesProperties IJsonModel<MachineLearningKubernetesProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningKubernetesProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningKubernetesProperties(document.RootElement, options);
         }
 
-        internal static MachineLearningKubernetesProperties DeserializeMachineLearningKubernetesProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningKubernetesProperties DeserializeMachineLearningKubernetesProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -148,80 +170,78 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string @namespace = default;
             string defaultInstanceType = default;
             IDictionary<string, MachineLearningInstanceTypeSchema> instanceTypes = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("relayConnectionString"u8))
+                if (prop.NameEquals("relayConnectionString"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         relayConnectionString = null;
                         continue;
                     }
-                    relayConnectionString = property.Value.GetString();
+                    relayConnectionString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceBusConnectionString"u8))
+                if (prop.NameEquals("serviceBusConnectionString"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         serviceBusConnectionString = null;
                         continue;
                     }
-                    serviceBusConnectionString = property.Value.GetString();
+                    serviceBusConnectionString = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionPrincipalId"u8))
+                if (prop.NameEquals("extensionPrincipalId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         extensionPrincipalId = null;
                         continue;
                     }
-                    extensionPrincipalId = property.Value.GetString();
+                    extensionPrincipalId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensionInstanceReleaseTrain"u8))
+                if (prop.NameEquals("extensionInstanceReleaseTrain"u8))
                 {
-                    extensionInstanceReleaseTrain = property.Value.GetString();
+                    extensionInstanceReleaseTrain = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vcName"u8))
+                if (prop.NameEquals("vcName"u8))
                 {
-                    vcName = property.Value.GetString();
+                    vcName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("namespace"u8))
+                if (prop.NameEquals("namespace"u8))
                 {
-                    @namespace = property.Value.GetString();
+                    @namespace = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("defaultInstanceType"u8))
+                if (prop.NameEquals("defaultInstanceType"u8))
                 {
-                    defaultInstanceType = property.Value.GetString();
+                    defaultInstanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceTypes"u8))
+                if (prop.NameEquals("instanceTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value, options));
+                        dictionary.Add(prop0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(prop0.Value, options));
                     }
                     instanceTypes = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningKubernetesProperties(
                 relayConnectionString,
                 serviceBusConnectionString,
@@ -231,240 +251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 @namespace,
                 defaultInstanceType,
                 instanceTypes ?? new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelayConnectionString), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  relayConnectionString: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RelayConnectionString))
-                {
-                    builder.Append("  relayConnectionString: ");
-                    if (RelayConnectionString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RelayConnectionString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RelayConnectionString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceBusConnectionString), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  serviceBusConnectionString: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ServiceBusConnectionString))
-                {
-                    builder.Append("  serviceBusConnectionString: ");
-                    if (ServiceBusConnectionString.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ServiceBusConnectionString}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ServiceBusConnectionString}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionPrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensionPrincipalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtensionPrincipalId))
-                {
-                    builder.Append("  extensionPrincipalId: ");
-                    if (ExtensionPrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ExtensionPrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ExtensionPrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExtensionInstanceReleaseTrain), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensionInstanceReleaseTrain: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExtensionInstanceReleaseTrain))
-                {
-                    builder.Append("  extensionInstanceReleaseTrain: ");
-                    if (ExtensionInstanceReleaseTrain.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ExtensionInstanceReleaseTrain}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ExtensionInstanceReleaseTrain}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VcName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vcName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VcName))
-                {
-                    builder.Append("  vcName: ");
-                    if (VcName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VcName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VcName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  namespace: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Namespace))
-                {
-                    builder.Append("  namespace: ");
-                    if (Namespace.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Namespace}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Namespace}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultInstanceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  defaultInstanceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefaultInstanceType))
-                {
-                    builder.Append("  defaultInstanceType: ");
-                    if (DefaultInstanceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultInstanceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultInstanceType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstanceTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  instanceTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(InstanceTypes))
-                {
-                    if (InstanceTypes.Any())
-                    {
-                        builder.Append("  instanceTypes: ");
-                        builder.AppendLine("{");
-                        foreach (var item in InstanceTypes)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  instanceTypes: ");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningKubernetesProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningKubernetesProperties IPersistableModel<MachineLearningKubernetesProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningKubernetesProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningKubernetesProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningKubernetesProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningKubernetesProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct PortalRevisionStatus : IEquatable<PortalRevisionStatus>
     {
         private readonly string _value;
+        /// <summary> Portal's revision has been queued. </summary>
+        private const string PendingValue = "pending";
+        /// <summary> Portal's revision is being published. </summary>
+        private const string PublishingValue = "publishing";
+        /// <summary> Portal's revision publishing completed. </summary>
+        private const string CompletedValue = "completed";
+        /// <summary> Portal's revision publishing failed. </summary>
+        private const string FailedValue = "failed";
 
         /// <summary> Initializes a new instance of <see cref="PortalRevisionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PortalRevisionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "pending";
-        private const string PublishingValue = "publishing";
-        private const string CompletedValue = "completed";
-        private const string FailedValue = "failed";
+            _value = value;
+        }
 
         /// <summary> Portal's revision has been queued. </summary>
         public static PortalRevisionStatus Pending { get; } = new PortalRevisionStatus(PendingValue);
+
         /// <summary> Portal's revision is being published. </summary>
         public static PortalRevisionStatus Publishing { get; } = new PortalRevisionStatus(PublishingValue);
+
         /// <summary> Portal's revision publishing completed. </summary>
         public static PortalRevisionStatus Completed { get; } = new PortalRevisionStatus(CompletedValue);
+
         /// <summary> Portal's revision publishing failed. </summary>
         public static PortalRevisionStatus Failed { get; } = new PortalRevisionStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PortalRevisionStatus left, PortalRevisionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PortalRevisionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PortalRevisionStatus left, PortalRevisionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PortalRevisionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PortalRevisionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PortalRevisionStatus(string value) => new PortalRevisionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PortalRevisionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PortalRevisionStatus?(string value) => value == null ? null : new PortalRevisionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PortalRevisionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PortalRevisionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

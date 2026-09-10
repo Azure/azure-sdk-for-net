@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DomainRegistration
         {
             TryGetApiVersion(DomainOwnershipIdentifierResource.ResourceType, out string domainOwnershipIdentifierApiVersion);
             _domainOwnershipIdentifiersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DomainRegistration", DomainOwnershipIdentifierResource.ResourceType.Namespace, Diagnostics);
-            _domainOwnershipIdentifiersRestClient = new DomainOwnershipIdentifiers(_domainOwnershipIdentifiersClientDiagnostics, Pipeline, Endpoint, domainOwnershipIdentifierApiVersion ?? "2024-11-01");
+            _domainOwnershipIdentifiersRestClient = new DomainOwnershipIdentifiers(_domainOwnershipIdentifiersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainOwnershipIdentifierApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 

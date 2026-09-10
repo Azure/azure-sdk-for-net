@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 ListContainerItems result = ListContainerItems.FromResponse(response);
-                yield return Page<BlobContainerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<BlobContainerData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

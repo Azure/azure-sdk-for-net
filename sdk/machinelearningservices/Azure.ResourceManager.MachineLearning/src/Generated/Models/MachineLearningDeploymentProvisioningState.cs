@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningDeploymentProvisioningState : IEquatable<MachineLearningDeploymentProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningDeploymentProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string ScalingValue = "Scaling";
@@ -30,37 +23,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Creating. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningDeploymentProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Creating. </summary>
         public static MachineLearningDeploymentProvisioningState Creating { get; } = new MachineLearningDeploymentProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static MachineLearningDeploymentProvisioningState Deleting { get; } = new MachineLearningDeploymentProvisioningState(DeletingValue);
-        /// <summary> Scaling. </summary>
+
+        /// <summary> Gets the Scaling. </summary>
         public static MachineLearningDeploymentProvisioningState Scaling { get; } = new MachineLearningDeploymentProvisioningState(ScalingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static MachineLearningDeploymentProvisioningState Updating { get; } = new MachineLearningDeploymentProvisioningState(UpdatingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static MachineLearningDeploymentProvisioningState Succeeded { get; } = new MachineLearningDeploymentProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static MachineLearningDeploymentProvisioningState Failed { get; } = new MachineLearningDeploymentProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static MachineLearningDeploymentProvisioningState Canceled { get; } = new MachineLearningDeploymentProvisioningState(CanceledValue);
+
         /// <summary> Determines if two <see cref="MachineLearningDeploymentProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningDeploymentProvisioningState left, MachineLearningDeploymentProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningDeploymentProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningDeploymentProvisioningState left, MachineLearningDeploymentProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningDeploymentProvisioningState(string value) => new MachineLearningDeploymentProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningDeploymentProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningDeploymentProvisioningState?(string value) => value == null ? null : new MachineLearningDeploymentProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningDeploymentProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningDeploymentProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -37,15 +37,15 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new UnknownCommonExportProperties(
-                new CommonExportType(@type),
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null);
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> Uses ARG (Azure Resource Graph) query to choose resources to be exported. </summary>
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportQueryTerraform(
-                CommonExportType.ExportQuery,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 query,
                 namePattern,
                 isRecursive,
@@ -108,16 +108,16 @@ namespace Azure.ResourceManager.Terraform.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new ExportResourceTerraform(
-                CommonExportType.ExportResource,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
-                resourceIds.ToList(),
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                (resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 resourceName,
                 resourceType,
                 namePattern,
@@ -142,15 +142,15 @@ namespace Azure.ResourceManager.Terraform.Models
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
             return new ExportResourceGroupTerraform(
-                CommonExportType.ExportResourceGroup,
+                default,
                 targetProvider,
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
                 includeManagedResource,
-                azureResourcesToExclude.ToList(),
-                terraformResourcesToExclude.ToList(),
-                additionalBinaryDataProperties: null,
+                (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 resourceGroupName,
                 namePattern);
         }
@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="startsOn"> Operation start time. </param>
+        /// <param name="endsOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.TerraformOperationStatus"/> instance for mocking. </returns>
-        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, ResponseError error = default)
+        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, double? percentComplete = default, ResponseError error = default)
         {
             return new TerraformOperationStatus(
                 properties,
                 status,
                 id,
                 name,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 error,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The Terraform export result. </summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Terraform.Models
             skippedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             errors ??= new ChangeTrackingList<ResponseError>();
 
-            return new TerraformExportResult(configuration, import, skippedResourceIds.ToList(), errors.ToList(), additionalBinaryDataProperties: null);
+            return new TerraformExportResult(configuration, import, (skippedResourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (errors ?? new ChangeTrackingList<ResponseError>()).ToList(), default);
         }
     }
 }

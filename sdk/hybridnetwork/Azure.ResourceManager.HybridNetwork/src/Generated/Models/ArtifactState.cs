@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public readonly partial struct ArtifactState : IEquatable<ArtifactState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ArtifactState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ArtifactState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string PreviewValue = "Preview";
         private const string ActiveValue = "Active";
         private const string DeprecatedValue = "Deprecated";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ArtifactState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static ArtifactState Unknown { get; } = new ArtifactState(UnknownValue);
-        /// <summary> Preview. </summary>
+
+        /// <summary> Gets the Preview. </summary>
         public static ArtifactState Preview { get; } = new ArtifactState(PreviewValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static ArtifactState Active { get; } = new ArtifactState(ActiveValue);
-        /// <summary> Deprecated. </summary>
+
+        /// <summary> Gets the Deprecated. </summary>
         public static ArtifactState Deprecated { get; } = new ArtifactState(DeprecatedValue);
+
         /// <summary> Determines if two <see cref="ArtifactState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArtifactState left, ArtifactState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArtifactState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArtifactState left, ArtifactState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArtifactState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArtifactState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArtifactState(string value) => new ArtifactState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArtifactState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArtifactState?(string value) => value == null ? null : new ArtifactState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArtifactState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArtifactState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

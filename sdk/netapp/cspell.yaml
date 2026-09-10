@@ -3,6 +3,7 @@ import:
 words:
   - vserver
   - Vserver
+  - SAPHANA
 
 # Optional overrides example for words in a specific file
 # overrides:

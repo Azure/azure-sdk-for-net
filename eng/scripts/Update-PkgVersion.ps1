@@ -45,6 +45,7 @@ Param (
 )
 
 . (Join-Path $PSScriptRoot ".." common scripts common.ps1)
+. (Join-Path $PSScriptRoot "Remove-ObsoleteApiCompatBaselines.ps1")
 
 $pkgProperties = Get-PkgProperties -PackageName $PackageName -ServiceDirectory $ServiceDirectory
 $csprojPath = Join-Path $pkgProperties.DirectoryPath src "${PackageName}.csproj"
@@ -89,7 +90,12 @@ if ($packageSemVer.HasValidPrereleaseLabel() -ne $true){
   exit 1
 }
 
-if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)) {
+# True when this release advances <ApiCompatVersion> (a GA version was released and the version is
+# actually changing). Both the ApiCompatVersion bump and the baseline cleanup below gate on this so they
+# stay in lock-step - baselines are only removed when the baseline was actually advanced.
+$apiCompatVersionBumped = Test-ApiCompatVersionBumped -CurrentVersion $packageVersion -NewVersionString $NewVersionString
+
+if ($apiCompatVersionBumped) {
   $whitespace = $propertyGroup["Version"].PreviousSibling
   if (!$propertyGroup.ApiCompatVersion) {
     $propertyGroup.InsertAfter($csproj.CreateElement("ApiCompatVersion"), $propertyGroup["Version"]) | Out-Null
@@ -106,6 +112,19 @@ if (!$packageOldSemVer.IsPrerelease -and ($packageVersion -ne $NewVersionString)
 
 $propertyGroup.Version = $packageSemVer.ToString()
 $csproj.Save($csprojPath)
+
+# When the release advanced <ApiCompatVersion> above (GA release), any ApiCompat baseline suppressions /
+# opt-out entries for this project are now obsolete. Wrapped in its own try/catch so a cleanup failure
+# never blocks the version bump PR.
+if ($apiCompatVersionBumped) {
+  try {
+    Remove-ObsoleteApiCompatBaselines -RepoRoot $RepoRoot -PackageName $PackageName | Out-Null
+  }
+  catch {
+    Write-Warning "ApiCompat baseline cleanup failed — baselines under eng/apicompatbaselines may need a manual cleanup: $($_.Exception.Message)"
+    Write-Host "##vso[task.logissue type=warning]ApiCompat baseline cleanup failed for $PackageName. Baselines under eng/apicompatbaselines may need a manual cleanup."
+  }
+}
 
 # Update Central Package Management files with the released version so
 # other packages that depend on this one pick up the latest release.

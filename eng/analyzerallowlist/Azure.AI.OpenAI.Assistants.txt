@@ -1,0 +1,8 @@
+# Azure.AI.OpenAI.Assistants approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# 'Assistant' is the resource name defined by the OpenAI Assistants API that this library
+# wraps, and the containing Azure.AI.OpenAI.Assistants namespace already disambiguates it.
+# It has been the public name since the first preview, so renaming would break every
+# existing consumer without making the type easier to identify.
+nowarn:AZC0012 T:Azure.AI.OpenAI.Assistants.Assistant

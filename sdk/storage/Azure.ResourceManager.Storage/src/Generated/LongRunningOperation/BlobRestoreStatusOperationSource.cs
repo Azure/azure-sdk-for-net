@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.Storage
         BlobRestoreStatus IOperationSource<BlobRestoreStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            BlobRestoreStatus result = BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.Storage
         async ValueTask<BlobRestoreStatus> IOperationSource<BlobRestoreStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            BlobRestoreStatus result = BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return BlobRestoreStatus.DeserializeBlobRestoreStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

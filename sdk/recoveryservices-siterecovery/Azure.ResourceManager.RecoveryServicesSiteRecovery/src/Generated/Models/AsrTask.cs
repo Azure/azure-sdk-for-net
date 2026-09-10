@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Task of the Job. </summary>
     public partial class AsrTask
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         internal AsrTask()
@@ -62,19 +34,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="state"> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
         /// <param name="stateDescription"> The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </param>
         /// <param name="taskType"> The type of task. Details in CustomDetails property depend on this type. </param>
-        /// <param name="customDetails">
-        /// The custom task details based on the task type.
-        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
-        /// </param>
-        /// <param name="groupTaskCustomDetails">
-        /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
-        /// </param>
+        /// <param name="customDetails"> The custom task details based on the task type. </param>
+        /// <param name="groupTaskCustomDetails"> The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it. </param>
         /// <param name="errors"> The task error details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
             Name = name;
@@ -88,39 +52,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             CustomDetails = customDetails;
             GroupTaskCustomDetails = groupTaskCustomDetails;
             Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Id. </summary>
         public string TaskId { get; }
+
         /// <summary> The unique Task name. </summary>
         public string Name { get; }
+
         /// <summary> The start time. </summary>
         public DateTimeOffset? StartOn { get; }
+
         /// <summary> The end time. </summary>
         public DateTimeOffset? EndOn { get; }
+
         /// <summary> The state/actions applicable on this task. </summary>
         public IReadOnlyList<string> AllowedActions { get; }
+
         /// <summary> The name. </summary>
         public string FriendlyName { get; }
+
         /// <summary> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </summary>
         public string State { get; }
+
         /// <summary> The description of the task state. For example - For Succeeded state, description can be Completed, PartiallySucceeded, CompletedWithInformation or Skipped. </summary>
         public string StateDescription { get; }
+
         /// <summary> The type of task. Details in CustomDetails property depend on this type. </summary>
         public string TaskType { get; }
-        /// <summary>
-        /// The custom task details based on the task type.
-        /// Please note <see cref="SiteRecoveryTaskTypeDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AutomationRunbookTaskDetails"/>, <see cref="ConsistencyCheckTaskDetails"/>, <see cref="FabricReplicationGroupTaskDetails"/>, <see cref="SiteRecoveryJobTaskDetails"/>, <see cref="ManualActionTaskDetails"/>, <see cref="ScriptActionTaskDetails"/>, <see cref="SiteRecoveryVmTaskDetails"/> and <see cref="VmNicUpdatesTaskDetails"/>.
-        /// </summary>
+
+        /// <summary> The custom task details based on the task type. </summary>
         public SiteRecoveryTaskTypeDetails CustomDetails { get; }
-        /// <summary>
-        /// The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it.
-        /// Please note <see cref="SiteRecoveryGroupTaskDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="InlineWorkflowTaskDetails"/>, <see cref="RecoveryPlanGroupTaskDetails"/> and <see cref="RecoveryPlanShutdownGroupTaskDetails"/>.
-        /// </summary>
+
+        /// <summary> The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it. </summary>
         public SiteRecoveryGroupTaskDetails GroupTaskCustomDetails { get; }
+
         /// <summary> The task error details. </summary>
         public IReadOnlyList<SiteRecoveryJobErrorDetails> Errors { get; }
     }

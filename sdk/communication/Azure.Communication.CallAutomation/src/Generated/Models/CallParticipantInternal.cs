@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of <see cref="CallParticipantInternal"/>. </summary>
-        /// <param name="identifier"> Communication identifier of the participant. </param>
+        /// <param name="identifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="isMuted"> Is participant muted. </param>
         /// <param name="isOnHold"> Is participant on hold. </param>
         internal CallParticipantInternal(CommunicationIdentifierModel identifier, bool? isMuted, bool? isOnHold)
@@ -26,7 +26,7 @@ namespace Azure.Communication.CallAutomation
             IsOnHold = isOnHold;
         }
 
-        /// <summary> Communication identifier of the participant. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel Identifier { get; }
         /// <summary> Is participant muted. </summary>
         public bool? IsMuted { get; }

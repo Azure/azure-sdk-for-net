@@ -55,6 +55,7 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(InternalProjectsClient).Assembly) }, Array.Empty<PipelinePolicy>());
             }
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of InternalProjectsClient. </summary>
@@ -68,10 +69,13 @@ namespace Azure.AI.Extensions.OpenAI
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline { get; }
 
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
         /// <summary> Initializes a new instance of Responses. </summary>
         public virtual Responses GetResponsesClient()
         {
-            return Volatile.Read(ref _cachedResponses) ?? Interlocked.CompareExchange(ref _cachedResponses, new Responses(Pipeline, _endpoint), null) ?? _cachedResponses;
+            return Volatile.Read(ref _cachedResponses) ?? Interlocked.CompareExchange(ref _cachedResponses, new Responses(ClientDiagnostics, Pipeline, _endpoint), null) ?? _cachedResponses;
         }
     }
 }

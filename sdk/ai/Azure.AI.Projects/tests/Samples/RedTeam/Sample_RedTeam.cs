@@ -4,12 +4,13 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.AI.Projects.Evaluation;
+using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_RedTeam : SamplesBase
 {

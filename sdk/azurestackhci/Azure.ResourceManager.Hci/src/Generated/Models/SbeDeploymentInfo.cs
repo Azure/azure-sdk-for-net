@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Solution builder extension (SBE) package and manifest information for the solution builder extension staged for AzureStackHCI cluster deployment. </summary>
     public partial class SbeDeploymentInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SbeDeploymentInfo"/>. </summary>
         public SbeDeploymentInfo()
@@ -56,29 +28,33 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="publisher"> SBE manifest publisher. </param>
         /// <param name="sbeManifestSource"> SBE Manifest Source. </param>
         /// <param name="sbeManifestCreationOn"> SBE Manifest Creation Date. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbeDeploymentInfo(string version, string family, string publisher, string sbeManifestSource, DateTimeOffset? sbeManifestCreationOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SbeDeploymentInfo(string version, string family, string publisher, string sbeManifestSource, DateTimeOffset? sbeManifestCreationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Family = family;
             Publisher = publisher;
             SbeManifestSource = sbeManifestSource;
             SbeManifestCreationOn = sbeManifestCreationOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SBE package version. </summary>
         [WirePath("version")]
         public string Version { get; set; }
+
         /// <summary> SBE family name. </summary>
         [WirePath("family")]
         public string Family { get; set; }
+
         /// <summary> SBE manifest publisher. </summary>
         [WirePath("publisher")]
         public string Publisher { get; set; }
+
         /// <summary> SBE Manifest Source. </summary>
         [WirePath("sbeManifestSource")]
         public string SbeManifestSource { get; set; }
+
         /// <summary> SBE Manifest Creation Date. </summary>
         [WirePath("sbeManifestCreationDate")]
         public DateTimeOffset? SbeManifestCreationOn { get; set; }

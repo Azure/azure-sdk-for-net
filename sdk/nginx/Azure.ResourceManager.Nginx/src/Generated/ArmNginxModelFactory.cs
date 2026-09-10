@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Nginx;
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Nginx Deployment Api Key Response Properties. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentApiKeyProperties"/> instance for mocking. </returns>
         public static NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = default, DateTimeOffset? endOn = default)
         {
-            return new NginxDeploymentApiKeyProperties(hint, endOn, additionalBinaryDataProperties: null);
+            return new NginxDeploymentApiKeyProperties(hint, endOn, default);
         }
 
         /// <summary> Nginx Deployment Api Key Request. </summary>
@@ -62,7 +62,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 resourceType,
                 properties,
                 systemData,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Nginx Deployment Api Key Request Properties. </summary>
+        /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
+        /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyRequestProperties"/> instance for mocking. </returns>
+        public static NginxDeploymentApiKeyRequestProperties NginxDeploymentApiKeyRequestProperties(string secretText = default, DateTimeOffset? endOn = default)
+        {
+            return new NginxDeploymentApiKeyRequestProperties(secretText, endOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -84,12 +93,12 @@ namespace Azure.ResourceManager.Nginx.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 identity,
-                skuName is null ? default : new NginxResourceSku(skuName, null));
+                skuName is null ? default : new NginxResourceSku(skuName, default),
+                default);
         }
 
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -112,13 +121,21 @@ namespace Azure.ResourceManager.Nginx.Models
                 networkProfile,
                 ipAddress,
                 enableDiagnosticsSupport,
-                loggingStorageAccount is null ? default : new NginxLogging(loggingStorageAccount, null),
+                loggingStorageAccount is null ? default : new NginxLogging(loggingStorageAccount, default),
                 scalingProperties,
-                upgradeChannel is null ? default : new AutoUpgradeProfile(upgradeChannel, null),
-                userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, null),
+                upgradeChannel is null ? default : new AutoUpgradeProfile(upgradeChannel, default),
+                userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, default),
                 nginxAppProtect,
                 dataplaneApiEndpoint,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="frontEndIPConfiguration"> Nginx Frontend IP Configuration. </param>
+        /// <param name="networkInterfaceSubnetId"> Gets or sets the SubnetId. </param>
+        /// <returns> A new <see cref="Models.NginxNetworkProfile"/> instance for mocking. </returns>
+        public static NginxNetworkProfile NginxNetworkProfile(NginxFrontendIPConfiguration frontEndIPConfiguration = default, ResourceIdentifier networkInterfaceSubnetId = default)
+        {
+            return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceSubnetId is null ? default : new NginxNetworkInterfaceConfiguration(networkInterfaceSubnetId, default), default);
         }
 
         /// <summary> Nginx Frontend IP Configuration. </summary>
@@ -130,7 +147,52 @@ namespace Azure.ResourceManager.Nginx.Models
             publicIPAddresses ??= new ChangeTrackingList<WritableSubResource>();
             privateIPAddresses ??= new ChangeTrackingList<NginxPrivateIPAddress>();
 
-            return new NginxFrontendIPConfiguration(publicIPAddresses.ToList(), privateIPAddresses.ToList(), additionalBinaryDataProperties: null);
+            return new NginxFrontendIPConfiguration((publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (privateIPAddresses ?? new ChangeTrackingList<NginxPrivateIPAddress>()).ToList(), default);
+        }
+
+        /// <summary> Nginx Private IP Address. </summary>
+        /// <param name="privateIPAddress"></param>
+        /// <param name="privateIPAllocationMethod"> Nginx Private IP Allocation Method. </param>
+        /// <param name="subnetId"></param>
+        /// <returns> A new <see cref="Models.NginxPrivateIPAddress"/> instance for mocking. </returns>
+        public static NginxPrivateIPAddress NginxPrivateIPAddress(IPAddress privateIPAddress = default, NginxPrivateIPAllocationMethod? privateIPAllocationMethod = default, ResourceIdentifier subnetId = default)
+        {
+            return new NginxPrivateIPAddress(privateIPAddress, privateIPAllocationMethod, subnetId, default);
+        }
+
+        /// <summary> Nginx Storage Account. </summary>
+        /// <param name="accountName"></param>
+        /// <param name="containerName"></param>
+        /// <returns> A new <see cref="Models.NginxStorageAccount"/> instance for mocking. </returns>
+        public static NginxStorageAccount NginxStorageAccount(string accountName = default, string containerName = default)
+        {
+            return new NginxStorageAccount(accountName, containerName, default);
+        }
+
+        /// <param name="capacity"></param>
+        /// <param name="profiles"> Gets the Profiles. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentScalingProperties"/> instance for mocking. </returns>
+        public static NginxDeploymentScalingProperties NginxDeploymentScalingProperties(int? capacity = default, IEnumerable<NginxScaleProfile> profiles = default)
+        {
+            return new NginxDeploymentScalingProperties(capacity, profiles is null ? default : new NginxDeploymentAutoScaleSettings((profiles ?? new ChangeTrackingList<NginxScaleProfile>()).ToList(), default), default);
+        }
+
+        /// <summary> The autoscale profile. </summary>
+        /// <param name="name"></param>
+        /// <param name="capacity"> The capacity parameters of the profile. </param>
+        /// <returns> A new <see cref="Models.NginxScaleProfile"/> instance for mocking. </returns>
+        public static NginxScaleProfile NginxScaleProfile(string name = default, NginxScaleProfileCapacity capacity = default)
+        {
+            return new NginxScaleProfile(name, capacity, default);
+        }
+
+        /// <summary> The capacity parameters of the profile. </summary>
+        /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
+        /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
+        /// <returns> A new <see cref="Models.NginxScaleProfileCapacity"/> instance for mocking. </returns>
+        public static NginxScaleProfileCapacity NginxScaleProfileCapacity(int min = default, int max = default)
+        {
+            return new NginxScaleProfileCapacity(min, max, default);
         }
 
         /// <param name="webApplicationFirewallActivationState"> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </param>
@@ -138,7 +200,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentPropertiesNginxAppProtect"/> instance for mocking. </returns>
         public static NginxDeploymentPropertiesNginxAppProtect NginxDeploymentPropertiesNginxAppProtect(WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default, WebApplicationFirewallStatus webApplicationFirewallStatus = default)
         {
-            return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, null), webApplicationFirewallStatus, additionalBinaryDataProperties: null);
+            return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), webApplicationFirewallStatus, default);
         }
 
         /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
@@ -156,7 +218,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 botSignaturesPackage,
                 threatCampaignsPackage,
                 componentVersions,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> NGINX App Protect Web Application Firewall (WAF) Package. Contains the version and revision date of the package. </summary>
@@ -165,7 +227,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.WebApplicationFirewallPackage"/> instance for mocking. </returns>
         public static WebApplicationFirewallPackage WebApplicationFirewallPackage(string version = default, DateTimeOffset revisionDatetime = default)
         {
-            return new WebApplicationFirewallPackage(version, revisionDatetime, additionalBinaryDataProperties: null);
+            return new WebApplicationFirewallPackage(version, revisionDatetime, default);
         }
 
         /// <summary> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </summary>
@@ -174,7 +236,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.WebApplicationFirewallComponentVersions"/> instance for mocking. </returns>
         public static WebApplicationFirewallComponentVersions WebApplicationFirewallComponentVersions(string wafEngineVersion = default, string wafNginxVersion = default)
         {
-            return new WebApplicationFirewallComponentVersions(wafEngineVersion, wafNginxVersion, additionalBinaryDataProperties: null);
+            return new WebApplicationFirewallComponentVersions(wafEngineVersion, wafNginxVersion, default);
         }
 
         /// <param name="identity"> Identity Properties. </param>
@@ -189,11 +251,32 @@ namespace Azure.ResourceManager.Nginx.Models
 
             return new NginxDeploymentPatch(
                 identity,
-                tags,
-                skuName is null ? default : new NginxResourceSku(skuName, null),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                skuName is null ? default : new NginxResourceSku(skuName, default),
                 location,
                 properties,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="loggingStorageAccount"> Nginx Storage Account. </param>
+        /// <param name="scalingProperties"> Information on how the deployment will be scaled. </param>
+        /// <param name="userPreferredEmail"> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </param>
+        /// <param name="networkProfile"> Nginx Network Profile. </param>
+        /// <param name="upgradeChannel"> Channel used for autoupgrade. </param>
+        /// <param name="webApplicationFirewallActivationState"> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentUpdateProperties"/> instance for mocking. </returns>
+        public static NginxDeploymentUpdateProperties NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport = default, NginxStorageAccount loggingStorageAccount = default, NginxDeploymentScalingProperties scalingProperties = default, string userPreferredEmail = default, NginxNetworkProfile networkProfile = default, string upgradeChannel = default, WebApplicationFirewallActivationState? webApplicationFirewallActivationState = default)
+        {
+            return new NginxDeploymentUpdateProperties(
+                enableDiagnosticsSupport,
+                loggingStorageAccount is null ? default : new NginxLogging(loggingStorageAccount, default),
+                scalingProperties,
+                userPreferredEmail is null ? default : new NginxDeploymentUserProfile(userPreferredEmail, default),
+                networkProfile,
+                upgradeChannel is null ? default : new AutoUpgradeProfile(upgradeChannel, default),
+                webApplicationFirewallActivationState is null ? default : new NginxDeploymentUpdatePropertiesNginxAppProtect(new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), default),
+                default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Metadata. </summary>
@@ -211,7 +294,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 @type,
                 properties,
                 systemData,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Metadata Properties. </summary>
@@ -222,7 +305,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyMetadataProperties"/> instance for mocking. </returns>
         public static NginxDeploymentWafPolicyMetadataProperties NginxDeploymentWafPolicyMetadataProperties(string filepath = default, NginxProvisioningState? provisioningState = default, NginxDeploymentWafPolicyCompilingStatus compilingState = default, NginxDeploymentWafPolicyApplyingStatus applyingState = default)
         {
-            return new NginxDeploymentWafPolicyMetadataProperties(filepath, provisioningState, compilingState, applyingState, additionalBinaryDataProperties: null);
+            return new NginxDeploymentWafPolicyMetadataProperties(filepath, provisioningState, compilingState, applyingState, default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Compiling Status. </summary>
@@ -232,7 +315,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyCompilingStatus"/> instance for mocking. </returns>
         public static NginxDeploymentWafPolicyCompilingStatus NginxDeploymentWafPolicyCompilingStatus(NginxDeploymentWafPolicyCompilingStatusCode? code = default, string displayStatus = default, string time = default)
         {
-            return new NginxDeploymentWafPolicyCompilingStatus(code, displayStatus, time, additionalBinaryDataProperties: null);
+            return new NginxDeploymentWafPolicyCompilingStatus(code, displayStatus, time, default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Applying Status. </summary>
@@ -242,7 +325,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyApplyingStatus"/> instance for mocking. </returns>
         public static NginxDeploymentWafPolicyApplyingStatus NginxDeploymentWafPolicyApplyingStatus(NginxDeploymentWafPolicyApplyingStatusCode? code = default, string displayStatus = default, string time = default)
         {
-            return new NginxDeploymentWafPolicyApplyingStatus(code, displayStatus, time, additionalBinaryDataProperties: null);
+            return new NginxDeploymentWafPolicyApplyingStatus(code, displayStatus, time, default);
         }
 
         /// <summary> Nginx Deployment Default Waf Policy List Response. </summary>
@@ -253,7 +336,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             value ??= new ChangeTrackingList<NginxDeploymentDefaultWafPolicyProperties>();
 
-            return new NginxDeploymentDefaultWafPolicyListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+            return new NginxDeploymentDefaultWafPolicyListResult((value ?? new ChangeTrackingList<NginxDeploymentDefaultWafPolicyProperties>()).ToList(), nextLink, default);
         }
 
         /// <summary> Nginx Deployment Default Waf Policy Properties. </summary>
@@ -262,7 +345,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentDefaultWafPolicyProperties"/> instance for mocking. </returns>
         public static NginxDeploymentDefaultWafPolicyProperties NginxDeploymentDefaultWafPolicyProperties(BinaryData content = default, string filepath = default)
         {
-            return new NginxDeploymentDefaultWafPolicyProperties(content, filepath, additionalBinaryDataProperties: null);
+            return new NginxDeploymentDefaultWafPolicyProperties(content, filepath, default);
         }
 
         /// <summary> Nginx Certificate. </summary>
@@ -280,9 +363,9 @@ namespace Azure.ResourceManager.Nginx.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 properties,
-                location);
+                location,
+                default);
         }
 
         /// <summary> Nginx Certificate Properties. </summary>
@@ -306,7 +389,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 keyVaultSecretVersion,
                 keyVaultSecretCreated,
                 certificateError,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Nginx Certificate Error Response Body. </summary>
+        /// <param name="code"></param>
+        /// <param name="message"></param>
+        /// <returns> A new <see cref="Models.NginxCertificateError"/> instance for mocking. </returns>
+        public static NginxCertificateError NginxCertificateError(string code = default, string message = default)
+        {
+            return new NginxCertificateError(code, message, default);
         }
 
         /// <summary> Nginx Configuration Response. </summary>
@@ -323,8 +415,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Nginx Configuration Response Properties. </summary>
@@ -341,11 +433,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
             return new NginxConfigurationProperties(
                 provisioningState,
-                files.ToList(),
-                protectedFiles.ToList(),
+                (files ?? new ChangeTrackingList<NginxConfigurationFile>()).ToList(),
+                (protectedFiles ?? new ChangeTrackingList<NginxConfigurationFile>()).ToList(),
                 package,
                 rootFile,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Nginx Configuration File. </summary>
+        /// <param name="content"></param>
+        /// <param name="virtualPath"></param>
+        /// <param name="contentHash"></param>
+        /// <returns> A new <see cref="Models.NginxConfigurationFile"/> instance for mocking. </returns>
+        public static NginxConfigurationFile NginxConfigurationFile(string content = default, string virtualPath = default, string contentHash = default)
+        {
+            return new NginxConfigurationFile(content, virtualPath, contentHash, default);
         }
 
         /// <summary> Nginx Configuration Package. </summary>
@@ -356,7 +458,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             protectedFiles ??= new ChangeTrackingList<string>();
 
-            return new NginxConfigurationPackage(data, protectedFiles.ToList(), additionalBinaryDataProperties: null);
+            return new NginxConfigurationPackage(data, (protectedFiles ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Nginx Configuration Request. </summary>
@@ -374,7 +476,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 resourceType,
                 properties,
                 systemData,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Nginx Configuration Request Properties. </summary>
@@ -391,11 +493,21 @@ namespace Azure.ResourceManager.Nginx.Models
 
             return new NginxConfigurationCreateOrUpdateProperties(
                 provisioningState,
-                files.ToList(),
-                protectedFiles.ToList(),
+                (files ?? new ChangeTrackingList<NginxConfigurationFile>()).ToList(),
+                (protectedFiles ?? new ChangeTrackingList<NginxConfigurationContentProtectedFile>()).ToList(),
                 package,
                 rootFile,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Nginx Configuration Protected File Request. </summary>
+        /// <param name="content"> The content of the protected file. This value is a PUT only value. If you perform a GET request on this value, it will be empty because it is a protected file. </param>
+        /// <param name="virtualPath"> The virtual path of the protected file. </param>
+        /// <param name="contentHash"> The hash of the content of the file. This value is used to determine if the file has changed. </param>
+        /// <returns> A new <see cref="Models.NginxConfigurationContentProtectedFile"/> instance for mocking. </returns>
+        public static NginxConfigurationContentProtectedFile NginxConfigurationContentProtectedFile(string content = default, string virtualPath = default, string contentHash = default)
+        {
+            return new NginxConfigurationContentProtectedFile(content, virtualPath, contentHash, default);
         }
 
         /// <summary> The request body for creating an analysis for an NGINX configuration. </summary>
@@ -403,7 +515,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxAnalysisContent"/> instance for mocking. </returns>
         public static NginxAnalysisContent NginxAnalysisContent(NginxAnalysisConfig config = default)
         {
-            return new NginxAnalysisContent(config, additionalBinaryDataProperties: null);
+            return new NginxAnalysisContent(config, default);
         }
 
         /// <summary> The NginxAnalysisConfig. </summary>
@@ -417,7 +529,7 @@ namespace Azure.ResourceManager.Nginx.Models
             files ??= new ChangeTrackingList<NginxConfigurationFile>();
             protectedFiles ??= new ChangeTrackingList<NginxConfigurationContentProtectedFile>();
 
-            return new NginxAnalysisConfig(rootFile, files.ToList(), protectedFiles.ToList(), package, additionalBinaryDataProperties: null);
+            return new NginxAnalysisConfig(rootFile, (files ?? new ChangeTrackingList<NginxConfigurationFile>()).ToList(), (protectedFiles ?? new ChangeTrackingList<NginxConfigurationContentProtectedFile>()).ToList(), package, default);
         }
 
         /// <summary> The response body for an analysis request. Contains the status of the analysis and any errors. </summary>
@@ -426,7 +538,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxAnalysisResult"/> instance for mocking. </returns>
         public static NginxAnalysisResult NginxAnalysisResult(string status = default, NginxAnalysisResultDetails data = default)
         {
-            return new NginxAnalysisResult(status, data, additionalBinaryDataProperties: null);
+            return new NginxAnalysisResult(status, data, default);
         }
 
         /// <summary> The NginxAnalysisResultDetails. </summary>
@@ -438,7 +550,7 @@ namespace Azure.ResourceManager.Nginx.Models
             errors ??= new ChangeTrackingList<NginxAnalysisDiagnostic>();
             diagnostics ??= new ChangeTrackingList<NginxDiagnosticItem>();
 
-            return new NginxAnalysisResultDetails(errors.ToList(), diagnostics.ToList(), additionalBinaryDataProperties: null);
+            return new NginxAnalysisResultDetails((errors ?? new ChangeTrackingList<NginxAnalysisDiagnostic>()).ToList(), (diagnostics ?? new ChangeTrackingList<NginxDiagnosticItem>()).ToList(), default);
         }
 
         /// <summary> An error object found during the analysis of an NGINX configuration. </summary>
@@ -460,7 +572,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 line,
                 message,
                 rule,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> A diagnostic is a message associated with an NGINX config. The Analyzer returns diagnostics with a level indicating the importance of the diagnostic with optional category. </summary>
@@ -486,7 +598,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 rule,
                 level,
                 category,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Nginx Deployment Waf Policy. </summary>
@@ -503,8 +615,8 @@ namespace Azure.ResourceManager.Nginx.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Properties. </summary>
@@ -522,7 +634,16 @@ namespace Azure.ResourceManager.Nginx.Models
                 filepath,
                 compilingState,
                 applyingState,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Nginx Deployment Waf Policy Analysis Create Request. </summary>
+        /// <param name="content"> The byte content of the policy. </param>
+        /// <param name="filepath"> The absolute file path of the policy as in the virtual machine. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyAnalysisCreateContent"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyAnalysisCreateContent NginxDeploymentWafPolicyAnalysisCreateContent(BinaryData content = default, string filepath = default)
+        {
+            return new NginxDeploymentWafPolicyAnalysisCreateContent(content, filepath, default);
         }
 
         /// <param name="status"> The status of the analysis. The possible values can be arbitrary. </param>
@@ -530,7 +651,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyAnalysisResult"/> instance for mocking. </returns>
         public static NginxDeploymentWafPolicyAnalysisResult NginxDeploymentWafPolicyAnalysisResult(string status = default, IEnumerable<NginxDeploymentWafPolicyError> dataErrors = default)
         {
-            return new NginxDeploymentWafPolicyAnalysisResult(status, dataErrors is null ? default : new NginxDeploymentWafPolicyAnalysisData((dataErrors ?? new ChangeTrackingList<NginxDeploymentWafPolicyError>()).ToList(), null), additionalBinaryDataProperties: null);
+            return new NginxDeploymentWafPolicyAnalysisResult(status, dataErrors is null ? default : new NginxDeploymentWafPolicyAnalysisData((dataErrors ?? new ChangeTrackingList<NginxDeploymentWafPolicyError>()).ToList(), default), default);
         }
 
         /// <summary> Nginx Deployment Waf Policy Error. </summary>
@@ -540,7 +661,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyError"/> instance for mocking. </returns>
         public static NginxDeploymentWafPolicyError NginxDeploymentWafPolicyError(string code = default, string @field = default, string message = default)
         {
-            return new NginxDeploymentWafPolicyError(code, @field, message, additionalBinaryDataProperties: null);
+            return new NginxDeploymentWafPolicyError(code, @field, message, default);
         }
     }
 }

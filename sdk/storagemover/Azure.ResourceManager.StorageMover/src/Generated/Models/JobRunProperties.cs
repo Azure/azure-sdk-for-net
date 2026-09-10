@@ -13,7 +13,6 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -30,8 +29,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="scanStatus"> The status of Agent's scanning of source. </param>
         /// <param name="agentName"> Name of the Agent assigned to this run. </param>
         /// <param name="agentResourceId"> Fully qualified resource id of the Agent assigned to this run. </param>
-        /// <param name="executionStartOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
-        /// <param name="executionEndOn"> End time of the run. Null if Agent has not reported that the job has ended. </param>
+        /// <param name="executionStartsOn"> Start time of the run. Null if no Agent reported that the job has started. </param>
+        /// <param name="executionEndsOn"> End time of the run. Null if Agent has not reported that the job has ended. </param>
+        /// <param name="triggerType"> Trigger type for the job run. Default is manual. </param>
+        /// <param name="scheduledExecutionOn"> Scheduled execution time. Null if Trigger type is manual. </param>
         /// <param name="lastStatusUpdate"> The last updated time of the Job Run. </param>
         /// <param name="itemsScanned"> Number of items scanned so far in source. </param>
         /// <param name="itemsExcluded"> Number of items that will not be transferred, as they are excluded by user configuration. </param>
@@ -56,14 +57,16 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="warnings"> Warning details. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobRunProperties(JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartOn, DateTimeOffset? executionEndOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, IReadOnlyList<JobRunWarning> warnings, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobRunProperties(JobRunStatus? status, JobRunScanStatus? scanStatus, string agentName, ResourceIdentifier agentResourceId, DateTimeOffset? executionStartsOn, DateTimeOffset? executionEndsOn, StorageMoverJobTriggerType? triggerType, DateTimeOffset? scheduledExecutionOn, DateTimeOffset? lastStatusUpdate, long? itemsScanned, long? itemsExcluded, long? itemsUnsupported, long? itemsNoTransferNeeded, long? itemsFailed, long? itemsTransferred, long? bytesScanned, long? bytesExcluded, long? bytesUnsupported, long? bytesNoTransferNeeded, long? bytesFailed, long? bytesTransferred, string sourceName, ResourceIdentifier sourceResourceId, BinaryData sourceProperties, string targetName, ResourceIdentifier targetResourceId, BinaryData targetProperties, BinaryData jobDefinitionProperties, JobRunError error, IReadOnlyList<JobRunWarning> warnings, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ScanStatus = scanStatus;
             AgentName = agentName;
             AgentResourceId = agentResourceId;
-            ExecutionStartOn = executionStartOn;
-            ExecutionEndOn = executionEndOn;
+            ExecutionStartsOn = executionStartsOn;
+            ExecutionEndsOn = executionEndsOn;
+            TriggerType = triggerType;
+            ScheduledExecutionOn = scheduledExecutionOn;
             LastStatusUpdate = lastStatusUpdate;
             ItemsScanned = itemsScanned;
             ItemsExcluded = itemsExcluded;
@@ -103,10 +106,16 @@ namespace Azure.ResourceManager.StorageMover.Models
         public ResourceIdentifier AgentResourceId { get; }
 
         /// <summary> Start time of the run. Null if no Agent reported that the job has started. </summary>
-        public DateTimeOffset? ExecutionStartOn { get; }
+        public DateTimeOffset? ExecutionStartsOn { get; }
 
         /// <summary> End time of the run. Null if Agent has not reported that the job has ended. </summary>
-        public DateTimeOffset? ExecutionEndOn { get; }
+        public DateTimeOffset? ExecutionEndsOn { get; }
+
+        /// <summary> Trigger type for the job run. Default is manual. </summary>
+        public StorageMoverJobTriggerType? TriggerType { get; }
+
+        /// <summary> Scheduled execution time. Null if Trigger type is manual. </summary>
+        public DateTimeOffset? ScheduledExecutionOn { get; }
 
         /// <summary> The last updated time of the Job Run. </summary>
         public DateTimeOffset? LastStatusUpdate { get; }

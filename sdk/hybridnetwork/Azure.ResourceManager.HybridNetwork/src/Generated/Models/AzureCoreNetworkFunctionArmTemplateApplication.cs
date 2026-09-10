@@ -14,27 +14,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class AzureCoreNetworkFunctionArmTemplateApplication : AzureCoreNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>. </summary>
-        public AzureCoreNetworkFunctionArmTemplateApplication()
+        public AzureCoreNetworkFunctionArmTemplateApplication() : base(AzureCoreArtifactType.ArmTemplate)
         {
-            ArtifactType = AzureCoreArtifactType.ArmTemplate;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactProfile"> Azure template artifact profile. </param>
         /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
-        internal AzureCoreNetworkFunctionArmTemplateApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType, AzureCoreArmTemplateArtifactProfile artifactProfile, AzureCoreArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
+        internal AzureCoreNetworkFunctionArmTemplateApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureCoreArtifactType artifactType, AzureCoreArmTemplateArtifactProfile artifactProfile, AzureCoreArmTemplateDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, additionalBinaryDataProperties, artifactType)
         {
             ArtifactProfile = artifactProfile;
             DeployParametersMappingRuleProfile = deployParametersMappingRuleProfile;
-            ArtifactType = artifactType;
         }
 
         /// <summary> Azure template artifact profile. </summary>
         public AzureCoreArmTemplateArtifactProfile ArtifactProfile { get; set; }
+
         /// <summary> Deploy mapping rule profile. </summary>
         public AzureCoreArmTemplateDeployMappingRuleProfile DeployParametersMappingRuleProfile { get; set; }
     }

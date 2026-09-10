@@ -1,0 +1,91 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
+using Azure.Security.KeyVault.Keys.Tests;
+using Azure.Security.KeyVault.Tests;
+using NUnit.Framework;
+
+namespace Azure.Security.KeyVault.Keys.Samples
+{
+    /// <summary>
+    /// This sample demonstrates how to securely wrap a key generated inside a Managed HSM trusted execution
+    /// environment (TEE) and securely unwrap it into a target TEE using the asynchronous methods of
+    /// <see cref="CryptographyClient"/>. Secure wrap and unwrap are only supported on Managed HSM with service
+    /// version 2026-01-01-preview or newer, and are remote-only operations.
+    /// </summary>
+    public partial class SecureWrapUnwrapSample
+    {
+        [Test]
+        public async Task SecureWrapUnwrapAsync()
+        {
+            TestEnvironment.AssertManagedHsm();
+
+            string managedHsmUrl = TestEnvironment.ManagedHsmUrl;
+            Uri attestationUrl = TestEnvironment.AttestationUri;
+
+            // Instantiate a key client that will be used to call the service.
+            var keyClient = new KeyClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
+
+            // Secure wrap/unwrap keys must be created on a Managed HSM with the SecureWrapKey and SecureUnwrapKey
+            // operations and a release policy. The release policy governs which target environments (TEEs) the
+            // wrapping key may be released into.
+            string keyName = $"SecureWrapKey-{Guid.NewGuid()}";
+            BinaryData releasePolicyData = BinaryData.FromObjectAsJson(new
+            {
+                anyOf = new[]
+                {
+                    new
+                    {
+                        anyOf = new[] { new { claim = "sdk-test", equals = "true" } },
+                        authority = attestationUrl,
+                    },
+                },
+                version = "1.0.0",
+            });
+
+            var createOptions = new CreateRsaKeyOptions(keyName, hardwareProtected: true)
+            {
+                KeySize = 2048,
+                KeyOperations = { KeyOperation.SecureWrapKey, KeyOperation.SecureUnwrapKey },
+                ReleasePolicy = new KeyReleasePolicy(releasePolicyData),
+            };
+
+            KeyVaultKey wrappingKey = await keyClient.CreateRsaKeyAsync(createOptions);
+            Debug.WriteLine($"Wrapping key created with name {wrappingKey.Name} and type {wrappingKey.KeyType}");
+
+            // Build a CryptographyClient bound to the wrapping key. Secure wrap is remote-only.
+            var cryptoClient = new CryptographyClient(wrappingKey.Id, new DefaultAzureCredential());
+
+            // Securely wrap a key generated inside the Managed HSM trusted execution environment.
+            SecureWrapResult wrapResult = await cryptoClient.SecureWrapKeyAsync(SecureKeyWrapAlgorithm.RsaOaep256);
+            Debug.WriteLine($"Securely wrapped a key for {wrapResult.KeyId} using {wrapResult.Algorithm}.");
+
+            // Secure unwrap requires a Microsoft Azure Attestation (MAA) token that proves the identity of the
+            // target trusted execution environment (TEE). The token is opaque to the SDK; in a real application you
+            // obtain it from your TEE / attestation flow. This sample uses a Key Vault test attestation site to
+            // generate one.
+            string targetAttestationToken = await new AttestationClient(attestationUrl, new KeyClientOptions()).GetTokenAsync();
+
+            // Unwrap the key into the target TEE proven by the attestation token. The same algorithm used to wrap
+            // must be used to unwrap.
+            SecureUnwrapResult unwrapResult = await cryptoClient.SecureUnwrapKeyAsync(
+                wrapResult.Algorithm,
+                wrapResult.EncryptedKey,
+                targetAttestationToken);
+            Debug.WriteLine($"Securely unwrapped the key for {unwrapResult.KeyId} using {unwrapResult.Algorithm}.");
+
+            // Delete and purge the wrapping key when it is no longer needed.
+            DeleteKeyOperation operation = await keyClient.StartDeleteKeyAsync(keyName);
+
+            // You only need to wait for completion if you want to purge or recover the key.
+            await operation.WaitForCompletionAsync();
+
+            await keyClient.PurgeDeletedKeyAsync(keyName);
+        }
+    }
+}

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerAadAdministratorResource.ResourceType, out string mySqlFlexibleServerAadAdministratorApiVersion);
             _azureADAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerAadAdministratorResource.ResourceType.Namespace, Diagnostics);
-            _azureADAdministratorsRestClient = new AzureADAdministrators(_azureADAdministratorsClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerAadAdministratorApiVersion ?? "2024-12-30");
+            _azureADAdministratorsRestClient = new AzureADAdministrators(_azureADAdministratorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerAadAdministratorApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _azureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, administratorName.ToString(), MySqlFlexibleServerAadAdministratorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(
-                    new MySqlFlexibleServerAadAdministratorOperationSource(Client),
+                    new MySqlFlexibleServerAadAdministratorResourceOperationSource(Client),
                     _azureADAdministratorsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 HttpMessage message = _azureADAdministratorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, administratorName.ToString(), MySqlFlexibleServerAadAdministratorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource> operation = new FlexibleServersArmOperation<MySqlFlexibleServerAadAdministratorResource>(
-                    new MySqlFlexibleServerAadAdministratorOperationSource(Client),
+                    new MySqlFlexibleServerAadAdministratorResourceOperationSource(Client),
                     _azureADAdministratorsClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location);
+                    OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

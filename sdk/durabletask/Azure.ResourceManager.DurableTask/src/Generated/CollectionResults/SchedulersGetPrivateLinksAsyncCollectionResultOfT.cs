@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.DurableTask
                     yield break;
                 }
                 SchedulerPrivateLinkResourceListResult result = SchedulerPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<DurableTaskSchedulerPrivateLinkResourceData>.FromValues((IReadOnlyList<DurableTaskSchedulerPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DurableTaskSchedulerPrivateLinkResourceData>.FromValues((IReadOnlyList<DurableTaskSchedulerPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

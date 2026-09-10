@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct NetezzaSecurityLevelType : IEquatable<NetezzaSecurityLevelType>
     {
         private readonly string _value;
+        /// <summary> PreferredUnSecured. </summary>
+        private const string PreferredUnSecuredValue = "PreferredUnSecured";
+        /// <summary> OnlyUnSecured. </summary>
+        private const string OnlyUnSecuredValue = "OnlyUnSecured";
 
         /// <summary> Initializes a new instance of <see cref="NetezzaSecurityLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetezzaSecurityLevelType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PreferredUnSecuredValue = "PreferredUnSecured";
-        private const string OnlyUnSecuredValue = "OnlyUnSecured";
+            _value = value;
+        }
 
         /// <summary> PreferredUnSecured. </summary>
         public static NetezzaSecurityLevelType PreferredUnSecured { get; } = new NetezzaSecurityLevelType(PreferredUnSecuredValue);
+
         /// <summary> OnlyUnSecured. </summary>
         public static NetezzaSecurityLevelType OnlyUnSecured { get; } = new NetezzaSecurityLevelType(OnlyUnSecuredValue);
+
         /// <summary> Determines if two <see cref="NetezzaSecurityLevelType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetezzaSecurityLevelType left, NetezzaSecurityLevelType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetezzaSecurityLevelType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetezzaSecurityLevelType left, NetezzaSecurityLevelType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetezzaSecurityLevelType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetezzaSecurityLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetezzaSecurityLevelType(string value) => new NetezzaSecurityLevelType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetezzaSecurityLevelType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetezzaSecurityLevelType?(string value) => value == null ? null : new NetezzaSecurityLevelType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetezzaSecurityLevelType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetezzaSecurityLevelType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

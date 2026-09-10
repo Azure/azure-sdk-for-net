@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
-    internal partial class RunsGetAllCollectionResultOfT : Pageable<RunData>
+    internal partial class RunsGetAllCollectionResultOfT : Pageable<ContainerRegistryRunData>
     {
         private readonly Runs _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of RunsGetAllCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<RunData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ContainerRegistryRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                     yield break;
                 }
                 RunListResult result = RunListResult.FromResponse(response);
-                yield return Page<RunData>.FromValues((IReadOnlyList<RunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 string nextPageString = result.NextLink;
-                if (string.IsNullOrEmpty(nextPageString))
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
+                yield return Page<ContainerRegistryRunData>.FromValues((IReadOnlyList<ContainerRegistryRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if (nextPage == null)
                 {
                     yield break;
                 }
-                nextPage = new Uri(nextPageString, UriKind.RelativeOrAbsolute);
             }
         }
 

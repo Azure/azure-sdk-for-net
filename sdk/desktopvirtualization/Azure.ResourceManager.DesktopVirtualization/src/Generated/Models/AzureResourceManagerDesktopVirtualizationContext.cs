@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
@@ -17,9 +18,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveDirectoryInfoPatchProperties))]
-    [ModelReaderWriterBuildable(typeof(ActiveDirectoryInfoProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationData))]
-    [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationList))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationProperties))]
     [ModelReaderWriterBuildable(typeof(ActiveSessionHostConfigurationResource))]
     [ModelReaderWriterBuildable(typeof(AppAttachPackageData))]
@@ -37,13 +36,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(ApplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ArmPlan))]
     [ModelReaderWriterBuildable(typeof(AzureActiveDirectoryInfoProperties))]
-    [ModelReaderWriterBuildable(typeof(BootDiagnosticsInfoPatchProperties))]
-    [ModelReaderWriterBuildable(typeof(BootDiagnosticsInfoProperties))]
     [ModelReaderWriterBuildable(typeof(CustomInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(CustomInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopList))]
     [ModelReaderWriterBuildable(typeof(DesktopPatchProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopProperties))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationActiveDirectoryInfoProperties))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationBootDiagnosticsInfoPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationBootDiagnosticsInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationCreateDeleteProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationDiffDiskProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationDiskInfoProperties))]
@@ -52,6 +52,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationImageInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationKeyVaultCredentialsPatchProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationKeyVaultCredentialsProperties))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationMarketplaceInfoPatchProperties))]
+    [ModelReaderWriterBuildable(typeof(DesktopVirtualizationMarketplaceInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationNetworkInfoPatchProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationNetworkInfoProperties))]
     [ModelReaderWriterBuildable(typeof(DesktopVirtualizationPrivateEndpointConnection))]
@@ -88,8 +90,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(MaintenanceWindowPatchProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedDiskProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
-    [ModelReaderWriterBuildable(typeof(MarketplaceInfoPatchProperties))]
-    [ModelReaderWriterBuildable(typeof(MarketplaceInfoProperties))]
     [ModelReaderWriterBuildable(typeof(MsixImageUri))]
     [ModelReaderWriterBuildable(typeof(MsixPackageApplications))]
     [ModelReaderWriterBuildable(typeof(MsixPackageData))]
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(ScalingPlanProperties))]
     [ModelReaderWriterBuildable(typeof(ScalingPlanResource))]
     [ModelReaderWriterBuildable(typeof(ScalingSchedule))]
-    [ModelReaderWriterBuildable(typeof(ScopedRegistrationTokenProperties))]
+    [ModelReaderWriterBuildable(typeof(ScopedRegistrationTokenContent))]
     [ModelReaderWriterBuildable(typeof(SessionHostAgentUpdatePatchProperties))]
     [ModelReaderWriterBuildable(typeof(SessionHostAgentUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SessionHostConfigurationData))]
@@ -156,6 +156,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     [ModelReaderWriterBuildable(typeof(SessionHostResource))]
     [ModelReaderWriterBuildable(typeof(StartMenuItemList))]
     [ModelReaderWriterBuildable(typeof(StartMenuItemProperties))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserSessionData))]

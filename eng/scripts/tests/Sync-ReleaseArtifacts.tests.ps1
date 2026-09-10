@@ -51,6 +51,36 @@ BeforeAll {
             }
         }
 
+        $datedStableReleases = @()
+        foreach ($version in $ReleaseEntries.Keys) {
+            if ($ReleaseEntries[$version].ReleaseStatus -eq $CHANGELOG_UNRELEASED_STATUS) { continue }
+            $semVer = [AzureEngSemanticVersion]::ParseVersionString($version)
+            if ($semVer -and -not $semVer.IsPrerelease) {
+                $datedStableReleases += $semVer
+            }
+        }
+
+        if ($datedStableReleases.Count -gt 0) {
+            $toRemove = @()
+            foreach ($version in @($MainEntries.Keys)) {
+                if ($MainEntries[$version].ReleaseStatus -ne $CHANGELOG_UNRELEASED_STATUS) { continue }
+                $entrySemVer = [AzureEngSemanticVersion]::ParseVersionString($version)
+                if (-not $entrySemVer -or -not $entrySemVer.IsPrerelease) { continue }
+                foreach ($stable in $datedStableReleases) {
+                    if ($entrySemVer.Major -eq $stable.Major -and
+                        $entrySemVer.Minor -eq $stable.Minor -and
+                        $entrySemVer.Patch -eq $stable.Patch) {
+                        $toRemove += $version
+                        break
+                    }
+                }
+            }
+            foreach ($version in $toRemove) {
+                $MainEntries.Remove($version)
+                Write-Host "  Removed unreleased prerelease entry $version superseded by stable release"
+            }
+        }
+
         return $MainEntries
     }
 
@@ -222,6 +252,71 @@ Describe "Merge-ChangeLogEntries" {
 
         # Both unreleased — main wins (no overwrite)
         $result["1.2.0"].ReleaseContent | Should -Contain "- main work in progress"
+    }
+
+    It "GA release supersedes unreleased beta of the same version" {
+        # Repro for https://github.com/Azure/azure-sdk-for-net/pull/58993
+        # Release branch shipped 1.11.0 GA; main has 1.11.0-beta.1 (Unreleased)
+        # plus a newer 1.12.0-beta.1 (Unreleased). The unreleased 1.11.0-beta.1
+        # should be removed because it is now superseded by the GA release.
+        $mainChangelog = Build-Changelog @(
+            @{ Version = "1.12.0-beta.1"; Status = "(Unreleased)" },
+            @{ Version = "1.11.0-beta.1"; Status = "(Unreleased)" },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $releaseChangelog = Build-Changelog @(
+            @{ Version = "1.11.0"; Status = "(2026-05-05)"; Content = @("", "### Features Added", "", "- ga content") },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $mainEntries = Get-ChangeLogEntriesFromContent $mainChangelog
+        $releaseEntries = Get-ChangeLogEntriesFromContent $releaseChangelog
+
+        $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
+
+        $result.Contains("1.11.0") | Should -BeTrue
+        $result["1.11.0"].ReleaseStatus | Should -Be "(2026-05-05)"
+        $result.Contains("1.11.0-beta.1") | Should -BeFalse
+        $result.Contains("1.12.0-beta.1") | Should -BeTrue
+        $result.Contains("1.10.0") | Should -BeTrue
+    }
+
+    It "GA release does not remove a dated (already shipped) prerelease of same MMP" {
+        # If main has a historical dated 1.11.0-beta.1 entry it must be preserved
+        # — only Unreleased prereleases are superseded.
+        $mainChangelog = Build-Changelog @(
+            @{ Version = "1.11.0-beta.1"; Status = "(2026-04-01)"; Content = @("", "### Features Added", "", "- shipped beta") },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $releaseChangelog = Build-Changelog @(
+            @{ Version = "1.11.0"; Status = "(2026-05-05)"; Content = @("", "### Features Added", "", "- ga content") },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $mainEntries = Get-ChangeLogEntriesFromContent $mainChangelog
+        $releaseEntries = Get-ChangeLogEntriesFromContent $releaseChangelog
+
+        $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
+
+        $result.Contains("1.11.0") | Should -BeTrue
+        $result.Contains("1.11.0-beta.1") | Should -BeTrue
+        $result["1.11.0-beta.1"].ReleaseStatus | Should -Be "(2026-04-01)"
+    }
+
+    It "GA release does not remove unreleased prereleases of different MMP" {
+        $mainChangelog = Build-Changelog @(
+            @{ Version = "1.12.0-beta.1"; Status = "(Unreleased)" },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $releaseChangelog = Build-Changelog @(
+            @{ Version = "1.11.0"; Status = "(2026-05-05)"; Content = @("", "### Features Added", "", "- ga content") },
+            @{ Version = "1.10.0"; Status = "(2026-03-16)"; Content = @("", "### Features Added", "", "- prior") }
+        )
+        $mainEntries = Get-ChangeLogEntriesFromContent $mainChangelog
+        $releaseEntries = Get-ChangeLogEntriesFromContent $releaseChangelog
+
+        $result = Merge-ChangeLogEntries -MainEntries $mainEntries -ReleaseEntries $releaseEntries
+
+        $result.Contains("1.12.0-beta.1") | Should -BeTrue
+        $result.Contains("1.11.0") | Should -BeTrue
     }
 
     It "Handles version ordering correctly after merge via Set-ChangeLogContent" {

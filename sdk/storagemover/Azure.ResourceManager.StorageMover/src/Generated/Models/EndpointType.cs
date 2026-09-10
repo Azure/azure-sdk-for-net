@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string SmbMountValue = "SmbMount";
         private const string AzureMultiCloudConnectorValue = "AzureMultiCloudConnector";
         private const string AzureStorageNfsFileShareValue = "AzureStorageNfsFileShare";
+        private const string S3WithHmacValue = "S3WithHMAC";
 
         /// <summary> Initializes a new instance of <see cref="EndpointType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -49,6 +50,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Gets the AzureStorageNfsFileShare. </summary>
         public static EndpointType AzureStorageNfsFileShare { get; } = new EndpointType(AzureStorageNfsFileShareValue);
+
+        /// <summary> Gets the S3WithHmac. </summary>
+        public static EndpointType S3WithHmac { get; } = new EndpointType(S3WithHmacValue);
 
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

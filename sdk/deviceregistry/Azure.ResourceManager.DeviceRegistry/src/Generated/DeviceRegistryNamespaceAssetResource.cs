@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryNamespaceAssetApiVersion);
             _namespaceAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
+            _namespaceAssetsRestClient = new NamespaceAssets(_namespaceAssetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceAssetApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceAssetPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceAssetResource>(
-                    new DeviceRegistryNamespaceAssetOperationSource(Client),
+                    new DeviceRegistryNamespaceAssetResourceOperationSource(Client),
                     _namespaceAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespaceAssetsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DeviceRegistryNamespaceAssetPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceAssetResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceAssetResource>(
-                    new DeviceRegistryNamespaceAssetOperationSource(Client),
+                    new DeviceRegistryNamespaceAssetResourceOperationSource(Client),
                     _namespaceAssetsClientDiagnostics,
                     Pipeline,
                     message.Request,

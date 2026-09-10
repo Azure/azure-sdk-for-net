@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class McasDataConnectorDataTypes : IUtf8JsonSerializable, IJsonModel<McasDataConnectorDataTypes>
+    /// <summary> The available data types for MCAS (Microsoft Cloud App Security) data connector. </summary>
+    public partial class McasDataConnectorDataTypes : SecurityInsightsAlertsDataTypeOfDataConnector, IJsonModel<McasDataConnectorDataTypes>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<McasDataConnectorDataTypes>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityInsightsAlertsDataTypeOfDataConnector PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMcasDataConnectorDataTypes(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<McasDataConnectorDataTypes>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        McasDataConnectorDataTypes IPersistableModel<McasDataConnectorDataTypes>.Create(BinaryData data, ModelReaderWriterOptions options) => (McasDataConnectorDataTypes)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<McasDataConnectorDataTypes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<McasDataConnectorDataTypes>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DiscoveryLogs))
             {
@@ -43,137 +82,56 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        McasDataConnectorDataTypes IJsonModel<McasDataConnectorDataTypes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        McasDataConnectorDataTypes IJsonModel<McasDataConnectorDataTypes>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (McasDataConnectorDataTypes)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityInsightsAlertsDataTypeOfDataConnector JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMcasDataConnectorDataTypes(document.RootElement, options);
         }
 
-        internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static McasDataConnectorDataTypes DeserializeMcasDataConnectorDataTypes(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataConnectorDataTypeCommon discoveryLogs = default;
             DataConnectorDataTypeCommon alerts = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataConnectorDataTypeCommon discoveryLogs = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("discoveryLogs"u8))
+                if (prop.NameEquals("alerts"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("discoveryLogs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("alerts"u8))
-                {
-                    alerts = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(property.Value, options);
+                    discoveryLogs = DataConnectorDataTypeCommon.DeserializeDataConnectorDataTypeCommon(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new McasDataConnectorDataTypes(alerts, serializedAdditionalRawData, discoveryLogs);
+            return new McasDataConnectorDataTypes(alerts, additionalBinaryDataProperties, discoveryLogs);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("DiscoveryLogsState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  discoveryLogs: ");
-                builder.AppendLine("{");
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(DiscoveryLogs))
-                {
-                    builder.Append("  discoveryLogs: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, DiscoveryLogs, options, 2, false, "  discoveryLogs: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("AlertsState", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  alerts: ");
-                builder.AppendLine("{");
-                builder.Append("    state: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Alerts))
-                {
-                    builder.Append("  alerts: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Alerts, options, 2, false, "  alerts: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<McasDataConnectorDataTypes>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        McasDataConnectorDataTypes IPersistableModel<McasDataConnectorDataTypes>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<McasDataConnectorDataTypes>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMcasDataConnectorDataTypes(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(McasDataConnectorDataTypes)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<McasDataConnectorDataTypes>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

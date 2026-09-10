@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.IsNull(aaaa.TtlInSeconds);
             Assert.IsNull(aaaa.Fqdn);
             Assert.IsNull(aaaa.ProvisioningState);
-            Assert.IsNull(aaaa.TargetResource);
+            Assert.IsNull(aaaa.TargetResourceId);
             Assert.IsEmpty(aaaa.DnsAaaaRecords);
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             BasicAssert(cname);
             Assert.AreEqual(id, cname.Id);
             Assert.AreEqual(resourceType, cname.ResourceType);
-            Assert.AreEqual(aliasValue, cname.DnsCnameRecord.Cname);
+            Assert.AreEqual(aliasValue, cname.Cname);
         }
 
         [Test]
@@ -108,6 +108,21 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(1, soa.DnsSoaRecord.SerialNumber);
         }
 
+        [Test]
+        public void DnsZoneDataCompatibilityFactoryConvertsVirtualNetworks()
+        {
+            ResourceIdentifier registrationId = new ResourceIdentifier("/subscriptions/000000000-0000-0000-0000-000000000/resourceGroups/rg0000/providers/Microsoft.Network/virtualNetworks/registration");
+            ResourceIdentifier resolutionId = new ResourceIdentifier("/subscriptions/000000000-0000-0000-0000-000000000/resourceGroups/rg0000/providers/Microsoft.Network/virtualNetworks/resolution");
+
+            DnsZoneData zone = ArmDnsModelFactory.DnsZoneData(
+                etag: default,
+                registrationVirtualNetworks: new[] { new WritableSubResource { Id = registrationId } },
+                resolutionVirtualNetworks: new[] { new WritableSubResource { Id = resolutionId } });
+
+            Assert.AreEqual(registrationId, zone.RegistrationVirtualNetworkReferences.Single().Id);
+            Assert.AreEqual(resolutionId, zone.ResolutionVirtualNetworkReferences.Single().Id);
+        }
+
         private static void BasicAssert(DnsBaseRecordData recordData)
         {
             Assert.AreEqual(name, recordData.Name);
@@ -115,7 +130,7 @@ namespace Azure.ResourceManager.Dns.Tests.Scenario
             Assert.AreEqual(fqdn, recordData.Fqdn);
             Assert.AreEqual(etag, recordData.ETag);
             Assert.AreEqual(ttl, recordData.TtlInSeconds);
-            Assert.IsNull(recordData.TargetResource);
+            Assert.IsNull(recordData.TargetResourceId);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct RoutingState : IEquatable<RoutingState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Provisioned. </summary>
+        private const string ProvisionedValue = "Provisioned";
+        /// <summary> Provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="RoutingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutingState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ProvisionedValue = "Provisioned";
-        private const string ProvisioningValue = "Provisioning";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static RoutingState None { get; } = new RoutingState(NoneValue);
+
         /// <summary> Provisioned. </summary>
         public static RoutingState Provisioned { get; } = new RoutingState(ProvisionedValue);
+
         /// <summary> Provisioning. </summary>
         public static RoutingState Provisioning { get; } = new RoutingState(ProvisioningValue);
+
         /// <summary> Failed. </summary>
         public static RoutingState Failed { get; } = new RoutingState(FailedValue);
+
         /// <summary> Determines if two <see cref="RoutingState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutingState left, RoutingState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutingState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutingState left, RoutingState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutingState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutingState(string value) => new RoutingState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutingState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutingState?(string value) => value == null ? null : new RoutingState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutingState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutingState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

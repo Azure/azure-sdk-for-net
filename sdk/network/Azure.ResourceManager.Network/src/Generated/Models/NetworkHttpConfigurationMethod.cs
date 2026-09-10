@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkHttpConfigurationMethod : IEquatable<NetworkHttpConfigurationMethod>
     {
         private readonly string _value;
+        /// <summary> Get. </summary>
+        private const string GetValue = "Get";
+        /// <summary> Post. </summary>
+        private const string PostValue = "Post";
 
         /// <summary> Initializes a new instance of <see cref="NetworkHttpConfigurationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkHttpConfigurationMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GetValue = "Get";
-        private const string PostValue = "Post";
+            _value = value;
+        }
 
         /// <summary> Get. </summary>
         public static NetworkHttpConfigurationMethod Get { get; } = new NetworkHttpConfigurationMethod(GetValue);
+
         /// <summary> Post. </summary>
         public static NetworkHttpConfigurationMethod Post { get; } = new NetworkHttpConfigurationMethod(PostValue);
+
         /// <summary> Determines if two <see cref="NetworkHttpConfigurationMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkHttpConfigurationMethod left, NetworkHttpConfigurationMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkHttpConfigurationMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkHttpConfigurationMethod left, NetworkHttpConfigurationMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkHttpConfigurationMethod(string value) => new NetworkHttpConfigurationMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkHttpConfigurationMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkHttpConfigurationMethod?(string value) => value == null ? null : new NetworkHttpConfigurationMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkHttpConfigurationMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkHttpConfigurationMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

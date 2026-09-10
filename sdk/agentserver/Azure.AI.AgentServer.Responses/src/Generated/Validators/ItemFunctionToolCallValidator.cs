@@ -50,7 +50,7 @@ internal static partial class ItemFunctionToolCallValidator
         }
 
         // Optional: id
-        if (element.TryGetProperty("id", out var idProp))
+        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
         {
             if (idProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
@@ -63,6 +63,13 @@ internal static partial class ItemFunctionToolCallValidator
         {
             if (nameProp.ValueKind != JsonValueKind.String)
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
+        }
+
+        // Optional: namespace
+        if (element.TryGetProperty("namespace", out var namespaceProp))
+        {
+            if (namespaceProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.namespace", $"Expected string, got {namespaceProp.ValueKind}"));
         }
 
         // Optional: status

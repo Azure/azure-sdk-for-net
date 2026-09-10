@@ -40,6 +40,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public bool? FilePermissions { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Files.Shares.ShareProtocol ShareProtocol { get { throw null; } set { } }
         public bool SkipProtocolValidation { get { throw null; } set { } }
+        public string Snapshot { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
     public enum ShareProtocol : byte

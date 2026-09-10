@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(RelayNamespaceAuthorizationRuleResource.ResourceType, out string relayNamespaceAuthorizationRuleApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", RelayNamespaceAuthorizationRuleResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, relayNamespaceAuthorizationRuleApiVersion ?? "2024-01-01");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayNamespaceAuthorizationRuleApiVersion ?? "2024-01-01");
             ValidateResourceId(id);
         }
 

@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Elastic.Mocking
 
         private ClientDiagnostics ElasticMonitorResourcesClientDiagnostics => _elasticMonitorResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticMonitorResources ElasticMonitorResourcesRestClient => _elasticMonitorResourcesRestClient ??= new ElasticMonitorResources(ElasticMonitorResourcesClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private ElasticMonitorResources ElasticMonitorResourcesRestClient => _elasticMonitorResourcesRestClient ??= new ElasticMonitorResources(ElasticMonitorResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics ElasticVersionsOperationGroupClientDiagnostics => _elasticVersionsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ElasticVersionsOperationGroup ElasticVersionsOperationGroupRestClient => _elasticVersionsOperationGroupRestClient ??= new ElasticVersionsOperationGroup(ElasticVersionsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private ElasticVersionsOperationGroup ElasticVersionsOperationGroupRestClient => _elasticVersionsOperationGroupRestClient ??= new ElasticVersionsOperationGroup(ElasticVersionsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         private ClientDiagnostics OrganizationsOperationGroupClientDiagnostics => _organizationsOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Elastic.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OrganizationsOperationGroup OrganizationsOperationGroupRestClient => _organizationsOperationGroupRestClient ??= new OrganizationsOperationGroup(OrganizationsOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-06-01");
+        private OrganizationsOperationGroup OrganizationsOperationGroupRestClient => _organizationsOperationGroupRestClient ??= new OrganizationsOperationGroup(OrganizationsOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-06-01");
 
         /// <summary>
         /// List all Elastic monitor resources within a specified subscription, helping you audit and manage your monitoring setup.

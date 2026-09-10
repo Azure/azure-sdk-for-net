@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,47 +15,77 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct ModelLifecycleStatus : IEquatable<ModelLifecycleStatus>
     {
         private readonly string _value;
+        /// <summary> Legacy state. Replaced with GenerallyAvailable going forward. </summary>
+        private const string StableValue = "Stable";
+        /// <summary> Model is in preview and may be subject to changes. </summary>
+        private const string PreviewValue = "Preview";
+        /// <summary> Model is generally available for production use. </summary>
+        private const string GenerallyAvailableValue = "GenerallyAvailable";
+        /// <summary> Model is being deprecated and will be removed in the future. Only customers with existing deployments can create new deployments with this model. </summary>
+        private const string DeprecatingValue = "Deprecating";
+        /// <summary> Model has been deprecated, also known as retired, and is no longer supported. Inference calls to deployments of models in this lifecycle state will return 410 errors. </summary>
+        private const string DeprecatedValue = "Deprecated";
+        /// <summary> Model is a legacy version that is no longer recommended for use. Customers should migrate to newer models. Check replacementConfig for upgrade information. </summary>
+        private const string LegacyValue = "Legacy";
 
         /// <summary> Initializes a new instance of <see cref="ModelLifecycleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ModelLifecycleStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string StableValue = "Stable";
-        private const string PreviewValue = "Preview";
-        private const string GenerallyAvailableValue = "GenerallyAvailable";
-        private const string DeprecatingValue = "Deprecating";
-        private const string DeprecatedValue = "Deprecated";
-
-        /// <summary> Stable. </summary>
+        /// <summary> Legacy state. Replaced with GenerallyAvailable going forward. </summary>
         public static ModelLifecycleStatus Stable { get; } = new ModelLifecycleStatus(StableValue);
-        /// <summary> Preview. </summary>
+
+        /// <summary> Model is in preview and may be subject to changes. </summary>
         public static ModelLifecycleStatus Preview { get; } = new ModelLifecycleStatus(PreviewValue);
-        /// <summary> GenerallyAvailable. </summary>
+
+        /// <summary> Model is generally available for production use. </summary>
         public static ModelLifecycleStatus GenerallyAvailable { get; } = new ModelLifecycleStatus(GenerallyAvailableValue);
-        /// <summary> Deprecating. </summary>
+
+        /// <summary> Model is being deprecated and will be removed in the future. Only customers with existing deployments can create new deployments with this model. </summary>
         public static ModelLifecycleStatus Deprecating { get; } = new ModelLifecycleStatus(DeprecatingValue);
-        /// <summary> Deprecated. </summary>
+
+        /// <summary> Model has been deprecated, also known as retired, and is no longer supported. Inference calls to deployments of models in this lifecycle state will return 410 errors. </summary>
         public static ModelLifecycleStatus Deprecated { get; } = new ModelLifecycleStatus(DeprecatedValue);
+
+        /// <summary> Model is a legacy version that is no longer recommended for use. Customers should migrate to newer models. Check replacementConfig for upgrade information. </summary>
+        public static ModelLifecycleStatus Legacy { get; } = new ModelLifecycleStatus(LegacyValue);
+
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ModelLifecycleStatus left, ModelLifecycleStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ModelLifecycleStatus left, ModelLifecycleStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelLifecycleStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ModelLifecycleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ModelLifecycleStatus(string value) => new ModelLifecycleStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ModelLifecycleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ModelLifecycleStatus?(string value) => value == null ? null : new ModelLifecycleStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ModelLifecycleStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ModelLifecycleStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

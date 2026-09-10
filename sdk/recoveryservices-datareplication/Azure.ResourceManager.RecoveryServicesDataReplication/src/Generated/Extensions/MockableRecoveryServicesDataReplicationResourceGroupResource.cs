@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 
         private ClientDiagnostics DeploymentPreflightOperationsClientDiagnostics => _deploymentPreflightOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeploymentPreflightOperations DeploymentPreflightOperationsRestClient => _deploymentPreflightOperationsRestClient ??= new DeploymentPreflightOperations(DeploymentPreflightOperationsClientDiagnostics, Pipeline, Endpoint, "2024-09-01");
+        private DeploymentPreflightOperations DeploymentPreflightOperationsRestClient => _deploymentPreflightOperationsRestClient ??= new DeploymentPreflightOperations(DeploymentPreflightOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01");
 
         /// <summary> Gets a collection of DataReplicationVaults in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DataReplicationVaults and their operations over a DataReplicationVaultResource. </returns>

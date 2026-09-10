@@ -42,12 +42,57 @@ public class BasicSearchTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource search 'Microsoft.Search/searchServices@2023-11-01' = {
-              name: take('search-${uniqueString(resourceGroup().id)}', 60)
+            resource search 'Microsoft.Search/searchServices@2025-05-01' = {
+              name: take('search-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
-                hostingMode: 'default'
+                hostingMode: 'Default'
                 partitionCount: 1
+                replicaCount: 1
+              }
+              sku: {
+                name: 'standard'
+              }
+            }
+            """);
+    }
+
+    [Test]
+    public async Task CreateSearchServiceWithPublicNetworkAccessCompatibility()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                SearchService search =
+                    new(nameof(search))
+                    {
+                        SearchSkuName = SearchServiceSkuName.Standard,
+                        ReplicaCount = 1,
+                        PartitionCount = 1,
+                        HostingMode = SearchServiceHostingMode.Default,
+                        PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
+                    };
+#pragma warning disable CS0618 // Verify the obsolete compatibility property does not overwrite the properties envelope.
+                search.PublicNetworkAccess = SearchServicePublicNetworkAccess.Enabled;
+#pragma warning restore CS0618
+                infra.Add(search);
+
+                return infra;
+            });
+        test.Compare(
+            """
+            @description('The location for the resource(s) to be deployed.')
+            param location string = resourceGroup().location
+
+            resource search 'Microsoft.Search/searchServices@2025-05-01' = {
+              name: take('search-${uniqueString(resourceGroup().id)}', 24)
+              location: location
+              properties: {
+                hostingMode: 'Default'
+                partitionCount: 1
+                publicNetworkAccess: 'enabled'
                 replicaCount: 1
               }
               sku: {

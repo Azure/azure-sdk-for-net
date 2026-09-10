@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
+    /// <summary></summary>
     public partial class SecurityCenterLocationResource : IJsonModel<SecurityCenterLocationData>
     {
-        private static SecurityCenterLocationData s_dataDeserializationInstance;
-        private static SecurityCenterLocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecurityCenterLocationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecurityCenterLocationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecurityCenterLocationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecurityCenterLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterLocationData>)Data).Write(writer, options);
 
-        SecurityCenterLocationData IJsonModel<SecurityCenterLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterLocationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecurityCenterLocationData IJsonModel<SecurityCenterLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecurityCenterLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterLocationData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecurityCenterLocationData IPersistableModel<SecurityCenterLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterLocationData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
 
-        string IPersistableModel<SecurityCenterLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterLocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecurityCenterLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

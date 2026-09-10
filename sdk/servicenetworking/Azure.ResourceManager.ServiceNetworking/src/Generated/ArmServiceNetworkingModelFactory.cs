@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerAssociationPatch(tags, associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, null), null), additionalBinaryDataProperties: null);
+            return new TrafficControllerAssociationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), associationType is null && subnetId is null ? default : new AssociationUpdateProperties(associationType, new AssociationSubnetUpdate(subnetId, default), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -38,10 +37,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
+        /// <param name="publicNetworkAccess"> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </param>
         /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
+        /// <param name="associationId"> Resource ID of the Association. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerFrontendData"/> instance for mocking. </returns>
-        public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string fqdn = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? provisioningState = default)
+        public static TrafficControllerFrontendData TrafficControllerFrontendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string fqdn = default, TrafficControllerPublicNetworkAccess? publicNetworkAccess = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? provisioningState = default, ResourceIdentifier associationId = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -50,20 +51,44 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fqdn is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(fqdn, securityPolicyConfigurations, provisioningState, null));
+                fqdn is null && publicNetworkAccess is null && associationId is null && securityPolicyConfigurations is null && provisioningState is null ? default : new FrontendProperties(
+                    fqdn,
+                    publicNetworkAccess,
+                    new FrontendAssociation(associationId, default),
+                    securityPolicyConfigurations,
+                    provisioningState,
+                    default),
+                default);
         }
 
+        /// <param name="wafSecurityPolicyId"> Resource ID of the Waf Security Policy. </param>
+        /// <param name="ipAccessRulesSecurityPolicyId"> Resource ID of the Ip Access Rules Security Policy. </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyConfigurations"/> instance for mocking. </returns>
+        public static SecurityPolicyConfigurations SecurityPolicyConfigurations(ResourceIdentifier wafSecurityPolicyId = default, ResourceIdentifier ipAccessRulesSecurityPolicyId = default)
+        {
+            return new SecurityPolicyConfigurations(wafSecurityPolicyId is null ? default : new WafSecurityPolicy(wafSecurityPolicyId, default), ipAccessRulesSecurityPolicyId is null ? default : new ServiceNetworkingIPAccessRulesSecurityPolicy(ipAccessRulesSecurityPolicyId, default), default);
+        }
+
+        /// <summary> The type used for update operations of the Frontend. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="frontendUpdateSecurityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.TrafficControllerFrontendPatch"/> instance for mocking. </returns>
-        public static TrafficControllerFrontendPatch TrafficControllerFrontendPatch(IDictionary<string, string> tags = default, SecurityPolicyConfigurations frontendUpdateSecurityPolicyConfigurations = default)
+        public static TrafficControllerFrontendPatch TrafficControllerFrontendPatch(IDictionary<string, string> tags = default, TrafficControllerFrontendUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerFrontendPatch(tags, frontendUpdateSecurityPolicyConfigurations is null ? default : new FrontendUpdateProperties(frontendUpdateSecurityPolicyConfigurations, null), additionalBinaryDataProperties: null);
+            return new TrafficControllerFrontendPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="publicNetworkAccess"> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </param>
+        /// <param name="associationId"> Resource ID of the Association. </param>
+        /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
+        /// <returns> A new <see cref="Models.TrafficControllerFrontendUpdateProperties"/> instance for mocking. </returns>
+        public static TrafficControllerFrontendUpdateProperties TrafficControllerFrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess = default, ResourceIdentifier associationId = default, SecurityPolicyConfigurations securityPolicyConfigurations = default)
+        {
+            return new TrafficControllerFrontendUpdateProperties(publicNetworkAccess, associationId is null ? default : new FrontendAssociation(associationId, default), securityPolicyConfigurations, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -86,10 +111,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                policyType is null && provisioningState is null && wafPolicyId is null && rules is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, null), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), null), provisioningState, null));
+                policyType is null && wafPolicyId is null && rules is null && provisioningState is null ? default : new SecurityPolicyProperties(policyType, new WafPolicy(wafPolicyId, default), new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), provisioningState, default),
+                default);
         }
 
         /// <summary> Ip Access Policy Rules. </summary>
@@ -102,7 +127,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             sourceAddressPrefixes ??= new ChangeTrackingList<string>();
 
-            return new ServiceNetworkingIPAccessRule(name, priority, sourceAddressPrefixes.ToList(), action, additionalBinaryDataProperties: null);
+            return new ServiceNetworkingIPAccessRule(name, priority, (sourceAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), action, default);
         }
 
         /// <summary> The type used for update operations of the SecurityPolicy. </summary>
@@ -113,7 +138,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new ApplicationGatewayForContainersSecurityPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="wafPolicyId"> Resource ID of the WAF. </param>
+        /// <param name="rules"> Ip Access Policy Rules List. </param>
+        /// <returns> A new <see cref="Models.SecurityPolicyUpdateProperties"/> instance for mocking. </returns>
+        public static SecurityPolicyUpdateProperties SecurityPolicyUpdateProperties(ResourceIdentifier wafPolicyId = default, IEnumerable<ServiceNetworkingIPAccessRule> rules = default)
+        {
+            return new SecurityPolicyUpdateProperties(wafPolicyId is null ? default : new WafPolicy(wafPolicyId, default), rules is null ? default : new ServiceNetworkingIPAccessRulesPolicy((rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>()).ToList(), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -126,10 +159,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="frontends"> Frontends References List. </param>
         /// <param name="associations"> Associations References List. </param>
         /// <param name="securityPolicies"> Security Policies References List. </param>
+        /// <param name="privateEndpointConnections"> Private Endpoint Connections List. </param>
         /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
         /// <param name="trafficControllerProvisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerData"/> instance for mocking. </returns>
-        public static TrafficControllerData TrafficControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> configurationEndpoints = default, IEnumerable<SubResource> frontends = default, IEnumerable<SubResource> associations = default, IEnumerable<SubResource> securityPolicies = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default)
+        public static TrafficControllerData TrafficControllerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> configurationEndpoints = default, IEnumerable<SubResource> frontends = default, IEnumerable<SubResource> associations = default, IEnumerable<SubResource> securityPolicies = default, IEnumerable<SubResource> privateEndpointConnections = default, SecurityPolicyConfigurations securityPolicyConfigurations = default, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -138,17 +172,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                configurationEndpoints is null && frontends is null && associations is null && securityPolicies is null && securityPolicyConfigurations is null && trafficControllerProvisioningState is null ? default : new TrafficControllerProperties(
+                configurationEndpoints is null && frontends is null && associations is null && securityPolicies is null && privateEndpointConnections is null && securityPolicyConfigurations is null && trafficControllerProvisioningState is null ? default : new TrafficControllerProperties(
                     (configurationEndpoints ?? new ChangeTrackingList<string>()).ToList(),
                     (frontends ?? new ChangeTrackingList<SubResource>()).ToList(),
                     (associations ?? new ChangeTrackingList<SubResource>()).ToList(),
                     (securityPolicies ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    (privateEndpointConnections ?? new ChangeTrackingList<SubResource>()).ToList(),
                     securityPolicyConfigurations,
                     trafficControllerProvisioningState,
-                    null));
+                    default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -158,7 +193,56 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new TrafficControllerPatch(tags, trafficControllerUpdateSecurityPolicyConfigurations is null ? default : new TrafficControllerUpdateProperties(trafficControllerUpdateSecurityPolicyConfigurations, null), additionalBinaryDataProperties: null);
+            return new TrafficControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), trafficControllerUpdateSecurityPolicyConfigurations is null ? default : new TrafficControllerUpdateProperties(trafficControllerUpdateSecurityPolicyConfigurations, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> The connection state of the private endpoint connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
+        /// <param name="privateEndpointId"> Resource ID of the private endpoint. </param>
+        /// <returns> A new <see cref="ServiceNetworking.ServiceNetworkingPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ServiceNetworkingPrivateEndpointConnectionData ServiceNetworkingPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceNetworkingPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ServiceNetworkingProvisioningState? provisioningState = default, string privateEndpointId = default)
+        {
+            return new ServiceNetworkingPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointReference(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                default);
+        }
+
+        /// <summary> The state of a private link service connection. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.ServiceNetworkingPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static ServiceNetworkingPrivateLinkServiceConnectionState ServiceNetworkingPrivateLinkServiceConnectionState(ServiceNetworkingPrivateLinkServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new ServiceNetworkingPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group ID. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private DNS zone names. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="ServiceNetworking.ServiceNetworkingPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static ServiceNetworkingPrivateLinkResourceData ServiceNetworkingPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, ServiceNetworkingProvisioningState? provisioningState = default)
+        {
+            return new ServiceNetworkingPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null && provisioningState is null ? default : new ServiceNetworkingPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default),
+                default);
         }
     }
 }

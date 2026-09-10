@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public readonly partial struct SecurityInsightsAlertRuleTemplateStatus : IEquatable<SecurityInsightsAlertRuleTemplateStatus>
     {
         private readonly string _value;
+        /// <summary> Alert rule template installed. and can not use more then once. </summary>
+        private const string InstalledValue = "Installed";
+        /// <summary> Alert rule template is available. </summary>
+        private const string AvailableValue = "Available";
+        /// <summary> Alert rule template is not available. </summary>
+        private const string NotAvailableValue = "NotAvailable";
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertRuleTemplateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityInsightsAlertRuleTemplateStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InstalledValue = "Installed";
-        private const string AvailableValue = "Available";
-        private const string NotAvailableValue = "NotAvailable";
+            _value = value;
+        }
 
         /// <summary> Alert rule template installed. and can not use more then once. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus Installed { get; } = new SecurityInsightsAlertRuleTemplateStatus(InstalledValue);
+
         /// <summary> Alert rule template is available. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus Available { get; } = new SecurityInsightsAlertRuleTemplateStatus(AvailableValue);
+
         /// <summary> Alert rule template is not available. </summary>
         public static SecurityInsightsAlertRuleTemplateStatus NotAvailable { get; } = new SecurityInsightsAlertRuleTemplateStatus(NotAvailableValue);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleTemplateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityInsightsAlertRuleTemplateStatus left, SecurityInsightsAlertRuleTemplateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityInsightsAlertRuleTemplateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityInsightsAlertRuleTemplateStatus left, SecurityInsightsAlertRuleTemplateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityInsightsAlertRuleTemplateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertRuleTemplateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityInsightsAlertRuleTemplateStatus(string value) => new SecurityInsightsAlertRuleTemplateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityInsightsAlertRuleTemplateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityInsightsAlertRuleTemplateStatus?(string value) => value == null ? null : new SecurityInsightsAlertRuleTemplateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityInsightsAlertRuleTemplateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityInsightsAlertRuleTemplateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

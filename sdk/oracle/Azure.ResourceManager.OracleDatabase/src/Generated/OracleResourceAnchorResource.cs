@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string oracleResourceAnchorApiVersion);
             _resourceAnchorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _resourceAnchorsRestClient = new ResourceAnchors(_resourceAnchorsClientDiagnostics, Pipeline, Endpoint, oracleResourceAnchorApiVersion ?? "2025-09-01");
+            _resourceAnchorsRestClient = new ResourceAnchors(_resourceAnchorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleResourceAnchorApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OracleResourceAnchorPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _resourceAnchorsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, OracleResourceAnchorPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<OracleResourceAnchorResource> operation = new OracleDatabaseArmOperation<OracleResourceAnchorResource>(
-                    new OracleResourceAnchorOperationSource(Client),
+                    new OracleResourceAnchorResourceOperationSource(Client),
                     _resourceAnchorsClientDiagnostics,
                     Pipeline,
                     message.Request,

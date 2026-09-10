@@ -6,4 +6,5 @@ overrides:
       - azprovision
       - nopri
       - resourceid
+      - slis
       - uucp

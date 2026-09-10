@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     internal static partial class ApiManagementSkuRestrictionsReasonCodeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ApiManagementSkuRestrictionsReasonCode value) => value switch
         {
             ApiManagementSkuRestrictionsReasonCode.QuotaId => "QuotaId",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsReasonCode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ApiManagementSkuRestrictionsReasonCode ToApiManagementSkuRestrictionsReasonCode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId")) return ApiManagementSkuRestrictionsReasonCode.QuotaId;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription")) return ApiManagementSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId"))
+            {
+                return ApiManagementSkuRestrictionsReasonCode.QuotaId;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription"))
+            {
+                return ApiManagementSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsReasonCode value.");
         }
     }

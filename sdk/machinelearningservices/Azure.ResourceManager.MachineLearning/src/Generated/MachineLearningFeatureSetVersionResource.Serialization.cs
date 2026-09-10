@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearningFeatureSetVersionResource : IJsonModel<MachineLearningFeatureSetVersionData>
     {
-        private static MachineLearningFeatureSetVersionData s_dataDeserializationInstance;
-        private static MachineLearningFeatureSetVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningFeatureSetVersionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningFeatureSetVersionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningFeatureSetVersionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningFeatureSetVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetVersionData>)Data).Write(writer, options);
 
-        MachineLearningFeatureSetVersionData IJsonModel<MachineLearningFeatureSetVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningFeatureSetVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningFeatureSetVersionData IJsonModel<MachineLearningFeatureSetVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningFeatureSetVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningFeatureSetVersionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningFeatureSetVersionData IPersistableModel<MachineLearningFeatureSetVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningFeatureSetVersionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningFeatureSetVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningFeatureSetVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningFeatureSetVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

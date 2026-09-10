@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<MoboBrokerInfo> MoboBrokerResources { get; }
+        public IReadOnlyList<MoboBrokerInfo> MoboBrokerResources { get; } = new ChangeTrackingList<MoboBrokerInfo>();
     }
 }

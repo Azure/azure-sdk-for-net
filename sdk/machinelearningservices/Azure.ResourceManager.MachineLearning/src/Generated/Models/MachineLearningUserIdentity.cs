@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningUserIdentity : MachineLearningIdentityConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningUserIdentity"/>. </summary>
-        public MachineLearningUserIdentity()
+        public MachineLearningUserIdentity() : base(IdentityConfigurationType.UserIdentity)
         {
-            IdentityType = IdentityConfigurationType.UserIdentity;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningUserIdentity"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningUserIdentity(IdentityConfigurationType identityType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(identityType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningUserIdentity(IdentityConfigurationType identityType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(identityType, additionalBinaryDataProperties)
         {
-            IdentityType = identityType;
         }
     }
 }

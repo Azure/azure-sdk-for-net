@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ImageStorageAccountType : IEquatable<ImageStorageAccountType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ImageStorageAccountType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ImageStorageAccountType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StandardLrsValue = "Standard_LRS";
         private const string StandardZrsValue = "Standard_ZRS";
         private const string PremiumLrsValue = "Premium_LRS";
         private const string PremiumV2LrsValue = "PremiumV2_LRS";
 
-        /// <summary> Standard_LRS. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ImageStorageAccountType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the StandardLrs. </summary>
         public static ImageStorageAccountType StandardLrs { get; } = new ImageStorageAccountType(StandardLrsValue);
-        /// <summary> Standard_ZRS. </summary>
+
+        /// <summary> Gets the StandardZrs. </summary>
         public static ImageStorageAccountType StandardZrs { get; } = new ImageStorageAccountType(StandardZrsValue);
-        /// <summary> Premium_LRS. </summary>
+
+        /// <summary> Gets the PremiumLrs. </summary>
         public static ImageStorageAccountType PremiumLrs { get; } = new ImageStorageAccountType(PremiumLrsValue);
-        /// <summary> PremiumV2_LRS. </summary>
+
+        /// <summary> Gets the PremiumV2Lrs. </summary>
         public static ImageStorageAccountType PremiumV2Lrs { get; } = new ImageStorageAccountType(PremiumV2LrsValue);
+
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImageStorageAccountType left, ImageStorageAccountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImageStorageAccountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImageStorageAccountType left, ImageStorageAccountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImageStorageAccountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImageStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImageStorageAccountType(string value) => new ImageStorageAccountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImageStorageAccountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImageStorageAccountType?(string value) => value == null ? null : new ImageStorageAccountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImageStorageAccountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImageStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The NumericalDataQualityMetric. </summary>
+    /// <summary></summary>
     public readonly partial struct NumericalDataQualityMetric : IEquatable<NumericalDataQualityMetric>
     {
         private readonly string _value;
+        /// <summary> Calculates the rate of null values. </summary>
+        private const string NullValueRateValue = "NullValueRate";
+        /// <summary> Calculates the rate of data type errors. </summary>
+        private const string DataTypeErrorRateValue = "DataTypeErrorRate";
+        /// <summary> Calculates the rate values are out of bounds. </summary>
+        private const string OutOfBoundsRateValue = "OutOfBoundsRate";
 
         /// <summary> Initializes a new instance of <see cref="NumericalDataQualityMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NumericalDataQualityMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NullValueRateValue = "NullValueRate";
-        private const string DataTypeErrorRateValue = "DataTypeErrorRate";
-        private const string OutOfBoundsRateValue = "OutOfBoundsRate";
+            _value = value;
+        }
 
         /// <summary> Calculates the rate of null values. </summary>
         public static NumericalDataQualityMetric NullValueRate { get; } = new NumericalDataQualityMetric(NullValueRateValue);
+
         /// <summary> Calculates the rate of data type errors. </summary>
         public static NumericalDataQualityMetric DataTypeErrorRate { get; } = new NumericalDataQualityMetric(DataTypeErrorRateValue);
+
         /// <summary> Calculates the rate values are out of bounds. </summary>
         public static NumericalDataQualityMetric OutOfBoundsRate { get; } = new NumericalDataQualityMetric(OutOfBoundsRateValue);
+
         /// <summary> Determines if two <see cref="NumericalDataQualityMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NumericalDataQualityMetric left, NumericalDataQualityMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NumericalDataQualityMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NumericalDataQualityMetric left, NumericalDataQualityMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NumericalDataQualityMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NumericalDataQualityMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NumericalDataQualityMetric(string value) => new NumericalDataQualityMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NumericalDataQualityMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NumericalDataQualityMetric?(string value) => value == null ? null : new NumericalDataQualityMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NumericalDataQualityMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NumericalDataQualityMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

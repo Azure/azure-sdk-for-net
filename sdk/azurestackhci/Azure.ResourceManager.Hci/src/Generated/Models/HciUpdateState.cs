@@ -7,96 +7,160 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of the update as it relates to this stamp. </summary>
+    /// <summary> Represents the current state of the update as it relates to this stamp. This includes phases such as preparation, installation, scanning, and error handling, providing insight into the update's progress and any issues encountered. </summary>
     public readonly partial struct HciUpdateState : IEquatable<HciUpdateState>
     {
         private readonly string _value;
+        /// <summary> The update has prerequisites that must be fulfilled before it can proceed. </summary>
+        private const string HasPrerequisiteValue = "HasPrerequisite";
+        /// <summary> The update is obsolete and no longer applicable. </summary>
+        private const string ObsoleteValue = "Obsolete";
+        /// <summary> The update is ready to be installed. </summary>
+        private const string ReadyValue = "Ready";
+        /// <summary> The update cannot be applied because another update is currently in progress. </summary>
+        private const string NotApplicableBecauseAnotherUpdateIsInProgressValue = "NotApplicableBecauseAnotherUpdateIsInProgress";
+        /// <summary> The update is currently in the preparation phase. </summary>
+        private const string PreparingValue = "Preparing";
+        /// <summary> The update is currently being installed. </summary>
+        private const string InstallingValue = "Installing";
+        /// <summary> The update has been successfully installed. </summary>
+        private const string InstalledValue = "Installed";
+        /// <summary> The update preparation phase failed. </summary>
+        private const string PreparationFailedValue = "PreparationFailed";
+        /// <summary> The update installation failed. </summary>
+        private const string InstallationFailedValue = "InstallationFailed";
+        /// <summary> The update is invalid and cannot be applied. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The update has been recalled and should not be applied. </summary>
+        private const string RecalledValue = "Recalled";
+        /// <summary> The update is currently being downloaded. </summary>
+        private const string DownloadingValue = "Downloading";
+        /// <summary> The update download failed. </summary>
+        private const string DownloadFailedValue = "DownloadFailed";
+        /// <summary> A health check is being performed before applying the update. </summary>
+        private const string HealthCheckingValue = "HealthChecking";
+        /// <summary> The health check failed, preventing the update from proceeding. </summary>
+        private const string HealthCheckFailedValue = "HealthCheckFailed";
+        /// <summary> The update is ready to be installed after successful preparation and checks. </summary>
+        private const string ReadyToInstallValue = "ReadyToInstall";
+        /// <summary> The system is scanning for updates. </summary>
+        private const string ScanInProgressValue = "ScanInProgress";
+        /// <summary> The scan for updates failed. </summary>
+        private const string ScanFailedValue = "ScanFailed";
+        /// <summary> Additional content is required to proceed with the update. </summary>
+        private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
+        /// <summary> The health check has expired and needs to be redone. </summary>
+        private const string HealthCheckExpiredValue = "HealthCheckExpired";
+        /// <summary> The update is pending OEM validation before it can proceed. </summary>
+        private const string PendingOEMValidationValue = "PendingOEMValidation";
 
         /// <summary> Initializes a new instance of <see cref="HciUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HciUpdateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string HasPrerequisiteValue = "HasPrerequisite";
-        private const string ObsoleteValue = "Obsolete";
-        private const string ReadyValue = "Ready";
-        private const string NotApplicableBecauseAnotherUpdateIsInProgressValue = "NotApplicableBecauseAnotherUpdateIsInProgress";
-        private const string PreparingValue = "Preparing";
-        private const string InstallingValue = "Installing";
-        private const string InstalledValue = "Installed";
-        private const string PreparationFailedValue = "PreparationFailed";
-        private const string InstallationFailedValue = "InstallationFailed";
-        private const string InvalidValue = "Invalid";
-        private const string RecalledValue = "Recalled";
-        private const string DownloadingValue = "Downloading";
-        private const string DownloadFailedValue = "DownloadFailed";
-        private const string HealthCheckingValue = "HealthChecking";
-        private const string HealthCheckFailedValue = "HealthCheckFailed";
-        private const string ReadyToInstallValue = "ReadyToInstall";
-        private const string ScanInProgressValue = "ScanInProgress";
-        private const string ScanFailedValue = "ScanFailed";
-        private const string AdditionalContentRequiredValue = "AdditionalContentRequired";
-
-        /// <summary> HasPrerequisite. </summary>
+        /// <summary> The update has prerequisites that must be fulfilled before it can proceed. </summary>
         public static HciUpdateState HasPrerequisite { get; } = new HciUpdateState(HasPrerequisiteValue);
-        /// <summary> Obsolete. </summary>
+
+        /// <summary> The update is obsolete and no longer applicable. </summary>
         public static HciUpdateState Obsolete { get; } = new HciUpdateState(ObsoleteValue);
-        /// <summary> Ready. </summary>
+
+        /// <summary> The update is ready to be installed. </summary>
         public static HciUpdateState Ready { get; } = new HciUpdateState(ReadyValue);
-        /// <summary> NotApplicableBecauseAnotherUpdateIsInProgress. </summary>
+
+        /// <summary> The update cannot be applied because another update is currently in progress. </summary>
         public static HciUpdateState NotApplicableBecauseAnotherUpdateIsInProgress { get; } = new HciUpdateState(NotApplicableBecauseAnotherUpdateIsInProgressValue);
-        /// <summary> Preparing. </summary>
+
+        /// <summary> The update is currently in the preparation phase. </summary>
         public static HciUpdateState Preparing { get; } = new HciUpdateState(PreparingValue);
-        /// <summary> Installing. </summary>
+
+        /// <summary> The update is currently being installed. </summary>
         public static HciUpdateState Installing { get; } = new HciUpdateState(InstallingValue);
-        /// <summary> Installed. </summary>
+
+        /// <summary> The update has been successfully installed. </summary>
         public static HciUpdateState Installed { get; } = new HciUpdateState(InstalledValue);
-        /// <summary> PreparationFailed. </summary>
+
+        /// <summary> The update preparation phase failed. </summary>
         public static HciUpdateState PreparationFailed { get; } = new HciUpdateState(PreparationFailedValue);
-        /// <summary> InstallationFailed. </summary>
+
+        /// <summary> The update installation failed. </summary>
         public static HciUpdateState InstallationFailed { get; } = new HciUpdateState(InstallationFailedValue);
-        /// <summary> Invalid. </summary>
+
+        /// <summary> The update is invalid and cannot be applied. </summary>
         public static HciUpdateState Invalid { get; } = new HciUpdateState(InvalidValue);
-        /// <summary> Recalled. </summary>
+
+        /// <summary> The update has been recalled and should not be applied. </summary>
         public static HciUpdateState Recalled { get; } = new HciUpdateState(RecalledValue);
-        /// <summary> Downloading. </summary>
+
+        /// <summary> The update is currently being downloaded. </summary>
         public static HciUpdateState Downloading { get; } = new HciUpdateState(DownloadingValue);
-        /// <summary> DownloadFailed. </summary>
+
+        /// <summary> The update download failed. </summary>
         public static HciUpdateState DownloadFailed { get; } = new HciUpdateState(DownloadFailedValue);
-        /// <summary> HealthChecking. </summary>
+
+        /// <summary> A health check is being performed before applying the update. </summary>
         public static HciUpdateState HealthChecking { get; } = new HciUpdateState(HealthCheckingValue);
-        /// <summary> HealthCheckFailed. </summary>
+
+        /// <summary> The health check failed, preventing the update from proceeding. </summary>
         public static HciUpdateState HealthCheckFailed { get; } = new HciUpdateState(HealthCheckFailedValue);
-        /// <summary> ReadyToInstall. </summary>
+
+        /// <summary> The update is ready to be installed after successful preparation and checks. </summary>
         public static HciUpdateState ReadyToInstall { get; } = new HciUpdateState(ReadyToInstallValue);
-        /// <summary> ScanInProgress. </summary>
+
+        /// <summary> The system is scanning for updates. </summary>
         public static HciUpdateState ScanInProgress { get; } = new HciUpdateState(ScanInProgressValue);
-        /// <summary> ScanFailed. </summary>
+
+        /// <summary> The scan for updates failed. </summary>
         public static HciUpdateState ScanFailed { get; } = new HciUpdateState(ScanFailedValue);
-        /// <summary> AdditionalContentRequired. </summary>
+
+        /// <summary> Additional content is required to proceed with the update. </summary>
         public static HciUpdateState AdditionalContentRequired { get; } = new HciUpdateState(AdditionalContentRequiredValue);
+
+        /// <summary> The health check has expired and needs to be redone. </summary>
+        public static HciUpdateState HealthCheckExpired { get; } = new HciUpdateState(HealthCheckExpiredValue);
+
+        /// <summary> The update is pending OEM validation before it can proceed. </summary>
+        public static HciUpdateState PendingOEMValidation { get; } = new HciUpdateState(PendingOEMValidationValue);
+
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HciUpdateState left, HciUpdateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HciUpdateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HciUpdateState left, HciUpdateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HciUpdateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HciUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HciUpdateState(string value) => new HciUpdateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HciUpdateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HciUpdateState?(string value) => value == null ? null : new HciUpdateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HciUpdateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HciUpdateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

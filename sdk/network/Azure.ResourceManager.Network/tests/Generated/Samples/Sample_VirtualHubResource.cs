@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubResource virtualHub = client.GetVirtualHubResource(virtualHubResourceId);
 
             // invoke the operation
-            await virtualHub.DeleteAsync(WaitUntil.Completed);
+            await virtualHub.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteGateways/expressRouteGatewayName/expressRouteConnections/connectionName"),
                 VirtualWanResourceType = "ExpressRouteConnection",
             };
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/hubRouteTables/hubRouteTable1"),
                 VirtualWanResourceType = "RouteTable",
             };
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             EffectiveRoutesContent content = default;
-            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content);
+            ArmOperation<VirtualHubEffectiveRouteList> lro = await virtualHub.GetVirtualHubEffectiveRoutesAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubEffectiveRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",
             };
-            ArmOperation<EffectiveRouteMapRouteList> lro = await virtualHub.GetVirtualHubInboundRoutesAsync(WaitUntil.Completed, content);
+            ArmOperation<EffectiveRouteMapRouteList> lro = await virtualHub.GetVirtualHubInboundRoutesAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveRouteMapRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network.Samples
                 ResourceUri = new Uri("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/expressRouteGateways/exrGw1/expressRouteConnections/exrConn1"),
                 ConnectionType = "ExpressRouteConnection",
             };
-            ArmOperation<EffectiveRouteMapRouteList> lro = await virtualHub.GetVirtualHubOutboundRoutesAsync(WaitUntil.Completed, content);
+            ArmOperation<EffectiveRouteMapRouteList> lro = await virtualHub.GetVirtualHubOutboundRoutesAsync(WaitUntil.Completed, content, cancellationToken: System.Threading.CancellationToken.None);
             EffectiveRouteMapRouteList result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

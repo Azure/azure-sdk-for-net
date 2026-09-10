@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,26 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class RouteConfigurationOverrideActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
-        public RouteConfigurationOverrideActionProperties()
+        public RouteConfigurationOverrideActionProperties() : base(DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters)
         {
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleRouteConfigurationOverrideActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteConfigurationOverrideActionProperties"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="originGroupOverride"> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </param>
-        internal RouteConfigurationOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration) : base(typeName, serializedAdditionalRawData)
+        internal RouteConfigurationOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, OriginGroupOverride originGroupOverride, CacheConfiguration cacheConfiguration) : base(typeName, additionalBinaryDataProperties)
         {
             OriginGroupOverride = originGroupOverride;
             CacheConfiguration = cacheConfiguration;
-            TypeName = typeName;
         }
 
         /// <summary> A reference to the origin group override configuration. Leave empty to use the default origin group on route. </summary>
         [WirePath("originGroupOverride")]
         public OriginGroupOverride OriginGroupOverride { get; set; }
+
         /// <summary> The caching configuration associated with this rule. To disable caching, do not provide a cacheConfiguration object. </summary>
         [WirePath("cacheConfiguration")]
         public CacheConfiguration CacheConfiguration { get; set; }

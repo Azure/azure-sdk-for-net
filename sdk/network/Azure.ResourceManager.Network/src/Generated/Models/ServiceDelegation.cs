@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -17,37 +19,69 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
         public ServiceDelegation()
         {
-            Actions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceDelegation"/>. </summary>
         /// <param name="id"> Resource ID. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="serviceName"> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </param>
-        /// <param name="actions"> The actions permitted to the service upon delegation. </param>
-        /// <param name="provisioningState"> The provisioning state of the service delegation resource. </param>
-        internal ServiceDelegation(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string serviceName, IReadOnlyList<string> actions, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the subnet. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ServiceDelegation(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ServiceDelegationPropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
-            ETag = etag;
-            ServiceName = serviceName;
-            Actions = actions;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of the subnet. </summary>
+        [WirePath("properties")]
+        internal ServiceDelegationPropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> The name of the service to whom the subnet should be delegated (e.g. Microsoft.Sql/servers). </summary>
         [WirePath("properties.serviceName")]
-        public string ServiceName { get; set; }
+        public string ServiceName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceDelegationPropertiesFormat();
+                }
+                Properties.ServiceName = value;
+            }
+        }
+
         /// <summary> The actions permitted to the service upon delegation. </summary>
         [WirePath("properties.actions")]
-        public IReadOnlyList<string> Actions { get; }
+        public IReadOnlyList<string> Actions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceDelegationPropertiesFormat();
+                }
+                return Properties.Actions;
+            }
+        }
+
         /// <summary> The provisioning state of the service delegation resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

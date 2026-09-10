@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class BatchPipelineComponentDeploymentConfiguration : BatchDeploymentConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
-        public BatchPipelineComponentDeploymentConfiguration()
+        public BatchPipelineComponentDeploymentConfiguration() : base(BatchDeploymentConfigurationType.PipelineComponent)
         {
             Settings = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
-            DeploymentConfigurationType = BatchDeploymentConfigurationType.PipelineComponent;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchPipelineComponentDeploymentConfiguration"/>. </summary>
         /// <param name="deploymentConfigurationType"> [Required] The type of the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> The ARM id of the component to be run. </param>
         /// <param name="description"> The description which will be applied to the job. </param>
         /// <param name="settings"> Run-time settings for the pipeline job. </param>
         /// <param name="tags"> The tags which will be applied to the job. </param>
-        internal BatchPipelineComponentDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningIdAssetReference componentId, string description, IDictionary<string, string> settings, IDictionary<string, string> tags) : base(deploymentConfigurationType, serializedAdditionalRawData)
+        internal BatchPipelineComponentDeploymentConfiguration(BatchDeploymentConfigurationType deploymentConfigurationType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningIdAssetReference componentId, string description, IDictionary<string, string> settings, IDictionary<string, string> tags) : base(deploymentConfigurationType, additionalBinaryDataProperties)
         {
             ComponentId = componentId;
             Description = description;
             Settings = settings;
             Tags = tags;
-            DeploymentConfigurationType = deploymentConfigurationType;
         }
 
-        /// <summary> The ARM id of the component to be run. </summary>
-        [WirePath("componentId")]
-        public MachineLearningIdAssetReference ComponentId { get; set; }
         /// <summary> The description which will be applied to the job. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary> Run-time settings for the pipeline job. </summary>
         [WirePath("settings")]
         public IDictionary<string, string> Settings { get; set; }
+
         /// <summary> The tags which will be applied to the job. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; set; }

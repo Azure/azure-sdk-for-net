@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             VirtualHubRouteTableV2Resource virtualHubRouteTableV2 = client.GetVirtualHubRouteTableV2Resource(virtualHubRouteTableV2ResourceId);
 
             // invoke the operation
-            await virtualHubRouteTableV2.DeleteAsync(WaitUntil.Completed);
+            await virtualHubRouteTableV2.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -113,7 +113,7 @@ NextHops = {"10.0.0.68"},
 }},
                 AttachedConnections = { "All_Vnets" },
             };
-            ArmOperation<VirtualHubRouteTableV2Resource> lro = await virtualHubRouteTableV2.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VirtualHubRouteTableV2Resource> lro = await virtualHubRouteTableV2.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualHubRouteTableV2Resource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

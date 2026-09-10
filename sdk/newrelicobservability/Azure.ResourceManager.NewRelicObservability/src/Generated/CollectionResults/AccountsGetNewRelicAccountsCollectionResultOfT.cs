@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.NewRelicObservability
                     yield break;
                 }
                 AccountsListResponse result = AccountsListResponse.FromResponse(response);
-                yield return Page<NewRelicAccountResourceData>.FromValues((IReadOnlyList<NewRelicAccountResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NewRelicAccountResourceData>.FromValues((IReadOnlyList<NewRelicAccountResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

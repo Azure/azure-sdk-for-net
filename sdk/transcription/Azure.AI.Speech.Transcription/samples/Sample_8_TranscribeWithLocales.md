@@ -10,6 +10,8 @@ The `Locales` property controls how the transcription service handles language r
 - **Multiple locales (language identification)**: When you're not sure about the language, specify multiple candidate locales and the service will identify the language (one locale per audio file).
 - **No locale specified**: The service uses the multi-lingual model to auto-detect and transcribe.
 
+`Locales` applies to both fast transcription and Enhanced Mode. In Enhanced Mode the service operates in multi-lingual mode by default; if `Locales` is specified, the first locale is used as a hint to guide recognition.
+
 For the full list of supported locales, see [Language support](https://learn.microsoft.com/azure/ai-services/speech-service/language-support?tabs=stt).
 
 ## Transcribe with Known Locale
@@ -29,7 +31,7 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with known locale (en-US):");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 Console.WriteLine(channelPhrases.Text);
 ```
 
@@ -51,10 +53,10 @@ ClientResult<TranscriptionResult> response = await client.TranscribeAsync(option
 TranscriptionResult result = response.Value;
 
 Console.WriteLine("Transcription with language identification:");
-var channelPhrases = result.PhrasesByChannel.First();
+var channelPhrases = result.CombinedPhrases.First();
 
 // The detected locale is available in each phrase
-foreach (TranscribedPhrase phrase in channelPhrases.Phrases)
+foreach (TranscribedPhrase phrase in result.Phrases)
 {
     Console.WriteLine($"[{phrase.Locale}] {phrase.Text}");
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CosmosDB
 {
+    /// <summary></summary>
     public partial class RestorableCosmosDBAccountResource : IJsonModel<RestorableCosmosDBAccountData>
     {
-        private static RestorableCosmosDBAccountData s_dataDeserializationInstance;
-        private static RestorableCosmosDBAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RestorableCosmosDBAccountData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RestorableCosmosDBAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RestorableCosmosDBAccountData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestorableCosmosDBAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RestorableCosmosDBAccountData>)Data).Write(writer, options);
 
-        RestorableCosmosDBAccountData IJsonModel<RestorableCosmosDBAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorableCosmosDBAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestorableCosmosDBAccountData IJsonModel<RestorableCosmosDBAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RestorableCosmosDBAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RestorableCosmosDBAccountData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RestorableCosmosDBAccountData IPersistableModel<RestorableCosmosDBAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorableCosmosDBAccountData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<RestorableCosmosDBAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorableCosmosDBAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestorableCosmosDBAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options = new ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions(componentPolicyStatesResource) { Filter = "componentId eq cert-RSA-cert-3" };
-            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, options))
+            PolicyQuerySettings options = new PolicyQuerySettings() { Filter = "componentId eq cert-RSA-cert-3" };
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options = new ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions(componentPolicyStatesResource) { Filter = "policyAssignmentId eq '/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/560050f83dbb4a24974323f8'", Apply = "groupby((componentType,complianceState),aggregate($count as count))" };
-            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, options))
+            PolicyQuerySettings options = new PolicyQuerySettings() { Filter = "policyAssignmentId eq '/subscriptions/e78961ba-36fe-4739-9212-e3031b4c8db7/providers/microsoft.authorization/policyassignments/560050f83dbb4a24974323f8'", Apply = "groupby((componentType,complianceState),aggregate($count as count))" };
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -79,8 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options = new ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions(componentPolicyStatesResource);
-            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, options))
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -103,8 +102,7 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options = new ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions(componentPolicyStatesResource);
-            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, options))
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -127,8 +125,8 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             // invoke the operation and iterate over the result
             ResourceIdentifier scope = null;
             ComponentPolicyStatesResource componentPolicyStatesResource = ComponentPolicyStatesResource.Latest;
-            ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions options = new ArmResourceGetQueryResultsForResourceComponentPolicyStatesOptions(componentPolicyStatesResource) { Filter = "componentType eq 'pod' AND componentId eq 'default/test-pod' AND componentName eq 'test-pod'", Expand = "PolicyEvaluationDetails" };
-            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, options))
+            PolicyQuerySettings options = new PolicyQuerySettings() { Filter = "componentType eq 'pod' AND componentId eq 'default/test-pod' AND componentName eq 'test-pod'", Expand = "PolicyEvaluationDetails" };
+            await foreach (ComponentPolicyState item in client.GetQueryResultsForResourceComponentPolicyStatesAsync(scope, componentPolicyStatesResource, options))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

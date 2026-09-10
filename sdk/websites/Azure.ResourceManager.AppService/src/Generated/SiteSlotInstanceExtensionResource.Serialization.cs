@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.AppService
 {
+    /// <summary></summary>
     public partial class SiteSlotInstanceExtensionResource : IJsonModel<MSDeployStatusData>
     {
-        private static MSDeployStatusData s_dataDeserializationInstance;
-        private static MSDeployStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MSDeployStatusData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MSDeployStatusData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MSDeployStatusData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MSDeployStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)Data).Write(writer, options);
 
-        MSDeployStatusData IJsonModel<MSDeployStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MSDeployStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MSDeployStatusData IJsonModel<MSDeployStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MSDeployStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MSDeployStatusData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MSDeployStatusData IPersistableModel<MSDeployStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MSDeployStatusData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<MSDeployStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MSDeployStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MSDeployStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

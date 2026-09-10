@@ -74,10 +74,10 @@ namespace Azure.AI.VoiceLive
                 throw new FormatException($"The model {nameof(RequestImageContentPart)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
-                writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WritePropertyName("image_url"u8);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Detail))
             {
@@ -113,7 +113,7 @@ namespace Azure.AI.VoiceLive
             }
             ContentPartType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string url = default;
+            Uri uri = default;
             RequestImageContentPartDetail? detail = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -122,9 +122,13 @@ namespace Azure.AI.VoiceLive
                     @type = new ContentPartType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("url"u8))
+                if (prop.NameEquals("image_url"u8))
                 {
-                    url = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("detail"u8))
@@ -141,7 +145,7 @@ namespace Azure.AI.VoiceLive
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RequestImageContentPart(@type, additionalBinaryDataProperties, url, detail);
+            return new RequestImageContentPart(@type, additionalBinaryDataProperties, uri, detail);
         }
     }
 }

@@ -21,15 +21,15 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
-        /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
+        /// <param name="publicFqdn"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort)
         {
             Name = name;
             Protocol = protocol;
             PublicIpAddress = publicIpAddress;
-            PublicFQDN = publicFQDN;
+            PublicFqdn = publicFqdn;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
         }
@@ -38,16 +38,16 @@ namespace Azure.Compute.Batch
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
         /// <param name="publicIpAddress"> The public IP address of the Compute Node. </param>
-        /// <param name="publicFQDN"> The public fully qualified domain name for the Compute Node. </param>
+        /// <param name="publicFqdn"> The public fully qualified domain name for the Compute Node. </param>
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFQDN, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InboundEndpoint(string name, InboundEndpointProtocol protocol, IPAddress publicIpAddress, string publicFqdn, int frontendPort, int backendPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Protocol = protocol;
             PublicIpAddress = publicIpAddress;
-            PublicFQDN = publicFQDN;
+            PublicFqdn = publicFqdn;
             FrontendPort = frontendPort;
             BackendPort = backendPort;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -63,7 +63,7 @@ namespace Azure.Compute.Batch
         public IPAddress PublicIpAddress { get; }
 
         /// <summary> The public fully qualified domain name for the Compute Node. </summary>
-        public string PublicFQDN { get; }
+        public string PublicFqdn { get; }
 
         /// <summary> The public port number of the endpoint. </summary>
         public int FrontendPort { get; }

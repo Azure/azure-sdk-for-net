@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(GlobalRulestackResource.ResourceType, out string globalRulestackApiVersion);
             _globalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackResource.ResourceType.Namespace, Diagnostics);
-            _globalRulestackRestClient = new GlobalRulestack(_globalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackApiVersion ?? "2025-10-08");
+            _globalRulestackRestClient = new GlobalRulestack(_globalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, GlobalRulestackData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackResource> operation = new NgfwArmOperation<GlobalRulestackResource>(
-                    new GlobalRulestackOperationSource(Client),
+                    new GlobalRulestackResourceOperationSource(Client),
                     _globalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _globalRulestackRestClient.CreateCreateOrUpdateRequest(globalRulestackName, GlobalRulestackData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackResource> operation = new NgfwArmOperation<GlobalRulestackResource>(
-                    new GlobalRulestackOperationSource(Client),
+                    new GlobalRulestackResourceOperationSource(Client),
                     _globalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

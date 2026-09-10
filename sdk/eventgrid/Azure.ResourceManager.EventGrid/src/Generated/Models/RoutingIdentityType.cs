@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct RoutingIdentityType : IEquatable<RoutingIdentityType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> SystemAssigned. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
+        /// <summary> UserAssigned. </summary>
+        private const string UserAssignedValue = "UserAssigned";
 
         /// <summary> Initializes a new instance of <see cref="RoutingIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RoutingIdentityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string SystemAssignedValue = "SystemAssigned";
-        private const string UserAssignedValue = "UserAssigned";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static RoutingIdentityType None { get; } = new RoutingIdentityType(NoneValue);
+
         /// <summary> SystemAssigned. </summary>
         public static RoutingIdentityType SystemAssigned { get; } = new RoutingIdentityType(SystemAssignedValue);
+
         /// <summary> UserAssigned. </summary>
         public static RoutingIdentityType UserAssigned { get; } = new RoutingIdentityType(UserAssignedValue);
+
         /// <summary> Determines if two <see cref="RoutingIdentityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RoutingIdentityType left, RoutingIdentityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RoutingIdentityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RoutingIdentityType left, RoutingIdentityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RoutingIdentityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RoutingIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RoutingIdentityType(string value) => new RoutingIdentityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RoutingIdentityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RoutingIdentityType?(string value) => value == null ? null : new RoutingIdentityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RoutingIdentityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RoutingIdentityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

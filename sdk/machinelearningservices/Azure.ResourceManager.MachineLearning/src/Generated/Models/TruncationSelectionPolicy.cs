@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,21 +15,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class TruncationSelectionPolicy : MachineLearningEarlyTerminationPolicy
     {
         /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
-        public TruncationSelectionPolicy()
+        public TruncationSelectionPolicy() : base(EarlyTerminationPolicyType.TruncationSelection)
         {
-            PolicyType = EarlyTerminationPolicyType.TruncationSelection;
         }
 
         /// <summary> Initializes a new instance of <see cref="TruncationSelectionPolicy"/>. </summary>
-        /// <param name="policyType"> [Required] Name of policy configuration. </param>
-        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
         /// <param name="delayEvaluation"> Number of intervals by which to delay the first evaluation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="evaluationInterval"> Interval (number of runs) between policy evaluations. </param>
+        /// <param name="policyType"> [Required] Name of policy configuration. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="truncationPercentage"> The percentage of runs to cancel at each evaluation interval. </param>
-        internal TruncationSelectionPolicy(EarlyTerminationPolicyType policyType, int? evaluationInterval, int? delayEvaluation, IDictionary<string, BinaryData> serializedAdditionalRawData, int? truncationPercentage) : base(policyType, evaluationInterval, delayEvaluation, serializedAdditionalRawData)
+        internal TruncationSelectionPolicy(int? delayEvaluation, int? evaluationInterval, EarlyTerminationPolicyType policyType, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? truncationPercentage) : base(delayEvaluation, evaluationInterval, policyType, additionalBinaryDataProperties)
         {
             TruncationPercentage = truncationPercentage;
-            PolicyType = policyType;
         }
 
         /// <summary> The percentage of runs to cancel at each evaluation interval. </summary>

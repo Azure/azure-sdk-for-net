@@ -244,7 +244,7 @@ namespace Azure.Health.Deidentification
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
         {
-            return DeidentificationContent(inputText, operationType, taggedEntities: default, customizations);
+            return DeidentificationContent(inputText: inputText, operationType: operationType, taggedEntities: default, customizations: customizations);
         }
     }
 }

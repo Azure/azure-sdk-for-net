@@ -27,7 +27,7 @@ namespace Azure.Maps.Weather.Models
             string category = default;
             string categoryColor = default;
             string description = default;
-            IReadOnlyList<Pollutant> pollutants = default;
+            IReadOnlyList<WeatherPollutant> pollutants = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTime"u8))
@@ -87,10 +87,10 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    List<Pollutant> array = new List<Pollutant>();
+                    List<WeatherPollutant> array = new List<WeatherPollutant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pollutant.DeserializePollutant(item));
+                        array.Add(WeatherPollutant.DeserializeWeatherPollutant(item));
                     }
                     pollutants = array;
                     continue;
@@ -104,7 +104,7 @@ namespace Azure.Maps.Weather.Models
                 category,
                 categoryColor,
                 description,
-                pollutants ?? new ChangeTrackingList<Pollutant>());
+                pollutants ?? new ChangeTrackingList<WeatherPollutant>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

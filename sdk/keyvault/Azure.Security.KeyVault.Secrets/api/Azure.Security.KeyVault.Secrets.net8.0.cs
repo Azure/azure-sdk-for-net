@@ -1,5 +1,11 @@
 namespace Azure.Security.KeyVault.Secrets
 {
+    public partial class AzureSecurityKeyVaultSecretsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityKeyVaultSecretsContext() { }
+        public static Azure.Security.KeyVault.Secrets.AzureSecurityKeyVaultSecretsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeletedSecret : Azure.Security.KeyVault.Secrets.KeyVaultSecret
     {
         internal DeletedSecret() : base (default(string), default(string)) { }
@@ -93,6 +99,14 @@ namespace Azure.Security.KeyVault.Secrets
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Secrets.RecoverDeletedSecretOperation> StartRecoverDeletedSecretAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Secrets.SecretProperties> UpdateSecretProperties(Azure.Security.KeyVault.Secrets.SecretProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Secrets.SecretProperties>> UpdateSecretPropertiesAsync(Azure.Security.KeyVault.Secrets.SecretProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class SecretClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSecretClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedSecretClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Security.KeyVault.Secrets.SecretClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSecretClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddSecretClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Security.KeyVault.Secrets.SecretClientSettings> configureSettings) { throw null; }
     }
     public partial class SecretClientOptions : Azure.Core.ClientOptions
     {

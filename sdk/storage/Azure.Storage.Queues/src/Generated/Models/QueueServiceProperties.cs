@@ -6,18 +6,17 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.Queues.Models
 {
-    /// <summary> Storage Service Properties. </summary>
+    /// <summary> The service properties. </summary>
     public partial class QueueServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="QueueServiceProperties"/>. </summary>
-        /// <param name="logging"> Azure Analytics Logging settings. </param>
-        /// <param name="hourMetrics"> A summary of request statistics grouped by API in hourly aggregates for queues. </param>
-        /// <param name="minuteMetrics"> a summary of request statistics grouped by API in minute aggregates for queues. </param>
-        /// <param name="cors"> The set of CORS rules. </param>
+        /// <param name="logging"> The logging properties. </param>
+        /// <param name="hourMetrics"> The hour metrics properties. </param>
+        /// <param name="minuteMetrics"> The minute metrics properties. </param>
+        /// <param name="cors"> The CORS properties. </param>
         internal QueueServiceProperties(QueueAnalyticsLogging logging, QueueMetrics hourMetrics, QueueMetrics minuteMetrics, IList<QueueCorsRule> cors)
         {
             Logging = logging;
@@ -26,11 +25,13 @@ namespace Azure.Storage.Queues.Models
             Cors = cors;
         }
 
-        /// <summary> Azure Analytics Logging settings. </summary>
+        /// <summary> The logging properties. </summary>
         public QueueAnalyticsLogging Logging { get; set; }
-        /// <summary> A summary of request statistics grouped by API in hourly aggregates for queues. </summary>
+
+        /// <summary> The hour metrics properties. </summary>
         public QueueMetrics HourMetrics { get; set; }
-        /// <summary> a summary of request statistics grouped by API in minute aggregates for queues. </summary>
+
+        /// <summary> The minute metrics properties. </summary>
         public QueueMetrics MinuteMetrics { get; set; }
     }
 }

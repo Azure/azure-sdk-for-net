@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,25 +15,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class PrivateEndpointOutboundRule : MachineLearningOutboundRule
     {
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointOutboundRule"/>. </summary>
-        public PrivateEndpointOutboundRule()
+        public PrivateEndpointOutboundRule() : base(RuleType.PrivateEndpoint)
         {
-            OutboundRuleType = OutboundRuleType.PrivateEndpoint;
+            Fqdns = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateEndpointOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a machine learning workspace. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="outboundRuleType"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="type"> Type of a managed network Outbound Rule of a machine learning workspace. </param>
+        /// <param name="errorInformation"> Error information about an outbound rule of a machine learning workspace if RuleStatus is failed. </param>
+        /// <param name="parentRuleNames"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </param>
-        internal PrivateEndpointOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, OutboundRuleType outboundRuleType, IDictionary<string, BinaryData> serializedAdditionalRawData, PrivateEndpointDestination destination) : base(category, status, outboundRuleType, serializedAdditionalRawData)
+        /// <param name="fqdns"></param>
+        internal PrivateEndpointOutboundRule(OutboundRuleCategory? category, OutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, PrivateEndpointDestination destination, IList<string> fqdns) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
-            OutboundRuleType = outboundRuleType;
+            Fqdns = fqdns;
         }
 
         /// <summary> Private Endpoint destination for a Private Endpoint Outbound Rule for the managed network of a machine learning workspace. </summary>
         [WirePath("destination")]
         public PrivateEndpointDestination Destination { get; set; }
+
+        /// <summary> Gets the Fqdns. </summary>
+        [WirePath("fqdns")]
+        public IList<string> Fqdns { get; }
     }
 }

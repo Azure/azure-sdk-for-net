@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -39,10 +38,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Details of the StandbyVirtualMachinePool. </summary>
@@ -53,7 +52,17 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolProperties"/> instance for mocking. </returns>
         public static StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default, StandbyVirtualMachineState virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = default, StandbyProvisioningState? provisioningState = default)
         {
-            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, default);
+        }
+
+        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="minReadyCapacity"> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </param>
+        /// <param name="postProvisioningDelay"> Specifies the duration to wait after virtual machine provisioning before the virtual machine becomes available for use. The duration should be specified in ISO 8601 format (e.g., PT2S for 2 seconds). </param>
+        /// <param name="dynamicSizingEnabled"> Indicates whether dynamic sizing is enabled for the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolElasticityProfile"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolElasticityProfile StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity = default, long? minReadyCapacity = default, string postProvisioningDelay = default, bool? dynamicSizingEnabled = default)
+        {
+            return new StandbyVirtualMachinePoolElasticityProfile(maxReadyCapacity, minReadyCapacity, postProvisioningDelay, dynamicSizingEnabled is null ? default : new DynamicSizing(dynamicSizingEnabled, default), default);
         }
 
         /// <summary> The type used for update operations of the StandbyVirtualMachinePoolResource. </summary>
@@ -64,7 +73,17 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StandbyVirtualMachinePoolPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachinePoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the StandbyVirtualMachinePoolResource. </summary>
+        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
+        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
+        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolUpdateProperties"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolUpdateProperties StandbyVirtualMachinePoolUpdateProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default, StandbyVirtualMachineState? virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = default)
+        {
+            return new StandbyVirtualMachinePoolUpdateProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -81,8 +100,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Details of the StandbyVirtualMachine. </summary>
@@ -91,7 +110,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyVirtualMachineProperties"/> instance for mocking. </returns>
         public static StandbyVirtualMachineProperties StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId = default, StandbyProvisioningState? provisioningState = default)
         {
-            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, default);
         }
 
         /// <summary> Contains information about a standby virtual machine pool as last known by the StandbyPool resource provider. </summary>
@@ -108,8 +127,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
@@ -122,7 +141,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             instanceCountSummary ??= new ChangeTrackingList<StandbyVirtualMachineInstanceCountSummary>();
 
-            return new StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary.ToList(), status, provisioningState, prediction, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachinePoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<StandbyVirtualMachineInstanceCountSummary>()).ToList(), status, provisioningState, prediction, default);
         }
 
         /// <summary> Displays the counts of pooled virtual machines in each state, as known by the StandbyPool resource provider. </summary>
@@ -131,7 +150,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.PoolVirtualMachineStateCount"/> instance for mocking. </returns>
         public static PoolVirtualMachineStateCount PoolVirtualMachineStateCount(PoolVirtualMachineState state = default, long count = default)
         {
-            return new PoolVirtualMachineStateCount(state, count, additionalBinaryDataProperties: null);
+            return new PoolVirtualMachineStateCount(state, count, default);
         }
 
         /// <summary> Displays StandbyPool status. </summary>
@@ -140,7 +159,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyPoolStatus"/> instance for mocking. </returns>
         public static StandbyPoolStatus StandbyPoolStatus(StandbyPoolHealthStateCode code = default, string message = default)
         {
-            return new StandbyPoolStatus(code, message, additionalBinaryDataProperties: null);
+            return new StandbyPoolStatus(code, message, default);
         }
 
         /// <param name="forecastValuesInstancesRequestedCount"> Displays the predicted count of instances to be requested from the standby pool. </param>
@@ -149,7 +168,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolPrediction"/> instance for mocking. </returns>
         public static StandbyVirtualMachinePoolPrediction StandbyVirtualMachinePoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
-            return new StandbyVirtualMachinePoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyVirtualMachinePoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
+            return new StandbyVirtualMachinePoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyVirtualMachinePoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), default), forecastStartOn, forecastInfo, default);
         }
 
         /// <summary> A StandbyContainerGroupPoolResource. </summary>
@@ -170,10 +189,10 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Details of the StandbyContainerGroupPool. </summary>
@@ -186,7 +205,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             zones ??= new ChangeTrackingList<string>();
 
-            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, (zones ?? new ChangeTrackingList<string>()).ToList(), provisioningState, default);
+        }
+
+        /// <param name="maxReadyCapacity"> Specifies maximum number of standby container groups in the standby pool. </param>
+        /// <param name="refillPolicy"> Specifies refill policy of the pool. </param>
+        /// <param name="dynamicSizingEnabled"> Indicates whether dynamic sizing is enabled for the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupPoolElasticityProfile"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolElasticityProfile StandbyContainerGroupPoolElasticityProfile(long maxReadyCapacity = default, StandbyRefillPolicy? refillPolicy = default, bool? dynamicSizingEnabled = default)
+        {
+            return new StandbyContainerGroupPoolElasticityProfile(maxReadyCapacity, refillPolicy, dynamicSizingEnabled is null ? default : new DynamicSizing(dynamicSizingEnabled, default), default);
         }
 
         /// <summary> Details of the ContainerGroupProperties. </summary>
@@ -197,7 +225,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             subnetIds ??= new ChangeTrackingList<WritableSubResource>();
 
-            return new StandbyContainerGroupProperties(containerGroupProfile, subnetIds.ToList(), additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupProperties(containerGroupProfile, (subnetIds ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default);
+        }
+
+        /// <summary> Details of the ContainerGroupProfile. </summary>
+        /// <param name="id"> Specifies container group profile id of standby container groups. </param>
+        /// <param name="revision"> Specifies revision of container group profile. </param>
+        /// <returns> A new <see cref="Models.StandbyContainerGroupProfile"/> instance for mocking. </returns>
+        public static StandbyContainerGroupProfile StandbyContainerGroupProfile(ResourceIdentifier id = default, long? revision = default)
+        {
+            return new StandbyContainerGroupProfile(id, revision, default);
         }
 
         /// <summary> The type used for update operations of the StandbyContainerGroupPoolResource. </summary>
@@ -208,7 +245,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StandbyContainerGroupPoolPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The updatable properties of the StandbyContainerGroupPoolResource. </summary>
@@ -220,7 +257,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             zones ??= new ChangeTrackingList<string>();
 
-            return new StandbyContainerGroupPoolUpdateProperties(elasticityProfile, containerGroupProperties, zones.ToList(), additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolUpdateProperties(elasticityProfile, containerGroupProperties, (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Contains information about a standby container group pool as last known by the StandbyPool resource provider. </summary>
@@ -237,8 +274,8 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
@@ -251,7 +288,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             instanceCountSummary ??= new ChangeTrackingList<ContainerGroupInstanceCountSummary>();
 
-            return new StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary.ToList(), status, provisioningState, prediction, additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<ContainerGroupInstanceCountSummary>()).ToList(), status, provisioningState, prediction, default);
         }
 
         /// <summary> Displays the counts of container groups in each state, as known by the StandbyPool resource provider. </summary>
@@ -262,7 +299,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         {
             standbyContainerGroupInstanceCountsByState ??= new ChangeTrackingList<PoolContainerGroupStateCount>();
 
-            return new ContainerGroupInstanceCountSummary(zone, standbyContainerGroupInstanceCountsByState.ToList(), additionalBinaryDataProperties: null);
+            return new ContainerGroupInstanceCountSummary(zone, (standbyContainerGroupInstanceCountsByState ?? new ChangeTrackingList<PoolContainerGroupStateCount>()).ToList(), default);
         }
 
         /// <summary> Displays the counts of pooled container groups in each state, as known by the StandbyPool resource provider. </summary>
@@ -271,7 +308,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.PoolContainerGroupStateCount"/> instance for mocking. </returns>
         public static PoolContainerGroupStateCount PoolContainerGroupStateCount(PoolContainerGroupState state = default, long count = default)
         {
-            return new PoolContainerGroupStateCount(state, count, additionalBinaryDataProperties: null);
+            return new PoolContainerGroupStateCount(state, count, default);
         }
 
         /// <param name="forecastValuesInstancesRequestedCount"> Displays the predicted count of instances to be requested from the standby pool. </param>
@@ -280,32 +317,30 @@ namespace Azure.ResourceManager.StandbyPool.Models
         /// <returns> A new <see cref="Models.StandbyContainerGroupPoolPrediction"/> instance for mocking. </returns>
         public static StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
-            return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), null), forecastStartOn, forecastInfo, additionalBinaryDataProperties: null);
+            return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), default), forecastStartOn, forecastInfo, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/>. </summary>
+        /// <summary> Contains the counts of VMs in each power state in a given zone, fault domain, as known by the StandbyPool resource provider. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </summary>
         /// <param name="zone"> The zone that the provided counts are in. It will not have a value if zones are not enabled on the attached VMSS. </param>
         /// <param name="standbyVirtualMachineInstanceCountsByState"> The count of pooled virtual machines in each state for the given zone. </param>
         /// <returns> A new <see cref="Models.StandbyVirtualMachineInstanceCountSummary"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachineInstanceCountSummary StandbyVirtualMachineInstanceCountSummary(long? zone, IEnumerable<PoolVirtualMachineStateCount> standbyVirtualMachineInstanceCountsByState)
         {
-            standbyVirtualMachineInstanceCountsByState ??= new ChangeTrackingList<PoolVirtualMachineStateCount>();
-
-            return new StandbyVirtualMachineInstanceCountSummary(zone, default, serializedAdditionalRawData: null);
+            return new StandbyVirtualMachineInstanceCountSummary(zone, (standbyVirtualMachineInstanceCountsByState ?? new ChangeTrackingList<PoolVirtualMachineStateCount>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/>. </summary>
+        /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
         /// <param name="instanceCountSummary"> A list containing the counts of container groups in each possible state, as known by the StandbyPool resource provider. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyContainerGroupPoolRuntimeViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolRuntimeViewProperties StandbyContainerGroupPoolRuntimeViewProperties(IEnumerable<ContainerGroupInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return StandbyContainerGroupPoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
+            return new StandbyContainerGroupPoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<ContainerGroupInstanceCountSummary>()).ToList(), default, provisioningState, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyContainerGroupPoolProperties"/>. </summary>
+        /// <summary> Details of the StandbyContainerGroupPool. </summary>
         /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
         /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -313,22 +348,17 @@ namespace Azure.ResourceManager.StandbyPool.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyContainerGroupPoolProperties StandbyContainerGroupPoolProperties(StandbyContainerGroupPoolElasticityProfile elasticityProfile, StandbyContainerGroupProperties containerGroupProperties, StandbyProvisioningState? provisioningState)
         {
-            return StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones: default, provisioningState);
+            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, default, provisioningState, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/>. </summary>
-        /// <param name="instanceCountSummary">
-        /// A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider.
-        ///                         If zones are not enabled on the attached VMSS, the list will contain a single entry with null zone values.
-        ///                         Note: any updates to pool resources outside of StandbyPoolRP (i.e deleting a VM through portal) are not reflected here.
-        ///                         Note: any resources in the Running state may still be installing extensions / not fully provisioned.
-        /// </param>
+        /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
+        /// <param name="instanceCountSummary"> A list containing the counts of virtual machines in each possible power state for each zone if enabled, as known by the StandbyPool resource provider. If zones are not enabled on the attached VMSS, the list will contain a single entry without zone values. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </param>
         /// <param name="provisioningState"> Displays the provisioning state of the standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolRuntimeViewProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StandbyVirtualMachinePoolRuntimeViewProperties StandbyVirtualMachinePoolRuntimeViewProperties(IEnumerable<StandbyVirtualMachineInstanceCountSummary> instanceCountSummary, StandbyProvisioningState? provisioningState)
         {
-            return StandbyVirtualMachinePoolRuntimeViewProperties(instanceCountSummary, status: default, provisioningState, prediction: default);
+            return new StandbyVirtualMachinePoolRuntimeViewProperties((instanceCountSummary ?? new ChangeTrackingList<StandbyVirtualMachineInstanceCountSummary>()).ToList(), default, provisioningState, default, default);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Azure.AI.Agents.Persistent
 {
     public partial class SharepointGroundingToolParameters
     {
+        /// <summary> Initializes a new instance of the <see cref="SharepointGroundingToolParameters"/> class. </summary>
+        /// <param name="connectionId"> The connection identifier for the SharePoint grounding resource. </param>
         public SharepointGroundingToolParameters(string connectionId)
         {
             // Additional initialization logic if needed

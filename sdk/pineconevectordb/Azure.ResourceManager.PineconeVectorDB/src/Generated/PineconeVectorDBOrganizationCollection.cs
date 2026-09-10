@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
         {
             TryGetApiVersion(PineconeVectorDBOrganizationResource.ResourceType, out string pineconeVectorDBOrganizationApiVersion);
             _organizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PineconeVectorDB", PineconeVectorDBOrganizationResource.ResourceType.Namespace, Diagnostics);
-            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
+            _organizationsRestClient = new Organizations(_organizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pineconeVectorDBOrganizationApiVersion ?? "2024-10-22-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, PineconeVectorDBOrganizationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource> operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(
-                    new PineconeVectorDBOrganizationOperationSource(Client),
+                    new PineconeVectorDBOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                 HttpMessage message = _organizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, organizationname, PineconeVectorDBOrganizationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource> operation = new PineconeVectorDBArmOperation<PineconeVectorDBOrganizationResource>(
-                    new PineconeVectorDBOrganizationOperationSource(Client),
+                    new PineconeVectorDBOrganizationResourceOperationSource(Client),
                     _organizationsClientDiagnostics,
                     Pipeline,
                     message.Request,

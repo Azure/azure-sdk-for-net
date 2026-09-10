@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct InboundSecurityRuleType : IEquatable<InboundSecurityRuleType>
     {
         private readonly string _value;
+        /// <summary> AutoExpire. </summary>
+        private const string AutoExpireValue = "AutoExpire";
+        /// <summary> Permanent. </summary>
+        private const string PermanentValue = "Permanent";
 
         /// <summary> Initializes a new instance of <see cref="InboundSecurityRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public InboundSecurityRuleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoExpireValue = "AutoExpire";
-        private const string PermanentValue = "Permanent";
+            _value = value;
+        }
 
         /// <summary> AutoExpire. </summary>
         public static InboundSecurityRuleType AutoExpire { get; } = new InboundSecurityRuleType(AutoExpireValue);
+
         /// <summary> Permanent. </summary>
         public static InboundSecurityRuleType Permanent { get; } = new InboundSecurityRuleType(PermanentValue);
+
         /// <summary> Determines if two <see cref="InboundSecurityRuleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(InboundSecurityRuleType left, InboundSecurityRuleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="InboundSecurityRuleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(InboundSecurityRuleType left, InboundSecurityRuleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="InboundSecurityRuleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="InboundSecurityRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator InboundSecurityRuleType(string value) => new InboundSecurityRuleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="InboundSecurityRuleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator InboundSecurityRuleType?(string value) => value == null ? null : new InboundSecurityRuleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is InboundSecurityRuleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(InboundSecurityRuleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciEdgeDeviceSwitchDetail : IUtf8JsonSerializable, IJsonModel<HciEdgeDeviceSwitchDetail>
+    /// <summary> List of switch details for edge device. </summary>
+    public partial class HciEdgeDeviceSwitchDetail : IJsonModel<HciEdgeDeviceSwitchDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciEdgeDeviceSwitchDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceSwitchDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHciEdgeDeviceSwitchDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HciEdgeDeviceSwitchDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceSwitchDetail IPersistableModel<HciEdgeDeviceSwitchDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HciEdgeDeviceSwitchDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HciEdgeDeviceSwitchDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(SwitchName))
             {
                 writer.WritePropertyName("switchName"u8);
@@ -50,21 +88,21 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Extensions)
+                foreach (HciEdgeSwitchExtension item in Extensions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,22 +111,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        HciEdgeDeviceSwitchDetail IJsonModel<HciEdgeDeviceSwitchDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HciEdgeDeviceSwitchDetail IJsonModel<HciEdgeDeviceSwitchDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HciEdgeDeviceSwitchDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHciEdgeDeviceSwitchDetail(document.RootElement, options);
         }
 
-        internal static HciEdgeDeviceSwitchDetail DeserializeHciEdgeDeviceSwitchDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HciEdgeDeviceSwitchDetail DeserializeHciEdgeDeviceSwitchDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,28 +139,27 @@ namespace Azure.ResourceManager.Hci.Models
             string switchName = default;
             string switchType = default;
             IReadOnlyList<HciEdgeSwitchExtension> extensions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("switchName"u8))
+                if (prop.NameEquals("switchName"u8))
                 {
-                    switchName = property.Value.GetString();
+                    switchName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("switchType"u8))
+                if (prop.NameEquals("switchType"u8))
                 {
-                    switchType = property.Value.GetString();
+                    switchType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
+                if (prop.NameEquals("extensions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<HciEdgeSwitchExtension> array = new List<HciEdgeSwitchExtension>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(HciEdgeSwitchExtension.DeserializeHciEdgeSwitchExtension(item, options));
                     }
@@ -126,128 +168,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions ?? new ChangeTrackingList<HciEdgeSwitchExtension>(), serializedAdditionalRawData);
+            return new HciEdgeDeviceSwitchDetail(switchName, switchType, extensions ?? new ChangeTrackingList<HciEdgeSwitchExtension>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  switchName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SwitchName))
-                {
-                    builder.Append("  switchName: ");
-                    if (SwitchName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SwitchName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SwitchName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SwitchType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  switchType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SwitchType))
-                {
-                    builder.Append("  switchType: ");
-                    if (SwitchType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SwitchType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SwitchType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extensions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Extensions))
-                {
-                    if (Extensions.Any())
-                    {
-                        builder.Append("  extensions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Extensions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  extensions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<HciEdgeDeviceSwitchDetail>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HciEdgeDeviceSwitchDetail IPersistableModel<HciEdgeDeviceSwitchDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HciEdgeDeviceSwitchDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHciEdgeDeviceSwitchDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HciEdgeDeviceSwitchDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HciEdgeDeviceSwitchDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

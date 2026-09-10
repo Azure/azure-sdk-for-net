@@ -4,13 +4,13 @@
 #nullable disable
 
 using System;
-using OpenAI;
+using System.Diagnostics.CodeAnalysis;
 
 #pragma warning disable OPENAI001
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenType("A2ATool")]
+[CodeGenType("A2APreviewTool")]
 public partial class A2APreviewTool
 {
     /// <summary> Base URL of the agent. </summary>
@@ -27,13 +27,4 @@ public partial class A2APreviewTool
     /// If not provided, defaults to  `/.well-known/agent-card.json`
     /// </summary>
     internal string AgentCardPath { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="A2APreviewTool"/>.
-    /// </summary>
-    /// <param name="baseUri"></param>
-    public A2APreviewTool(Uri baseUri) : this()
-    {
-        BaseUri = baseUri;
-    }
 }

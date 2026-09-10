@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PineconeVectorDB;
@@ -38,11 +37,11 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -57,9 +56,9 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, null),
+                partnerDisplayName is null ? default : new PineconeVectorDBPartnerProperties(partnerDisplayName, default),
                 singleSignOnProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Marketplace details for an organization. </summary>
@@ -69,7 +68,45 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         /// <returns> A new <see cref="Models.PineconeVectorDBMarketplaceDetails"/> instance for mocking. </returns>
         public static PineconeVectorDBMarketplaceDetails PineconeVectorDBMarketplaceDetails(string subscriptionId = default, PineconeVectorDBMarketplaceSubscriptionStatus? subscriptionStatus = default, PineconeVectorDBOfferDetails offerDetails = default)
         {
-            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+            return new PineconeVectorDBMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBOfferDetails"/> instance for mocking. </returns>
+        public static PineconeVectorDBOfferDetails PineconeVectorDBOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new PineconeVectorDBOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <summary> User details for an organization. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.PineconeVectorDBUserDetails"/> instance for mocking. </returns>
+        public static PineconeVectorDBUserDetails PineconeVectorDBUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new PineconeVectorDBUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
         }
 
         /// <summary> Properties specific to Single Sign On Resource. </summary>
@@ -88,8 +125,8 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
                 state,
                 enterpriseAppId,
                 uri,
-                aadDomains.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> The type used for update operations of the Organization Resource. </summary>
@@ -100,7 +137,7 @@ namespace Azure.ResourceManager.PineconeVectorDB.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new PineconeVectorDBOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new PineconeVectorDBOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

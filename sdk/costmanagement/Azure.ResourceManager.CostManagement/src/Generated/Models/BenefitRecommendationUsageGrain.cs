@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct BenefitRecommendationUsageGrain : IEquatable<BenefitRecommendationUsageGrain>
     {
         private readonly string _value;
+        /// <summary> Hourly grain corresponds to value per hour. </summary>
+        private const string HourlyValue = "Hourly";
+        /// <summary> Hourly grain corresponds to value per day. </summary>
+        private const string DailyValue = "Daily";
+        /// <summary> Hourly grain corresponds to value per month. </summary>
+        private const string MonthlyValue = "Monthly";
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationUsageGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BenefitRecommendationUsageGrain(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HourlyValue = "Hourly";
-        private const string DailyValue = "Daily";
-        private const string MonthlyValue = "Monthly";
+            _value = value;
+        }
 
         /// <summary> Hourly grain corresponds to value per hour. </summary>
         public static BenefitRecommendationUsageGrain Hourly { get; } = new BenefitRecommendationUsageGrain(HourlyValue);
+
         /// <summary> Hourly grain corresponds to value per day. </summary>
         public static BenefitRecommendationUsageGrain Daily { get; } = new BenefitRecommendationUsageGrain(DailyValue);
+
         /// <summary> Hourly grain corresponds to value per month. </summary>
         public static BenefitRecommendationUsageGrain Monthly { get; } = new BenefitRecommendationUsageGrain(MonthlyValue);
+
         /// <summary> Determines if two <see cref="BenefitRecommendationUsageGrain"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BenefitRecommendationUsageGrain left, BenefitRecommendationUsageGrain right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BenefitRecommendationUsageGrain"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BenefitRecommendationUsageGrain left, BenefitRecommendationUsageGrain right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BenefitRecommendationUsageGrain(string value) => new BenefitRecommendationUsageGrain(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BenefitRecommendationUsageGrain"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BenefitRecommendationUsageGrain?(string value) => value == null ? null : new BenefitRecommendationUsageGrain(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BenefitRecommendationUsageGrain other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BenefitRecommendationUsageGrain other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

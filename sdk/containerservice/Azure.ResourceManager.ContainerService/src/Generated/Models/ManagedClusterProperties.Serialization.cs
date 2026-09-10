@@ -196,6 +196,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStringValue(SupportPlan.Value.ToString());
             }
+            if (Optional.IsDefined(IsFipsEnabled))
+            {
+                writer.WritePropertyName("enableFIPS"u8);
+                writer.WriteBooleanValue(IsFipsEnabled.Value);
+            }
+            if (Optional.IsDefined(EnableNodeHardening))
+            {
+                writer.WritePropertyName("enableNodeHardening"u8);
+                writer.WriteBooleanValue(EnableNodeHardening.Value);
+            }
             if (Optional.IsDefined(IsNamespaceResourcesEnabled))
             {
                 writer.WritePropertyName("enableNamespaceResources"u8);
@@ -342,6 +352,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("healthMonitorProfile"u8);
                 writer.WriteObjectValue(HealthMonitorProfile, options);
             }
+            if (Optional.IsDefined(ControlPlaneScalingProfile))
+            {
+                writer.WritePropertyName("controlPlaneScalingProfile"u8);
+                writer.WriteObjectValue(ControlPlaneScalingProfile, options);
+            }
+            if (Optional.IsDefined(NodeDisruptionProfile))
+            {
+                writer.WritePropertyName("nodeDisruptionProfile"u8);
+                writer.WriteObjectValue(NodeDisruptionProfile, options);
+            }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -411,6 +431,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterNodeResourceGroupProfile nodeResourceGroupProfile = default;
             bool? isRbacEnabled = default;
             KubernetesSupportPlan? supportPlan = default;
+            bool? isFipsEnabled = default;
+            bool? enableNodeHardening = default;
             bool? isNamespaceResourcesEnabled = default;
             ContainerServiceNetworkProfile networkProfile = default;
             ManagedClusterAadProfile aadProfile = default;
@@ -438,6 +460,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             SchedulerProfile schedulerProfile = default;
             ManagedClusterHostedSystemProfile hostedSystemProfile = default;
             ManagedClusterHealthMonitorProfile healthMonitorProfile = default;
+            ManagedClusterControlPlaneScalingProfile controlPlaneScalingProfile = default;
+            NodeDisruptionProfile nodeDisruptionProfile = default;
             ManagedClusterStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -612,6 +636,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     supportPlan = new KubernetesSupportPlan(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableFIPS"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isFipsEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("enableNodeHardening"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableNodeHardening = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("enableNamespaceResources"u8))
@@ -867,6 +909,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     healthMonitorProfile = ManagedClusterHealthMonitorProfile.DeserializeManagedClusterHealthMonitorProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("controlPlaneScalingProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    controlPlaneScalingProfile = ManagedClusterControlPlaneScalingProfile.DeserializeManagedClusterControlPlaneScalingProfile(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("nodeDisruptionProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeDisruptionProfile = NodeDisruptionProfile.DeserializeNodeDisruptionProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("status"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -904,6 +964,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 nodeResourceGroupProfile,
                 isRbacEnabled,
                 supportPlan,
+                isFipsEnabled,
+                enableNodeHardening,
                 isNamespaceResourcesEnabled,
                 networkProfile,
                 aadProfile,
@@ -931,6 +993,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 schedulerProfile,
                 hostedSystemProfile,
                 healthMonitorProfile,
+                controlPlaneScalingProfile,
+                nodeDisruptionProfile,
                 status,
                 additionalBinaryDataProperties);
         }

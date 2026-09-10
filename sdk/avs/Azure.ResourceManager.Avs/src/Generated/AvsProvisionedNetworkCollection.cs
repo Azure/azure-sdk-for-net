@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsProvisionedNetworkResource.ResourceType, out string avsProvisionedNetworkApiVersion);
             _provisionedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsProvisionedNetworkResource.ResourceType.Namespace, Diagnostics);
-            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
+            _provisionedNetworksRestClient = new ProvisionedNetworks(_provisionedNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsProvisionedNetworkApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

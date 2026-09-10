@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningAllocationState : IEquatable<MachineLearningAllocationState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningAllocationState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningAllocationState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string SteadyValue = "Steady";
         private const string ResizingValue = "Resizing";
 
-        /// <summary> Steady. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAllocationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningAllocationState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Steady. </summary>
         public static MachineLearningAllocationState Steady { get; } = new MachineLearningAllocationState(SteadyValue);
-        /// <summary> Resizing. </summary>
+
+        /// <summary> Gets the Resizing. </summary>
         public static MachineLearningAllocationState Resizing { get; } = new MachineLearningAllocationState(ResizingValue);
+
         /// <summary> Determines if two <see cref="MachineLearningAllocationState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningAllocationState left, MachineLearningAllocationState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningAllocationState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningAllocationState left, MachineLearningAllocationState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningAllocationState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningAllocationState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningAllocationState(string value) => new MachineLearningAllocationState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningAllocationState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningAllocationState?(string value) => value == null ? null : new MachineLearningAllocationState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningAllocationState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningAllocationState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

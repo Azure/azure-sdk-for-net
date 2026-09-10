@@ -24,6 +24,42 @@ This library allows you to specify your infrastructure in a declarative style us
 
 ## Examples
 
+Create an availability set:
+
+```C# Snippet:ComputeAvailabilitySetBasic
+Infrastructure infra = new();
+
+ProvisioningParameter availabilitySetName = new(nameof(availabilitySetName), typeof(string))
+{
+    Description = "Availability Set Name",
+    Value = "myAvSet"
+};
+infra.Add(availabilitySetName);
+
+ProvisioningParameter faultDomainCount = new(nameof(faultDomainCount), typeof(int))
+{
+    Description = "Number of fault domains",
+    Value = 3
+};
+infra.Add(faultDomainCount);
+
+ProvisioningParameter updateDomainCount = new(nameof(updateDomainCount), typeof(int))
+{
+    Description = "Number of update domains",
+    Value = 20
+};
+infra.Add(updateDomainCount);
+
+AvailabilitySet avset = new(nameof(avset), AvailabilitySet.ResourceVersions.V2025_04_01)
+{
+    Name = availabilitySetName,
+    Sku = new ComputeSku { Name = "Aligned" },
+    PlatformFaultDomainCount = faultDomainCount,
+    PlatformUpdateDomainCount = updateDomainCount
+};
+infra.Add(avset);
+```
+
 ## Troubleshooting
 
 ## Next steps

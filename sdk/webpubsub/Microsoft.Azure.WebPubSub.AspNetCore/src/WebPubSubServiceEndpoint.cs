@@ -24,7 +24,12 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
 
         internal string ConnectionString { get; }
 
-        internal string AccessKey { get; }
+        private readonly string _connectionStringAccessKey;
+
+        // Returns the access key for signature validation. For AzureKeyCredential the key is read
+        // live so credential rotation via AzureKeyCredential.Update is honored. Null means key-less
+        // (AAD/keys-disabled) where signature validation is intentionally skipped.
+        internal string AccessKey => AzureKeyCredential?.Key ?? _connectionStringAccessKey;
 
         internal TokenCredential TokenCredential { get; }
 
@@ -51,7 +56,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
             CredentialKind = CredentialKind.ConnectionString;
             ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
             ClientOptions = clientOptions ?? new WebPubSubServiceClientOptions();
-            (Endpoint, AccessKey) = ParseConnectionString(connectionString);
+            (Endpoint, _connectionStringAccessKey) = ParseConnectionString(connectionString);
         }
 
         /// <summary>

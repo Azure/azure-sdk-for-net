@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CommonDataServiceForAppsEntityDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsEntityDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public CommonDataServiceForAppsEntityDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "CommonDataServiceForAppsEntity";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsEntityDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,20 +23,31 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="entityName"> The logical name of the entity. Type: string (or Expression with resultType string). </param>
-        internal CommonDataServiceForAppsEntityDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> entityName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Common Data Service for Apps entity dataset properties. </param>
+        internal CommonDataServiceForAppsEntityDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, CommonDataServiceForAppsEntityDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            EntityName = entityName;
-            DatasetType = datasetType ?? "CommonDataServiceForAppsEntity";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommonDataServiceForAppsEntityDataset"/> for deserialization. </summary>
-        internal CommonDataServiceForAppsEntityDataset()
-        {
-        }
+        /// <summary> Common Data Service for Apps entity dataset properties. </summary>
+        internal CommonDataServiceForAppsEntityDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> EntityName { get; set; }
+        public DataFactoryElement<string> EntityName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.EntityName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new CommonDataServiceForAppsEntityDatasetTypeProperties();
+                }
+                TypeProperties.EntityName = value;
+            }
+        }
     }
 }

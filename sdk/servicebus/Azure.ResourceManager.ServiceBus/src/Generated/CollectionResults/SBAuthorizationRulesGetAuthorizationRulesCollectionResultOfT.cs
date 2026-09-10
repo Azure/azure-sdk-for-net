@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ServiceBus
                     yield break;
                 }
                 SBAuthorizationRuleListResult result = SBAuthorizationRuleListResult.FromResponse(response);
-                yield return Page<ServiceBusAuthorizationRuleData>.FromValues((IReadOnlyList<ServiceBusAuthorizationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceBusAuthorizationRuleData>.FromValues((IReadOnlyList<ServiceBusAuthorizationRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

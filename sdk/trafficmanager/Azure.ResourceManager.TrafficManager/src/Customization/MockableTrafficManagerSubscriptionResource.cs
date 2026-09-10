@@ -5,7 +5,7 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    [CodeGenSuppress("GetTrafficManagerUserMetrics")]
+    [CodeGenSuppress("GetTrafficManagerUserMetric")]
     public partial class MockableTrafficManagerSubscriptionResource
     {
         /// <summary> Gets the TrafficManagerUserMetricsResource. </summary>

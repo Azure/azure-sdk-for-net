@@ -50,6 +50,7 @@ namespace Azure.Communication.ShortCodes.Models
     public static partial class CommunicationShortCodesModelFactory
     {
         public static Azure.Communication.ShortCodes.Models.ShortCode ShortCode(string number = null, Azure.Communication.ShortCodes.Models.NumberType? numberType = default(Azure.Communication.ShortCodes.Models.NumberType?), string countryCode = null, System.Collections.Generic.IEnumerable<string> programBriefIds = null, System.DateTimeOffset? purchaseDate = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.Communication.ShortCodes.Models.USProgramBrief USProgramBrief(System.Guid id = default(System.Guid), Azure.Communication.ShortCodes.Models.ProgramBriefStatus? status = default(Azure.Communication.ShortCodes.Models.ProgramBriefStatus?), string number = null, System.Collections.Generic.IEnumerable<Azure.Communication.ShortCodes.Models.ReviewNote> reviewNotes = null, System.Collections.Generic.IEnumerable<Azure.Communication.ShortCodes.Models.ShortCodeCost> costs = null, System.DateTimeOffset? submissionDate = default(System.DateTimeOffset?), System.DateTimeOffset? statusUpdatedDate = default(System.DateTimeOffset?), Azure.Communication.ShortCodes.Models.ProgramDetails programDetails = null, Azure.Communication.ShortCodes.Models.CompanyInformation companyInformation = null, Azure.Communication.ShortCodes.Models.MessageDetails messageDetails = null, Azure.Communication.ShortCodes.Models.TrafficDetails trafficDetails = null) { throw null; }
     }
     public partial class CompanyInformation
     {

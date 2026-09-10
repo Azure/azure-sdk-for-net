@@ -33,7 +33,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         ?? _asFileSearchCall?.Id
         ?? _asFunctionCall?.Id
         ?? _asMcpCall?.Id
-        ?? (_toolCall?.SerializedAdditionalRawData?.TryGetValue("id", out BinaryData idData) == true
+        ?? (_toolCall?._additionalBinaryDataProperties?.TryGetValue("id", out BinaryData idData) == true
             ? idData.ToString()
             : null);
 
@@ -56,6 +56,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
     /// <inheritdoc cref="RunStepDeltaFunction.Output"/>
     public string FunctionOutput => _asFunctionCall?.Function?.Output;
 
+    /// <summary> Gets the underlying delta tool call details for this update. </summary>
     public RunStepDeltaToolCall GetDeltaToolCall => _toolCall;
 
     internal RunStepDetailsUpdate(
@@ -77,7 +78,7 @@ public class RunStepDetailsUpdate : StreamingUpdate
         StreamingUpdateReason updateKind,
         ModelReaderWriterOptions options = null)
     {
-        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options);
+        RunStepDeltaChunk stepDelta = RunStepDeltaChunk.DeserializeRunStepDeltaChunk(element, options ?? ModelSerializationExtensions.WireOptions);
         List<RunStepDetailsUpdate> updates = [];
         if (stepDelta?.Delta?.StepDetails is RunStepDeltaMessageCreation)
         {

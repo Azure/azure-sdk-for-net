@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of schedule parameters. </summary>
     public partial class SoftwareUpdateConfigurationScheduleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationScheduleProperties"/>. </summary>
         public SoftwareUpdateConfigurationScheduleProperties()
@@ -65,8 +36,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="createdOn"> Gets or sets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn, double? startInMinutes, DateTimeOffset? expireOn, double? expireInMinutes, bool? isEnabled, DateTimeOffset? nextRunOn, double? nextRunInMinutes, long? interval, AutomationScheduleFrequency? frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             StartInMinutes = startInMinutes;
@@ -82,35 +53,48 @@ namespace Azure.ResourceManager.Automation.Models
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             Description = description;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the start time of the schedule. </summary>
         public DateTimeOffset? StartOn { get; set; }
+
         /// <summary> Gets the start time's offset in minutes. </summary>
         public double? StartInMinutes { get; }
+
         /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
+
         /// <summary> Gets or sets the expiry time's offset in minutes. </summary>
         public double? ExpireInMinutes { get; set; }
+
         /// <summary> Gets or sets a value indicating whether this schedule is enabled. </summary>
         public bool? IsEnabled { get; set; }
+
         /// <summary> Gets or sets the next run time of the schedule. </summary>
         public DateTimeOffset? NextRunOn { get; set; }
+
         /// <summary> Gets or sets the next run time's offset in minutes. </summary>
         public double? NextRunInMinutes { get; set; }
+
         /// <summary> Gets or sets the interval of the schedule. </summary>
         public long? Interval { get; set; }
+
         /// <summary> Gets or sets the frequency of the schedule. </summary>
         public AutomationScheduleFrequency? Frequency { get; set; }
+
         /// <summary> Gets or sets the time zone of the schedule. </summary>
         public string TimeZone { get; set; }
+
         /// <summary> Gets or sets the advanced schedule. </summary>
         public AutomationAdvancedSchedule AdvancedSchedule { get; set; }
+
         /// <summary> Gets or sets the creation time. </summary>
         public DateTimeOffset? CreatedOn { get; set; }
+
         /// <summary> Gets or sets the last modified time. </summary>
         public DateTimeOffset? LastModifiedOn { get; set; }
+
         /// <summary> Gets or sets the description. </summary>
         public string Description { get; set; }
     }

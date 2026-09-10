@@ -348,7 +348,7 @@ Console.WriteLine($"Retrieved component for digital twin '{basicDtId}'.");
 
 ### Create digital twin relationships
 
-`CreateRelationshipAsync` creates a relationship on a digital twin provided with Id of a digital twin, name of relationship such as "contains", Id of an relationship such as "FloorContainsRoom" and an application/json relationship to be created. Must contain property with key "$targetId" to specify the target of the relationship. Sample payloads for relationships can be found [here](https://github.com/Azure/azure-sdk-for-net-pr/blob/feature/IoT-ADT/sdk/iot/Azure.Iot.DigitalTwins/samples/DigitalTwinServiceClientSample/DTDL/Relationships/HospitalRelationships.json "RelationshipExamples").
+`CreateRelationshipAsync` creates a relationship on a digital twin provided with the Id of a digital twin, the name of a relationship such as "contains", the Id of a relationship such as "FloorContainsRoom", and an application/json relationship to be created. It must contain a property with key "$targetId" to specify the target of the relationship.
 
 One option is to use the provided class BasicRelationship for serialization and deserialization. 
 It uses functionality from the `System.Text.Json` library to maintain any unmapped json properties to a dictionary.

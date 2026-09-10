@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(WebPubSubCustomCertificateResource.ResourceType, out string webPubSubCustomCertificateApiVersion);
             _customCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", WebPubSubCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Endpoint, webPubSubCustomCertificateApiVersion ?? "2025-08-01-preview");
+            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubCustomCertificateApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, WebPubSubCustomCertificateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubCustomCertificateResource> operation = new WebPubSubArmOperation<WebPubSubCustomCertificateResource>(
-                    new WebPubSubCustomCertificateOperationSource(Client),
+                    new WebPubSubCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customCertificatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, certificateName, WebPubSubCustomCertificateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubCustomCertificateResource> operation = new WebPubSubArmOperation<WebPubSubCustomCertificateResource>(
-                    new WebPubSubCustomCertificateOperationSource(Client),
+                    new WebPubSubCustomCertificateResourceOperationSource(Client),
                     _customCertificatesClientDiagnostics,
                     Pipeline,
                     message.Request,

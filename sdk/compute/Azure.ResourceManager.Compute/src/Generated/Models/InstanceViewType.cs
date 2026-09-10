@@ -7,14 +7,14 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The InstanceViewType. </summary>
+    /// <summary></summary>
     public enum InstanceViewType
     {
-        /// <summary> instanceView. </summary>
+        /// <summary> InstanceView. </summary>
         InstanceView,
-        /// <summary> userData. </summary>
+        /// <summary> UserData. </summary>
         UserData,
-        /// <summary> resiliencyView. </summary>
+        /// <summary> ResiliencyView. </summary>
         ResiliencyView
     }
 }

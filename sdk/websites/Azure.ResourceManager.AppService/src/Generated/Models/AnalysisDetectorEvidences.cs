@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Class Representing Detector Evidence used for analysis. </summary>
     public partial class AnalysisDetectorEvidences
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalysisDetectorEvidences"/>. </summary>
         public AnalysisDetectorEvidences()
@@ -58,40 +30,51 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="metrics"> Source Metrics. </param>
         /// <param name="data"> Additional Source Data. </param>
         /// <param name="detectorMetaData"> Detector Meta Data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             DetectorDefinition = detectorDefinition;
             Metrics = metrics;
             Data = data;
             DetectorMetaData = detectorMetaData;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the Detector. </summary>
         [WirePath("source")]
         public string Source { get; set; }
+
         /// <summary> Detector Definition. </summary>
         [WirePath("detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; set; }
+
         /// <summary> Source Metrics. </summary>
         [WirePath("metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; }
+
         /// <summary> Additional Source Data. </summary>
         [WirePath("data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
+
         /// <summary> Detector Meta Data. </summary>
+        [WirePath("detectorMetaData")]
         internal DetectorMetadata DetectorMetaData { get; set; }
+
         /// <summary> Source of the Data. </summary>
         [WirePath("detectorMetaData.dataSource")]
         public DetectorDataSource DataSource
         {
-            get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;
+            get
+            {
+                return DetectorMetaData is null ? default : DetectorMetaData.DataSource;
+            }
             set
             {
                 if (DetectorMetaData is null)
+                {
                     DetectorMetaData = new DetectorMetadata();
+                }
                 DetectorMetaData.DataSource = value;
             }
         }

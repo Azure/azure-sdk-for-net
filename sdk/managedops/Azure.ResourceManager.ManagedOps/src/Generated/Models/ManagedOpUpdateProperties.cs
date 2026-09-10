@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.ManagedOps.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOpUpdateProperties"/>. </summary>
         /// <param name="desiredConfiguration"> Desired configuration input by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOpUpdateProperties(ManagedOpsDesiredConfigurationUpdate desiredConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOpUpdateProperties(ManagedOpsDesiredConfigurationPatch desiredConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredConfiguration = desiredConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Desired configuration input by the user. </summary>
-        public ManagedOpsDesiredConfigurationUpdate DesiredConfiguration { get; set; }
+        public ManagedOpsDesiredConfigurationPatch DesiredConfiguration { get; set; }
     }
 }

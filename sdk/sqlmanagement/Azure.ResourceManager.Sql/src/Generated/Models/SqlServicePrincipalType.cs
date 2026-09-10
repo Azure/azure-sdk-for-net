@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Sql.Models
     public readonly partial struct SqlServicePrincipalType : IEquatable<SqlServicePrincipalType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> SystemAssigned. </summary>
+        private const string SystemAssignedValue = "SystemAssigned";
 
         /// <summary> Initializes a new instance of <see cref="SqlServicePrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SqlServicePrincipalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string SystemAssignedValue = "SystemAssigned";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SqlServicePrincipalType None { get; } = new SqlServicePrincipalType(NoneValue);
+
         /// <summary> SystemAssigned. </summary>
         public static SqlServicePrincipalType SystemAssigned { get; } = new SqlServicePrincipalType(SystemAssignedValue);
+
         /// <summary> Determines if two <see cref="SqlServicePrincipalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SqlServicePrincipalType left, SqlServicePrincipalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SqlServicePrincipalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SqlServicePrincipalType left, SqlServicePrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlServicePrincipalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SqlServicePrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SqlServicePrincipalType(string value) => new SqlServicePrincipalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SqlServicePrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SqlServicePrincipalType?(string value) => value == null ? null : new SqlServicePrincipalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SqlServicePrincipalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SqlServicePrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

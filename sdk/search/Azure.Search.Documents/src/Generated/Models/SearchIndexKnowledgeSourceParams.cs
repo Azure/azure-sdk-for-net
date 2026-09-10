@@ -29,16 +29,26 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
+        /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
+        /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
-        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, float? rerankerThreshold, KnowledgeSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterAddOn) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, rerankerThreshold, kind, additionalBinaryDataProperties)
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
+        internal SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? neverQuerySource, bool? failOnError, float? rerankerThreshold, KnowledgeSourceResultsProcessing? resultsProcessing, int? maxOutputDocuments, KnowledgeSourceKind kind, bool? enableImageServing, IDictionary<string, BinaryData> additionalBinaryDataProperties, string filterAddOn, SearchIndexKnowledgeSourceQueryHints queryHintOverrides) : base(knowledgeSourceName, includeReferences, includeReferenceSourceData, alwaysQuerySource, neverQuerySource, failOnError, rerankerThreshold, resultsProcessing, maxOutputDocuments, kind, enableImageServing, additionalBinaryDataProperties)
         {
             FilterAddOn = filterAddOn;
+            QueryHintOverrides = queryHintOverrides;
         }
 
         /// <summary> A filter condition applied to the index (e.g., 'State eq VA'). </summary>
         public string FilterAddOn { get; set; }
+
+        /// <summary> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </summary>
+        public SearchIndexKnowledgeSourceQueryHints QueryHintOverrides { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -16,6 +17,9 @@ namespace Azure.ResourceManager.AppConfiguration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(AccessRule))]
+    [ModelReaderWriterBuildable(typeof(AccessRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(AccessRulePropertiesSubscription))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationDataPlaneProxyProperties))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationKeyValueData))]
     [ModelReaderWriterBuildable(typeof(AppConfigurationKeyValueResource))]
@@ -55,16 +59,25 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(DeletedConfigurationStoreProperties))]
     [ModelReaderWriterBuildable(typeof(KeyValueProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeter))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfiguration))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationListResult))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityPerimeterConfigurationProperties))]
+    [ModelReaderWriterBuildable(typeof(NetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssue))]
+    [ModelReaderWriterBuildable(typeof(ProvisioningIssueProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
+    [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelemetryProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAppConfigurationContext : ModelReaderWriterContext
     {
     }

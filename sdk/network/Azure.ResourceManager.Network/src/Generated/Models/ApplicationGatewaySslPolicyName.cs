@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySslPolicyName : IEquatable<ApplicationGatewaySslPolicyName>
     {
         private readonly string _value;
+        /// <summary> AppGwSslPolicy20150501. </summary>
+        private const string AppGwSslPolicy20150501Value = "AppGwSslPolicy20150501";
+        /// <summary> AppGwSslPolicy20170401. </summary>
+        private const string AppGwSslPolicy20170401Value = "AppGwSslPolicy20170401";
+        /// <summary> AppGwSslPolicy20170401S. </summary>
+        private const string AppGwSslPolicy20170401SValue = "AppGwSslPolicy20170401S";
+        /// <summary> AppGwSslPolicy20220101. </summary>
+        private const string AppGwSslPolicy20220101Value = "AppGwSslPolicy20220101";
+        /// <summary> AppGwSslPolicy20220101S. </summary>
+        private const string AppGwSslPolicy20220101SValue = "AppGwSslPolicy20220101S";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySslPolicyName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AppGwSslPolicy20150501Value = "AppGwSslPolicy20150501";
-        private const string AppGwSslPolicy20170401Value = "AppGwSslPolicy20170401";
-        private const string AppGwSslPolicy20170401SValue = "AppGwSslPolicy20170401S";
-        private const string AppGwSslPolicy20220101Value = "AppGwSslPolicy20220101";
-        private const string AppGwSslPolicy20220101SValue = "AppGwSslPolicy20220101S";
+            _value = value;
+        }
 
         /// <summary> AppGwSslPolicy20150501. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20150501 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20150501Value);
+
         /// <summary> AppGwSslPolicy20170401. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401Value);
+
         /// <summary> AppGwSslPolicy20170401S. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20170401S { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20170401SValue);
+
         /// <summary> AppGwSslPolicy20220101. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20220101 { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20220101Value);
+
         /// <summary> AppGwSslPolicy20220101S. </summary>
         public static ApplicationGatewaySslPolicyName AppGwSslPolicy20220101S { get; } = new ApplicationGatewaySslPolicyName(AppGwSslPolicy20220101SValue);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySslPolicyName left, ApplicationGatewaySslPolicyName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslPolicyName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySslPolicyName left, ApplicationGatewaySslPolicyName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySslPolicyName(string value) => new ApplicationGatewaySslPolicyName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslPolicyName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySslPolicyName?(string value) => value == null ? null : new ApplicationGatewaySslPolicyName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySslPolicyName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySslPolicyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

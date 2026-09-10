@@ -24,7 +24,7 @@ public class WeatherHandler : ResponseHandler
         var stream = new ResponseEventStream(context, request);
 
         // Check if the input contains a function call output (turn 2)
-        var inputItems = request.GetInputExpanded();
+        var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
         var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
 
         if (toolOutput is not null)
@@ -75,7 +75,7 @@ public class WeatherHandlerFullControl : ResponseHandler
         var stream = new ResponseEventStream(context, request);
 
         // Check if the input contains a function call output (turn 2)
-        var inputItems = request.GetInputExpanded();
+        var inputItems = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
         var toolOutput = inputItems.OfType<FunctionCallOutputItemParam>().FirstOrDefault();
 
         if (toolOutput is not null)
@@ -96,9 +96,9 @@ public class WeatherHandlerFullControl : ResponseHandler
 
             var reply = $"The weather is: {weatherJson}";
             yield return text.EmitDelta(reply);
-            yield return text.EmitDone(reply);
+            yield return text.EmitTextDone(reply);
 
-            yield return message.EmitContentDone(text);
+            yield return text.EmitDone();
             yield return message.EmitDone();
 
             yield return stream.EmitCompleted();

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(DatadogMonitoredSubscriptionResource.ResourceType, out string datadogMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", DatadogMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-12-26-preview");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogMonitoredSubscriptionApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
-                    new DatadogMonitoredSubscriptionOperationSource(Client),
+                    new DatadogMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Datadog
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, DatadogMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatadogArmOperation<DatadogMonitoredSubscriptionResource> operation = new DatadogArmOperation<DatadogMonitoredSubscriptionResource>(
-                    new DatadogMonitoredSubscriptionOperationSource(Client),
+                    new DatadogMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

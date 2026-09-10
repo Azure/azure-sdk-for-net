@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -16,114 +17,155 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
         public HybridComputeMachineExtensionPatch()
         {
-            Settings = new ChangeTrackingDictionary<string, BinaryData>();
-            ProtectedSettings = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachineExtensionPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
-        /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="machineExtensionUpdatePropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
-        /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </param>
-        /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
-        /// <param name="settings"> Json formatted public settings for the extension. </param>
-        /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
-        internal HybridComputeMachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string forceUpdateTag, string publisher, string machineExtensionUpdatePropertiesType, string typeHandlerVersion, bool? enableAutomaticUpgrade, bool? autoUpgradeMinorVersion, IDictionary<string, BinaryData> settings, IDictionary<string, BinaryData> protectedSettings) : base(tags, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Describes Machine Extension Update Properties. </param>
+        internal HybridComputeMachineExtensionPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineExtensionUpdateProperties properties) : base(tags, additionalBinaryDataProperties)
         {
-            ForceUpdateTag = forceUpdateTag;
-            Publisher = publisher;
-            MachineExtensionUpdatePropertiesType = machineExtensionUpdatePropertiesType;
-            TypeHandlerVersion = typeHandlerVersion;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
-            AutoUpgradeMinorVersion = autoUpgradeMinorVersion;
-            Settings = settings;
-            ProtectedSettings = protectedSettings;
+            Properties = properties;
         }
+
+        /// <summary> Describes Machine Extension Update Properties. </summary>
+        [WirePath("properties")]
+        internal MachineExtensionUpdateProperties Properties { get; set; }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
         [WirePath("properties.forceUpdateTag")]
-        public string ForceUpdateTag { get; set; }
+        public string ForceUpdateTag
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceUpdateTag;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.ForceUpdateTag = value;
+            }
+        }
+
         /// <summary> The name of the extension handler publisher. </summary>
         [WirePath("properties.publisher")]
-        public string Publisher { get; set; }
+        public string Publisher
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Publisher;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.Publisher = value;
+            }
+        }
+
         /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         [WirePath("properties.type")]
-        public string MachineExtensionUpdatePropertiesType { get; set; }
+        public string MachineExtensionUpdatePropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MachineExtensionUpdatePropertiesType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.MachineExtensionUpdatePropertiesType = value;
+            }
+        }
+
         /// <summary> Specifies the version of the script handler. </summary>
         [WirePath("properties.typeHandlerVersion")]
-        public string TypeHandlerVersion { get; set; }
+        public string TypeHandlerVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypeHandlerVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.TypeHandlerVersion = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version available. </summary>
         [WirePath("properties.enableAutomaticUpgrade")]
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? EnableAutomaticUpgrade
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableAutomaticUpgrade;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.EnableAutomaticUpgrade = value;
+            }
+        }
+
         /// <summary> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </summary>
         [WirePath("properties.autoUpgradeMinorVersion")]
-        public bool? AutoUpgradeMinorVersion { get; set; }
-        /// <summary>
-        /// Json formatted public settings for the extension.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public bool? AutoUpgradeMinorVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AutoUpgradeMinorVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                Properties.AutoUpgradeMinorVersion = value;
+            }
+        }
+
+        /// <summary> Json formatted public settings for the extension. </summary>
         [WirePath("properties.settings")]
-        public IDictionary<string, BinaryData> Settings { get; }
-        /// <summary>
-        /// The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public IDictionary<string, BinaryData> Settings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                return Properties.Settings;
+            }
+        }
+
+        /// <summary> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </summary>
         [WirePath("properties.protectedSettings")]
-        public IDictionary<string, BinaryData> ProtectedSettings { get; }
+        public IDictionary<string, BinaryData> ProtectedSettings
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new MachineExtensionUpdateProperties();
+                }
+                return Properties.ProtectedSettings;
+            }
+        }
     }
 }

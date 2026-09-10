@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _isSecureBootEnabled = DefineProperty<bool>(nameof(IsSecureBootEnabled), new string[] { "secureBootEnabled" });
             _isVTpmEnabled = DefineProperty<bool>(nameof(IsVTpmEnabled), new string[] { "vTpmEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchUefiSettings that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

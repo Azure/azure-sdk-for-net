@@ -14,14 +14,18 @@ namespace OpenAI
         private readonly string _value;
         private const string FunctionValue = "function";
         private const string FileSearchValue = "file_search";
+        private const string ComputerValue = "computer";
         private const string ComputerUsePreviewValue = "computer_use_preview";
         private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
         private const string CodeInterpreterValue = "code_interpreter";
+        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ImageGenerationValue = "image_generation";
         private const string LocalShellValue = "local_shell";
         private const string ShellValue = "shell";
         private const string CustomValue = "custom";
+        private const string NamespaceValue = "namespace";
+        private const string ToolSearchValue = "tool_search";
         private const string WebSearchPreviewValue = "web_search_preview";
         private const string ApplyPatchValue = "apply_patch";
         private const string A2aPreviewValue = "a2a_preview";
@@ -31,6 +35,10 @@ namespace OpenAI
         private const string SharepointGroundingPreviewValue = "sharepoint_grounding_preview";
         private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
+        private const string FabricIqPreviewValue = "fabric_iq_preview";
+        private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
+        private const string WebIqPreviewValue = "web_iq_preview";
+        private const string A2aValue = "a2a";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -53,6 +61,9 @@ namespace OpenAI
         /// <summary> Gets the FileSearch. </summary>
         public static ToolType FileSearch { get; } = new ToolType(FileSearchValue);
 
+        /// <summary> Gets the Computer. </summary>
+        public static ToolType Computer { get; } = new ToolType(ComputerValue);
+
         /// <summary> Gets the ComputerUsePreview. </summary>
         public static ToolType ComputerUsePreview { get; } = new ToolType(ComputerUsePreviewValue);
 
@@ -65,6 +76,9 @@ namespace OpenAI
         /// <summary> Gets the CodeInterpreter. </summary>
         public static ToolType CodeInterpreter { get; } = new ToolType(CodeInterpreterValue);
 
+        /// <summary> Gets the ProgrammaticToolCalling. </summary>
+        public static ToolType ProgrammaticToolCalling { get; } = new ToolType(ProgrammaticToolCallingValue);
+
         /// <summary> Gets the ImageGeneration. </summary>
         public static ToolType ImageGeneration { get; } = new ToolType(ImageGenerationValue);
 
@@ -76,6 +90,12 @@ namespace OpenAI
 
         /// <summary> Gets the Custom. </summary>
         public static ToolType Custom { get; } = new ToolType(CustomValue);
+
+        /// <summary> Gets the Namespace. </summary>
+        public static ToolType Namespace { get; } = new ToolType(NamespaceValue);
+
+        /// <summary> Gets the ToolSearch. </summary>
+        public static ToolType ToolSearch { get; } = new ToolType(ToolSearchValue);
 
         /// <summary> Gets the WebSearchPreview. </summary>
         public static ToolType WebSearchPreview { get; } = new ToolType(WebSearchPreviewValue);
@@ -103,6 +123,18 @@ namespace OpenAI
 
         /// <summary> Gets the WorkIqPreview. </summary>
         public static ToolType WorkIqPreview { get; } = new ToolType(WorkIqPreviewValue);
+
+        /// <summary> Gets the FabricIqPreview. </summary>
+        public static ToolType FabricIqPreview { get; } = new ToolType(FabricIqPreviewValue);
+
+        /// <summary> Gets the ToolboxSearchPreview. </summary>
+        public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);
+
+        /// <summary> Gets the WebIqPreview. </summary>
+        public static ToolType WebIqPreview { get; } = new ToolType(WebIqPreviewValue);
+
+        /// <summary> Gets the A2a. </summary>
+        public static ToolType A2a { get; } = new ToolType(A2aValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

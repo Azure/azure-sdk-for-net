@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct CapacityPoolQosType : IEquatable<CapacityPoolQosType>
     {
         private readonly string _value;
+        /// <summary> qos type Auto. </summary>
+        private const string AutoValue = "Auto";
+        /// <summary> qos type Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolQosType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CapacityPoolQosType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AutoValue = "Auto";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> qos type Auto. </summary>
         public static CapacityPoolQosType Auto { get; } = new CapacityPoolQosType(AutoValue);
+
         /// <summary> qos type Manual. </summary>
         public static CapacityPoolQosType Manual { get; } = new CapacityPoolQosType(ManualValue);
+
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CapacityPoolQosType left, CapacityPoolQosType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CapacityPoolQosType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CapacityPoolQosType left, CapacityPoolQosType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CapacityPoolQosType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CapacityPoolQosType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CapacityPoolQosType(string value) => new CapacityPoolQosType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CapacityPoolQosType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CapacityPoolQosType?(string value) => value == null ? null : new CapacityPoolQosType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CapacityPoolQosType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CapacityPoolQosType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

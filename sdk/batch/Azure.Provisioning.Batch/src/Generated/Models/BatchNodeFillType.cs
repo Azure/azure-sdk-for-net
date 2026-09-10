@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchNodeFillType
     {
         /// <summary> Tasks should be assigned evenly across all nodes in the pool. </summary>
-        Spread,
+        Spread = 0,
         /// <summary> As many tasks as possible (taskSlotsPerNode) should be assigned to each node in the pool before any tasks are assigned to the next node in the pool. </summary>
-        Pack
+        Pack = 1
     }
 }

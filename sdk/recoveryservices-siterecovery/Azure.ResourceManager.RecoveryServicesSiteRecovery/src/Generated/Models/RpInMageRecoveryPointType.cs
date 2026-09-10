@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RpInMageRecoveryPointType : IEquatable<RpInMageRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> LatestTime. </summary>
+        private const string LatestTimeValue = "LatestTime";
+        /// <summary> LatestTag. </summary>
+        private const string LatestTagValue = "LatestTag";
+        /// <summary> Custom. </summary>
+        private const string CustomValue = "Custom";
 
         /// <summary> Initializes a new instance of <see cref="RpInMageRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RpInMageRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestTimeValue = "LatestTime";
-        private const string LatestTagValue = "LatestTag";
-        private const string CustomValue = "Custom";
+            _value = value;
+        }
 
         /// <summary> LatestTime. </summary>
         public static RpInMageRecoveryPointType LatestTime { get; } = new RpInMageRecoveryPointType(LatestTimeValue);
+
         /// <summary> LatestTag. </summary>
         public static RpInMageRecoveryPointType LatestTag { get; } = new RpInMageRecoveryPointType(LatestTagValue);
+
         /// <summary> Custom. </summary>
         public static RpInMageRecoveryPointType Custom { get; } = new RpInMageRecoveryPointType(CustomValue);
+
         /// <summary> Determines if two <see cref="RpInMageRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RpInMageRecoveryPointType left, RpInMageRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RpInMageRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RpInMageRecoveryPointType left, RpInMageRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RpInMageRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RpInMageRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RpInMageRecoveryPointType(string value) => new RpInMageRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RpInMageRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RpInMageRecoveryPointType?(string value) => value == null ? null : new RpInMageRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RpInMageRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RpInMageRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

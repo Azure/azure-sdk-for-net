@@ -9,463 +9,369 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
 {
     internal partial class ServiceRestClient
     {
-        private readonly HttpPipeline _pipeline;
-        private readonly string _url;
+        private readonly Uri _endpoint;
         private readonly string _version;
         private readonly ShareTokenIntent? _fileRequestIntent;
+
+        /// <summary> Initializes a new instance of ServiceRestClient for mocking. </summary>
+        protected ServiceRestClient()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="version"></param>
+        /// <param name="fileRequestIntent"></param>
+        internal ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string version, ShareTokenIntent? fileRequestIntent)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _version = version;
+            _fileRequestIntent = fileRequestIntent;
+        }
+
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of ServiceRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
-        /// <param name="fileRequestIntent"> Valid value is backup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version, ShareTokenIntent? fileRequestIntent = null)
+        /// <summary>
+        /// [Protocol Method] Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response SetProperties(RequestContent content, int? timeout = default, RequestContext context = null)
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _url = url ?? throw new ArgumentNullException(nameof(url));
-            _version = version ?? throw new ArgumentNullException(nameof(version));
-            _fileRequestIntent = fileRequestIntent;
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        internal HttpMessage CreateSetPropertiesRequest(ShareServiceProperties shareServiceProperties, int? timeout)
+        /// <summary>
+        /// [Protocol Method] Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? timeout = default, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "properties", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(shareServiceProperties, "StorageServiceProperties");
-            request.Content = content;
-            return message;
-        }
-
-        /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="shareServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareServiceProperties"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ServiceSetPropertiesHeaders>> SetPropertiesAsync(ShareServiceProperties shareServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (shareServiceProperties == null)
-            {
-                throw new ArgumentNullException(nameof(shareServiceProperties));
-            }
-
-            using var message = CreateSetPropertiesRequest(shareServiceProperties, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceSetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="shareServiceProperties"> The StorageService properties. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="shareServiceProperties"/> is null. </exception>
-        public ResponseWithHeaders<ServiceSetPropertiesHeaders> SetProperties(ShareServiceProperties shareServiceProperties, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="storageServiceProperties"> Storage service properties. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            if (shareServiceProperties == null)
-            {
-                throw new ArgumentNullException(nameof(shareServiceProperties));
-            }
+            return SetProperties(storageServiceProperties, timeout, cancellationToken.ToRequestContext());
+        }
 
-            using var message = CreateSetPropertiesRequest(shareServiceProperties, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceSetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
+        /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="storageServiceProperties"> Storage service properties. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            return await SetPropertiesAsync(storageServiceProperties, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetProperties(int? timeout, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                case 202:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout)
+        /// <summary>
+        /// [Protocol Method] Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetPropertiesAsync(int? timeout, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "properties", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
+            catch (Exception e)
             {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+                scope.Failed(e);
+                throw;
             }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
         }
 
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ShareServiceProperties> GetProperties(int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareServiceProperties value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
-                        {
-                            value = ShareServiceProperties.DeserializeShareServiceProperties(storageServicePropertiesElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = GetProperties(timeout, cancellationToken.ToRequestContext());
+            return Response.FromValue((ShareServiceProperties)result, result);
         }
 
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ShareServiceProperties>> GetPropertiesAsync(int? timeout = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetPropertiesRequest(timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ShareServiceProperties value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("StorageServiceProperties") is XElement storageServicePropertiesElement)
-                        {
-                            value = ShareServiceProperties.DeserializeShareServiceProperties(storageServicePropertiesElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = await GetPropertiesAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ShareServiceProperties)result, result);
         }
 
-        internal HttpMessage CreateListSharesSegmentRequest(string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("comp", "list", true);
-            if (prefix != null)
-            {
-                uri.AppendQuery("prefix", prefix, true);
-            }
-            if (marker != null)
-            {
-                uri.AppendQuery("marker", marker, true);
-            }
-            if (maxresults != null)
-            {
-                uri.AppendQuery("maxresults", maxresults.Value, true);
-            }
-            if (include != null && !(include is Common.ChangeTrackingList<ListSharesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("include", include, ",", true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
+        /// <summary>
+        /// [Protocol Method] The List Shares Segment operation returns a list of the shares and share snapshots under the specified account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentAsync(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSharesSegment(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
         {
-            using var message = CreateListSharesSegmentRequest(prefix, marker, maxresults, include, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceListSharesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetSharesSegment");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListSharesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetSharesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The List Shares Segment operation returns a list of the shares and share snapshots under the specified account.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSharesSegmentAsync(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetSharesSegment");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSharesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegment(string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<ListSharesResponse> GetSharesSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListSharesSegmentRequest(prefix, marker, maxresults, include, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceListSharesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
+            Response result = GetSharesSegment(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
+            return Response.FromValue((ListSharesResponse)result, result);
+        }
+
+        /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
+        /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
+        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
+        /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<ListSharesResponse>> GetSharesSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GetSharesSegmentAsync(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ListSharesResponse)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetUserDelegationKey(RequestContent content, int? timeout = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
+            scope.Start();
+            try
             {
-                case 200:
-                    {
-                        ListSharesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
-        internal HttpMessage CreateGetUserDelegationKeyRequest(KeyInfo keyInfo, int? timeout)
+        /// <summary>
+        /// [Protocol Method] Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetUserDelegationKeyAsync(RequestContent content, int? timeout = default, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendQuery("restype", "service", true);
-            uri.AppendQuery("comp", "userdelegationkey", true);
-            if (timeout != null)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
+            scope.Start();
+            try
             {
-                uri.AppendQuery("timeout", timeout.Value, true);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Type", "application/xml");
-            var content = new XmlWriterContent();
-            content.XmlWriter.WriteObjectValue(keyInfo, "KeyInfo");
-            request.Content = content;
-            return message;
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> Retrieves a user delegation key for the File service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <summary> Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS. </summary>
         /// <param name="keyInfo"> Key information. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
-        public async Task<ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            if (keyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(keyInfo));
-            }
-
-            using var message = CreateGetUserDelegationKeyRequest(keyInfo, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceGetUserDelegationKeyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UserDelegationKey value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("UserDelegationKey") is XElement userDelegationKeyElement)
-                        {
-                            value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = GetUserDelegationKey(keyInfo, timeout, cancellationToken.ToRequestContext());
+            return Response.FromValue((UserDelegationKey)result, result);
         }
 
-        /// <summary> Retrieves a user delegation key for the File service. This is only a valid operation when using bearer token authentication. </summary>
+        /// <summary> Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS. </summary>
         /// <param name="keyInfo"> Key information. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyInfo"/> is null. </exception>
-        public ResponseWithHeaders<UserDelegationKey, ServiceGetUserDelegationKeyHeaders> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = null, CancellationToken cancellationToken = default)
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            if (keyInfo == null)
-            {
-                throw new ArgumentNullException(nameof(keyInfo));
-            }
-
-            using var message = CreateGetUserDelegationKeyRequest(keyInfo, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceGetUserDelegationKeyHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        UserDelegationKey value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("UserDelegationKey") is XElement userDelegationKeyElement)
-                        {
-                            value = UserDelegationKey.DeserializeUserDelegationKey(userDelegationKeyElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListSharesSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListSharesIncludeType> include, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            if (_fileRequestIntent != null)
-            {
-                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
-            }
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders>> ListSharesSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListSharesSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ServiceListSharesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListSharesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only entries whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next list operation. The operation returns a marker value within the response body if the list returned was not complete. The marker value may then be used in a subsequent call to request the next set of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of entries to return. If the request does not specify maxresults, or specifies a value greater than 5,000, the server will return up to 5,000 items. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListSharesResponse, ServiceListSharesSegmentHeaders> ListSharesSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListSharesIncludeType> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListSharesSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ServiceListSharesSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListSharesResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListSharesResponse.DeserializeListSharesResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            Response result = await GetUserDelegationKeyAsync(keyInfo, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((UserDelegationKey)result, result);
         }
     }
 }

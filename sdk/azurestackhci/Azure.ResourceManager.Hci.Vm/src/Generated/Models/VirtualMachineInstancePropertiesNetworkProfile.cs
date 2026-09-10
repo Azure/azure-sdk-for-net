@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> NetworkInterfaces - list of network interfaces to be attached to the virtual machine instance. </summary>
-        public IList<HciVmNetworkInterfaceArmReference> NetworkInterfaces { get; }
+        public IList<HciVmNetworkInterfaceArmReference> NetworkInterfaces { get; } = new ChangeTrackingList<HciVmNetworkInterfaceArmReference>();
     }
 }

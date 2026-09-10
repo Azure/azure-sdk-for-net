@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostConfigurationPatchProperties(string friendlyName, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoPatchProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoPatchProperties imageInfo, DomainInfoPatchProperties domainInfo, DesktopVirtualizationSecurityInfoPatchProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials, BootDiagnosticsInfoPatchProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostConfigurationPatchProperties(string friendlyName, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoPatchProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoPatchProperties imageInfo, DomainInfoPatchProperties domainInfo, DesktopVirtualizationSecurityInfoPatchProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsPatchProperties vmAdminCredentials, DesktopVirtualizationBootDiagnosticsInfoPatchProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             VmTags = vmTags;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Boot Diagnostics Information. </summary>
         [WirePath("bootDiagnosticsInfo")]
-        public BootDiagnosticsInfoPatchProperties BootDiagnosticsInfo { get; set; }
+        public DesktopVirtualizationBootDiagnosticsInfoPatchProperties BootDiagnosticsInfo { get; set; }
 
         /// <summary> Credentials needed to create the virtual machine. </summary>
         [WirePath("domainInfo.activeDirectoryInfo.domainCredentials")]

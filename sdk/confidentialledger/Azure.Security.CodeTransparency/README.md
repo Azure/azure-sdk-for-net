@@ -15,6 +15,12 @@ Ensure you have access to the correct NuGet feed.
 Install the client library via NuGet:
 
 ```dotnetcli
+dotnet add package Azure.Security.CodeTransparency
+```
+
+To install a preview release, use the `--prerelease` flag:
+
+```dotnetcli
 dotnet add package Azure.Security.CodeTransparency --prerelease
 ```
 
@@ -45,14 +51,14 @@ Use the following code to submit the signature:
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
 Then obtain the transparent statement:
 
 ```C# Snippet:CodeTransparencyDownloadTransparentStatement
-Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+await operation.WaitForCompletionAsync();
+string entryId = operation.Id;
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();

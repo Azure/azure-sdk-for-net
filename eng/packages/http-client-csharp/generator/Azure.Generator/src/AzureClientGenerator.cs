@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure;
+using Azure.Core.Expressions.DataFactory;
+using Azure.Generator.Providers;
 using Azure.Generator.Visitors;
 using Microsoft.CodeAnalysis;
 using Microsoft.TypeSpec.Generator;
@@ -8,8 +11,6 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
-using Azure.Core.Expressions.DataFactory;
-using Azure.Generator.Providers;
 
 namespace Azure.Generator;
 
@@ -30,7 +31,9 @@ public class AzureClientGenerator : ScmCodeModelGenerator
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
-    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition { get; } = new();
+    private RawRequestUriBuilderExtensionsDefinition? _rawRequestUriBuilderExtensionsDefinition;
+    internal RawRequestUriBuilderExtensionsDefinition RawRequestUriBuilderExtensionsDefinition =>
+        _rawRequestUriBuilderExtensionsDefinition ??= new();
 
     internal RequestHeaderExtensionsDefinition RequestHeaderExtensionsDefinition { get; } = new();
 
@@ -91,13 +94,16 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
-        AddVisitor(new DistributedTracingVisitor());
+        AddVisitor(new AzureDistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());
         AddVisitor(new MatchConditionsHeadersVisitor());
         AddVisitor(new ClientRequestIdHeaderVisitor());
         AddVisitor(new SystemTextJsonConverterVisitor());
         AddVisitor(new MultiPartFormDataVisitor());
+        AddVisitor(new MultiPartFormDataConvenienceMethodVisitor());
+        AddVisitor(new OptionalResponseBodyVisitor());
+        AddVisitor(new StreamingResponseVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());
         AddVisitor(new XmlSerializableVisitor());
         AddVisitor(new ClientSettingsVisitor());

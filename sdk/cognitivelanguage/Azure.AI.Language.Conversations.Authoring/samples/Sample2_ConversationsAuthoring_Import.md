@@ -23,6 +23,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To import a project synchronously, call Import on the `ConversationAuthoringProject` client. The method returns an Operation object, which you can use to track the status of the operation. The operation-location header contains the location of the operation for further tracking.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_Import
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
@@ -75,7 +77,7 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 
-Operation operation = client.Import(
+Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     exportedProject: exportedProject,
@@ -94,6 +96,8 @@ Console.WriteLine($"Project import completed with status: {operation.GetRawRespo
 To import a project using raw JSON, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJson
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 string rawJson = """
@@ -146,7 +150,7 @@ string rawJson = """
 }
 """;
 using RequestContent content = RequestContent.Create(rawJson);
-Operation operation = client.Import(
+Operation operation = projectClient.Import(
     waitUntil: WaitUntil.Started,
     projectName: projectName,
     content: content,
@@ -163,6 +167,8 @@ Console.WriteLine($"Project import (raw JSON) completed with status: {operation.
 To import a project, construct a `ConversationAuthoringExportedProject` that includes the metadata and assets. Then call `Import` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectWithMetadataAndResources
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Create metadata
@@ -233,7 +239,7 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 // Start import operation
-Operation operation = client.Import(
+Operation operation = projectClient.Import(
     WaitUntil.Started,
     projectName,
     exportedProject,
@@ -252,6 +258,8 @@ Console.WriteLine($"Operation Location: {operationLocation}");
 To import a project, call ImportAsync on the ConversationAuthoringProject client, which returns an Operation object that tracks the progress and completion of the import operation..
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
     projectKind: "Conversation",
@@ -304,7 +312,7 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     exportedProject: exportedProject,
@@ -324,6 +332,8 @@ Console.WriteLine($"Project import completed with status: {operation.GetRawRespo
 To import a project using raw JSON asynchronously, define the JSON string matching the structure of `ConversationAuthoringExportedProject`. Then call `ImportAsync` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsRawJsonAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 string rawJson = """
 {
@@ -376,7 +386,7 @@ string rawJson = """
 """;
 
 using RequestContent content = RequestContent.Create(rawJson);
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Started,
     projectName: projectName,
     content: content,
@@ -393,6 +403,8 @@ Console.WriteLine($"Project import (raw JSON) completed with status: {operation.
 To import a project async, construct a `ConversationAuthoringExportedProject` that includes the metadata and assets. Then call `Import` on the `ConversationAuthoringProject` client.
 
 ```C# Snippet:Sample2_ConversationsAuthoring_ImportProjectAsync_WithMetadataAndAssets
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string projectName = "{projectName}";
 
 // Define project metadata
@@ -462,7 +474,7 @@ ConversationAuthoringExportedProject exportedProject = new ConversationAuthoring
     Assets = projectAssets
 };
 // Start import
-Operation operation = await client.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Started,
     projectName,
     exportedProject,

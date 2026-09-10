@@ -99,29 +99,38 @@ namespace Azure.Storage.DataMovement
                 Argument.AssertNotNull(TransferManager, nameof(TransferManager));
                 if (_status.SetTransferStateChange(state))
                 {
-                    if (TransferState.Completed == _status.State ||
-                        TransferState.Paused == _status.State)
-                    {
-                        DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
-                        // If the _completionSource has been cancelled or the exception
-                        // has been set, we don't need to check if TrySetResult returns false
-                        // because it's acceptable to cancel or have an error occur before then.
-
-                        CompletionSource.TrySetResult(_status);
-
-                        // Tell the transfer manager to clean up the completed/paused job.
-                        TransferManager.TryRemoveTransfer(_id);
-
-                        // Remove Transfer Manager reference after no longer needed.
-                        TransferManager = null;
-
-                        // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
-                        DisposeCancellationTokenSource();
-                    }
                     return true;
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// Signals transfer completion if the transfer is in a final state (Completed/Paused).
+        /// Must be called AFTER all checkpointer and cleanup work is done
+        /// to avoid race conditions with resume operations.
+        /// </summary>
+        public void CompleteIfFinalState()
+        {
+            if (TransferState.Completed == _status.State ||
+                TransferState.Paused == _status.State)
+            {
+                DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
+                // If the _completionSource has been cancelled or the exception
+                // has been set, we don't need to check if TrySetResult returns false
+                // because it's acceptable to cancel or have an error occur before then.
+
+                CompletionSource.TrySetResult(_status);
+
+                // Tell the transfer manager to clean up the completed/paused job.
+                TransferManager?.TryRemoveTransfer(_id);
+
+                // Remove Transfer Manager reference after no longer needed.
+                TransferManager = null;
+
+                // Once we reach a Completed/Paused, Dispose the CancellationTokenSource to release resources (since it is no longer needed).
+                DisposeCancellationTokenSource();
+            }
         }
 
         public bool SetFailedItemsState() => _status.SetFailedItem();

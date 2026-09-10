@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubRoutingProperties : IUtf8JsonSerializable, IJsonModel<IotHubRoutingProperties>
+    /// <summary> The routing related properties of the IoT hub. See: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-messaging. </summary>
+    public partial class IotHubRoutingProperties : IJsonModel<IotHubRoutingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubRoutingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRoutingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeIotHubRoutingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IotHubRoutingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRoutingProperties IPersistableModel<IotHubRoutingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubRoutingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubRoutingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
@@ -43,7 +83,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
-                foreach (var item in Routes)
+                foreach (RoutingRuleProperties item in Routes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -58,21 +98,21 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 writer.WritePropertyName("enrichments"u8);
                 writer.WriteStartArray();
-                foreach (var item in Enrichments)
+                foreach (IotHubEnrichmentProperties item in Enrichments)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,22 +121,27 @@ namespace Azure.ResourceManager.IotHub.Models
             }
         }
 
-        IotHubRoutingProperties IJsonModel<IotHubRoutingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubRoutingProperties IJsonModel<IotHubRoutingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IotHubRoutingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeIotHubRoutingProperties(document.RootElement, options);
         }
 
-        internal static IotHubRoutingProperties DeserializeIotHubRoutingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IotHubRoutingProperties DeserializeIotHubRoutingProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -105,50 +150,49 @@ namespace Azure.ResourceManager.IotHub.Models
             IList<RoutingRuleProperties> routes = default;
             IotHubFallbackRouteProperties fallbackRoute = default;
             IList<IotHubEnrichmentProperties> enrichments = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("endpoints"u8))
+                if (prop.NameEquals("endpoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    endpoints = RoutingEndpoints.DeserializeRoutingEndpoints(property.Value, options);
+                    endpoints = RoutingEndpoints.DeserializeRoutingEndpoints(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("routes"u8))
+                if (prop.NameEquals("routes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RoutingRuleProperties> array = new List<RoutingRuleProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RoutingRuleProperties.DeserializeRoutingRuleProperties(item, options));
                     }
                     routes = array;
                     continue;
                 }
-                if (property.NameEquals("fallbackRoute"u8))
+                if (prop.NameEquals("fallbackRoute"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(property.Value, options);
+                    fallbackRoute = IotHubFallbackRouteProperties.DeserializeIotHubFallbackRouteProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("enrichments"u8))
+                if (prop.NameEquals("enrichments"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IotHubEnrichmentProperties> array = new List<IotHubEnrichmentProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(IotHubEnrichmentProperties.DeserializeIotHubEnrichmentProperties(item, options));
                     }
@@ -157,42 +201,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IotHubRoutingProperties(endpoints, routes ?? new ChangeTrackingList<RoutingRuleProperties>(), fallbackRoute, enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>(), serializedAdditionalRawData);
+            return new IotHubRoutingProperties(endpoints, routes ?? new ChangeTrackingList<RoutingRuleProperties>(), fallbackRoute, enrichments ?? new ChangeTrackingList<IotHubEnrichmentProperties>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<IotHubRoutingProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        IotHubRoutingProperties IPersistableModel<IotHubRoutingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IotHubRoutingProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIotHubRoutingProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(IotHubRoutingProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<IotHubRoutingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

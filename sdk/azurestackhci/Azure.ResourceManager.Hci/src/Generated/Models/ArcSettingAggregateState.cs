@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
@@ -14,86 +15,137 @@ namespace Azure.ResourceManager.Hci.Models
     public readonly partial struct ArcSettingAggregateState : IEquatable<ArcSettingAggregateState>
     {
         private readonly string _value;
+        /// <summary> The aggregate state is not specified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> An error occurred in the aggregate state. </summary>
+        private const string ErrorValue = "Error";
+        /// <summary> The operation successfully completed across all nodes. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The operation was canceled across the nodes. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> The operation failed on all or most nodes. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> All nodes are connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> All nodes are disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
+        /// <summary> The Arc agent has been deleted from all nodes. </summary>
+        private const string DeletedValue = "Deleted";
+        /// <summary> The Arc agent is being created across the nodes. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> The Arc agent is being updated across the nodes. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> The Arc agent is being deleted across the nodes. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> The Arc agent is being moved across the nodes. </summary>
+        private const string MovingValue = "Moving";
+        /// <summary> The operation succeeded on some nodes. </summary>
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        /// <summary> Some nodes are connected, others are not. </summary>
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        /// <summary> The operation is currently in progress across the nodes. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The operation has been accepted and is pending execution. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The Arc agent is being provisioned across the nodes. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> The Arc agent is being disabled across the nodes. </summary>
+        private const string DisableInProgressValue = "DisableInProgress";
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArcSettingAggregateState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string ErrorValue = "Error";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
-        private const string DeletedValue = "Deleted";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string MovingValue = "Moving";
-        private const string PartiallySucceededValue = "PartiallySucceeded";
-        private const string PartiallyConnectedValue = "PartiallyConnected";
-        private const string InProgressValue = "InProgress";
-        private const string AcceptedValue = "Accepted";
-        private const string ProvisioningValue = "Provisioning";
-        private const string DisableInProgressValue = "DisableInProgress";
-
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The aggregate state is not specified. </summary>
         public static ArcSettingAggregateState NotSpecified { get; } = new ArcSettingAggregateState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> An error occurred in the aggregate state. </summary>
         public static ArcSettingAggregateState Error { get; } = new ArcSettingAggregateState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> The operation successfully completed across all nodes. </summary>
         public static ArcSettingAggregateState Succeeded { get; } = new ArcSettingAggregateState(SucceededValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> The operation was canceled across the nodes. </summary>
         public static ArcSettingAggregateState Canceled { get; } = new ArcSettingAggregateState(CanceledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> The operation failed on all or most nodes. </summary>
         public static ArcSettingAggregateState Failed { get; } = new ArcSettingAggregateState(FailedValue);
-        /// <summary> Connected. </summary>
+
+        /// <summary> All nodes are connected. </summary>
         public static ArcSettingAggregateState Connected { get; } = new ArcSettingAggregateState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+
+        /// <summary> All nodes are disconnected. </summary>
         public static ArcSettingAggregateState Disconnected { get; } = new ArcSettingAggregateState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> The Arc agent has been deleted from all nodes. </summary>
         public static ArcSettingAggregateState Deleted { get; } = new ArcSettingAggregateState(DeletedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> The Arc agent is being created across the nodes. </summary>
         public static ArcSettingAggregateState Creating { get; } = new ArcSettingAggregateState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> The Arc agent is being updated across the nodes. </summary>
         public static ArcSettingAggregateState Updating { get; } = new ArcSettingAggregateState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> The Arc agent is being deleted across the nodes. </summary>
         public static ArcSettingAggregateState Deleting { get; } = new ArcSettingAggregateState(DeletingValue);
-        /// <summary> Moving. </summary>
+
+        /// <summary> The Arc agent is being moved across the nodes. </summary>
         public static ArcSettingAggregateState Moving { get; } = new ArcSettingAggregateState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+
+        /// <summary> The operation succeeded on some nodes. </summary>
         public static ArcSettingAggregateState PartiallySucceeded { get; } = new ArcSettingAggregateState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+
+        /// <summary> Some nodes are connected, others are not. </summary>
         public static ArcSettingAggregateState PartiallyConnected { get; } = new ArcSettingAggregateState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+
+        /// <summary> The operation is currently in progress across the nodes. </summary>
         public static ArcSettingAggregateState InProgress { get; } = new ArcSettingAggregateState(InProgressValue);
-        /// <summary> Accepted. </summary>
+
+        /// <summary> The operation has been accepted and is pending execution. </summary>
         public static ArcSettingAggregateState Accepted { get; } = new ArcSettingAggregateState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+
+        /// <summary> The Arc agent is being provisioned across the nodes. </summary>
         public static ArcSettingAggregateState Provisioning { get; } = new ArcSettingAggregateState(ProvisioningValue);
-        /// <summary> DisableInProgress. </summary>
+
+        /// <summary> The Arc agent is being disabled across the nodes. </summary>
         public static ArcSettingAggregateState DisableInProgress { get; } = new ArcSettingAggregateState(DisableInProgressValue);
+
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArcSettingAggregateState left, ArcSettingAggregateState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArcSettingAggregateState left, ArcSettingAggregateState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcSettingAggregateState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArcSettingAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArcSettingAggregateState(string value) => new ArcSettingAggregateState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArcSettingAggregateState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArcSettingAggregateState?(string value) => value == null ? null : new ArcSettingAggregateState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArcSettingAggregateState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArcSettingAggregateState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

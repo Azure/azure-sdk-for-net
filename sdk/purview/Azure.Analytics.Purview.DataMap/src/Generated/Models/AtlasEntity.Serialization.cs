@@ -343,7 +343,7 @@ namespace Azure.Analytics.Purview.DataMap
             int? provenanceType = default;
             bool? proxy = default;
             IDictionary<string, BinaryData> relationshipAttributes = default;
-            EntityStatus? status = default;
+            DataMapEntityStatus? status = default;
             long? updateTime = default;
             string updatedBy = default;
             long? version = default;
@@ -556,7 +556,7 @@ namespace Azure.Analytics.Purview.DataMap
                     {
                         continue;
                     }
-                    status = new EntityStatus(prop.Value.GetString());
+                    status = new DataMapEntityStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("updateTime"u8))

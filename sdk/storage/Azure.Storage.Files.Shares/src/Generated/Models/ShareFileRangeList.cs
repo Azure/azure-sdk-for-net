@@ -6,11 +6,10 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Storage.Common;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The list of file ranges. </summary>
     internal partial class ShareFileRangeList
     {
         /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
@@ -21,17 +20,18 @@ namespace Azure.Storage.Files.Shares.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ShareFileRangeList"/>. </summary>
-        /// <param name="ranges"></param>
-        /// <param name="clearRanges"></param>
-        internal ShareFileRangeList(IReadOnlyList<FileRange> ranges, IReadOnlyList<ClearRange> clearRanges)
+        /// <param name="ranges"> The file ranges. </param>
+        /// <param name="clearRanges"> The clear ranges. </param>
+        internal ShareFileRangeList(IList<FileRange> ranges, IList<ClearRange> clearRanges)
         {
             Ranges = ranges;
             ClearRanges = clearRanges;
         }
 
-        /// <summary> Gets the ranges. </summary>
-        public IReadOnlyList<FileRange> Ranges { get; }
-        /// <summary> Gets the clear ranges. </summary>
-        public IReadOnlyList<ClearRange> ClearRanges { get; }
+        /// <summary> The file ranges. </summary>
+        public IList<FileRange> Ranges { get; }
+
+        /// <summary> The clear ranges. </summary>
+        public IList<ClearRange> ClearRanges { get; }
     }
 }

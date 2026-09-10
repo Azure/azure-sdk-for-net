@@ -120,6 +120,11 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("instructions"u8);
                 writer.WriteStringValue(Instructions);
             }
+            if (Optional.IsDefined(PromptCacheKey))
+            {
+                writer.WritePropertyName("prompt_cache_key"u8);
+                writer.WriteStringValue(PromptCacheKey);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +171,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             BinaryData input = default;
             string previousResponseId = default;
             string instructions = default;
+            string promptCacheKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,12 +215,28 @@ namespace Azure.AI.AgentServer.Responses.Models
                     instructions = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_key"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        promptCacheKey = null;
+                        continue;
+                    }
+                    promptCacheKey = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CompactResponseMethodPublicBody(model, input, previousResponseId, instructions, additionalBinaryDataProperties);
+            return new CompactResponseMethodPublicBody(
+                model,
+                input,
+                previousResponseId,
+                instructions,
+                promptCacheKey,
+                additionalBinaryDataProperties);
         }
     }
 }

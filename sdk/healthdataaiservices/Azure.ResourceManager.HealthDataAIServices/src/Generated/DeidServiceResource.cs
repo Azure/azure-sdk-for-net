@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.HealthDataAIServices
         {
             TryGetApiVersion(ResourceType, out string deidServiceApiVersion);
             _deidServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _deidServicesRestClient = new DeidServices(_deidServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deidServiceApiVersion ?? "2024-09-20");
             _privateLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthDataAIServices", ResourceType.Namespace, Diagnostics);
-            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Endpoint, deidServiceApiVersion ?? "2024-09-20");
+            _privateLinksRestClient = new PrivateLinks(_privateLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deidServiceApiVersion ?? "2024-09-20");
             ValidateResourceId(id);
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                 HttpMessage message = _deidServicesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DeidServicePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 HealthDataAIServicesArmOperation<DeidServiceResource> operation = new HealthDataAIServicesArmOperation<DeidServiceResource>(
-                    new DeidServiceOperationSource(Client),
+                    new DeidServiceResourceOperationSource(Client),
                     _deidServicesClientDiagnostics,
                     Pipeline,
                     message.Request,

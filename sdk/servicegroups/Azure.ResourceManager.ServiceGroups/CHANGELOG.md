@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-09-03)
+
+This is the first stable release of Service Groups management client library.
+
+### Features Added
+
+- Updated the service API version to `2026-08-01`.
+
+## 1.0.0-beta.2 (2026-04-28)
+
+### Features Added
+
+- Migrated the package generation to use TypeSpec instead of the previous Swagger/AutoRest pipeline.
 
 ## 1.0.0-beta.1 (2025-02-06)
 

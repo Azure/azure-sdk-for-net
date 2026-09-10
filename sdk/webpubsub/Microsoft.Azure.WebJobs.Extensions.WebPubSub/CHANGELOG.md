@@ -1,14 +1,14 @@
 # Release History
 
-## 1.11.0-beta.1 (Unreleased)
+## 1.10.2 (2026-06-01)
 
 ### Features Added
+- Support singular `connection` property in Web PubSub trigger and context bindings for backward-compatibility.
 
-### Breaking Changes
+## 1.10.1 (2026-04-24)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix NullPointerException with custom connection name.
 
 ## 1.10.0 (2026-01-19)
 

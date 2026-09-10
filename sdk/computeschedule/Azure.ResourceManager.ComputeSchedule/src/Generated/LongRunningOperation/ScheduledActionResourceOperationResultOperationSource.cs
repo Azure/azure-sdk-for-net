@@ -28,8 +28,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         ScheduledActionResourceOperationResult IOperationSource<ScheduledActionResourceOperationResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            ScheduledActionResourceOperationResult result = ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
@@ -38,8 +37,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         async ValueTask<ScheduledActionResourceOperationResult> IOperationSource<ScheduledActionResourceOperationResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            ScheduledActionResourceOperationResult result = ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
-            return result;
+            return ScheduledActionResourceOperationResult.DeserializeScheduledActionResourceOperationResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

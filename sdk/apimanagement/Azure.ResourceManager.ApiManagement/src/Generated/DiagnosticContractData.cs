@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the DiagnosticContract data model.
-    /// Diagnostic details.
-    /// </summary>
+    /// <summary> Diagnostic details. </summary>
     public partial class DiagnosticContractData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
         public DiagnosticContractData()
@@ -57,65 +25,218 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticContractData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="alwaysLog"> Specifies for what type of messages sampling settings should not apply. </param>
-        /// <param name="loggerId"> Resource Id of a target logger. </param>
-        /// <param name="sampling"> Sampling settings for Diagnostic. </param>
-        /// <param name="frontend"> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </param>
-        /// <param name="backend"> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </param>
-        /// <param name="isLogClientIPEnabled"> Log the ClientIP. Default is false. </param>
-        /// <param name="httpCorrelationProtocol"> Sets correlation protocol to use for Application Insights diagnostics. </param>
-        /// <param name="verbosity"> The verbosity level applied to traces emitted by trace policies. </param>
-        /// <param name="operationNameFormat"> The format of the Operation Name for Application Insights telemetries. Default is Name. </param>
-        /// <param name="metrics"> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlwaysLog? alwaysLog, string loggerId, SamplingSettings sampling, PipelineDiagnosticSettings frontend, PipelineDiagnosticSettings backend, bool? isLogClientIPEnabled, HttpCorrelationProtocol? httpCorrelationProtocol, TraceVerbosityLevel? verbosity, OperationNameFormat? operationNameFormat, bool? metrics, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Diagnostic entity contract properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DiagnosticContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DiagnosticContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            AlwaysLog = alwaysLog;
-            LoggerId = loggerId;
-            Sampling = sampling;
-            Frontend = frontend;
-            Backend = backend;
-            IsLogClientIPEnabled = isLogClientIPEnabled;
-            HttpCorrelationProtocol = httpCorrelationProtocol;
-            Verbosity = verbosity;
-            OperationNameFormat = operationNameFormat;
-            Metrics = metrics;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Diagnostic entity contract properties. </summary>
+        [WirePath("properties")]
+        internal DiagnosticContractProperties Properties { get; set; }
 
         /// <summary> Specifies for what type of messages sampling settings should not apply. </summary>
         [WirePath("properties.alwaysLog")]
-        public AlwaysLog? AlwaysLog { get; set; }
+        public AlwaysLog? AlwaysLog
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AlwaysLog;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.AlwaysLog = value;
+            }
+        }
+
         /// <summary> Resource Id of a target logger. </summary>
         [WirePath("properties.loggerId")]
-        public string LoggerId { get; set; }
+        public string LoggerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoggerId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.LoggerId = value;
+            }
+        }
+
         /// <summary> Sampling settings for Diagnostic. </summary>
         [WirePath("properties.sampling")]
-        public SamplingSettings Sampling { get; set; }
+        public SamplingSettings Sampling
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sampling;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.Sampling = value;
+            }
+        }
+
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Gateway. </summary>
         [WirePath("properties.frontend")]
-        public PipelineDiagnosticSettings Frontend { get; set; }
+        public PipelineDiagnosticSettings Frontend
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Frontend;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.Frontend = value;
+            }
+        }
+
         /// <summary> Diagnostic settings for incoming/outgoing HTTP messages to the Backend. </summary>
         [WirePath("properties.backend")]
-        public PipelineDiagnosticSettings Backend { get; set; }
+        public PipelineDiagnosticSettings Backend
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Backend;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.Backend = value;
+            }
+        }
+
+        /// <summary> Large Language Models diagnostic settings. </summary>
+        [WirePath("properties.largeLanguageModel")]
+        public LLMDiagnosticSettings LargeLanguageModel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LargeLanguageModel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.LargeLanguageModel = value;
+            }
+        }
+
         /// <summary> Log the ClientIP. Default is false. </summary>
         [WirePath("properties.logClientIp")]
-        public bool? IsLogClientIPEnabled { get; set; }
+        public bool? IsLogClientIPEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsLogClientIPEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.IsLogClientIPEnabled = value;
+            }
+        }
+
         /// <summary> Sets correlation protocol to use for Application Insights diagnostics. </summary>
         [WirePath("properties.httpCorrelationProtocol")]
-        public HttpCorrelationProtocol? HttpCorrelationProtocol { get; set; }
+        public HttpCorrelationProtocol? HttpCorrelationProtocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HttpCorrelationProtocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.HttpCorrelationProtocol = value;
+            }
+        }
+
         /// <summary> The verbosity level applied to traces emitted by trace policies. </summary>
         [WirePath("properties.verbosity")]
-        public TraceVerbosityLevel? Verbosity { get; set; }
+        public TraceVerbosityLevel? Verbosity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Verbosity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.Verbosity = value;
+            }
+        }
+
         /// <summary> The format of the Operation Name for Application Insights telemetries. Default is Name. </summary>
         [WirePath("properties.operationNameFormat")]
-        public OperationNameFormat? OperationNameFormat { get; set; }
+        public OperationNameFormat? OperationNameFormat
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationNameFormat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.OperationNameFormat = value;
+            }
+        }
+
         /// <summary> Emit custom metrics via emit-metric policy. Applicable only to Application Insights diagnostic settings. </summary>
         [WirePath("properties.metrics")]
-        public bool? Metrics { get; set; }
+        public bool? Metrics
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Metrics;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticContractProperties();
+                }
+                Properties.Metrics = value;
+            }
+        }
     }
 }

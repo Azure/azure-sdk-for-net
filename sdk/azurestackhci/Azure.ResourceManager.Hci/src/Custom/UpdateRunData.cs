@@ -116,12 +116,6 @@ namespace Azure.ResourceManager.Hci
             _serializedAdditionalRawData = null;
         }
 
-        internal HciClusterUpdateRunData ToHciClusterUpdateRunData()
-        {
-            return new HciClusterUpdateRunData(Id, Name, ResourceType, SystemData, Location, ProvisioningState, TimeStarted, LastUpdatedOn, Duration, State, NamePropertiesProgressName, Description,
-                ErrorMessage, Status, StartTimeUtc, EndTimeUtc, LastUpdatedTimeUtc, default, Steps, _serializedAdditionalRawData);
-        }
-
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary> Provisioning state of the UpdateRuns proxy resource. </summary>

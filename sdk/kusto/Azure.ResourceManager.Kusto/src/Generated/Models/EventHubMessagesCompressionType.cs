@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct EventHubMessagesCompressionType : IEquatable<EventHubMessagesCompressionType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> GZip. </summary>
+        private const string GZipValue = "GZip";
 
         /// <summary> Initializes a new instance of <see cref="EventHubMessagesCompressionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventHubMessagesCompressionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string GZipValue = "GZip";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static EventHubMessagesCompressionType None { get; } = new EventHubMessagesCompressionType(NoneValue);
+
         /// <summary> GZip. </summary>
         public static EventHubMessagesCompressionType GZip { get; } = new EventHubMessagesCompressionType(GZipValue);
+
         /// <summary> Determines if two <see cref="EventHubMessagesCompressionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventHubMessagesCompressionType left, EventHubMessagesCompressionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventHubMessagesCompressionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventHubMessagesCompressionType left, EventHubMessagesCompressionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventHubMessagesCompressionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventHubMessagesCompressionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventHubMessagesCompressionType(string value) => new EventHubMessagesCompressionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventHubMessagesCompressionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventHubMessagesCompressionType?(string value) => value == null ? null : new EventHubMessagesCompressionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventHubMessagesCompressionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventHubMessagesCompressionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Relay
                     yield break;
                 }
                 HybridConnectionListResult result = HybridConnectionListResult.FromResponse(response);
-                yield return Page<RelayHybridConnectionData>.FromValues((IReadOnlyList<RelayHybridConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RelayHybridConnectionData>.FromValues((IReadOnlyList<RelayHybridConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

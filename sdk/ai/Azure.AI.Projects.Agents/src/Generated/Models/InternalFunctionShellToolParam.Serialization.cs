@@ -76,6 +76,16 @@ namespace OpenAI
                 writer.WritePropertyName("environment"u8);
                 writer.WriteObjectValue(Environment, options);
             }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -85,6 +95,17 @@ namespace OpenAI
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
         }
 
@@ -116,8 +137,10 @@ namespace OpenAI
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             FunctionShellToolParamEnvironment environment = default;
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             string name = default;
             string description = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -135,6 +158,20 @@ namespace OpenAI
                     environment = FunctionShellToolParamEnvironment.DeserializeFunctionShellToolParamEnvironment(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -145,12 +182,33 @@ namespace OpenAI
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalFunctionShellToolParam(@type, additionalBinaryDataProperties, environment, name, description);
+            return new InternalFunctionShellToolParam(
+                @type,
+                additionalBinaryDataProperties,
+                environment,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
+                name,
+                description,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

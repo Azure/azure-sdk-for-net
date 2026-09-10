@@ -310,7 +310,7 @@ namespace Azure.AI.Language.Text
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateAnalyzeTextSubmitJobRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitJobAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextSubmitJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -400,7 +400,7 @@ namespace Azure.AI.Language.Text
             try
             {
                 using HttpMessage message = CreateAnalyzeTextCancelJobRequest(jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelJobAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "TextAnalysisClient.AnalyzeTextCancelJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

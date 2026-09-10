@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.NetApp.Tests
                 else if (snapshot.Id.Name.Equals(snapshotName2))
                     snapshotResource4 = snapshot;
             }
-            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1);
-            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2);
+            snapshotResource3.Should().BeEquivalentTo(snapshotGetResource1, options => options.IncludingAllDeclaredProperties());
+            snapshotResource4.Should().BeEquivalentTo(snapshotGetResource2, options => options.IncludingAllDeclaredProperties());
             await LiveDelay(20000);
             //Check deletion
             await snapshotResource2.DeleteAsync(WaitUntil.Completed);
@@ -201,7 +201,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(snapshotName, snapshotResource1.Id.Name);
 
             //create new clone volume from snapshot, we do this by calling create volume with a snapshotId
-            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id, volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
+            NetAppVolumeResource newVolumeResource = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName: newVolumeName, snapshotId: snapshotResource2.Id,
+                volumeType: "ShortTermClone", growPool: AcceptGrowCapacityPoolForShortTermCloneSplit.Accepted.ToString());
             await LiveDelay(8000);
             //Validate
             NetAppVolumeResource newVolumeResource2 = await _volumeCollection.GetAsync(newVolumeName);

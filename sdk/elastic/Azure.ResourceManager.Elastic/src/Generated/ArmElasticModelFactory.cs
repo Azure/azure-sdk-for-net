@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Elastic;
 using Azure.ResourceManager.Models;
@@ -39,13 +38,13 @@ namespace Azure.ResourceManager.Elastic.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
                 kind,
-                skuName is null ? default : new ElasticSku(skuName, null),
-                identity);
+                skuName is null ? default : new ElasticSku(skuName, default),
+                identity,
+                default);
         }
 
         /// <summary> Properties specific to the monitor resource. </summary>
@@ -83,7 +82,16 @@ namespace Azure.ResourceManager.Elastic.Models
                 isApiKeyGenerated,
                 hostingType,
                 projectDetails,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Elastic Resource Properties. </summary>
+        /// <param name="elasticCloudUser"> Details of the user's elastic account. </param>
+        /// <param name="elasticCloudDeployment"> Details of the elastic cloud deployment. </param>
+        /// <returns> A new <see cref="Models.ElasticCloudProperties"/> instance for mocking. </returns>
+        public static ElasticCloudProperties ElasticCloudProperties(ElasticCloudUser elasticCloudUser = default, ElasticCloudDeployment elasticCloudDeployment = default)
+        {
+            return new ElasticCloudProperties(elasticCloudUser, elasticCloudDeployment, default);
         }
 
         /// <summary> Details of the user's elastic account. </summary>
@@ -93,7 +101,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticCloudUser"/> instance for mocking. </returns>
         public static ElasticCloudUser ElasticCloudUser(string emailAddress = default, string id = default, Uri elasticCloudSsoDefaultUri = default)
         {
-            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUri, additionalBinaryDataProperties: null);
+            return new ElasticCloudUser(emailAddress, id, elasticCloudSsoDefaultUri, default);
         }
 
         /// <summary> Details of the user's elastic deployment associated with the monitor resource. </summary>
@@ -115,7 +123,70 @@ namespace Azure.ResourceManager.Elastic.Models
                 elasticsearchServiceUri,
                 kibanaServiceUri,
                 kibanaSsoUri,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> User Information to be passed to partners. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="companyName"> Company name of the user. </param>
+        /// <param name="emailAddress"> Email of the user used by Elastic for contacting them if needed. </param>
+        /// <param name="companyInfo"> Company information of the user to be passed to partners. </param>
+        /// <returns> A new <see cref="Models.ElasticUserInfo"/> instance for mocking. </returns>
+        public static ElasticUserInfo ElasticUserInfo(string firstName = default, string lastName = default, string companyName = default, string emailAddress = default, ElasticCompanyInfo companyInfo = default)
+        {
+            return new ElasticUserInfo(
+                firstName,
+                lastName,
+                companyName,
+                emailAddress,
+                companyInfo,
+                default);
+        }
+
+        /// <summary> Company information of the user to be passed to partners. </summary>
+        /// <param name="domain"> Domain of the company. </param>
+        /// <param name="business"> Business of the company. </param>
+        /// <param name="employeesNumber"> Number of employees in the company. </param>
+        /// <param name="state"> State of the company location. </param>
+        /// <param name="country"> Country of the company location. </param>
+        /// <returns> A new <see cref="Models.ElasticCompanyInfo"/> instance for mocking. </returns>
+        public static ElasticCompanyInfo ElasticCompanyInfo(string domain = default, string business = default, string employeesNumber = default, string state = default, string country = default)
+        {
+            return new ElasticCompanyInfo(
+                domain,
+                business,
+                employeesNumber,
+                state,
+                country,
+                default);
+        }
+
+        /// <summary> Plan details of the monitor resource. </summary>
+        /// <param name="offerId"> Offer ID of the plan. </param>
+        /// <param name="publisherId"> Publisher ID of the plan. </param>
+        /// <param name="termId"> Term ID of the plan. </param>
+        /// <param name="planId"> Plan ID. </param>
+        /// <param name="planName"> Plan Name. </param>
+        /// <returns> A new <see cref="Models.ElasticPlanDetails"/> instance for mocking. </returns>
+        public static ElasticPlanDetails ElasticPlanDetails(string offerId = default, string publisherId = default, string termId = default, string planId = default, string planName = default)
+        {
+            return new ElasticPlanDetails(
+                offerId,
+                publisherId,
+                termId,
+                planId,
+                planName,
+                default);
+        }
+
+        /// <summary> Project details of the monitor resource IF it belongs to Serverless offer kind. </summary>
+        /// <param name="projectType"> Project type; ex: Elasticsearch / Observability / Security. </param>
+        /// <param name="configurationType"> Configuration type of the Elasticsearch project. </param>
+        /// <returns> A new <see cref="Models.MonitorResourceProjectDetails"/> instance for mocking. </returns>
+        public static MonitorResourceProjectDetails MonitorResourceProjectDetails(MonitorResourceProjectType? projectType = default, ElasticsearchProjectConfigurationType? configurationType = default)
+        {
+            return new MonitorResourceProjectDetails(projectType, configurationType, default);
         }
 
         /// <summary> Monitor resource update parameters. </summary>
@@ -125,7 +196,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticMonitorPatch(tags, additionalBinaryDataProperties: null);
+            return new ElasticMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> The properties of a resource currently being monitored by the Elastic monitor resource. </summary>
@@ -135,7 +206,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.MonitoredResourceInfo"/> instance for mocking. </returns>
         public static MonitoredResourceInfo MonitoredResourceInfo(ResourceIdentifier id = default, SendingLogsStatus? sendingLogs = default, string reasonForLogsStatus = default)
         {
-            return new MonitoredResourceInfo(id, sendingLogs, reasonForLogsStatus, additionalBinaryDataProperties: null);
+            return new MonitoredResourceInfo(id, sendingLogs, reasonForLogsStatus, default);
         }
 
         /// <summary> The properties of deployment in Elastic cloud corresponding to the Elastic monitor resource. </summary>
@@ -161,7 +232,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 marketplaceSaasInfo,
                 projectType,
                 configurationType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Marketplace SAAS Info of the resource. </summary>
@@ -181,7 +252,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 marketplaceStatus,
                 billedAzureSubscriptionId,
                 isSubscribed,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Marketplace Subscription. </summary>
@@ -191,7 +262,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfoMarketplaceSubscription"/> instance for mocking. </returns>
         public static MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSaaSInfoMarketplaceSubscription(ResourceIdentifier id = default, string publisherId = default, string offerId = default)
         {
-            return new MarketplaceSaaSInfoMarketplaceSubscription(id, publisherId, offerId, additionalBinaryDataProperties: null);
+            return new MarketplaceSaaSInfoMarketplaceSubscription(id, publisherId, offerId, default);
         }
 
         /// <summary> The properties of the request required for creating user on elastic side. </summary>
@@ -210,8 +281,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 fullName,
                 password,
                 emailId,
-                roles.ToList(),
-                additionalBinaryDataProperties: null);
+                (roles ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> The properties of the response we got from elastic while creating external user. </summary>
@@ -219,7 +290,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticExternalUserCreationResult"/> instance for mocking. </returns>
         public static ElasticExternalUserCreationResult ElasticExternalUserCreationResult(bool? isCreated = default)
         {
-            return new ElasticExternalUserCreationResult(isCreated, additionalBinaryDataProperties: null);
+            return new ElasticExternalUserCreationResult(isCreated, default);
         }
 
         /// <summary> Marketplace Subscription and Organization details to which resource gets billed into. </summary>
@@ -228,7 +299,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticBillingInfoResult"/> instance for mocking. </returns>
         public static ElasticBillingInfoResult ElasticBillingInfoResult(MarketplaceSaaSInfo marketplaceSaasInfo = default, PartnerBillingEntity partnerBillingEntity = default)
         {
-            return new ElasticBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, additionalBinaryDataProperties: null);
+            return new ElasticBillingInfoResult(marketplaceSaasInfo, partnerBillingEntity, default);
         }
 
         /// <summary> Partner Billing details associated with the resource. </summary>
@@ -238,7 +309,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.PartnerBillingEntity"/> instance for mocking. </returns>
         public static PartnerBillingEntity PartnerBillingEntity(string id = default, string name = default, Uri partnerEntityUri = default)
         {
-            return new PartnerBillingEntity(id, name, partnerEntityUri, additionalBinaryDataProperties: null);
+            return new PartnerBillingEntity(id, name, partnerEntityUri, default);
         }
 
         /// <summary> Connected Partner Resources List Format. </summary>
@@ -246,7 +317,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ConnectedPartnerResourceInfo"/> instance for mocking. </returns>
         public static ConnectedPartnerResourceInfo ConnectedPartnerResourceInfo(ConnectedPartnerResourceProperties properties = default)
         {
-            return new ConnectedPartnerResourceInfo(properties, additionalBinaryDataProperties: null);
+            return new ConnectedPartnerResourceInfo(properties, default);
         }
 
         /// <summary> Connected Partner Resource Properties. </summary>
@@ -264,7 +335,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 azureResourceId,
                 location,
                 connectedPartnerResourcePropertiesType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The vm resource properties that is currently being monitored by the Elastic monitor resource. </summary>
@@ -272,7 +343,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticVmResourceInfo"/> instance for mocking. </returns>
         public static ElasticVmResourceInfo ElasticVmResourceInfo(ResourceIdentifier vmResourceId = default)
         {
-            return new ElasticVmResourceInfo(vmResourceId, additionalBinaryDataProperties: null);
+            return new ElasticVmResourceInfo(vmResourceId, default);
         }
 
         /// <summary> The vm ingestion details to install an agent. </summary>
@@ -281,7 +352,16 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.VmIngestionDetailsResult"/> instance for mocking. </returns>
         public static VmIngestionDetailsResult VmIngestionDetailsResult(string cloudId = default, string ingestionKey = default)
         {
-            return new VmIngestionDetailsResult(cloudId, ingestionKey, additionalBinaryDataProperties: null);
+            return new VmIngestionDetailsResult(cloudId, ingestionKey, default);
+        }
+
+        /// <summary> Update VM resource collection. </summary>
+        /// <param name="vmResourceId"> ARM id of the VM resource. </param>
+        /// <param name="operationName"> Operation to be performed for given VM. </param>
+        /// <returns> A new <see cref="Models.VmCollectionContent"/> instance for mocking. </returns>
+        public static VmCollectionContent VmCollectionContent(ResourceIdentifier vmResourceId = default, VmCollectionUpdateOperationName? operationName = default)
+        {
+            return new VmCollectionContent(vmResourceId, operationName, default);
         }
 
         /// <summary> Stack Versions that this version can upgrade to. </summary>
@@ -292,7 +372,15 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             upgradableVersions ??= new ChangeTrackingList<string>();
 
-            return new UpgradableVersionListResult(currentVersion, upgradableVersions.ToList(), additionalBinaryDataProperties: null);
+            return new UpgradableVersionListResult(currentVersion, (upgradableVersions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Upgrade elastic monitor version. </summary>
+        /// <param name="version"> Version to which the elastic monitor should be upgraded to. </param>
+        /// <returns> A new <see cref="Models.ElasticMonitorUpgrade"/> instance for mocking. </returns>
+        public static ElasticMonitorUpgrade ElasticMonitorUpgrade(string version = default)
+        {
+            return new ElasticMonitorUpgrade(version, default);
         }
 
         /// <summary> List of elastic traffic filters in the account. </summary>
@@ -302,7 +390,7 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             rulesets ??= new ChangeTrackingList<ElasticTrafficFilter>();
 
-            return new ElasticTrafficFilterListResult(rulesets.ToList(), additionalBinaryDataProperties: null);
+            return new ElasticTrafficFilterListResult((rulesets ?? new ChangeTrackingList<ElasticTrafficFilter>()).ToList(), default);
         }
 
         /// <summary> Elastic traffic filter object. </summary>
@@ -325,8 +413,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 region,
                 filterType,
                 doesIncludeByDefault,
-                rules.ToList(),
-                additionalBinaryDataProperties: null);
+                (rules ?? new ChangeTrackingList<ElasticTrafficFilterRule>()).ToList(),
+                default);
         }
 
         /// <summary> Elastic traffic filter rule object. </summary>
@@ -344,7 +432,25 @@ namespace Azure.ResourceManager.Elastic.Models
                 azureEndpointGuid,
                 azureEndpointName,
                 id,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Resubscribe Properties. </summary>
+        /// <param name="planId"> Newly selected plan Id to create the new Marketplace subscription for Resubscribe. </param>
+        /// <param name="term"> Newly selected term to create the new Marketplace subscription for Resubscribe. </param>
+        /// <param name="subscriptionId"> Newly selected Azure Subscription Id in which the new Marketplace subscription will be created for Resubscribe. </param>
+        /// <param name="resourceGroup"> Newly selected Azure resource group in which the new Marketplace subscription will be created for Resubscribe. </param>
+        /// <param name="organizationId"> Organization Id of the Elastic Organization that needs to be resubscribed. </param>
+        /// <returns> A new <see cref="Models.ResubscribeProperties"/> instance for mocking. </returns>
+        public static ResubscribeProperties ResubscribeProperties(string planId = default, string term = default, ResourceIdentifier subscriptionId = default, string resourceGroup = default, string organizationId = default)
+        {
+            return new ResubscribeProperties(
+                planId,
+                term,
+                subscriptionId,
+                resourceGroup,
+                organizationId,
+                default);
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
@@ -361,8 +467,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The request to update subscriptions needed to be monitored by the Elastic monitor resource. </summary>
@@ -374,7 +480,27 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             monitoredSubscriptionList ??= new ChangeTrackingList<MonitoredSubscription>();
 
-            return new ElasticMonitoredSubscriptionProperties(operation, monitoredSubscriptionList.ToList(), provisioningState, additionalBinaryDataProperties: null);
+            return new ElasticMonitoredSubscriptionProperties(operation, (monitoredSubscriptionList ?? new ChangeTrackingList<MonitoredSubscription>()).ToList(), provisioningState, default);
+        }
+
+        /// <summary> The list of subscriptions and it's monitoring status by current Elastic monitor. </summary>
+        /// <param name="subscriptionId"> The subscriptionId to be monitored. </param>
+        /// <param name="status"> The state of monitoring. </param>
+        /// <param name="error"> The reason of not monitoring the subscription. </param>
+        /// <param name="tagRules"> Definition of the properties for a TagRules resource. </param>
+        /// <returns> A new <see cref="Models.MonitoredSubscription"/> instance for mocking. </returns>
+        public static MonitoredSubscription MonitoredSubscription(ResourceIdentifier subscriptionId = default, MonitoringStatus? status = default, string error = default, ElasticTagRuleProperties tagRules = default)
+        {
+            return new MonitoredSubscription(subscriptionId, status, error, tagRules, default);
+        }
+
+        /// <summary> Definition of the properties for a TagRules resource. </summary>
+        /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
+        /// <param name="logRules"> Rules for sending logs. </param>
+        /// <returns> A new <see cref="Models.ElasticTagRuleProperties"/> instance for mocking. </returns>
+        public static ElasticTagRuleProperties ElasticTagRuleProperties(ElasticProvisioningState? provisioningState = default, ElasticLogRules logRules = default)
+        {
+            return new ElasticTagRuleProperties(provisioningState, logRules, default);
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
@@ -387,7 +513,17 @@ namespace Azure.ResourceManager.Elastic.Models
         {
             filteringTags ??= new ChangeTrackingList<ElasticFilteringTag>();
 
-            return new ElasticLogRules(shouldAadLogsBeSent, shouldSubscriptionLogsBeSent, shouldActivityLogsBeSent, filteringTags.ToList(), additionalBinaryDataProperties: null);
+            return new ElasticLogRules(shouldAadLogsBeSent, shouldSubscriptionLogsBeSent, shouldActivityLogsBeSent, (filteringTags ?? new ChangeTrackingList<ElasticFilteringTag>()).ToList(), default);
+        }
+
+        /// <summary> The definition of a filtering tag. Filtering tags are used for capturing resources and include/exclude them from being monitored. </summary>
+        /// <param name="name"> The name (also known as the key) of the tag. </param>
+        /// <param name="value"> The value of the tag. </param>
+        /// <param name="action"> Valid actions for a filtering tag. </param>
+        /// <returns> A new <see cref="Models.ElasticFilteringTag"/> instance for mocking. </returns>
+        public static ElasticFilteringTag ElasticFilteringTag(string name = default, string value = default, FilteringTagAction? action = default)
+        {
+            return new ElasticFilteringTag(name, value, action, default);
         }
 
         /// <summary> Capture properties of Open AI resource Integration. </summary>
@@ -404,8 +540,8 @@ namespace Azure.ResourceManager.Elastic.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Open AI Integration details. </summary>
@@ -423,14 +559,14 @@ namespace Azure.ResourceManager.Elastic.Models
                 openAIConnectorId,
                 key,
                 lastRefreshOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="elasticOpenAIIntegrationStatus"> Status of the OpenAI Integration. </param>
         /// <returns> A new <see cref="Models.ElasticOpenAIIntegrationStatusResult"/> instance for mocking. </returns>
         public static ElasticOpenAIIntegrationStatusResult ElasticOpenAIIntegrationStatusResult(string elasticOpenAIIntegrationStatus = default)
         {
-            return new ElasticOpenAIIntegrationStatusResult(elasticOpenAIIntegrationStatus is null ? default : new ElasticOpenAIIntegrationStatusProperties(elasticOpenAIIntegrationStatus, null), additionalBinaryDataProperties: null);
+            return new ElasticOpenAIIntegrationStatusResult(elasticOpenAIIntegrationStatus is null ? default : new ElasticOpenAIIntegrationStatusProperties(elasticOpenAIIntegrationStatus, default), default);
         }
 
         /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
@@ -447,22 +583,30 @@ namespace Azure.ResourceManager.Elastic.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <param name="availableVersion"> Available elastic version of the given region. </param>
         /// <returns> A new <see cref="Models.ElasticVersion"/> instance for mocking. </returns>
         public static ElasticVersion ElasticVersion(string availableVersion = default)
         {
-            return new ElasticVersion(availableVersion is null ? default : new ElasticVersionProperties(availableVersion, null), additionalBinaryDataProperties: null);
+            return new ElasticVersion(availableVersion is null ? default : new ElasticVersionProperties(availableVersion, default), default);
+        }
+
+        /// <summary> Email Id of the User Organization, of which the API Key must be returned. </summary>
+        /// <param name="emailId"> The User email Id. </param>
+        /// <returns> A new <see cref="Models.ElasticUserEmailId"/> instance for mocking. </returns>
+        public static ElasticUserEmailId ElasticUserEmailId(string emailId = default)
+        {
+            return new ElasticUserEmailId(emailId, default);
         }
 
         /// <param name="elasticUserApiKey"> The User Api Key Generated based on GenerateApiKey flag. This is applicable for non-Portal clients only. </param>
         /// <returns> A new <see cref="Models.ElasticUserApiKeyResult"/> instance for mocking. </returns>
         public static ElasticUserApiKeyResult ElasticUserApiKeyResult(string elasticUserApiKey = default)
         {
-            return new ElasticUserApiKeyResult(elasticUserApiKey is null ? default : new ElasticUserApiKeyProperties(elasticUserApiKey, null), additionalBinaryDataProperties: null);
+            return new ElasticUserApiKeyResult(elasticUserApiKey is null ? default : new ElasticUserApiKeyProperties(elasticUserApiKey, default), default);
         }
 
         /// <summary> The Azure Subscription ID to which the Organization of the logged in user belongs and gets billed into. </summary>
@@ -470,7 +614,7 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingResult"/> instance for mocking. </returns>
         public static ElasticOrganizationToAzureSubscriptionMappingResult ElasticOrganizationToAzureSubscriptionMappingResult(ElasticOrganizationToAzureSubscriptionMappingProperties properties = default)
         {
-            return new ElasticOrganizationToAzureSubscriptionMappingResult(properties, additionalBinaryDataProperties: null);
+            return new ElasticOrganizationToAzureSubscriptionMappingResult(properties, default);
         }
 
         /// <summary> The properties of Azure Subscription ID to which the Organization of the logged in user belongs and gets billed into. </summary>
@@ -481,11 +625,11 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <returns> A new <see cref="Models.ElasticOrganizationToAzureSubscriptionMappingProperties"/> instance for mocking. </returns>
         public static ElasticOrganizationToAzureSubscriptionMappingProperties ElasticOrganizationToAzureSubscriptionMappingProperties(string billedAzureSubscriptionId = default, MarketplaceSaaSInfo marketplaceSaasInfo = default, string elasticOrganizationId = default, string elasticOrganizationName = default)
         {
-            return new ElasticOrganizationToAzureSubscriptionMappingProperties(billedAzureSubscriptionId, marketplaceSaasInfo, elasticOrganizationId, elasticOrganizationName, additionalBinaryDataProperties: null);
+            return new ElasticOrganizationToAzureSubscriptionMappingProperties(billedAzureSubscriptionId, marketplaceSaasInfo, elasticOrganizationId, elasticOrganizationName, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MarketplaceSaaSInfo"/>. </summary>
-        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription. </param>
+        /// <summary> Marketplace SAAS Info of the resource. </summary>
+        /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. This is a GUID-formatted string. </param>
         /// <param name="marketplaceName"> Marketplace Subscription Details: SAAS Name. </param>
         /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
@@ -493,46 +637,47 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(ResourceIdentifier marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceResourceId = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, bool? isSubscribed = default)
         {
             return new MarketplaceSaaSInfo(
-                default,
+                marketplaceSubscriptionId is null ? default : new MarketplaceSaaSInfoMarketplaceSubscription(marketplaceSubscriptionId, default, default, default),
                 marketplaceName,
                 marketplaceResourceId,
                 marketplaceStatus,
                 billedAzureSubscriptionId,
                 isSubscribed,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ElasticTagRuleProperties"/>. </summary>
-        /// <param name="provisioningState"> Provisioning state of the monitoring tag rules. </param>
-        /// <param name="logRules"> Rules for sending logs. </param>
-        /// <returns> A new <see cref="Models.ElasticTagRuleProperties"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ElasticTagRuleProperties ElasticTagRuleProperties(ElasticProvisioningState? provisioningState, ElasticLogRules logRules)
-        {
-            return new ElasticTagRuleProperties(provisioningState, logRules, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Elastic.ElasticMonitorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> SKU of the monitor resource. </param>
+        /// <summary> Monitor resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"> The name of the SKU. </param>
         /// <param name="properties"> Properties of the monitor resource. </param>
-        /// <param name="identity"> Identity properties of the monitor resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="identity"> Identity properties of the monitor resource. </param>
         /// <returns> A new <see cref="Elastic.ElasticMonitorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorData ElasticMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, ElasticMonitorProperties properties, ManagedServiceIdentity identity)
         {
-            return ElasticMonitorData(id, name, resourceType, systemData, tags, location, properties, kind: default, skuName, identity);
+            return new ElasticMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default,
+                skuName is null ? default : new ElasticSku(skuName, default),
+                identity,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ElasticMonitorProperties"/>. </summary>
+        /// <summary> Properties specific to the monitor resource. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitor resource. </param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>
@@ -550,10 +695,26 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticMonitorProperties ElasticMonitorProperties(ElasticProvisioningState? provisioningState, ElasticMonitoringStatus? monitoringStatus, ElasticCloudProperties elasticProperties, ElasticUserInfo userInfo, ElasticPlanDetails planDetails, string version, string subscriptionState, string saaSAzureSubscriptionStatus, string sourceCampaignName, string sourceCampaignId, ElasticLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, bool? isApiKeyGenerated)
         {
-            return ElasticMonitorProperties(provisioningState, monitoringStatus, elasticProperties, userInfo, planDetails, version, subscriptionState, saaSAzureSubscriptionStatus, sourceCampaignName, sourceCampaignId, liftrResourceCategory, liftrResourcePreference, isApiKeyGenerated, hostingType: default, projectDetails: default);
+            return new ElasticMonitorProperties(
+                provisioningState,
+                monitoringStatus,
+                elasticProperties,
+                userInfo,
+                planDetails,
+                version,
+                subscriptionState,
+                saaSAzureSubscriptionStatus,
+                sourceCampaignName,
+                sourceCampaignId,
+                liftrResourceCategory,
+                liftrResourcePreference,
+                isApiKeyGenerated,
+                default,
+                default,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ElasticDeploymentInfoResult"/>. </summary>
+        /// <summary> The properties of deployment in Elastic cloud corresponding to the Elastic monitor resource. </summary>
         /// <param name="status"> The Elastic deployment status. </param>
         /// <param name="version"> Version of the elasticsearch in Elastic cloud deployment. </param>
         /// <param name="memoryCapacity"> RAM capacity of the elasticsearch in Elastic cloud deployment. </param>
@@ -565,23 +726,39 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticDeploymentInfoResult ElasticDeploymentInfoResult(ElasticDeploymentStatus? status, string version, string memoryCapacity, string diskCapacity, string elasticsearchEndPoint, Uri deploymentUri, MarketplaceSaaSInfo marketplaceSaasInfo)
         {
-            return ElasticDeploymentInfoResult(status, version, memoryCapacity, diskCapacity, elasticsearchEndPoint, deploymentUri, marketplaceSaasInfo, projectType: default, configurationType: default);
+            return new ElasticDeploymentInfoResult(
+                status,
+                version,
+                memoryCapacity,
+                diskCapacity,
+                elasticsearchEndPoint,
+                deploymentUri,
+                marketplaceSaasInfo,
+                default,
+                default,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedPartnerResourceProperties"/>. </summary>
-        /// <param name="partnerDeploymentName"> Elastic deployment name. </param>
-        /// <param name="partnerDeploymentUri"> Deployment URL of the elasticsearch in Elastic cloud deployment. </param>
-        /// <param name="azureResourceId"> The azure resource Id of the deployment. </param>
-        /// <param name="location"> The location of the deployment. </param>
+        /// <summary> Connected Partner Resource Properties. </summary>
+        /// <param name="partnerDeploymentName"> Elastic resource name. </param>
+        /// <param name="partnerDeploymentUri"> URL of the resource in Elastic cloud. </param>
+        /// <param name="azureResourceId"> The azure resource Id of the resource. </param>
+        /// <param name="location"> The location of the resource. </param>
         /// <returns> A new <see cref="Models.ConnectedPartnerResourceProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectedPartnerResourceProperties ConnectedPartnerResourceProperties(string partnerDeploymentName, Uri partnerDeploymentUri, ResourceIdentifier azureResourceId, AzureLocation? location)
         {
-            return ConnectedPartnerResourceProperties(partnerDeploymentName, partnerDeploymentUri, azureResourceId, location, connectedPartnerResourcePropertiesType: default);
+            return new ConnectedPartnerResourceProperties(
+                partnerDeploymentName,
+                partnerDeploymentUri,
+                azureResourceId,
+                location,
+                default,
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ElasticOpenAIIntegrationProperties"/>. </summary>
-        /// <param name="openAIResourceId"> The resource id of Open AI resource. </param>
+        /// <summary> Open AI Integration details. </summary>
+        /// <param name="openAIResourceId"> The resource name of Open AI resource. </param>
         /// <param name="openAIResourceEndpoint"> The API endpoint for Open AI resource. </param>
         /// <param name="key"> Value of API key for Open AI resource. </param>
         /// <param name="lastRefreshOn"> Last Update Timestamp for key updation. </param>
@@ -589,7 +766,13 @@ namespace Azure.ResourceManager.Elastic.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticOpenAIIntegrationProperties ElasticOpenAIIntegrationProperties(ResourceIdentifier openAIResourceId, string openAIResourceEndpoint, string key, DateTimeOffset? lastRefreshOn)
         {
-            return ElasticOpenAIIntegrationProperties(openAIResourceId, openAIResourceEndpoint, openAIConnectorId: default, key, lastRefreshOn);
+            return new ElasticOpenAIIntegrationProperties(
+                openAIResourceId,
+                openAIResourceEndpoint,
+                default,
+                key,
+                lastRefreshOn,
+                default);
         }
     }
 }

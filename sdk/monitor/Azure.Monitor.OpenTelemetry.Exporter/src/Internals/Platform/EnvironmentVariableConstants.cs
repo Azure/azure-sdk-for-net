@@ -15,8 +15,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         {
             APPLICATIONINSIGHTS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_STATSBEAT_DISABLED,
+            APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL,
             APPLICATIONINSIGHTS_SDKSTATS_DISABLED,
             APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL,
+            APPLICATIONINSIGHTS_STATS_CONNECTION_STRING,
             APPLICATIONINSIGHTS_CLOUD_ROLE_NAME,
             APPLICATIONINSIGHTS_CLOUD_ROLE_INSTANCE,
             APPLICATIONINSIGHTS_COMPONENT_VERSION,
@@ -52,11 +56,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         public const string APPLICATIONINSIGHTS_STATSBEAT_DISABLED = "APPLICATIONINSIGHTS_STATSBEAT_DISABLED";
 
         /// <summary>
-        /// Available for users to enable customer SDK stats.
+        /// INTERNAL ONLY. Kill-switch to turn off internal SDKStats (Attach / Feature / Network Statsbeat)
+        /// completely. Set to "true" to fully disable emission of these signals.
         /// </summary>
         /// <remarks>
-        /// Customer SDK stats provide insights into SDK success/failure/retry counts.
-        /// Set to "false" to enable this feature.
+        /// Maps to the <c>disabledAll</c> configuration in the SDKStats spec. Distinct from the
+        /// customer-facing <see cref="APPLICATIONINSIGHTS_SDKSTATS_DISABLED"/> which governs CustomerSdkStats.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED_ALL";
+
+        /// <summary>
+        /// Available for users to opt out of customer SDK stats.
+        /// </summary>
+        /// <remarks>
+        /// Customer SDK stats provide insights into SDK success/failure/retry counts and are on by default.
+        /// Set to "true" to disable this feature.
         /// </remarks>
         public const string APPLICATIONINSIGHTS_SDKSTATS_DISABLED = "APPLICATIONINSIGHTS_SDKSTATS_DISABLED";
 
@@ -67,6 +81,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// Default is 900 seconds (15 minutes). Minimum recommended is 60 seconds.
         /// </remarks>
         public const string APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_SDKSTATS_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the export interval (in seconds) for long-interval internal SDKStats
+        /// (the Attach / Feature signals, default 24 hours).
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>longInterval</c> configuration in the SDKStats spec. Primarily intended for testing.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the export interval (in seconds) for short-interval internal SDKStats
+        /// (the Network signal, default 15 minutes).
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>shortInterval</c> configuration in the SDKStats spec. Primarily intended for testing.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL = "APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL";
+
+        /// <summary>
+        /// INTERNAL ONLY. Overrides the destination connection string that internal SDKStats envelopes are
+        /// sent to. When unset (the default), SDKStats flow to the Microsoft-owned SDKStats resources.
+        /// </summary>
+        /// <remarks>
+        /// Maps to the <c>connectionString</c> configuration in the SDKStats spec. Primarily intended for testing
+        /// (e.g. routing SDKStats to a test ingestion endpoint); production deployments should leave this unset.
+        /// </remarks>
+        public const string APPLICATIONINSIGHTS_STATS_CONNECTION_STRING = "APPLICATIONINSIGHTS_STATS_CONNECTION_STRING";
 
         /// <summary>
         /// INTERNAL ONLY. Used by Statsbeat to identify if the Exporter is running within Azure Functions.

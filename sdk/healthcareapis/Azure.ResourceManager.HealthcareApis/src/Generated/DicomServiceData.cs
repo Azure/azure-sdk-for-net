@@ -7,134 +7,193 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HealthcareApis.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary>
-    /// A class representing the DicomService data model.
-    /// The description of Dicom Service
-    /// </summary>
+    /// <summary> The description of Dicom Service. </summary>
     public partial class DicomServiceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public DicomServiceData(AzureLocation location) : base(location)
         {
-            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DicomServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="authenticationConfiguration"> Dicom Service authentication configuration. </param>
-        /// <param name="corsConfiguration"> Dicom Service Cors configuration. </param>
-        /// <param name="serviceUri"> The url of the Dicom Services. </param>
-        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
-        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
-        /// <param name="eventState"> DICOM Service event support status. </param>
-        /// <param name="encryption"> The encryption settings of the DICOM service. </param>
-        /// <param name="storageConfiguration"> The configuration of external storage account. </param>
-        /// <param name="isDataPartitionsEnabled"> If data partitions is enabled or not. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Dicom Service configuration. </param>
+        /// <param name="eTag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
-        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, HealthcareApisServiceStorageConfiguration storageConfiguration, bool? isDataPartitionsEnabled, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DicomServiceProperties properties, ETag? eTag, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            ProvisioningState = provisioningState;
-            AuthenticationConfiguration = authenticationConfiguration;
-            CorsConfiguration = corsConfiguration;
-            ServiceUri = serviceUri;
-            PrivateEndpointConnections = privateEndpointConnections;
-            PublicNetworkAccess = publicNetworkAccess;
-            EventState = eventState;
-            Encryption = encryption;
-            StorageConfiguration = storageConfiguration;
-            IsDataPartitionsEnabled = isDataPartitionsEnabled;
+            Properties = properties;
+            ETag = eTag;
             Identity = identity;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DicomServiceData"/> for deserialization. </summary>
-        internal DicomServiceData()
-        {
-        }
+        /// <summary> Dicom Service configuration. </summary>
+        internal DicomServiceProperties Properties { get; set; }
+
+        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
+        public ETag? ETag { get; set; }
+
+        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The provisioning state. </summary>
-        public HealthcareApisProvisioningState? ProvisioningState { get; }
-        /// <summary> Dicom Service authentication configuration. </summary>
-        public DicomServiceAuthenticationConfiguration AuthenticationConfiguration { get; set; }
-        /// <summary> Dicom Service Cors configuration. </summary>
-        public DicomServiceCorsConfiguration CorsConfiguration { get; set; }
-        /// <summary> The url of the Dicom Services. </summary>
-        public Uri ServiceUri { get; }
-        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
-        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
-        /// <summary> DICOM Service event support status. </summary>
-        public FhirServiceEventState? EventState { get; }
-        /// <summary> The encryption settings of the DICOM service. </summary>
-        internal Encryption Encryption { get; set; }
-        /// <summary> The URL of the key to use for encryption. </summary>
-        public Uri KeyEncryptionKeyUri
+        public HealthcareApisProvisioningState? ProvisioningState
         {
-            get => Encryption is null ? default : Encryption.KeyEncryptionKeyUri;
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Dicom Service authentication configuration. </summary>
+        public DicomServiceAuthenticationConfiguration AuthenticationConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AuthenticationConfiguration;
+            }
             set
             {
-                if (Encryption is null)
-                    Encryption = new Encryption();
-                Encryption.KeyEncryptionKeyUri = value;
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.AuthenticationConfiguration = value;
+            }
+        }
+
+        /// <summary> Dicom Service Cors configuration. </summary>
+        public DicomServiceCorsConfiguration CorsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.CorsConfiguration = value;
+            }
+        }
+
+        /// <summary> The url of the Dicom Services. </summary>
+        public Uri ServiceUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ServiceUri;
+            }
+        }
+
+        /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.PublicNetworkAccess = value;
+            }
+        }
+
+        /// <summary> DICOM Service event support status. </summary>
+        public FhirServiceEventState? EventState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EventState;
             }
         }
 
         /// <summary> The configuration of external storage account. </summary>
-        public HealthcareApisServiceStorageConfiguration StorageConfiguration { get; set; }
+        public HealthcareApisServiceStorageConfiguration StorageConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.StorageConfiguration = value;
+            }
+        }
+
         /// <summary> If data partitions is enabled or not. </summary>
-        public bool? IsDataPartitionsEnabled { get; set; }
-        /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
-        public ETag? ETag { get; set; }
+        public bool? IsDataPartitionsEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDataPartitionsEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.IsDataPartitionsEnabled = value;
+            }
+        }
+
+        /// <summary> The URL of the key to use for encryption. </summary>
+        public Uri KeyEncryptionKeyUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyEncryptionKeyUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DicomServiceProperties();
+                }
+                Properties.KeyEncryptionKeyUri = value;
+            }
+        }
     }
 }

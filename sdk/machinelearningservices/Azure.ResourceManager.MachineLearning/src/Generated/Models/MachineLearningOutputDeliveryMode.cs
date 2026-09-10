@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningOutputDeliveryMode : IEquatable<MachineLearningOutputDeliveryMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningOutputDeliveryMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningOutputDeliveryMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ReadWriteMountValue = "ReadWriteMount";
         private const string UploadValue = "Upload";
         private const string DirectValue = "Direct";
 
-        /// <summary> ReadWriteMount. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOutputDeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningOutputDeliveryMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the ReadWriteMount. </summary>
         public static MachineLearningOutputDeliveryMode ReadWriteMount { get; } = new MachineLearningOutputDeliveryMode(ReadWriteMountValue);
-        /// <summary> Upload. </summary>
+
+        /// <summary> Gets the Upload. </summary>
         public static MachineLearningOutputDeliveryMode Upload { get; } = new MachineLearningOutputDeliveryMode(UploadValue);
-        /// <summary> Direct. </summary>
+
+        /// <summary> Gets the Direct. </summary>
         public static MachineLearningOutputDeliveryMode Direct { get; } = new MachineLearningOutputDeliveryMode(DirectValue);
+
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningOutputDeliveryMode left, MachineLearningOutputDeliveryMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningOutputDeliveryMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningOutputDeliveryMode left, MachineLearningOutputDeliveryMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningOutputDeliveryMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningOutputDeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningOutputDeliveryMode(string value) => new MachineLearningOutputDeliveryMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningOutputDeliveryMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningOutputDeliveryMode?(string value) => value == null ? null : new MachineLearningOutputDeliveryMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningOutputDeliveryMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningOutputDeliveryMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

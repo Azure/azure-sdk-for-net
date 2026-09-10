@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     internal readonly partial struct IntegrationRuntimeType : IEquatable<IntegrationRuntimeType>
     {
         private readonly string _value;
+        /// <summary> Managed. </summary>
+        private const string ManagedValue = "Managed";
+        /// <summary> SelfHosted. </summary>
+        private const string SelfHostedValue = "SelfHosted";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManagedValue = "Managed";
-        private const string SelfHostedValue = "SelfHosted";
+            _value = value;
+        }
 
         /// <summary> Managed. </summary>
         public static IntegrationRuntimeType Managed { get; } = new IntegrationRuntimeType(ManagedValue);
+
         /// <summary> SelfHosted. </summary>
         public static IntegrationRuntimeType SelfHosted { get; } = new IntegrationRuntimeType(SelfHostedValue);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeType left, IntegrationRuntimeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeType left, IntegrationRuntimeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeType(string value) => new IntegrationRuntimeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeType?(string value) => value == null ? null : new IntegrationRuntimeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

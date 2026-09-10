@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Monitor.Models
     public readonly partial struct MonitorMetricClass : IEquatable<MonitorMetricClass>
     {
         private readonly string _value;
+        /// <summary> Availability. </summary>
+        private const string AvailabilityValue = "Availability";
+        /// <summary> Transactions. </summary>
+        private const string TransactionsValue = "Transactions";
+        /// <summary> Errors. </summary>
+        private const string ErrorsValue = "Errors";
+        /// <summary> Latency. </summary>
+        private const string LatencyValue = "Latency";
+        /// <summary> Saturation. </summary>
+        private const string SaturationValue = "Saturation";
 
         /// <summary> Initializes a new instance of <see cref="MonitorMetricClass"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitorMetricClass(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AvailabilityValue = "Availability";
-        private const string TransactionsValue = "Transactions";
-        private const string ErrorsValue = "Errors";
-        private const string LatencyValue = "Latency";
-        private const string SaturationValue = "Saturation";
+            _value = value;
+        }
 
         /// <summary> Availability. </summary>
         public static MonitorMetricClass Availability { get; } = new MonitorMetricClass(AvailabilityValue);
+
         /// <summary> Transactions. </summary>
         public static MonitorMetricClass Transactions { get; } = new MonitorMetricClass(TransactionsValue);
+
         /// <summary> Errors. </summary>
         public static MonitorMetricClass Errors { get; } = new MonitorMetricClass(ErrorsValue);
+
         /// <summary> Latency. </summary>
         public static MonitorMetricClass Latency { get; } = new MonitorMetricClass(LatencyValue);
+
         /// <summary> Saturation. </summary>
         public static MonitorMetricClass Saturation { get; } = new MonitorMetricClass(SaturationValue);
+
         /// <summary> Determines if two <see cref="MonitorMetricClass"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitorMetricClass left, MonitorMetricClass right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitorMetricClass"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitorMetricClass left, MonitorMetricClass right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorMetricClass"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitorMetricClass"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitorMetricClass(string value) => new MonitorMetricClass(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitorMetricClass"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitorMetricClass?(string value) => value == null ? null : new MonitorMetricClass(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitorMetricClass other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitorMetricClass other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

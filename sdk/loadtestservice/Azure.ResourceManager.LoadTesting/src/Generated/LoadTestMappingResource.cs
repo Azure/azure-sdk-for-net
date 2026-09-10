@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(ResourceType, out string loadTestMappingApiVersion);
             _loadTestMappingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
+            _loadTestMappingsRestClient = new LoadTestMappings(_loadTestMappingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, loadTestMappingApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent, Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, LoadTestMappingPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LoadTestMappingData> response = Response.FromValue(LoadTestMappingData.FromResponse(result), result);
                 if (response.Value == null)
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.LoadTesting
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _loadTestMappingsRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _loadTestMappingsRestClient.CreateDeleteRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());

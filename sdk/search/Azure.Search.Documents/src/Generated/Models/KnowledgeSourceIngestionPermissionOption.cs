@@ -21,6 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string GroupIdsValue = "groupIds";
         /// <summary> Ingest RBAC scope information alongside document content. </summary>
         private const string RbacScopeValue = "rbacScope";
+        /// <summary> Ingest Microsoft Purview sensitivity labels alongside document content. </summary>
+        private const string SensitivityLabelsValue = "sensitivityLabels";
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeSourceIngestionPermissionOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Ingest RBAC scope information alongside document content. </summary>
         public static KnowledgeSourceIngestionPermissionOption RbacScope { get; } = new KnowledgeSourceIngestionPermissionOption(RbacScopeValue);
+
+        /// <summary> Ingest Microsoft Purview sensitivity labels alongside document content. </summary>
+        public static KnowledgeSourceIngestionPermissionOption SensitivityLabels { get; } = new KnowledgeSourceIngestionPermissionOption(SensitivityLabelsValue);
 
         /// <summary> Determines if two <see cref="KnowledgeSourceIngestionPermissionOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

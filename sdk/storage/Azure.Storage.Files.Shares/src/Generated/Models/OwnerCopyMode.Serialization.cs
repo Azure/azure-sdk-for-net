@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class OwnerCopyModeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this OwnerCopyMode value) => value switch
         {
             OwnerCopyMode.Source => "source",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OwnerCopyMode value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static OwnerCopyMode ToOwnerCopyMode(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source")) return OwnerCopyMode.Source;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override")) return OwnerCopyMode.Override;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "source"))
+            {
+                return OwnerCopyMode.Source;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "override"))
+            {
+                return OwnerCopyMode.Override;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OwnerCopyMode value.");
         }
     }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceResource.ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceApiVersion ?? "2026-03-01-preview");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespacesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, DeviceRegistryNamespaceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceResource>(
-                    new DeviceRegistryNamespaceOperationSource(Client),
+                    new DeviceRegistryNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _namespacesRestClient.CreateCreateOrReplaceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, namespaceName, DeviceRegistryNamespaceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<DeviceRegistryNamespaceResource> operation = new DeviceRegistryArmOperation<DeviceRegistryNamespaceResource>(
-                    new DeviceRegistryNamespaceOperationSource(Client),
+                    new DeviceRegistryNamespaceResourceOperationSource(Client),
                     _namespacesClientDiagnostics,
                     Pipeline,
                     message.Request,

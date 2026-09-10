@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,26 +15,25 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ManagedCertificateProperties : FrontDoorSecretProperties
     {
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
-        public ManagedCertificateProperties()
+        public ManagedCertificateProperties() : base(SecretType.ManagedCertificate)
         {
-            SecretType = SecretType.ManagedCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedCertificateProperties"/>. </summary>
         /// <param name="secretType"> The type of the secret resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subject"> Subject name in the certificate. </param>
         /// <param name="expiresOn"> Certificate expiration date. </param>
-        internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData, string subject, DateTimeOffset? expiresOn) : base(secretType, serializedAdditionalRawData)
+        internal ManagedCertificateProperties(SecretType secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string subject, DateTimeOffset? expiresOn) : base(secretType, additionalBinaryDataProperties)
         {
             Subject = subject;
             ExpiresOn = expiresOn;
-            SecretType = secretType;
         }
 
         /// <summary> Subject name in the certificate. </summary>
         [WirePath("subject")]
         public string Subject { get; }
+
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
         public DateTimeOffset? ExpiresOn { get; }

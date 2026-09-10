@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
 ["key1"] = "value1"
 },
             };
-            ArmOperation<SecurityPartnerProviderResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPartnerProviderName, data);
+            ArmOperation<SecurityPartnerProviderResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, securityPartnerProviderName, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityPartnerProviderResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

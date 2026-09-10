@@ -1,0 +1,11 @@
+# Azure.Messaging.ServiceBus approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# ServiceBusClient does provide the with-options / without-options constructor pairs that
+# AZC0007 asks for, but the analyzer cannot see them: it only recognises an options bag
+# that derives from Azure.Core.ClientOptions, and ServiceBusClientOptions intentionally
+# does not. Service Bus is an AMQP client and does not build on the Azure.Core HTTP
+# pipeline, so there is nothing for its options type to inherit. Changing the base type
+# is a breaking change to a GA'd public type. Suppressed for this one type only; the
+# analyzer stays live for every other client in the package.
+nowarn:AZC0007 T:Azure.Messaging.ServiceBus.ServiceBusClient

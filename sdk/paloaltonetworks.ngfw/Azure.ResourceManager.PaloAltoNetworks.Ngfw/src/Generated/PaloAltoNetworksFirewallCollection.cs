@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(PaloAltoNetworksFirewallResource.ResourceType, out string paloAltoNetworksFirewallApiVersion);
             _firewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", PaloAltoNetworksFirewallResource.ResourceType.Namespace, Diagnostics);
-            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2025-10-08");
+            _firewallsRestClient = new Firewalls(_firewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paloAltoNetworksFirewallApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
-                    new PaloAltoNetworksFirewallOperationSource(Client),
+                    new PaloAltoNetworksFirewallResourceOperationSource(Client),
                     _firewallsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _firewallsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, firewallName, PaloAltoNetworksFirewallData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<PaloAltoNetworksFirewallResource> operation = new NgfwArmOperation<PaloAltoNetworksFirewallResource>(
-                    new PaloAltoNetworksFirewallOperationSource(Client),
+                    new PaloAltoNetworksFirewallResourceOperationSource(Client),
                     _firewallsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -10,14 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheNetworkSettings : IUtf8JsonSerializable, IJsonModel<StorageCacheNetworkSettings>
+    /// <summary> Cache network settings. </summary>
+    public partial class StorageCacheNetworkSettings : IJsonModel<StorageCacheNetworkSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheNetworkSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageCacheNetworkSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageCacheNetworkSettings IPersistableModel<StorageCacheNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageCacheNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageCacheNetworkSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +70,11 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Mtu))
             {
                 writer.WritePropertyName("mtu"u8);
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 writer.WritePropertyName("utilityAddresses"u8);
                 writer.WriteStartArray();
-                foreach (var item in UtilityAddresses)
+                foreach (IPAddress item in UtilityAddresses)
                 {
                     if (item == null)
                     {
@@ -59,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                foreach (IPAddress item in DnsServers)
                 {
                     if (item == null)
                     {
@@ -80,15 +120,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("ntpServer"u8);
                 writer.WriteStringValue(NtpServer);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -97,22 +137,27 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
         }
 
-        StorageCacheNetworkSettings IJsonModel<StorageCacheNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageCacheNetworkSettings IJsonModel<StorageCacheNetworkSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual StorageCacheNetworkSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
         }
 
-        internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static StorageCacheNetworkSettings DeserializeStorageCacheNetworkSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -122,27 +167,26 @@ namespace Azure.ResourceManager.StorageCache.Models
             IList<IPAddress> dnsServers = default;
             string dnsSearchDomain = default;
             string ntpServer = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mtu"u8))
+                if (prop.NameEquals("mtu"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mtu = property.Value.GetInt32();
+                    mtu = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("utilityAddresses"u8))
+                if (prop.NameEquals("utilityAddresses"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -156,14 +200,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     utilityAddresses = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("dnsServers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<IPAddress> array = new List<IPAddress>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -177,60 +221,28 @@ namespace Azure.ResourceManager.StorageCache.Models
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("dnsSearchDomain"u8))
+                if (prop.NameEquals("dnsSearchDomain"u8))
                 {
-                    dnsSearchDomain = property.Value.GetString();
+                    dnsSearchDomain = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ntpServer"u8))
+                if (prop.NameEquals("ntpServer"u8))
                 {
-                    ntpServer = property.Value.GetString();
+                    ntpServer = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheNetworkSettings(
                 mtu,
                 utilityAddresses ?? new ChangeTrackingList<IPAddress>(),
                 dnsServers ?? new ChangeTrackingList<IPAddress>(),
                 dnsSearchDomain,
                 ntpServer,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<StorageCacheNetworkSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageCacheContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        StorageCacheNetworkSettings IPersistableModel<StorageCacheNetworkSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheNetworkSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeStorageCacheNetworkSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(StorageCacheNetworkSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<StorageCacheNetworkSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

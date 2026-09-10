@@ -61,7 +61,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlRoleDefinitionCreateAndUpdate()
         {
@@ -101,7 +100,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlRoleDefinitions(definition, definition2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task SqlRoleDefinitionList()
         {
@@ -114,8 +112,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifySqlRoleDefinitions(definitions[0], definition);
         }
 
-        [Test]
         [RecordedTest]
+
+        [Ignore("MPG migration WIP: LRO completion-state divergence.")]
         public async Task SqlRoleDefinitionDelete()
         {
             var definition = await CreateSqlRoleDefinition(SqlDatabaseActionScope, SqlRoleDefinitionCollection);

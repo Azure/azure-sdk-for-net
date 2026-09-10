@@ -80,7 +80,7 @@ public class CacheIntegrationTests : IDisposable
     [Test]
     public async Task Get_UnknownId_Returns404()
     {
-        var response = await _client.GetAsync("/responses/resp_unknown_cache_test");
+        var response = await _client.GetAsync($"/responses/{IdGenerator.NewResponseId()}");
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 

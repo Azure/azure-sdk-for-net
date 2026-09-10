@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningContainerResourceRequirements : IUtf8JsonSerializable, IJsonModel<MachineLearningContainerResourceRequirements>
+    /// <summary> Resource requirements for each container instance within an online deployment. </summary>
+    public partial class MachineLearningContainerResourceRequirements : IJsonModel<MachineLearningContainerResourceRequirements>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningContainerResourceRequirements>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningContainerResourceRequirements PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeMachineLearningContainerResourceRequirements(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<MachineLearningContainerResourceRequirements>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningContainerResourceRequirements IPersistableModel<MachineLearningContainerResourceRequirements>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningContainerResourceRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningContainerResourceRequirements>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,45 +69,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ContainerResourceRequests))
-            {
-                if (ContainerResourceRequests != null)
-                {
-                    writer.WritePropertyName("containerResourceRequests"u8);
-                    writer.WriteObjectValue(ContainerResourceRequests, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceRequests");
-                }
-            }
             if (Optional.IsDefined(ContainerResourceLimits))
             {
-                if (ContainerResourceLimits != null)
-                {
-                    writer.WritePropertyName("containerResourceLimits"u8);
-                    writer.WriteObjectValue(ContainerResourceLimits, options);
-                }
-                else
-                {
-                    writer.WriteNull("containerResourceLimits");
-                }
+                writer.WritePropertyName("containerResourceLimits"u8);
+                writer.WriteObjectValue(ContainerResourceLimits, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ContainerResourceRequests))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("containerResourceRequests"u8);
+                writer.WriteObjectValue(ContainerResourceRequests, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,137 +101,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        MachineLearningContainerResourceRequirements IJsonModel<MachineLearningContainerResourceRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningContainerResourceRequirements IJsonModel<MachineLearningContainerResourceRequirements>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual MachineLearningContainerResourceRequirements JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeMachineLearningContainerResourceRequirements(document.RootElement, options);
         }
 
-        internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static MachineLearningContainerResourceRequirements DeserializeMachineLearningContainerResourceRequirements(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MachineLearningContainerResourceSettings containerResourceRequests = default;
             MachineLearningContainerResourceSettings containerResourceLimits = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            MachineLearningContainerResourceSettings containerResourceRequests = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("containerResourceRequests"u8))
+                if (prop.NameEquals("containerResourceLimits"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        containerResourceRequests = null;
-                        continue;
-                    }
-                    containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("containerResourceLimits"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         containerResourceLimits = null;
                         continue;
                     }
-                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(property.Value, options);
+                    containerResourceLimits = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("containerResourceRequests"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        containerResourceRequests = null;
+                        continue;
+                    }
+                    containerResourceRequests = MachineLearningContainerResourceSettings.DeserializeMachineLearningContainerResourceSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new MachineLearningContainerResourceRequirements(containerResourceRequests, containerResourceLimits, serializedAdditionalRawData);
+            return new MachineLearningContainerResourceRequirements(containerResourceLimits, containerResourceRequests, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerResourceRequests), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerResourceRequests: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerResourceRequests))
-                {
-                    builder.Append("  containerResourceRequests: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ContainerResourceRequests, options, 2, false, "  containerResourceRequests: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerResourceLimits), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerResourceLimits: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerResourceLimits))
-                {
-                    builder.Append("  containerResourceLimits: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, ContainerResourceLimits, options, 2, false, "  containerResourceLimits: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<MachineLearningContainerResourceRequirements>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        MachineLearningContainerResourceRequirements IPersistableModel<MachineLearningContainerResourceRequirements>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMachineLearningContainerResourceRequirements(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerResourceRequirements)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<MachineLearningContainerResourceRequirements>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

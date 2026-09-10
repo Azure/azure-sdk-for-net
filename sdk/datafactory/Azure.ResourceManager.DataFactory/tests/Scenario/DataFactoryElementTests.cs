@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             return dataFactory;
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task CreateLinkedServiceFromSecretString()
         {
             DataFactoryResource dataFactory = await TestSetUp();
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.AreEqual("**********", element.ToString());
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task CreateLinkedServiceFromLiteral()
         {
             DataFactoryResource dataFactory = await TestSetUp();
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.AreEqual(connectionStringExpected, element.ToString());
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task CreateDataSetFromExpression()
         {
             DataFactoryResource dataFactory = await TestSetUp();
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             Assert.AreEqual("@utcnow()", elementFileName.ToString());
         }
 
-        [Test]
         [RecordedTest]
+        [Test]
         public async Task CreateLinkedServiceFromKeyVaultSecret()
         {
             DataFactoryResource dataFactory = await TestSetUp();

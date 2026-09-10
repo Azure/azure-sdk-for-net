@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(AvsCloudLinkResource.ResourceType, out string avsCloudLinkApiVersion);
             _cloudLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsCloudLinkResource.ResourceType.Namespace, Diagnostics);
-            _cloudLinksRestClient = new CloudLinks(_cloudLinksClientDiagnostics, Pipeline, Endpoint, avsCloudLinkApiVersion ?? "2025-09-01");
+            _cloudLinksRestClient = new CloudLinks(_cloudLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsCloudLinkApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _cloudLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cloudLinkName, AvsCloudLinkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<AvsCloudLinkResource> operation = new AvsArmOperation<AvsCloudLinkResource>(
-                    new AvsCloudLinkOperationSource(Client),
+                    new AvsCloudLinkResourceOperationSource(Client),
                     _cloudLinksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _cloudLinksRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, cloudLinkName, AvsCloudLinkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<AvsCloudLinkResource> operation = new AvsArmOperation<AvsCloudLinkResource>(
-                    new AvsCloudLinkOperationSource(Client),
+                    new AvsCloudLinkResourceOperationSource(Client),
                     _cloudLinksClientDiagnostics,
                     Pipeline,
                     message.Request,

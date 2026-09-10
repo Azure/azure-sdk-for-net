@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> The shipping address of the customer. </summary>
     public partial class DataBoxEdgeShippingAddress
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/>. </summary>
         /// <param name="country"> The country name. </param>
@@ -63,8 +35,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="city"> The city name. </param>
         /// <param name="state"> The state name. </param>
         /// <param name="country"> The country name. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeShippingAddress(string addressLine1, string addressLine2, string addressLine3, string postalCode, string city, string state, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeShippingAddress(string addressLine1, string addressLine2, string addressLine3, string postalCode, string city, string state, string country, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressLine1 = addressLine1;
             AddressLine2 = addressLine2;
@@ -73,26 +45,27 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             City = city;
             State = state;
             Country = country;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeShippingAddress"/> for deserialization. </summary>
-        internal DataBoxEdgeShippingAddress()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The address line1. </summary>
         public string AddressLine1 { get; set; }
+
         /// <summary> The address line2. </summary>
         public string AddressLine2 { get; set; }
+
         /// <summary> The address line3. </summary>
         public string AddressLine3 { get; set; }
+
         /// <summary> The postal code. </summary>
         public string PostalCode { get; set; }
+
         /// <summary> The city name. </summary>
         public string City { get; set; }
+
         /// <summary> The state name. </summary>
         public string State { get; set; }
+
         /// <summary> The country name. </summary>
         public string Country { get; set; }
     }

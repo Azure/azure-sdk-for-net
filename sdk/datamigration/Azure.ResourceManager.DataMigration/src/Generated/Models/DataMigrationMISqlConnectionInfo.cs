@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -17,29 +18,22 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="DataMigrationMISqlConnectionInfo"/>. </summary>
         /// <param name="managedInstanceResourceId"> Resource id for Azure SQL database Managed instance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceResourceId"/> is null. </exception>
-        public DataMigrationMISqlConnectionInfo(ResourceIdentifier managedInstanceResourceId)
+        public DataMigrationMISqlConnectionInfo(ResourceIdentifier managedInstanceResourceId) : base("MiSqlConnectionInfo")
         {
             Argument.AssertNotNull(managedInstanceResourceId, nameof(managedInstanceResourceId));
 
             ManagedInstanceResourceId = managedInstanceResourceId;
-            ConnectionInfoType = "MiSqlConnectionInfo";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationMISqlConnectionInfo"/>. </summary>
-        /// <param name="connectionInfoType"> Type of connection info. </param>
+        /// <param name="type"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedInstanceResourceId"> Resource id for Azure SQL database Managed instance. </param>
-        internal DataMigrationMISqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier managedInstanceResourceId) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
+        internal DataMigrationMISqlConnectionInfo(string @type, string userName, string password, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier managedInstanceResourceId) : base(@type, userName, password, additionalBinaryDataProperties)
         {
             ManagedInstanceResourceId = managedInstanceResourceId;
-            ConnectionInfoType = connectionInfoType ?? "MiSqlConnectionInfo";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DataMigrationMISqlConnectionInfo"/> for deserialization. </summary>
-        internal DataMigrationMISqlConnectionInfo()
-        {
         }
 
         /// <summary> Resource id for Azure SQL database Managed instance. </summary>

@@ -65,12 +65,10 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                         },
                         StaticRoutes = {new StaticRoute
 {
-Name = "route1",
 AddressPrefixes = {"10.1.0.0/16", "10.2.0.0/16"},
 NextHopIPAddress = "10.0.0.68",
 }, new StaticRoute
 {
-Name = "route2",
 AddressPrefixes = {"10.3.0.0/16", "10.4.0.0/16"},
 NextHopIPAddress = "10.0.0.65",
 }},
@@ -79,7 +77,7 @@ NextHopIPAddress = "10.0.0.65",
                     OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
             };
-            ArmOperation<HubVirtualNetworkConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data);
+            ArmOperation<HubVirtualNetworkConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             HubVirtualNetworkConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

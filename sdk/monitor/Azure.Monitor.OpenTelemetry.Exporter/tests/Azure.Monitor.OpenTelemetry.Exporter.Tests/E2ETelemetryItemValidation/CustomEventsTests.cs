@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string>(),
+                expectedProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -162,7 +162,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string>(),
+                expectedProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");
@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string> (),
+                expectedProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -312,7 +312,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string>(),
+                expectedProperties: new Dictionary<string, string> { { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null,
                 expectedClientIp: "1.2.3.4");
@@ -420,7 +420,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "MyCustomEventName",
-                expectedProperties: new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "scopeKey1", "scopeValue1" }, { "scopeKey2", "scopeValue2" } },
+                expectedProperties: new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "scopeKey1", "scopeValue1" }, { "scopeKey2", "scopeValue2" }, { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }
@@ -473,7 +473,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCustomEventTelemetry(
                 telemetryItem: telemetryItem!,
                 expectedName: "Name1",
-                expectedProperties: new Dictionary<string, string>() { { "microsoft.custom_event.name", "Name2" } },
+                expectedProperties: new Dictionary<string, string>() { { "microsoft.custom_event.name", "Name2" }, { "CategoryName", logCategoryName } },
                 expectedSpanId: null,
                 expectedTraceId: null);
         }

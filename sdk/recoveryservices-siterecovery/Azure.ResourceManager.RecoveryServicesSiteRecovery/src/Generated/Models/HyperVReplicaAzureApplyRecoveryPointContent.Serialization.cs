@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureApplyRecoveryPointContent : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>
+    /// <summary> ApplyRecoveryPoint input specific to HyperVReplicaAzure provider. </summary>
+    public partial class HyperVReplicaAzureApplyRecoveryPointContent : SiteRecoveryApplyRecoveryPointProviderSpecificContent, IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryApplyRecoveryPointProviderSpecificContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureApplyRecoveryPointContent IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (HyperVReplicaAzureApplyRecoveryPointContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
@@ -47,86 +87,58 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        HyperVReplicaAzureApplyRecoveryPointContent IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HyperVReplicaAzureApplyRecoveryPointContent IJsonModel<HyperVReplicaAzureApplyRecoveryPointContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HyperVReplicaAzureApplyRecoveryPointContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SiteRecoveryApplyRecoveryPointProviderSpecificContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(document.RootElement, options);
         }
 
-        internal static HyperVReplicaAzureApplyRecoveryPointContent DeserializeHyperVReplicaAzureApplyRecoveryPointContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HyperVReplicaAzureApplyRecoveryPointContent DeserializeHyperVReplicaAzureApplyRecoveryPointContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "HyperVReplicaAzure";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string primaryKekCertificatePfx = default;
             string secondaryKekCertificatePfx = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("primaryKekCertificatePfx"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    primaryKekCertificatePfx = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("secondaryKekCertificatePfx"u8))
+                if (prop.NameEquals("primaryKekCertificatePfx"u8))
                 {
-                    secondaryKekCertificatePfx = property.Value.GetString();
+                    primaryKekCertificatePfx = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("instanceType"u8))
+                if (prop.NameEquals("secondaryKekCertificatePfx"u8))
                 {
-                    instanceType = property.Value.GetString();
+                    secondaryKekCertificatePfx = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVReplicaAzureApplyRecoveryPointContent(instanceType, serializedAdditionalRawData, primaryKekCertificatePfx, secondaryKekCertificatePfx);
+            return new HyperVReplicaAzureApplyRecoveryPointContent(instanceType, additionalBinaryDataProperties, primaryKekCertificatePfx, secondaryKekCertificatePfx);
         }
-
-        BinaryData IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HyperVReplicaAzureApplyRecoveryPointContent IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHyperVReplicaAzureApplyRecoveryPointContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureApplyRecoveryPointContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HyperVReplicaAzureApplyRecoveryPointContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

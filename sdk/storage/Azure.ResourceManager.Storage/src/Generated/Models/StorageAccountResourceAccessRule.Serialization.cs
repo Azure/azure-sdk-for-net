@@ -134,11 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = new Guid(prop.Value.GetString());
+                    DeserializeNullableGuid(prop, ref tenantId);
                     continue;
                 }
                 if (prop.NameEquals("resourceId"u8))

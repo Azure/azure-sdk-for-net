@@ -7,82 +7,181 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary>
-    /// A class representing the Probe data model.
-    /// A load balancer probe.
-    /// </summary>
+    /// <summary> A load balancer probe. </summary>
     public partial class ProbeData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         public ProbeData()
         {
-            LoadBalancingRules = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProbeData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="loadBalancingRules"> The load balancer rules that use this probe. </param>
-        /// <param name="protocol"> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </param>
-        /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
-        /// <param name="intervalInSeconds"> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </param>
-        /// <param name="noHealthyBackendsBehavior"> Determines how new connections are handled by the load balancer when all backend instances are probed down. </param>
-        /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
-        /// <param name="probeThreshold"> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </param>
-        /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
-        /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        internal ProbeData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, IReadOnlyList<WritableSubResource> loadBalancingRules, ProbeProtocol? protocol, int? port, int? intervalInSeconds, ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior, int? numberOfProbes, int? probeThreshold, string requestPath, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of load balancer probe. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal ProbeData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, ProbePropertiesFormat properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            LoadBalancingRules = loadBalancingRules;
-            Protocol = protocol;
-            Port = port;
-            IntervalInSeconds = intervalInSeconds;
-            NoHealthyBackendsBehavior = noHealthyBackendsBehavior;
-            NumberOfProbes = numberOfProbes;
-            ProbeThreshold = probeThreshold;
-            RequestPath = requestPath;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of load balancer probe. </summary>
+        [WirePath("properties")]
+        internal ProbePropertiesFormat Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
-        /// <summary> The load balancer rules that use this probe. </summary>
-        [WirePath("properties.loadBalancingRules")]
-        public IReadOnlyList<WritableSubResource> LoadBalancingRules { get; }
+
         /// <summary> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </summary>
         [WirePath("properties.protocol")]
-        public ProbeProtocol? Protocol { get; set; }
+        public ProbeProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ProbePropertiesFormat();
+                    }
+                    Properties.Protocol = value.Value;
+                }
+            }
+        }
+
         /// <summary> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </summary>
         [WirePath("properties.port")]
-        public int? Port { get; set; }
+        public int? Port
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Port;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ProbePropertiesFormat();
+                    }
+                    Properties.Port = value.Value;
+                }
+            }
+        }
+
         /// <summary> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </summary>
         [WirePath("properties.intervalInSeconds")]
-        public int? IntervalInSeconds { get; set; }
+        public int? IntervalInSeconds
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IntervalInSeconds;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                Properties.IntervalInSeconds = value;
+            }
+        }
+
         /// <summary> Determines how new connections are handled by the load balancer when all backend instances are probed down. </summary>
         [WirePath("properties.noHealthyBackendsBehavior")]
-        public ProbeNoHealthyBackendsBehavior? NoHealthyBackendsBehavior { get; set; }
+        public ProbeNoHealthyBackendsBehavior? NoHealthyBackendsBehavior
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NoHealthyBackendsBehavior;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                Properties.NoHealthyBackendsBehavior = value;
+            }
+        }
+
         /// <summary> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </summary>
         [WirePath("properties.numberOfProbes")]
-        public int? NumberOfProbes { get; set; }
+        public int? NumberOfProbes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NumberOfProbes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                Properties.NumberOfProbes = value;
+            }
+        }
+
         /// <summary> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </summary>
         [WirePath("properties.probeThreshold")]
-        public int? ProbeThreshold { get; set; }
+        public int? ProbeThreshold
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProbeThreshold;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                Properties.ProbeThreshold = value;
+            }
+        }
+
         /// <summary> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </summary>
         [WirePath("properties.requestPath")]
-        public string RequestPath { get; set; }
+        public string RequestPath
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestPath;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProbePropertiesFormat();
+                }
+                Properties.RequestPath = value;
+            }
+        }
+
         /// <summary> The provisioning state of the probe resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

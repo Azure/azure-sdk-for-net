@@ -5,12 +5,12 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -44,16 +44,18 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         string filePath = GetFile();
         OpenApiFunctionDefinition toolDefinition = new(
             name: "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenAPIAnonymousAuthenticationDetails()
-        );
-        toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPITool openapiTool = new(toolDefinition);
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            authentication: new OpenApiAnonymousAuthenticationDetails()
+        )
+        {
+            Description = "Retrieve weather information for a location."
+        };
+        OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
-            Tools = {openapiTool}
+            Tools = { openapiTool }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -89,11 +91,13 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         string filePath = GetFile();
         OpenApiFunctionDefinition toolDefinition = new(
             name: "get_weather",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
-            authentication: new OpenAPIAnonymousAuthenticationDetails()
-        );
-        toolDefinition.Description = "Retrieve weather information for a location.";
-        OpenAPITool openapiTool = new(toolDefinition);
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            authentication: new OpenApiAnonymousAuthenticationDetails()
+        )
+        {
+            Description = "Retrieve weather information for a location."
+        };
+        OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Prefix Rule properties. </summary>
     public partial class IPPrefixRule
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IPPrefixRule"/>. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
@@ -65,30 +37,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkPrefix"> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </param>
         /// <param name="condition"> Specify prefix-list bounds. </param>
         /// <param name="subnetMaskLength"> SubnetMaskLength gives the minimum NetworkPrefix length to be matched. Possible values for IPv4 are 1 - 32 . Possible values of IPv6 are 1 - 128. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, IPPrefixRuleCondition? condition, string subnetMaskLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IPPrefixRule(CommunityActionType action, long sequenceNumber, string networkPrefix, IPPrefixRuleCondition? condition, string subnetMaskLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             SequenceNumber = sequenceNumber;
             NetworkPrefix = networkPrefix;
             Condition = condition;
             SubnetMaskLength = subnetMaskLength;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="IPPrefixRule"/> for deserialization. </summary>
-        internal IPPrefixRule()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Action to be taken on the configuration. Example: Permit | Deny. </summary>
         public CommunityActionType Action { get; set; }
+
         /// <summary> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </summary>
         public long SequenceNumber { get; set; }
+
         /// <summary> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </summary>
         public string NetworkPrefix { get; set; }
+
         /// <summary> Specify prefix-list bounds. </summary>
         public IPPrefixRuleCondition? Condition { get; set; }
+
         /// <summary> SubnetMaskLength gives the minimum NetworkPrefix length to be matched. Possible values for IPv4 are 1 - 32 . Possible values of IPv6 are 1 - 128. </summary>
         public string SubnetMaskLength { get; set; }
     }

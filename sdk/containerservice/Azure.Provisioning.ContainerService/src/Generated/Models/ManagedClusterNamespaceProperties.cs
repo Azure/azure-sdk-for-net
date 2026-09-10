@@ -149,6 +149,10 @@ namespace Azure.Provisioning.ContainerService
             _defaultNetworkPolicy = DefineModelProperty<NamespaceNetworkPolicies>(nameof(DefaultNetworkPolicy), new string[] { "defaultNetworkPolicy" });
             _adoptionPolicy = DefineProperty<NamespaceAdoptionPolicy>(nameof(AdoptionPolicy), new string[] { "adoptionPolicy" });
             _deletePolicy = DefineProperty<NamespaceDeletePolicy>(nameof(DeletePolicy), new string[] { "deletePolicy" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterNamespaceProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

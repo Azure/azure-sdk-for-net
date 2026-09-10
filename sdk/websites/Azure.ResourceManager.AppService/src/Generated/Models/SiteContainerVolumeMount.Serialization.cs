@@ -8,16 +8,61 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteContainerVolumeMount : IUtf8JsonSerializable, IJsonModel<SiteContainerVolumeMount>
+    /// <summary> The SiteContainerVolumeMount. </summary>
+    public partial class SiteContainerVolumeMount : IJsonModel<SiteContainerVolumeMount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteContainerVolumeMount>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="SiteContainerVolumeMount"/> for deserialization. </summary>
+        internal SiteContainerVolumeMount()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteContainerVolumeMount PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteContainerVolumeMount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteContainerVolumeMount>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteContainerVolumeMount IPersistableModel<SiteContainerVolumeMount>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteContainerVolumeMount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteContainerVolumeMount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +74,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("volumeSubPath"u8);
             writer.WriteStringValue(VolumeSubPath);
             writer.WritePropertyName("containerMountPath"u8);
@@ -49,15 +93,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +110,27 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        SiteContainerVolumeMount IJsonModel<SiteContainerVolumeMount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteContainerVolumeMount IJsonModel<SiteContainerVolumeMount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteContainerVolumeMount JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteContainerVolumeMount(document.RootElement, options);
         }
 
-        internal static SiteContainerVolumeMount DeserializeSiteContainerVolumeMount(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteContainerVolumeMount DeserializeSiteContainerVolumeMount(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,175 +138,40 @@ namespace Azure.ResourceManager.AppService.Models
             string volumeSubPath = default;
             string containerMountPath = default;
             string data = default;
-            bool? readOnly = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            bool? isReadOnly = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("volumeSubPath"u8))
+                if (prop.NameEquals("volumeSubPath"u8))
                 {
-                    volumeSubPath = property.Value.GetString();
+                    volumeSubPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("containerMountPath"u8))
+                if (prop.NameEquals("containerMountPath"u8))
                 {
-                    containerMountPath = property.Value.GetString();
+                    containerMountPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data"u8))
+                if (prop.NameEquals("data"u8))
                 {
-                    data = property.Value.GetString();
+                    data = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("readOnly"u8))
+                if (prop.NameEquals("readOnly"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    readOnly = property.Value.GetBoolean();
+                    isReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SiteContainerVolumeMount(volumeSubPath, containerMountPath, data, readOnly, serializedAdditionalRawData);
+            return new SiteContainerVolumeMount(volumeSubPath, containerMountPath, data, isReadOnly, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VolumeSubPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  volumeSubPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VolumeSubPath))
-                {
-                    builder.Append("  volumeSubPath: ");
-                    if (VolumeSubPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{VolumeSubPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{VolumeSubPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerMountPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  containerMountPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ContainerMountPath))
-                {
-                    builder.Append("  containerMountPath: ");
-                    if (ContainerMountPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ContainerMountPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ContainerMountPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  data: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Data))
-                {
-                    builder.Append("  data: ");
-                    if (Data.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Data}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Data}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReadOnly), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  readOnly: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsReadOnly))
-                {
-                    builder.Append("  readOnly: ");
-                    var boolValue = IsReadOnly.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SiteContainerVolumeMount>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteContainerVolumeMount IPersistableModel<SiteContainerVolumeMount>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteContainerVolumeMount>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteContainerVolumeMount(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteContainerVolumeMount)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteContainerVolumeMount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

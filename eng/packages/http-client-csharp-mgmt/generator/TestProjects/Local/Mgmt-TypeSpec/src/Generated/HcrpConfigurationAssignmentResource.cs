@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string hcrpConfigurationAssignmentApiVersion);
             _hcrpConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _hcrpConfigurationAssignmentsRestClient = new HcrpConfigurationAssignments(_hcrpConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hcrpConfigurationAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<HcrpConfigurationAssignmentData> response = Response.FromValue(HcrpConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _hcrpConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<HcrpConfigurationAssignmentData> response = Response.FromValue(HcrpConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)

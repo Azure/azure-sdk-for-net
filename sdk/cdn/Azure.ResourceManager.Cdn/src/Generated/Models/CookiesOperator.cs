@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CookiesOperator : IEquatable<CookiesOperator>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CookiesOperator"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CookiesOperator(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AnyValue = "Any";
         private const string EqualValue = "Equal";
         private const string ContainsValue = "Contains";
@@ -33,43 +26,76 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary> Initializes a new instance of <see cref="CookiesOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CookiesOperator(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Any. </summary>
         public static CookiesOperator Any { get; } = new CookiesOperator(AnyValue);
-        /// <summary> Equal. </summary>
+
+        /// <summary> Gets the Equal. </summary>
         public static CookiesOperator Equal { get; } = new CookiesOperator(EqualValue);
-        /// <summary> Contains. </summary>
+
+        /// <summary> Gets the Contains. </summary>
         public static CookiesOperator Contains { get; } = new CookiesOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+
+        /// <summary> Gets the BeginsWith. </summary>
         public static CookiesOperator BeginsWith { get; } = new CookiesOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+
+        /// <summary> Gets the EndsWith. </summary>
         public static CookiesOperator EndsWith { get; } = new CookiesOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+
+        /// <summary> Gets the LessThan. </summary>
         public static CookiesOperator LessThan { get; } = new CookiesOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+
+        /// <summary> Gets the LessThanOrEqual. </summary>
         public static CookiesOperator LessThanOrEqual { get; } = new CookiesOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+
+        /// <summary> Gets the GreaterThan. </summary>
         public static CookiesOperator GreaterThan { get; } = new CookiesOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+
+        /// <summary> Gets the GreaterThanOrEqual. </summary>
         public static CookiesOperator GreaterThanOrEqual { get; } = new CookiesOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+
+        /// <summary> Gets the RegEx. </summary>
         public static CookiesOperator RegEx { get; } = new CookiesOperator(RegExValue);
+
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CookiesOperator left, CookiesOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CookiesOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CookiesOperator left, CookiesOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CookiesOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CookiesOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CookiesOperator(string value) => new CookiesOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CookiesOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CookiesOperator?(string value) => value == null ? null : new CookiesOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CookiesOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CookiesOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

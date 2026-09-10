@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class SqlServerAzureADAdministratorResource : IJsonModel<SqlServerAzureADAdministratorData>
     {
-        private static SqlServerAzureADAdministratorData s_dataDeserializationInstance;
-        private static SqlServerAzureADAdministratorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SqlServerAzureADAdministratorData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SqlServerAzureADAdministratorData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SqlServerAzureADAdministratorData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlServerAzureADAdministratorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)Data).Write(writer, options);
 
-        SqlServerAzureADAdministratorData IJsonModel<SqlServerAzureADAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAzureADAdministratorData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlServerAzureADAdministratorData IJsonModel<SqlServerAzureADAdministratorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SqlServerAzureADAdministratorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAzureADAdministratorData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SqlServerAzureADAdministratorData IPersistableModel<SqlServerAzureADAdministratorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAzureADAdministratorData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerAzureADAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAzureADAdministratorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlServerAzureADAdministratorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

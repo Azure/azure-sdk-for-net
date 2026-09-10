@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class GetUserTablesSqlTaskProperties : IUtf8JsonSerializable, IJsonModel<GetUserTablesSqlTaskProperties>
+    /// <summary> Properties for the task that collects user tables for the given list of databases. </summary>
+    public partial class GetUserTablesSqlTaskProperties : DataMigrationProjectTaskProperties, IJsonModel<GetUserTablesSqlTaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GetUserTablesSqlTaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGetUserTablesSqlTaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GetUserTablesSqlTaskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesSqlTaskProperties IPersistableModel<GetUserTablesSqlTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (GetUserTablesSqlTaskProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GetUserTablesSqlTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GetUserTablesSqlTaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (var item in Output)
+                foreach (GetUserTablesSqlTaskOutput item in Output)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -57,169 +97,148 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        GetUserTablesSqlTaskProperties IJsonModel<GetUserTablesSqlTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GetUserTablesSqlTaskProperties IJsonModel<GetUserTablesSqlTaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GetUserTablesSqlTaskProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGetUserTablesSqlTaskProperties(document.RootElement, options);
         }
 
-        internal static GetUserTablesSqlTaskProperties DeserializeGetUserTablesSqlTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GetUserTablesSqlTaskProperties DeserializeGetUserTablesSqlTaskProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            GetUserTablesSqlTaskInput input = default;
-            IReadOnlyList<GetUserTablesSqlTaskOutput> output = default;
-            string taskId = default;
             DataMigrationTaskType taskType = default;
             IReadOnlyList<DataMigrationODataError> errors = default;
             DataMigrationTaskState? state = default;
             IReadOnlyList<DataMigrationCommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            GetUserTablesSqlTaskInput input = default;
+            IReadOnlyList<GetUserTablesSqlTaskOutput> output = default;
+            string taskId = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("input"u8))
+                if (prop.NameEquals("taskType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(property.Value, options);
+                    taskType = new DataMigrationTaskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("output"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<GetUserTablesSqlTaskOutput> array = new List<GetUserTablesSqlTaskOutput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item, options));
-                    }
-                    output = array;
-                    continue;
-                }
-                if (property.NameEquals("taskId"u8))
-                {
-                    taskId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new DataMigrationTaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationODataError> array = new List<DataMigrationODataError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new DataMigrationTaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"u8))
+                if (prop.NameEquals("commands"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"u8))
+                if (prop.NameEquals("clientData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     clientData = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = GetUserTablesSqlTaskInput.DeserializeGetUserTablesSqlTaskInput(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("output"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<GetUserTablesSqlTaskOutput> array = new List<GetUserTablesSqlTaskOutput>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(GetUserTablesSqlTaskOutput.DeserializeGetUserTablesSqlTaskOutput(item, options));
+                    }
+                    output = array;
+                    continue;
+                }
+                if (prop.NameEquals("taskId"u8))
+                {
+                    taskId = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GetUserTablesSqlTaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
                 commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 input,
                 output ?? new ChangeTrackingList<GetUserTablesSqlTaskOutput>(),
                 taskId);
         }
-
-        BinaryData IPersistableModel<GetUserTablesSqlTaskProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GetUserTablesSqlTaskProperties IPersistableModel<GetUserTablesSqlTaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGetUserTablesSqlTaskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GetUserTablesSqlTaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

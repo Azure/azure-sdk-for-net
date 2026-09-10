@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningComputeRecurrenceFrequency : IEquatable<MachineLearningComputeRecurrenceFrequency>
     {
         private readonly string _value;
+        /// <summary> Minute frequency. </summary>
+        private const string MinuteValue = "Minute";
+        /// <summary> Hour frequency. </summary>
+        private const string HourValue = "Hour";
+        /// <summary> Day frequency. </summary>
+        private const string DayValue = "Day";
+        /// <summary> Week frequency. </summary>
+        private const string WeekValue = "Week";
+        /// <summary> Month frequency. </summary>
+        private const string MonthValue = "Month";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningComputeRecurrenceFrequency(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MinuteValue = "Minute";
-        private const string HourValue = "Hour";
-        private const string DayValue = "Day";
-        private const string WeekValue = "Week";
-        private const string MonthValue = "Month";
+            _value = value;
+        }
 
         /// <summary> Minute frequency. </summary>
         public static MachineLearningComputeRecurrenceFrequency Minute { get; } = new MachineLearningComputeRecurrenceFrequency(MinuteValue);
+
         /// <summary> Hour frequency. </summary>
         public static MachineLearningComputeRecurrenceFrequency Hour { get; } = new MachineLearningComputeRecurrenceFrequency(HourValue);
+
         /// <summary> Day frequency. </summary>
         public static MachineLearningComputeRecurrenceFrequency Day { get; } = new MachineLearningComputeRecurrenceFrequency(DayValue);
+
         /// <summary> Week frequency. </summary>
         public static MachineLearningComputeRecurrenceFrequency Week { get; } = new MachineLearningComputeRecurrenceFrequency(WeekValue);
+
         /// <summary> Month frequency. </summary>
         public static MachineLearningComputeRecurrenceFrequency Month { get; } = new MachineLearningComputeRecurrenceFrequency(MonthValue);
+
         /// <summary> Determines if two <see cref="MachineLearningComputeRecurrenceFrequency"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningComputeRecurrenceFrequency left, MachineLearningComputeRecurrenceFrequency right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningComputeRecurrenceFrequency"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningComputeRecurrenceFrequency left, MachineLearningComputeRecurrenceFrequency right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputeRecurrenceFrequency"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningComputeRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningComputeRecurrenceFrequency(string value) => new MachineLearningComputeRecurrenceFrequency(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningComputeRecurrenceFrequency"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningComputeRecurrenceFrequency?(string value) => value == null ? null : new MachineLearningComputeRecurrenceFrequency(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningComputeRecurrenceFrequency other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningComputeRecurrenceFrequency other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

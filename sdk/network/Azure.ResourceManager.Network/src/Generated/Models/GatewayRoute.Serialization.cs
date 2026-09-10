@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class GatewayRoute : IUtf8JsonSerializable, IJsonModel<GatewayRoute>
+    /// <summary> Gateway routing details. </summary>
+    public partial class GatewayRoute : IJsonModel<GatewayRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayRoute>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayRoute PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGatewayRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayRoute IPersistableModel<GatewayRoute>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GatewayRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GatewayRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(LocalAddress))
             {
                 writer.WritePropertyName("localAddress"u8);
@@ -70,15 +109,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("weight"u8);
                 writer.WriteNumberValue(Weight.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -87,22 +126,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        GatewayRoute IJsonModel<GatewayRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GatewayRoute IJsonModel<GatewayRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GatewayRoute JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGatewayRoute(document.RootElement, options);
         }
 
-        internal static GatewayRoute DeserializeGatewayRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GatewayRoute DeserializeGatewayRoute(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,55 +158,53 @@ namespace Azure.ResourceManager.Network.Models
             string origin = default;
             string asPath = default;
             int? weight = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("localAddress"u8))
+                if (prop.NameEquals("localAddress"u8))
                 {
-                    localAddress = property.Value.GetString();
+                    localAddress = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("network"u8))
+                if (prop.NameEquals("network"u8))
                 {
-                    network = property.Value.GetString();
+                    network = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("nextHop"u8))
+                if (prop.NameEquals("nextHop"u8))
                 {
-                    nextHop = property.Value.GetString();
+                    nextHop = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourcePeer"u8))
+                if (prop.NameEquals("sourcePeer"u8))
                 {
-                    sourcePeer = property.Value.GetString();
+                    sourcePeer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("origin"u8))
+                if (prop.NameEquals("origin"u8))
                 {
-                    origin = property.Value.GetString();
+                    origin = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("asPath"u8))
+                if (prop.NameEquals("asPath"u8))
                 {
-                    asPath = property.Value.GetString();
+                    asPath = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("weight"u8))
+                if (prop.NameEquals("weight"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    weight = property.Value.GetInt32();
+                    weight = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayRoute(
                 localAddress,
                 network,
@@ -171,208 +213,7 @@ namespace Azure.ResourceManager.Network.Models
                 origin,
                 asPath,
                 weight,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  localAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LocalAddress))
-                {
-                    builder.Append("  localAddress: ");
-                    if (LocalAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{LocalAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{LocalAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Network), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  network: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Network))
-                {
-                    builder.Append("  network: ");
-                    if (Network.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Network}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Network}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextHop), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  nextHop: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NextHop))
-                {
-                    builder.Append("  nextHop: ");
-                    if (NextHop.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{NextHop}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{NextHop}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourcePeer), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sourcePeer: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SourcePeer))
-                {
-                    builder.Append("  sourcePeer: ");
-                    if (SourcePeer.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SourcePeer}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SourcePeer}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Origin), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  origin: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Origin))
-                {
-                    builder.Append("  origin: ");
-                    if (Origin.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Origin}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Origin}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AsPath), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  asPath: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AsPath))
-                {
-                    builder.Append("  asPath: ");
-                    if (AsPath.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AsPath}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AsPath}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Weight), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  weight: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Weight))
-                {
-                    builder.Append("  weight: ");
-                    builder.AppendLine($"{Weight.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GatewayRoute IPersistableModel<GatewayRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGatewayRoute(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GatewayRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.ContainerService
     {
         /// <summary> Use a a standard Load Balancer. This is the recommended Load Balancer SKU. For more information about on working with the load balancer in the managed cluster, see the [standard Load Balancer](https://docs.microsoft.com/azure/aks/load-balancer-standard) article. </summary>
         [DataMember(Name = "standard")]
-        Standard,
+        Standard = 0,
         /// <summary> Use a basic Load Balancer with limited functionality. </summary>
         [DataMember(Name = "basic")]
-        Basic
+        Basic = 1
     }
 }

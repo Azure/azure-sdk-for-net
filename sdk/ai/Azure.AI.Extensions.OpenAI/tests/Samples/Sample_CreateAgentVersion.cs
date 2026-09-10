@@ -1,17 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Extensions.OpenAI;
+using OpenAI.Conversations;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
 
@@ -51,7 +52,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateConversation_Async
-        ProjectConversation conversation
+        ConversationResource conversation
             = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         #endregion
 
@@ -104,7 +105,7 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
         #endregion
 
         #region Snippet:Sample_CreateConversation_Sync
-        ProjectConversation conversation
+        ConversationResource conversation
             = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         #endregion
 

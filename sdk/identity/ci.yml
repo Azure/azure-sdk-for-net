@@ -18,5 +18,7 @@ extends:
     Artifacts:
     - name: Azure.Identity
       safeName: AzureIdentity
+      skipCodeownersVerification: true
     - name: Azure.Identity.Broker
       safeName: AzureIdentityBroker
+      skipCodeownersVerification: true

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 JWTAuthenticatorListResult result = JWTAuthenticatorListResult.FromResponse(response);
-                yield return Page<ManagedClusterJwtAuthenticatorData>.FromValues((IReadOnlyList<ManagedClusterJwtAuthenticatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedClusterJwtAuthenticatorData>.FromValues((IReadOnlyList<ManagedClusterJwtAuthenticatorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

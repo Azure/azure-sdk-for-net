@@ -108,7 +108,10 @@ For scenarios where an Entra user can be used with Communication Services, you n
 Along with this, you must provide the URI of the Azure Communication Services resource and the scopes required for the Entra user token. These scopes determine the permissions granted to the token.
 
 This approach needs to be used for authorizing an Entra user with a Teams license to use Teams Phone Extensibility features through your Azure Communication Services resource.
-This requires providing the `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls` scope.
+This requires providing a Teams Extension scope:
+- Public cloud: `https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls`
+- Sovereign (GCCH) cloud: `https://auth.msft.communication.azure.us/TeamsExtension.ManageCalls`
+
 ```C# 
 var options = new InteractiveBrowserCredentialOptions
     {
@@ -121,7 +124,6 @@ var entraTokenCredential = new InteractiveBrowserCredential(options);
 var entraTokenCredentialOptions = new EntraCommunicationTokenCredentialOptions(
     resourceEndpoint: "https://<your-resource>.communication.azure.com",
     entraTokenCredential: entraTokenCredential)
-    )
     {
       Scopes = new[] { "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls" }
     };

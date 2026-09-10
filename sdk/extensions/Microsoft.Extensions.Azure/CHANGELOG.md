@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.14.1 (2026-09-08)
+
+### Other Changes
+
+- Updated dependency `Azure.Core` to version `1.61.0`.
+- Updated dependency `Microsoft.Extensions.Configuration.Binder` to version `10.0.10`.
+- Updated dependency `Microsoft.Extensions.Logging` to version `10.0.10`.
+
+## 1.14.0 (2026-04-22)
+
+### Other Changes
+
+- Adopted the new `Azure.Core` version that includes the identity types moved from `Azure.Identity`.
 
 ## 1.13.1 (2025-11-19)
 

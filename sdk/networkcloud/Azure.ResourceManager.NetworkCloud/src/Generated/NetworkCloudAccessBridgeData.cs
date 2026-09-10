@@ -40,18 +40,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The list of the resource properties. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="extendedLocation"> The extended location of the resource. This property is required when creating the resource. </param>
-        internal NetworkCloudAccessBridgeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, AccessBridgeProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudAccessBridgeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AccessBridgeProperties properties, ETag? eTag, Resources.Models.ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             ExtendedLocation = extendedLocation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of the resource properties. </summary>
@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.NetworkCloud
         public Resources.Models.ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> The IPv4 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string Ipv4ConnectedPrefix
+        public string IPv4ConnectedPrefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4ConnectedPrefix;
+                return Properties is null ? default : Properties.IPv4ConnectedPrefix;
             }
             set
             {
@@ -76,16 +76,16 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AccessBridgeProperties();
                 }
-                Properties.Ipv4ConnectedPrefix = value;
+                Properties.IPv4ConnectedPrefix = value;
             }
         }
 
         /// <summary> The IPv6 subnet from which the access bridge allocates an address. This subnet must be part of the internal network specified by networkId. </summary>
-        public string Ipv6ConnectedPrefix
+        public string IPv6ConnectedPrefix
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6ConnectedPrefix;
+                return Properties is null ? default : Properties.IPv6ConnectedPrefix;
             }
             set
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 {
                     Properties = new AccessBridgeProperties();
                 }
-                Properties.Ipv6ConnectedPrefix = value;
+                Properties.IPv6ConnectedPrefix = value;
             }
         }
 

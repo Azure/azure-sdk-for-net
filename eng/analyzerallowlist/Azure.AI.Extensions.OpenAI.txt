@@ -1,0 +1,18 @@
+# Azure.AI.Extensions.OpenAI approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# OPENAI001 / OPENAICUA001 are the [Experimental] markers on the OpenAI SDK types this
+# library extends. The OpenAIExperimentalVisitor in the codegen plugin (sdk/ai/codegen)
+# propagates these markers onto the generated public surface, so downstream consumers are
+# correctly warned per-symbol. These assembly-wide entries are still required because the
+# compile-time source-generated ModelReaderWriterContext partial (*.g.cs) references
+# external OpenAI experimental types (e.g. McpToolDefinition, ComputerCallSafetyCheck) in
+# code we cannot edit or attribute, and the [Experimental] diagnostics ship as errors so
+# they cannot be narrowed via scoped (point) suppression. Hand-written custom extension
+# code also relies on these until it is individually audited and attributed.
+nowarn:OPENAI001 SourceGenerated
+nowarn:OPENAICUA001 SourceGenerated
+
+# Point suppressions for AAIP001 warnings
+nowarn:AAIP001 M:Azure.AI.Extensions.OpenAI.AgentResponseItem.DeserializeAgentResponseItem(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Extensions.OpenAI.ResponsesTool.DeserializeResponsesTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

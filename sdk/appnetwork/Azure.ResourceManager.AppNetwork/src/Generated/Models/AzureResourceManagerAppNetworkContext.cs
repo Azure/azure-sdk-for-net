@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AppNetwork.Models;
 using Azure.ResourceManager.Models;
 
@@ -44,7 +43,6 @@ namespace Azure.ResourceManager.AppNetwork
     [ModelReaderWriterBuildable(typeof(MetricsProfile))]
     [ModelReaderWriterBuildable(typeof(ObservabilityProfile))]
     [ModelReaderWriterBuildable(typeof(PrivateConnectProfile))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SelfManagedUpgradeProfile))]
     [ModelReaderWriterBuildable(typeof(SelfManagedVersions))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

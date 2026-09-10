@@ -1,6 +1,27 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.6.0 (2026-07-27)
+
+### Bugs Fixed
+
+- Hardened Azure Monitor ingestion and Live Metrics redirect handling to prevent credentials and telemetry from being forwarded to untrusted destinations.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Updated `Azure.Monitor.OpenTelemetry.Exporter` dependency to `1.8.3`, which brings: customer SDK stats enabled by default (opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`), internal Network SDK statistics signals, GenAI agent attribution processors for spans and logs, and `CategoryName` added to custom event custom dimensions.
+
+## 1.5.0 (2026-04-30)
 
 ### Features Added
 
@@ -36,8 +57,6 @@
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
   instead of replica names in the Role Instance field.
   ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
-
-### Other Changes
 
 ## 1.4.0 (2025-11-14)
 

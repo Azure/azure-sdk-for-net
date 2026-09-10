@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 RecoveryServicesDataReplicationPrivateEndpointConnectionListResult result = RecoveryServicesDataReplicationPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<DataReplicationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DataReplicationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataReplicationPrivateEndpointConnectionData>.FromValues((IReadOnlyList<DataReplicationPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

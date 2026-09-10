@@ -14,7 +14,6 @@ using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> Job run properties. </summary>
     internal partial class JobRunProperties : IJsonModel<JobRunProperties>
     {
         /// <param name="data"> The data to parse. </param>
@@ -95,15 +94,25 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("agentResourceId"u8);
                 writer.WriteStringValue(AgentResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartTime"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndsOn))
             {
                 writer.WritePropertyName("executionEndTime"u8);
-                writer.WriteStringValue(ExecutionEndOn.Value, "O");
+                writer.WriteStringValue(ExecutionEndsOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TriggerType))
+            {
+                writer.WritePropertyName("triggerType"u8);
+                writer.WriteStringValue(TriggerType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledExecutionOn))
+            {
+                writer.WritePropertyName("scheduledExecutionTime"u8);
+                writer.WriteStringValue(ScheduledExecutionOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastStatusUpdate))
             {
@@ -292,8 +301,10 @@ namespace Azure.ResourceManager.StorageMover.Models
             JobRunScanStatus? scanStatus = default;
             string agentName = default;
             ResourceIdentifier agentResourceId = default;
-            DateTimeOffset? executionStartOn = default;
-            DateTimeOffset? executionEndOn = default;
+            DateTimeOffset? executionStartsOn = default;
+            DateTimeOffset? executionEndsOn = default;
+            StorageMoverJobTriggerType? triggerType = default;
+            DateTimeOffset? scheduledExecutionOn = default;
             DateTimeOffset? lastStatusUpdate = default;
             long? itemsScanned = default;
             long? itemsExcluded = default;
@@ -345,11 +356,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("agentResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    agentResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeAgentResourceIdValue(prop, ref agentResourceId);
                     continue;
                 }
                 if (prop.NameEquals("executionStartTime"u8))
@@ -358,7 +365,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    executionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executionEndTime"u8))
@@ -367,7 +374,25 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    executionEndOn = prop.Value.GetDateTimeOffset("O");
+                    executionEndsOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("triggerType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    triggerType = new StorageMoverJobTriggerType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scheduledExecutionTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledExecutionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStatusUpdate"u8))
@@ -494,11 +519,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sourceResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeSourceResourceIdValue(prop, ref sourceResourceId);
                     continue;
                 }
                 if (prop.NameEquals("sourceProperties"u8))
@@ -517,11 +538,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("targetResourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    DeserializeTargetResourceIdValue(prop, ref targetResourceId);
                     continue;
                 }
                 if (prop.NameEquals("targetProperties"u8))
@@ -584,8 +601,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 scanStatus,
                 agentName,
                 agentResourceId,
-                executionStartOn,
-                executionEndOn,
+                executionStartsOn,
+                executionEndsOn,
+                triggerType,
+                scheduledExecutionOn,
                 lastStatusUpdate,
                 itemsScanned,
                 itemsExcluded,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             TryGetApiVersion(DisconnectedOperationsHardwareSettingResource.ResourceType, out string disconnectedOperationsHardwareSettingApiVersion);
             _hardwareSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationsHardwareSettingResource.ResourceType.Namespace, Diagnostics);
-            _hardwareSettingsRestClient = new HardwareSettings(_hardwareSettingsClientDiagnostics, Pipeline, Endpoint, disconnectedOperationsHardwareSettingApiVersion ?? "2026-03-15");
+            _hardwareSettingsRestClient = new HardwareSettings(_hardwareSettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationsHardwareSettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _hardwareSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hardwareSettingName, DisconnectedOperationsHardwareSettingData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource>(
-                    new DisconnectedOperationsHardwareSettingOperationSource(Client),
+                    new DisconnectedOperationsHardwareSettingResourceOperationSource(Client),
                     _hardwareSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 HttpMessage message = _hardwareSettingsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, hardwareSettingName, DisconnectedOperationsHardwareSettingData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationsHardwareSettingResource>(
-                    new DisconnectedOperationsHardwareSettingOperationSource(Client),
+                    new DisconnectedOperationsHardwareSettingResourceOperationSource(Client),
                     _hardwareSettingsClientDiagnostics,
                     Pipeline,
                     message.Request,

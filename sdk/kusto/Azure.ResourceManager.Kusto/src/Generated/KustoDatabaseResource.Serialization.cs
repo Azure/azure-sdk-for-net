@@ -8,22 +8,33 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class KustoDatabaseResource : IJsonModel<KustoDatabaseData>
+    /// <summary></summary>
+    public partial class KustoDatabaseResource : ArmResource, IJsonModel<KustoDatabaseData>
     {
-        private static KustoDatabaseData s_dataDeserializationInstance;
-        private static KustoDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<KustoDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<KustoDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new KustoDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<KustoDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabaseData>)Data).Write(writer, options);
 
-        KustoDatabaseData IJsonModel<KustoDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        KustoDatabaseData IJsonModel<KustoDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<KustoDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoDatabaseData>(Data, options, AzureResourceManagerKustoContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         KustoDatabaseData IPersistableModel<KustoDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDatabaseData>(data, options, AzureResourceManagerKustoContext.Default);
 
-        string IPersistableModel<KustoDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<KustoDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

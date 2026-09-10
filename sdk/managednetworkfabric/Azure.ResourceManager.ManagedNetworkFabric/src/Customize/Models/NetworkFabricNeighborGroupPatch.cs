@@ -1,0 +1,280 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
+
+namespace Azure.ResourceManager.ManagedNetworkFabric.Models
+{
+    // 1. The TypeSpec patch model now keeps the Swagger-compatible TagsUpdate base and the generated
+    //    C# patch shape is renamed to NetworkFabricNeighborGroupPatchContent.
+    // 2. We keep this obsolete compatibility type with the shipped NetworkFabricNeighborGroupPatch name and original
+    //    NetworkRackPatch inheritance, then adapt it to the generated content type at operation boundaries.
+    // 3. Without this custom code, the public NetworkFabricNeighborGroupPatch type and Update overloads that accept it would be
+    //    removed or would have the wrong base type, breaking existing callers.
+    /// <summary> The Neighbor Group Patch definition. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This compatibility type is obsolete and will be removed in a future version. Use NetworkFabricNeighborGroupPatchContent instead.")]
+    public partial class NetworkFabricNeighborGroupPatch : NetworkRackPatch, IJsonModel<NetworkFabricNeighborGroupPatch>, IPersistableModel<NetworkFabricNeighborGroupPatch>
+    {
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
+        public NetworkFabricNeighborGroupPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricNeighborGroupPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Neighbor Group Patch properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal NetworkFabricNeighborGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, NeighborGroupPatchProperties properties, NetworkFabricManagedServiceIdentityPatch identity) : base(tags, additionalBinaryDataProperties)
+        {
+            Properties = properties;
+            Identity = identity;
+        }
+
+        /// <summary> Neighbor Group Patch properties. </summary>
+        internal NeighborGroupPatchProperties Properties { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public NetworkFabricManagedServiceIdentityPatch Identity { get; set; }
+
+        /// <summary> Switch configuration description. </summary>
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupPatchProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
+        /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
+        public NeighborGroupDestination Destination
+        {
+            get
+            {
+                return ToNeighborGroupDestination(Properties?.DestinationSettings);
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NeighborGroupPatchProperties();
+                }
+                Properties.DestinationSettings = ToNeighborGroupDestinationPatch(value);
+            }
+        }
+
+        private static NeighborGroupDestination ToNeighborGroupDestination(NeighborGroupDestinationPatch value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new NeighborGroupDestination();
+            foreach (var address in value.IPv4Addresses)
+            {
+                result.IPv4Addresses.Add(address);
+            }
+            foreach (var address in value.IPv6Addresses)
+            {
+                result.IPv6Addresses.Add(address);
+            }
+            return result;
+        }
+
+        private static NeighborGroupDestinationPatch ToNeighborGroupDestinationPatch(NeighborGroupDestination value)
+        {
+            if (value is null)
+            {
+                return null;
+            }
+
+            var result = new NeighborGroupDestinationPatch();
+            foreach (var address in value.IPv4Addresses)
+            {
+                result.IPv4Addresses.Add(address);
+            }
+            foreach (var address in value.IPv6Addresses)
+            {
+                result.IPv6Addresses.Add(address);
+            }
+            return result;
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNetworkFabricNeighborGroupPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NetworkFabricNeighborGroupPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricNeighborGroupPatch IPersistableModel<NetworkFabricNeighborGroupPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => (NetworkFabricNeighborGroupPatch)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkFabricNeighborGroupPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="networkFabricNeighborGroupPatch"> The <see cref="NetworkFabricNeighborGroupPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(NetworkFabricNeighborGroupPatch networkFabricNeighborGroupPatch)
+        {
+            if (networkFabricNeighborGroupPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(networkFabricNeighborGroupPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<NetworkFabricNeighborGroupPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupPatch)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
+        }
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkFabricNeighborGroupPatch IJsonModel<NetworkFabricNeighborGroupPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NetworkFabricNeighborGroupPatch)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkRackPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NetworkFabricNeighborGroupPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkFabricNeighborGroupPatch)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkFabricNeighborGroupPatch(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NetworkFabricNeighborGroupPatch DeserializeNetworkFabricNeighborGroupPatch(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NeighborGroupPatchProperties properties = default;
+            NetworkFabricManagedServiceIdentityPatch identity = default;
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NeighborGroupPatchProperties.DeserializeNeighborGroupPatchProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = NetworkFabricManagedServiceIdentityPatch.DeserializeNetworkFabricManagedServiceIdentityPatch(prop.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new NetworkFabricNeighborGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties, properties, identity);
+        }
+    }
+}

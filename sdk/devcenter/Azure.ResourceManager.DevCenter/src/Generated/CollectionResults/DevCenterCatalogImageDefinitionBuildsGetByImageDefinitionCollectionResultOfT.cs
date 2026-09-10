@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.DevCenter
                     yield break;
                 }
                 ImageDefinitionBuildListResult result = ImageDefinitionBuildListResult.FromResponse(response);
-                yield return Page<ImageDefinitionBuildData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ImageDefinitionBuildData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -6,9 +6,11 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectEvaluatorsGetVersionsCollectionResultOfT : CollectionResult<EvaluatorVersion>
     {
         private readonly ProjectEvaluators _client;
@@ -40,7 +42,7 @@ namespace Azure.AI.Projects.Evaluation
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
                 nextPageUri = ((PagedEvaluatorVersion)result).NextLink;
@@ -74,6 +76,23 @@ namespace Azure.AI.Projects.Evaluation
         protected override IEnumerable<EvaluatorVersion> GetValuesFromPage(ClientResult page)
         {
             return ((PagedEvaluatorVersion)page).Value;
+        }
+
+        /// <summary> Sends the request in the pipeline message and returns the response. </summary>
+        /// <param name="message"> The pipeline message containing the request to send. </param>
+        private ClientResult GetNextResponse(PipelineMessage message)
+        {
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectEvaluators.GetVersions");
+            scope.Start();
+            try
+            {
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

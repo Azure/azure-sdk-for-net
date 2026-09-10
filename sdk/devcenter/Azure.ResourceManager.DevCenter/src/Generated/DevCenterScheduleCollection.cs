@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterScheduleResource.ResourceType, out string devCenterScheduleApiVersion);
             _schedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterScheduleResource.ResourceType.Namespace, Diagnostics);
-            _schedulesRestClient = new Schedules(_schedulesClientDiagnostics, Pipeline, Endpoint, devCenterScheduleApiVersion ?? "2026-01-01-preview");
+            _schedulesRestClient = new Schedules(_schedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterScheduleApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
-                    new DevCenterScheduleOperationSource(Client),
+                    new DevCenterScheduleResourceOperationSource(Client),
                     _schedulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _schedulesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, scheduleName, DevCenterScheduleData.ToRequestContent(data), top, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterScheduleResource> operation = new DevCenterArmOperation<DevCenterScheduleResource>(
-                    new DevCenterScheduleOperationSource(Client),
+                    new DevCenterScheduleResourceOperationSource(Client),
                     _schedulesClientDiagnostics,
                     Pipeline,
                     message.Request,

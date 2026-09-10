@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,146 +15,237 @@ namespace Azure.ResourceManager.DataMigration.Models
     internal readonly partial struct DataMigrationTaskType : IEquatable<DataMigrationTaskType>
     {
         private readonly string _value;
+        /// <summary> Connect.MongoDb. </summary>
+        private const string ConnectMongoDbValue = "Connect.MongoDb";
+        /// <summary> ConnectToSource.SqlServer. </summary>
+        private const string ConnectToSourceSqlServerValue = "ConnectToSource.SqlServer";
+        /// <summary> ConnectToSource.SqlServer.Sync. </summary>
+        private const string ConnectToSourceSqlServerSyncValue = "ConnectToSource.SqlServer.Sync";
+        /// <summary> ConnectToSource.PostgreSql.Sync. </summary>
+        private const string ConnectToSourcePostgreSqlSyncValue = "ConnectToSource.PostgreSql.Sync";
+        /// <summary> ConnectToSource.MySql. </summary>
+        private const string ConnectToSourceMySqlValue = "ConnectToSource.MySql";
+        /// <summary> ConnectToSource.Oracle.Sync. </summary>
+        private const string ConnectToSourceOracleSyncValue = "ConnectToSource.Oracle.Sync";
+        /// <summary> ConnectToTarget.SqlDb. </summary>
+        private const string ConnectToTargetSqlDbValue = "ConnectToTarget.SqlDb";
+        /// <summary> ConnectToTarget.SqlDb.Sync. </summary>
+        private const string ConnectToTargetSqlDbSyncValue = "ConnectToTarget.SqlDb.Sync";
+        /// <summary> ConnectToTarget.AzureDbForPostgreSql.Sync. </summary>
+        private const string ConnectToTargetAzureDbForPostgreSqlSyncValue = "ConnectToTarget.AzureDbForPostgreSql.Sync";
+        /// <summary> ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync. </summary>
+        private const string ConnectToTargetOracleAzureDbForPostgreSqlSyncValue = "ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync";
+        /// <summary> ConnectToTarget.AzureSqlDbMI. </summary>
+        private const string ConnectToTargetAzureSqlDbMIValue = "ConnectToTarget.AzureSqlDbMI";
+        /// <summary> ConnectToTarget.AzureSqlDbMI.Sync.LRS. </summary>
+        private const string ConnectToTargetAzureSqlDbMISyncLRSValue = "ConnectToTarget.AzureSqlDbMI.Sync.LRS";
+        /// <summary> ConnectToTarget.AzureDbForMySql. </summary>
+        private const string ConnectToTargetAzureDbForMySqlValue = "ConnectToTarget.AzureDbForMySql";
+        /// <summary> GetUserTables.Sql. </summary>
+        private const string GetUserTablesSqlValue = "GetUserTables.Sql";
+        /// <summary> GetUserTables.AzureSqlDb.Sync. </summary>
+        private const string GetUserTablesAzureSqlDbSyncValue = "GetUserTables.AzureSqlDb.Sync";
+        /// <summary> GetUserTablesOracle. </summary>
+        private const string GetUserTablesOracleValue = "GetUserTablesOracle";
+        /// <summary> GetUserTablesPostgreSql. </summary>
+        private const string GetUserTablesPostgreSqlValue = "GetUserTablesPostgreSql";
+        /// <summary> GetUserTablesMySql. </summary>
+        private const string GetUserTablesMySqlValue = "GetUserTablesMySql";
+        /// <summary> Migrate.MongoDb. </summary>
+        private const string MigrateMongoDbValue = "Migrate.MongoDb";
+        /// <summary> Migrate.SqlServer.AzureSqlDbMI. </summary>
+        private const string MigrateSqlServerAzureSqlDbMIValue = "Migrate.SqlServer.AzureSqlDbMI";
+        /// <summary> Migrate.SqlServer.AzureSqlDbMI.Sync.LRS. </summary>
+        private const string MigrateSqlServerAzureSqlDbMISyncLRSValue = "Migrate.SqlServer.AzureSqlDbMI.Sync.LRS";
+        /// <summary> Migrate.SqlServer.SqlDb. </summary>
+        private const string MigrateSqlServerSqlDbValue = "Migrate.SqlServer.SqlDb";
+        /// <summary> Migrate.SqlServer.AzureSqlDb.Sync. </summary>
+        private const string MigrateSqlServerAzureSqlDbSyncValue = "Migrate.SqlServer.AzureSqlDb.Sync";
+        /// <summary> Migrate.MySql.AzureDbForMySql.Sync. </summary>
+        private const string MigrateMySqlAzureDbForMySqlSyncValue = "Migrate.MySql.AzureDbForMySql.Sync";
+        /// <summary> Migrate.MySql.AzureDbForMySql. </summary>
+        private const string MigrateMySqlAzureDbForMySqlValue = "Migrate.MySql.AzureDbForMySql";
+        /// <summary> Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2. </summary>
+        private const string MigratePostgreSqlAzureDbForPostgreSqlSyncV2Value = "Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2";
+        /// <summary> Migrate.Oracle.AzureDbForPostgreSql.Sync. </summary>
+        private const string MigrateOracleAzureDbForPostgreSqlSyncValue = "Migrate.Oracle.AzureDbForPostgreSql.Sync";
+        /// <summary> ValidateMigrationInput.SqlServer.SqlDb.Sync. </summary>
+        private const string ValidateMigrationInputSqlServerSqlDbSyncValue = "ValidateMigrationInput.SqlServer.SqlDb.Sync";
+        /// <summary> ValidateMigrationInput.SqlServer.AzureSqlDbMI. </summary>
+        private const string ValidateMigrationInputSqlServerAzureSqlDbMIValue = "ValidateMigrationInput.SqlServer.AzureSqlDbMI";
+        /// <summary> ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS. </summary>
+        private const string ValidateMigrationInputSqlServerAzureSqlDbMISyncLRSValue = "ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS";
+        /// <summary> Validate.MongoDb. </summary>
+        private const string ValidateMongoDbValue = "Validate.MongoDb";
+        /// <summary> Validate.Oracle.AzureDbPostgreSql.Sync. </summary>
+        private const string ValidateOracleAzureDbPostgreSqlSyncValue = "Validate.Oracle.AzureDbPostgreSql.Sync";
+        /// <summary> GetTDECertificates.Sql. </summary>
+        private const string GetTDECertificatesSqlValue = "GetTDECertificates.Sql";
+        /// <summary> Migrate.Ssis. </summary>
+        private const string MigrateSsisValue = "Migrate.Ssis";
+        /// <summary> Service.Check.OCI. </summary>
+        private const string ServiceCheckOCIValue = "Service.Check.OCI";
+        /// <summary> Service.Upload.OCI. </summary>
+        private const string ServiceUploadOCIValue = "Service.Upload.OCI";
+        /// <summary> Service.Install.OCI. </summary>
+        private const string ServiceInstallOCIValue = "Service.Install.OCI";
+        /// <summary> MigrateSchemaSqlServerSqlDb. </summary>
+        private const string MigrateSchemaSqlServerSqlDbValue = "MigrateSchemaSqlServerSqlDb";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationTaskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationTaskType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ConnectMongoDBValue = "Connect.MongoDb";
-        private const string ConnectToSourceSqlServerValue = "ConnectToSource.SqlServer";
-        private const string ConnectToSourceSqlServerSyncValue = "ConnectToSource.SqlServer.Sync";
-        private const string ConnectToSourcePostgreSqlSyncValue = "ConnectToSource.PostgreSql.Sync";
-        private const string ConnectToSourceMySqlValue = "ConnectToSource.MySql";
-        private const string ConnectToSourceOracleSyncValue = "ConnectToSource.Oracle.Sync";
-        private const string ConnectToTargetSqlDBValue = "ConnectToTarget.SqlDb";
-        private const string ConnectToTargetSqlDBSyncValue = "ConnectToTarget.SqlDb.Sync";
-        private const string ConnectToTargetAzureDBForPostgreSqlSyncValue = "ConnectToTarget.AzureDbForPostgreSql.Sync";
-        private const string ConnectToTargetOracleAzureDBForPostgreSqlSyncValue = "ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync";
-        private const string ConnectToTargetAzureSqlDBMIValue = "ConnectToTarget.AzureSqlDbMI";
-        private const string ConnectToTargetAzureSqlDBMISyncLRSValue = "ConnectToTarget.AzureSqlDbMI.Sync.LRS";
-        private const string ConnectToTargetAzureDBForMySqlValue = "ConnectToTarget.AzureDbForMySql";
-        private const string GetUserTablesSqlValue = "GetUserTables.Sql";
-        private const string GetUserTablesAzureSqlDBSyncValue = "GetUserTables.AzureSqlDb.Sync";
-        private const string GetUserTablesOracleValue = "GetUserTablesOracle";
-        private const string GetUserTablesPostgreSqlValue = "GetUserTablesPostgreSql";
-        private const string GetUserTablesMySqlValue = "GetUserTablesMySql";
-        private const string MigrateMongoDBValue = "Migrate.MongoDb";
-        private const string MigrateSqlServerAzureSqlDBMIValue = "Migrate.SqlServer.AzureSqlDbMI";
-        private const string MigrateSqlServerAzureSqlDBMISyncLRSValue = "Migrate.SqlServer.AzureSqlDbMI.Sync.LRS";
-        private const string MigrateSqlServerSqlDBValue = "Migrate.SqlServer.SqlDb";
-        private const string MigrateSqlServerAzureSqlDBSyncValue = "Migrate.SqlServer.AzureSqlDb.Sync";
-        private const string MigrateMySqlAzureDBForMySqlSyncValue = "Migrate.MySql.AzureDbForMySql.Sync";
-        private const string MigrateMySqlAzureDBForMySqlValue = "Migrate.MySql.AzureDbForMySql";
-        private const string MigratePostgreSqlAzureDBForPostgreSqlSyncV2Value = "Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2";
-        private const string MigrateOracleAzureDBForPostgreSqlSyncValue = "Migrate.Oracle.AzureDbForPostgreSql.Sync";
-        private const string ValidateMigrationInputSqlServerSqlDBSyncValue = "ValidateMigrationInput.SqlServer.SqlDb.Sync";
-        private const string ValidateMigrationInputSqlServerAzureSqlDBMIValue = "ValidateMigrationInput.SqlServer.AzureSqlDbMI";
-        private const string ValidateMigrationInputSqlServerAzureSqlDBMISyncLRSValue = "ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS";
-        private const string ValidateMongoDBValue = "Validate.MongoDb";
-        private const string ValidateOracleAzureDBPostgreSqlSyncValue = "Validate.Oracle.AzureDbPostgreSql.Sync";
-        private const string GetTDECertificatesSqlValue = "GetTDECertificates.Sql";
-        private const string MigrateSsisValue = "Migrate.Ssis";
-        private const string ServiceCheckOciValue = "Service.Check.OCI";
-        private const string ServiceUploadOciValue = "Service.Upload.OCI";
-        private const string ServiceInstallOciValue = "Service.Install.OCI";
-        private const string MigrateSchemaSqlServerSqlDBValue = "MigrateSchemaSqlServerSqlDb";
-
         /// <summary> Connect.MongoDb. </summary>
-        public static DataMigrationTaskType ConnectMongoDB { get; } = new DataMigrationTaskType(ConnectMongoDBValue);
+        public static DataMigrationTaskType ConnectMongoDb { get; } = new DataMigrationTaskType(ConnectMongoDbValue);
+
         /// <summary> ConnectToSource.SqlServer. </summary>
         public static DataMigrationTaskType ConnectToSourceSqlServer { get; } = new DataMigrationTaskType(ConnectToSourceSqlServerValue);
+
         /// <summary> ConnectToSource.SqlServer.Sync. </summary>
         public static DataMigrationTaskType ConnectToSourceSqlServerSync { get; } = new DataMigrationTaskType(ConnectToSourceSqlServerSyncValue);
+
         /// <summary> ConnectToSource.PostgreSql.Sync. </summary>
         public static DataMigrationTaskType ConnectToSourcePostgreSqlSync { get; } = new DataMigrationTaskType(ConnectToSourcePostgreSqlSyncValue);
+
         /// <summary> ConnectToSource.MySql. </summary>
         public static DataMigrationTaskType ConnectToSourceMySql { get; } = new DataMigrationTaskType(ConnectToSourceMySqlValue);
+
         /// <summary> ConnectToSource.Oracle.Sync. </summary>
         public static DataMigrationTaskType ConnectToSourceOracleSync { get; } = new DataMigrationTaskType(ConnectToSourceOracleSyncValue);
+
         /// <summary> ConnectToTarget.SqlDb. </summary>
-        public static DataMigrationTaskType ConnectToTargetSqlDB { get; } = new DataMigrationTaskType(ConnectToTargetSqlDBValue);
+        public static DataMigrationTaskType ConnectToTargetSqlDb { get; } = new DataMigrationTaskType(ConnectToTargetSqlDbValue);
+
         /// <summary> ConnectToTarget.SqlDb.Sync. </summary>
-        public static DataMigrationTaskType ConnectToTargetSqlDBSync { get; } = new DataMigrationTaskType(ConnectToTargetSqlDBSyncValue);
+        public static DataMigrationTaskType ConnectToTargetSqlDbSync { get; } = new DataMigrationTaskType(ConnectToTargetSqlDbSyncValue);
+
         /// <summary> ConnectToTarget.AzureDbForPostgreSql.Sync. </summary>
-        public static DataMigrationTaskType ConnectToTargetAzureDBForPostgreSqlSync { get; } = new DataMigrationTaskType(ConnectToTargetAzureDBForPostgreSqlSyncValue);
+        public static DataMigrationTaskType ConnectToTargetAzureDbForPostgreSqlSync { get; } = new DataMigrationTaskType(ConnectToTargetAzureDbForPostgreSqlSyncValue);
+
         /// <summary> ConnectToTarget.Oracle.AzureDbForPostgreSql.Sync. </summary>
-        public static DataMigrationTaskType ConnectToTargetOracleAzureDBForPostgreSqlSync { get; } = new DataMigrationTaskType(ConnectToTargetOracleAzureDBForPostgreSqlSyncValue);
+        public static DataMigrationTaskType ConnectToTargetOracleAzureDbForPostgreSqlSync { get; } = new DataMigrationTaskType(ConnectToTargetOracleAzureDbForPostgreSqlSyncValue);
+
         /// <summary> ConnectToTarget.AzureSqlDbMI. </summary>
-        public static DataMigrationTaskType ConnectToTargetAzureSqlDBMI { get; } = new DataMigrationTaskType(ConnectToTargetAzureSqlDBMIValue);
+        public static DataMigrationTaskType ConnectToTargetAzureSqlDbMI { get; } = new DataMigrationTaskType(ConnectToTargetAzureSqlDbMIValue);
+
         /// <summary> ConnectToTarget.AzureSqlDbMI.Sync.LRS. </summary>
-        public static DataMigrationTaskType ConnectToTargetAzureSqlDBMISyncLRS { get; } = new DataMigrationTaskType(ConnectToTargetAzureSqlDBMISyncLRSValue);
+        public static DataMigrationTaskType ConnectToTargetAzureSqlDbMISyncLRS { get; } = new DataMigrationTaskType(ConnectToTargetAzureSqlDbMISyncLRSValue);
+
         /// <summary> ConnectToTarget.AzureDbForMySql. </summary>
-        public static DataMigrationTaskType ConnectToTargetAzureDBForMySql { get; } = new DataMigrationTaskType(ConnectToTargetAzureDBForMySqlValue);
+        public static DataMigrationTaskType ConnectToTargetAzureDbForMySql { get; } = new DataMigrationTaskType(ConnectToTargetAzureDbForMySqlValue);
+
         /// <summary> GetUserTables.Sql. </summary>
         public static DataMigrationTaskType GetUserTablesSql { get; } = new DataMigrationTaskType(GetUserTablesSqlValue);
+
         /// <summary> GetUserTables.AzureSqlDb.Sync. </summary>
-        public static DataMigrationTaskType GetUserTablesAzureSqlDBSync { get; } = new DataMigrationTaskType(GetUserTablesAzureSqlDBSyncValue);
+        public static DataMigrationTaskType GetUserTablesAzureSqlDbSync { get; } = new DataMigrationTaskType(GetUserTablesAzureSqlDbSyncValue);
+
         /// <summary> GetUserTablesOracle. </summary>
         public static DataMigrationTaskType GetUserTablesOracle { get; } = new DataMigrationTaskType(GetUserTablesOracleValue);
+
         /// <summary> GetUserTablesPostgreSql. </summary>
         public static DataMigrationTaskType GetUserTablesPostgreSql { get; } = new DataMigrationTaskType(GetUserTablesPostgreSqlValue);
+
         /// <summary> GetUserTablesMySql. </summary>
         public static DataMigrationTaskType GetUserTablesMySql { get; } = new DataMigrationTaskType(GetUserTablesMySqlValue);
+
         /// <summary> Migrate.MongoDb. </summary>
-        public static DataMigrationTaskType MigrateMongoDB { get; } = new DataMigrationTaskType(MigrateMongoDBValue);
+        public static DataMigrationTaskType MigrateMongoDb { get; } = new DataMigrationTaskType(MigrateMongoDbValue);
+
         /// <summary> Migrate.SqlServer.AzureSqlDbMI. </summary>
-        public static DataMigrationTaskType MigrateSqlServerAzureSqlDBMI { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDBMIValue);
+        public static DataMigrationTaskType MigrateSqlServerAzureSqlDbMI { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDbMIValue);
+
         /// <summary> Migrate.SqlServer.AzureSqlDbMI.Sync.LRS. </summary>
-        public static DataMigrationTaskType MigrateSqlServerAzureSqlDBMISyncLRS { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDBMISyncLRSValue);
+        public static DataMigrationTaskType MigrateSqlServerAzureSqlDbMISyncLRS { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDbMISyncLRSValue);
+
         /// <summary> Migrate.SqlServer.SqlDb. </summary>
-        public static DataMigrationTaskType MigrateSqlServerSqlDB { get; } = new DataMigrationTaskType(MigrateSqlServerSqlDBValue);
+        public static DataMigrationTaskType MigrateSqlServerSqlDb { get; } = new DataMigrationTaskType(MigrateSqlServerSqlDbValue);
+
         /// <summary> Migrate.SqlServer.AzureSqlDb.Sync. </summary>
-        public static DataMigrationTaskType MigrateSqlServerAzureSqlDBSync { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDBSyncValue);
+        public static DataMigrationTaskType MigrateSqlServerAzureSqlDbSync { get; } = new DataMigrationTaskType(MigrateSqlServerAzureSqlDbSyncValue);
+
         /// <summary> Migrate.MySql.AzureDbForMySql.Sync. </summary>
-        public static DataMigrationTaskType MigrateMySqlAzureDBForMySqlSync { get; } = new DataMigrationTaskType(MigrateMySqlAzureDBForMySqlSyncValue);
+        public static DataMigrationTaskType MigrateMySqlAzureDbForMySqlSync { get; } = new DataMigrationTaskType(MigrateMySqlAzureDbForMySqlSyncValue);
+
         /// <summary> Migrate.MySql.AzureDbForMySql. </summary>
-        public static DataMigrationTaskType MigrateMySqlAzureDBForMySql { get; } = new DataMigrationTaskType(MigrateMySqlAzureDBForMySqlValue);
+        public static DataMigrationTaskType MigrateMySqlAzureDbForMySql { get; } = new DataMigrationTaskType(MigrateMySqlAzureDbForMySqlValue);
+
         /// <summary> Migrate.PostgreSql.AzureDbForPostgreSql.SyncV2. </summary>
-        public static DataMigrationTaskType MigratePostgreSqlAzureDBForPostgreSqlSyncV2 { get; } = new DataMigrationTaskType(MigratePostgreSqlAzureDBForPostgreSqlSyncV2Value);
+        public static DataMigrationTaskType MigratePostgreSqlAzureDbForPostgreSqlSyncV2 { get; } = new DataMigrationTaskType(MigratePostgreSqlAzureDbForPostgreSqlSyncV2Value);
+
         /// <summary> Migrate.Oracle.AzureDbForPostgreSql.Sync. </summary>
-        public static DataMigrationTaskType MigrateOracleAzureDBForPostgreSqlSync { get; } = new DataMigrationTaskType(MigrateOracleAzureDBForPostgreSqlSyncValue);
+        public static DataMigrationTaskType MigrateOracleAzureDbForPostgreSqlSync { get; } = new DataMigrationTaskType(MigrateOracleAzureDbForPostgreSqlSyncValue);
+
         /// <summary> ValidateMigrationInput.SqlServer.SqlDb.Sync. </summary>
-        public static DataMigrationTaskType ValidateMigrationInputSqlServerSqlDBSync { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerSqlDBSyncValue);
+        public static DataMigrationTaskType ValidateMigrationInputSqlServerSqlDbSync { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerSqlDbSyncValue);
+
         /// <summary> ValidateMigrationInput.SqlServer.AzureSqlDbMI. </summary>
-        public static DataMigrationTaskType ValidateMigrationInputSqlServerAzureSqlDBMI { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerAzureSqlDBMIValue);
+        public static DataMigrationTaskType ValidateMigrationInputSqlServerAzureSqlDbMI { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerAzureSqlDbMIValue);
+
         /// <summary> ValidateMigrationInput.SqlServer.AzureSqlDbMI.Sync.LRS. </summary>
-        public static DataMigrationTaskType ValidateMigrationInputSqlServerAzureSqlDBMISyncLRS { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerAzureSqlDBMISyncLRSValue);
+        public static DataMigrationTaskType ValidateMigrationInputSqlServerAzureSqlDbMISyncLRS { get; } = new DataMigrationTaskType(ValidateMigrationInputSqlServerAzureSqlDbMISyncLRSValue);
+
         /// <summary> Validate.MongoDb. </summary>
-        public static DataMigrationTaskType ValidateMongoDB { get; } = new DataMigrationTaskType(ValidateMongoDBValue);
+        public static DataMigrationTaskType ValidateMongoDb { get; } = new DataMigrationTaskType(ValidateMongoDbValue);
+
         /// <summary> Validate.Oracle.AzureDbPostgreSql.Sync. </summary>
-        public static DataMigrationTaskType ValidateOracleAzureDBPostgreSqlSync { get; } = new DataMigrationTaskType(ValidateOracleAzureDBPostgreSqlSyncValue);
+        public static DataMigrationTaskType ValidateOracleAzureDbPostgreSqlSync { get; } = new DataMigrationTaskType(ValidateOracleAzureDbPostgreSqlSyncValue);
+
         /// <summary> GetTDECertificates.Sql. </summary>
         public static DataMigrationTaskType GetTDECertificatesSql { get; } = new DataMigrationTaskType(GetTDECertificatesSqlValue);
+
         /// <summary> Migrate.Ssis. </summary>
         public static DataMigrationTaskType MigrateSsis { get; } = new DataMigrationTaskType(MigrateSsisValue);
+
         /// <summary> Service.Check.OCI. </summary>
-        public static DataMigrationTaskType ServiceCheckOci { get; } = new DataMigrationTaskType(ServiceCheckOciValue);
+        public static DataMigrationTaskType ServiceCheckOCI { get; } = new DataMigrationTaskType(ServiceCheckOCIValue);
+
         /// <summary> Service.Upload.OCI. </summary>
-        public static DataMigrationTaskType ServiceUploadOci { get; } = new DataMigrationTaskType(ServiceUploadOciValue);
+        public static DataMigrationTaskType ServiceUploadOCI { get; } = new DataMigrationTaskType(ServiceUploadOCIValue);
+
         /// <summary> Service.Install.OCI. </summary>
-        public static DataMigrationTaskType ServiceInstallOci { get; } = new DataMigrationTaskType(ServiceInstallOciValue);
+        public static DataMigrationTaskType ServiceInstallOCI { get; } = new DataMigrationTaskType(ServiceInstallOCIValue);
+
         /// <summary> MigrateSchemaSqlServerSqlDb. </summary>
-        public static DataMigrationTaskType MigrateSchemaSqlServerSqlDB { get; } = new DataMigrationTaskType(MigrateSchemaSqlServerSqlDBValue);
+        public static DataMigrationTaskType MigrateSchemaSqlServerSqlDb { get; } = new DataMigrationTaskType(MigrateSchemaSqlServerSqlDbValue);
+
         /// <summary> Determines if two <see cref="DataMigrationTaskType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationTaskType left, DataMigrationTaskType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationTaskType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationTaskType left, DataMigrationTaskType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationTaskType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationTaskType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationTaskType(string value) => new DataMigrationTaskType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationTaskType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationTaskType?(string value) => value == null ? null : new DataMigrationTaskType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationTaskType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationTaskType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

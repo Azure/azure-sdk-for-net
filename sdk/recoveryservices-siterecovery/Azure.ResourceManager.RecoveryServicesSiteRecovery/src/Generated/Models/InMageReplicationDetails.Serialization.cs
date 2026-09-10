@@ -11,13 +11,55 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageReplicationDetails>
+    /// <summary> InMage provider specific settings. </summary>
+    public partial class InMageReplicationDetails : ReplicationProviderSpecificSettings, IJsonModel<InMageReplicationDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageReplicationDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeInMageReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<InMageReplicationDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageReplicationDetails IPersistableModel<InMageReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (InMageReplicationDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<InMageReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<InMageReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +71,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ActiveSiteType))
             {
@@ -110,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("protectedDisks"u8);
                 writer.WriteStartArray();
-                foreach (var item in ProtectedDisks)
+                foreach (InMageProtectedDiskDetails item in ProtectedDisks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -191,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmNics)
+                foreach (VmNicDetails item in VmNics)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -211,8 +252,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
-                foreach (var item in Datastores)
+                foreach (string item in Datastores)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -221,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("validationErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidationErrors)
+                foreach (SiteRecoveryHealthError item in ValidationErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -264,26 +310,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        InMageReplicationDetails IJsonModel<InMageReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        InMageReplicationDetails IJsonModel<InMageReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (InMageReplicationDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeInMageReplicationDetails(document.RootElement, options);
         }
 
-        internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static InMageReplicationDetails DeserializeInMageReplicationDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "InMage";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string activeSiteType = default;
             int? sourceVmCpuCount = default;
             int? sourceVmRamSizeInMB = default;
@@ -293,14 +346,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string vmProtectionState = default;
             string vmProtectionStateDescription = default;
             InitialReplicationDetails resyncDetails = default;
-            DateTimeOffset? retentionWindowStart = default;
-            DateTimeOffset? retentionWindowEnd = default;
+            DateTimeOffset? retentionWindowStartOn = default;
+            DateTimeOffset? retentionWindowEndOn = default;
             double? compressedDataRateInMB = default;
             double? uncompressedDataRateInMB = default;
             long? rpoInSeconds = default;
             IReadOnlyList<InMageProtectedDiskDetails> protectedDisks = default;
             IPAddress ipAddress = default;
-            DateTimeOffset? lastHeartbeat = default;
+            DateTimeOffset? lastHeartbeatReceivedOn = default;
             Guid? processServerId = default;
             string masterTargetId = default;
             IReadOnlyDictionary<string, DateTimeOffset> consistencyPoints = default;
@@ -317,349 +370,352 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier azureStorageAccountId = default;
             IReadOnlyList<string> datastores = default;
             IReadOnlyList<SiteRecoveryHealthError> validationErrors = default;
-            DateTimeOffset? lastRpoCalculatedTime = default;
-            DateTimeOffset? lastUpdateReceivedTime = default;
+            DateTimeOffset? lastRpoCalculatedOn = default;
+            DateTimeOffset? lastUpdateReceivedOn = default;
             string replicaId = default;
             string osVersion = default;
             bool? isAdditionalStatsAvailable = default;
             long? totalDataTransferred = default;
             string totalProgressHealth = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("activeSiteType"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    activeSiteType = property.Value.GetString();
+                    instanceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceVmCpuCount"u8))
+                if (prop.NameEquals("activeSiteType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    activeSiteType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceVmCpuCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceVmCpuCount = property.Value.GetInt32();
+                    sourceVmCpuCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("sourceVmRamSizeInMB"u8))
+                if (prop.NameEquals("sourceVmRamSizeInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sourceVmRamSizeInMB = property.Value.GetInt32();
+                    sourceVmRamSizeInMB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("osDetails"u8))
+                if (prop.NameEquals("osDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(property.Value, options);
+                    osDetails = SiteRecoveryOSDiskDetails.DeserializeSiteRecoveryOSDiskDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("protectionStage"u8))
+                if (prop.NameEquals("protectionStage"u8))
                 {
-                    protectionStage = property.Value.GetString();
+                    protectionStage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmId"u8))
+                if (prop.NameEquals("vmId"u8))
                 {
-                    vmId = property.Value.GetString();
+                    vmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionState"u8))
+                if (prop.NameEquals("vmProtectionState"u8))
                 {
-                    vmProtectionState = property.Value.GetString();
+                    vmProtectionState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmProtectionStateDescription"u8))
+                if (prop.NameEquals("vmProtectionStateDescription"u8))
                 {
-                    vmProtectionStateDescription = property.Value.GetString();
+                    vmProtectionStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resyncDetails"u8))
+                if (prop.NameEquals("resyncDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(property.Value, options);
+                    resyncDetails = InitialReplicationDetails.DeserializeInitialReplicationDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("retentionWindowStart"u8))
+                if (prop.NameEquals("retentionWindowStart"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retentionWindowStart = property.Value.GetDateTimeOffset("O");
+                    retentionWindowStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("retentionWindowEnd"u8))
+                if (prop.NameEquals("retentionWindowEnd"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retentionWindowEnd = property.Value.GetDateTimeOffset("O");
+                    retentionWindowEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("compressedDataRateInMB"u8))
+                if (prop.NameEquals("compressedDataRateInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    compressedDataRateInMB = property.Value.GetDouble();
+                    compressedDataRateInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("uncompressedDataRateInMB"u8))
+                if (prop.NameEquals("uncompressedDataRateInMB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    uncompressedDataRateInMB = property.Value.GetDouble();
+                    uncompressedDataRateInMB = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"u8))
+                if (prop.NameEquals("rpoInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rpoInSeconds = property.Value.GetInt64();
+                    rpoInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("protectedDisks"u8))
+                if (prop.NameEquals("protectedDisks"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<InMageProtectedDiskDetails> array = new List<InMageProtectedDiskDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(InMageProtectedDiskDetails.DeserializeInMageProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
                 }
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("lastHeartbeat"u8))
+                if (prop.NameEquals("lastHeartbeat"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastHeartbeat = property.Value.GetDateTimeOffset("O");
+                    lastHeartbeatReceivedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("processServerId"u8))
+                if (prop.NameEquals("processServerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    processServerId = property.Value.GetGuid();
+                    processServerId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("masterTargetId"u8))
+                if (prop.NameEquals("masterTargetId"u8))
                 {
-                    masterTargetId = property.Value.GetString();
+                    masterTargetId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consistencyPoints"u8))
+                if (prop.NameEquals("consistencyPoints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, DateTimeOffset> dictionary = new Dictionary<string, DateTimeOffset>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetDateTimeOffset("O"));
+                        dictionary.Add(prop0.Name, prop0.Value.GetDateTimeOffset("O"));
                     }
                     consistencyPoints = dictionary;
                     continue;
                 }
-                if (property.NameEquals("diskResized"u8))
+                if (prop.NameEquals("diskResized"u8))
                 {
-                    diskResized = property.Value.GetString();
+                    diskResized = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("rebootAfterUpdateStatus"u8))
+                if (prop.NameEquals("rebootAfterUpdateStatus"u8))
                 {
-                    rebootAfterUpdateStatus = property.Value.GetString();
+                    rebootAfterUpdateStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupId"u8))
+                if (prop.NameEquals("multiVmGroupId"u8))
                 {
-                    multiVmGroupId = property.Value.GetString();
+                    multiVmGroupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"u8))
+                if (prop.NameEquals("multiVmGroupName"u8))
                 {
-                    multiVmGroupName = property.Value.GetString();
+                    multiVmGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"u8))
+                if (prop.NameEquals("multiVmSyncStatus"u8))
                 {
-                    multiVmSyncStatus = property.Value.GetString();
+                    multiVmSyncStatus = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("agentDetails"u8))
+                if (prop.NameEquals("agentDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(property.Value, options);
+                    agentDetails = InMageAgentDetails.DeserializeInMageAgentDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vCenterInfrastructureId"u8))
+                if (prop.NameEquals("vCenterInfrastructureId"u8))
                 {
-                    vCenterInfrastructureId = property.Value.GetString();
+                    vCenterInfrastructureId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("infrastructureVmId"u8))
+                if (prop.NameEquals("infrastructureVmId"u8))
                 {
-                    infrastructureVmId = property.Value.GetString();
+                    infrastructureVmId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vmNics"u8))
+                if (prop.NameEquals("vmNics"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VmNicDetails> array = new List<VmNicDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
                 }
-                if (property.NameEquals("discoveryType"u8))
+                if (prop.NameEquals("discoveryType"u8))
                 {
-                    discoveryType = property.Value.GetString();
+                    discoveryType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("azureStorageAccountId"u8))
+                if (prop.NameEquals("azureStorageAccountId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    azureStorageAccountId = new ResourceIdentifier(property.Value.GetString());
+                    azureStorageAccountId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("datastores"u8))
+                if (prop.NameEquals("datastores"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     datastores = array;
                     continue;
                 }
-                if (property.NameEquals("validationErrors"u8))
+                if (prop.NameEquals("validationErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     validationErrors = array;
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"u8))
+                if (prop.NameEquals("lastRpoCalculatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
+                    lastRpoCalculatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastUpdateReceivedTime"u8))
+                if (prop.NameEquals("lastUpdateReceivedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdateReceivedTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdateReceivedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("replicaId"u8))
+                if (prop.NameEquals("replicaId"u8))
                 {
-                    replicaId = property.Value.GetString();
+                    replicaId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"u8))
+                if (prop.NameEquals("osVersion"u8))
                 {
-                    osVersion = property.Value.GetString();
+                    osVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isAdditionalStatsAvailable"u8))
+                if (prop.NameEquals("isAdditionalStatsAvailable"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isAdditionalStatsAvailable = property.Value.GetBoolean();
+                    isAdditionalStatsAvailable = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("totalDataTransferred"u8))
+                if (prop.NameEquals("totalDataTransferred"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalDataTransferred = property.Value.GetInt64();
+                    totalDataTransferred = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("totalProgressHealth"u8))
+                if (prop.NameEquals("totalProgressHealth"u8))
                 {
-                    totalProgressHealth = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    totalProgressHealth = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new InMageReplicationDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 activeSiteType,
                 sourceVmCpuCount,
                 sourceVmRamSizeInMB,
@@ -669,14 +725,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 vmProtectionState,
                 vmProtectionStateDescription,
                 resyncDetails,
-                retentionWindowStart,
-                retentionWindowEnd,
+                retentionWindowStartOn,
+                retentionWindowEndOn,
                 compressedDataRateInMB,
                 uncompressedDataRateInMB,
                 rpoInSeconds,
                 protectedDisks ?? new ChangeTrackingList<InMageProtectedDiskDetails>(),
                 ipAddress,
-                lastHeartbeat,
+                lastHeartbeatReceivedOn,
                 processServerId,
                 masterTargetId,
                 consistencyPoints ?? new ChangeTrackingDictionary<string, DateTimeOffset>(),
@@ -693,44 +749,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 azureStorageAccountId,
                 datastores ?? new ChangeTrackingList<string>(),
                 validationErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
-                lastRpoCalculatedTime,
-                lastUpdateReceivedTime,
+                lastRpoCalculatedOn,
+                lastUpdateReceivedOn,
                 replicaId,
                 osVersion,
                 isAdditionalStatsAvailable,
                 totalDataTransferred,
                 totalProgressHealth);
         }
-
-        BinaryData IPersistableModel<InMageReplicationDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        InMageReplicationDetails IPersistableModel<InMageReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<InMageReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeInMageReplicationDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(InMageReplicationDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<InMageReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

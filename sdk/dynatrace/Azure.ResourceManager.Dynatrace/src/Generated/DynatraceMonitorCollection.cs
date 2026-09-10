@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dynatrace
         {
             TryGetApiVersion(DynatraceMonitorResource.ResourceType, out string dynatraceMonitorApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dynatrace", DynatraceMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dynatraceMonitorApiVersion ?? "2024-04-24");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMonitorData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DynatraceArmOperation<DynatraceMonitorResource> operation = new DynatraceArmOperation<DynatraceMonitorResource>(
-                    new DynatraceMonitorOperationSource(Client),
+                    new DynatraceMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Dynatrace
                 HttpMessage message = _monitorsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, monitorName, DynatraceMonitorData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DynatraceArmOperation<DynatraceMonitorResource> operation = new DynatraceArmOperation<DynatraceMonitorResource>(
-                    new DynatraceMonitorOperationSource(Client),
+                    new DynatraceMonitorResourceOperationSource(Client),
                     _monitorsClientDiagnostics,
                     Pipeline,
                     message.Request,

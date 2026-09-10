@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ActionIPCommunityProperties"/>. </summary>
-        /// <param name="add"> List of IP Community IDs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="add"> List of IP community resource IDs to add. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="delete"> List of IP Community IDs. </param>
         /// <param name="set"> List of IP Community IDs. </param>
-        internal ActionIPCommunityProperties(IPCommunityIdList @add, IDictionary<string, BinaryData> serializedAdditionalRawData, IPCommunityIdList delete, IPCommunityIdList @set) : base(@add, serializedAdditionalRawData)
+        internal ActionIPCommunityProperties(IPCommunityIdList @add, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPCommunityIdList delete, IPCommunityIdList @set) : base(@add, additionalBinaryDataProperties)
         {
             Delete = delete;
             Set = @set;
@@ -32,26 +32,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> List of IP Community IDs. </summary>
         internal IPCommunityIdList Delete { get; set; }
+
+        /// <summary> List of IP Community IDs. </summary>
+        internal IPCommunityIdList Set { get; set; }
+
         /// <summary> List of IP Community resource IDs. </summary>
         public IList<ResourceIdentifier> DeleteIPCommunityIds
         {
             get
             {
                 if (Delete is null)
+                {
                     Delete = new IPCommunityIdList();
+                }
                 return Delete.IPCommunityIds;
             }
         }
 
-        /// <summary> List of IP Community IDs. </summary>
-        internal IPCommunityIdList Set { get; set; }
         /// <summary> List of IP Community resource IDs. </summary>
         public IList<ResourceIdentifier> SetIPCommunityIds
         {
             get
             {
                 if (Set is null)
+                {
                     Set = new IPCommunityIdList();
+                }
                 return Set.IPCommunityIds;
             }
         }

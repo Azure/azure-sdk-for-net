@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> The Step of AzureStackHCI Cluster. </summary>
     public partial class HciClusterDeploymentStep
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentStep"/>. </summary>
         internal HciClusterDeploymentStep()
@@ -61,8 +33,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </param>
         /// <param name="steps"> List of nested steps of AzureStackHCI Cluster Deployment. </param>
         /// <param name="exception"> List of exceptions in AzureStackHCI Cluster Deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterDeploymentStep(string name, string description, string fullStepIndex, string startOn, string endOn, string status, IReadOnlyList<HciClusterDeploymentStep> steps, IReadOnlyList<string> exception, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -72,30 +44,37 @@ namespace Azure.ResourceManager.Hci.Models
             Status = status;
             Steps = steps;
             Exception = exception;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of step. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Description of step. </summary>
         [WirePath("description")]
         public string Description { get; }
+
         /// <summary> FullStepIndex of step. </summary>
         [WirePath("fullStepIndex")]
         public string FullStepIndex { get; }
+
         /// <summary> Start time of step. </summary>
         [WirePath("startTimeUtc")]
         public string StartOn { get; }
+
         /// <summary> End time of step. </summary>
         [WirePath("endTimeUtc")]
         public string EndOn { get; }
+
         /// <summary> Status of step. Allowed values are 'Error', 'Success', 'InProgress'. </summary>
         [WirePath("status")]
         public string Status { get; }
+
         /// <summary> List of nested steps of AzureStackHCI Cluster Deployment. </summary>
         [WirePath("steps")]
         public IReadOnlyList<HciClusterDeploymentStep> Steps { get; }
+
         /// <summary> List of exceptions in AzureStackHCI Cluster Deployment. </summary>
         [WirePath("exception")]
         public IReadOnlyList<string> Exception { get; }

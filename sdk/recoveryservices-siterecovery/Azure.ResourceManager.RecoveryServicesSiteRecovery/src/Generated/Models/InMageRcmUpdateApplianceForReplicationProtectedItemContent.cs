@@ -14,19 +14,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageRcmUpdateApplianceForReplicationProtectedItemContent : UpdateApplianceForReplicationProtectedItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemContent"/>. </summary>
-        public InMageRcmUpdateApplianceForReplicationProtectedItemContent()
+        public InMageRcmUpdateApplianceForReplicationProtectedItemContent() : base("InMageRcm")
         {
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmUpdateApplianceForReplicationProtectedItemContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="runAsAccountId"> The run as account Id. </param>
-        internal InMageRcmUpdateApplianceForReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string runAsAccountId) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmUpdateApplianceForReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string runAsAccountId) : base(instanceType, additionalBinaryDataProperties)
         {
             RunAsAccountId = runAsAccountId;
-            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The run as account Id. </summary>

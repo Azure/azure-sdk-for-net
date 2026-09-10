@@ -11,6 +11,6 @@ namespace Azure.Provisioning.Batch
     public enum BatchDiffDiskPlacement
     {
         /// <summary> The OS disk will be placed on the cache disk of the VM. </summary>
-        CacheDisk
+        CacheDisk = 0
     }
 }

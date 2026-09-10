@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string redisEnterpriseDatabaseApiVersion);
             _databasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Endpoint, redisEnterpriseDatabaseApiVersion ?? "2025-08-01-preview");
+            _databasesRestClient = new Databases(_databasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseDatabaseApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
-                    new RedisEnterpriseDatabaseOperationSource(Client),
+                    new RedisEnterpriseDatabaseResourceOperationSource(Client),
                     _databasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _databasesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RedisEnterpriseDatabasePatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource> operation = new RedisEnterpriseArmOperation<RedisEnterpriseDatabaseResource>(
-                    new RedisEnterpriseDatabaseOperationSource(Client),
+                    new RedisEnterpriseDatabaseResourceOperationSource(Client),
                     _databasesClientDiagnostics,
                     Pipeline,
                     message.Request,

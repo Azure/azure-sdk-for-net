@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class EvaluatedNetworkSecurityGroup : IUtf8JsonSerializable, IJsonModel<EvaluatedNetworkSecurityGroup>
+    /// <summary> Results of network security group evaluation. </summary>
+    public partial class EvaluatedNetworkSecurityGroup : IJsonModel<EvaluatedNetworkSecurityGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluatedNetworkSecurityGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EvaluatedNetworkSecurityGroup PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EvaluatedNetworkSecurityGroup>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluatedNetworkSecurityGroup IPersistableModel<EvaluatedNetworkSecurityGroup>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<EvaluatedNetworkSecurityGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EvaluatedNetworkSecurityGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(NetworkSecurityGroupId))
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
@@ -55,21 +94,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("rulesEvaluationResult"u8);
                 writer.WriteStartArray();
-                foreach (var item in RulesEvaluationResult)
+                foreach (NetworkSecurityRulesEvaluationResult item in RulesEvaluationResult)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,22 +117,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        EvaluatedNetworkSecurityGroup IJsonModel<EvaluatedNetworkSecurityGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EvaluatedNetworkSecurityGroup IJsonModel<EvaluatedNetworkSecurityGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual EvaluatedNetworkSecurityGroup JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
         }
 
-        internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EvaluatedNetworkSecurityGroup DeserializeEvaluatedNetworkSecurityGroup(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,41 +146,40 @@ namespace Azure.ResourceManager.Network.Models
             string appliedTo = default;
             MatchedRule matchedRule = default;
             IReadOnlyList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("networkSecurityGroupId"u8))
+                if (prop.NameEquals("networkSecurityGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkSecurityGroupId = new ResourceIdentifier(property.Value.GetString());
+                    networkSecurityGroupId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("appliedTo"u8))
+                if (prop.NameEquals("appliedTo"u8))
                 {
-                    appliedTo = property.Value.GetString();
+                    appliedTo = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("matchedRule"u8))
+                if (prop.NameEquals("matchedRule"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    matchedRule = MatchedRule.DeserializeMatchedRule(property.Value, options);
+                    matchedRule = MatchedRule.DeserializeMatchedRule(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("rulesEvaluationResult"u8))
+                if (prop.NameEquals("rulesEvaluationResult"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<NetworkSecurityRulesEvaluationResult> array = new List<NetworkSecurityRulesEvaluationResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(NetworkSecurityRulesEvaluationResult.DeserializeNetworkSecurityRulesEvaluationResult(item, options));
                     }
@@ -145,135 +188,10 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId, appliedTo, matchedRule, rulesEvaluationResult ?? new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>(), serializedAdditionalRawData);
+            return new EvaluatedNetworkSecurityGroup(networkSecurityGroupId, appliedTo, matchedRule, rulesEvaluationResult ?? new ChangeTrackingList<NetworkSecurityRulesEvaluationResult>(), additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityGroupId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkSecurityGroupId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkSecurityGroupId))
-                {
-                    builder.Append("  networkSecurityGroupId: ");
-                    builder.AppendLine($"'{NetworkSecurityGroupId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppliedTo), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  appliedTo: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AppliedTo))
-                {
-                    builder.Append("  appliedTo: ");
-                    if (AppliedTo.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AppliedTo}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AppliedTo}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MatchedRule), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  matchedRule: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MatchedRule))
-                {
-                    builder.Append("  matchedRule: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, MatchedRule, options, 2, false, "  matchedRule: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RulesEvaluationResult), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  rulesEvaluationResult: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RulesEvaluationResult))
-                {
-                    if (RulesEvaluationResult.Any())
-                    {
-                        builder.Append("  rulesEvaluationResult: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RulesEvaluationResult)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  rulesEvaluationResult: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<EvaluatedNetworkSecurityGroup>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        EvaluatedNetworkSecurityGroup IPersistableModel<EvaluatedNetworkSecurityGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<EvaluatedNetworkSecurityGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

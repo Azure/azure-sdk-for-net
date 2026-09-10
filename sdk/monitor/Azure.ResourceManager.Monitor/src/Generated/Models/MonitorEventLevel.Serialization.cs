@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorEventLevelExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MonitorEventLevel value) => value switch
         {
             MonitorEventLevel.Critical => "Critical",
@@ -21,13 +22,29 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorEventLevel value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MonitorEventLevel ToMonitorEventLevel(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical")) return MonitorEventLevel.Critical;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error")) return MonitorEventLevel.Error;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning")) return MonitorEventLevel.Warning;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Informational")) return MonitorEventLevel.Informational;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose")) return MonitorEventLevel.Verbose;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Critical"))
+            {
+                return MonitorEventLevel.Critical;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Error"))
+            {
+                return MonitorEventLevel.Error;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Warning"))
+            {
+                return MonitorEventLevel.Warning;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Informational"))
+            {
+                return MonitorEventLevel.Informational;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Verbose"))
+            {
+                return MonitorEventLevel.Verbose;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorEventLevel value.");
         }
     }

@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         }
 
         /// <summary> Displays the predicted count of instances to be requested from the standby pool. </summary>
-        public IReadOnlyList<long> InstancesRequestedCount { get; }
+        public IReadOnlyList<long> InstancesRequestedCount { get; } = new ChangeTrackingList<long>();
     }
 }

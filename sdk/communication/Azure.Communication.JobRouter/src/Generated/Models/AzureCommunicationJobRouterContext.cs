@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 
 namespace Azure.Communication.JobRouter
 {
@@ -57,7 +56,6 @@ namespace Azure.Communication.JobRouter
     [ModelReaderWriterBuildable(typeof(ReclassifyExceptionAction))]
     [ModelReaderWriterBuildable(typeof(ReclassifyJobOptions))]
     [ModelReaderWriterBuildable(typeof(ReclassifyJobResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RoundRobinMode))]
     [ModelReaderWriterBuildable(typeof(RouterChannel))]
     [ModelReaderWriterBuildable(typeof(RouterJob))]

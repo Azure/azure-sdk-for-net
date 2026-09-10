@@ -57,6 +57,10 @@ namespace Azure.Provisioning.Batch
             base.DefineProvisionableProperties();
             _action = DefineProperty<BatchIPRuleAction>(nameof(Action), new string[] { "action" }, isRequired: true);
             _value = DefineProperty<string>(nameof(Value), new string[] { "value" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchIPRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

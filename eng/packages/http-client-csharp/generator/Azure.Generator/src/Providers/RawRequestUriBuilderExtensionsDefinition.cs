@@ -15,14 +15,11 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
-    internal class RawRequestUriBuilderExtensionsDefinition : TypeProvider
+    internal class RawRequestUriBuilderExtensionsDefinition : InternalHelperProvider
     {
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "Internal", $"{Name}.cs");
 
         protected override string BuildName() => "RawRequestUriBuilderExtensions";
-
-        protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
-            TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static | TypeSignatureModifiers.Class;
 
         protected override MethodProvider[] BuildMethods()
         {

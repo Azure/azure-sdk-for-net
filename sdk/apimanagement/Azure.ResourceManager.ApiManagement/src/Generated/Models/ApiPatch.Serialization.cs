@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiPatch : IUtf8JsonSerializable, IJsonModel<ApiPatch>
+    /// <summary> API update contract details. </summary>
+    public partial class ApiPatch : IJsonModel<ApiPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApiPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApiPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApiPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiPatch IPersistableModel<ApiPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="apiPatch"> The <see cref="ApiPatch"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApiPatch apiPatch)
+        {
+            if (apiPatch == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(apiPatch, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,124 +80,25 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiPatch)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(AuthenticationSettings))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings, options);
-            }
-            if (Optional.IsDefined(SubscriptionKeyParameterNames))
-            {
-                writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames, options);
-            }
-            if (Optional.IsDefined(ApiType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ApiType.Value.ToString());
-            }
-            if (Optional.IsDefined(ApiRevision))
-            {
-                writer.WritePropertyName("apiRevision"u8);
-                writer.WriteStringValue(ApiRevision);
-            }
-            if (Optional.IsDefined(ApiVersion))
-            {
-                writer.WritePropertyName("apiVersion"u8);
-                writer.WriteStringValue(ApiVersion);
-            }
-            if (Optional.IsDefined(IsCurrent))
-            {
-                writer.WritePropertyName("isCurrent"u8);
-                writer.WriteBooleanValue(IsCurrent.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsOnline))
-            {
-                writer.WritePropertyName("isOnline"u8);
-                writer.WriteBooleanValue(IsOnline.Value);
-            }
-            if (Optional.IsDefined(ApiRevisionDescription))
-            {
-                writer.WritePropertyName("apiRevisionDescription"u8);
-                writer.WriteStringValue(ApiRevisionDescription);
-            }
-            if (Optional.IsDefined(ApiVersionDescription))
-            {
-                writer.WritePropertyName("apiVersionDescription"u8);
-                writer.WriteStringValue(ApiVersionDescription);
-            }
-            if (Optional.IsDefined(ApiVersionSetId))
-            {
-                writer.WritePropertyName("apiVersionSetId"u8);
-                writer.WriteStringValue(ApiVersionSetId);
-            }
-            if (Optional.IsDefined(IsSubscriptionRequired))
-            {
-                writer.WritePropertyName("subscriptionRequired"u8);
-                writer.WriteBooleanValue(IsSubscriptionRequired.Value);
-            }
-            if (Optional.IsDefined(TermsOfServiceLink))
-            {
-                writer.WritePropertyName("termsOfServiceUrl"u8);
-                writer.WriteStringValue(TermsOfServiceLink);
-            }
-            if (Optional.IsDefined(Contact))
-            {
-                writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact, options);
-            }
-            if (Optional.IsDefined(License))
-            {
-                writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License, options);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(ServiceLink))
-            {
-                writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteStringValue(ServiceLink);
-            }
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsCollectionDefined(Protocols))
-            {
-                writer.WritePropertyName("protocols"u8);
-                writer.WriteStartArray();
-                foreach (var item in Protocols)
-                {
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -154,259 +107,50 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
         }
 
-        ApiPatch IJsonModel<ApiPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiPatch IJsonModel<ApiPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApiPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApiPatch)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApiPatch(document.RootElement, options);
         }
 
-        internal static ApiPatch DeserializeApiPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApiPatch DeserializeApiPatch(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            AuthenticationSettingsContract authenticationSettings = default;
-            SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default;
-            ApiType? type = default;
-            string apiRevision = default;
-            string apiVersion = default;
-            bool? isCurrent = default;
-            bool? isOnline = default;
-            string apiRevisionDescription = default;
-            string apiVersionDescription = default;
-            ResourceIdentifier apiVersionSetId = default;
-            bool? subscriptionRequired = default;
-            string termsOfServiceUri = default;
-            ApiContactInformation contact = default;
-            ApiLicenseInformation license = default;
-            string displayName = default;
-            string serviceUri = default;
-            string path = default;
-            IList<ApiOperationInvokableProtocol> protocols = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ApiContractUpdateProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("authenticationSettings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authenticationSettings = AuthenticationSettingsContract.DeserializeAuthenticationSettingsContract(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionKeyParameterNames"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subscriptionKeyParameterNames = SubscriptionKeyParameterNamesContract.DeserializeSubscriptionKeyParameterNamesContract(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("type"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            type = new ApiType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("apiRevision"u8))
-                        {
-                            apiRevision = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("apiVersion"u8))
-                        {
-                            apiVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("isCurrent"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isCurrent = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("isOnline"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isOnline = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("apiRevisionDescription"u8))
-                        {
-                            apiRevisionDescription = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("apiVersionDescription"u8))
-                        {
-                            apiVersionDescription = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("apiVersionSetId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            apiVersionSetId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("subscriptionRequired"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            subscriptionRequired = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("termsOfServiceUrl"u8))
-                        {
-                            termsOfServiceUri = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("contact"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            contact = ApiContactInformation.DeserializeApiContactInformation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("license"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            license = ApiLicenseInformation.DeserializeApiLicenseInformation(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceUrl"u8))
-                        {
-                            serviceUri = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("path"u8))
-                        {
-                            path = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("protocols"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<ApiOperationInvokableProtocol> array = new List<ApiOperationInvokableProtocol>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(new ApiOperationInvokableProtocol(item.GetString()));
-                            }
-                            protocols = array;
-                            continue;
-                        }
-                    }
+                    properties = ApiContractUpdateProperties.DeserializeApiContractUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ApiPatch(
-                description,
-                authenticationSettings,
-                subscriptionKeyParameterNames,
-                type,
-                apiRevision,
-                apiVersion,
-                isCurrent,
-                isOnline,
-                apiRevisionDescription,
-                apiVersionDescription,
-                apiVersionSetId,
-                subscriptionRequired,
-                termsOfServiceUri,
-                contact,
-                license,
-                displayName,
-                serviceUri,
-                path,
-                protocols ?? new ChangeTrackingList<ApiOperationInvokableProtocol>(),
-                serializedAdditionalRawData);
+            return new ApiPatch(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ApiPatch>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ApiPatch)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApiPatch IPersistableModel<ApiPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApiPatch>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApiPatch(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApiPatch)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApiPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

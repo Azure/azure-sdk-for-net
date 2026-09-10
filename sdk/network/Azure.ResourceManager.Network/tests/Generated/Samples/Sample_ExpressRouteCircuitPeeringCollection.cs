@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Samples
                 SecondaryPeerAddressPrefix = "192.168.18.252/30",
                 VlanId = 200,
             };
-            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data);
+            ArmOperation<ExpressRouteCircuitPeeringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, peeringName, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRouteCircuitPeeringResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

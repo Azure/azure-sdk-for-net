@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources.Policy;
 namespace Azure.ResourceManager.Resources.Policy.Models
 {
     /// <summary> The response of a PolicyDefinitionVersion list operation. </summary>
-    public partial class PolicyDefinitionVersionListResult : IJsonModel<PolicyDefinitionVersionListResult>
+    internal partial class PolicyDefinitionVersionListResult : IJsonModel<PolicyDefinitionVersionListResult>
     {
         /// <summary> Initializes a new instance of <see cref="PolicyDefinitionVersionListResult"/> for deserialization. </summary>
         internal PolicyDefinitionVersionListResult()

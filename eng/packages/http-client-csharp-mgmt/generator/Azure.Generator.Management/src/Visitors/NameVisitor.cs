@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
@@ -65,32 +64,55 @@ internal class NameVisitor : ScmLibraryVisitor
             return null;
         }
 
-        if (TryTransformUrlToUri(model.Name, out var newName))
+        type = base.PreVisitModel(model, type);
+        if (type is null)
+        {
+            return null;
+        }
+
+        if (TryTransformUrlToUri(type.Name, out var newName))
         {
             type.Update(name: newName);
         }
 
         if (_knownTypes.Contains(model.Name))
         {
-            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{model.Name}";
+            // Compose with type.Name (not model.Name) so any prior provider-level rename
+            // (e.g. ResourceDataModelProvider's "Data" suffix) is preserved.
+            newName = $"{ManagementClientGenerator.Instance.TypeFactory.ResourceProviderName}{type.Name}";
             type.Update(name: newName);
         }
 
         if (inputLibrary.TryFindEnclosingResourceNameForResourceUpdateModel(model, out var enclosingResourceName, out var isAlsoUsedInCreate))
         {
-            newName = isAlsoUsedInCreate
-                ? $"{enclosingResourceName}CreateOrUpdateContent"
-                : $"{enclosingResourceName}Patch";
-            type.Update(name: newName);
+            // Honor user-provided @@clientName(.., "csharp") only on the patch-only path.
+            // When the same model is also used as the Create body we always rename to
+            // {Resource}CreateOrUpdateContent to keep the Create/Update parameter type
+            // consistent across the SDK surface.
+            if (isAlsoUsedInCreate)
+            {
+                newName = $"{enclosingResourceName}CreateOrUpdateContent";
+                type.Update(name: newName);
+            }
+            else if (!inputLibrary.ClientNameOverriddenModels.Contains(model))
+            {
+                // PATCH-only payloads use {Resource}Patch unless the service provided an explicit clientName.
+                newName = $"{enclosingResourceName}Patch";
+                type.Update(name: newName);
+            }
         }
-        return base.PreVisitModel(model, type);
+        return type;
     }
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
+        if (propertyProvider is not null)
+        {
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
+        }
+
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
-        DoPreVisitPropertyForTimePropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
@@ -102,7 +124,7 @@ internal class NameVisitor : ScmLibraryVisitor
             return;
         }
         var enclosingType = propertyProvider.EnclosingType;
-        if (enclosingType is not InheritableSystemObjectModelProvider modelProvider
+        if (enclosingType is not SystemObjectModelProvider modelProvider
             || modelProvider.CrossLanguageDefinitionId?.Equals(KnownManagementTypes.ArmResourceId) != true)
         {
             return;
@@ -122,53 +144,6 @@ internal class NameVisitor : ScmLibraryVisitor
         if (propertyProvider != null && TryTransformUrlToUri(propertyProvider.Name, out var newPropertyName))
         {
             propertyProvider.Update(name: newPropertyName);
-        }
-    }
-
-    // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
-    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
-        {
-            {"Creation", "Created"},
-            {"Deletion", "Deleted"},
-            {"Expiration", "Expire"},
-            {"Modification", "Modified"},
-        };
-    private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
-    {
-        if (propertyProvider != null && IsDateTimeInputType(property.Type))
-        {
-            var propertyName = propertyProvider.Name;
-            // Skip properties that are not following the pattern we want to change
-            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
-                propertyName.StartsWith("To", StringComparison.Ordinal) ||
-                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
-            {
-                return;
-            }
-
-            var lengthToCut = 0;
-            if (propertyName.Length > 8 &&
-                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
-            {
-                lengthToCut = 8;
-            }
-            else if (propertyName.Length > 4 &&
-                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
-                propertyName.EndsWith("Date", StringComparison.Ordinal)))
-            {
-                lengthToCut = 4;
-            }
-            else if (propertyName.Length > 2 &&
-                propertyName.EndsWith("At", StringComparison.Ordinal))
-            {
-                lengthToCut = 2;
-            }
-            if (lengthToCut > 0)
-            {
-                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
-                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
-                propertyProvider.Update(name: newPropertyName);
-            }
         }
     }
 
@@ -209,17 +184,4 @@ internal class NameVisitor : ScmLibraryVisitor
 
         return false;
     }
-
-    /// <summary>
-    /// Checks the input type (rather than the C# type) to determine if it represents a date/time,
-    /// so the rename logic works regardless of what C# type the downstream generator maps it to
-    /// (e.g., DateTimeOffset, BicepValue&lt;DateTimeOffset&gt;, etc.).
-    /// </summary>
-    private static bool IsDateTimeInputType(InputType inputType) => inputType switch
-    {
-        InputDateTimeType => true,
-        InputPrimitiveType { Kind: InputPrimitiveTypeKind.PlainDate } => true,
-        InputNullableType nullableType => IsDateTimeInputType(nullableType.Type),
-        _ => false
-    };
 }

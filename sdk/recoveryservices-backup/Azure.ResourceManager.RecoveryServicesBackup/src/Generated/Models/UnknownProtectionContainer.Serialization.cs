@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupGenericProtectionContainer IPersistableModel<BackupGenericProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        BackupGenericProtectionContainer IPersistableModel<BackupGenericProtectionContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupGenericProtectionContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -83,7 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupGenericProtectionContainer IJsonModel<BackupGenericProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        BackupGenericProtectionContainer IJsonModel<BackupGenericProtectionContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -112,6 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,6 +157,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectableObjectType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -161,6 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties);
         }
     }

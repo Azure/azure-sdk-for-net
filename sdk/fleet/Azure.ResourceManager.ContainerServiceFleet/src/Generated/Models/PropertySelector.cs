@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> MatchExpressions is an array of PropertySelectorRequirements. The requirements are AND'd. </summary>
-        public IList<ContainerServiceFleetPropertySelectorRequirement> MatchExpressions { get; }
+        public IList<ContainerServiceFleetPropertySelectorRequirement> MatchExpressions { get; } = new ChangeTrackingList<ContainerServiceFleetPropertySelectorRequirement>();
     }
 }

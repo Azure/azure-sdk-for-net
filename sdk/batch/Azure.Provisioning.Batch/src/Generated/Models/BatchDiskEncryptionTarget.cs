@@ -14,8 +14,8 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> The OS Disk on the compute node is encrypted. </summary>
         [DataMember(Name = "OsDisk")]
-        OSDisk,
+        OSDisk = 0,
         /// <summary> The temporary disk on the compute node is encrypted. On Linux this encryption applies to other partitions (such as those on mounted data disks) when encryption occurs at boot time. </summary>
-        TemporaryDisk
+        TemporaryDisk = 1
     }
 }

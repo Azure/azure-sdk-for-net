@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -18,48 +19,93 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         public VirtualNetworkGatewayPolicyGroup()
         {
-            PolicyMembers = new ChangeTrackingList<VirtualNetworkGatewayPolicyGroupMember>();
-            VngClientConnectionConfigurations = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayPolicyGroup"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="isDefault"> Shows if this is a Default VirtualNetworkGatewayPolicyGroup or not. </param>
-        /// <param name="priority"> Priority for VirtualNetworkGatewayPolicyGroup. </param>
-        /// <param name="policyMembers"> Multiple PolicyMembers for VirtualNetworkGatewayPolicyGroup. </param>
-        /// <param name="vngClientConnectionConfigurations"> List of references to vngClientConnectionConfigurations. </param>
-        /// <param name="provisioningState"> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </param>
-        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, bool? isDefault, int? priority, IList<VirtualNetworkGatewayPolicyGroupMember> policyMembers, IReadOnlyList<WritableSubResource> vngClientConnectionConfigurations, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="properties"> Properties of tVirtualNetworkGatewayPolicyGroup. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal VirtualNetworkGatewayPolicyGroup(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VirtualNetworkGatewayPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
-            ETag = etag;
-            IsDefault = isDefault;
-            Priority = priority;
-            PolicyMembers = policyMembers;
-            VngClientConnectionConfigurations = vngClientConnectionConfigurations;
-            ProvisioningState = provisioningState;
+            Properties = properties;
+            ETag = eTag;
         }
+
+        /// <summary> Properties of tVirtualNetworkGatewayPolicyGroup. </summary>
+        [WirePath("properties")]
+        internal VirtualNetworkGatewayPolicyGroupProperties Properties { get; set; }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
         /// <summary> Shows if this is a Default VirtualNetworkGatewayPolicyGroup or not. </summary>
         [WirePath("properties.isDefault")]
-        public bool? IsDefault { get; set; }
+        public bool? IsDefault
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDefault;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new VirtualNetworkGatewayPolicyGroupProperties();
+                    }
+                    Properties.IsDefault = value.Value;
+                }
+            }
+        }
+
         /// <summary> Priority for VirtualNetworkGatewayPolicyGroup. </summary>
         [WirePath("properties.priority")]
-        public int? Priority { get; set; }
+        public int? Priority
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Priority;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new VirtualNetworkGatewayPolicyGroupProperties();
+                    }
+                    Properties.Priority = value.Value;
+                }
+            }
+        }
+
         /// <summary> Multiple PolicyMembers for VirtualNetworkGatewayPolicyGroup. </summary>
         [WirePath("properties.policyMembers")]
-        public IList<VirtualNetworkGatewayPolicyGroupMember> PolicyMembers { get; }
-        /// <summary> List of references to vngClientConnectionConfigurations. </summary>
-        [WirePath("properties.vngClientConnectionConfigurations")]
-        public IReadOnlyList<WritableSubResource> VngClientConnectionConfigurations { get; }
+        public IList<VirtualNetworkGatewayPolicyGroupMember> PolicyMembers
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPolicyGroupProperties();
+                }
+                return Properties.PolicyMembers;
+            }
+        }
+
         /// <summary> The provisioning state of the VirtualNetworkGatewayPolicyGroup resource. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkProvisioningState? ProvisioningState { get; }
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

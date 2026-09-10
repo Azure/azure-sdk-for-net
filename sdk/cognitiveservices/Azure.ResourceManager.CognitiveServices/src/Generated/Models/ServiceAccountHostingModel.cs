@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,44 +15,63 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct ServiceAccountHostingModel : IEquatable<ServiceAccountHostingModel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServiceAccountHostingModel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServiceAccountHostingModel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WebValue = "Web";
         private const string ConnectedContainerValue = "ConnectedContainer";
         private const string DisconnectedContainerValue = "DisconnectedContainer";
         private const string ProvisionedWebValue = "ProvisionedWeb";
 
-        /// <summary> Web. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAccountHostingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServiceAccountHostingModel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Web. </summary>
         public static ServiceAccountHostingModel Web { get; } = new ServiceAccountHostingModel(WebValue);
-        /// <summary> ConnectedContainer. </summary>
+
+        /// <summary> Gets the ConnectedContainer. </summary>
         public static ServiceAccountHostingModel ConnectedContainer { get; } = new ServiceAccountHostingModel(ConnectedContainerValue);
-        /// <summary> DisconnectedContainer. </summary>
+
+        /// <summary> Gets the DisconnectedContainer. </summary>
         public static ServiceAccountHostingModel DisconnectedContainer { get; } = new ServiceAccountHostingModel(DisconnectedContainerValue);
-        /// <summary> ProvisionedWeb. </summary>
+
+        /// <summary> Gets the ProvisionedWeb. </summary>
         public static ServiceAccountHostingModel ProvisionedWeb { get; } = new ServiceAccountHostingModel(ProvisionedWebValue);
+
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceAccountHostingModel left, ServiceAccountHostingModel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceAccountHostingModel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceAccountHostingModel left, ServiceAccountHostingModel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceAccountHostingModel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceAccountHostingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceAccountHostingModel(string value) => new ServiceAccountHostingModel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceAccountHostingModel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceAccountHostingModel?(string value) => value == null ? null : new ServiceAccountHostingModel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceAccountHostingModel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceAccountHostingModel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

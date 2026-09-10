@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             TryGetApiVersion(ResourceType, out string accessPolicyAssignmentApiVersion);
             _accessPolicyAssignmentClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _accessPolicyAssignmentRestClient = new AccessPolicyAssignment(_accessPolicyAssignmentClientDiagnostics, Pipeline, Endpoint, accessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
+            _accessPolicyAssignmentRestClient = new AccessPolicyAssignment(_accessPolicyAssignmentClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, accessPolicyAssignmentApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
-                    new AccessPolicyAssignmentOperationSource(Client),
+                    new AccessPolicyAssignmentResourceOperationSource(Client),
                     _accessPolicyAssignmentClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 HttpMessage message = _accessPolicyAssignmentRestClient.CreateCreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, AccessPolicyAssignmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedisEnterpriseArmOperation<AccessPolicyAssignmentResource> operation = new RedisEnterpriseArmOperation<AccessPolicyAssignmentResource>(
-                    new AccessPolicyAssignmentOperationSource(Client),
+                    new AccessPolicyAssignmentResourceOperationSource(Client),
                     _accessPolicyAssignmentClientDiagnostics,
                     Pipeline,
                     message.Request,

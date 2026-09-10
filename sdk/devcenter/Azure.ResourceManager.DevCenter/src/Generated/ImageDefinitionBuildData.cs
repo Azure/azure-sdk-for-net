@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Image Definition Build properties. </param>
-        internal ImageDefinitionBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageDefinitionBuildProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImageDefinitionBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ImageDefinitionBuildProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Image Definition Build properties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ImageReference;
+                return Properties is null ? default : Properties.ImageReference;
             }
         }
 
@@ -54,25 +54,25 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
         /// <summary> Start time of the task group. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> End time of the task group. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ErrorDetails;
+                return Properties is null ? default : Properties.ErrorDetails;
             }
         }
     }

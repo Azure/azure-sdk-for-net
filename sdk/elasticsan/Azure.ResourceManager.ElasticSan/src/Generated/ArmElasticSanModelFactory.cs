@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.Models;
@@ -20,53 +19,54 @@ namespace Azure.ResourceManager.ElasticSan.Models
     public static partial class ArmElasticSanModelFactory
     {
 
+        /// <summary> The SKU name. Required for account creation; optional for update. </summary>
+        /// <param name="name"> The sku name. </param>
+        /// <param name="tier"> The sku tier. </param>
+        /// <returns> A new <see cref="Models.ElasticSanSku"/> instance for mocking. </returns>
+        public static ElasticSanSku ElasticSanSku(ElasticSanSkuName name = default, ElasticSanSkuTier? tier = default)
+        {
+            return new ElasticSanSku(name, tier, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="sku"> resource sku. </param>
-        /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
-        /// <param name="provisioningState"> State of the operation on the resource. </param>
-        /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
-        /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
-        /// <param name="totalVolumeSizeGiB"> Total size of the provisioned Volumes in GiB. </param>
-        /// <param name="volumeGroupCount"> Total number of volume groups in this Elastic San appliance. </param>
-        /// <param name="totalIops"> Total Provisioned IOPS of the Elastic San appliance. </param>
-        /// <param name="totalMbps"> Total Provisioned MBps Elastic San appliance. </param>
-        /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
-        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
-        /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
-        /// <param name="scaleUpProperties"> Scale up settings on Elastic San Appliance. </param>
-        /// <returns> A new <see cref="ElasticSan.ElasticSanData"/> instance for mocking. </returns>
-        public static ElasticSanData ElasticSanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSanSku sku = default, IEnumerable<string> availabilityZones = default, ElasticSanProvisioningState? provisioningState = default, long? baseSizeTiB = default, long? extendedCapacitySizeTiB = default, long? totalVolumeSizeGiB = default, long? volumeGroupCount = default, long? totalIops = default, long? totalMbps = default, long? totalSizeTiB = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, ElasticSanPublicNetworkAccess? publicNetworkAccess = default, ElasticSanScaleUpProperties scaleUpProperties = default)
+        /// <param name="provisioningState"> Provisioning State of Private Endpoint connection resource. </param>
+        /// <param name="connectionState"> Private Link Service Connection State. </param>
+        /// <param name="groupIds"> List of resources private endpoint is mapped. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ElasticSanPrivateEndpointConnectionData ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticSanProvisioningState? provisioningState = default, ElasticSanPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ElasticSanData(
+            return new ElasticSanPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                sku is null && availabilityZones is null && provisioningState is null && baseSizeTiB is null && extendedCapacitySizeTiB is null && totalVolumeSizeGiB is null && volumeGroupCount is null && totalIops is null && totalMbps is null && totalSizeTiB is null && privateEndpointConnections is null && publicNetworkAccess is null && scaleUpProperties is null ? default : new ElasticSanProperties(
-                    sku,
-                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    baseSizeTiB.Value,
-                    extendedCapacitySizeTiB.Value,
-                    totalVolumeSizeGiB,
-                    volumeGroupCount,
-                    totalIops,
-                    totalMbps,
-                    totalSizeTiB,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    new AutoScaleProperties(scaleUpProperties, null),
-                    null));
+                privateEndpointId is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, default, default),
+                default);
+        }
+
+        /// <summary> Response for Private Link Service Connection state. </summary>
+        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
+        /// <param name="description"> The reason for approval/rejection of the connection. </param>
+        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
+        /// <returns> A new <see cref="Models.ElasticSanPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static ElasticSanPrivateLinkServiceConnectionState ElasticSanPrivateLinkServiceConnectionState(ElasticSanPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
+        {
+            return new ElasticSanPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <summary> Scale up properties on Elastic San Appliance. </summary>
+        /// <param name="unusedSizeTiB"> Unused size on Elastic San appliance in TiB. </param>
+        /// <param name="increaseCapacityUnitByTiB"> Unit to increase Capacity Unit on Elastic San appliance in TiB. </param>
+        /// <param name="capacityUnitScaleUpLimitTiB"> Maximum scale up size on Elastic San appliance in TiB. </param>
+        /// <param name="autoScalePolicyEnforcement"> Enable or Disable scale up setting on Elastic San Appliance. </param>
+        /// <returns> A new <see cref="Models.ElasticSanScaleUpProperties"/> instance for mocking. </returns>
+        public static ElasticSanScaleUpProperties ElasticSanScaleUpProperties(long? unusedSizeTiB = default, long? increaseCapacityUnitByTiB = default, long? capacityUnitScaleUpLimitTiB = default, AutoScalePolicyEnforcement? autoScalePolicyEnforcement = default)
+        {
+            return new ElasticSanScaleUpProperties(unusedSizeTiB, increaseCapacityUnitByTiB, capacityUnitScaleUpLimitTiB, autoScalePolicyEnforcement, default);
         }
 
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
@@ -79,7 +79,45 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null ? default : new ElasticSanUpdateProperties(baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, new AutoScaleProperties(scaleUpProperties, null), null), tags, additionalBinaryDataProperties: null);
+            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null ? default : new ElasticSanUpdateProperties(baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, new AutoScaleProperties(scaleUpProperties, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
+        /// <param name="creationData"> State of the operation on the resource. </param>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="storageTarget"> Storage target information. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="managedByResourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
+        public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? volumeId = default, ElasticSanVolumeDataSourceInfo creationData = default, long sizeGiB = default, IscsiTargetInfo storageTarget = default, ElasticSanProvisioningState? provisioningState = default, ResourceIdentifier managedByResourceId = default)
+        {
+            return new ElasticSanVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                volumeId is null && managedByResourceId is null ? default : new VolumeProperties(
+                    volumeId,
+                    default,
+                    default,
+                    default,
+                    new ManagedByInfo(managedByResourceId, default),
+                    default,
+                    default),
+                default);
+        }
+
+        /// <summary> Data source used when creating the volume. </summary>
+        /// <param name="createSource"> This enumerates the possible sources of a volume creation. </param>
+        /// <param name="sourceId"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
+        /// <returns> A new <see cref="Models.ElasticSanVolumeDataSourceInfo"/> instance for mocking. </returns>
+        public static ElasticSanVolumeDataSourceInfo ElasticSanVolumeDataSourceInfo(ElasticSanVolumeCreateOption? createSource = default, ResourceIdentifier sourceId = default)
+        {
+            return new ElasticSanVolumeDataSourceInfo(createSource, sourceId, default);
         }
 
         /// <summary> Iscsi target information. </summary>
@@ -97,7 +135,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 targetPortalPort,
                 provisioningState,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="managedByResourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
+        /// <returns> A new <see cref="Models.ElasticSanVolumePatch"/> instance for mocking. </returns>
+        public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB = default, ResourceIdentifier managedByResourceId = default)
+        {
+            return new ElasticSanVolumePatch(sizeGiB is null && managedByResourceId is null ? default : new VolumeUpdateProperties(sizeGiB, new ManagedByInfo(managedByResourceId, default), default), default);
         }
 
         /// <summary> object to hold array of volume names. </summary>
@@ -107,7 +153,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             volumeNames ??= new ChangeTrackingList<string>();
 
-            return new ElasticSanVolumeNameListContent(volumeNames.ToList(), additionalBinaryDataProperties: null);
+            return new ElasticSanVolumeNameListContent((volumeNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> response object for pre validation api. </summary>
@@ -115,7 +161,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.ElasticSanPreValidationResult"/> instance for mocking. </returns>
         public static ElasticSanPreValidationResult ElasticSanPreValidationResult(string validationStatus = default)
         {
-            return new ElasticSanPreValidationResult(validationStatus, additionalBinaryDataProperties: null);
+            return new ElasticSanPreValidationResult(validationStatus, default);
         }
 
         /// <summary> object to hold array of Disk Snapshot ARM IDs. </summary>
@@ -125,7 +171,48 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             diskSnapshotIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new DiskSnapshotListContent(diskSnapshotIds.ToList(), additionalBinaryDataProperties: null);
+            return new DiskSnapshotListContent((diskSnapshotIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
+        public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ElasticSanProvisioningState? provisioningState = default, ElasticSanStorageTargetType? protocolType = default, ElasticSanEncryptionType? encryption = default, ElasticSanEncryptionProperties encryptionProperties = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enforceDataIntegrityCheckForIscsi = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default)
+        {
+            return new ElasticSanVolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                provisioningState is null && protocolType is null && encryption is null && encryptionProperties is null && virtualNetworkRules is null && privateEndpointConnections is null && enforceDataIntegrityCheckForIscsi is null ? default : new VolumeGroupProperties(
+                    provisioningState,
+                    protocolType,
+                    encryption,
+                    encryptionProperties,
+                    new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
+                    enforceDataIntegrityCheckForIscsi,
+                    default),
+                default);
+        }
+
+        /// <param name="keyVaultProperties"> Properties provided by key vault. </param>
+        /// <param name="encryptionUserAssignedIdentity"> Resource identifier of the UserAssigned identity to be associated with server-side encryption on the volume group. </param>
+        /// <returns> A new <see cref="Models.ElasticSanEncryptionProperties"/> instance for mocking. </returns>
+        public static ElasticSanEncryptionProperties ElasticSanEncryptionProperties(ElasticSanKeyVaultProperties keyVaultProperties = default, ResourceIdentifier encryptionUserAssignedIdentity = default)
+        {
+            return new ElasticSanEncryptionProperties(keyVaultProperties, encryptionUserAssignedIdentity is null ? default : new ElasticSanEncryptionIdentity(encryptionUserAssignedIdentity, default), default);
         }
 
         /// <summary> Properties of key vault. </summary>
@@ -145,7 +232,62 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 currentVersionedKeyIdentifier,
                 lastKeyRotationTimestamp,
                 currentVersionedKeyExpirationTimestamp,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Virtual Network rule. </summary>
+        /// <param name="virtualNetworkResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
+        /// <param name="action"> The action of virtual network rule. </param>
+        /// <returns> A new <see cref="Models.ElasticSanVirtualNetworkRule"/> instance for mocking. </returns>
+        public static ElasticSanVirtualNetworkRule ElasticSanVirtualNetworkRule(ResourceIdentifier virtualNetworkResourceId = default, ElasticSanVirtualNetworkRuleAction? action = default)
+        {
+            return new ElasticSanVirtualNetworkRule(virtualNetworkResourceId, action, default);
+        }
+
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="protocolType"> Type of storage target. </param>
+        /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
+        /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
+        /// <returns> A new <see cref="Models.ElasticSanVolumeGroupPatch"/> instance for mocking. </returns>
+        public static ElasticSanVolumeGroupPatch ElasticSanVolumeGroupPatch(ManagedServiceIdentity identity = default, ElasticSanStorageTargetType? protocolType = default, ElasticSanEncryptionType? encryption = default, ElasticSanEncryptionProperties encryptionProperties = default, bool? enforceDataIntegrityCheckForIscsi = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default)
+        {
+            return new ElasticSanVolumeGroupPatch(identity, protocolType is null && encryption is null && encryptionProperties is null && virtualNetworkRules is null && enforceDataIntegrityCheckForIscsi is null ? default : new VolumeGroupUpdateProperties(
+                protocolType,
+                encryption,
+                encryptionProperties,
+                new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                enforceDataIntegrityCheckForIscsi,
+                default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> State of the operation on the resource. </param>
+        /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
+        /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
+        /// <param name="creationDataSourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
+        /// <returns> A new <see cref="ElasticSan.ElasticSanSnapshotData"/> instance for mocking. </returns>
+        public static ElasticSanSnapshotData ElasticSanSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticSanProvisioningState? provisioningState = default, long? sourceVolumeSizeGiB = default, string volumeName = default, ResourceIdentifier creationDataSourceId = default)
+        {
+            return new ElasticSanSnapshotData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                creationDataSourceId is null ? default : new SnapshotProperties(new SnapshotCreationInfo(creationDataSourceId, default), default, default, default, default),
+                default);
+        }
+
+        /// <summary> Data used when creating a volume snapshot. </summary>
+        /// <param name="sourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
+        /// <returns> A new <see cref="Models.SnapshotCreationInfo"/> instance for mocking. </returns>
+        public static SnapshotCreationInfo SnapshotCreationInfo(ResourceIdentifier sourceId = default)
+        {
+            return new SnapshotCreationInfo(sourceId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -163,8 +305,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ElasticSanPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), null));
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ElasticSanPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <summary> ElasticSAN SKU and its properties. </summary>
@@ -185,10 +327,10 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 tier,
                 resourceType,
-                locations.ToList(),
-                locationInfo.ToList(),
-                capabilities.ToList(),
-                additionalBinaryDataProperties: null);
+                (locations ?? new ChangeTrackingList<string>()).ToList(),
+                (locationInfo ?? new ChangeTrackingList<ElasticSanSkuLocationInfo>()).ToList(),
+                (capabilities ?? new ChangeTrackingList<ElasticSanSkuCapability>()).ToList(),
+                default);
         }
 
         /// <summary> The location info. </summary>
@@ -199,7 +341,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             zones ??= new ChangeTrackingList<string>();
 
-            return new ElasticSanSkuLocationInfo(location, zones.ToList(), additionalBinaryDataProperties: null);
+            return new ElasticSanSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The capability information in the specified SKU. </summary>
@@ -208,16 +350,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.ElasticSanSkuCapability"/> instance for mocking. </returns>
         public static ElasticSanSkuCapability ElasticSanSkuCapability(string name = default, string value = default)
         {
-            return new ElasticSanSkuCapability(name, value, additionalBinaryDataProperties: null);
+            return new ElasticSanSkuCapability(name, value, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Response for ElasticSan request. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> resource sku. </param>
         /// <param name="availabilityZones"> Logical zone for Elastic San resource; example: ["1"]. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
@@ -234,73 +376,101 @@ namespace Azure.ResourceManager.ElasticSan.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanData ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IEnumerable<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess)
         {
-            return ElasticSanData(id, name, resourceType, systemData, tags, location, sku, availabilityZones, provisioningState, baseSizeTiB, extendedCapacitySizeTiB, totalVolumeSizeGiB, volumeGroupCount, totalIops, totalMbps, totalSizeTiB, privateEndpointConnections, publicNetworkAccess, scaleUpProperties: default);
+            return new ElasticSanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                sku is null && availabilityZones is null && provisioningState is null && totalVolumeSizeGiB is null && volumeGroupCount is null && totalIops is null && totalMbps is null && totalSizeTiB is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ElasticSanProperties(
+                    sku,
+                    (availabilityZones ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    baseSizeTiB,
+                    extendedCapacitySizeTiB,
+                    totalVolumeSizeGiB,
+                    volumeGroupCount,
+                    totalIops,
+                    totalMbps,
+                    totalSizeTiB,
+                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    default,
+                    default),
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Response for PrivateEndpoint Connection object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning State of Private Endpoint connection resource. </param>
-        /// <param name="privateEndpointId"> Private Endpoint resource. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <param name="connectionState"> Private Link Service Connection State. </param>
         /// <param name="groupIds"> List of resources private endpoint is mapped. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanPrivateEndpointConnectionData ElasticSanPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ElasticSanProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, ElasticSanPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default)
         {
-            groupIds ??= new ChangeTrackingList<string>();
-
             return new ElasticSanPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <summary> Response for Volume Group request. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
         /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
-        /// <param name="virtualNetworkRules"> A collection of rules governing the accessibility from specific network locations. </param>
+        /// <param name="virtualNetworkRules"> The list of virtual network rules. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="enforceDataIntegrityCheckForIscsi"> A boolean indicating whether or not Data Integrity Check is enabled. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeGroupData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumeGroupData ElasticSanVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, ElasticSanProvisioningState? provisioningState = default, ElasticSanStorageTargetType? protocolType = default, ElasticSanEncryptionType? encryption = default, ElasticSanEncryptionProperties encryptionProperties = default, IEnumerable<ElasticSanVirtualNetworkRule> virtualNetworkRules = default, IEnumerable<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default, bool? enforceDataIntegrityCheckForIscsi = default)
         {
-            virtualNetworkRules ??= new ChangeTrackingList<ElasticSanVirtualNetworkRule>();
-            privateEndpointConnections ??= new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
-
             return new ElasticSanVolumeGroupData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 identity,
+                provisioningState is null && protocolType is null && encryption is null && encryptionProperties is null && virtualNetworkRules is null && privateEndpointConnections is null && enforceDataIntegrityCheckForIscsi is null ? default : new VolumeGroupProperties(
+                    provisioningState,
+                    protocolType,
+                    encryption,
+                    encryptionProperties,
+                    new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                    (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
+                    enforceDataIntegrityCheckForIscsi,
+                    default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanVolumeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Response for Volume request. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="volumeId"> Unique Id of the volume in GUID format. </param>
         /// <param name="creationData"> State of the operation on the resource. </param>
         /// <param name="sizeGiB"> Volume size. </param>
         /// <param name="storageTarget"> Storage target information. </param>
-        /// <param name="managedByResourceId"> Parent resource information. </param>
+        /// <param name="managedByResourceId"> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanVolumeData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanVolumeData ElasticSanVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? volumeId = default, ElasticSanVolumeDataSourceInfo creationData = default, long sizeGiB = 0L, IscsiTargetInfo storageTarget = default, ResourceIdentifier managedByResourceId = default, ElasticSanProvisioningState? provisioningState = default)
         {
             return new ElasticSanVolumeData(
@@ -308,20 +478,28 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                volumeId is null && creationData is null && storageTarget is null && managedByResourceId is null && provisioningState is null ? default : new VolumeProperties(
+                    volumeId,
+                    creationData,
+                    sizeGiB,
+                    storageTarget,
+                    new ManagedByInfo(managedByResourceId, default),
+                    provisioningState,
+                    default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticSan.ElasticSanSnapshotData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="creationDataSourceId"> Data used when creating a volume snapshot. </param>
+        /// <summary> Response for Volume Snapshot request. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="creationDataSourceId"> Fully qualified resource ID of the volume. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}". </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="sourceVolumeSizeGiB"> Size of Source Volume. </param>
         /// <param name="volumeName"> Source Volume Name of a snapshot. </param>
         /// <returns> A new <see cref="ElasticSan.ElasticSanSnapshotData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static ElasticSanSnapshotData ElasticSanSnapshotData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier creationDataSourceId = default, ElasticSanProvisioningState? provisioningState = default, long? sourceVolumeSizeGiB = default, string volumeName = default)
         {
             return new ElasticSanSnapshotData(
@@ -329,7 +507,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
+                creationDataSourceId is null && provisioningState is null && sourceVolumeSizeGiB is null && volumeName is null ? default : new SnapshotProperties(new SnapshotCreationInfo(creationDataSourceId, default), provisioningState, sourceVolumeSizeGiB, volumeName, default),
                 default);
         }
     }

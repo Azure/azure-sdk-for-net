@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Unknown version of DeliveryRuleAction. </summary>
     internal partial class UnknownDeliveryRuleAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDeliveryRuleAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, serializedAdditionalRawData)
-        {
-            Name = name;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleAction"/> for deserialization. </summary>
-        internal UnknownDeliveryRuleAction()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDeliveryRuleAction(DeliveryRuleActionName name, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", additionalBinaryDataProperties)
         {
         }
     }

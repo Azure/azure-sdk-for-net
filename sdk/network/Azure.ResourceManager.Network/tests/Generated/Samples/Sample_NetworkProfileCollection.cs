@@ -51,13 +51,11 @@ Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/networkProfileVnet/subnets/networkProfileSubnet1"),
 },
-Name = "ipconfig1",
 }},
-Name = "eth1",
 }},
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<NetworkProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkProfileName, data);
+            ArmOperation<NetworkProfileResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkProfileName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkProfileResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "RepeatabilityResult",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
       "valueType": {
         "$id": "2",
@@ -29,7 +30,8 @@
             "$ref": "1"
           },
           "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -43,7 +45,8 @@
             "$ref": "1"
           },
           "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Azure.Core",
@@ -51,12 +54,16 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Output",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.Versions",
       "valueType": {
         "$id": "6",
@@ -78,7 +85,8 @@
             "$ref": "5"
           },
           "doc": "2022-12-01-preview",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Core.Traits",
@@ -86,14 +94,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "8",
       "kind": "constant",
-      "name": "smokeTestContentType",
+      "name": "SmokeTestAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -104,12 +113,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
       "kind": "constant",
-      "name": "repeatableActionContentType",
+      "name": "SmokeTestAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -120,12 +130,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "repeatableActionContentType1",
+      "name": "SmokeTestAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -136,7 +147,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -144,6 +156,9 @@
       "$id": "14",
       "kind": "model",
       "name": "User",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.User",
       "usage": "Output,Json",
@@ -154,11 +169,15 @@
           "name": "User"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "15",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "id",
           "doc": "The user's id.",
           "type": {
@@ -179,12 +198,16 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "17",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "name",
           "doc": "The user's name.",
           "type": {
@@ -205,7 +228,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -213,6 +237,7 @@
       "$id": "19",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
@@ -223,17 +248,20 @@
           "name": "ErrorResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "20",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "21",
             "kind": "model",
             "name": "Error",
+            "apiVersions": [],
             "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception",
@@ -244,11 +272,13 @@
                 "name": "Error"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "22",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [],
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
@@ -269,12 +299,14 @@
                     "name": "code"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "24",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [],
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
@@ -295,12 +327,14 @@
                     "name": "message"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "26",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [],
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
@@ -321,12 +355,14 @@
                     "name": "target"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "28",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [],
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
@@ -350,18 +386,21 @@
                     "name": "details"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "30",
                 "kind": "property",
                 "name": "innererror",
+                "apiVersions": [],
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
                   "$id": "31",
                   "kind": "model",
                   "name": "InnerError",
+                  "apiVersions": [],
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception",
@@ -372,11 +411,13 @@
                       "name": "InnerError"
                     }
                   },
+                  "isExactName": false,
                   "properties": [
                     {
                       "$id": "32",
                       "kind": "property",
                       "name": "code",
+                      "apiVersions": [],
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
@@ -397,12 +438,14 @@
                           "name": "code"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     },
                     {
                       "$id": "34",
                       "kind": "property",
                       "name": "innererror",
+                      "apiVersions": [],
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
@@ -419,7 +462,8 @@
                           "name": "innererror"
                         }
                       },
-                      "isHttpMetadata": false
+                      "isHttpMetadata": false,
+                      "isExactName": false
                     }
                   ]
                 },
@@ -434,7 +478,8 @@
                     "name": "innererror"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -449,12 +494,14 @@
               "name": "error"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "35",
           "kind": "property",
           "name": "errorCode",
+          "apiVersions": [],
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
@@ -475,7 +522,8 @@
               "name": "errorCode"
             }
           },
-          "isHttpMetadata": true
+          "isHttpMetadata": true,
+          "isExactName": false
         }
       ]
     },
@@ -489,6 +537,9 @@
       "$id": "37",
       "kind": "model",
       "name": "UserActionParam",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.UserActionParam",
       "usage": "Input,Json",
@@ -499,11 +550,15 @@
           "name": "UserActionParam"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "38",
           "kind": "property",
           "name": "userActionValue",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "userActionValue",
           "doc": "User action value.",
           "type": {
@@ -524,7 +579,8 @@
               "name": "userActionValue"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -532,6 +588,9 @@
       "$id": "40",
       "kind": "model",
       "name": "UserActionResponse",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Traits",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.UserActionResponse",
       "usage": "Output,Json",
@@ -542,11 +601,15 @@
           "name": "UserActionResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "41",
           "kind": "property",
           "name": "userActionResult",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "userActionResult",
           "doc": "User action result.",
           "type": {
@@ -567,7 +630,8 @@
               "name": "userActionResult"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -577,6 +641,7 @@
       "$id": "43",
       "kind": "client",
       "name": "TraitsClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Core.Traits",
       "doc": "Illustrates Azure Core operation customizations by traits",
       "methods": [
@@ -584,6 +649,7 @@
           "$id": "44",
           "kind": "basic",
           "name": "smokeTest",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -592,6 +658,7 @@
           "operation": {
             "$id": "45",
             "name": "smokeTest",
+            "isExactName": false,
             "resourceName": "User",
             "doc": "Get a resource, sending and receiving headers.",
             "accessibility": "public",
@@ -655,9 +722,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -703,9 +772,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "56",
@@ -748,9 +819,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.foo",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "60",
@@ -793,9 +866,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "64",
@@ -838,9 +913,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifNoneMatch",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "68",
@@ -899,9 +976,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifUnmodifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "74",
@@ -960,9 +1039,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.ifModifiedSince",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "80",
@@ -1019,9 +1100,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.clientRequestId",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "86",
@@ -1054,9 +1137,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.smokeTest.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1114,7 +1199,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1167,6 +1257,7 @@
           "$id": "92",
           "kind": "basic",
           "name": "repeatableAction",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -1175,6 +1266,7 @@
           "operation": {
             "$id": "93",
             "name": "repeatableAction",
+            "isExactName": false,
             "resourceName": "Traits",
             "doc": "Test for repeatable requests",
             "accessibility": "public",
@@ -1212,7 +1304,8 @@
                   {
                     "$ref": "49"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "97",
@@ -1258,9 +1351,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "101",
@@ -1303,9 +1398,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityRequestId",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "105",
@@ -1364,9 +1461,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.repeatabilityFirstSent",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "111",
@@ -1401,9 +1500,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "113",
@@ -1436,9 +1537,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "115",
@@ -1476,9 +1579,16 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.repeatableAction.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -1502,7 +1612,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -1578,7 +1693,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Core.Traits.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "49"

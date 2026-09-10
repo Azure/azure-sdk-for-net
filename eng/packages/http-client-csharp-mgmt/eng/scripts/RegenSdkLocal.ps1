@@ -7,15 +7,19 @@
 .DESCRIPTION
     Builds the mgmt generator locally and regenerates SDK folders using TypeSpec.
     Does NOT modify package.json files or create versioned packages.
-    By default, regenerates ALL mgmt SDKs. Use -Services to limit scope.
-    
-    Pattern matching: The -Services parameter uses substring matching.
-    For example, "Key" matches both "KeyVault" and "MyKeyService".
-    Use wildcards for more precise matching (e.g., "KeyVault*").
+    By default (when -Services is omitted), regenerates ALL mgmt SDKs.
+    Use -Services to regenerate one or more specific libraries by exact
+    library folder name (e.g., "Azure.ResourceManager.Compute").
 
 .PARAMETER Services
-    One or more service name patterns to regenerate (e.g., "KeyVault", "Compute").
-    Supports wildcards. Case-insensitive. Uses substring matching.
+    One or more library folder names to regenerate (e.g.,
+    "Azure.ResourceManager.Compute"). Each value must match an SDK folder
+    name exactly (case-insensitive). Omit -Services to regenerate ALL
+    mgmt SDKs.
+
+    Exact matching avoids the common pitfall where a substring like
+    "Compute" also picks up ComputeFleet, ComputeLimit, ComputeSchedule,
+    etc.
 
 .PARAMETER Parallel
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
@@ -36,16 +40,18 @@
     The powershell-yaml module will be auto-installed if not present.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault"
+    .\RegenSdkLocal.ps1
+    # Regenerates ALL mgmt SDKs.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault","Compute","Network"
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault"
+    # Exact match against the SDK folder name.
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "Key*" -Parallel 8
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault","Azure.ResourceManager.Compute"
 
 .EXAMPLE
-    .\RegenSdkLocal.ps1 -Services "KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
+    .\RegenSdkLocal.ps1 -Services "Azure.ResourceManager.KeyVault" -LocalSpecRepoPath "C:\src\azure-rest-api-specs"
 #>
 
 param(
@@ -92,6 +98,21 @@ if (-not (Test-Path $sdkRoot)) {
 Write-Host "=== Local Mgmt SDK Regeneration ==="
 Write-Host "Mgmt Generator: $mgmtPackageRoot"
 Write-Host "SDK Root: $sdkRepoRoot"
+
+function Format-FullError {
+    param([System.Management.Automation.ErrorRecord]$ErrorRecord)
+
+    $parts = @($ErrorRecord.ToString())
+    if ($ErrorRecord.ScriptStackTrace) {
+        $parts += "PowerShell stack trace:"
+        $parts += $ErrorRecord.ScriptStackTrace
+    }
+    if ($ErrorRecord.Exception.StackTrace) {
+        $parts += ".NET exception stack trace:"
+        $parts += $ErrorRecord.Exception.StackTrace
+    }
+    return $parts -join [Environment]::NewLine
+}
 
 # Step 1: Build generator
 Write-Host "`n[1/3] Building Mgmt generator..."
@@ -144,11 +165,19 @@ foreach ($tspFile in $tspFiles) {
 
 Write-Host "Found $($mgmtSdkFolders.Count) mgmt SDK folders"
 
-# Apply services filter
+# Apply services filter: each value must match an SDK folder name exactly
+# (case-insensitive). Throws if any value matches no folder.
 if ($Services -and $Services.Count -gt 0) {
-    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object { 
+    $unmatched = @($Services | Where-Object {
+        $name = $_
+        -not ($mgmtSdkFolders | Where-Object { $_.Library -ieq $name })
+    })
+    if ($unmatched.Count -gt 0) {
+        throw "No mgmt SDK folder matched: $($unmatched -join ', '). Pass the exact library folder name, e.g., 'Azure.ResourceManager.Compute'."
+    }
+    $mgmtSdkFolders = @($mgmtSdkFolders | Where-Object {
         $folder = $_
-        $Services | Where-Object { $folder.Library -like "*$_*" -or $folder.Service -like "*$_*" }
+        $null -ne ($Services | Where-Object { $folder.Library -ieq $_ })
     })
     Write-Host "Filtered to $($mgmtSdkFolders.Count) matching: $($Services -join ', ')"
 }
@@ -166,6 +195,7 @@ Write-Host "Selected $($selectedFolders.Count) SDKs for regeneration"
 Write-Host "`n[3/3] Regenerating ($Parallel parallel jobs)..."
 $totalStart = Get-Date
 $workerScript = Join-Path $PSScriptRoot "Invoke-SdkRegeneration.ps1"
+$formatFullErrorDefinition = ${function:Format-FullError}.ToString()
 
 # Run regeneration (parallel or sequential)
 if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
@@ -177,10 +207,12 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         $localSpecRepo = $using:LocalSpecRepoPath
         $saveInputsFlag = $using:SaveInputs
         $debugFlag = $using:DebugGenerator
-        
+        $formatFullError = [scriptblock]::Create($using:formatFullErrorDefinition)
+        Set-Item -Path function:Format-FullError -Value $formatFullError
+
         $result = @{ Library = $folder.Library; Success = $false; Error = ""; Elapsed = 0 }
         $start = Get-Date
-        
+
         try {
             $workerArgs = @{
                 ProjectPath = $folder.Path
@@ -197,20 +229,20 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 $result.Success = $workerResult.Success
                 $result.Error = $workerResult.Error
             } else {
-                throw "Worker script did not return valid result"
+                throw "Worker script did not return valid result. Full output:$([Environment]::NewLine)$($output -join [Environment]::NewLine)"
             }
         }
         catch {
-            $result.Error = $_.ToString()
+            $result.Error = Format-FullError $_
         }
-        
+
         $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
-        
+
         # Output progress
         if ($result.Success) {
             Write-Host "  $($result.Library): OK ($($result.Elapsed)s)"
         } else {
-            Write-Host "  $($result.Library): FAILED - $($result.Error)"
+            Write-Host "  $($result.Library): FAILED ($($result.Elapsed)s)"
         }
         
         $result
@@ -239,11 +271,11 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
                 $result.Success = $workerResult.Success
                 $result.Error = $workerResult.Error
             } else {
-                throw "Worker script did not return valid result"
+                throw "Worker script did not return valid result. Full output:$([Environment]::NewLine)$($output -join [Environment]::NewLine)"
             }
         }
         catch {
-            $result.Error = $_.ToString()
+            $result.Error = Format-FullError $_
         }
         
         $result.Elapsed = [math]::Round(((Get-Date) - $start).TotalSeconds, 1)
@@ -251,7 +283,7 @@ if ($Parallel -gt 1 -and $selectedFolders.Count -gt 1) {
         if ($result.Success) {
             Write-Host "    OK ($($result.Elapsed)s)"
         } else {
-            Write-Host "    FAILED: $($result.Error)"
+            Write-Host "    FAILED ($($result.Elapsed)s)"
         }
         $results += $result
     }
@@ -263,4 +295,11 @@ $passed = @($results | Where-Object { $_.Success -eq $true }).Count
 $failed = @($results | Where-Object { $_.Success -ne $true }).Count
 Write-Host "`n=== Summary: $passed passed, $failed failed (${totalElapsed}s total) ==="
 
-if ($failed -gt 0) { exit 1 }
+if ($failed -gt 0) {
+    Write-Host "`n=== Failure details ==="
+    foreach ($failedResult in @($results | Where-Object { $_.Success -ne $true })) {
+        Write-Host "`n--- $($failedResult.Library) ---"
+        Write-Host $failedResult.Error
+    }
+    exit 1
+}

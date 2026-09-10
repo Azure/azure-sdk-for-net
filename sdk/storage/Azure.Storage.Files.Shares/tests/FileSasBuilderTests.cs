@@ -330,6 +330,63 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNotNull(stringToSign);
         }
 
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_File_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
+            string filePath = GetNewDirectoryName();
+            Uri fileUri = new Uri("https://" + constants.Sas.Account + ".file.core.windows.net/" + shareName + "/" + filePath);
+            ShareFileClient fileClient = InstrumentClient(new ShareFileClient(fileUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            ShareSasBuilder builder = BuildFileSasBuilder(
+                includeFilePath: true,
+                constants,
+                shareName,
+                filePath,
+                includeDelegatedUserObjectId: true);
+
+            // Act
+            string viaClient = fileClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, fileClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public void GenerateUserDelegationSasUri_Share_PreservesIdentityBinding()
+        {
+            // Arrange
+            var constants = TestConstants.Create(this);
+            string shareName = GetNewShareName();
+            Uri shareUri = new Uri("https://" + constants.Sas.Account + ".file.core.windows.net/" + shareName);
+            ShareClient shareClient = InstrumentClient(new ShareClient(shareUri, GetOptions()));
+            UserDelegationKey userDelegationKey = GetUserDelegationKey(constants);
+
+            ShareSasBuilder builder = BuildFileSasBuilder(
+                includeFilePath: false,
+                constants,
+                shareName,
+                filePath: null,
+                includeDelegatedUserObjectId: true);
+
+            // Act
+            string viaClient = shareClient.GenerateUserDelegationSasUri(builder, userDelegationKey).Query.TrimStart('?');
+            string viaDirect = builder.ToSasQueryParameters(userDelegationKey, shareClient.AccountName).ToString();
+
+            // Assert
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaDirect);
+            StringAssert.Contains(Constants.Sas.Parameters.DelegatedUserObjectId, viaClient);
+            Assert.AreEqual(viaDirect, viaClient);
+        }
+
         private ShareSasBuilder BuildFileSasBuilder(
             bool includeFilePath,
             TestConstants constants,

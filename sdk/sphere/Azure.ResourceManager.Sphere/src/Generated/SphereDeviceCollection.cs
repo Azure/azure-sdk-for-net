@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereDeviceResource.ResourceType, out string sphereDeviceApiVersion);
             _devicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeviceResource.ResourceType.Namespace, Diagnostics);
-            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
+            _devicesRestClient = new Devices(_devicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeviceApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
-                    new SphereDeviceOperationSource(Client),
+                    new SphereDeviceResourceOperationSource(Client),
                     _devicesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _devicesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deviceName, SphereDeviceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereDeviceResource> operation = new SphereArmOperation<SphereDeviceResource>(
-                    new SphereDeviceOperationSource(Client),
+                    new SphereDeviceResourceOperationSource(Client),
                     _devicesClientDiagnostics,
                     Pipeline,
                     message.Request,

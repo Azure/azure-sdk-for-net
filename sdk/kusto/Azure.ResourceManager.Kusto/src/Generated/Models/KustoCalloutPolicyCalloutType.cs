@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoCalloutPolicyCalloutType : IEquatable<KustoCalloutPolicyCalloutType>
     {
         private readonly string _value;
+        /// <summary> kusto. </summary>
+        private const string KustoValue = "kusto";
+        /// <summary> sql. </summary>
+        private const string SqlValue = "sql";
+        /// <summary> cosmosdb. </summary>
+        private const string CosmosdbValue = "cosmosdb";
+        /// <summary> external_data. </summary>
+        private const string ExternalDataValue = "external_data";
+        /// <summary> azure_digital_twins. </summary>
+        private const string AzureDigitalTwinsValue = "azure_digital_twins";
+        /// <summary> sandbox_artifacts. </summary>
+        private const string SandboxArtifactsValue = "sandbox_artifacts";
+        /// <summary> webapi. </summary>
+        private const string WebapiValue = "webapi";
+        /// <summary> mysql. </summary>
+        private const string MysqlValue = "mysql";
+        /// <summary> postgresql. </summary>
+        private const string PostgresqlValue = "postgresql";
+        /// <summary> genevametrics. </summary>
+        private const string GenevametricsValue = "genevametrics";
+        /// <summary> azure_openai. </summary>
+        private const string AzureOpenaiValue = "azure_openai";
 
         /// <summary> Initializes a new instance of <see cref="KustoCalloutPolicyCalloutType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoCalloutPolicyCalloutType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string KustoValue = "kusto";
-        private const string SqlValue = "sql";
-        private const string CosmosdbValue = "cosmosdb";
-        private const string ExternalDataValue = "external_data";
-        private const string AzureDigitalTwinsValue = "azure_digital_twins";
-        private const string SandboxArtifactsValue = "sandbox_artifacts";
-        private const string WebapiValue = "webapi";
-        private const string MysqlValue = "mysql";
-        private const string PostgresqlValue = "postgresql";
-        private const string GenevametricsValue = "genevametrics";
-        private const string AzureOpenaiValue = "azure_openai";
+            _value = value;
+        }
 
         /// <summary> kusto. </summary>
         public static KustoCalloutPolicyCalloutType Kusto { get; } = new KustoCalloutPolicyCalloutType(KustoValue);
+
         /// <summary> sql. </summary>
         public static KustoCalloutPolicyCalloutType Sql { get; } = new KustoCalloutPolicyCalloutType(SqlValue);
+
         /// <summary> cosmosdb. </summary>
         public static KustoCalloutPolicyCalloutType Cosmosdb { get; } = new KustoCalloutPolicyCalloutType(CosmosdbValue);
+
         /// <summary> external_data. </summary>
         public static KustoCalloutPolicyCalloutType ExternalData { get; } = new KustoCalloutPolicyCalloutType(ExternalDataValue);
+
         /// <summary> azure_digital_twins. </summary>
         public static KustoCalloutPolicyCalloutType AzureDigitalTwins { get; } = new KustoCalloutPolicyCalloutType(AzureDigitalTwinsValue);
+
         /// <summary> sandbox_artifacts. </summary>
         public static KustoCalloutPolicyCalloutType SandboxArtifacts { get; } = new KustoCalloutPolicyCalloutType(SandboxArtifactsValue);
+
         /// <summary> webapi. </summary>
         public static KustoCalloutPolicyCalloutType Webapi { get; } = new KustoCalloutPolicyCalloutType(WebapiValue);
+
         /// <summary> mysql. </summary>
         public static KustoCalloutPolicyCalloutType Mysql { get; } = new KustoCalloutPolicyCalloutType(MysqlValue);
+
         /// <summary> postgresql. </summary>
         public static KustoCalloutPolicyCalloutType Postgresql { get; } = new KustoCalloutPolicyCalloutType(PostgresqlValue);
+
         /// <summary> genevametrics. </summary>
         public static KustoCalloutPolicyCalloutType Genevametrics { get; } = new KustoCalloutPolicyCalloutType(GenevametricsValue);
+
         /// <summary> azure_openai. </summary>
         public static KustoCalloutPolicyCalloutType AzureOpenai { get; } = new KustoCalloutPolicyCalloutType(AzureOpenaiValue);
+
         /// <summary> Determines if two <see cref="KustoCalloutPolicyCalloutType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoCalloutPolicyCalloutType left, KustoCalloutPolicyCalloutType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoCalloutPolicyCalloutType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoCalloutPolicyCalloutType left, KustoCalloutPolicyCalloutType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoCalloutPolicyCalloutType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoCalloutPolicyCalloutType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoCalloutPolicyCalloutType(string value) => new KustoCalloutPolicyCalloutType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoCalloutPolicyCalloutType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoCalloutPolicyCalloutType?(string value) => value == null ? null : new KustoCalloutPolicyCalloutType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoCalloutPolicyCalloutType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoCalloutPolicyCalloutType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

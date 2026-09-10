@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ManagedClusterNodeResourceGroupRestrictionLevel
     {
         /// <summary> All RBAC permissions are allowed on the managed node resource group. </summary>
-        Unrestricted,
+        Unrestricted = 0,
         /// <summary> Only \*\/read RBAC permissions allowed on the managed node resource group. </summary>
-        ReadOnly
+        ReadOnly = 1
     }
 }

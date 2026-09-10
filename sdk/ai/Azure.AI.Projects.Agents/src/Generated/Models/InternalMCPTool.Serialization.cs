@@ -88,6 +88,11 @@ namespace OpenAI
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteStringValue(ConnectorId.Value.ToSerialString());
             }
+            if (Optional.IsDefined(TunnelId))
+            {
+                writer.WritePropertyName("tunnel_id"u8);
+                writer.WriteStringValue(TunnelId);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -126,6 +131,16 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
@@ -138,10 +153,26 @@ namespace OpenAI
                 }
 #endif
             }
+            if (Optional.IsDefined(DeferLoading))
+            {
+                writer.WritePropertyName("defer_loading"u8);
+                writer.WriteBooleanValue(DeferLoading.Value);
+            }
             if (Optional.IsDefined(ProjectConnectionId))
             {
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
+            }
+            if (Optional.IsCollectionDefined(ToolConfigs))
+            {
+                writer.WritePropertyName("tool_configs"u8);
+                writer.WriteStartObject();
+                foreach (var item in ToolConfigs)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
         }
 
@@ -174,13 +205,17 @@ namespace OpenAI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUrl = default;
-            MCPToolConnectorId? connectorId = default;
+            MCPToolboxToolConnectorId? connectorId = default;
+            string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             BinaryData requireApproval = default;
+            bool? deferLoading = default;
             string projectConnectionId = default;
+            IDictionary<string, ToolConfig> toolConfigs = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -208,7 +243,12 @@ namespace OpenAI
                     {
                         continue;
                     }
-                    connectorId = prop.Value.GetString().ToMCPToolConnectorId();
+                    connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
+                    continue;
+                }
+                if (prop.NameEquals("tunnel_id"u8))
+                {
+                    tunnelId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("authorization"u8))
@@ -252,6 +292,20 @@ namespace OpenAI
                     allowedTools = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -262,9 +316,32 @@ namespace OpenAI
                     requireApproval = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("defer_loading"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("project_connection_id"u8))
                 {
                     projectConnectionId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("tool_configs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                    }
+                    toolConfigs = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -278,12 +355,16 @@ namespace OpenAI
                 serverLabel,
                 serverUrl,
                 connectorId,
+                tunnelId,
                 authorization,
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 requireApproval,
-                projectConnectionId);
+                deferLoading,
+                projectConnectionId,
+                toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>());
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageCache;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.StorageCache.Models
     public readonly partial struct StorageCacheRestrictionReasonCode : IEquatable<StorageCacheRestrictionReasonCode>
     {
         private readonly string _value;
+        /// <summary> QuotaId. </summary>
+        private const string QuotaIdValue = "QuotaId";
+        /// <summary> NotAvailableForSubscription. </summary>
+        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
 
         /// <summary> Initializes a new instance of <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageCacheRestrictionReasonCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string QuotaIdValue = "QuotaId";
-        private const string NotAvailableForSubscriptionValue = "NotAvailableForSubscription";
+            _value = value;
+        }
 
         /// <summary> QuotaId. </summary>
         public static StorageCacheRestrictionReasonCode QuotaId { get; } = new StorageCacheRestrictionReasonCode(QuotaIdValue);
+
         /// <summary> NotAvailableForSubscription. </summary>
         public static StorageCacheRestrictionReasonCode NotAvailableForSubscription { get; } = new StorageCacheRestrictionReasonCode(NotAvailableForSubscriptionValue);
+
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageCacheRestrictionReasonCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageCacheRestrictionReasonCode left, StorageCacheRestrictionReasonCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageCacheRestrictionReasonCode(string value) => new StorageCacheRestrictionReasonCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageCacheRestrictionReasonCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageCacheRestrictionReasonCode?(string value) => value == null ? null : new StorageCacheRestrictionReasonCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageCacheRestrictionReasonCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageCacheRestrictionReasonCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

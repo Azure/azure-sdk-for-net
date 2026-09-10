@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "Status",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.Status",
       "valueType": {
         "$id": "2",
@@ -27,7 +28,8 @@
             "$ref": "1"
           },
           "doc": "Active status",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -41,7 +43,8 @@
             "$ref": "1"
           },
           "doc": "Inactive status",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.Naming.EnumConflict.FirstNamespace",
@@ -49,12 +52,14 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "enum",
       "name": "SecondStatus",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.Status",
       "valueType": {
         "$id": "6",
@@ -76,7 +81,8 @@
             "$ref": "5"
           },
           "doc": "Running status",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "8",
@@ -90,7 +96,8 @@
             "$ref": "5"
           },
           "doc": "Stopped status",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Client.Naming.EnumConflict.SecondNamespace",
@@ -98,14 +105,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "9",
       "kind": "constant",
-      "name": "firstContentType",
+      "name": "FirstContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -116,12 +124,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "firstContentType1",
+      "name": "FirstContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -132,12 +141,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "secondContentType",
+      "name": "FirstContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -148,12 +158,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "secondContentType1",
+      "name": "FirstContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -164,7 +175,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -172,6 +184,7 @@
       "$id": "17",
       "kind": "model",
       "name": "FirstModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.EnumConflict.FirstNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstNamespace.FirstModel",
       "usage": "Input,Output,Json",
@@ -181,11 +194,13 @@
           "name": "FirstModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "18",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "Status from first namespace",
           "type": {
@@ -202,12 +217,14 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "19",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "Name of the item",
           "type": {
@@ -228,7 +245,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -236,6 +254,7 @@
       "$id": "21",
       "kind": "model",
       "name": "SecondModel",
+      "apiVersions": [],
       "namespace": "Client.Naming.EnumConflict.SecondNamespace",
       "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondNamespace.SecondModel",
       "usage": "Input,Output,Json",
@@ -245,11 +264,13 @@
           "name": "SecondModel"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "22",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "Status from second namespace",
           "type": {
@@ -266,12 +287,14 @@
               "name": "status"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "23",
           "kind": "property",
           "name": "description",
+          "apiVersions": [],
           "serializedName": "description",
           "doc": "Description of the item",
           "type": {
@@ -292,7 +315,8 @@
               "name": "description"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -302,6 +326,7 @@
       "$id": "25",
       "kind": "client",
       "name": "EnumConflictClient",
+      "isExactName": false,
       "namespace": "Client.Naming.EnumConflict",
       "doc": "Test for enum with same name in different namespace.",
       "methods": [],
@@ -334,7 +359,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint"
+          "crossLanguageDefinitionId": "Client.Naming.EnumConflict.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -346,18 +372,21 @@
           "$id": "29",
           "kind": "client",
           "name": "FirstOperations",
+          "isExactName": false,
           "namespace": "Client.Naming.EnumConflict",
           "methods": [
             {
               "$id": "30",
               "kind": "basic",
               "name": "first",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Operation using first namespace Status enum",
               "operation": {
                 "$id": "31",
                 "name": "first",
+                "isExactName": false,
                 "resourceName": "FirstOperations",
                 "doc": "Operation using first namespace Status enum",
                 "accessibility": "public",
@@ -395,9 +424,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "34",
@@ -430,9 +461,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "36",
@@ -468,9 +501,16 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.first.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -485,7 +525,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -552,7 +597,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.FirstOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -568,18 +614,21 @@
           "$id": "41",
           "kind": "client",
           "name": "SecondOperations",
+          "isExactName": false,
           "namespace": "Client.Naming.EnumConflict",
           "methods": [
             {
               "$id": "42",
               "kind": "basic",
               "name": "second",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Operation using second namespace Status enum",
               "operation": {
                 "$id": "43",
                 "name": "second",
+                "isExactName": false,
                 "resourceName": "SecondOperations",
                 "doc": "Operation using second namespace Status enum",
                 "accessibility": "public",
@@ -617,9 +666,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "46",
@@ -652,9 +703,11 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "48",
@@ -690,9 +743,16 @@
                         "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.second.body",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -707,7 +767,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "POST",
@@ -774,7 +839,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint"
+              "crossLanguageDefinitionId": "Client.Naming.EnumConflict.SecondOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ProviderAuthorizedApplicationProperties. </summary>
     public partial class ProviderAuthorizedApplicationProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ProviderAuthorizedApplicationProperties"/>. </summary>
         public ProviderAuthorizedApplicationProperties()
@@ -55,19 +27,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="providerAuthorization"></param>
         /// <param name="dataAuthorizations"> The authorizations that determine the level of data access permissions on the specified resource types. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderAuthorizedApplicationProperties(ApplicationProviderAuthorization providerAuthorization, IList<ApplicationDataAuthorization> dataAuthorizations, ProviderHubProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderAuthorizedApplicationProperties(ApplicationProviderAuthorization providerAuthorization, IList<ApplicationDataAuthorization> dataAuthorizations, ProviderHubProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProviderAuthorization = providerAuthorization;
             DataAuthorizations = dataAuthorizations;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the provider authorization. </summary>
+        /// <summary> Gets or sets the ProviderAuthorization. </summary>
         public ApplicationProviderAuthorization ProviderAuthorization { get; set; }
+
         /// <summary> The authorizations that determine the level of data access permissions on the specified resource types. </summary>
         public IList<ApplicationDataAuthorization> DataAuthorizations { get; }
+
         /// <summary> The provisioning state. </summary>
         public ProviderHubProvisioningState? ProvisioningState { get; }
     }

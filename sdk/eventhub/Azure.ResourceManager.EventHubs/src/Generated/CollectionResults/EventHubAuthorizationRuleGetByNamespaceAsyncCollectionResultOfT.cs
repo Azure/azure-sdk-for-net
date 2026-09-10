@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 EventHubListResult result = EventHubListResult.FromResponse(response);
-                yield return Page<EventHubData>.FromValues((IReadOnlyList<EventHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubData>.FromValues((IReadOnlyList<EventHubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

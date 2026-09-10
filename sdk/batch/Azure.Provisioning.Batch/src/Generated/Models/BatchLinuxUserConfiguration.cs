@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _uid = DefineProperty<int>(nameof(Uid), new string[] { "uid" });
             _gid = DefineProperty<int>(nameof(Gid), new string[] { "gid" });
             _sshPrivateKey = DefineProperty<string>(nameof(SshPrivateKey), new string[] { "sshPrivateKey" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchLinuxUserConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class NetworkGroupStaticMemberResource : IJsonModel<NetworkGroupStaticMemberData>
     {
-        private static NetworkGroupStaticMemberData s_dataDeserializationInstance;
-        private static NetworkGroupStaticMemberData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetworkGroupStaticMemberData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NetworkGroupStaticMemberData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetworkGroupStaticMemberData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NetworkGroupStaticMemberData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkGroupStaticMemberData>)Data).Write(writer, options);
 
-        NetworkGroupStaticMemberData IJsonModel<NetworkGroupStaticMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkGroupStaticMemberData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NetworkGroupStaticMemberData IJsonModel<NetworkGroupStaticMemberData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NetworkGroupStaticMemberData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkGroupStaticMemberData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NetworkGroupStaticMemberData IPersistableModel<NetworkGroupStaticMemberData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkGroupStaticMemberData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<NetworkGroupStaticMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkGroupStaticMemberData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NetworkGroupStaticMemberData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

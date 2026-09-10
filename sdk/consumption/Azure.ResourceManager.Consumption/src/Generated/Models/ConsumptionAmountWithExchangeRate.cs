@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="ConsumptionAmountWithExchangeRate"/>. </summary>
         /// <param name="currency"> Amount currency. </param>
         /// <param name="value"> Amount. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="exchangeRate"> The exchange rate. </param>
         /// <param name="exchangeRateMonth"> The exchange rate month. </param>
-        internal ConsumptionAmountWithExchangeRate(string currency, decimal? value, IDictionary<string, BinaryData> serializedAdditionalRawData, decimal? exchangeRate, int? exchangeRateMonth) : base(currency, value, serializedAdditionalRawData)
+        internal ConsumptionAmountWithExchangeRate(string currency, decimal? value, IDictionary<string, BinaryData> additionalBinaryDataProperties, decimal? exchangeRate, int? exchangeRateMonth) : base(currency, value, additionalBinaryDataProperties)
         {
             ExchangeRate = exchangeRate;
             ExchangeRateMonth = exchangeRateMonth;
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> The exchange rate. </summary>
         public decimal? ExchangeRate { get; }
+
         /// <summary> The exchange rate month. </summary>
         public int? ExchangeRateMonth { get; }
     }

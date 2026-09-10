@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.MachineLearning.Models
     internal readonly partial struct MonitoringInputDataType : IEquatable<MonitoringInputDataType>
     {
         private readonly string _value;
+        /// <summary> An input data with a fixed window size. </summary>
+        private const string StaticValue = "Static";
+        /// <summary> An input data which rolls relatively to the monitor's current run time. </summary>
+        private const string RollingValue = "Rolling";
+        /// <summary> An input data with tabular format which doesn't require preprocessing. </summary>
+        private const string FixedValue = "Fixed";
 
         /// <summary> Initializes a new instance of <see cref="MonitoringInputDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoringInputDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StaticValue = "Static";
-        private const string RollingValue = "Rolling";
-        private const string FixedValue = "Fixed";
+            _value = value;
+        }
 
         /// <summary> An input data with a fixed window size. </summary>
         public static MonitoringInputDataType Static { get; } = new MonitoringInputDataType(StaticValue);
+
         /// <summary> An input data which rolls relatively to the monitor's current run time. </summary>
         public static MonitoringInputDataType Rolling { get; } = new MonitoringInputDataType(RollingValue);
+
         /// <summary> An input data with tabular format which doesn't require preprocessing. </summary>
         public static MonitoringInputDataType Fixed { get; } = new MonitoringInputDataType(FixedValue);
+
         /// <summary> Determines if two <see cref="MonitoringInputDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoringInputDataType left, MonitoringInputDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoringInputDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoringInputDataType left, MonitoringInputDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringInputDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoringInputDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoringInputDataType(string value) => new MonitoringInputDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoringInputDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoringInputDataType?(string value) => value == null ? null : new MonitoringInputDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoringInputDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoringInputDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

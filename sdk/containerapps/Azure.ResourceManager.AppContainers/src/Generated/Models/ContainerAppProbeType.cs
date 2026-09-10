@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct ContainerAppProbeType : IEquatable<ContainerAppProbeType>
     {
         private readonly string _value;
+        /// <summary> Liveness. </summary>
+        private const string LivenessValue = "Liveness";
+        /// <summary> Readiness. </summary>
+        private const string ReadinessValue = "Readiness";
+        /// <summary> Startup. </summary>
+        private const string StartupValue = "Startup";
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppProbeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerAppProbeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LivenessValue = "Liveness";
-        private const string ReadinessValue = "Readiness";
-        private const string StartupValue = "Startup";
+            _value = value;
+        }
 
         /// <summary> Liveness. </summary>
         public static ContainerAppProbeType Liveness { get; } = new ContainerAppProbeType(LivenessValue);
+
         /// <summary> Readiness. </summary>
         public static ContainerAppProbeType Readiness { get; } = new ContainerAppProbeType(ReadinessValue);
+
         /// <summary> Startup. </summary>
         public static ContainerAppProbeType Startup { get; } = new ContainerAppProbeType(StartupValue);
+
         /// <summary> Determines if two <see cref="ContainerAppProbeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerAppProbeType left, ContainerAppProbeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerAppProbeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerAppProbeType left, ContainerAppProbeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerAppProbeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerAppProbeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerAppProbeType(string value) => new ContainerAppProbeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerAppProbeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerAppProbeType?(string value) => value == null ? null : new ContainerAppProbeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerAppProbeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerAppProbeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadContainer IPersistableModel<WorkloadContainer>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownWorkloadContainer)PersistableModelCreateCore(data, options);
+        WorkloadContainer IPersistableModel<WorkloadContainer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (WorkloadContainer)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<WorkloadContainer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkloadContainer IJsonModel<WorkloadContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownWorkloadContainer)JsonModelCreateCore(ref reader, options);
+        WorkloadContainer IJsonModel<WorkloadContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (WorkloadContainer)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -113,6 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             DateTimeOffset? lastUpdatedOn = default;
@@ -153,6 +160,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (prop.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -212,6 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 lastUpdatedOn,

@@ -4,11 +4,28 @@
 
 ### Features Added
 
+- Upgraded API version to 2025-05-25-preview.
+- Added tenant-level alert operations via `TenantResource` extension.
+- Added alert enrichments support via `GetEnrichments` operation.
+
 ### Breaking Changes
+
+- Migrated the generated management surface from AutoRest to TypeSpec. Compatibility shims are retained for the previous alert entry points; new code should prefer the TypeSpec-generated alert collection and summary APIs on the appropriate resource scope, such as `ArmClient.GetServiceAlerts(ResourceIdentifier scope)` and `ArmClient.GetServiceAlertSummary(ResourceIdentifier scope, ...)`.
+- `AlertProcessingRule` APIs have moved to the `Azure.ResourceManager.AlertProcessingRules` package. Reference that package and use the equivalent alert processing rule APIs there.
+- `SmartGroup` APIs have been removed from this package and will be shipped in a separate package in a future release.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Migrated from AutoRest/Swagger to TypeSpec-based code generation using Azure Management Generator.
+
+## 1.1.2 (2026-04-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.53.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
 
 ## 1.1.1 (2025-03-11)
 

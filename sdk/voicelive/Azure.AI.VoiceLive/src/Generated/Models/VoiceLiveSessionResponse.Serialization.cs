@@ -163,6 +163,11 @@ namespace Azure.AI.VoiceLive
                 writer.WritePropertyName("tool_choice"u8);
                 writer.WriteObjectValue(ToolChoice, options);
             }
+            if (Optional.IsDefined(AllowParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(AllowParallelToolCalls.Value);
+            }
             if (Optional.IsDefined(Temperature))
             {
                 writer.WritePropertyName("temperature"u8);
@@ -190,6 +195,32 @@ namespace Azure.AI.VoiceLive
                 }
 #endif
             }
+            if (Optional.IsCollectionDefined(Include))
+            {
+                writer.WritePropertyName("include"u8);
+                writer.WriteStartArray();
+                foreach (SessionIncludeOption item in Include)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(Agent))
             {
                 writer.WritePropertyName("agent"u8);
@@ -199,6 +230,11 @@ namespace Azure.AI.VoiceLive
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expires_at"u8);
+                writer.WriteNumberValue(ExpiresOn.Value, "U");
             }
             if (Optional.IsDefined(_turnDetection))
             {
@@ -269,12 +305,16 @@ namespace Azure.AI.VoiceLive
             IList<AudioTimestampType> outputAudioTimestampTypes = default;
             IList<VoiceLiveToolDefinition> tools = default;
             ToolChoiceOption toolChoice = default;
+            bool? allowParallelToolCalls = default;
             float? temperature = default;
             MaxResponseOutputTokensOption maxResponseOutputTokens = default;
             ReasoningEffort? reasoningEffort = default;
             BinaryData interimResponse = default;
+            IList<SessionIncludeOption> include = default;
+            IDictionary<string, string> metadata = default;
             RespondingAgentOptions agent = default;
             string id = default;
+            DateTimeOffset? expiresOn = default;
             BinaryData turnDetection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -421,6 +461,15 @@ namespace Azure.AI.VoiceLive
                     toolChoice = ToolChoiceOption.DeserializeToolChoiceOption(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowParallelToolCalls = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("temperature"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -457,6 +506,41 @@ namespace Azure.AI.VoiceLive
                     interimResponse = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("include"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SessionIncludeOption> array = new List<SessionIncludeOption>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new SessionIncludeOption(item.GetString()));
+                    }
+                    include = array;
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("agent"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -469,6 +553,15 @@ namespace Azure.AI.VoiceLive
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("expires_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("turn_detection"u8))
@@ -501,12 +594,16 @@ namespace Azure.AI.VoiceLive
                 outputAudioTimestampTypes ?? new ChangeTrackingList<AudioTimestampType>(),
                 tools ?? new ChangeTrackingList<VoiceLiveToolDefinition>(),
                 toolChoice,
+                allowParallelToolCalls,
                 temperature,
                 maxResponseOutputTokens,
                 reasoningEffort,
                 interimResponse,
+                include ?? new ChangeTrackingList<SessionIncludeOption>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 agent,
                 id,
+                expiresOn,
                 turnDetection,
                 additionalBinaryDataProperties);
         }

@@ -15,25 +15,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class A2AUnplannedFailoverContent : UnplannedFailoverProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="A2AUnplannedFailoverContent"/>. </summary>
-        public A2AUnplannedFailoverContent()
+        public A2AUnplannedFailoverContent() : base("A2A")
         {
-            InstanceType = "A2A";
         }
 
         /// <summary> Initializes a new instance of <see cref="A2AUnplannedFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
         /// <param name="cloudServiceCreationOption"> A value indicating whether to use recovery cloud service for failover or not. </param>
-        internal A2AUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, string cloudServiceCreationOption) : base(instanceType, serializedAdditionalRawData)
+        internal A2AUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryPointId, string cloudServiceCreationOption) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryPointId = recoveryPointId;
             CloudServiceCreationOption = cloudServiceCreationOption;
-            InstanceType = instanceType ?? "A2A";
         }
 
         /// <summary> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </summary>
         public ResourceIdentifier RecoveryPointId { get; set; }
+
         /// <summary> A value indicating whether to use recovery cloud service for failover or not. </summary>
         public string CloudServiceCreationOption { get; set; }
     }

@@ -4,9 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
+    [Experimental("AAIP001")]
     internal partial class UnknownEvaluatorDefinition : EvaluatorDefinition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEvaluatorDefinition"/>. </summary>

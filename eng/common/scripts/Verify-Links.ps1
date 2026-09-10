@@ -22,7 +22,7 @@
   Path to the root of the site for resolving rooted relative links, defaults to host root for http and file directory for local files.
 
   .PARAMETER errorStatusCodes
-  List of http status codes that count as broken links. Defaults to 400, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004.
+  List of http status codes that count as broken links. Defaults to 400, 404, SocketError.HostNotFound = 11001, SocketError.NoData = 11004, and -131073 (socket error on Linux).
 
   .PARAMETER branchReplaceRegex
   Regex to check if the link needs to be replaced. E.g. ^(https://github.com/.*/(?:blob|tree)/)main(/.*)$
@@ -75,7 +75,7 @@ param (
   [switch] $recursive = $true,
   [string] $baseUrl = "",
   [string] $rootUrl = "",
-  [array] $errorStatusCodes = @(400, 404, 11001, 11004),
+  [array] $errorStatusCodes = @(400, 404, 11001, 11004, -131073),
   [string] $branchReplaceRegex = "",
   [string] $branchReplacementName = "",
   [bool] $checkLinkGuidance = $false,

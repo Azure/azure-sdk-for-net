@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ReasonChronicityType : IEquatable<ReasonChronicityType>
     {
         private readonly string _value;
+        /// <summary> Transient. </summary>
+        private const string TransientValue = "Transient";
+        /// <summary> Persistent. </summary>
+        private const string PersistentValue = "Persistent";
 
         /// <summary> Initializes a new instance of <see cref="ReasonChronicityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ReasonChronicityType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TransientValue = "Transient";
-        private const string PersistentValue = "Persistent";
+            _value = value;
+        }
 
         /// <summary> Transient. </summary>
         public static ReasonChronicityType Transient { get; } = new ReasonChronicityType(TransientValue);
+
         /// <summary> Persistent. </summary>
         public static ReasonChronicityType Persistent { get; } = new ReasonChronicityType(PersistentValue);
+
         /// <summary> Determines if two <see cref="ReasonChronicityType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ReasonChronicityType left, ReasonChronicityType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ReasonChronicityType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ReasonChronicityType left, ReasonChronicityType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ReasonChronicityType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ReasonChronicityType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ReasonChronicityType(string value) => new ReasonChronicityType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ReasonChronicityType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ReasonChronicityType?(string value) => value == null ? null : new ReasonChronicityType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ReasonChronicityType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ReasonChronicityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

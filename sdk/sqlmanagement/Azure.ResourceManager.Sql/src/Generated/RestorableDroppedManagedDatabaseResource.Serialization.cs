@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class RestorableDroppedManagedDatabaseResource : IJsonModel<RestorableDroppedManagedDatabaseData>
     {
-        private static RestorableDroppedManagedDatabaseData s_dataDeserializationInstance;
-        private static RestorableDroppedManagedDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RestorableDroppedManagedDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RestorableDroppedManagedDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RestorableDroppedManagedDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestorableDroppedManagedDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RestorableDroppedManagedDatabaseData>)Data).Write(writer, options);
 
-        RestorableDroppedManagedDatabaseData IJsonModel<RestorableDroppedManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorableDroppedManagedDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestorableDroppedManagedDatabaseData IJsonModel<RestorableDroppedManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RestorableDroppedManagedDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RestorableDroppedManagedDatabaseData IPersistableModel<RestorableDroppedManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorableDroppedManagedDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<RestorableDroppedManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorableDroppedManagedDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestorableDroppedManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Enables Firewall logs to be collected by this data collection rule. </summary>
     public partial class WindowsFirewallLogsDataSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WindowsFirewallLogsDataSource"/>. </summary>
         /// <param name="streams"> Firewall logs streams. </param>
@@ -54,29 +26,31 @@ namespace Azure.ResourceManager.Monitor.Models
             Argument.AssertNotNull(streams, nameof(streams));
 
             Streams = streams.ToList();
+            ProfileFilter = new ChangeTrackingList<KnownWindowsFirewallLogsDataSourceProfileFilter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WindowsFirewallLogsDataSource"/>. </summary>
         /// <param name="streams"> Firewall logs streams. </param>
+        /// <param name="profileFilter"> Firewall logs profile filter. </param>
         /// <param name="name">
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WindowsFirewallLogsDataSource(IList<string> streams, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WindowsFirewallLogsDataSource(IList<string> streams, IList<KnownWindowsFirewallLogsDataSourceProfileFilter> profileFilter, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Streams = streams;
+            ProfileFilter = profileFilter;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WindowsFirewallLogsDataSource"/> for deserialization. </summary>
-        internal WindowsFirewallLogsDataSource()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Firewall logs streams. </summary>
         public IList<string> Streams { get; }
+
+        /// <summary> Firewall logs profile filter. </summary>
+        public IList<KnownWindowsFirewallLogsDataSourceProfileFilter> ProfileFilter { get; }
+
         /// <summary>
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.

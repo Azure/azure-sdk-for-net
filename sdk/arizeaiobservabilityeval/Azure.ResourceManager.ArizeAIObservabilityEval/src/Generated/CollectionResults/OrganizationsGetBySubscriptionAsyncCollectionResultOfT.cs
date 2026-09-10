@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                     yield break;
                 }
                 OrganizationResourceListResult result = OrganizationResourceListResult.FromResponse(response);
-                yield return Page<ArizeAIObservabilityEvalOrganizationData>.FromValues((IReadOnlyList<ArizeAIObservabilityEvalOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArizeAIObservabilityEvalOrganizationData>.FromValues((IReadOnlyList<ArizeAIObservabilityEvalOrganizationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

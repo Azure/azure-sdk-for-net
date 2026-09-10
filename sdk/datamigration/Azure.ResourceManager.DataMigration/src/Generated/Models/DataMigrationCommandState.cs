@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationCommandState : IEquatable<DataMigrationCommandState>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationCommandState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationCommandState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string AcceptedValue = "Accepted";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static DataMigrationCommandState Unknown { get; } = new DataMigrationCommandState(UnknownValue);
+
         /// <summary> Accepted. </summary>
         public static DataMigrationCommandState Accepted { get; } = new DataMigrationCommandState(AcceptedValue);
+
         /// <summary> Running. </summary>
         public static DataMigrationCommandState Running { get; } = new DataMigrationCommandState(RunningValue);
+
         /// <summary> Succeeded. </summary>
         public static DataMigrationCommandState Succeeded { get; } = new DataMigrationCommandState(SucceededValue);
+
         /// <summary> Failed. </summary>
         public static DataMigrationCommandState Failed { get; } = new DataMigrationCommandState(FailedValue);
+
         /// <summary> Determines if two <see cref="DataMigrationCommandState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationCommandState left, DataMigrationCommandState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationCommandState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationCommandState left, DataMigrationCommandState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationCommandState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationCommandState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationCommandState(string value) => new DataMigrationCommandState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationCommandState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationCommandState?(string value) => value == null ? null : new DataMigrationCommandState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationCommandState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationCommandState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

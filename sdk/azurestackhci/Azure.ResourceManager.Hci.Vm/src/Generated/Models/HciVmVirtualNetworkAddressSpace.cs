@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         }
 
         /// <summary> A list of one or more CIDR blocks that define the address space. </summary>
-        public IList<string> AddressPrefixes { get; }
+        public IList<string> AddressPrefixes { get; } = new ChangeTrackingList<string>();
     }
 }

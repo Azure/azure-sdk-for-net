@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -16,26 +17,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public partial class AzureServersSetting : ServerVulnerabilityAssessmentsSettingData
     {
         /// <summary> Initializes a new instance of <see cref="AzureServersSetting"/>. </summary>
-        public AzureServersSetting()
+        public AzureServersSetting() : base(ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting)
         {
-            Kind = ServerVulnerabilityAssessmentsSettingKind.AzureServersSetting;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureServersSetting"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> The kind of the server vulnerability assessments setting. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="selectedProvider"> The selected vulnerability assessments provider on Azure servers in the defined scope. </param>
-        internal AzureServersSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerVulnerabilityAssessmentsSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? selectedProvider) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The vulnerability assessments setting properties on Azure servers in the defined scope. </param>
+        internal AzureServersSetting(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServerVulnerabilityAssessmentsSettingKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServerVulnerabilityAssessmentsAzureSettingProperties properties) : base(id, name, resourceType, systemData, kind, additionalBinaryDataProperties)
         {
-            SelectedProvider = selectedProvider;
-            Kind = kind;
+            Properties = properties;
         }
 
+        /// <summary> The vulnerability assessments setting properties on Azure servers in the defined scope. </summary>
+        internal ServerVulnerabilityAssessmentsAzureSettingProperties Properties { get; set; }
+
         /// <summary> The selected vulnerability assessments provider on Azure servers in the defined scope. </summary>
-        public ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? SelectedProvider { get; set; }
+        public ServerVulnerabilityAssessmentsAzureSettingSelectedProvider? SelectedProvider
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SelectedProvider;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ServerVulnerabilityAssessmentsAzureSettingProperties();
+                    }
+                    Properties.SelectedProvider = value.Value;
+                }
+            }
+        }
     }
 }

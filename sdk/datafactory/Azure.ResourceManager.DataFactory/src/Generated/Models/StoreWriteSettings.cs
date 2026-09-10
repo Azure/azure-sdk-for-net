@@ -8,21 +8,26 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Connector write settings.
-    /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="LakeHouseWriteSettings"/> and <see cref="SftpWriteSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SftpWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="FileServerWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, and <see cref="LakeHouseWriteSettings"/>.
     /// </summary>
     public abstract partial class StoreWriteSettings
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
-        protected StoreWriteSettings()
+        /// <param name="storeWriteSettingsType"> The write setting type. </param>
+        private protected StoreWriteSettings(string storeWriteSettingsType)
         {
+            StoreWriteSettingsType = storeWriteSettingsType;
             Metadata = new ChangeTrackingList<DataFactoryMetadataItemInfo>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
@@ -31,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal StoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType;
@@ -39,49 +44,25 @@ namespace Azure.ResourceManager.DataFactory.Models
             DisableMetricsCollection = disableMetricsCollection;
             CopyBehavior = copyBehavior;
             Metadata = metadata;
-            AdditionalProperties = additionalProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
+
         /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
+
         /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
+
         /// <summary> The type of copy behavior for copy sink. </summary>
         public DataFactoryElement<string> CopyBehavior { get; set; }
+
         /// <summary> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </summary>
         public IList<DataFactoryMetadataItemInfo> Metadata { get; }
-        /// <summary>
-        /// Additional Properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

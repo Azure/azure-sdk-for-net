@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableVerticalFeaturizationSettings : IUtf8JsonSerializable, IJsonModel<TableVerticalFeaturizationSettings>
+    /// <summary> Featurization Configuration. </summary>
+    public partial class TableVerticalFeaturizationSettings : MachineLearningFeaturizationSettings, IJsonModel<TableVerticalFeaturizationSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableVerticalFeaturizationSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningFeaturizationSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTableVerticalFeaturizationSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TableVerticalFeaturizationSettings IPersistableModel<TableVerticalFeaturizationSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (TableVerticalFeaturizationSettings)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TableVerticalFeaturizationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TableVerticalFeaturizationSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,413 +69,207 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Mode))
-            {
-                writer.WritePropertyName("mode"u8);
-                writer.WriteStringValue(Mode.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(BlockedTransformers))
             {
-                if (BlockedTransformers != null)
+                writer.WritePropertyName("blockedTransformers"u8);
+                writer.WriteStartArray();
+                foreach (BlockedTransformer item in BlockedTransformers)
                 {
-                    writer.WritePropertyName("blockedTransformers"u8);
-                    writer.WriteStartArray();
-                    foreach (var item in BlockedTransformers)
-                    {
-                        writer.WriteStringValue(item.ToString());
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteStringValue(item.ToString());
                 }
-                else
-                {
-                    writer.WriteNull("blockedTransformers");
-                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(ColumnNameAndTypes))
             {
-                if (ColumnNameAndTypes != null)
+                writer.WritePropertyName("columnNameAndTypes"u8);
+                writer.WriteStartObject();
+                foreach (var item in ColumnNameAndTypes)
                 {
-                    writer.WritePropertyName("columnNameAndTypes"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in ColumnNameAndTypes)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        writer.WriteStringValue(item.Value);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteStringValue(item.Value);
                 }
-                else
-                {
-                    writer.WriteNull("columnNameAndTypes");
-                }
-            }
-            if (Optional.IsCollectionDefined(TransformerParams))
-            {
-                if (TransformerParams != null)
-                {
-                    writer.WritePropertyName("transformerParams"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in TransformerParams)
-                    {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteStartArray();
-                        foreach (var item0 in item.Value)
-                        {
-                            writer.WriteObjectValue(item0, options);
-                        }
-                        writer.WriteEndArray();
-                    }
-                    writer.WriteEndObject();
-                }
-                else
-                {
-                    writer.WriteNull("transformerParams");
-                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(EnableDnnFeaturization))
             {
                 writer.WritePropertyName("enableDnnFeaturization"u8);
                 writer.WriteBooleanValue(EnableDnnFeaturization.Value);
             }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(TransformerParams))
+            {
+                writer.WritePropertyName("transformerParams"u8);
+                writer.WriteStartObject();
+                foreach (var item in TransformerParams)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStartArray();
+                    foreach (ColumnTransformer item0 in item.Value)
+                    {
+                        writer.WriteObjectValue(item0, options);
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndObject();
+            }
         }
 
-        TableVerticalFeaturizationSettings IJsonModel<TableVerticalFeaturizationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TableVerticalFeaturizationSettings IJsonModel<TableVerticalFeaturizationSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TableVerticalFeaturizationSettings)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override MachineLearningFeaturizationSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTableVerticalFeaturizationSettings(document.RootElement, options);
         }
 
-        internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TableVerticalFeaturizationSettings DeserializeTableVerticalFeaturizationSettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MachineLearningFeaturizationMode? mode = default;
+            string datasetLanguage = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<BlockedTransformer> blockedTransformers = default;
             IDictionary<string, string> columnNameAndTypes = default;
-            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
             bool? enableDnnFeaturization = default;
-            string datasetLanguage = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            MachineLearningFeaturizationMode? mode = default;
+            IDictionary<string, IList<ColumnTransformer>> transformerParams = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("datasetLanguage"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        datasetLanguage = null;
                         continue;
                     }
-                    mode = new MachineLearningFeaturizationMode(property.Value.GetString());
+                    datasetLanguage = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("blockedTransformers"u8))
+                if (prop.NameEquals("blockedTransformers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blockedTransformers = null;
                         continue;
                     }
                     List<BlockedTransformer> array = new List<BlockedTransformer>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(new BlockedTransformer(item.GetString()));
                     }
                     blockedTransformers = array;
                     continue;
                 }
-                if (property.NameEquals("columnNameAndTypes"u8))
+                if (prop.NameEquals("columnNameAndTypes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        columnNameAndTypes = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     columnNameAndTypes = dictionary;
                     continue;
                 }
-                if (property.NameEquals("transformerParams"u8))
+                if (prop.NameEquals("enableDnnFeaturization"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        transformerParams = null;
+                        continue;
+                    }
+                    enableDnnFeaturization = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new MachineLearningFeaturizationMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("transformerParams"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
                         continue;
                     }
                     Dictionary<string, IList<ColumnTransformer>> dictionary = new Dictionary<string, IList<ColumnTransformer>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<ColumnTransformer> array = new List<ColumnTransformer>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
                                 array.Add(ColumnTransformer.DeserializeColumnTransformer(item, options));
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
                     transformerParams = dictionary;
                     continue;
                 }
-                if (property.NameEquals("enableDnnFeaturization"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableDnnFeaturization = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("datasetLanguage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        datasetLanguage = null;
-                        continue;
-                    }
-                    datasetLanguage = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TableVerticalFeaturizationSettings(
                 datasetLanguage,
-                serializedAdditionalRawData,
-                mode,
+                additionalBinaryDataProperties,
                 blockedTransformers ?? new ChangeTrackingList<BlockedTransformer>(),
                 columnNameAndTypes ?? new ChangeTrackingDictionary<string, string>(),
-                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>(),
-                enableDnnFeaturization);
+                enableDnnFeaturization,
+                mode,
+                transformerParams ?? new ChangeTrackingDictionary<string, IList<ColumnTransformer>>());
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Mode))
-                {
-                    builder.Append("  mode: ");
-                    builder.AppendLine($"'{Mode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockedTransformers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  blockedTransformers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(BlockedTransformers))
-                {
-                    if (BlockedTransformers.Any())
-                    {
-                        builder.Append("  blockedTransformers: ");
-                        builder.AppendLine("[");
-                        foreach (var item in BlockedTransformers)
-                        {
-                            builder.AppendLine($"    '{item.ToString()}'");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ColumnNameAndTypes), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  columnNameAndTypes: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(ColumnNameAndTypes))
-                {
-                    if (ColumnNameAndTypes.Any())
-                    {
-                        builder.Append("  columnNameAndTypes: ");
-                        builder.AppendLine("{");
-                        foreach (var item in ColumnNameAndTypes)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Value.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("'''");
-                                builder.AppendLine($"{item.Value}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"'{item.Value}'");
-                            }
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransformerParams), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  transformerParams: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TransformerParams))
-                {
-                    if (TransformerParams.Any())
-                    {
-                        builder.Append("  transformerParams: ");
-                        builder.AppendLine("{");
-                        foreach (var item in TransformerParams)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine("[");
-                            foreach (var item0 in item.Value)
-                            {
-                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 6, true, "  transformerParams: ");
-                            }
-                            builder.AppendLine("    ]");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableDnnFeaturization), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  enableDnnFeaturization: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableDnnFeaturization))
-                {
-                    builder.Append("  enableDnnFeaturization: ");
-                    var boolValue = EnableDnnFeaturization.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatasetLanguage), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  datasetLanguage: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DatasetLanguage))
-                {
-                    builder.Append("  datasetLanguage: ");
-                    if (DatasetLanguage.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DatasetLanguage}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DatasetLanguage}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<TableVerticalFeaturizationSettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TableVerticalFeaturizationSettings IPersistableModel<TableVerticalFeaturizationSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TableVerticalFeaturizationSettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTableVerticalFeaturizationSettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TableVerticalFeaturizationSettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TableVerticalFeaturizationSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

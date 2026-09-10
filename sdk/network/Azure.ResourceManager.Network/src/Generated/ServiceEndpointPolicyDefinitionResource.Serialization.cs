@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class ServiceEndpointPolicyDefinitionResource : IJsonModel<ServiceEndpointPolicyDefinitionData>
     {
-        private static ServiceEndpointPolicyDefinitionData s_dataDeserializationInstance;
-        private static ServiceEndpointPolicyDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ServiceEndpointPolicyDefinitionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ServiceEndpointPolicyDefinitionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ServiceEndpointPolicyDefinitionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ServiceEndpointPolicyDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)Data).Write(writer, options);
 
-        ServiceEndpointPolicyDefinitionData IJsonModel<ServiceEndpointPolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ServiceEndpointPolicyDefinitionData IJsonModel<ServiceEndpointPolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceEndpointPolicyDefinitionData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ServiceEndpointPolicyDefinitionData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<ServiceEndpointPolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEndpointPolicyDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ServiceEndpointPolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

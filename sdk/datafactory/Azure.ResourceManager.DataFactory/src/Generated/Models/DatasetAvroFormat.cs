@@ -15,19 +15,17 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DatasetAvroFormat : DatasetStorageFormat
     {
         /// <summary> Initializes a new instance of <see cref="DatasetAvroFormat"/>. </summary>
-        public DatasetAvroFormat()
+        public DatasetAvroFormat() : base("AvroFormat")
         {
-            DatasetStorageFormatType = "AvroFormat";
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetAvroFormat"/>. </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal DatasetAvroFormat(string datasetStorageFormatType, DataFactoryElement<string> serializer, DataFactoryElement<string> deserializer, IDictionary<string, BinaryData> additionalProperties) : base(datasetStorageFormatType, serializer, deserializer, additionalProperties)
         {
-            DatasetStorageFormatType = datasetStorageFormatType ?? "AvroFormat";
         }
     }
 }

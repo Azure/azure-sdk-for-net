@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Automation.Models
     public readonly partial struct AutomationKeyName : IEquatable<AutomationKeyName>
     {
         private readonly string _value;
+        /// <summary> Primary. </summary>
+        private const string PrimaryValue = "Primary";
+        /// <summary> Secondary. </summary>
+        private const string SecondaryValue = "Secondary";
 
         /// <summary> Initializes a new instance of <see cref="AutomationKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationKeyName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "Primary";
-        private const string SecondaryValue = "Secondary";
+            _value = value;
+        }
 
         /// <summary> Primary. </summary>
         public static AutomationKeyName Primary { get; } = new AutomationKeyName(PrimaryValue);
+
         /// <summary> Secondary. </summary>
         public static AutomationKeyName Secondary { get; } = new AutomationKeyName(SecondaryValue);
+
         /// <summary> Determines if two <see cref="AutomationKeyName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationKeyName left, AutomationKeyName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationKeyName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationKeyName left, AutomationKeyName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationKeyName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationKeyName(string value) => new AutomationKeyName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationKeyName?(string value) => value == null ? null : new AutomationKeyName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationKeyName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationKeyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -27,7 +27,7 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
             set => throw null;
         }
 
-        public QueryParamClientOptions Options
+        public SpecsAzureTcgcClientInitDefaultClientOptions Options
         {
             get => throw null;
             set => throw null;

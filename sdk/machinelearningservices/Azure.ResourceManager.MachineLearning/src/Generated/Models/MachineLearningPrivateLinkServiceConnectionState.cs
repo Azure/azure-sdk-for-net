@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
     public partial class MachineLearningPrivateLinkServiceConnectionState
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkServiceConnectionState"/>. </summary>
         public MachineLearningPrivateLinkServiceConnectionState()
@@ -51,26 +23,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkServiceConnectionState"/>. </summary>
-        /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
-        /// <param name="description"> The reason for approval/rejection of the connection. </param>
-        /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningPrivateLinkServiceConnectionState(MachineLearningPrivateEndpointServiceConnectionStatus? status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="actionsRequired"> Some RP chose "None". Other RPs use this for region expansion. </param>
+        /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
+        /// <param name="status"> Connection status of the service consumer with the service provider\r\nPossible state transitions\r\nPending -&gt; Approved (Service provider approves the connection request)\r\nPending -&gt; Rejected (Service provider rejects the connection request)\r\nPending -&gt; Disconnected (Service provider deletes the connection)\r\nApproved -&gt; Rejected (Service provider rejects the approved connection)\r\nApproved -&gt; Disconnected (Service provider deletes the connection)\r\nRejected -&gt; Pending (Service consumer re-initiates the connection request that was rejected)\r\nRejected -&gt; Disconnected (Service provider deletes the connection). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Status = status;
-            Description = description;
             ActionsRequired = actionsRequired;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Description = description;
+            Status = status;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </summary>
-        [WirePath("status")]
-        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
-        /// <summary> The reason for approval/rejection of the connection. </summary>
-        [WirePath("description")]
-        public string Description { get; set; }
-        /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>
         [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
+
+        /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
+        [WirePath("description")]
+        public string Description { get; set; }
     }
 }

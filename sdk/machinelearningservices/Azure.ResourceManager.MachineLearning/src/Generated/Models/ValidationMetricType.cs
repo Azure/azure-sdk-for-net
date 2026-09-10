@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct ValidationMetricType : IEquatable<ValidationMetricType>
     {
         private readonly string _value;
+        /// <summary> No metric. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Coco metric. </summary>
+        private const string CocoValue = "Coco";
+        /// <summary> Voc metric. </summary>
+        private const string VocValue = "Voc";
+        /// <summary> CocoVoc metric. </summary>
+        private const string CocoVocValue = "CocoVoc";
 
         /// <summary> Initializes a new instance of <see cref="ValidationMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ValidationMetricType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string CocoValue = "Coco";
-        private const string VocValue = "Voc";
-        private const string CocoVocValue = "CocoVoc";
+            _value = value;
+        }
 
         /// <summary> No metric. </summary>
         public static ValidationMetricType None { get; } = new ValidationMetricType(NoneValue);
+
         /// <summary> Coco metric. </summary>
         public static ValidationMetricType Coco { get; } = new ValidationMetricType(CocoValue);
+
         /// <summary> Voc metric. </summary>
         public static ValidationMetricType Voc { get; } = new ValidationMetricType(VocValue);
+
         /// <summary> CocoVoc metric. </summary>
         public static ValidationMetricType CocoVoc { get; } = new ValidationMetricType(CocoVocValue);
+
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ValidationMetricType left, ValidationMetricType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ValidationMetricType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ValidationMetricType left, ValidationMetricType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ValidationMetricType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ValidationMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ValidationMetricType(string value) => new ValidationMetricType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ValidationMetricType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ValidationMetricType?(string value) => value == null ? null : new ValidationMetricType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ValidationMetricType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ValidationMetricType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

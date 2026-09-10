@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
 
         private ClientDiagnostics AzureTrafficCollectorsBySubscriptionClientDiagnostics => _azureTrafficCollectorsBySubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetworkFunction.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureTrafficCollectorsBySubscription AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscription(AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private AzureTrafficCollectorsBySubscription AzureTrafficCollectorsBySubscriptionRestClient => _azureTrafficCollectorsBySubscriptionRestClient ??= new AzureTrafficCollectorsBySubscription(AzureTrafficCollectorsBySubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         /// <summary>
         /// Return list of Azure Traffic Collectors in a subscription
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
+            return new AsyncPageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionAzureTrafficCollectorsBySubscriptionListAsyncCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.NetworkFunction.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionGetAllCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
+            return new PageableWrapper<AzureTrafficCollectorData, AzureTrafficCollectorResource>(new AzureTrafficCollectorsBySubscriptionAzureTrafficCollectorsBySubscriptionListCollectionResultOfT(AzureTrafficCollectorsBySubscriptionRestClient, Id.SubscriptionId, context, "MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors"), data => new AzureTrafficCollectorResource(Client, data));
         }
     }
 }

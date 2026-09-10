@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Batch
     public enum BatchSecurityEncryptionType
     {
         /// <summary> EncryptionType of the managed disk is set to NonPersistedTPM for not persisting firmware state in the VMGuestState blob. </summary>
-        NonPersistedTPM,
+        NonPersistedTPM = 0,
         /// <summary> EncryptionType of the managed disk is set to VMGuestStateOnly for encryption of just the VMGuestState blob. </summary>
         [DataMember(Name = "VMGuestStateOnly")]
-        VmGuestStateOnly,
+        VmGuestStateOnly = 1,
         /// <summary> EncryptionType of the managed disk is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob. It is not supported in data disks. </summary>
         [DataMember(Name = "DiskWithVMGuestState")]
-        DiskWithVmGuestState
+        DiskWithVmGuestState = 2
     }
 }

@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.FileShares
                     yield break;
                 }
                 FileSharesPrivateEndpointConnectionListResult result = FileSharesPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<FileSharePrivateEndpointConnectionData>.FromValues((IReadOnlyList<FileSharePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FileSharePrivateEndpointConnectionData>.FromValues((IReadOnlyList<FileSharePrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

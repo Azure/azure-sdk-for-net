@@ -36,6 +36,7 @@ namespace Azure.ResourceManager.LargeInstance
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(LargeStorageInstanceResource))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OperationStatusResult))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]

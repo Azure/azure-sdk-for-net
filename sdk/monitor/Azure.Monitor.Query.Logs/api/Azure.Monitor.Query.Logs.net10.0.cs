@@ -50,6 +50,14 @@ namespace Azure.Monitor.Query.Logs
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Mapping query results to open generic types is not supported with AOT compilation. This message can be suppressed if you are certain calls will only ever attempt to map results to primitive types.")]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<T>> QueryWorkspace<T>(string workspaceId, string query, Azure.Monitor.Query.Logs.LogsQueryTimeRange timeRange, Azure.Monitor.Query.Logs.LogsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class LogsQueryClientHostExtensions
+    {
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddKeyedLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static System.ClientModel.Primitives.IClientBuilder AddLogsQueryClient(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.Monitor.Query.Logs.LogsQueryClientSettings> configureSettings) { throw null; }
+    }
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.Logs.LogsQueryClientOptions.ServiceVersion.V1) { }

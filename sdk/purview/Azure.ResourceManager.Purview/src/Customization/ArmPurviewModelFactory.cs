@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Purview.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 privateEndpointId is null && connectionState is null && provisioningState is null
                     ? default
                     : new PrivateEndpointConnectionProperties(
                         privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null),
                         connectionState,
                         provisioningState,
-                        null));
+                        null),
+                additionalBinaryDataProperties: null);
         }
     }
 }

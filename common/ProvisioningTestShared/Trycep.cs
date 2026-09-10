@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -12,13 +14,25 @@ using Azure.Core.TestFramework;
 using Azure.Provisioning.Primitives;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests;
 
 public class Trycep : IAsyncDisposable
 {
+    public Trycep() : this(orderProperties: true)
+    {
+    }
+
+    public Trycep(bool orderProperties)
+    {
+        if (orderProperties)
+        {
+            BuildOptions.InfrastructureResolvers.Add(new PropertyOrderingInfrastructureResolver());
+        }
+    }
+
     public bool SkipTools { get; private set; } = true;
     public bool SkipLiveCalls { get; private set; } = true;
     public ProvisioningTestBase? Test { get; private set; }
@@ -92,9 +106,9 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(string expectedBicep)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(1, BicepModules.Count, $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
+        Assert.That(BicepModules.Count, Is.EqualTo(1), $"Expected exactly one bicep module, not <{string.Join(", ", BicepModules.Keys)}>");
 
-        Assert.IsNotNull(Bicep, "The produced Bicep module was null!");
+        Assert.That(Bicep, Is.Not.Null, "The produced Bicep module was null!");
         if (!CompareBicepContent(expectedBicep, Bicep!, "main.bicep"))
         {
             Assert.Fail("Bicep content comparison failed. See output above for details.");
@@ -106,9 +120,9 @@ public class Trycep : IAsyncDisposable
     public Trycep Compare(IDictionary<string, string> expectedBicepModules)
     {
         BicepModules = GetPlan().Compile();
-        Assert.AreEqual(
-            expectedBicepModules.Count,
+        Assert.That(
             BicepModules.Count,
+            Is.EqualTo(expectedBicepModules.Count),
             $"Expected {expectedBicepModules.Count} modules but found {BicepModules.Count}.  " +
                 $"Expected: <{string.Join(", ", expectedBicepModules.Keys)}>  " +
                 $"Actual: <{string.Join(", ", BicepModules.Keys)}>");
@@ -118,7 +132,7 @@ public class Trycep : IAsyncDisposable
         {
             string expected = expectedBicepModules[name];
             string? actual = BicepModules.TryGetValue(name, out string? b) ? b : null;
-            Assert.IsNotNull(actual, $"Did not find expected module {name} in the actual modules!");
+            Assert.That(actual, Is.Not.Null, $"Did not find expected module {name} in the actual modules!");
 
             if (!CompareBicepContent(expected, actual!, name))
             {
@@ -233,7 +247,7 @@ public class Trycep : IAsyncDisposable
             Console.WriteLine("Actual:");
             Console.WriteLine(arm);
         }
-        Assert.AreEqual(expectedArm, arm);
+        Assert.That(arm, Is.EqualTo(expectedArm));
         return this;
     }
 
@@ -257,7 +271,7 @@ public class Trycep : IAsyncDisposable
             {
                 remaining = [.. remaining.Where(m => !ignore.Contains(m.Code ?? ""))];
             }
-            Assert.Zero(remaining.Count,
+            Assert.That(remaining.Count, Is.Zero,
                 $"Found {remaining.Count} unexpected warnings:{Environment.NewLine}" +
                 $"{string.Join(Environment.NewLine, remaining.Select(s => s.ToString()))}");
         }
@@ -386,5 +400,167 @@ public class Trycep : IAsyncDisposable
             TempDir = null;
         }
         GC.SuppressFinalize(this);
+    }
+}
+
+internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureResolver
+{
+    public override void ResolveProperties(
+        ProvisionableConstruct construct,
+        ProvisioningBuildOptions options)
+    {
+        HashSet<ProvisionableConstruct> visited = new(ProvisionableConstructReferenceComparer.Instance);
+        OrderProperties(construct, visited);
+    }
+
+    private static void OrderProperties(
+        ProvisionableConstruct construct,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        if (!visited.Add(construct))
+        {
+            return;
+        }
+
+        KeyValuePair<string, IBicepValue>[] properties =
+        [
+            .. construct.ProvisionableProperties
+                .OrderBy(
+                    pair => pair.Value.Self?.BicepPath,
+                    construct is ProvisionableResource ?
+                        BicepPathComparer.ResourceInstance :
+                        BicepPathComparer.Instance)
+                .ThenBy(pair => pair.Key, StringComparer.Ordinal)
+        ];
+
+        construct.ProvisionableProperties.Clear();
+        foreach (KeyValuePair<string, IBicepValue> property in properties)
+        {
+            construct.ProvisionableProperties.Add(property);
+            OrderNestedProperties(property.Value, visited);
+        }
+    }
+
+    private static void OrderNestedProperties(
+        IBicepValue value,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        if (value.Kind != BicepValueKind.Literal)
+        {
+            return;
+        }
+
+        if (value is IDictionary<string, IBicepValue> dictionary)
+        {
+            OrderDictionary(dictionary, visited);
+            return;
+        }
+
+        switch (value.LiteralValue)
+        {
+            case ProvisionableConstruct construct:
+                OrderProperties(construct, visited);
+                break;
+            case IEnumerable sequence:
+                foreach (object? item in sequence)
+                {
+                    if (item is IBicepValue nested)
+                    {
+                        OrderNestedProperties(nested, visited);
+                    }
+                }
+                break;
+        }
+    }
+
+    private static void OrderDictionary(
+        IDictionary<string, IBicepValue> dictionary,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        KeyValuePair<string, IBicepValue>[] values =
+        [
+            .. dictionary.OrderBy(pair => pair.Key, StringComparer.Ordinal)
+        ];
+
+        dictionary.Clear();
+        foreach (KeyValuePair<string, IBicepValue> value in values)
+        {
+            dictionary.Add(value);
+            OrderNestedProperties(value.Value, visited);
+        }
+    }
+
+    private sealed class BicepPathComparer : IComparer<IReadOnlyList<string>?>
+    {
+        public static BicepPathComparer Instance { get; } = new();
+        public static BicepPathComparer ResourceInstance { get; } = new(promoteResourceMetadata: true);
+
+        private readonly bool _promoteResourceMetadata;
+
+        private BicepPathComparer(bool promoteResourceMetadata = false)
+        {
+            _promoteResourceMetadata = promoteResourceMetadata;
+        }
+
+        public int Compare(IReadOnlyList<string>? x, IReadOnlyList<string>? y)
+        {
+            if (ReferenceEquals(x, y))
+            {
+                return 0;
+            }
+            if (x is null)
+            {
+                return -1;
+            }
+            if (y is null)
+            {
+                return 1;
+            }
+
+            if (_promoteResourceMetadata)
+            {
+                int priorityComparison = GetResourceMetadataPriority(x)
+                    .CompareTo(GetResourceMetadataPriority(y));
+                if (priorityComparison != 0)
+                {
+                    return priorityComparison;
+                }
+            }
+
+            int count = Math.Min(x.Count, y.Count);
+            for (int i = 0; i < count; i++)
+            {
+                int comparison = StringComparer.Ordinal.Compare(x[i], y[i]);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+            }
+
+            return x.Count.CompareTo(y.Count);
+        }
+
+        private static int GetResourceMetadataPriority(IReadOnlyList<string> path) =>
+            path.Count == 1 ?
+                path[0] switch
+                {
+                    "name" => 0,
+                    "location" => 1,
+                    "scope" => 2,
+                    "parent" => 3,
+                    _ => 4
+                } :
+                4;
+    }
+
+    private sealed class ProvisionableConstructReferenceComparer : IEqualityComparer<ProvisionableConstruct>
+    {
+        public static ProvisionableConstructReferenceComparer Instance { get; } = new();
+
+        public bool Equals(ProvisionableConstruct? x, ProvisionableConstruct? y) =>
+            ReferenceEquals(x, y);
+
+        public int GetHashCode(ProvisionableConstruct obj) =>
+            RuntimeHelpers.GetHashCode(obj);
     }
 }

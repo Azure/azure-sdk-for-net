@@ -248,7 +248,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             }
             """, validIndexer);
             TestModel? model = validIndexer.Value;
-            Assert.IsNotNull(model);
+            Assert.That(model, Is.Not.Null);
             TestHelpers.AssertExpression("'model1'", model!.Name);
             TestHelpers.AssertExpression("test.models[0]", validIndexer.ToBicepExpression());
 
@@ -277,7 +277,7 @@ namespace Azure.Provisioning.Tests.BicepValues
             var validIndexer = resource.Models[0];
 
             var item = validIndexer.Value!;
-            Assert.IsNotNull(item);
+            Assert.That(item, Is.Not.Null);
             var name = item.Name;
 
             TestHelpers.AssertExpression("'model1'", name);
@@ -1039,6 +1039,30 @@ namespace Azure.Provisioning.Tests.BicepValues
         }
 
         [Test]
+        public void ValidateListPropertyReindexesCapturedSelfReference()
+        {
+            var resource = new TestResource("test");
+            resource.List.Add("item1");
+            resource.List.Add("item2");
+
+            BicepValueReference captured = ((IBicepValue)resource.List[0]).Self!;
+            Assert.That(captured.PropertyName, Is.EqualTo("List[0]"));
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
+
+            resource.List.Insert(0, "item0");
+
+            Assert.That(((IBicepValue)resource.List[1]).Self, Is.SameAs(captured));
+            Assert.That(captured.PropertyName, Is.EqualTo("List[1]"));
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[1]"));
+
+            resource.List.RemoveAt(0);
+
+            Assert.That(((IBicepValue)resource.List[0]).Self, Is.SameAs(captured));
+            Assert.That(captured.PropertyName, Is.EqualTo("List[0]"));
+            Assert.That(captured.ToString(), Is.EqualTo("test.list[0]"));
+        }
+
+        [Test]
         public void ValidateDictionaryPropertyAssignFromStandaloneDictionary()
         {
             // Construct a standalone dictionary first
@@ -1097,12 +1121,12 @@ namespace Azure.Provisioning.Tests.BicepValues
 
             // Assert individual elements
             var model1 = resource.Models[0].Value!;
-            Assert.IsNotNull(model1);
+            Assert.That(model1, Is.Not.Null);
             TestHelpers.AssertExpression("'model1'", model1.Name);
             TestHelpers.AssertExpression("test.models[0].name", model1.Name.ToBicepExpression());
 
             var model2 = resource.Models[1].Value!;
-            Assert.IsNotNull(model2);
+            Assert.That(model2, Is.Not.Null);
             TestHelpers.AssertExpression("'model2'", model2.Name);
             TestHelpers.AssertExpression("test.models[1].name", model2.Name.ToBicepExpression());
         }

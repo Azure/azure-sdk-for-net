@@ -59,7 +59,7 @@ public class GetResponseTests : IDisposable
     [Test]
     public async Task GetJson_UnknownId_Returns404()
     {
-        var response = await _client.GetAsync("/responses/resp_nonexistent");
+        var response = await _client.GetAsync($"/responses/{IdGenerator.NewResponseId()}");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
         var body = await response.Content.ReadFromJsonAsync<JsonElement>();
@@ -110,7 +110,7 @@ public class GetResponseTests : IDisposable
     [Test]
     public async Task GetSse_UnknownId_Returns404()
     {
-        var response = await _client.GetAsync("/responses/resp_unknown_sse?stream=true");
+        var response = await _client.GetAsync($"/responses/{IdGenerator.NewResponseId()}?stream=true");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }

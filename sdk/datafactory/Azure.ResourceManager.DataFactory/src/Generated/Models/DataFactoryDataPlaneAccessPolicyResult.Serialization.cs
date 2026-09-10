@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryDataPlaneAccessPolicyResult : IUtf8JsonSerializable, IJsonModel<DataFactoryDataPlaneAccessPolicyResult>
+    /// <summary> Get Data Plane read only token response definition. </summary>
+    public partial class DataFactoryDataPlaneAccessPolicyResult : IJsonModel<DataFactoryDataPlaneAccessPolicyResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryDataPlaneAccessPolicyResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryDataPlaneAccessPolicyResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataFactoryDataPlaneAccessPolicyResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryDataPlaneAccessPolicyResult IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DataFactoryDataPlaneAccessPolicyResult"/> from. </param>
+        internal static DataFactoryDataPlaneAccessPolicyResult FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDataFactoryDataPlaneAccessPolicyResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataFactoryDataPlaneAccessPolicyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +77,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
@@ -49,15 +97,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("dataPlaneUrl"u8);
                 writer.WriteStringValue(DataPlaneUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,94 +114,66 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        DataFactoryDataPlaneAccessPolicyResult IJsonModel<DataFactoryDataPlaneAccessPolicyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataFactoryDataPlaneAccessPolicyResult IJsonModel<DataFactoryDataPlaneAccessPolicyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DataFactoryDataPlaneAccessPolicyResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataFactoryDataPlaneAccessPolicyResult(document.RootElement, options);
         }
 
-        internal static DataFactoryDataPlaneAccessPolicyResult DeserializeDataFactoryDataPlaneAccessPolicyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataFactoryDataPlaneAccessPolicyResult DeserializeDataFactoryDataPlaneAccessPolicyResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryDataPlaneUserAccessPolicy policy = default;
             string accessToken = default;
-            Uri dataPlaneUrl = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri dataPlaneUri = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("policy"u8))
+                if (prop.NameEquals("policy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(property.Value, options);
+                    policy = DataFactoryDataPlaneUserAccessPolicy.DeserializeDataFactoryDataPlaneUserAccessPolicy(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("accessToken"u8))
+                if (prop.NameEquals("accessToken"u8))
                 {
-                    accessToken = property.Value.GetString();
+                    accessToken = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dataPlaneUrl"u8))
+                if (prop.NameEquals("dataPlaneUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataPlaneUrl = new Uri(property.Value.GetString());
+                    dataPlaneUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUrl, serializedAdditionalRawData);
+            return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUri, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataFactoryDataPlaneAccessPolicyResult IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataFactoryDataPlaneAccessPolicyResult(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneAccessPolicyResult)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataFactoryDataPlaneAccessPolicyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

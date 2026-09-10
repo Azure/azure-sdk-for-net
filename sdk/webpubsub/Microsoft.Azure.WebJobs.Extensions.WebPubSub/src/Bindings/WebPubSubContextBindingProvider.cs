@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -16,13 +17,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         private readonly IConfiguration _configuration;
         private readonly WebPubSubServiceAccessOptions _options;
         private readonly WebPubSubServiceAccessFactory _accessFactory;
+        private readonly ILogger _logger;
 
-        public WebPubSubContextBindingProvider(INameResolver nameResolver, IConfiguration configuration, WebPubSubServiceAccessOptions options, WebPubSubServiceAccessFactory accessFactory)
+        public WebPubSubContextBindingProvider(INameResolver nameResolver, IConfiguration configuration, WebPubSubServiceAccessOptions options, WebPubSubServiceAccessFactory accessFactory, ILogger logger)
         {
-            _nameResolver = nameResolver;
-            _configuration = configuration;
-            _options = options;
-            _accessFactory = accessFactory;
+            _nameResolver = nameResolver ?? throw new ArgumentNullException(nameof(nameResolver));
+            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+            _options = options ?? throw new ArgumentNullException(nameof(options));
+            _accessFactory = accessFactory ?? throw new ArgumentNullException(nameof(accessFactory));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public Task<IBinding> TryCreateAsync(BindingProviderContext context)
@@ -39,7 +42,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 return Task.FromResult<IBinding>(null);
             }
 
-            return Task.FromResult<IBinding>(new WebPubSubContextBinding(context, _configuration, _nameResolver, _options, _accessFactory));
+            return Task.FromResult<IBinding>(new WebPubSubContextBinding(context, _configuration, _nameResolver, _options, _accessFactory, _logger));
         }
     }
 }

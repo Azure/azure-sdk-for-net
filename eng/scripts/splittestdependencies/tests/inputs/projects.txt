@@ -84,7 +84,6 @@ $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Administration\tests\Azure.Secur
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Certificates\tests\Azure.Security.KeyVault.Certificates.Tests.csproj
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Keys\tests\Azure.Security.KeyVault.Keys.Tests.csproj
 $(RepoRoot)sdk\keyvault\Azure.Security.KeyVault.Secrets\tests\Azure.Security.KeyVault.Secrets.Tests.csproj
-$(RepoRoot)sdk\keyvault\samples\keyvaultproxy\tests\AzureSamples.Security.KeyVault.Proxy.Tests.csproj
 $(RepoRoot)sdk\logic\Azure.ResourceManager.Logic\tests\Azure.ResourceManager.Logic.Tests.csproj
 $(RepoRoot)sdk\machinelearningservices\Azure.ResourceManager.MachineLearning\tests\Azure.ResourceManager.MachineLearning.Tests.csproj
 $(RepoRoot)sdk\managedserviceidentity\Azure.ResourceManager.ManagedServiceIdentities\tests\Azure.ResourceManager.ManagedServiceIdentities.Tests.csproj
@@ -103,7 +102,6 @@ $(RepoRoot)sdk\mysql\Azure.ResourceManager.MySql\tests\Azure.ResourceManager.MyS
 $(RepoRoot)sdk\networkfunction\Azure.ResourceManager.NetworkFunction\tests\Azure.ResourceManager.NetworkFunction.Tests.csproj
 $(RepoRoot)sdk\network\Azure.ResourceManager.Network\tests\Azure.ResourceManager.Network.Tests.csproj
 $(RepoRoot)sdk\notificationhubs\Azure.ResourceManager.NotificationHubs\tests\Azure.ResourceManager.NotificationHubs.Tests.csproj
-$(RepoRoot)sdk\personalizer\Azure.AI.Personalizer\tests\Azure.AI.Personalizer.Tests.csproj
 $(RepoRoot)sdk\postgresql\Azure.ResourceManager.PostgreSql\tests\Azure.ResourceManager.PostgreSql.Tests.csproj
 $(RepoRoot)sdk\purview\Azure.Analytics.Purview.Account\tests\Azure.Analytics.Purview.Account.Tests.csproj
 $(RepoRoot)sdk\purview\Azure.Analytics.Purview.Administration\tests\Azure.Analytics.Purview.Administration.Tests.csproj
@@ -154,7 +152,6 @@ $(RepoRoot)sdk\tables\Azure.Data.Tables\tests\perf\Azure.Data.Tables.Perf.csproj
 $(RepoRoot)sdk\tables\Microsoft.Azure.WebJobs.Extensions.Tables\tests\Microsoft.Azure.WebJobs.Extensions.Tables.Tests.csproj
 $(RepoRoot)sdk\template\Azure.Template\tests\Azure.Template.Tests.csproj
 $(RepoRoot)sdk\textanalytics\Azure.AI.TextAnalytics\tests\Azure.AI.TextAnalytics.Tests.csproj
-$(RepoRoot)sdk\timeseriesinsights\Azure.IoT.TimeSeriesInsights\tests\Azure.IoT.TimeSeriesInsights.Tests.csproj
 $(RepoRoot)sdk\translation\Azure.AI.Translation.Document\tests\Azure.AI.Translation.Document.Tests.csproj
 $(RepoRoot)sdk\videoanalyzer\Azure.Media.VideoAnalyzer.Edge\tests\Azure.Media.VideoAnalyzer.Edge.Tests.csproj
 $(RepoRoot)sdk\webpubsub\Azure.Messaging.WebPubSub\tests\Azure.Messaging.WebPubSub.Tests.csproj

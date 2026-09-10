@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ArizeAIObservabilityEval;
 using Azure.ResourceManager.Models;
@@ -38,11 +37,11 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="marketplace"> Marketplace details of the resource. </param>
@@ -57,9 +56,9 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, null),
+                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, default),
                 singleSignOnProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Marketplace details for an organization. </summary>
@@ -69,7 +68,53 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalMarketplaceDetails"/> instance for mocking. </returns>
         public static ArizeAIObservabilityEvalMarketplaceDetails ArizeAIObservabilityEvalMarketplaceDetails(string subscriptionId = default, ArizeAIObservabilityEvalMarketplaceSubscriptionStatus? subscriptionStatus = default, ArizeAIObservabilityEvalOfferDetails offerDetails = default)
         {
-            return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties: null);
+            return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
+        }
+
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
+        /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
+        /// <param name="offerId"> Offer Id for the marketplace offer. </param>
+        /// <param name="planId"> Plan Id for the marketplace offer. </param>
+        /// <param name="planName"> Plan Name for the marketplace offer. </param>
+        /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
+        /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOfferDetails"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOfferDetails ArizeAIObservabilityEvalOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default)
+        {
+            return new ArizeAIObservabilityEvalOfferDetails(
+                publisherId,
+                offerId,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                default);
+        }
+
+        /// <summary> User details for an organization. </summary>
+        /// <param name="firstName"> First name of the user. </param>
+        /// <param name="lastName"> Last name of the user. </param>
+        /// <param name="emailAddress"> Email address of the user. </param>
+        /// <param name="upn"> User's principal name. </param>
+        /// <param name="phoneNumber"> User's phone number. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalUserDetails"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalUserDetails ArizeAIObservabilityEvalUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        {
+            return new ArizeAIObservabilityEvalUserDetails(
+                firstName,
+                lastName,
+                emailAddress,
+                upn,
+                phoneNumber,
+                default);
+        }
+
+        /// <summary> Partner's specific Properties. </summary>
+        /// <param name="description"> Description of the Organization's purpose. </param>
+        /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOfferPartnerProperties"/> instance for mocking. </returns>
+        public static ArizeAIObservabilityEvalOfferPartnerProperties ArizeAIObservabilityEvalOfferPartnerProperties(string description = default)
+        {
+            return new ArizeAIObservabilityEvalOfferPartnerProperties(description, default);
         }
 
         /// <summary> Properties specific to Single Sign On Resource. </summary>
@@ -88,8 +133,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 state,
                 enterpriseAppId,
                 uri,
-                aadDomains.ToList(),
-                additionalBinaryDataProperties: null);
+                (aadDomains ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <summary> The type used for update operations of the Organization Resource. </summary>
@@ -100,7 +145,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArizeAIObservabilityEvalOrganizationPatch(tags, identity, additionalBinaryDataProperties: null);
+            return new ArizeAIObservabilityEvalOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
     }
 }

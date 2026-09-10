@@ -1,4 +1,4 @@
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
     <!-- Don't warn for missing XML comments for test projects as the stubbed versions will not have them. -->

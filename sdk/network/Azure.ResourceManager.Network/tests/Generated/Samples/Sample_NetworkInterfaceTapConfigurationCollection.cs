@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Samples
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/testrg/providers/Microsoft.Network/virtualNetworkTaps/testvtap"),
                 },
             };
-            ArmOperation<NetworkInterfaceTapConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, tapConfigurationName, data);
+            ArmOperation<NetworkInterfaceTapConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, tapConfigurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkInterfaceTapConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

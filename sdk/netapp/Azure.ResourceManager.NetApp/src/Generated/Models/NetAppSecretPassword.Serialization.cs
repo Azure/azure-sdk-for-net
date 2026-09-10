@@ -9,140 +9,46 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppSecretPassword : IUtf8JsonSerializable, IJsonModel<NetAppSecretPassword>
+    /// <summary> Access password from Azure KeyVault Secrets to connect Active Directory. </summary>
+    public partial class NetAppSecretPassword : IJsonModel<NetAppSecretPassword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppSecretPassword>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<NetAppSecretPassword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static NetAppSecretPassword DeserializeNetAppSecretPassword(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSecretPassword>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NetAppSecretPassword)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(KeyVaultProperties))
-            {
-                writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties, options);
-            }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        NetAppSecretPassword IJsonModel<NetAppSecretPassword>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSecretPassword>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(NetAppSecretPassword)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetAppSecretPassword(document.RootElement, options);
-        }
-
-        internal static NetAppSecretPassword DeserializeNetAppSecretPassword(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetAppSecretPasswordKeyVaultProperties keyVaultProperties = default;
+            NetAppSecretPasswordKeyVaultPatchProperties keyVaultProperties = default;
             NetAppSecretPasswordIdentity identity = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultProperties"u8))
+                if (prop.NameEquals("keyVaultProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultProperties = NetAppSecretPasswordKeyVaultProperties.DeserializeNetAppSecretPasswordKeyVaultProperties(property.Value, options);
+                    keyVaultProperties = NetAppSecretPasswordKeyVaultPatchProperties.DeserializeNetAppSecretPasswordKeyVaultPatchProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identity = NetAppSecretPasswordIdentity.DeserializeNetAppSecretPasswordIdentity(property.Value, options);
+                    identity = NetAppSecretPasswordIdentity.DeserializeNetAppSecretPasswordIdentity(prop.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppSecretPassword(keyVaultProperties, identity, serializedAdditionalRawData);
+            return new NetAppSecretPassword(keyVaultProperties, identity, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<NetAppSecretPassword>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSecretPassword>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NetAppSecretPassword)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NetAppSecretPassword IPersistableModel<NetAppSecretPassword>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NetAppSecretPassword>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetAppSecretPassword(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NetAppSecretPassword)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NetAppSecretPassword>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

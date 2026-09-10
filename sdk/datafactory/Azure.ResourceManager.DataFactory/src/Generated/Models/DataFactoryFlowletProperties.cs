@@ -14,13 +14,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class DataFactoryFlowletProperties : DataFactoryDataFlowProperties
     {
         /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
-        public DataFactoryFlowletProperties()
+        public DataFactoryFlowletProperties() : base("Flowlet")
         {
-            Sources = new ChangeTrackingList<DataFlowSource>();
-            Sinks = new ChangeTrackingList<DataFlowSink>();
-            Transformations = new ChangeTrackingList<DataFlowTransformation>();
-            ScriptLines = new ChangeTrackingList<string>();
-            DataFlowType = "Flowlet";
         }
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryFlowletProperties"/>. </summary>
@@ -28,31 +23,83 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="description"> The description of the data flow. </param>
         /// <param name="annotations"> List of tags that can be used for describing the data flow. </param>
         /// <param name="folder"> The folder that this data flow is in. If not specified, Data flow will appear at the root level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="sources"> List of sources in Flowlet. </param>
-        /// <param name="sinks"> List of sinks in Flowlet. </param>
-        /// <param name="transformations"> List of transformations in Flowlet. </param>
-        /// <param name="script"> Flowlet script. </param>
-        /// <param name="scriptLines"> Flowlet script lines. </param>
-        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<DataFlowSource> sources, IList<DataFlowSink> sinks, IList<DataFlowTransformation> transformations, string script, IList<string> scriptLines) : base(dataFlowType, description, annotations, folder, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="typeProperties"> Flowlet type properties. </param>
+        internal DataFactoryFlowletProperties(string dataFlowType, string description, IList<BinaryData> annotations, DataFlowFolder folder, IDictionary<string, BinaryData> additionalBinaryDataProperties, FlowletTypeProperties typeProperties) : base(dataFlowType, description, annotations, folder, additionalBinaryDataProperties)
         {
-            Sources = sources;
-            Sinks = sinks;
-            Transformations = transformations;
-            Script = script;
-            ScriptLines = scriptLines;
-            DataFlowType = dataFlowType ?? "Flowlet";
+            TypeProperties = typeProperties;
         }
 
+        /// <summary> Flowlet type properties. </summary>
+        internal FlowletTypeProperties TypeProperties { get; set; }
+
         /// <summary> List of sources in Flowlet. </summary>
-        public IList<DataFlowSource> Sources { get; }
+        public IList<DataFlowSource> Sources
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FlowletTypeProperties();
+                }
+                return TypeProperties.Sources;
+            }
+        }
+
         /// <summary> List of sinks in Flowlet. </summary>
-        public IList<DataFlowSink> Sinks { get; }
+        public IList<DataFlowSink> Sinks
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FlowletTypeProperties();
+                }
+                return TypeProperties.Sinks;
+            }
+        }
+
         /// <summary> List of transformations in Flowlet. </summary>
-        public IList<DataFlowTransformation> Transformations { get; }
+        public IList<DataFlowTransformation> Transformations
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FlowletTypeProperties();
+                }
+                return TypeProperties.Transformations;
+            }
+        }
+
         /// <summary> Flowlet script. </summary>
-        public string Script { get; set; }
+        public string Script
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Script;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FlowletTypeProperties();
+                }
+                TypeProperties.Script = value;
+            }
+        }
+
         /// <summary> Flowlet script lines. </summary>
-        public IList<string> ScriptLines { get; }
+        public IList<string> ScriptLines
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new FlowletTypeProperties();
+                }
+                return TypeProperties.ScriptLines;
+            }
+        }
     }
 }

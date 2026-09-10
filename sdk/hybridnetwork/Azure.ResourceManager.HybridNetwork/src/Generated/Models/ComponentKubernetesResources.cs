@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridNetwork;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The resources of the network function component. </summary>
     public partial class ComponentKubernetesResources
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ComponentKubernetesResources"/>. </summary>
         internal ComponentKubernetesResources()
@@ -61,26 +33,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComponentKubernetesResources(IReadOnlyList<KubernetesDeployment> deployments, IReadOnlyList<KubernetesPod> pods, IReadOnlyList<KubernetesReplicaSet> replicaSets, IReadOnlyList<KubernetesStatefulSet> statefulSets, IReadOnlyList<KubernetesDaemonSet> daemonSets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ComponentKubernetesResources(IList<KubernetesDeployment> deployments, IList<KubernetesPod> pods, IList<KubernetesReplicaSet> replicaSets, IList<KubernetesStatefulSet> statefulSets, IList<KubernetesDaemonSet> daemonSets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deployments = deployments;
             Pods = pods;
             ReplicaSets = replicaSets;
             StatefulSets = statefulSets;
             DaemonSets = daemonSets;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Deployments that are related to component resource. </summary>
-        public IReadOnlyList<KubernetesDeployment> Deployments { get; }
+        public IList<KubernetesDeployment> Deployments { get; }
+
         /// <summary> Pods related to component resource. </summary>
-        public IReadOnlyList<KubernetesPod> Pods { get; }
+        public IList<KubernetesPod> Pods { get; }
+
         /// <summary> Replica sets related to component resource. </summary>
-        public IReadOnlyList<KubernetesReplicaSet> ReplicaSets { get; }
+        public IList<KubernetesReplicaSet> ReplicaSets { get; }
+
         /// <summary> Stateful sets related to component resource. </summary>
-        public IReadOnlyList<KubernetesStatefulSet> StatefulSets { get; }
+        public IList<KubernetesStatefulSet> StatefulSets { get; }
+
         /// <summary> Daemonsets related to component resource. </summary>
-        public IReadOnlyList<KubernetesDaemonSet> DaemonSets { get; }
+        public IList<KubernetesDaemonSet> DaemonSets { get; }
     }
 }

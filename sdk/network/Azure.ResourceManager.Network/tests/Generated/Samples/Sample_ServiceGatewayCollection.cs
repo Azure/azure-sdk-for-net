@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Network.Samples
                     PrivateIPAllocationMethod = NetworkIPAllocationMethod.Static,
                 },
             };
-            ArmOperation<ServiceGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGatewayName, data);
+            ArmOperation<ServiceGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceGatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             ServiceGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

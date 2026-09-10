@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderAuthorization. </summary>
     public partial class ResourceProviderAuthorization
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderAuthorization"/>. </summary>
         public ResourceProviderAuthorization()
@@ -58,8 +30,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="managedByAuthorization"> Managed by authorization. </param>
         /// <param name="allowedThirdPartyExtensions"> The allowed third party extensions. </param>
         /// <param name="groupingTag"> The grouping tag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId, ResourceProviderManagedByAuthorization managedByAuthorization, IList<ThirdPartyExtension> allowedThirdPartyExtensions, string groupingTag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceProviderAuthorization(string applicationId, string roleDefinitionId, string managedByRoleDefinitionId, ResourceProviderManagedByAuthorization managedByAuthorization, IList<ThirdPartyExtension> allowedThirdPartyExtensions, string groupingTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplicationId = applicationId;
             RoleDefinitionId = roleDefinitionId;
@@ -67,19 +39,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ManagedByAuthorization = managedByAuthorization;
             AllowedThirdPartyExtensions = allowedThirdPartyExtensions;
             GroupingTag = groupingTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The application id. </summary>
         public string ApplicationId { get; set; }
+
         /// <summary> The role definition id. </summary>
         public string RoleDefinitionId { get; set; }
+
         /// <summary> The managed by role definition id. </summary>
         public string ManagedByRoleDefinitionId { get; set; }
+
         /// <summary> Managed by authorization. </summary>
         public ResourceProviderManagedByAuthorization ManagedByAuthorization { get; set; }
+
         /// <summary> The allowed third party extensions. </summary>
         public IList<ThirdPartyExtension> AllowedThirdPartyExtensions { get; }
+
         /// <summary> The grouping tag. </summary>
         public string GroupingTag { get; set; }
     }

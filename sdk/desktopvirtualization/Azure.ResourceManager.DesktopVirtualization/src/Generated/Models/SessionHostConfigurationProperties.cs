@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="vmAdminCredentials"> Local Admin credentials for session hosts.". </param>
         /// <param name="bootDiagnosticsInfo"> Boot Diagnostics Information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, ProvisioningStateSessionHostConfiguration? provisioningState, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, BootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionHostConfigurationProperties(DateTimeOffset? version, string friendlyName, SessionHostConfigurationProvisioningState? provisioningState, IDictionary<string, string> vmTags, AzureLocation? vmLocation, string vmResourceGroup, string vmNamePrefix, IList<int> availabilityZones, DesktopVirtualizationNetworkInfoProperties networkInfo, string vmSizeId, DesktopVirtualizationDiskInfoProperties diskInfo, Uri customConfigurationScriptUri, DesktopVirtualizationImageInfoProperties imageInfo, DesktopVirtualizationDomainInfoProperties domainInfo, DesktopVirtualizationSecurityInfoProperties securityInfo, DesktopVirtualizationKeyVaultCredentialsProperties vmAdminCredentials, DesktopVirtualizationBootDiagnosticsInfoProperties bootDiagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             FriendlyName = friendlyName;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Provisioning state of the Session Host Configuration. </summary>
         [WirePath("provisioningState")]
-        public ProvisioningStateSessionHostConfiguration? ProvisioningState { get; }
+        public SessionHostConfigurationProvisioningState? ProvisioningState { get; }
 
         /// <summary> Hashtable that lists key/value pair tags to apply to the VMs. </summary>
         [WirePath("vmTags")]
@@ -155,6 +155,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Boot Diagnostics Information. </summary>
         [WirePath("bootDiagnosticsInfo")]
-        public BootDiagnosticsInfoProperties BootDiagnosticsInfo { get; set; }
+        public DesktopVirtualizationBootDiagnosticsInfoProperties BootDiagnosticsInfo { get; set; }
     }
 }

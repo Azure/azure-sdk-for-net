@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct AppServiceKind : IEquatable<AppServiceKind>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AppServiceKind"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AppServiceKind(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string StatefulValue = "Stateful";
         private const string StatelessValue = "Stateless";
 
-        /// <summary> Stateful. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AppServiceKind(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Stateful. </summary>
         public static AppServiceKind Stateful { get; } = new AppServiceKind(StatefulValue);
-        /// <summary> Stateless. </summary>
+
+        /// <summary> Gets the Stateless. </summary>
         public static AppServiceKind Stateless { get; } = new AppServiceKind(StatelessValue);
+
         /// <summary> Determines if two <see cref="AppServiceKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AppServiceKind left, AppServiceKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AppServiceKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AppServiceKind left, AppServiceKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AppServiceKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AppServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AppServiceKind(string value) => new AppServiceKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AppServiceKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AppServiceKind?(string value) => value == null ? null : new AppServiceKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AppServiceKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AppServiceKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

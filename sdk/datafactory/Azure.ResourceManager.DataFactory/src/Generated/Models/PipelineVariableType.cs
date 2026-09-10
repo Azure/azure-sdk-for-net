@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct PipelineVariableType : IEquatable<PipelineVariableType>
     {
         private readonly string _value;
+        /// <summary> String. </summary>
+        private const string StringValue = "String";
+        /// <summary> Bool. </summary>
+        private const string BoolValue = "Bool";
+        /// <summary> Array. </summary>
+        private const string ArrayValue = "Array";
 
         /// <summary> Initializes a new instance of <see cref="PipelineVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PipelineVariableType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StringValue = "String";
-        private const string BoolValue = "Bool";
-        private const string ArrayValue = "Array";
+            _value = value;
+        }
 
         /// <summary> String. </summary>
         public static PipelineVariableType String { get; } = new PipelineVariableType(StringValue);
+
         /// <summary> Bool. </summary>
         public static PipelineVariableType Bool { get; } = new PipelineVariableType(BoolValue);
+
         /// <summary> Array. </summary>
         public static PipelineVariableType Array { get; } = new PipelineVariableType(ArrayValue);
+
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PipelineVariableType left, PipelineVariableType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PipelineVariableType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PipelineVariableType left, PipelineVariableType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PipelineVariableType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PipelineVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PipelineVariableType(string value) => new PipelineVariableType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PipelineVariableType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PipelineVariableType?(string value) => value == null ? null : new PipelineVariableType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PipelineVariableType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PipelineVariableType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

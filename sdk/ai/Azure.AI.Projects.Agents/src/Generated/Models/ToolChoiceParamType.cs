@@ -16,6 +16,7 @@ namespace OpenAI
         private const string FunctionValue = "function";
         private const string McpValue = "mcp";
         private const string CustomValue = "custom";
+        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ApplyPatchValue = "apply_patch";
         private const string ShellValue = "shell";
         private const string FileSearchValue = "file_search";
@@ -24,6 +25,8 @@ namespace OpenAI
         private const string WebSearchPreview20250311Value = "web_search_preview_2025_03_11";
         private const string ImageGenerationValue = "image_generation";
         private const string CodeInterpreterValue = "code_interpreter";
+        private const string ComputerValue = "computer";
+        private const string ComputerUseValue = "computer_use";
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceParamType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,6 +49,9 @@ namespace OpenAI
 
         /// <summary> Gets the Custom. </summary>
         public static ToolChoiceParamType Custom { get; } = new ToolChoiceParamType(CustomValue);
+
+        /// <summary> Gets the ProgrammaticToolCalling. </summary>
+        public static ToolChoiceParamType ProgrammaticToolCalling { get; } = new ToolChoiceParamType(ProgrammaticToolCallingValue);
 
         /// <summary> Gets the ApplyPatch. </summary>
         public static ToolChoiceParamType ApplyPatch { get; } = new ToolChoiceParamType(ApplyPatchValue);
@@ -70,6 +76,12 @@ namespace OpenAI
 
         /// <summary> Gets the CodeInterpreter. </summary>
         public static ToolChoiceParamType CodeInterpreter { get; } = new ToolChoiceParamType(CodeInterpreterValue);
+
+        /// <summary> Gets the Computer. </summary>
+        public static ToolChoiceParamType Computer { get; } = new ToolChoiceParamType(ComputerValue);
+
+        /// <summary> Gets the ComputerUse. </summary>
+        public static ToolChoiceParamType ComputerUse { get; } = new ToolChoiceParamType(ComputerUseValue);
 
         /// <summary> Determines if two <see cref="ToolChoiceParamType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class UnauthenticatedClientActionV2Extensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this UnauthenticatedClientActionV2 value) => value switch
         {
             UnauthenticatedClientActionV2.RedirectToLoginPage => "RedirectToLoginPage",
@@ -20,12 +21,25 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientActionV2 value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static UnauthenticatedClientActionV2 ToUnauthenticatedClientActionV2(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return UnauthenticatedClientActionV2.RedirectToLoginPage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return UnauthenticatedClientActionV2.AllowAnonymous;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401")) return UnauthenticatedClientActionV2.Return401;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403")) return UnauthenticatedClientActionV2.Return403;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage"))
+            {
+                return UnauthenticatedClientActionV2.RedirectToLoginPage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous"))
+            {
+                return UnauthenticatedClientActionV2.AllowAnonymous;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401"))
+            {
+                return UnauthenticatedClientActionV2.Return401;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403"))
+            {
+                return UnauthenticatedClientActionV2.Return403;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientActionV2 value.");
         }
     }

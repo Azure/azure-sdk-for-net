@@ -17,9 +17,19 @@ namespace Azure.AI.Projects
         InsightsV1Preview,
         /// <summary> MemoryStoresV1Preview. </summary>
         MemoryStoresV1Preview,
+        /// <summary> AgentInsightsV1Preview. </summary>
+        AgentInsightsV1Preview,
+        /// <summary> RoutinesV2Preview. </summary>
+        RoutinesV2Preview,
         /// <summary> SkillsV1Preview. </summary>
         SkillsV1Preview,
-        /// <summary> ToolboxesV1Preview. </summary>
-        ToolboxesV1Preview
+        /// <summary> DataGenerationJobsV1Preview. </summary>
+        DataGenerationJobsV1Preview,
+        /// <summary> ModelsV1Preview. </summary>
+        ModelsV1Preview,
+        /// <summary> AgentsOptimizationV2Preview. </summary>
+        AgentsOptimizationV2Preview,
+        /// <summary> ModelRouterControlsV1Preview. </summary>
+        ModelRouterControlsV1Preview
     }
 }

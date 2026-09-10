@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             string locationName = default;
-            EventHubsNamespaceGeoDRRoleType? roleType = default;
+            EventHubsNamespaceGeoDrRoleType? roleType = default;
             string replicaState = default;
             ResourceIdentifier clusterArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    roleType = new EventHubsNamespaceGeoDRRoleType(prop.Value.GetString());
+                    roleType = new EventHubsNamespaceGeoDrRoleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("replicaState"u8))

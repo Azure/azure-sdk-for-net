@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionEndpointMetadata : IUtf8JsonSerializable, IJsonModel<DataCollectionEndpointMetadata>
+    /// <summary> Metadata for the resource. This property can only be updated by Log Analytics Control Plane for Data Collection Endpoint with Log Analytics Destination. </summary>
+    public partial class DataCollectionEndpointMetadata : DataCollectionRuleRelatedResourceMetadata, IJsonModel<DataCollectionEndpointMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionEndpointMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataCollectionRuleRelatedResourceMetadata PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDataCollectionEndpointMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DataCollectionEndpointMetadata>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionEndpointMetadata IPersistableModel<DataCollectionEndpointMetadata>.Create(BinaryData data, ModelReaderWriterOptions options) => (DataCollectionEndpointMetadata)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DataCollectionEndpointMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DataCollectionEndpointMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,89 +69,66 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
         }
 
-        DataCollectionEndpointMetadata IJsonModel<DataCollectionEndpointMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DataCollectionEndpointMetadata IJsonModel<DataCollectionEndpointMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DataCollectionEndpointMetadata)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataCollectionRuleRelatedResourceMetadata JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataCollectionEndpointMetadata(document.RootElement, options);
         }
 
-        internal static DataCollectionEndpointMetadata DeserializeDataCollectionEndpointMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DataCollectionEndpointMetadata DeserializeDataCollectionEndpointMetadata(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string provisionedBy = default;
             string provisionedByResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string provisionedByImmutableId = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisionedBy"u8))
+                if (prop.NameEquals("provisionedBy"u8))
                 {
-                    provisionedBy = property.Value.GetString();
+                    provisionedBy = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisionedByResourceId"u8))
+                if (prop.NameEquals("provisionedByResourceId"u8))
                 {
-                    provisionedByResourceId = property.Value.GetString();
+                    provisionedByResourceId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("provisionedByImmutableId"u8))
+                {
+                    provisionedByImmutableId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId, serializedAdditionalRawData);
+            return new DataCollectionEndpointMetadata(provisionedBy, provisionedByResourceId, provisionedByImmutableId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DataCollectionEndpointMetadata>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DataCollectionEndpointMetadata IPersistableModel<DataCollectionEndpointMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionEndpointMetadata>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDataCollectionEndpointMetadata(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DataCollectionEndpointMetadata)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DataCollectionEndpointMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

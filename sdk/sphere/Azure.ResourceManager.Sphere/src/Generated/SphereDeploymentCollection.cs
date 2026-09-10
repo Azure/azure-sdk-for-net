@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(SphereDeploymentResource.ResourceType, out string sphereDeploymentApiVersion);
             _deploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", SphereDeploymentResource.ResourceType.Namespace, Diagnostics);
-            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Endpoint, sphereDeploymentApiVersion ?? "2024-04-01");
+            _deploymentsRestClient = new Deployments(_deploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereDeploymentApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SphereArmOperation<SphereDeploymentResource> operation = new SphereArmOperation<SphereDeploymentResource>(
-                    new SphereDeploymentOperationSource(Client),
+                    new SphereDeploymentResourceOperationSource(Client),
                     _deploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sphere
                 HttpMessage message = _deploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, SphereDeploymentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SphereArmOperation<SphereDeploymentResource> operation = new SphereArmOperation<SphereDeploymentResource>(
-                    new SphereDeploymentOperationSource(Client),
+                    new SphereDeploymentResourceOperationSource(Client),
                     _deploymentsClientDiagnostics,
                     Pipeline,
                     message.Request,

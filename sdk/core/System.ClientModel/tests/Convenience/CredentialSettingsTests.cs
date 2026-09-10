@@ -31,7 +31,7 @@ public class CredentialSettingsTests
     [TestCase("ManagedIdentity", "managedidentity")]
     [TestCase("ManagedIdentityCredential", "managedidentitycredential")]
     [TestCase("AzureCli", "azurecli")]
-    public void CredentialSource_NormalizesToLowercaseLongForm(string input, string expected)
+    public void CredentialSource_NormalizesToLowercase(string input, string expected)
     {
         CredentialSettings settings = new CredentialSettings(null!)
         {

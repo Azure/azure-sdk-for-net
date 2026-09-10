@@ -7,51 +7,75 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The NumericalDataDriftMetric. </summary>
+    /// <summary></summary>
     public readonly partial struct NumericalDataDriftMetric : IEquatable<NumericalDataDriftMetric>
     {
         private readonly string _value;
+        /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
+        private const string JensenShannonDistanceValue = "JensenShannonDistance";
+        /// <summary> The Population Stability Index (PSI) metric. </summary>
+        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
+        /// <summary> The Normalized Wasserstein Distance metric. </summary>
+        private const string NormalizedWassersteinDistanceValue = "NormalizedWassersteinDistance";
+        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample Kâ€“S) metric. </summary>
+        private const string TwoSampleKolmogorovSmirnovTestValue = "TwoSampleKolmogorovSmirnovTest";
 
         /// <summary> Initializes a new instance of <see cref="NumericalDataDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NumericalDataDriftMetric(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string JensenShannonDistanceValue = "JensenShannonDistance";
-        private const string PopulationStabilityIndexValue = "PopulationStabilityIndex";
-        private const string NormalizedWassersteinDistanceValue = "NormalizedWassersteinDistance";
-        private const string TwoSampleKolmogorovSmirnovTestValue = "TwoSampleKolmogorovSmirnovTest";
+            _value = value;
+        }
 
         /// <summary> The Jensen Shannon Distance (JSD) metric. </summary>
         public static NumericalDataDriftMetric JensenShannonDistance { get; } = new NumericalDataDriftMetric(JensenShannonDistanceValue);
+
         /// <summary> The Population Stability Index (PSI) metric. </summary>
         public static NumericalDataDriftMetric PopulationStabilityIndex { get; } = new NumericalDataDriftMetric(PopulationStabilityIndexValue);
+
         /// <summary> The Normalized Wasserstein Distance metric. </summary>
         public static NumericalDataDriftMetric NormalizedWassersteinDistance { get; } = new NumericalDataDriftMetric(NormalizedWassersteinDistanceValue);
-        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample K–S) metric. </summary>
+
+        /// <summary> The Two Sample Kolmogorov-Smirnov Test (two-sample Kâ€“S) metric. </summary>
         public static NumericalDataDriftMetric TwoSampleKolmogorovSmirnovTest { get; } = new NumericalDataDriftMetric(TwoSampleKolmogorovSmirnovTestValue);
+
         /// <summary> Determines if two <see cref="NumericalDataDriftMetric"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NumericalDataDriftMetric left, NumericalDataDriftMetric right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NumericalDataDriftMetric"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NumericalDataDriftMetric left, NumericalDataDriftMetric right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NumericalDataDriftMetric"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NumericalDataDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NumericalDataDriftMetric(string value) => new NumericalDataDriftMetric(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NumericalDataDriftMetric"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NumericalDataDriftMetric?(string value) => value == null ? null : new NumericalDataDriftMetric(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NumericalDataDriftMetric other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NumericalDataDriftMetric other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

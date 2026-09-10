@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class InMageRcmFabricSpecificDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSpecificDetails"/>. </summary>
-        internal InMageRcmFabricSpecificDetails()
+        internal InMageRcmFabricSpecificDetails() : base("InMageRcm")
         {
             ProcessServers = new ChangeTrackingList<SiteRecoveryProcessServerDetails>();
             RcmProxies = new ChangeTrackingList<RcmProxyDetails>();
@@ -25,13 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgents = new ChangeTrackingList<MarsAgentDetails>();
             Dras = new ChangeTrackingList<SiteRecoveryDraDetails>();
             AgentDetails = new ChangeTrackingList<SiteRecoveryAgentDetails>();
-            InstanceType = "InMageRcm";
         }
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFabricSpecificDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vmwareSiteId"> The ARM Id of the VMware site. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="vMwareSiteId"> The ARM Id of the VMware site. </param>
         /// <param name="physicalSiteId"> The ARM Id of the physical site. </param>
         /// <param name="serviceEndpoint"> The service endpoint. </param>
         /// <param name="serviceResourceId"> The service resource Id. </param>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="marsAgents"> The list of Mars agents. </param>
         /// <param name="dras"> The list of DRAs. </param>
         /// <param name="agentDetails"> The list of agent details. </param>
-        internal InMageRcmFabricSpecificDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareSiteId, ResourceIdentifier physicalSiteId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<SiteRecoveryDraDetails> dras, IReadOnlyList<SiteRecoveryAgentDetails> agentDetails) : base(instanceType, serializedAdditionalRawData)
+        internal InMageRcmFabricSpecificDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier vMwareSiteId, ResourceIdentifier physicalSiteId, string serviceEndpoint, ResourceIdentifier serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<SiteRecoveryProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<SiteRecoveryDraDetails> dras, IReadOnlyList<SiteRecoveryAgentDetails> agentDetails) : base(instanceType, additionalBinaryDataProperties)
         {
-            VMwareSiteId = vmwareSiteId;
+            VMwareSiteId = vMwareSiteId;
             PhysicalSiteId = physicalSiteId;
             ServiceEndpoint = serviceEndpoint;
             ServiceResourceId = serviceResourceId;
@@ -65,39 +65,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MarsAgents = marsAgents;
             Dras = dras;
             AgentDetails = agentDetails;
-            InstanceType = instanceType ?? "InMageRcm";
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
         public ResourceIdentifier VMwareSiteId { get; }
+
         /// <summary> The ARM Id of the physical site. </summary>
         public ResourceIdentifier PhysicalSiteId { get; }
+
         /// <summary> The service endpoint. </summary>
         public string ServiceEndpoint { get; }
+
         /// <summary> The service resource Id. </summary>
         public ResourceIdentifier ServiceResourceId { get; }
+
         /// <summary> The service container Id. </summary>
         public string ServiceContainerId { get; }
+
         /// <summary> The data plane Uri. </summary>
         public Uri DataPlaneUri { get; }
+
         /// <summary> The control plane Uri. </summary>
         public Uri ControlPlaneUri { get; }
+
         /// <summary> The source agent identity details. </summary>
         public IdentityProviderDetails SourceAgentIdentityDetails { get; }
+
         /// <summary> The list of process servers. </summary>
         public IReadOnlyList<SiteRecoveryProcessServerDetails> ProcessServers { get; }
+
         /// <summary> The list of RCM proxies. </summary>
         public IReadOnlyList<RcmProxyDetails> RcmProxies { get; }
+
         /// <summary> The list of push installers. </summary>
         public IReadOnlyList<PushInstallerDetails> PushInstallers { get; }
+
         /// <summary> The list of replication agents. </summary>
         public IReadOnlyList<ReplicationAgentDetails> ReplicationAgents { get; }
+
         /// <summary> The list of reprotect agents. </summary>
         public IReadOnlyList<ReprotectAgentDetails> ReprotectAgents { get; }
+
         /// <summary> The list of Mars agents. </summary>
         public IReadOnlyList<MarsAgentDetails> MarsAgents { get; }
+
         /// <summary> The list of DRAs. </summary>
         public IReadOnlyList<SiteRecoveryDraDetails> Dras { get; }
+
         /// <summary> The list of agent details. </summary>
         public IReadOnlyList<SiteRecoveryAgentDetails> AgentDetails { get; }
     }

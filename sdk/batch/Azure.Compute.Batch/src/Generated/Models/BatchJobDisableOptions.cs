@@ -17,22 +17,22 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobDisableOptions"/>. </summary>
-        /// <param name="disableTasks"> What to do with active Tasks associated with the Job. </param>
-        public BatchJobDisableOptions(DisableBatchJobOption disableTasks)
+        /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
+        public BatchJobDisableOptions(DisableBatchJobOption jobOption)
         {
-            DisableTasks = disableTasks;
+            JobOption = jobOption;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchJobDisableOptions"/>. </summary>
-        /// <param name="disableTasks"> What to do with active Tasks associated with the Job. </param>
+        /// <param name="jobOption"> What to do with active Tasks associated with the Job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchJobDisableOptions(DisableBatchJobOption disableTasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchJobDisableOptions(DisableBatchJobOption jobOption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            DisableTasks = disableTasks;
+            JobOption = jobOption;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> What to do with active Tasks associated with the Job. </summary>
-        public DisableBatchJobOption DisableTasks { get; }
+        public DisableBatchJobOption JobOption { get; }
     }
 }

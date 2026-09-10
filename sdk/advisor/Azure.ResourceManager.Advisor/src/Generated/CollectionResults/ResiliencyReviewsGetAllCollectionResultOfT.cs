@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.Advisor
                     yield break;
                 }
                 AdvisorResiliencyReviewListResult result = AdvisorResiliencyReviewListResult.FromResponse(response);
-                yield return Page<AdvisorResiliencyReviewData>.FromValues((IReadOnlyList<AdvisorResiliencyReviewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AdvisorResiliencyReviewData>.FromValues((IReadOnlyList<AdvisorResiliencyReviewData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

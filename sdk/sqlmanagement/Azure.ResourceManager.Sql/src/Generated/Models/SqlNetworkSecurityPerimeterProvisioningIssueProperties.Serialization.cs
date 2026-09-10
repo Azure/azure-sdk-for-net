@@ -8,17 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlNetworkSecurityPerimeterProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>
+    /// <summary> The SqlNetworkSecurityPerimeterProvisioningIssueProperties. </summary>
+    public partial class SqlNetworkSecurityPerimeterProvisioningIssueProperties : IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlNetworkSecurityPerimeterProvisioningIssueProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlNetworkSecurityPerimeterProvisioningIssueProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlNetworkSecurityPerimeterProvisioningIssueProperties IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +69,11 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IssueType))
             {
                 writer.WritePropertyName("issueType"u8);
@@ -55,8 +93,13 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("suggestedResourceIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in SuggestedResourceIds)
+                foreach (string item in SuggestedResourceIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -65,21 +108,26 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("suggestedAccessRules"u8);
                 writer.WriteStartArray();
-                foreach (var item in SuggestedAccessRules)
+                foreach (string item in SuggestedAccessRules)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -88,22 +136,27 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        SqlNetworkSecurityPerimeterProvisioningIssueProperties IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlNetworkSecurityPerimeterProvisioningIssueProperties IJsonModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SqlNetworkSecurityPerimeterProvisioningIssueProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlNetworkSecurityPerimeterProvisioningIssueProperties(document.RootElement, options);
         }
 
-        internal static SqlNetworkSecurityPerimeterProvisioningIssueProperties DeserializeSqlNetworkSecurityPerimeterProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlNetworkSecurityPerimeterProvisioningIssueProperties DeserializeSqlNetworkSecurityPerimeterProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,255 +166,78 @@ namespace Azure.ResourceManager.Sql.Models
             string description = default;
             IList<string> suggestedResourceIds = default;
             IList<string> suggestedAccessRules = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("issueType"u8))
+                if (prop.NameEquals("issueType"u8))
                 {
-                    issueType = property.Value.GetString();
+                    issueType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("severity"u8))
+                if (prop.NameEquals("severity"u8))
                 {
-                    severity = property.Value.GetString();
+                    severity = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("suggestedResourceIds"u8))
+                if (prop.NameEquals("suggestedResourceIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     suggestedResourceIds = array;
                     continue;
                 }
-                if (property.NameEquals("suggestedAccessRules"u8))
+                if (prop.NameEquals("suggestedAccessRules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     suggestedAccessRules = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SqlNetworkSecurityPerimeterProvisioningIssueProperties(
                 issueType,
                 severity,
                 description,
                 suggestedResourceIds ?? new ChangeTrackingList<string>(),
                 suggestedAccessRules ?? new ChangeTrackingList<string>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IssueType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  issueType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IssueType))
-                {
-                    builder.Append("  issueType: ");
-                    if (IssueType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IssueType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IssueType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Severity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  severity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Severity))
-                {
-                    builder.Append("  severity: ");
-                    if (Severity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Severity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Severity}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuggestedResourceIds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  suggestedResourceIds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SuggestedResourceIds))
-                {
-                    if (SuggestedResourceIds.Any())
-                    {
-                        builder.Append("  suggestedResourceIds: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SuggestedResourceIds)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SuggestedAccessRules), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  suggestedAccessRules: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(SuggestedAccessRules))
-                {
-                    if (SuggestedAccessRules.Any())
-                    {
-                        builder.Append("  suggestedAccessRules: ");
-                        builder.AppendLine("[");
-                        foreach (var item in SuggestedAccessRules)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlNetworkSecurityPerimeterProvisioningIssueProperties IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlNetworkSecurityPerimeterProvisioningIssueProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlNetworkSecurityPerimeterProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlNetworkSecurityPerimeterProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

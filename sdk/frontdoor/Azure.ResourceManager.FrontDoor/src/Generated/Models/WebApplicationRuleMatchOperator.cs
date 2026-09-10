@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,68 +15,122 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct WebApplicationRuleMatchOperator : IEquatable<WebApplicationRuleMatchOperator>
     {
         private readonly string _value;
+        /// <summary> Any. </summary>
+        private const string AnyValue = "Any";
+        /// <summary> IPMatch. </summary>
+        private const string IPMatchValue = "IPMatch";
+        /// <summary> GeoMatch. </summary>
+        private const string GeoMatchValue = "GeoMatch";
+        /// <summary> Equal. </summary>
+        private const string EqualValue = "Equal";
+        /// <summary> Contains. </summary>
+        private const string ContainsValue = "Contains";
+        /// <summary> LessThan. </summary>
+        private const string LessThanValue = "LessThan";
+        /// <summary> GreaterThan. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> LessThanOrEqual. </summary>
+        private const string LessThanOrEqualValue = "LessThanOrEqual";
+        /// <summary> GreaterThanOrEqual. </summary>
+        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
+        /// <summary> BeginsWith. </summary>
+        private const string BeginsWithValue = "BeginsWith";
+        /// <summary> EndsWith. </summary>
+        private const string EndsWithValue = "EndsWith";
+        /// <summary> RegEx. </summary>
+        private const string RegEXValue = "RegEx";
+        /// <summary> ServiceTagMatch. </summary>
+        private const string ServiceTagMatchValue = "ServiceTagMatch";
+        /// <summary> Autonomous System Number Match Operator. </summary>
+        private const string AsnMatchValue = "AsnMatch";
+        /// <summary> Client Finger print Operator. </summary>
+        private const string ClientFingerprintValue = "ClientFingerprint";
 
         /// <summary> Initializes a new instance of <see cref="WebApplicationRuleMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public WebApplicationRuleMatchOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AnyValue = "Any";
-        private const string IPMatchValue = "IPMatch";
-        private const string GeoMatchValue = "GeoMatch";
-        private const string EqualValue = "Equal";
-        private const string ContainsValue = "Contains";
-        private const string LessThanValue = "LessThan";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string LessThanOrEqualValue = "LessThanOrEqual";
-        private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
-        private const string BeginsWithValue = "BeginsWith";
-        private const string EndsWithValue = "EndsWith";
-        private const string RegEXValue = "RegEx";
+            _value = value;
+        }
 
         /// <summary> Any. </summary>
         public static WebApplicationRuleMatchOperator Any { get; } = new WebApplicationRuleMatchOperator(AnyValue);
+
         /// <summary> IPMatch. </summary>
         public static WebApplicationRuleMatchOperator IPMatch { get; } = new WebApplicationRuleMatchOperator(IPMatchValue);
+
         /// <summary> GeoMatch. </summary>
         public static WebApplicationRuleMatchOperator GeoMatch { get; } = new WebApplicationRuleMatchOperator(GeoMatchValue);
+
         /// <summary> Equal. </summary>
         public static WebApplicationRuleMatchOperator Equal { get; } = new WebApplicationRuleMatchOperator(EqualValue);
+
         /// <summary> Contains. </summary>
         public static WebApplicationRuleMatchOperator Contains { get; } = new WebApplicationRuleMatchOperator(ContainsValue);
+
         /// <summary> LessThan. </summary>
         public static WebApplicationRuleMatchOperator LessThan { get; } = new WebApplicationRuleMatchOperator(LessThanValue);
+
         /// <summary> GreaterThan. </summary>
         public static WebApplicationRuleMatchOperator GreaterThan { get; } = new WebApplicationRuleMatchOperator(GreaterThanValue);
+
         /// <summary> LessThanOrEqual. </summary>
         public static WebApplicationRuleMatchOperator LessThanOrEqual { get; } = new WebApplicationRuleMatchOperator(LessThanOrEqualValue);
+
         /// <summary> GreaterThanOrEqual. </summary>
         public static WebApplicationRuleMatchOperator GreaterThanOrEqual { get; } = new WebApplicationRuleMatchOperator(GreaterThanOrEqualValue);
+
         /// <summary> BeginsWith. </summary>
         public static WebApplicationRuleMatchOperator BeginsWith { get; } = new WebApplicationRuleMatchOperator(BeginsWithValue);
+
         /// <summary> EndsWith. </summary>
         public static WebApplicationRuleMatchOperator EndsWith { get; } = new WebApplicationRuleMatchOperator(EndsWithValue);
+
         /// <summary> RegEx. </summary>
         public static WebApplicationRuleMatchOperator RegEX { get; } = new WebApplicationRuleMatchOperator(RegEXValue);
+
+        /// <summary> ServiceTagMatch. </summary>
+        public static WebApplicationRuleMatchOperator ServiceTagMatch { get; } = new WebApplicationRuleMatchOperator(ServiceTagMatchValue);
+
+        /// <summary> Autonomous System Number Match Operator. </summary>
+        public static WebApplicationRuleMatchOperator AsnMatch { get; } = new WebApplicationRuleMatchOperator(AsnMatchValue);
+
+        /// <summary> Client Finger print Operator. </summary>
+        public static WebApplicationRuleMatchOperator ClientFingerprint { get; } = new WebApplicationRuleMatchOperator(ClientFingerprintValue);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WebApplicationRuleMatchOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WebApplicationRuleMatchOperator left, WebApplicationRuleMatchOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WebApplicationRuleMatchOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WebApplicationRuleMatchOperator(string value) => new WebApplicationRuleMatchOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WebApplicationRuleMatchOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WebApplicationRuleMatchOperator?(string value) => value == null ? null : new WebApplicationRuleMatchOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WebApplicationRuleMatchOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WebApplicationRuleMatchOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

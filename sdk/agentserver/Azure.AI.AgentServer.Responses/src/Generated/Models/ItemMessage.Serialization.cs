@@ -81,6 +81,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToSerialString());
+            if (Optional.IsDefined(Phase))
+            {
+                writer.WritePropertyName("phase"u8);
+                writer.WriteStringValue(Phase.Value.ToSerialString());
+            }
             writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Content);
@@ -120,6 +125,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             ItemType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             MessageRole role = default;
+            MessagePhase? phase = default;
             BinaryData content = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -133,6 +139,16 @@ namespace Azure.AI.AgentServer.Responses.Models
                     role = prop.Value.GetString().ToMessageRole();
                     continue;
                 }
+                if (prop.NameEquals("phase"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        phase = null;
+                        continue;
+                    }
+                    phase = prop.Value.GetString().ToMessagePhase();
+                    continue;
+                }
                 if (prop.NameEquals("content"u8))
                 {
                     content = BinaryData.FromString(prop.Value.GetRawText());
@@ -143,7 +159,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ItemMessage(@type, additionalBinaryDataProperties, role, content);
+            return new ItemMessage(@type, additionalBinaryDataProperties, role, phase, content);
         }
     }
 }

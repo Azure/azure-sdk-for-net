@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.Compute.Models
     public readonly partial struct ComputeGalleryEndpointAccess : IEquatable<ComputeGalleryEndpointAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ComputeGalleryEndpointAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ComputeGalleryEndpointAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowValue = "Allow";
         private const string DenyValue = "Deny";
 
-        /// <summary> Allow. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeGalleryEndpointAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ComputeGalleryEndpointAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Allow. </summary>
         public static ComputeGalleryEndpointAccess Allow { get; } = new ComputeGalleryEndpointAccess(AllowValue);
-        /// <summary> Deny. </summary>
+
+        /// <summary> Gets the Deny. </summary>
         public static ComputeGalleryEndpointAccess Deny { get; } = new ComputeGalleryEndpointAccess(DenyValue);
+
         /// <summary> Determines if two <see cref="ComputeGalleryEndpointAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComputeGalleryEndpointAccess left, ComputeGalleryEndpointAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComputeGalleryEndpointAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComputeGalleryEndpointAccess left, ComputeGalleryEndpointAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComputeGalleryEndpointAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComputeGalleryEndpointAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComputeGalleryEndpointAccess(string value) => new ComputeGalleryEndpointAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComputeGalleryEndpointAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComputeGalleryEndpointAccess?(string value) => value == null ? null : new ComputeGalleryEndpointAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComputeGalleryEndpointAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComputeGalleryEndpointAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

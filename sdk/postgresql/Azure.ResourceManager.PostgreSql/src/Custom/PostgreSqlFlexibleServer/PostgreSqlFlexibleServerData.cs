@@ -1,17 +1,17 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
+    // Preserves previous flattened properties and setter signatures on the server data model.
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServer data model.
     /// Represents a server.
@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Max storage allowed for a server. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("properties.storage.storageSizeGB")]
         public int? StorageSizeInGB
         {
@@ -35,9 +34,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity
         {
-            get;
-            [EditorBrowsable(EditorBrowsableState.Never)]
-            set;
+            get => Properties is null ? default : Properties.ReplicaCapacity;
+            set
+            {
+                // Previous GA exposed this setter, but replicaCapacity is service-readonly in the TypeSpec model.
+                // Keep the setter for compatibility; there is no generated backing setter to forward to.
+            }
         }
     }
 }

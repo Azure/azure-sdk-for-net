@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="removePropagationsOnEntityDelete"> Determines if propagations will be removed on entity deletion. </param>
         /// <param name="validityPeriods"> An array of time boundaries indicating validity periods. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AtlasClassification(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, string entityGuid, EntityStatus? entityStatus, bool? removePropagationsOnEntityDelete, IList<TimeBoundary> validityPeriods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AtlasClassification(IDictionary<string, BinaryData> attributes, string typeName, string lastModifiedTS, string entityGuid, DataMapEntityStatus? entityStatus, bool? removePropagationsOnEntityDelete, IList<TimeBoundary> validityPeriods, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Attributes = attributes;
             TypeName = typeName;
@@ -92,7 +92,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// Status of the entity - can be active or deleted. Deleted entities are not
         /// removed.
         /// </summary>
-        public EntityStatus? EntityStatus { get; set; }
+        public DataMapEntityStatus? EntityStatus { get; set; }
 
         /// <summary> Determines if propagations will be removed on entity deletion. </summary>
         public bool? RemovePropagationsOnEntityDelete { get; set; }

@@ -349,6 +349,25 @@ Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 
 ## Troubleshoot brokered authentication issues
 
+### `TypeLoadException` for `IMsalSettablePublicClientInitializerOptions` or `IMsalPublicClientInitializerOptions` after updating `Azure.Identity`
+
+If you see the following error after updating to `Azure.Identity` 1.21.0+ or `Azure.Core` 1.53.0+:
+
+```
+TypeLoadException: Could not load type 'Azure.Identity.IMsalSettablePublicClientInitializerOptions'
+from assembly 'Azure.Identity, Version=1.21.0.0, Culture=neutral, PublicKeyToken=92742159e12e44c8'.
+```
+
+Or if brokered authentication fails (e.g., `DefaultAzureCredential` can no longer use WAM, or connections using `Authentication=ActiveDirectoryDefault` fail), you need to update `Azure.Identity.Broker` to version **1.6.0 or later**.
+
+Older `Azure.Identity.Broker` versions (1.5.0 and earlier) reference internal types that moved from `Azure.Identity` to `Azure.Core` as part of the type consolidation. Update your package reference:
+
+```xml
+<PackageReference Include="Azure.Identity.Broker" Version="1.6.0" />
+```
+
+See the [migration guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/MigrationGuide.md#azureidentitybroker-compatibility) for more details.
+
 ### Common error messages for Web Account Manager (WAM)
 | Error Message |Description| Mitigation |
 |---|---|---|

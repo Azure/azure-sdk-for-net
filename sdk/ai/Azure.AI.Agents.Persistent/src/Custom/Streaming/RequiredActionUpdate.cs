@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -22,6 +23,7 @@ public class RequiredActionUpdate : RunUpdate
     /// <inheritdoc cref="RequiredFunctionToolCall.Arguments"/>
     public string FunctionArguments => AsFunctionCall?.Arguments;
 
+    /// <summary> Gets the identifier of the tool call that requires action. </summary>
     public string ToolCallId => AsFunctionCall?.Id;
 
     private RequiredFunctionToolCall AsFunctionCall => _requiredAction as RequiredFunctionToolCall;
@@ -43,7 +45,7 @@ public class RequiredActionUpdate : RunUpdate
 
     internal static IEnumerable<RequiredActionUpdate> DeserializeRequiredActionUpdates(JsonElement element)
     {
-        ThreadRun run = ThreadRun.DeserializeThreadRun(element);
+        ThreadRun run = ThreadRun.DeserializeThreadRun(element, new ModelReaderWriterOptions("W"));
         List<RequiredActionUpdate> updates = [];
         foreach (RequiredAction action in run.RequiredActions ?? [])
         {

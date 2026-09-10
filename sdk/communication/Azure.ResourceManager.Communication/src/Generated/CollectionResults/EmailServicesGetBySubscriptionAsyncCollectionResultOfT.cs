@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.Communication
                     yield break;
                 }
                 EmailServiceResourceList result = EmailServiceResourceList.FromResponse(response);
-                yield return Page<EmailServiceResourceData>.FromValues((IReadOnlyList<EmailServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EmailServiceResourceData>.FromValues((IReadOnlyList<EmailServiceResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

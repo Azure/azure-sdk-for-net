@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Advisor
         {
             TryGetApiVersion(ResourceType, out string advisorMetadataEntityApiVersion);
             _metadataEntitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Advisor", ResourceType.Namespace, Diagnostics);
-            _metadataEntitiesRestClient = new MetadataEntities(_metadataEntitiesClientDiagnostics, Pipeline, Endpoint, advisorMetadataEntityApiVersion ?? "2025-05-01-preview");
+            _metadataEntitiesRestClient = new MetadataEntities(_metadataEntitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, advisorMetadataEntityApiVersion ?? "2025-05-01-preview");
             ValidateResourceId(id);
         }
 

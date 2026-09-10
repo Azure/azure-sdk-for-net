@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.FrontDoor
 {
+    /// <summary></summary>
     public partial class FrontendEndpointResource : IJsonModel<FrontendEndpointData>
     {
-        private static FrontendEndpointData s_dataDeserializationInstance;
-        private static FrontendEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FrontendEndpointData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FrontendEndpointData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FrontendEndpointData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FrontendEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontendEndpointData>)Data).Write(writer, options);
 
-        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontendEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontendEndpointData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontendEndpointData>(data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontendEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

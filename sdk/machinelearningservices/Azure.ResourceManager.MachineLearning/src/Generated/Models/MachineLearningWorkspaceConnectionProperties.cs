@@ -8,50 +8,24 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+    /// The MachineLearningWorkspaceConnectionProperties.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/>, and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
     /// </summary>
     public abstract partial class MachineLearningWorkspaceConnectionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
-        protected MachineLearningWorkspaceConnectionProperties()
+        /// <param name="authType"> Authentication type of the connection target. </param>
+        private protected MachineLearningWorkspaceConnectionProperties(ConnectionAuthType authType)
         {
+            AuthType = authType;
             Metadata = new ChangeTrackingDictionary<string, string>();
             SharedUserList = new ChangeTrackingList<string>();
         }
@@ -60,56 +34,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
         /// <param name="createdByWorkspaceArmId"></param>
+        /// <param name="error"></param>
         /// <param name="expiryOn"></param>
         /// <param name="group"> Group based on connection category. </param>
         /// <param name="isSharedToAll"></param>
-        /// <param name="target"></param>
         /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="peRequirement"></param>
+        /// <param name="peStatus"></param>
         /// <param name="sharedUserList"></param>
-        /// <param name="value"> Value details of the workspace connection. </param>
-        /// <param name="valueFormat"> format for the workspace connection value. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="target"></param>
+        /// <param name="useWorkspaceManagedIdentity"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionProperties(ConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, string error, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? @group, bool? isSharedToAll, IDictionary<string, string> metadata, ManagedPERequirement? peRequirement, ManagedPEStatus? peStatus, IList<string> sharedUserList, string target, bool? useWorkspaceManagedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthType = authType;
             Category = category;
             CreatedByWorkspaceArmId = createdByWorkspaceArmId;
+            Error = error;
             ExpiryOn = expiryOn;
-            Group = group;
+            Group = @group;
             IsSharedToAll = isSharedToAll;
-            Target = target;
             Metadata = metadata;
+            PeRequirement = peRequirement;
+            PeStatus = peStatus;
             SharedUserList = sharedUserList;
-            Value = value;
-            ValueFormat = valueFormat;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Target = target;
+            UseWorkspaceManagedIdentity = useWorkspaceManagedIdentity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Authentication type of the connection target. </summary>
-        internal MachineLearningConnectionAuthType AuthType { get; set; }
+        [WirePath("authType")]
+        internal ConnectionAuthType AuthType { get; set; }
+
         /// <summary> Category of the connection. </summary>
         [WirePath("category")]
         public MachineLearningConnectionCategory? Category { get; set; }
-        /// <summary> Gets the created by workspace arm id. </summary>
+
+        /// <summary> Gets the CreatedByWorkspaceArmId. </summary>
         [WirePath("createdByWorkspaceArmId")]
         public ResourceIdentifier CreatedByWorkspaceArmId { get; }
-        /// <summary> Gets or sets the expiry on. </summary>
+
+        /// <summary> Gets or sets the Error. </summary>
+        [WirePath("error")]
+        public string Error { get; set; }
+
+        /// <summary> Gets or sets the ExpiryOn. </summary>
         [WirePath("expiryTime")]
         public DateTimeOffset? ExpiryOn { get; set; }
+
         /// <summary> Group based on connection category. </summary>
         [WirePath("group")]
         public WorkspaceConnectionGroup? Group { get; }
-        /// <summary> Gets or sets the is shared to all. </summary>
+
+        /// <summary> Gets or sets the IsSharedToAll. </summary>
         [WirePath("isSharedToAll")]
         public bool? IsSharedToAll { get; set; }
-        /// <summary> Gets or sets the target. </summary>
-        [WirePath("target")]
-        public string Target { get; set; }
+
         /// <summary> Store user metadata for this connection. </summary>
         [WirePath("metadata")]
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> Gets the shared user list. </summary>
+
+        /// <summary> Gets or sets the PeRequirement. </summary>
+        [WirePath("peRequirement")]
+        public ManagedPERequirement? PeRequirement { get; set; }
+
+        /// <summary> Gets or sets the PeStatus. </summary>
+        [WirePath("peStatus")]
+        public ManagedPEStatus? PeStatus { get; set; }
+
+        /// <summary> Gets the SharedUserList. </summary>
         [WirePath("sharedUserList")]
         public IList<string> SharedUserList { get; }
+
+        /// <summary> Gets or sets the Target. </summary>
+        [WirePath("target")]
+        public string Target { get; set; }
+
+        /// <summary> Gets or sets the UseWorkspaceManagedIdentity. </summary>
+        [WirePath("useWorkspaceManagedIdentity")]
+        public bool? UseWorkspaceManagedIdentity { get; set; }
     }
 }

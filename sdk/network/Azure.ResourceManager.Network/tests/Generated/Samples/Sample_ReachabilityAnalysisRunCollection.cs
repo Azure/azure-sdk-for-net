@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Description = "A sample reachability analysis run",
             });
-            ArmOperation<ReachabilityAnalysisRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, reachabilityAnalysisRunName, data);
+            ArmOperation<ReachabilityAnalysisRunResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, reachabilityAnalysisRunName, data, cancellationToken: System.Threading.CancellationToken.None);
             ReachabilityAnalysisRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

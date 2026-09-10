@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -18,26 +19,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
         /// <param name="targetLocation"> The target location. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountId"/> or <paramref name="targetLocation"/> is null. </exception>
-        public VMwareCbtContainerMappingContent(ResourceIdentifier storageAccountId, string targetLocation)
+        public VMwareCbtContainerMappingContent(ResourceIdentifier storageAccountId, string targetLocation) : base("VMwareCbt")
         {
             Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
             Argument.AssertNotNull(targetLocation, nameof(targetLocation));
 
             StorageAccountId = storageAccountId;
             TargetLocation = targetLocation;
-            InstanceType = "VMwareCbt";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyVaultId"> The target key vault ARM Id. </param>
         /// <param name="keyVaultUri"> The target key vault URL. </param>
         /// <param name="storageAccountId"> The storage account ARM Id. </param>
         /// <param name="storageAccountSasSecretName"> The secret name of the storage account. </param>
         /// <param name="serviceBusConnectionStringSecretName"> The secret name of the service bus connection string. </param>
         /// <param name="targetLocation"> The target location. </param>
-        internal VMwareCbtContainerMappingContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtContainerMappingContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier keyVaultId, Uri keyVaultUri, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, string serviceBusConnectionStringSecretName, string targetLocation) : base(instanceType, additionalBinaryDataProperties)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -45,24 +45,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             StorageAccountSasSecretName = storageAccountSasSecretName;
             ServiceBusConnectionStringSecretName = serviceBusConnectionStringSecretName;
             TargetLocation = targetLocation;
-            InstanceType = instanceType ?? "VMwareCbt";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VMwareCbtContainerMappingContent"/> for deserialization. </summary>
-        internal VMwareCbtContainerMappingContent()
-        {
         }
 
         /// <summary> The target key vault ARM Id. </summary>
         public ResourceIdentifier KeyVaultId { get; set; }
+
         /// <summary> The target key vault URL. </summary>
         public Uri KeyVaultUri { get; set; }
+
         /// <summary> The storage account ARM Id. </summary>
         public ResourceIdentifier StorageAccountId { get; }
+
         /// <summary> The secret name of the storage account. </summary>
         public string StorageAccountSasSecretName { get; set; }
+
         /// <summary> The secret name of the service bus connection string. </summary>
         public string ServiceBusConnectionStringSecretName { get; set; }
+
         /// <summary> The target location. </summary>
         public string TargetLocation { get; }
     }

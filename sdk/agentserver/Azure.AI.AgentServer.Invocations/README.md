@@ -43,25 +43,37 @@ public class EchoHandler : InvocationHandler
 }
 ```
 
+Alternatively, use `AgentHost.CreateBuilder()` for more control over service registration and middleware:
+
+```C# Snippet:Invocations_ReadMe_ManualSetup
+var builder = AgentHost.CreateBuilder();
+builder.AddInvocations<EchoHandler>();
+builder.Build().Run();
+```
+
 For more control over the host (adding services, configuring middleware, composing multiple protocols), see [Customizing the host](#customizing-the-host) below.
 
 ## Key concepts
 
 ### InvocationHandler
 
-The abstract base class you subclass. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `GetAsyncApiJsonAsync`, `GetAsyncApiYamlAsync`) return 404 by default and can be overridden as needed.
+
+### InvocationWebSocketHandler
+
+Derives from `InvocationHandler` and adds the abstract `HandleWebSocketAsync` method for the `/invocations_ws` endpoint. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only handler does not need to implement `HandleAsync` — multi-protocol handlers override both. See the [WebSocket protocol section](#websocket-protocol-invocations_ws) below.
 
 ### InvocationContext
 
-Provides request metadata to the handler, including the resolved session ID and forwarded client headers.
+Provides request metadata to the handler. All properties are read-only and resolved before `HandleAsync` is called.
 
-### Session resolution
-
-The library automatically extracts a session identifier from incoming requests, enabling multi-turn invocation tracking. The resolved session ID is available on `InvocationContext.SessionId`.
-
-### Client header forwarding
-
-Headers prefixed with `x-client-*` are automatically captured from the incoming request and made available via `InvocationContext.ClientHeaders`, allowing end-to-end tracing context and client metadata to flow through the server.
+| Property | Type | Description |
+|----------|------|-------------|
+| `InvocationId` | `string` | Unique identifier for this invocation. Passed as the first argument to `GetAsync` and `CancelAsync`. Use as a key when storing per-invocation state. |
+| `SessionId` | `string` | Resolved multi-turn session identifier. For `POST /invocations`, resolved from the `agent_session_id` query parameter, `FOUNDRY_AGENT_SESSION_ID` env var, or a generated UUID — in that order. For `GET` and `Cancel`, the query parameter is not used; the value comes from the env var or a generated UUID. |
+| `ClientHeaders` | `IReadOnlyDictionary<string, string>` | Forwarded `x-client-*` headers from the original request — useful for propagating tracing context and client metadata. |
+| `QueryParameters` | `IReadOnlyDictionary<string, StringValues>` | All query parameters from the incoming request. Per the invocation protocol spec, all query parameters are forwarded unchanged. |
+| `PlatformContext` | `PlatformContext` | Platform context extracted from the `x-agent-user-id` and `x-agent-foundry-call-id` headers. Useful for multi-tenant scenarios where per-user data must be partitioned and the per-request call ID forwarded to 1P services. `PlatformContext.Empty` indicates no platform headers were present. |
 
 ### Customizing the host
 
@@ -70,13 +82,212 @@ When you need to add services, configure middleware, or compose multiple protoco
 - [Tier 2 builder](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample6_Tier2HostingBuilder.md)
 - [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md)
 
+`InvocationsServerOptions` can be configured via the `AddInvocationsServer(options => { ... })` delegate on any tier. See the [Tier 3 self-hosting](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/Sample7_Tier3SelfHosting.md) sample for a complete example.
+
 ### Handler lifetime
 
 Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
 
+### Serving discovery specs (OpenAPI / AsyncAPI)
+
+The Invocations host exposes three optional discovery endpoints for machine-readable agent contracts. Override the corresponding methods on your `InvocationHandler`; each returns `404` by default.
+
+| Method | Endpoint | Response media type |
+|---|---|---|
+| `GetOpenApiAsync` | `GET /invocations/docs/openapi.json` | `application/json` |
+| `GetAsyncApiJsonAsync` | `GET /invocations/docs/asyncapi.json` | `application/json` |
+| `GetAsyncApiYamlAsync` | `GET /invocations/docs/asyncapi.yaml` | `application/yaml` |
+
+AsyncAPI is the companion to OpenAPI for event-driven / streaming surfaces (e.g. the `invocations_ws` WebSocket protocol) that OpenAPI cannot express. The path extension is authoritative for the returned content type — there is no `Accept` negotiation and no format conversion between the JSON and YAML representations. Override `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync` independently; publishing both is recommended for tooling compatibility.
+
+```C#
+public override async Task GetAsyncApiJsonAsync(
+    HttpRequest request, HttpResponse response, CancellationToken cancellationToken)
+{
+    response.StatusCode = 200;
+    response.ContentType = "application/json";
+    await response.WriteAsync(_asyncApiJson, cancellationToken);
+}
+```
+
+### WebSocket protocol (`invocations_ws`)
+
+The same host that serves `POST /invocations` also exposes a WebSocket transport at `/invocations_ws`. Container authors do not install or import a second package — derive from `InvocationWebSocketHandler` and override `HandleWebSocketAsync`. The inherited `HandleAsync` returns 404 by default, so a WebSocket-only agent has no boilerplate; override `HandleAsync` too when you want HTTP and WebSocket on the same handler.
+
+```C# Snippet:Invocations_ReadMe_WebSocketHandler
+public class WebSocketEchoHandler : InvocationWebSocketHandler
+{
+    public override async Task HandleWebSocketAsync(
+        WebSocket webSocket, InvocationContext context, CancellationToken cancellationToken)
+    {
+        var buffer = new byte[4096];
+        while (webSocket.State == WebSocketState.Open && !cancellationToken.IsCancellationRequested)
+        {
+            var received = await webSocket.ReceiveAsync(buffer, cancellationToken);
+            if (received.MessageType == WebSocketMessageType.Close)
+            {
+                break;
+            }
+            await webSocket.SendAsync(
+                new ArraySegment<byte>(buffer, 0, received.Count),
+                received.MessageType,
+                received.EndOfMessage,
+                cancellationToken);
+        }
+    }
+}
+```
+
+What the SDK does for you when the registered handler derives from `InvocationWebSocketHandler`:
+
+- Registers the `/invocations_ws` route on the same host as `/invocations` and `/readiness`.
+- Calls `AcceptWebSocketAsync` before invoking your handler.
+- Sends an RFC 6455 protocol-level Ping frame (opcode `0x9`) every `WS_KEEPALIVE_INTERVAL` seconds when the env var is set — Kestrel does this for us via `WebSocketOptions.KeepAliveInterval`, so the connection stays alive across upstream proxy / load-balancer idle timeouts without any extra application traffic. Disabled by default.
+- Closes the connection cleanly on handler return (close code `1000` — `NormalClosure`) or maps an uncaught handler exception to close code `1011` (`InternalServerError`). Handler-initiated close codes are preserved unchanged.
+- Emits a structured close-event log line carrying `session_id`, `close_code`, and `duration_ms`. Raw WebSocket handlers use the ASP.NET Core request span. The typed Voice relay replaces that generic request telemetry with a semantic `agentserver.connection` span created from the inbound W3C context.
+- When the registered handler is a plain `InvocationHandler` (not an `InvocationWebSocketHandler`), an upgrade attempt receives HTTP `404 Not Found` — the WS endpoint short-circuits with "endpoint not registered" semantics so a missing handler fails fast instead of accepting and immediately closing.
+
+The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
+
+For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request span and replaces it with semantic Voice spans to avoid duplicate request telemetry. The application's OpenTelemetry configuration controls whether those semantic spans are recorded and exported. When configuring tracing manually, register the `Azure.AI.AgentServer.Invocations` activity source and configure an appropriate sampler and exporter; the SDK does not override sampling or export decisions for the semantic spans. Register `VoiceHandler` implementations with `AddVoice<THandler>()`, not `AddInvocations()`, because the generic Invocations registration does not install Voice-specific tracing.
+
+### Typed Voice relay
+
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+
+The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+
+```C#
+#pragma warning disable AAAS001
+```
+
+```C# Snippet:Invocations_ReadMe_VoiceHandler
+public class VoiceEchoHandler : VoiceHandler
+{
+    protected override Task OnSessionStartAsync(
+        VoiceSession session,
+        VoiceSessionStartEvent start,
+        CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+            ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+            : session.SendAsync(
+                new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                cancellationToken);
+
+    protected override async Task OnUserMessageAsync(
+        VoiceSession session,
+        VoiceUserMessageEvent message,
+        CancellationToken cancellationToken)
+    {
+        var responseId = VoiceIds.CreateResponseId();
+        var itemId = VoiceIds.CreateItemId();
+        var text = string.Concat(message.Content.Select(part => part.Text));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+
+        try
+        {
+            await session.SendAsync(
+                new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+                cancellationToken);
+            await session.SendAsync(
+                new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+                cancellationToken);
+            await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+            turn.Complete(new VoiceTurnResult(
+                VoiceTurnOutcome.Response,
+                outputItemCount: 1,
+                responseId));
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                  cancellationToken.IsCancellationRequested)
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Cancelled));
+            throw;
+        }
+        catch
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.Error));
+            throw;
+        }
+    }
+}
+```
+
+```C# Snippet:Invocations_ReadMe_Voice_Startup
+VoiceServer.Run<VoiceEchoHandler>();
+```
+
+The Voice layer is deliberately a typed event relay:
+
+- It decodes one inbound text frame and dispatches one typed callback.
+- `VoiceSession.SendAsync` encodes one outbound message and serializes concurrent writes.
+- It retains no pending inputs, response state, message-ID ledger, timers, callback tasks, history, or reconnect state.
+- Callbacks are awaited in wire order. Start and track long-running model or tool work in application-owned tasks, then return so later barge-in, timeout, and cancellation events can be dispatched.
+- `OnConnectionTerminating` runs once after the session becomes unwritable and before transport close. Use it only to signal cancellation of application-owned work; do not block or send from it.
+
+See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleVoice1_TypedRelay.md) for a full sample with application-owned response tasks and cancellation.
+
+#### WebSocket configuration
+
+| Environment variable | Default | Description |
+|---|---|---|
+| `WS_KEEPALIVE_INTERVAL` | unset → disabled | Integer seconds between RFC 6455 Ping frames. `0` (or unset) disables protocol-level keep-alive. |
+
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples).
+
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Invocations_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Invocations_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : InvocationHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override async Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        _ = context.PlatformContext.UserIdKey; // container's own per-user state
+
+        // The "foundry" client (registered with FoundryCallIdHandler) echoes this
+        // request's x-agent-foundry-call-id, so the toolbox acts for THIS user.
+        var foundry = _httpClientFactory.CreateClient("foundry");
+        using var toolResponse = await foundry.PostAsJsonAsync(
+            "/toolboxes/github/mcp",
+            new
+            {
+                jsonrpc = "2.0",
+                method = "tools/call",
+                @params = new { name = "list_my_assigned_issues", arguments = new { } },
+            },
+            cancellationToken);
+
+        await response.WriteAsync(
+            await toolResponse.Content.ReadAsStringAsync(cancellationToken), cancellationToken);
+    }
+}
+```
 
 ## Troubleshooting
 

@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GovernanceAssignmentAdditionalInfo : IUtf8JsonSerializable, IJsonModel<GovernanceAssignmentAdditionalInfo>
+    /// <summary> Describe the additional data of governance assignment - optional. </summary>
+    public partial class GovernanceAssignmentAdditionalInfo : IJsonModel<GovernanceAssignmentAdditionalInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceAssignmentAdditionalInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GovernanceAssignmentAdditionalInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGovernanceAssignmentAdditionalInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<GovernanceAssignmentAdditionalInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceAssignmentAdditionalInfo IPersistableModel<GovernanceAssignmentAdditionalInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GovernanceAssignmentAdditionalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GovernanceAssignmentAdditionalInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,22 +106,27 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        GovernanceAssignmentAdditionalInfo IJsonModel<GovernanceAssignmentAdditionalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GovernanceAssignmentAdditionalInfo IJsonModel<GovernanceAssignmentAdditionalInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual GovernanceAssignmentAdditionalInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGovernanceAssignmentAdditionalInfo(document.RootElement, options);
         }
 
-        internal static GovernanceAssignmentAdditionalInfo DeserializeGovernanceAssignmentAdditionalInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GovernanceAssignmentAdditionalInfo DeserializeGovernanceAssignmentAdditionalInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,67 +134,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             int? ticketNumber = default;
             string ticketLink = default;
             string ticketStatus = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ticketNumber"u8))
+                if (prop.NameEquals("ticketNumber"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ticketNumber = property.Value.GetInt32();
+                    ticketNumber = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ticketLink"u8))
+                if (prop.NameEquals("ticketLink"u8))
                 {
-                    ticketLink = property.Value.GetString();
+                    ticketLink = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ticketStatus"u8))
+                if (prop.NameEquals("ticketStatus"u8))
                 {
-                    ticketStatus = property.Value.GetString();
+                    ticketStatus = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GovernanceAssignmentAdditionalInfo(ticketNumber, ticketLink, ticketStatus, serializedAdditionalRawData);
+            return new GovernanceAssignmentAdditionalInfo(ticketNumber, ticketLink, ticketStatus, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<GovernanceAssignmentAdditionalInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GovernanceAssignmentAdditionalInfo IPersistableModel<GovernanceAssignmentAdditionalInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGovernanceAssignmentAdditionalInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GovernanceAssignmentAdditionalInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

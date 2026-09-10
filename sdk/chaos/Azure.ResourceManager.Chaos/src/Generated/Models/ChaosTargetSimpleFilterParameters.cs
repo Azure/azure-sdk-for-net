@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <summary> List of Azure availability zones to filter targets by. </summary>
-        public IList<string> Zones { get; }
+        public IList<string> Zones { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal static partial class MonitorResultTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this MonitorResultType value) => value switch
         {
             MonitorResultType.Data => "Data",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Monitor.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorResultType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static MonitorResultType ToMonitorResultType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Data")) return MonitorResultType.Data;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Metadata")) return MonitorResultType.Metadata;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Data"))
+            {
+                return MonitorResultType.Data;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Metadata"))
+            {
+                return MonitorResultType.Metadata;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MonitorResultType value.");
         }
     }

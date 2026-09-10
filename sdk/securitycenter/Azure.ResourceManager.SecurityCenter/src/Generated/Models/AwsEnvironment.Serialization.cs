@@ -9,31 +9,52 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AwsEnvironment : IUtf8JsonSerializable, IJsonModel<AwsEnvironment>
+    /// <summary> The AWS connector environment data. </summary>
+    public partial class AwsEnvironment : SecurityConnectorEnvironment, IJsonModel<AwsEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AwsEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<AwsEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAwsEnvironment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OrganizationalData))
             {
@@ -44,8 +65,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
-                foreach (var item in Regions)
+                foreach (string item in Regions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -62,121 +88,96 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        AwsEnvironment IJsonModel<AwsEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAwsEnvironment(document.RootElement, options);
         }
 
-        internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AwsEnvironment DeserializeAwsEnvironment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            EnvironmentType environmentType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AwsOrganizationalInfo organizationalData = default;
             IList<string> regions = default;
             string accountName = default;
             long? scanInterval = default;
-            EnvironmentType environmentType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationalData"u8))
+                if (prop.NameEquals("environmentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    environmentType = new EnvironmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("organizationalData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value, options);
+                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("regions"u8))
+                if (prop.NameEquals("regions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     regions = array;
                     continue;
                 }
-                if (property.NameEquals("accountName"u8))
+                if (prop.NameEquals("accountName"u8))
                 {
-                    accountName = property.Value.GetString();
+                    accountName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("scanInterval"u8))
+                if (prop.NameEquals("scanInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanInterval = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("environmentType"u8))
-                {
-                    environmentType = new EnvironmentType(property.Value.GetString());
+                    scanInterval = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AwsEnvironment(
                 environmentType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 organizationalData,
                 regions ?? new ChangeTrackingList<string>(),
                 accountName,
                 scanInterval);
         }
-
-        BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AwsEnvironment IPersistableModel<AwsEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAwsEnvironment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AwsEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

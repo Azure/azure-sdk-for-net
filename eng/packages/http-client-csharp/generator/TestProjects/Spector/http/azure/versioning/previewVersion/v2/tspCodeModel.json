@@ -10,6 +10,11 @@
       "$id": "1",
       "kind": "enum",
       "name": "ApiVersions",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.ApiVersions",
       "valueType": {
         "$id": "2",
@@ -31,7 +36,8 @@
             "$ref": "1"
           },
           "doc": "Api version 2024-01-01.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -45,7 +51,8 @@
             "$ref": "1"
           },
           "doc": "Api version 2024-06-01.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "5",
@@ -59,7 +66,8 @@
             "$ref": "1"
           },
           "doc": "Preview api version 2024-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
@@ -67,14 +75,15 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "6",
       "kind": "constant",
-      "name": "getWidgetContentType",
+      "name": "GetWidgetAccept",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -85,7 +94,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "8",
@@ -101,7 +111,8 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "10",
@@ -117,12 +128,13 @@
         "decorators": []
       },
       "value": "application/merge-patch+json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "12",
       "kind": "constant",
-      "name": "updateWidgetColorContentType",
+      "name": "GetWidgetAccept1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -133,12 +145,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "14",
       "kind": "constant",
-      "name": "listWidgetsContentType",
+      "name": "GetWidgetAccept2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -149,7 +162,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -157,6 +171,11 @@
       "$id": "16",
       "kind": "model",
       "name": "Widget",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.Widget",
       "usage": "Output,Json",
@@ -167,11 +186,17 @@
           "name": "Widget"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "17",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "id",
           "doc": "Widget identifier.",
           "type": {
@@ -192,12 +217,18 @@
               "name": "id"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "19",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "name",
           "doc": "Widget name.",
           "type": {
@@ -218,12 +249,16 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "21",
           "kind": "property",
           "name": "color",
+          "apiVersions": [
+            "2024-12-01-preview"
+          ],
           "serializedName": "color",
           "doc": "Widget color, only available in preview version.",
           "type": {
@@ -244,7 +279,8 @@
               "name": "color"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -252,6 +288,11 @@
       "$id": "23",
       "kind": "model",
       "name": "UpdateWidgetColorRequest",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.UpdateWidgetColorRequest",
       "usage": "Input,JsonMergePatch,Json",
@@ -262,11 +303,17 @@
           "name": "UpdateWidgetColorRequest"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "24",
           "kind": "property",
           "name": "color",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "color",
           "doc": "New color for the widget.",
           "type": {
@@ -287,7 +334,8 @@
               "name": "color"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -295,6 +343,11 @@
       "$id": "26",
       "kind": "model",
       "name": "ListWidgetsResponse",
+      "apiVersions": [
+        "2024-01-01",
+        "2024-06-01",
+        "2024-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.Response.anonymous",
       "usage": "Output,Json",
@@ -304,11 +357,17 @@
           "name": ""
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "27",
           "kind": "property",
           "name": "widgets",
+          "apiVersions": [
+            "2024-01-01",
+            "2024-06-01",
+            "2024-12-01-preview"
+          ],
           "serializedName": "widgets",
           "type": {
             "$id": "28",
@@ -331,7 +390,8 @@
               "name": "widgets"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -341,12 +401,14 @@
       "$id": "29",
       "kind": "client",
       "name": "PreviewVersionClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.Versioning.PreviewVersion",
       "methods": [
         {
           "$id": "30",
           "kind": "basic",
           "name": "getWidget",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2024-01-01",
@@ -357,6 +419,7 @@
           "operation": {
             "$id": "31",
             "name": "getWidget",
+            "isExactName": false,
             "resourceName": "PreviewVersion",
             "doc": "Get widget by id (available in all versions)",
             "accessibility": "public",
@@ -403,9 +466,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "36",
@@ -466,9 +531,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "42",
@@ -501,9 +568,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.getWidget.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -518,14 +587,20 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               },
               {
                 "statusCodes": [
                   404
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "GET",
@@ -560,6 +635,7 @@
           "$id": "44",
           "kind": "basic",
           "name": "updateWidgetColor",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2024-12-01-preview"
@@ -568,6 +644,7 @@
           "operation": {
             "$id": "45",
             "name": "updateWidgetColor",
+            "isExactName": false,
             "resourceName": "PreviewVersion",
             "doc": "Update widget color (preview only)",
             "accessibility": "public",
@@ -614,9 +691,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.id",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "50",
@@ -649,9 +728,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "52",
@@ -686,7 +767,8 @@
                   {
                     "$ref": "39"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "55",
@@ -719,9 +801,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "57",
@@ -757,9 +841,16 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.updateWidgetColor.colorUpdate",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "colorUpdate"
+                  }
+                }
               }
             ],
             "responses": [
@@ -774,14 +865,20 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               },
               {
                 "statusCodes": [
                   404
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "PATCH",
@@ -825,6 +922,7 @@
           "$id": "59",
           "kind": "basic",
           "name": "listWidgets",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2024-01-01",
@@ -835,6 +933,7 @@
           "operation": {
             "$id": "60",
             "name": "listWidgets",
+            "isExactName": false,
             "resourceName": "PreviewVersion",
             "doc": "List widgets with optional color filtering",
             "accessibility": "public",
@@ -878,9 +977,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.name",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "65",
@@ -921,9 +1022,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.color",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "69",
@@ -958,7 +1061,8 @@
                   {
                     "$ref": "39"
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "72",
@@ -991,9 +1095,11 @@
                     "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.listWidgets.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -1008,7 +1114,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -1072,7 +1183,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.Versioning.PreviewVersion.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "39"

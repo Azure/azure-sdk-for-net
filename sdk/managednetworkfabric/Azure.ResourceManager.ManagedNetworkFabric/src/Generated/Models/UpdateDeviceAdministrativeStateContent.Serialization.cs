@@ -10,13 +10,65 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class UpdateDeviceAdministrativeStateContent : IUtf8JsonSerializable, IJsonModel<UpdateDeviceAdministrativeStateContent>
+    /// <summary> Update the administrative state on list of resources. </summary>
+    public partial class UpdateDeviceAdministrativeStateContent : UpdateAdministrativeStateOnResources, IJsonModel<UpdateDeviceAdministrativeStateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateDeviceAdministrativeStateContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateAdministrativeStateOnResources PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeUpdateDeviceAdministrativeStateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<UpdateDeviceAdministrativeStateContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateDeviceAdministrativeStateContent IPersistableModel<UpdateDeviceAdministrativeStateContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpdateDeviceAdministrativeStateContent)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<UpdateDeviceAdministrativeStateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="updateDeviceAdministrativeStateContent"> The <see cref="UpdateDeviceAdministrativeStateContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(UpdateDeviceAdministrativeStateContent updateDeviceAdministrativeStateContent)
+        {
+            if (updateDeviceAdministrativeStateContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(updateDeviceAdministrativeStateContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<UpdateDeviceAdministrativeStateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +80,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(State))
             {
@@ -42,49 +93,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
         }
 
-        UpdateDeviceAdministrativeStateContent IJsonModel<UpdateDeviceAdministrativeStateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        UpdateDeviceAdministrativeStateContent IJsonModel<UpdateDeviceAdministrativeStateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpdateDeviceAdministrativeStateContent)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override UpdateAdministrativeStateOnResources JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUpdateDeviceAdministrativeStateContent(document.RootElement, options);
         }
 
-        internal static UpdateDeviceAdministrativeStateContent DeserializeUpdateDeviceAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static UpdateDeviceAdministrativeStateContent DeserializeUpdateDeviceAdministrativeStateContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            NetworkDeviceAdministrativeState? state = default;
             IList<ResourceIdentifier> resourceIds = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            NetworkDeviceAdministrativeState? state = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("resourceIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    state = new NetworkDeviceAdministrativeState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceIds"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -98,44 +144,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     resourceIds = array;
                     continue;
                 }
+                if (prop.NameEquals("state"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new NetworkDeviceAdministrativeState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new UpdateDeviceAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData, state);
+            return new UpdateDeviceAdministrativeStateContent(resourceIds ?? new ChangeTrackingList<ResourceIdentifier>(), additionalBinaryDataProperties, state);
         }
-
-        BinaryData IPersistableModel<UpdateDeviceAdministrativeStateContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        UpdateDeviceAdministrativeStateContent IPersistableModel<UpdateDeviceAdministrativeStateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateDeviceAdministrativeStateContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpdateDeviceAdministrativeStateContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(UpdateDeviceAdministrativeStateContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<UpdateDeviceAdministrativeStateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

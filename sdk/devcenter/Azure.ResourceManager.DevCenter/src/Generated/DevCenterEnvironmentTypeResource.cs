@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ResourceType, out string devCenterEnvironmentTypeApiVersion);
             _environmentTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
-            _environmentTypesRestClient = new EnvironmentTypes(_environmentTypesClientDiagnostics, Pipeline, Endpoint, devCenterEnvironmentTypeApiVersion ?? "2026-01-01-preview");
+            _environmentTypesRestClient = new EnvironmentTypes(_environmentTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterEnvironmentTypeApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

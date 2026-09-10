@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DeploymentSettingNetworkController : IUtf8JsonSerializable, IJsonModel<DeploymentSettingNetworkController>
+    /// <summary> network controller config for SDN Integration to deploy AzureStackHCI Cluster. </summary>
+    public partial class DeploymentSettingNetworkController : IJsonModel<DeploymentSettingNetworkController>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentSettingNetworkController>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingNetworkController PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeploymentSettingNetworkController(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeploymentSettingNetworkController>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingNetworkController IPersistableModel<DeploymentSettingNetworkController>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeploymentSettingNetworkController>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeploymentSettingNetworkController>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(MacAddressPoolStart))
             {
                 writer.WritePropertyName("macAddressPoolStart"u8);
@@ -50,15 +89,15 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("networkVirtualizationEnabled"u8);
                 writer.WriteBooleanValue(NetworkVirtualizationEnabled.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -67,22 +106,27 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DeploymentSettingNetworkController IJsonModel<DeploymentSettingNetworkController>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeploymentSettingNetworkController IJsonModel<DeploymentSettingNetworkController>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeploymentSettingNetworkController JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeploymentSettingNetworkController(document.RootElement, options);
         }
 
-        internal static DeploymentSettingNetworkController DeserializeDeploymentSettingNetworkController(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeploymentSettingNetworkController DeserializeDeploymentSettingNetworkController(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,146 +134,34 @@ namespace Azure.ResourceManager.Hci.Models
             string macAddressPoolStart = default;
             string macAddressPoolStop = default;
             bool? networkVirtualizationEnabled = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("macAddressPoolStart"u8))
+                if (prop.NameEquals("macAddressPoolStart"u8))
                 {
-                    macAddressPoolStart = property.Value.GetString();
+                    macAddressPoolStart = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("macAddressPoolStop"u8))
+                if (prop.NameEquals("macAddressPoolStop"u8))
                 {
-                    macAddressPoolStop = property.Value.GetString();
+                    macAddressPoolStop = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("networkVirtualizationEnabled"u8))
+                if (prop.NameEquals("networkVirtualizationEnabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkVirtualizationEnabled = property.Value.GetBoolean();
+                    networkVirtualizationEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentSettingNetworkController(macAddressPoolStart, macAddressPoolStop, networkVirtualizationEnabled, serializedAdditionalRawData);
+            return new DeploymentSettingNetworkController(macAddressPoolStart, macAddressPoolStop, networkVirtualizationEnabled, additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddressPoolStart), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  macAddressPoolStart: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MacAddressPoolStart))
-                {
-                    builder.Append("  macAddressPoolStart: ");
-                    if (MacAddressPoolStart.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MacAddressPoolStart}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MacAddressPoolStart}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MacAddressPoolStop), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  macAddressPoolStop: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MacAddressPoolStop))
-                {
-                    builder.Append("  macAddressPoolStop: ");
-                    if (MacAddressPoolStop.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{MacAddressPoolStop}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{MacAddressPoolStop}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkVirtualizationEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkVirtualizationEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkVirtualizationEnabled))
-                {
-                    builder.Append("  networkVirtualizationEnabled: ");
-                    var boolValue = NetworkVirtualizationEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeploymentSettingNetworkController>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeploymentSettingNetworkController IPersistableModel<DeploymentSettingNetworkController>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentSettingNetworkController>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentSettingNetworkController(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeploymentSettingNetworkController)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeploymentSettingNetworkController>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

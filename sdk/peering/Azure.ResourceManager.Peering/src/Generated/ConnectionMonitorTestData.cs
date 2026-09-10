@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Peering
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties that define a Connection Monitor Test. </param>
-        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ConnectionMonitorTestProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ConnectionMonitorTestProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties that define a Connection Monitor Test. </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     Properties = new ConnectionMonitorTestProperties();
                 }
-                Properties.DestinationPort = value.Value;
+                Properties.DestinationPort = value;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
                 {
                     Properties = new ConnectionMonitorTestProperties();
                 }
-                Properties.TestFrequencyInSec = value.Value;
+                Properties.TestFrequencyInSec = value;
             }
         }
 

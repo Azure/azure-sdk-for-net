@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FailoverConnectionStatus : IEquatable<FailoverConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connected. </summary>
+        private const string ConnectedValue = "Connected";
+        /// <summary> Disconnected. </summary>
+        private const string DisconnectedValue = "Disconnected";
 
         /// <summary> Initializes a new instance of <see cref="FailoverConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FailoverConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ConnectedValue = "Connected";
-        private const string DisconnectedValue = "Disconnected";
+            _value = value;
+        }
 
         /// <summary> Connected. </summary>
         public static FailoverConnectionStatus Connected { get; } = new FailoverConnectionStatus(ConnectedValue);
+
         /// <summary> Disconnected. </summary>
         public static FailoverConnectionStatus Disconnected { get; } = new FailoverConnectionStatus(DisconnectedValue);
+
         /// <summary> Determines if two <see cref="FailoverConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FailoverConnectionStatus left, FailoverConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FailoverConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FailoverConnectionStatus left, FailoverConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FailoverConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FailoverConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FailoverConnectionStatus(string value) => new FailoverConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FailoverConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FailoverConnectionStatus?(string value) => value == null ? null : new FailoverConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FailoverConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FailoverConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

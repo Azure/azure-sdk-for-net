@@ -46,7 +46,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     [Test]
     public async Task Delete_NonExistent_Response_Returns_404()
     {
-        var deleteResponse = await Client.DeleteAsync("/responses/resp_nonexistent_delete_test");
+        var deleteResponse = await Client.DeleteAsync($"/responses/{IdGenerator.NewResponseId()}");
 
         Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 
@@ -54,6 +54,7 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc = JsonDocument.Parse(body);
         Assert.That(doc.RootElement.TryGetProperty("error", out var error), Is.True);
         Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
     }
 
     /// <summary>
@@ -77,6 +78,9 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         using var doc2 = JsonDocument.Parse(body2);
         Assert.That(doc2.RootElement.TryGetProperty("error", out var error2), Is.True);
         Assert.That(error2.GetProperty("type").GetString(), Is.EqualTo("invalid_request_error"));
+        Assert.That(error2.GetProperty("code").GetString(), Is.EqualTo("invalid_request_error"));
+        // Spec: "Cannot delete an in-flight response."
+        Assert.That(error2.GetProperty("message").GetString(), Is.EqualTo("Cannot delete an in-flight response."));
 
         // Clean up
         tcs.SetResult();
@@ -84,12 +88,12 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
     }
 
     /// <summary>
-    /// T022: GET after DELETE returns 400 (deleted responses are distinguished from never-existed).
+    /// T022: GET after DELETE returns 404 (response not found).
     /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
-    /// GET /responses/{id} → HTTP 400 with message indicating the response has been deleted.
+    /// GET /responses/{id} → HTTP 404 (response not found).
     /// </summary>
     [Test]
-    public async Task Get_After_Delete_Returns_400()
+    public async Task Get_After_Delete_Returns_404()
     {
         // Create and then delete a response
         var responseId = await CreateDefaultResponseAsync();
@@ -97,9 +101,27 @@ public class DeleteResponseProtocolTests : ProtocolTestBase
         var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
         Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 
-        // GET should return 400 (deleted, not 404 = never-existed)
+        // Spec: GET after DELETE → 404 (response not found)
         var getResponse = await GetResponseAsync(responseId);
-        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+        Assert.That(getResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
+    }
+
+    /// <summary>
+    /// Post-deletion: Cancel after DELETE returns 404.
+    /// Per API Behaviour Contract Endpoint 5 Post-Deletion Behaviour:
+    /// POST /responses/{id}/cancel → HTTP 404 (response not found).
+    /// </summary>
+    [Test]
+    public async Task Cancel_After_Delete_Returns_404()
+    {
+        var responseId = await CreateDefaultResponseAsync();
+
+        var deleteResponse = await Client.DeleteAsync($"/responses/{responseId}");
+        Assert.That(deleteResponse.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        // Spec: Cancel after DELETE → 404
+        var cancelResponse = await CancelResponseAsync(responseId);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
 
     /// <summary>

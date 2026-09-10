@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.Core
 {
     /// <summary> Paged collection of Insight items. </summary>
+    [Experimental("AAIP001")]
     internal partial class PagedInsight
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

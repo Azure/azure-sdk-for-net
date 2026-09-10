@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             get
             {
-                return CompliancePdfReport.SasUri;
+                return CompliancePdfReport is null ? default : CompliancePdfReport.SasUri;
             }
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         {
             get
             {
-                return ComplianceDetailedPdfReport.SasUri;
+                return ComplianceDetailedPdfReport is null ? default : ComplianceDetailedPdfReport.SasUri;
             }
         }
     }

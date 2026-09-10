@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(DevTestLabVirtualNetworkResource.ResourceType, out string devTestLabVirtualNetworkApiVersion);
             _virtualNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
-            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
+            _virtualNetworksRestClient = new VirtualNetworks(_virtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabVirtualNetworkApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVirtualNetworkData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevTestLabsArmOperation<DevTestLabVirtualNetworkResource> operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(
-                    new DevTestLabVirtualNetworkOperationSource(Client),
+                    new DevTestLabVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 HttpMessage message = _virtualNetworksRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DevTestLabVirtualNetworkData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevTestLabsArmOperation<DevTestLabVirtualNetworkResource> operation = new DevTestLabsArmOperation<DevTestLabVirtualNetworkResource>(
-                    new DevTestLabVirtualNetworkOperationSource(Client),
+                    new DevTestLabVirtualNetworkResourceOperationSource(Client),
                     _virtualNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

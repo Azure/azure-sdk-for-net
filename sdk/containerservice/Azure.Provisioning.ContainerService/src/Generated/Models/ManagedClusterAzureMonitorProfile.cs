@@ -39,6 +39,10 @@ namespace Azure.Provisioning.ContainerService
         {
             base.DefineProvisionableProperties();
             _metrics = DefineModelProperty<ManagedClusterMonitorProfileMetrics>(nameof(Metrics), new string[] { "metrics" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterAzureMonitorProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

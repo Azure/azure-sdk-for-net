@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(ProjectCatalogResource.ResourceType, out string projectCatalogApiVersion);
             _projectCatalogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ProjectCatalogResource.ResourceType.Namespace, Diagnostics);
-            _projectCatalogsRestClient = new ProjectCatalogs(_projectCatalogsClientDiagnostics, Pipeline, Endpoint, projectCatalogApiVersion ?? "2026-01-01-preview");
+            _projectCatalogsRestClient = new ProjectCatalogs(_projectCatalogsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, projectCatalogApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectCatalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<ProjectCatalogResource> operation = new DevCenterArmOperation<ProjectCatalogResource>(
-                    new ProjectCatalogOperationSource(Client),
+                    new ProjectCatalogResourceOperationSource(Client),
                     _projectCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _projectCatalogsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, catalogName, DevCenterCatalogData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<ProjectCatalogResource> operation = new DevCenterArmOperation<ProjectCatalogResource>(
-                    new ProjectCatalogOperationSource(Client),
+                    new ProjectCatalogResourceOperationSource(Client),
                     _projectCatalogsClientDiagnostics,
                     Pipeline,
                     message.Request,

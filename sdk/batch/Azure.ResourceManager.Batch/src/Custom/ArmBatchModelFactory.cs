@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchAccountDetectorData BatchAccountDetectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string value, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchAccountDetectorData(id, name, resourceType, systemData, null, new DetectorResponseProperties() { Value = value }, etag, tags);
+            return new BatchAccountDetectorData(id, name, resourceType, systemData, new DetectorResponseProperties() { Value = value }, etag, tags, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationData"/>. </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationData BatchApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, bool? allowUpdates, string defaultVersion, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchApplicationData(id, name, resourceType, systemData, null, new ApplicationProperties(displayName, allowUpdates, defaultVersion, null), etag, tags);
+            return new BatchApplicationData(id, name, resourceType, systemData, new ApplicationProperties(displayName, allowUpdates, defaultVersion, null), etag, tags, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchApplicationPackageData"/>. </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Batch.Models
         public static BatchApplicationPackageData BatchApplicationPackageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BatchApplicationPackageState? state, string format, Uri storageUri, DateTimeOffset? storageUriExpireOn, DateTimeOffset? lastActivatedOn, ETag? etag, IDictionary<string, string> tags)
         {
             tags ??= new Dictionary<string, string>();
-            return new BatchApplicationPackageData(id, name, resourceType, systemData, null, new ApplicationPackageProperties(state, format, storageUri, storageUriExpireOn, lastActivatedOn, null), etag, tags);
+            return new BatchApplicationPackageData(id, name, resourceType, systemData, new ApplicationPackageProperties(state, format, storageUri, storageUriExpireOn, lastActivatedOn, null), etag, tags, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateEndpointConnectionData"/>. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Batch.Models
             tags ??= new Dictionary<string, string>();
             groupIds ??= new List<string>();
             var privateEndpoint = privateEndpointId != null ? new PrivateEndpoint(privateEndpointId, null) : null;
-            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, null, new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds?.ToList(), connectionState, null), etag, tags);
+            return new BatchPrivateEndpointConnectionData(id, name, resourceType, systemData, new PrivateEndpointConnectionProperties(provisioningState, privateEndpoint, groupIds?.ToList(), connectionState, null), etag, tags, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Batch.BatchPrivateLinkResourceData"/>. </summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Batch.Models
             tags ??= new Dictionary<string, string>();
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
-            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, null, new BatchPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), null), etag, tags);
+            return new BatchPrivateLinkResourceData(id, name, resourceType, systemData, new BatchPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), null), etag, tags, null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BatchResourceAssociation"/>. </summary>

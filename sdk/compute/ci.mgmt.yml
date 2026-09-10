@@ -12,3 +12,5 @@ extends:
       safeName: AzureResourceManagerCompute
     - name: Azure.Provisioning.Compute
       safeName: AzureProvisioningCompute
+    - name: Azure.ResourceManager.Compute.BulkActions
+      safeName: AzureResourceManagerComputeBulkActions

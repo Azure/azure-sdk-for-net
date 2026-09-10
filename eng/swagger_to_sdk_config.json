@@ -29,6 +29,7 @@
     },
     "updateMetadataScript": {
       "path": "./eng/scripts/Export-API.ps1"
-    }
+    },
+    "buildFailedLabel": "auto-sdk-build-fix"
   }
 }

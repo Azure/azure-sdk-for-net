@@ -9,14 +9,63 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.PolicyInsights;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class PolicyStatesQueryResults : IUtf8JsonSerializable, IJsonModel<PolicyStatesQueryResults>
+    /// <summary> Query results. </summary>
+    internal partial class PolicyStatesQueryResults : IJsonModel<PolicyStatesQueryResults>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyStatesQueryResults>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyStatesQueryResults PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicyStatesQueryResults(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicyStatesQueryResults>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyStatesQueryResults IPersistableModel<PolicyStatesQueryResults>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicyStatesQueryResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PolicyStatesQueryResults"/> from. </param>
+        internal static PolicyStatesQueryResults FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePolicyStatesQueryResults(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicyStatesQueryResults>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,46 +77,45 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support writing '{format}' format.");
             }
-
-            if (Optional.IsDefined(ODataContext))
+            if (Optional.IsDefined(OdataContext))
             {
                 writer.WritePropertyName("@odata.context"u8);
-                writer.WriteStringValue(ODataContext);
+                writer.WriteStringValue(OdataContext);
             }
-            if (Optional.IsDefined(ODataCount))
+            if (Optional.IsDefined(OdataCount))
             {
                 writer.WritePropertyName("@odata.count"u8);
-                writer.WriteNumberValue(ODataCount.Value);
+                writer.WriteNumberValue(OdataCount.Value);
             }
-            if (Optional.IsDefined(ODataNextLink))
+            if (Optional.IsDefined(OdataNextLink))
             {
                 writer.WritePropertyName("@odata.nextLink"u8);
-                writer.WriteStringValue(ODataNextLink);
+                writer.WriteStringValue(OdataNextLink);
             }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (var item in Value)
+                foreach (PolicyState item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,22 +124,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             }
         }
 
-        PolicyStatesQueryResults IJsonModel<PolicyStatesQueryResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicyStatesQueryResults IJsonModel<PolicyStatesQueryResults>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicyStatesQueryResults JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePolicyStatesQueryResults(document.RootElement, options);
         }
 
-        internal static PolicyStatesQueryResults DeserializePolicyStatesQueryResults(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PolicyStatesQueryResults DeserializePolicyStatesQueryResults(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,38 +152,37 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string odataContext = default;
             int? odataCount = default;
             string odataNextLink = default;
-            IReadOnlyList<PolicyState> value = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<PolicyState> value = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.context"u8))
+                if (prop.NameEquals("@odata.context"u8))
                 {
-                    odataContext = property.Value.GetString();
+                    odataContext = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("@odata.count"u8))
+                if (prop.NameEquals("@odata.count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    odataCount = property.Value.GetInt32();
+                    odataCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("@odata.nextLink"u8))
+                if (prop.NameEquals("@odata.nextLink"u8))
                 {
-                    odataNextLink = property.Value.GetString();
+                    odataNextLink = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<PolicyState> array = new List<PolicyState>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(PolicyState.DeserializePolicyState(item, options));
                     }
@@ -139,42 +191,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PolicyStatesQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyState>(), serializedAdditionalRawData);
+            return new PolicyStatesQueryResults(odataContext, odataCount, odataNextLink, value ?? new ChangeTrackingList<PolicyState>(), additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<PolicyStatesQueryResults>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PolicyStatesQueryResults IPersistableModel<PolicyStatesQueryResults>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicyStatesQueryResults>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicyStatesQueryResults(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicyStatesQueryResults)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PolicyStatesQueryResults>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

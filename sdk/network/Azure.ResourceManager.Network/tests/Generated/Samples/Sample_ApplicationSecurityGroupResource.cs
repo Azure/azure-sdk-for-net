@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationSecurityGroupResource applicationSecurityGroup = client.GetApplicationSecurityGroupResource(applicationSecurityGroupResourceId);
 
             // invoke the operation
-            await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed);
+            await applicationSecurityGroup.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

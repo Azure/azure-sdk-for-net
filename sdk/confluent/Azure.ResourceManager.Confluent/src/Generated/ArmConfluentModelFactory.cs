@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Confluent;
 using Azure.ResourceManager.Models;
@@ -26,7 +25,25 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentApiKeyRecord"/> instance for mocking. </returns>
         public static ConfluentApiKeyRecord ConfluentApiKeyRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, ApiKeySpecEntity spec = default)
         {
-            return new ConfluentApiKeyRecord(kind, id, metadata is null && spec is null ? default : new APIKeyProperties(metadata, spec, null), additionalBinaryDataProperties: null);
+            return new ConfluentApiKeyRecord(kind, id, metadata is null && spec is null ? default : new APIKeyProperties(metadata, spec, default), default);
+        }
+
+        /// <summary> Metadata of the data record. </summary>
+        /// <param name="self"> Self lookup url. </param>
+        /// <param name="resourceName"> Resource name of the record. </param>
+        /// <param name="createdOn"> Created Date Time. </param>
+        /// <param name="updatedOn"> Updated Date time. </param>
+        /// <param name="deletedOn"> Deleted Date time. </param>
+        /// <returns> A new <see cref="Models.SCMetadataEntity"/> instance for mocking. </returns>
+        public static SCMetadataEntity SCMetadataEntity(string self = default, string resourceName = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, DateTimeOffset? deletedOn = default)
+        {
+            return new SCMetadataEntity(
+                self,
+                resourceName,
+                createdOn,
+                updatedOn,
+                deletedOn,
+                default);
         }
 
         /// <summary> Spec of the API Key record. </summary>
@@ -44,7 +61,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 secret,
                 resource,
                 owner,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> API Key Resource details which can be kafka cluster or schema registry cluster. </summary>
@@ -62,7 +79,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 related,
                 resourceName,
                 kind,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> API Key Owner details which can be a user or service account. </summary>
@@ -73,7 +90,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ApiKeyOwnerEntity"/> instance for mocking. </returns>
         public static ApiKeyOwnerEntity ApiKeyOwnerEntity(string id = default, string related = default, string resourceName = default, string kind = default)
         {
-            return new ApiKeyOwnerEntity(id, related, resourceName, kind, additionalBinaryDataProperties: null);
+            return new ApiKeyOwnerEntity(id, related, resourceName, kind, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -99,18 +116,18 @@ namespace Azure.ResourceManager.Confluent.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
-                    createdOn,
-                    provisioningState,
+                organizationId is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    default,
+                    default,
                     organizationId,
-                    ssoUri,
-                    offerDetail,
-                    userDetail,
-                    new LinkOrganization(linkOrganizationToken, null),
-                    null));
+                    default,
+                    default,
+                    default,
+                    new LinkOrganization(linkOrganizationToken, default),
+                    default),
+                default);
         }
 
         /// <summary> Confluent Offer detail. </summary>
@@ -136,9 +153,27 @@ namespace Azure.ResourceManager.Confluent.Models
                 termUnit,
                 termId,
                 privateOfferId,
-                privateOfferIds.ToList(),
+                (privateOfferIds ?? new ChangeTrackingList<string>()).ToList(),
                 status,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Subscriber detail. </summary>
+        /// <param name="firstName"> First name. </param>
+        /// <param name="lastName"> Last name. </param>
+        /// <param name="emailAddress"> Email address. </param>
+        /// <param name="userPrincipalName"> User principal name. </param>
+        /// <param name="aadEmail"> AAD email address. </param>
+        /// <returns> A new <see cref="Models.ConfluentUserDetail"/> instance for mocking. </returns>
+        public static ConfluentUserDetail ConfluentUserDetail(string firstName = default, string lastName = default, string emailAddress = default, string userPrincipalName = default, string aadEmail = default)
+        {
+            return new ConfluentUserDetail(
+                firstName,
+                lastName,
+                emailAddress,
+                userPrincipalName,
+                aadEmail,
+                default);
         }
 
         /// <summary> Organization Resource update. </summary>
@@ -148,7 +183,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConfluentOrganizationPatch(tags, additionalBinaryDataProperties: null);
+            return new ConfluentOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> List Access Request Model. </summary>
@@ -158,7 +193,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             searchFilters ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AccessListContent(searchFilters, additionalBinaryDataProperties: null);
+            return new AccessListContent(searchFilters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Result of POST request to list regions supported by confluent. </summary>
@@ -168,7 +203,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<ConfluentRegionRecord>();
 
-            return new ConfluentRegionListResult(data.ToList(), additionalBinaryDataProperties: null);
+            return new ConfluentRegionListResult((data ?? new ChangeTrackingList<ConfluentRegionRecord>()).ToList(), default);
         }
 
         /// <param name="kind"> Kind of the cluster. </param>
@@ -178,7 +213,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ConfluentRegionRecord"/> instance for mocking. </returns>
         public static ConfluentRegionRecord ConfluentRegionRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, RegionSpecEntity spec = default)
         {
-            return new ConfluentRegionRecord(kind, id, metadata is null && spec is null ? default : new RegionProperties(metadata, spec, null), additionalBinaryDataProperties: null);
+            return new ConfluentRegionRecord(kind, id, metadata is null && spec is null ? default : new RegionProperties(metadata, spec, default), default);
         }
 
         /// <summary> Region spec details. </summary>
@@ -191,7 +226,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             packages ??= new ChangeTrackingList<string>();
 
-            return new RegionSpecEntity(name, cloud, regionName, packages.ToList(), additionalBinaryDataProperties: null);
+            return new RegionSpecEntity(name, cloud, regionName, (packages ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> List users success response. </summary>
@@ -203,7 +238,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessUserRecord>();
 
-            return new AccessUserListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessUserListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessUserRecord>()).ToList(), default);
         }
 
         /// <summary> Metadata of the list. </summary>
@@ -221,7 +256,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 prev,
                 next,
                 totalSize,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Record of the user. </summary>
@@ -241,7 +276,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 email,
                 fullName,
                 authType,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Metadata of the data record. </summary>
@@ -259,7 +294,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 createdOn,
                 updatedOn,
                 deletedOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> List service accounts success response. </summary>
@@ -271,7 +306,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessServiceAccountRecord>();
 
-            return new AccessServiceAccountListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessServiceAccountListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessServiceAccountRecord>()).ToList(), default);
         }
 
         /// <summary> Record of the service account. </summary>
@@ -289,7 +324,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 metadata,
                 displayName,
                 description,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> List invitations success response. </summary>
@@ -301,7 +336,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessInvitationRecord>();
 
-            return new AccessInvitationListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessInvitationListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessInvitationRecord>()).ToList(), default);
         }
 
         /// <summary> Record of the invitation. </summary>
@@ -325,7 +360,27 @@ namespace Azure.ResourceManager.Confluent.Models
                 status,
                 acceptedOn,
                 expireOn,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Invite User Account model. </summary>
+        /// <param name="organizationId"> Id of the organization. </param>
+        /// <param name="email"> Email of the logged in user. </param>
+        /// <param name="upn"> Upn of the logged in user. </param>
+        /// <param name="invitedUserDetails"> Details of the user who is being invited. </param>
+        /// <returns> A new <see cref="Models.AccessInvitationContent"/> instance for mocking. </returns>
+        public static AccessInvitationContent AccessInvitationContent(string organizationId = default, string email = default, string upn = default, AccessInvitedUserDetails invitedUserDetails = default)
+        {
+            return new AccessInvitationContent(organizationId, email, upn, invitedUserDetails, default);
+        }
+
+        /// <summary> Details of the user being invited. </summary>
+        /// <param name="invitedEmail"> UPN/Email of the user who is being invited. </param>
+        /// <param name="authType"> Auth type of the user. </param>
+        /// <returns> A new <see cref="Models.AccessInvitedUserDetails"/> instance for mocking. </returns>
+        public static AccessInvitedUserDetails AccessInvitedUserDetails(string invitedEmail = default, string authType = default)
+        {
+            return new AccessInvitedUserDetails(invitedEmail, authType, default);
         }
 
         /// <summary> Details of the environments returned on successful response. </summary>
@@ -337,7 +392,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessEnvironmentRecord>();
 
-            return new AccessEnvironmentListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessEnvironmentListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessEnvironmentRecord>()).ToList(), default);
         }
 
         /// <summary> Details about environment name, metadata and environment id of an environment. </summary>
@@ -348,7 +403,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.AccessEnvironmentRecord"/> instance for mocking. </returns>
         public static AccessEnvironmentRecord AccessEnvironmentRecord(string kind = default, string id = default, MetadataEntity metadata = default, string displayName = default)
         {
-            return new AccessEnvironmentRecord(kind, id, metadata, displayName, additionalBinaryDataProperties: null);
+            return new AccessEnvironmentRecord(kind, id, metadata, displayName, default);
         }
 
         /// <summary> Details of the clusters returned on successful response. </summary>
@@ -360,7 +415,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessClusterRecord>();
 
-            return new AccessClusterListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessClusterListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessClusterRecord>()).ToList(), default);
         }
 
         /// <summary> Details of cluster record. </summary>
@@ -380,7 +435,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 displayName,
                 spec,
                 status,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <param name="displayName"> The name of the cluster. </param>
@@ -407,11 +462,11 @@ namespace Azure.ResourceManager.Confluent.Models
                 kafkaBootstrapEndpoint,
                 httpEndpoint,
                 apiEndpoint,
-                configKind is null ? default : new ClusterConfigEntity(configKind, null),
+                configKind is null ? default : new ClusterConfigEntity(configKind, default),
                 environment,
                 network,
                 byok,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The environment to which cluster belongs. </summary>
@@ -422,7 +477,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ClusterEnvironmentEntity"/> instance for mocking. </returns>
         public static ClusterEnvironmentEntity ClusterEnvironmentEntity(string id = default, string environment = default, string related = default, string resourceName = default)
         {
-            return new ClusterEnvironmentEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
+            return new ClusterEnvironmentEntity(id, environment, related, resourceName, default);
         }
 
         /// <summary> The network associated with this object. </summary>
@@ -433,7 +488,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ClusterNetworkEntity"/> instance for mocking. </returns>
         public static ClusterNetworkEntity ClusterNetworkEntity(string id = default, string environment = default, string related = default, string resourceName = default)
         {
-            return new ClusterNetworkEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
+            return new ClusterNetworkEntity(id, environment, related, resourceName, default);
         }
 
         /// <summary> The network associated with this object. </summary>
@@ -443,7 +498,16 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.ClusterByokEntity"/> instance for mocking. </returns>
         public static ClusterByokEntity ClusterByokEntity(string id = default, string related = default, string resourceName = default)
         {
-            return new ClusterByokEntity(id, related, resourceName, additionalBinaryDataProperties: null);
+            return new ClusterByokEntity(id, related, resourceName, default);
+        }
+
+        /// <summary> Status of the cluster record. </summary>
+        /// <param name="phase"> The lifecycle phase of the cluster. </param>
+        /// <param name="cku"> The number of Confluent Kafka Units. </param>
+        /// <returns> A new <see cref="Models.ClusterStatusEntity"/> instance for mocking. </returns>
+        public static ClusterStatusEntity ClusterStatusEntity(string phase = default, int? cku = default)
+        {
+            return new ClusterStatusEntity(phase, cku, default);
         }
 
         /// <summary> Details of the role bindings returned on successful response. </summary>
@@ -455,7 +519,7 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<AccessRoleBindingRecord>();
 
-            return new AccessRoleBindingListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessRoleBindingListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessRoleBindingRecord>()).ToList(), default);
         }
 
         /// <summary> Details on principal, role name and crn pattern of a role binding. </summary>
@@ -475,7 +539,17 @@ namespace Azure.ResourceManager.Confluent.Models
                 principal,
                 roleName,
                 crnPattern,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Create role binding request model. </summary>
+        /// <param name="principal"> The principal User or Group to bind the role to. </param>
+        /// <param name="roleName"> The name of the role to bind to the principal. </param>
+        /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
+        /// <returns> A new <see cref="Models.AccessRoleBindingCreateContent"/> instance for mocking. </returns>
+        public static AccessRoleBindingCreateContent AccessRoleBindingCreateContent(string principal = default, string roleName = default, string crnPattern = default)
+        {
+            return new AccessRoleBindingCreateContent(principal, roleName, crnPattern, default);
         }
 
         /// <summary> Details of the role binding names returned on successful response. </summary>
@@ -487,7 +561,51 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             data ??= new ChangeTrackingList<string>();
 
-            return new AccessRoleBindingNameListResult(kind, metadata, data.ToList(), additionalBinaryDataProperties: null);
+            return new AccessRoleBindingNameListResult(kind, metadata, (data ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> SaaS-related data properties. </summary>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <returns> A new <see cref="Models.ConfluentSaaSInfo"/> instance for mocking. </returns>
+        public static ConfluentSaaSInfo ConfluentSaaSInfo(ResourceIdentifier saaSResourceId = default)
+        {
+            return new ConfluentSaaSInfo(saaSResourceId, default);
+        }
+
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
+        /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static LatestLinkedSaaSResult LatestLinkedSaaSResult(ResourceIdentifier saaSResourceId = default, bool? isHiddenSaaS = default)
+        {
+            return new LatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, default);
+        }
+
+        /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        /// <param name="publisherId"> Publisher Id for Confluent resource. </param>
+        /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
+        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(string saasGuid = default, string publisherId = default)
+        {
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, default);
+        }
+
+        /// <summary> Proxy Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
+        /// <returns> A new <see cref="Models.SaaSResourceDetailsResult"/> instance for mocking. </returns>
+        public static SaaSResourceDetailsResult SaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        {
+            return new SaaSResourceDetailsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                saasId,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -505,9 +623,9 @@ namespace Azure.ResourceManager.Confluent.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 kind,
-                metadata is null && streamGovernanceConfigPackage is null ? default : new EnvironmentProperties(new StreamGovernanceConfig(streamGovernanceConfigPackage, null), metadata, null));
+                streamGovernanceConfigPackage is null && metadata is null ? default : new EnvironmentProperties(new StreamGovernanceConfig(streamGovernanceConfigPackage, default), metadata, default),
+                default);
         }
 
         /// <param name="kind"> Kind of the cluster. </param>
@@ -518,7 +636,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
         public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, SchemaRegistryClusterSpecEntity spec = default, string statusPhase = default)
         {
-            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, null), null), additionalBinaryDataProperties: null);
+            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
         }
 
         /// <summary> Details of schema registry cluster spec. </summary>
@@ -538,7 +656,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 region,
                 environment,
                 cloud,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The environment associated with this object. </summary>
@@ -548,7 +666,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterEnvironmentRegionEntity"/> instance for mocking. </returns>
         public static SchemaRegistryClusterEnvironmentRegionEntity SchemaRegistryClusterEnvironmentRegionEntity(string id = default, string related = default, string resourceName = default)
         {
-            return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, additionalBinaryDataProperties: null);
+            return new SchemaRegistryClusterEnvironmentRegionEntity(id, related, resourceName, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -567,9 +685,72 @@ namespace Azure.ResourceManager.Confluent.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
                 kind,
-                metadata is null && spec is null && status is null ? default : new ClusterProperties(metadata, spec, status, null));
+                metadata is null && spec is null && status is null ? default : new ClusterProperties(metadata, spec, status, default),
+                default);
+        }
+
+        /// <param name="name"> The name of the cluster. </param>
+        /// <param name="availability"> The availability zone configuration of the cluster. </param>
+        /// <param name="cloud"> The cloud service provider. </param>
+        /// <param name="zone"> type of zone availability. </param>
+        /// <param name="package"> Stream governance configuration. </param>
+        /// <param name="region"> The cloud service provider region. </param>
+        /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
+        /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
+        /// <param name="apiEndpoint"> The Kafka API cluster endpoint. </param>
+        /// <param name="configKind"> The lifecycle phase of the cluster. </param>
+        /// <param name="environment"> Specification of the cluster environment. </param>
+        /// <param name="network"> Specification of the cluster network. </param>
+        /// <param name="byok"> Specification of the cluster byok. </param>
+        /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, ConfluentPackage? package = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        {
+            return new SCClusterSpecEntity(
+                name,
+                availability,
+                cloud,
+                zone,
+                package,
+                region,
+                kafkaBootstrapEndpoint,
+                httpEndpoint,
+                apiEndpoint,
+                configKind is null ? default : new ClusterConfigEntity(configKind, default),
+                environment,
+                network,
+                byok,
+                default);
+        }
+
+        /// <summary> The environment or the network to which cluster belongs. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="environment"> Environment of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.SCClusterNetworkEnvironmentEntity"/> instance for mocking. </returns>
+        public static SCClusterNetworkEnvironmentEntity SCClusterNetworkEnvironmentEntity(string id = default, string environment = default, string related = default, string resourceName = default)
+        {
+            return new SCClusterNetworkEnvironmentEntity(id, environment, related, resourceName, default);
+        }
+
+        /// <summary> The network associated with this object. </summary>
+        /// <param name="id"> ID of the referred resource. </param>
+        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
+        /// <param name="resourceName"> CRN reference to the referred resource. </param>
+        /// <returns> A new <see cref="Models.SCClusterByokEntity"/> instance for mocking. </returns>
+        public static SCClusterByokEntity SCClusterByokEntity(string id = default, string related = default, string resourceName = default)
+        {
+            return new SCClusterByokEntity(id, related, resourceName, default);
+        }
+
+        /// <summary> Create API Key model. </summary>
+        /// <param name="name"> Name of the API Key. </param>
+        /// <param name="description"> Description of the API Key. </param>
+        /// <returns> A new <see cref="Models.ConfluentApiKeyCreateContent"/> instance for mocking. </returns>
+        public static ConfluentApiKeyCreateContent ConfluentApiKeyCreateContent(string name = default, string description = default)
+        {
+            return new ConfluentApiKeyCreateContent(name, description, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -587,8 +768,129 @@ namespace Azure.ResourceManager.Confluent.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, null));
+                connectorBasicInfo is null && connectorServiceTypeInfo is null && partnerConnectorInfo is null ? default : new ConnectorResourceProperties(connectorBasicInfo, connectorServiceTypeInfo, partnerConnectorInfo, default),
+                default);
+        }
+
+        /// <summary> Connector Info Base properties. </summary>
+        /// <param name="connectorType"> Connector Type. </param>
+        /// <param name="connectorClass"> Connector Class. </param>
+        /// <param name="connectorName"> Connector Name. </param>
+        /// <param name="connectorId"> Connector Id. </param>
+        /// <param name="connectorState"> Connector Status. </param>
+        /// <returns> A new <see cref="Models.ConnectorInfoBase"/> instance for mocking. </returns>
+        public static ConnectorInfoBase ConnectorInfoBase(ConnectorType? connectorType = default, ConnectorClass? connectorClass = default, string connectorName = default, string connectorId = default, ConnectorStatus? connectorState = default)
+        {
+            return new ConnectorInfoBase(
+                connectorType,
+                connectorClass,
+                connectorName,
+                connectorId,
+                connectorState,
+                default);
+        }
+
+        /// <summary>
+        /// The connector service type info
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureBlobStorageSinkConnectorServiceInfo"/>, <see cref="Models.AzureBlobStorageSourceConnectorServiceInfo"/>, <see cref="Models.AzureCosmosDBSinkConnectorServiceInfo"/>, <see cref="Models.AzureCosmosDBSourceConnectorServiceInfo"/>, and <see cref="Models.AzureSynapseAnalyticsSinkConnectorServiceInfo"/>.
+        /// </summary>
+        /// <param name="connectorServiceType"> The connector service type. </param>
+        /// <returns> A new <see cref="Models.ConnectorServiceTypeInfoBase"/> instance for mocking. </returns>
+        public static ConnectorServiceTypeInfoBase ConnectorServiceTypeInfoBase(string connectorServiceType = default)
+        {
+            return new UnknownConnectorServiceTypeInfoBase(default, default);
+        }
+
+        /// <summary> The authentication info when auth_type is azureBlobStorageSinkConnector. </summary>
+        /// <param name="storageAccountName"> Azure Blob Storage Account Name. </param>
+        /// <param name="storageAccountKey"> Azure Blob Storage Account Key. </param>
+        /// <param name="storageContainerName"> Azure Blob Storage Account Container Name. </param>
+        /// <returns> A new <see cref="Models.AzureBlobStorageSinkConnectorServiceInfo"/> instance for mocking. </returns>
+        public static AzureBlobStorageSinkConnectorServiceInfo AzureBlobStorageSinkConnectorServiceInfo(string storageAccountName = default, string storageAccountKey = default, string storageContainerName = default)
+        {
+            return new AzureBlobStorageSinkConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
+        }
+
+        /// <summary> The connector service type is AzureBlobStorageSourceConnector. </summary>
+        /// <param name="storageAccountName"> Azure Blob Storage Account Name. </param>
+        /// <param name="storageAccountKey"> Azure Blob Storage Account Key. </param>
+        /// <param name="storageContainerName"> Azure Blob Storage Account Container Name. </param>
+        /// <returns> A new <see cref="Models.AzureBlobStorageSourceConnectorServiceInfo"/> instance for mocking. </returns>
+        public static AzureBlobStorageSourceConnectorServiceInfo AzureBlobStorageSourceConnectorServiceInfo(string storageAccountName = default, string storageAccountKey = default, string storageContainerName = default)
+        {
+            return new AzureBlobStorageSourceConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
+        }
+
+        /// <summary> The authentication info when auth_type is AzureCosmosDBSinkConnector. </summary>
+        /// <param name="cosmosDatabaseName"> Azure Cosmos Database Name. </param>
+        /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
+        /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
+        /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
+        /// <param name="cosmosIdStrategy"> Azure Cosmos Database Id Strategy. </param>
+        /// <param name="cosmosWriteDetails"> Azure Cosmos write config details. </param>
+        /// <returns> A new <see cref="Models.AzureCosmosDBSinkConnectorServiceInfo"/> instance for mocking. </returns>
+        public static AzureCosmosDBSinkConnectorServiceInfo AzureCosmosDBSinkConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, string cosmosIdStrategy = default, string cosmosWriteDetails = default)
+        {
+            return new AzureCosmosDBSinkConnectorServiceInfo(
+                default,
+                default,
+                cosmosDatabaseName,
+                cosmosMasterKey,
+                cosmosConnectionEndpoint,
+                cosmosContainersTopicMapping,
+                cosmosIdStrategy,
+                cosmosWriteDetails);
+        }
+
+        /// <summary> The authentication info when auth_type is AzureCosmosDBSourceConnector. </summary>
+        /// <param name="cosmosDatabaseName"> Azure Cosmos Database Name. </param>
+        /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
+        /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
+        /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
+        /// <param name="isCosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
+        /// <param name="cosmosMessageKeyField"> Azure Cosmos Database Message Key Field. </param>
+        /// <param name="cosmosIncludeAllContainers"> Azure Cosmos Database Include all the containers in the database. </param>
+        /// <returns> A new <see cref="Models.AzureCosmosDBSourceConnectorServiceInfo"/> instance for mocking. </returns>
+        public static AzureCosmosDBSourceConnectorServiceInfo AzureCosmosDBSourceConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, bool? isCosmosMessageKeyEnabled = default, string cosmosMessageKeyField = default, string cosmosIncludeAllContainers = default)
+        {
+            return new AzureCosmosDBSourceConnectorServiceInfo(
+                default,
+                default,
+                cosmosDatabaseName,
+                cosmosMasterKey,
+                cosmosConnectionEndpoint,
+                cosmosContainersTopicMapping,
+                isCosmosMessageKeyEnabled,
+                cosmosMessageKeyField,
+                cosmosIncludeAllContainers);
+        }
+
+        /// <summary> The authentication info when auth_type is AzureSynapseAnalyticsSinkConnector. </summary>
+        /// <param name="synapseSqlServerName"> Azure Synapse Analytics SQL Server Name. </param>
+        /// <param name="synapseSqlUser"> Azure Synapse SQL login details. </param>
+        /// <param name="synapseSqlPassword"> Azure Synapse SQL login details. </param>
+        /// <param name="synapseSqlDatabaseName"> Azure Synapse Dedicated SQL Pool Database Name. </param>
+        /// <returns> A new <see cref="Models.AzureSynapseAnalyticsSinkConnectorServiceInfo"/> instance for mocking. </returns>
+        public static AzureSynapseAnalyticsSinkConnectorServiceInfo AzureSynapseAnalyticsSinkConnectorServiceInfo(string synapseSqlServerName = default, string synapseSqlUser = default, string synapseSqlPassword = default, string synapseSqlDatabaseName = default)
+        {
+            return new AzureSynapseAnalyticsSinkConnectorServiceInfo(
+                default,
+                default,
+                synapseSqlServerName,
+                synapseSqlUser,
+                synapseSqlPassword,
+                synapseSqlDatabaseName);
+        }
+
+        /// <summary>
+        /// The partner info base
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KafkaAzureBlobStorageSinkConnectorInfo"/>, <see cref="Models.KafkaAzureBlobStorageSourceConnectorInfo"/>, <see cref="Models.KafkaAzureCosmosDBSinkConnectorInfo"/>, <see cref="Models.KafkaAzureCosmosDBSourceConnectorInfo"/>, and <see cref="Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo"/>.
+        /// </summary>
+        /// <param name="partnerConnectorType"> The partner connector type. </param>
+        /// <returns> A new <see cref="Models.PartnerInfoBase"/> instance for mocking. </returns>
+        public static PartnerInfoBase PartnerInfoBase(string partnerConnectorType = default)
+        {
+            return new UnknownPartnerInfoBase(default, default);
         }
 
         /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>
@@ -610,8 +912,8 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureBlobStorageSinkConnectorInfo(
-                PartnerConnectorType.KafkaAzureBlobStorageSink,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 authType,
                 inputFormat,
                 outputFormat,
@@ -619,11 +921,40 @@ namespace Azure.ResourceManager.Confluent.Models
                 apiSecret,
                 serviceAccountId,
                 serviceAccountName,
-                topics.ToList(),
+                (topics ?? new ChangeTrackingList<string>()).ToList(),
                 topicsDir,
                 flushSize,
                 maxTasks,
                 timeInterval);
+        }
+
+        /// <summary> The partner connector type is KafkaAzureBlobStorageSource. </summary>
+        /// <param name="authType"> Kafka Auth Type. </param>
+        /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
+        /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
+        /// <param name="apiKey"> Kafka API Key. </param>
+        /// <param name="apiSecret"> Kafka API Secret. </param>
+        /// <param name="serviceAccountId"> Kafka Service Account Id. </param>
+        /// <param name="serviceAccountName"> Kafka Service Account Name. </param>
+        /// <param name="topicRegex"> Kafka topics Regex pattern. </param>
+        /// <param name="topicsDir"> Kafka topics directory. </param>
+        /// <param name="maxTasks"> Maximum Tasks. </param>
+        /// <returns> A new <see cref="Models.KafkaAzureBlobStorageSourceConnectorInfo"/> instance for mocking. </returns>
+        public static KafkaAzureBlobStorageSourceConnectorInfo KafkaAzureBlobStorageSourceConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, string topicRegex = default, string topicsDir = default, string maxTasks = default)
+        {
+            return new KafkaAzureBlobStorageSourceConnectorInfo(
+                default,
+                default,
+                authType,
+                inputFormat,
+                outputFormat,
+                apiKey,
+                apiSecret,
+                serviceAccountId,
+                serviceAccountName,
+                topicRegex,
+                topicsDir,
+                maxTasks);
         }
 
         /// <summary> The partner connector type is KafkaAzureCosmosDBSink. </summary>
@@ -645,8 +976,8 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureCosmosDBSinkConnectorInfo(
-                PartnerConnectorType.KafkaAzureCosmosDBSink,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 authType,
                 inputFormat,
                 outputFormat,
@@ -654,11 +985,40 @@ namespace Azure.ResourceManager.Confluent.Models
                 apiSecret,
                 serviceAccountId,
                 serviceAccountName,
-                topics.ToList(),
+                (topics ?? new ChangeTrackingList<string>()).ToList(),
                 topicsDir,
                 flushSize,
                 maxTasks,
                 timeInterval);
+        }
+
+        /// <summary> The partner connector type is KafkaAzureCosmosDBSource. </summary>
+        /// <param name="authType"> Kafka Auth Type. </param>
+        /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
+        /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
+        /// <param name="apiKey"> Kafka API Key. </param>
+        /// <param name="apiSecret"> Kafka API Secret. </param>
+        /// <param name="serviceAccountId"> Kafka Service Account Id. </param>
+        /// <param name="serviceAccountName"> Kafka Service Account Name. </param>
+        /// <param name="topicRegex"> Kafka topics Regex pattern. </param>
+        /// <param name="topicsDir"> Kafka topics directory. </param>
+        /// <param name="maxTasks"> Maximum Tasks. </param>
+        /// <returns> A new <see cref="Models.KafkaAzureCosmosDBSourceConnectorInfo"/> instance for mocking. </returns>
+        public static KafkaAzureCosmosDBSourceConnectorInfo KafkaAzureCosmosDBSourceConnectorInfo(ConfluentAuthType? authType = default, ConfluentDataFormatType? inputFormat = default, ConfluentDataFormatType? outputFormat = default, string apiKey = default, string apiSecret = default, string serviceAccountId = default, string serviceAccountName = default, string topicRegex = default, string topicsDir = default, string maxTasks = default)
+        {
+            return new KafkaAzureCosmosDBSourceConnectorInfo(
+                default,
+                default,
+                authType,
+                inputFormat,
+                outputFormat,
+                apiKey,
+                apiSecret,
+                serviceAccountId,
+                serviceAccountName,
+                topicRegex,
+                topicsDir,
+                maxTasks);
         }
 
         /// <summary> The partner connector type is KafkaAzureSynapseAnalyticsSink. </summary>
@@ -680,8 +1040,8 @@ namespace Azure.ResourceManager.Confluent.Models
             topics ??= new ChangeTrackingList<string>();
 
             return new KafkaAzureSynapseAnalyticsSinkConnectorInfo(
-                PartnerConnectorType.KafkaAzureSynapseAnalyticsSink,
-                additionalBinaryDataProperties: null,
+                default,
+                default,
                 authType,
                 inputFormat,
                 outputFormat,
@@ -689,7 +1049,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 apiSecret,
                 serviceAccountId,
                 serviceAccountName,
-                topics.ToList(),
+                (topics ?? new ChangeTrackingList<string>()).ToList(),
                 topicsDir,
                 flushSize,
                 maxTasks,
@@ -717,35 +1077,141 @@ namespace Azure.ResourceManager.Confluent.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                kind is null && topicId is null && metadata is null && inputConfigs is null && partitionsCount is null && replicationFactor is null && partitionsRelated is null && configsRelated is null && partitionsReassignmentsRelated is null ? default : new TopicProperties(
+                kind is null && topicId is null && metadata is null && partitionsRelated is null && configsRelated is null && inputConfigs is null && partitionsReassignmentsRelated is null && partitionsCount is null && replicationFactor is null ? default : new TopicProperties(
                     kind,
                     topicId,
                     metadata,
-                    new TopicsRelatedLink(partitionsRelated, null),
-                    new TopicsRelatedLink(configsRelated, null),
+                    new TopicsRelatedLink(partitionsRelated, default),
+                    new TopicsRelatedLink(configsRelated, default),
                     (inputConfigs ?? new ChangeTrackingList<TopicsInputConfig>()).ToList(),
-                    new TopicsRelatedLink(partitionsReassignmentsRelated, null),
+                    new TopicsRelatedLink(partitionsReassignmentsRelated, default),
                     partitionsCount,
                     replicationFactor,
-                    null));
+                    default),
+                default);
         }
 
-        /// <summary> Validation response from the provider. </summary>
-        /// <param name="info"> Info from the response. </param>
-        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
-        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
+        /// <summary> Metadata of the data record. </summary>
+        /// <param name="self"> Self lookup url. </param>
+        /// <param name="resourceName"> Resource name of the record. </param>
+        /// <returns> A new <see cref="Models.TopicMetadataEntity"/> instance for mocking. </returns>
+        public static TopicMetadataEntity TopicMetadataEntity(string self = default, string resourceName = default)
         {
-            info ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfluentOrganizationValidationResult(info, additionalBinaryDataProperties: null);
+            return new TopicMetadataEntity(self, resourceName, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfluentAgreement"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Topics input config. </summary>
+        /// <param name="name"> Name of the topic input config. </param>
+        /// <param name="value"> Value of the topic input config. </param>
+        /// <returns> A new <see cref="Models.TopicsInputConfig"/> instance for mocking. </returns>
+        public static TopicsInputConfig TopicsInputConfig(string name = default, string value = default)
+        {
+            return new TopicsInputConfig(name, value, default);
+        }
+
+        /// <summary> Details of network gateway record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Network Gateway Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentNetworkGatewayData"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayData ConfluentNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentNetworkGatewayProperties properties = default)
+        {
+            return new ConfluentNetworkGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Network Gateway Properties. </summary>
+        /// <param name="networkGatewayName"> Display name of the network gateway. </param>
+        /// <param name="region"> The cloud service provider region for the network gateway. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.ConfluentNetworkGatewayProperties"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayProperties ConfluentNetworkGatewayProperties(string networkGatewayName = default, string region = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        {
+            dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
+
+            return new ConfluentNetworkGatewayProperties(
+                networkGatewayName,
+                region,
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <summary> A key-value pair for extensibility. </summary>
+        /// <param name="key"> The key. </param>
+        /// <param name="value"> The value. </param>
+        /// <returns> A new <see cref="Models.ConfluentKeyValuePair"/> instance for mocking. </returns>
+        public static ConfluentKeyValuePair ConfluentKeyValuePair(string key = default, string value = default)
+        {
+            return new ConfluentKeyValuePair(key, value, default);
+        }
+
+        /// <summary> Details of access point record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Access Point Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentAccessPointData"/> instance for mocking. </returns>
+        public static ConfluentAccessPointData ConfluentAccessPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentAccessPointProperties properties = default)
+        {
+            return new ConfluentAccessPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Access Point Properties. </summary>
+        /// <param name="accessPointName"> Display name of the access point. </param>
+        /// <param name="region"> The cloud service provider region for the access point. </param>
+        /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
+        /// <param name="egressRoutes"> IP ranges to route through your virtual network instead of Confluent's default path. Required for Kafka clients in peered VNets or on-premises networks (e.g., 10.0.0.0/8, 172.16.0.0/12). </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the access point. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.ConfluentAccessPointProperties"/> instance for mocking. </returns>
+        public static ConfluentAccessPointProperties ConfluentAccessPointProperties(string accessPointName = default, string region = default, VNetInjectionDetails vnetInjection = default, IEnumerable<string> egressRoutes = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        {
+            egressRoutes ??= new ChangeTrackingList<string>();
+            dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
+
+            return new ConfluentAccessPointProperties(
+                accessPointName,
+                region,
+                vnetInjection,
+                (egressRoutes ?? new ChangeTrackingList<string>()).ToList(),
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <summary> Details for VNet injection. </summary>
+        /// <param name="virtualNetworkResourceId"> Resource ID of the virtual network. </param>
+        /// <param name="subnetResourceId"> Resource ID of the subnet. </param>
+        /// <returns> A new <see cref="Models.VNetInjectionDetails"/> instance for mocking. </returns>
+        public static VNetInjectionDetails VNetInjectionDetails(ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier subnetResourceId = default)
+        {
+            return new VNetInjectionDetails(virtualNetworkResourceId, subnetResourceId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="publisher"> Publisher identifier string. </param>
         /// <param name="product"> Product identifier string. </param>
         /// <param name="plan"> Plan identifier string. </param>
@@ -759,43 +1225,33 @@ namespace Azure.ResourceManager.Confluent.Models
         {
             return new ConfluentAgreement(
                 id,
-                resourceType,
-                additionalBinaryDataProperties: null,
                 name,
+                resourceType,
                 systemData,
+                publisher is null && product is null && plan is null && licenseTextLink is null && privacyPolicyLink is null && retrieveOn is null && signature is null && isAccepted is null ? default : new ConfluentAgreementProperties(
+                    publisher,
+                    product,
+                    plan,
+                    licenseTextLink,
+                    privacyPolicyLink,
+                    retrieveOn,
+                    signature,
+                    isAccepted,
+                    default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ClusterStatusEntity"/>. </summary>
-        /// <param name="phase"> The lifecycle phase of the cluster. </param>
-        /// <param name="cku"> The number of Confluent Kafka Units. </param>
-        /// <returns> A new <see cref="Models.ClusterStatusEntity"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ClusterStatusEntity ClusterStatusEntity(string phase, int? cku)
+        /// <summary> Validation response from the provider. </summary>
+        /// <param name="info"> Info from the response. </param>
+        /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
+        public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
         {
-            return new ClusterStatusEntity(phase, cku, additionalBinaryDataProperties: null);
+            info ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConfluentOrganizationValidationResult(info ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SCMetadataEntity"/>. </summary>
-        /// <param name="self"> Self lookup url. </param>
-        /// <param name="resourceName"> Resource name of the record. </param>
-        /// <param name="createdOn"> Created Date Time. </param>
-        /// <param name="updatedOn"> Updated Date time. </param>
-        /// <param name="deletedOn"> Deleted Date time. </param>
-        /// <returns> A new <see cref="Models.SCMetadataEntity"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCMetadataEntity SCMetadataEntity(string self, string resourceName, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, DateTimeOffset? deletedOn)
-        {
-            return new SCMetadataEntity(
-                self,
-                resourceName,
-                createdOn,
-                updatedOn,
-                deletedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SCClusterSpecEntity"/>. </summary>
+        /// <summary> Spec of the cluster record. </summary>
         /// <param name="name"> The name of the cluster. </param>
         /// <param name="availability"> The availability zone configuration of the cluster. </param>
         /// <param name="cloud"> The cloud service provider. </param>
@@ -804,13 +1260,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
         /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
         /// <param name="apiEndpoint"> The Kafka API cluster endpoint. </param>
-        /// <param name="configKind"> Specification of the cluster configuration. </param>
+        /// <param name="configKind"> The lifecycle phase of the cluster. </param>
         /// <param name="environment"> Specification of the cluster environment. </param>
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
         {
             return new SCClusterSpecEntity(
                 name,
@@ -822,43 +1278,20 @@ namespace Azure.ResourceManager.Confluent.Models
                 kafkaBootstrapEndpoint,
                 httpEndpoint,
                 apiEndpoint,
-                default,
+                configKind is null ? default : new ClusterConfigEntity(configKind, default),
                 environment,
                 network,
                 byok,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SCClusterNetworkEnvironmentEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="environment"> Environment of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.SCClusterNetworkEnvironmentEntity"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCClusterNetworkEnvironmentEntity SCClusterNetworkEnvironmentEntity(string id, string environment, string related, string resourceName)
-        {
-            return new SCClusterNetworkEnvironmentEntity(id, environment, related, resourceName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SCClusterByokEntity"/>. </summary>
-        /// <param name="id"> ID of the referred resource. </param>
-        /// <param name="related"> API URL for accessing or modifying the referred object. </param>
-        /// <param name="resourceName"> CRN reference to the referred resource. </param>
-        /// <returns> A new <see cref="Models.SCClusterByokEntity"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SCClusterByokEntity SCClusterByokEntity(string id, string related, string resourceName)
-        {
-            return new SCClusterByokEntity(id, related, resourceName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Organization resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="createdOn"> The creation time of the resource. </param>
         /// <param name="provisioningState"> Provision states for confluent RP. </param>
         /// <param name="organizationId"> Id of the Confluent organization. </param>
@@ -869,7 +1302,23 @@ namespace Azure.ResourceManager.Confluent.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? createdOn, ConfluentProvisionState? provisioningState, Guid? organizationId, Uri ssoUri, ConfluentOfferDetail offerDetail, ConfluentUserDetail userDetail)
         {
-            return ConfluentOrganizationData(id, name, resourceType, systemData, tags, location, createdOn, provisioningState, organizationId, ssoUri, offerDetail, userDetail, linkOrganizationToken: default);
+            return new ConfluentOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
+                    organizationId,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
+                    default,
+                    default),
+                default);
         }
     }
 }

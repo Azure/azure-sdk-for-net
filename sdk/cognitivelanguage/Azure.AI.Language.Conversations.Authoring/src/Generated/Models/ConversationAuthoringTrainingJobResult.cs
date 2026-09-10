@@ -36,9 +36,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="trainingStatus"> Represents the model training status. </param>
         /// <param name="dataGenerationStatus"> Represents the model data generation status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
-        /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
+        /// <param name="estimatedEndsOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringTrainingJobResult(string modelLabel, string trainingConfigVersion, ConversationAuthoringTrainingMode? trainingMode, ConversationAuthoringSubTrainingState trainingStatus, ConversationAuthoringSubTrainingState dataGenerationStatus, ConversationAuthoringSubTrainingState evaluationStatus, DateTimeOffset? estimatedEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             TrainingStatus = trainingStatus;
             DataGenerationStatus = dataGenerationStatus;
             EvaluationStatus = evaluationStatus;
-            EstimatedEndOn = estimatedEndOn;
+            EstimatedEndsOn = estimatedEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,6 +69,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public ConversationAuthoringSubTrainingState EvaluationStatus { get; }
 
         /// <summary> Represents the estimated end date time for training and evaluation. </summary>
-        public DateTimeOffset? EstimatedEndOn { get; }
+        public DateTimeOffset? EstimatedEndsOn { get; }
     }
 }

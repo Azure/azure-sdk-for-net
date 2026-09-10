@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class BackupFrequencyUnitExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BackupFrequencyUnit value) => value switch
         {
             BackupFrequencyUnit.Day => "Day",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupFrequencyUnit value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BackupFrequencyUnit ToBackupFrequencyUnit(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day")) return BackupFrequencyUnit.Day;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour")) return BackupFrequencyUnit.Hour;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Day"))
+            {
+                return BackupFrequencyUnit.Day;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Hour"))
+            {
+                return BackupFrequencyUnit.Hour;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BackupFrequencyUnit value.");
         }
     }

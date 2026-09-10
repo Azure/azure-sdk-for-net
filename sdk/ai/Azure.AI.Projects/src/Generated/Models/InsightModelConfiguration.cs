@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configuration of the model used in the insight generation. </summary>
+    [Experimental("AAIP001")]
     public partial class InsightModelConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

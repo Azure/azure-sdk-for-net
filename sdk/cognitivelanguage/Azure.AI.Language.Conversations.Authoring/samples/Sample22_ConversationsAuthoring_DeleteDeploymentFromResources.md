@@ -21,6 +21,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To delete a deployment from specific Azure resources, first retrieve a deployment-scoped client using `GetDeployment`, then call `DeleteDeploymentFromResources` with the set of resource IDs to remove.
 
 ```C# Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResources
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 // Define the Azure resource IDs from which the deployment should be deleted
@@ -34,7 +36,7 @@ var deleteBody = new ConversationAuthoringDeleteDeploymentDetails
 
 // Begin delete operation
 Operation operation =
-    client.DeleteDeploymentFromResources(WaitUntil.Started, projectName, deploymentName, deleteBody);
+    deploymentClient.DeleteDeploymentFromResources(WaitUntil.Started, projectName, deploymentName, deleteBody);
 
 // Wait for completion
 operation.WaitForCompletionResponse();
@@ -47,6 +49,8 @@ Console.WriteLine("Deployment delete-from-resources operation completed.");
 To delete a deployment from resources asynchronously, use `DeleteDeploymentFromResourcesAsync`.
 
 ```C# Snippet:Sample22_ConversationsAuthoring_DeleteDeploymentFromResourcesAsync
+ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
 string projectName = "{projectName}";
 string deploymentName = "{deploymentName}";
 // Define the Azure resource IDs from which the deployment should be deleted
@@ -60,7 +64,7 @@ var deleteBody = new ConversationAuthoringDeleteDeploymentDetails
 
 // Begin the delete operation
 Operation operation =
-    await client.DeleteDeploymentFromResourcesAsync(
+    await deploymentClient.DeleteDeploymentFromResourcesAsync(
         WaitUntil.Started,
         projectName,
         deploymentName,

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -15,49 +16,46 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>
-        public PostArgsMatchCondition(PostArgsOperator postArgsOperator)
+        public PostArgsMatchCondition(PostArgsOperator postArgsOperator) : base(DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters)
         {
             PostArgsOperator = postArgsOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRulePostArgsConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/>. </summary>
         /// <param name="typeName"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="selector"> Name of PostArg to be matched. </param>
         /// <param name="postArgsOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="transforms"> List of transforms. </param>
-        internal PostArgsMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal PostArgsMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> additionalBinaryDataProperties, string selector, PostArgsOperator postArgsOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, additionalBinaryDataProperties)
         {
             Selector = selector;
             PostArgsOperator = postArgsOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostArgsMatchCondition"/> for deserialization. </summary>
-        internal PostArgsMatchCondition()
-        {
         }
 
         /// <summary> Name of PostArg to be matched. </summary>
         [WirePath("selector")]
         public string Selector { get; set; }
+
         /// <summary> Describes operator to be matched. </summary>
         [WirePath("operator")]
         public PostArgsOperator PostArgsOperator { get; set; }
+
         /// <summary> Describes if this is negate condition or not. </summary>
         [WirePath("negateCondition")]
         public bool? NegateCondition { get; set; }
+
         /// <summary> The match value for the condition of the delivery rule. </summary>
         [WirePath("matchValues")]
         public IList<string> MatchValues { get; }
+
         /// <summary> List of transforms. </summary>
         [WirePath("transforms")]
         public IList<PreTransformCategory> Transforms { get; }

@@ -1,0 +1,11 @@
+# Per-language tuning for the cross-language auto-build-repair flow.
+#
+# These values configure the shared repair concept (driving
+# azure-sdk-mcp:azsdk_customized_code_update) for THIS language repo. The keys and
+# their meaning are standardized across languages; the values are tunable per repo,
+# so each language can pick a bound appropriate to its build/regeneration cost.
+#
+# maxIterations: maximum number of times the auto-build-repair skill re-invokes
+#   azsdk_customized_code_update (one repair attempt per call) before it commits the
+#   progress made so far and stops. Cross-language default is 3.
+maxIterations: 3

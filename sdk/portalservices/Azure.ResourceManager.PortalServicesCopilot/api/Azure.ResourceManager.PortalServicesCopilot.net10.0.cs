@@ -65,12 +65,13 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     public static partial class ArmPortalServicesCopilotModelFactory
     {
         public static Azure.ResourceManager.PortalServicesCopilot.PortalServicesCopilotSettingData PortalServicesCopilotSettingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool accessControlEnabled = false, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? provisioningState = default(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch PortalServicesCopilotSettingPatch(bool? isAccessControlEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled = false, Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? provisioningState = default(Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState?)) { throw null; }
     }
     public partial class PortalServicesCopilotSettingPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch>
     {
         public PortalServicesCopilotSettingPatch() { }
-        public bool? AccessControlEnabled { get { throw null; } set { } }
+        public bool? IsAccessControlEnabled { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -83,8 +84,8 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     }
     public partial class PortalServicesCopilotSettingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties>
     {
-        public PortalServicesCopilotSettingsProperties(bool accessControlEnabled) { }
-        public bool AccessControlEnabled { get { throw null; } set { } }
+        public PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled) { }
+        public bool IsAccessControlEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesResourceProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.PortalServicesCopilot.Models.PortalServicesCopilotSettingsProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             TryGetApiVersion(DevCenterPoolResource.ResourceType, out string devCenterPoolApiVersion);
             _poolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterPoolResource.ResourceType.Namespace, Diagnostics);
-            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
+            _poolsRestClient = new Pools(_poolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterPoolApiVersion ?? "2026-01-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, DevCenterPoolData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DevCenterArmOperation<DevCenterPoolResource> operation = new DevCenterArmOperation<DevCenterPoolResource>(
-                    new DevCenterPoolOperationSource(Client),
+                    new DevCenterPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevCenter
                 HttpMessage message = _poolsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, poolName, DevCenterPoolData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DevCenterArmOperation<DevCenterPoolResource> operation = new DevCenterArmOperation<DevCenterPoolResource>(
-                    new DevCenterPoolOperationSource(Client),
+                    new DevCenterPoolResourceOperationSource(Client),
                     _poolsClientDiagnostics,
                     Pipeline,
                     message.Request,

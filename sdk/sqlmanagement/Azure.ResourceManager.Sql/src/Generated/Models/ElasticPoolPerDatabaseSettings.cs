@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Per database settings of an elastic pool. </summary>
     public partial class ElasticPoolPerDatabaseSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseSettings"/>. </summary>
         public ElasticPoolPerDatabaseSettings()
@@ -54,21 +26,23 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="minCapacity"> The minimum capacity all databases are guaranteed. </param>
         /// <param name="maxCapacity"> The maximum capacity any one database can consume. </param>
         /// <param name="autoPauseDelay"> Auto Pause Delay for per database within pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity, int? autoPauseDelay, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticPoolPerDatabaseSettings(double? minCapacity, double? maxCapacity, int? autoPauseDelay, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinCapacity = minCapacity;
             MaxCapacity = maxCapacity;
             AutoPauseDelay = autoPauseDelay;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The minimum capacity all databases are guaranteed. </summary>
         [WirePath("minCapacity")]
         public double? MinCapacity { get; set; }
+
         /// <summary> The maximum capacity any one database can consume. </summary>
         [WirePath("maxCapacity")]
         public double? MaxCapacity { get; set; }
+
         /// <summary> Auto Pause Delay for per database within pool. </summary>
         [WirePath("autoPauseDelay")]
         public int? AutoPauseDelay { get; set; }

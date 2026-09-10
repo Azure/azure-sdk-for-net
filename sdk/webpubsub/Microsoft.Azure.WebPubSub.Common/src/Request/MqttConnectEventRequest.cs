@@ -15,6 +15,7 @@ namespace Microsoft.Azure.WebPubSub.Common;
 /// MQTT Connect event request. It's sent when a MQTT client connects to the service.
 /// </summary>
 [DataContract]
+[JsonConverter(typeof(MqttConnectEventRequestJsonConverter))]
 public class MqttConnectEventRequest : ConnectEventRequest
 {
     internal const string MqttPropertyName = "mqtt";

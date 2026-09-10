@@ -13,84 +13,106 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkFabricSku data model.
-    /// The Network Fabric SKU resource definition.
-    /// </summary>
+    /// <summary> The Network Fabric SKU resource definition. </summary>
     public partial class NetworkFabricSkuData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
         public NetworkFabricSkuData()
         {
-            SupportedVersions = new ChangeTrackingList<string>();
+
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="typePropertiesType"> Type of Network Fabric SKU. </param>
-        /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </param>
-        /// <param name="maximumServerCount"> Maximum number of servers available for this Network Fabric SKU. </param>
-        /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
-        /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The Network Fabric SKU properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            TypePropertiesType = typePropertiesType;
-            MaxComputeRacks = maxComputeRacks;
-            MaximumServerCount = maximumServerCount;
-            SupportedVersions = supportedVersions;
-            Details = details;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The Network Fabric SKU properties. </summary>
+        internal NetworkFabricSkuProperties Properties { get; set; }
+
         /// <summary> Type of Network Fabric SKU. </summary>
-        public NetworkFabricSkuType? TypePropertiesType { get; }
+        public NetworkFabricSkuType? TypePropertiesType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TypePropertiesType;
+            }
+        }
+
         /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
-        public int? MaxComputeRacks { get; set; }
+        public int? MaxComputeRacks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaxComputeRacks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                Properties.MaxComputeRacks = value;
+            }
+        }
+
         /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
-        public int? MaximumServerCount { get; set; }
+        public int? MaximumServerCount
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MaximumServerCount;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                Properties.MaximumServerCount = value;
+            }
+        }
+
         /// <summary> List of supported Network Fabric SKU versions. </summary>
-        public IReadOnlyList<string> SupportedVersions { get; }
+        public IReadOnlyList<string> SupportedVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkFabricSkuProperties();
+                }
+                return Properties.SupportedVersions;
+            }
+        }
+
         /// <summary> URL providing detailed configuration of the fabric SKU. </summary>
-        public string Details { get; }
+        public string Details
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Details;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

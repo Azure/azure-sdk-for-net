@@ -117,8 +117,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             bool? includeReferences = default;
             bool? includeReferenceSourceData = default;
             bool? alwaysQuerySource = default;
+            bool? neverQuerySource = default;
+            bool? failOnError = default;
             float? rerankerThreshold = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
+            int? maxOutputDocuments = default;
             KnowledgeSourceKind kind = default;
+            bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string filterExpressionAddOn = default;
             foreach (var prop in element.EnumerateObject())
@@ -155,6 +160,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     alwaysQuerySource = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("neverQuerySource"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    neverQuerySource = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("failOnError"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failOnError = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("rerankerThreshold"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -164,9 +187,36 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     rerankerThreshold = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("maxOutputDocuments"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxOutputDocuments = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("enableImageServing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableImageServing = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("filterExpressionAddOn"u8))
@@ -184,8 +234,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
+                failOnError,
                 rerankerThreshold,
+                resultsProcessing,
+                maxOutputDocuments,
                 kind,
+                enableImageServing,
                 additionalBinaryDataProperties,
                 filterExpressionAddOn);
         }

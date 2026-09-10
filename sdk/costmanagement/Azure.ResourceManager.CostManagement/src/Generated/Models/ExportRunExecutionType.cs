@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.CostManagement.Models
     public readonly partial struct ExportRunExecutionType : IEquatable<ExportRunExecutionType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ExportRunExecutionType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ExportRunExecutionType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string OnDemandValue = "OnDemand";
         private const string ScheduledValue = "Scheduled";
 
-        /// <summary> OnDemand. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportRunExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ExportRunExecutionType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the OnDemand. </summary>
         public static ExportRunExecutionType OnDemand { get; } = new ExportRunExecutionType(OnDemandValue);
-        /// <summary> Scheduled. </summary>
+
+        /// <summary> Gets the Scheduled. </summary>
         public static ExportRunExecutionType Scheduled { get; } = new ExportRunExecutionType(ScheduledValue);
+
         /// <summary> Determines if two <see cref="ExportRunExecutionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ExportRunExecutionType left, ExportRunExecutionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ExportRunExecutionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ExportRunExecutionType left, ExportRunExecutionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ExportRunExecutionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ExportRunExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ExportRunExecutionType(string value) => new ExportRunExecutionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ExportRunExecutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ExportRunExecutionType?(string value) => value == null ? null : new ExportRunExecutionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ExportRunExecutionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ExportRunExecutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -29,18 +29,18 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets.Tests
 
             IConfigurationRoot configuration = configurationBuilder.Build();
 
-            Assert.AreEqual("1", configuration["TestSecret1"]);
-            Assert.AreEqual("2", configuration["TestSecret2"]);
-            Assert.AreEqual("3", configuration["Nested:TestSecret3"]);
+            Assert.That(configuration["TestSecret1"], Is.EqualTo("1"));
+            Assert.That(configuration["TestSecret2"], Is.EqualTo("2"));
+            Assert.That(configuration["Nested:TestSecret3"], Is.EqualTo("3"));
 
             // KeyVault time resolution is 1sec we can't detect a change faster than that
             await Task.Delay(TimeSpan.FromSeconds(1));
             await client.SetSecretAsync("TestSecret1", "2");
             configuration.Reload();
 
-            Assert.AreEqual("2", configuration["TestSecret1"]);
-            Assert.AreEqual("2", configuration["TestSecret2"]);
-            Assert.AreEqual("3", configuration["Nested:TestSecret3"]);
+            Assert.That(configuration["TestSecret1"], Is.EqualTo("2"));
+            Assert.That(configuration["TestSecret2"], Is.EqualTo("2"));
+            Assert.That(configuration["Nested:TestSecret3"], Is.EqualTo("3"));
         }
     }
 }

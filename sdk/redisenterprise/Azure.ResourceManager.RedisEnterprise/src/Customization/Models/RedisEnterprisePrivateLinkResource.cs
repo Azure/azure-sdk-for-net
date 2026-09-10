@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         /// <summary> Initializes a new instance of <see cref="RedisEnterprisePrivateLinkResource"/>. </summary>
         public RedisEnterprisePrivateLinkResource()
-        {}
+        { }
     }
 }

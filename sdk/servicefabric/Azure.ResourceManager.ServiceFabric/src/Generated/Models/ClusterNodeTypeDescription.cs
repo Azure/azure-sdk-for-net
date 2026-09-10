@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
     public partial class ClusterNodeTypeDescription
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/>. </summary>
         /// <param name="name"> The name of the node type. </param>
@@ -73,11 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="httpGatewayEndpointPort"> The HTTP cluster management endpoint port. </param>
         /// <param name="durabilityLevel">
         /// The durability level of the node type. Learn about [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        ///   - Bronze - No privileges. This is the default.
-        ///   - Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.
-        ///   - Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.
-        ///
+        /// <list type="bullet"><item><description>Bronze - No privileges. This is the default.</description></item><item><description>Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.</description></item><item><description>Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.</description></item></list>
         /// </param>
         /// <param name="applicationPorts"> The range of ports from which cluster assigned port to Service Fabric applications. </param>
         /// <param name="ephemeralPorts"> The range of ephemeral ports that nodes in this node type should be configured with. </param>
@@ -87,8 +55,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
         /// <param name="isMultipleAvailabilityZonesSupported"> Indicates if the node type is enabled to support multiple zones. </param>
         /// <param name="httpGatewayTokenAuthEndpointPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported, int? httpGatewayTokenAuthEndpointPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterNodeTypeDescription(string name, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, int clientConnectionEndpointPort, int httpGatewayEndpointPort, ClusterDurabilityLevel? durabilityLevel, ClusterEndpointRangeDescription applicationPorts, ClusterEndpointRangeDescription ephemeralPorts, bool isPrimary, int vmInstanceCount, int? reverseProxyEndpointPort, bool? isStateless, bool? isMultipleAvailabilityZonesSupported, int? httpGatewayTokenAuthEndpointPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             PlacementProperties = placementProperties;
@@ -104,47 +72,51 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             IsStateless = isStateless;
             IsMultipleAvailabilityZonesSupported = isMultipleAvailabilityZonesSupported;
             HttpGatewayTokenAuthEndpointPort = httpGatewayTokenAuthEndpointPort;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ClusterNodeTypeDescription"/> for deserialization. </summary>
-        internal ClusterNodeTypeDescription()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the node type. </summary>
         public string Name { get; set; }
+
         /// <summary> The placement tags applied to nodes in the node type, which can be used to indicate where certain services (workload) should run. </summary>
         public IDictionary<string, string> PlacementProperties { get; }
+
         /// <summary> The capacity tags applied to the nodes in the node type, the cluster resource manager uses these tags to understand how much resource a node has. </summary>
         public IDictionary<string, string> Capacities { get; }
+
         /// <summary> The TCP cluster management endpoint port. </summary>
         public int ClientConnectionEndpointPort { get; set; }
+
         /// <summary> The HTTP cluster management endpoint port. </summary>
         public int HttpGatewayEndpointPort { get; set; }
+
         /// <summary>
         /// The durability level of the node type. Learn about [DurabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        ///
-        ///   - Bronze - No privileges. This is the default.
-        ///   - Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.
-        ///   - Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.
-        ///
+        /// <list type="bullet"><item><description>Bronze - No privileges. This is the default.</description></item><item><description>Silver - The infrastructure jobs can be paused for a duration of 10 minutes per UD.</description></item><item><description>Gold - The infrastructure jobs can be paused for a duration of 2 hours per UD. Gold durability can be enabled only on full node VM skus like D15_V2, G5 etc.</description></item></list>
         /// </summary>
         public ClusterDurabilityLevel? DurabilityLevel { get; set; }
+
         /// <summary> The range of ports from which cluster assigned port to Service Fabric applications. </summary>
         public ClusterEndpointRangeDescription ApplicationPorts { get; set; }
+
         /// <summary> The range of ephemeral ports that nodes in this node type should be configured with. </summary>
         public ClusterEndpointRangeDescription EphemeralPorts { get; set; }
+
         /// <summary> The node type on which system services will run. Only one node type should be marked as primary. Primary node type cannot be deleted or changed for existing clusters. </summary>
         public bool IsPrimary { get; set; }
+
         /// <summary> VMInstanceCount should be 1 to n, where n indicates the number of VM instances corresponding to this nodeType. VMInstanceCount = 0 can be done only in these scenarios: NodeType is a secondary nodeType. Durability = Bronze or Durability &gt;= Bronze and InfrastructureServiceManager = true. If VMInstanceCount = 0, implies the VMs for this nodeType will not be used for the initial cluster size computation. </summary>
         public int VmInstanceCount { get; set; }
+
         /// <summary> The endpoint used by reverse proxy. </summary>
         public int? ReverseProxyEndpointPort { get; set; }
+
         /// <summary> Indicates if the node type can only host Stateless workloads. </summary>
         public bool? IsStateless { get; set; }
+
         /// <summary> Indicates if the node type is enabled to support multiple zones. </summary>
         public bool? IsMultipleAvailabilityZonesSupported { get; set; }
+
         /// <summary> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </summary>
         public int? HttpGatewayTokenAuthEndpointPort { get; set; }
     }

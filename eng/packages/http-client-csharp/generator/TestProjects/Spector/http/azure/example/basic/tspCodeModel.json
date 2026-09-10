@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Enum",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Enum",
       "valueType": {
         "$id": "2",
@@ -28,19 +31,24 @@
           "enumType": {
             "$ref": "1"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "isFixed": false,
       "isFlags": false,
       "usage": "Input,Output,Json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "4",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Versions",
       "valueType": {
         "$id": "5",
@@ -61,21 +69,23 @@
           "enumType": {
             "$ref": "4"
           },
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
     {
       "$id": "7",
       "kind": "constant",
-      "name": "basicActionContentType",
+      "name": "BasicActionContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -86,12 +96,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "basicActionContentType1",
+      "name": "BasicActionContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,7 +113,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -110,6 +122,9 @@
       "$id": "11",
       "kind": "model",
       "name": "ActionRequest",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionRequest",
       "usage": "Input,Json",
@@ -119,11 +134,15 @@
           "name": "ActionRequest"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "12",
           "kind": "property",
           "name": "stringProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "stringProperty",
           "type": {
             "$id": "13",
@@ -143,17 +162,24 @@
               "name": "stringProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "14",
           "kind": "property",
           "name": "modelProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "modelProperty",
           "type": {
             "$id": "15",
             "kind": "model",
             "name": "Model",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
             "namespace": "_Specs_.Azure.Example.Basic",
             "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.Model",
             "usage": "Input,Output,Json",
@@ -163,11 +189,15 @@
                 "name": "Model"
               }
             },
+            "isExactName": false,
             "properties": [
               {
                 "$id": "16",
                 "kind": "property",
                 "name": "int32Property",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "int32Property",
                 "type": {
                   "$id": "17",
@@ -187,12 +217,16 @@
                     "name": "int32Property"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "18",
                 "kind": "property",
                 "name": "float32Property",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "float32Property",
                 "type": {
                   "$id": "19",
@@ -212,12 +246,16 @@
                     "name": "float32Property"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               },
               {
                 "$id": "20",
                 "kind": "property",
                 "name": "enumProperty",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "enumProperty",
                 "type": {
                   "$ref": "1"
@@ -233,7 +271,8 @@
                     "name": "enumProperty"
                   }
                 },
-                "isHttpMetadata": false
+                "isHttpMetadata": false,
+                "isExactName": false
               }
             ]
           },
@@ -248,12 +287,16 @@
               "name": "modelProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "21",
           "kind": "property",
           "name": "arrayProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "arrayProperty",
           "type": {
             "$id": "22",
@@ -280,12 +323,16 @@
               "name": "arrayProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "24",
           "kind": "property",
           "name": "recordProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "recordProperty",
           "type": {
             "$id": "25",
@@ -317,7 +364,8 @@
               "name": "recordProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -328,6 +376,9 @@
       "$id": "28",
       "kind": "model",
       "name": "ActionResponse",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Example.Basic",
       "crossLanguageDefinitionId": "_Specs_.Azure.Example.Basic.ActionResponse",
       "usage": "Output,Json",
@@ -337,11 +388,15 @@
           "name": "ActionResponse"
         }
       },
+      "isExactName": false,
       "properties": [
         {
           "$id": "29",
           "kind": "property",
           "name": "stringProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "stringProperty",
           "type": {
             "$id": "30",
@@ -361,12 +416,16 @@
               "name": "stringProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "31",
           "kind": "property",
           "name": "modelProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "modelProperty",
           "type": {
             "$ref": "15"
@@ -382,12 +441,16 @@
               "name": "modelProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "32",
           "kind": "property",
           "name": "arrayProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "arrayProperty",
           "type": {
             "$ref": "22"
@@ -403,12 +466,16 @@
               "name": "arrayProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         },
         {
           "$id": "33",
           "kind": "property",
           "name": "recordProperty",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "recordProperty",
           "type": {
             "$ref": "25"
@@ -424,7 +491,8 @@
               "name": "recordProperty"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     }
@@ -434,12 +502,14 @@
       "$id": "34",
       "kind": "client",
       "name": "AzureExampleClient",
+      "isExactName": false,
       "namespace": "AzureExampleBasicClient",
       "methods": [
         {
           "$id": "35",
           "kind": "basic",
           "name": "basicAction",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2022-12-01-preview"
@@ -447,6 +517,7 @@
           "operation": {
             "$id": "36",
             "name": "basicAction",
+            "isExactName": false,
             "resourceName": "AzureExampleClient",
             "accessibility": "public",
             "parameters": [
@@ -509,9 +580,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "43",
@@ -552,9 +625,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.queryParam",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "47",
@@ -595,9 +670,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.headerParam",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "51",
@@ -632,9 +709,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "53",
@@ -667,9 +746,11 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "55",
@@ -705,9 +786,16 @@
                     "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.basicAction.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -722,7 +810,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -795,7 +888,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint"
+          "crossLanguageDefinitionId": "AzureExampleBasicClient.AzureExampleClient.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "40"

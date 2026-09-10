@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class ImplementationMethodExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ImplementationMethod value) => value switch
         {
             ImplementationMethod.TSql => "TSql",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImplementationMethod value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ImplementationMethod ToImplementationMethod(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TSql")) return ImplementationMethod.TSql;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzurePowerShell")) return ImplementationMethod.AzurePowerShell;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TSql"))
+            {
+                return ImplementationMethod.TSql;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AzurePowerShell"))
+            {
+                return ImplementationMethod.AzurePowerShell;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ImplementationMethod value.");
         }
     }

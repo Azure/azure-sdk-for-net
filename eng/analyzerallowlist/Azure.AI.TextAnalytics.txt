@@ -1,0 +1,9 @@
+# Azure.AI.TextAnalytics approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These are GA'd public type names. The collisions are with unrelated libraries
+# (Azure.Search.Documents, Azure.AI.FormRecognizer) that are never referenced
+# together with Azure.AI.TextAnalytics, and renaming them would be a breaking
+# change, so AZC0034 is suppressed for these specific types.
+nowarn:AZC0034 T:Azure.AI.TextAnalytics.EntityCategory
+nowarn:AZC0034 T:Azure.AI.TextAnalytics.ClassifyDocumentOperation

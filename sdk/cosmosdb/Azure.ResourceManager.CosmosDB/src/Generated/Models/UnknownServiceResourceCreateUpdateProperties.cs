@@ -10,21 +10,14 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> Unknown version of ServiceResourceCreateUpdateProperties. </summary>
     internal partial class UnknownServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceCreateUpdateProperties"/>. </summary>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>
         /// <param name="serviceType"> ServiceType for the service. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceSize, instanceCount, serviceType, serializedAdditionalRawData)
-        {
-            ServiceType = serviceType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceCreateUpdateProperties"/> for deserialization. </summary>
-        internal UnknownServiceResourceCreateUpdateProperties()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownServiceResourceCreateUpdateProperties(CosmosDBServiceSize? instanceSize, int? instanceCount, CosmosDBServiceType serviceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceSize, instanceCount, serviceType != default ? serviceType : "unknown", additionalBinaryDataProperties)
         {
         }
     }

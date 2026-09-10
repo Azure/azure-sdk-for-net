@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct CognitiveServicesSkuTier : IEquatable<CognitiveServicesSkuTier>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuTier"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CognitiveServicesSkuTier(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string FreeValue = "Free";
         private const string BasicValue = "Basic";
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
         private const string EnterpriseValue = "Enterprise";
 
-        /// <summary> Free. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CognitiveServicesSkuTier(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Free. </summary>
         public static CognitiveServicesSkuTier Free { get; } = new CognitiveServicesSkuTier(FreeValue);
-        /// <summary> Basic. </summary>
+
+        /// <summary> Gets the Basic. </summary>
         public static CognitiveServicesSkuTier Basic { get; } = new CognitiveServicesSkuTier(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static CognitiveServicesSkuTier Standard { get; } = new CognitiveServicesSkuTier(StandardValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Gets the Premium. </summary>
         public static CognitiveServicesSkuTier Premium { get; } = new CognitiveServicesSkuTier(PremiumValue);
-        /// <summary> Enterprise. </summary>
+
+        /// <summary> Gets the Enterprise. </summary>
         public static CognitiveServicesSkuTier Enterprise { get; } = new CognitiveServicesSkuTier(EnterpriseValue);
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CognitiveServicesSkuTier left, CognitiveServicesSkuTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CognitiveServicesSkuTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CognitiveServicesSkuTier left, CognitiveServicesSkuTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CognitiveServicesSkuTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CognitiveServicesSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CognitiveServicesSkuTier(string value) => new CognitiveServicesSkuTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CognitiveServicesSkuTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CognitiveServicesSkuTier?(string value) => value == null ? null : new CognitiveServicesSkuTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CognitiveServicesSkuTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CognitiveServicesSkuTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

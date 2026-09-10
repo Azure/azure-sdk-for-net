@@ -11,6 +11,7 @@ namespace Azure.Storage.Files.Shares.Models
 {
     internal static partial class DeleteSnapshotsOptionTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this DeleteSnapshotsOptionType value) => value switch
         {
             DeleteSnapshotsOptionType.Include => "include",
@@ -18,10 +19,17 @@ namespace Azure.Storage.Files.Shares.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOptionType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static DeleteSnapshotsOptionType ToDeleteSnapshotsOptionType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include")) return DeleteSnapshotsOptionType.Include;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include-leased")) return DeleteSnapshotsOptionType.IncludeLeased;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include"))
+            {
+                return DeleteSnapshotsOptionType.Include;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "include-leased"))
+            {
+                return DeleteSnapshotsOptionType.IncludeLeased;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DeleteSnapshotsOptionType value.");
         }
     }

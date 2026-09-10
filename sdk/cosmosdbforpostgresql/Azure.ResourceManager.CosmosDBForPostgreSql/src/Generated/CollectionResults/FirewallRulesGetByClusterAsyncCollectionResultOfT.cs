@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     yield break;
                 }
                 FirewallRuleListResult result = FirewallRuleListResult.FromResponse(response);
-                yield return Page<CosmosDBForPostgreSqlFirewallRuleData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBForPostgreSqlFirewallRuleData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlFirewallRuleData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

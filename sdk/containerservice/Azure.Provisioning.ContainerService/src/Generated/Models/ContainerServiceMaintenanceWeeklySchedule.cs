@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _intervalWeeks = DefineProperty<int>(nameof(IntervalWeeks), new string[] { "intervalWeeks" }, isRequired: true);
             _dayOfWeek = DefineProperty<ContainerServiceWeekDay>(nameof(DayOfWeek), new string[] { "dayOfWeek" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMaintenanceWeeklySchedule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.AppService.Models
     public readonly partial struct WorkflowSkuName : IEquatable<WorkflowSkuName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="WorkflowSkuName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkflowSkuName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NotSpecifiedValue = "NotSpecified";
         private const string FreeValue = "Free";
         private const string SharedValue = "Shared";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.AppService.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkflowSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public WorkflowSkuName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static WorkflowSkuName NotSpecified { get; } = new WorkflowSkuName(NotSpecifiedValue);
-        /// <summary> Free. </summary>
+
+        /// <summary> Gets the Free. </summary>
         public static WorkflowSkuName Free { get; } = new WorkflowSkuName(FreeValue);
-        /// <summary> Shared. </summary>
+
+        /// <summary> Gets the Shared. </summary>
         public static WorkflowSkuName Shared { get; } = new WorkflowSkuName(SharedValue);
-        /// <summary> Basic. </summary>
+
+        /// <summary> Gets the Basic. </summary>
         public static WorkflowSkuName Basic { get; } = new WorkflowSkuName(BasicValue);
-        /// <summary> Standard. </summary>
+
+        /// <summary> Gets the Standard. </summary>
         public static WorkflowSkuName Standard { get; } = new WorkflowSkuName(StandardValue);
-        /// <summary> Premium. </summary>
+
+        /// <summary> Gets the Premium. </summary>
         public static WorkflowSkuName Premium { get; } = new WorkflowSkuName(PremiumValue);
+
         /// <summary> Determines if two <see cref="WorkflowSkuName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(WorkflowSkuName left, WorkflowSkuName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="WorkflowSkuName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(WorkflowSkuName left, WorkflowSkuName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkflowSkuName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="WorkflowSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator WorkflowSkuName(string value) => new WorkflowSkuName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="WorkflowSkuName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator WorkflowSkuName?(string value) => value == null ? null : new WorkflowSkuName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkflowSkuName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(WorkflowSkuName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

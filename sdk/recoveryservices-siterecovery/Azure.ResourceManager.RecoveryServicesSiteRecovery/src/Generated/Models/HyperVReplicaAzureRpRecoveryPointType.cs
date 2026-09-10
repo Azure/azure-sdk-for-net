@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct HyperVReplicaAzureRpRecoveryPointType : IEquatable<HyperVReplicaAzureRpRecoveryPointType>
     {
         private readonly string _value;
+        /// <summary> Latest. </summary>
+        private const string LatestValue = "Latest";
+        /// <summary> LatestApplicationConsistent. </summary>
+        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
+        /// <summary> LatestProcessed. </summary>
+        private const string LatestProcessedValue = "LatestProcessed";
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureRpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HyperVReplicaAzureRpRecoveryPointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LatestValue = "Latest";
-        private const string LatestApplicationConsistentValue = "LatestApplicationConsistent";
-        private const string LatestProcessedValue = "LatestProcessed";
+            _value = value;
+        }
 
         /// <summary> Latest. </summary>
         public static HyperVReplicaAzureRpRecoveryPointType Latest { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestValue);
+
         /// <summary> LatestApplicationConsistent. </summary>
         public static HyperVReplicaAzureRpRecoveryPointType LatestApplicationConsistent { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestApplicationConsistentValue);
+
         /// <summary> LatestProcessed. </summary>
         public static HyperVReplicaAzureRpRecoveryPointType LatestProcessed { get; } = new HyperVReplicaAzureRpRecoveryPointType(LatestProcessedValue);
+
         /// <summary> Determines if two <see cref="HyperVReplicaAzureRpRecoveryPointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HyperVReplicaAzureRpRecoveryPointType left, HyperVReplicaAzureRpRecoveryPointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HyperVReplicaAzureRpRecoveryPointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HyperVReplicaAzureRpRecoveryPointType left, HyperVReplicaAzureRpRecoveryPointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HyperVReplicaAzureRpRecoveryPointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HyperVReplicaAzureRpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HyperVReplicaAzureRpRecoveryPointType(string value) => new HyperVReplicaAzureRpRecoveryPointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HyperVReplicaAzureRpRecoveryPointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HyperVReplicaAzureRpRecoveryPointType?(string value) => value == null ? null : new HyperVReplicaAzureRpRecoveryPointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HyperVReplicaAzureRpRecoveryPointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HyperVReplicaAzureRpRecoveryPointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(PolicyResource.ResourceType, out string policyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", PolicyResource.ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, policyApiVersion ?? "2026-03-01-preview");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, policyName, PolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeviceRegistryArmOperation<PolicyResource> operation = new DeviceRegistryArmOperation<PolicyResource>(
-                    new PolicyOperationSource(Client),
+                    new PolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 HttpMessage message = _policiesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, policyName, PolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeviceRegistryArmOperation<PolicyResource> operation = new DeviceRegistryArmOperation<PolicyResource>(
-                    new PolicyOperationSource(Client),
+                    new PolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     internal static partial class ResponseBasedDetectedErrorTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ResponseBasedDetectedErrorType value) => value switch
         {
             ResponseBasedDetectedErrorType.None => "None",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Cdn.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseBasedDetectedErrorType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ResponseBasedDetectedErrorType ToResponseBasedDetectedErrorType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ResponseBasedDetectedErrorType.None;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpErrorsOnly")) return ResponseBasedDetectedErrorType.TcpErrorsOnly;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpAndHttpErrors")) return ResponseBasedDetectedErrorType.TcpAndHttpErrors;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None"))
+            {
+                return ResponseBasedDetectedErrorType.None;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpErrorsOnly"))
+            {
+                return ResponseBasedDetectedErrorType.TcpErrorsOnly;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TcpAndHttpErrors"))
+            {
+                return ResponseBasedDetectedErrorType.TcpAndHttpErrors;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ResponseBasedDetectedErrorType value.");
         }
     }

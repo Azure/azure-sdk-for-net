@@ -48,8 +48,8 @@ namespace Azure.AI.DocumentIntelligence
                     yield break;
                 }
                 PagedAnalyzeBatchOperation result = (PagedAnalyzeBatchOperation)response;
-                yield return Page<AnalyzeBatchOperationDetails>.FromValues((IReadOnlyList<AnalyzeBatchOperationDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<AnalyzeBatchOperationDetails>.FromValues((IReadOnlyList<AnalyzeBatchOperationDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

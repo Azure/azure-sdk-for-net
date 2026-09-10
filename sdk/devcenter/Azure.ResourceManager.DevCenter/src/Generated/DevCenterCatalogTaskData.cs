@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Task properties. </param>
-        internal DevCenterCatalogTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomizationTaskProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevCenterCatalogTaskData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CustomizationTaskProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Task properties. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Inputs;
+                return Properties is null ? default : Properties.Inputs;
             }
         }
 
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.Timeout;
+                return Properties is null ? default : Properties.Timeout;
             }
         }
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             get
             {
-                return Properties.ValidationStatus;
+                return Properties is null ? default : Properties.ValidationStatus;
             }
         }
     }

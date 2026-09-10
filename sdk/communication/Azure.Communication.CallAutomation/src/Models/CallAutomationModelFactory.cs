@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
     [CodeGenSuppress("SendDtmfTonesCompleted", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("SendDtmfTonesFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
     [CodeGenSuppress("HoldFailed", typeof(string), typeof(ResultInformation), typeof(string), typeof(string), typeof(string))]
+    [CodeGenSuppress("ResultInformation", typeof(int?), typeof(int?), typeof(string), typeof(SipDiagnosticInfo), typeof(SipDiagnosticInfo))]
     [CodeGenModel("CommunicationCallAutomationModelFactory")]
     public static partial class CallAutomationModelFactory
     {
@@ -243,7 +244,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
             return new AddParticipantFailed(internalObject);
@@ -260,7 +261,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
             return new AddParticipantSucceeded(internalObject);
@@ -278,7 +279,7 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber: sequenceNumber,
                 participants: participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer_2025_06_30.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted, p.IsOnHold)).ToList(),
                 resultInformation: resultInformation
                 );
 
@@ -296,7 +297,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
             return new RemoveParticipantFailed(internalObject);
@@ -313,7 +314,7 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                participant: CommunicationIdentifierSerializer_2025_06_30.Serialize(participant)
+                participant: CommunicationIdentifierSerializer.Serialize(participant)
                 );
 
             return new RemoveParticipantSucceeded(internalObject);
@@ -353,8 +354,8 @@ namespace Azure.Communication.CallAutomation
                 correlationId,
                 operationContext,
                 resultInformation,
-                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferTarget),
-                transferee: transferee == null ? null : CommunicationIdentifierSerializer_2025_06_30.Serialize(transferee)
+                transferTarget: transferTarget == null ? null : CommunicationIdentifierSerializer.Serialize(transferTarget),
+                transferee: transferee == null ? null : CommunicationIdentifierSerializer.Serialize(transferee)
                 );
             return new CallTransferAccepted(internalEvent);
         }
@@ -394,11 +395,11 @@ namespace Azure.Communication.CallAutomation
             string operationContext = default)
         {
             var internalObject = new CancelAddParticipantFailedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
-                operationContext,
-                resultInformation,
+               callConnectionId: callConnectionId,
+                serverCallId: serverCallId,
+                correlationId: correlationId,
+                operationContext: operationContext,
+                resultInformation: resultInformation,
                 invitationId: invitationId);
 
             return new CancelAddParticipantFailed(internalObject);
@@ -669,6 +670,28 @@ namespace Azure.Communication.CallAutomation
         {
             var createdCallFailedInternal = new CreateCallFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
             return new CreateCallFailed(createdCallFailedInternal);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
+        /// <param name="sipDetails">Contains the sip details. </param>
+        /// <param name="q850Details">Contains the q 850 details.</param>
+        /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null, SipDiagnosticInfo sipDetails = null, SipDiagnosticInfo q850Details = null)
+        {
+            return new ResultInformation(code, subCode, message, sipDetails, q850Details);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ResultInformation"/>. </summary>
+        /// <param name="code"> Code of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="subCode"> Subcode of the current result. This can be helpful to Call Automation team to troubleshoot the issue if this result was unexpected. </param>
+        /// <param name="message"> Detail message that describes the current result. </param>
+        /// <returns> A new <see cref="CallAutomation.ResultInformation"/> instance for mocking. </returns>
+        public static ResultInformation ResultInformation(int? code = null, int? subCode = null, string message = null)
+        {
+            return new ResultInformation(code, subCode, message, sipDetails: null, q850Details: null);
         }
     }
 }

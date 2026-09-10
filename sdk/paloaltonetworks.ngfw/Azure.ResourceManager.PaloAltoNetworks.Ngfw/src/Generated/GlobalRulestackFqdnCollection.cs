@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(GlobalRulestackFqdnResource.ResourceType, out string globalRulestackFqdnApiVersion);
             _fqdnListGlobalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", GlobalRulestackFqdnResource.ResourceType.Namespace, Diagnostics);
-            _fqdnListGlobalRulestackRestClient = new FqdnListGlobalRulestack(_fqdnListGlobalRulestackClientDiagnostics, Pipeline, Endpoint, globalRulestackFqdnApiVersion ?? "2025-10-08");
+            _fqdnListGlobalRulestackRestClient = new FqdnListGlobalRulestack(_fqdnListGlobalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, globalRulestackFqdnApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _fqdnListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<GlobalRulestackFqdnResource> operation = new NgfwArmOperation<GlobalRulestackFqdnResource>(
-                    new GlobalRulestackFqdnOperationSource(Client),
+                    new GlobalRulestackFqdnResourceOperationSource(Client),
                     _fqdnListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _fqdnListGlobalRulestackRestClient.CreateCreateOrUpdateRequest(Id.Name, name, GlobalRulestackFqdnData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<GlobalRulestackFqdnResource> operation = new NgfwArmOperation<GlobalRulestackFqdnResource>(
-                    new GlobalRulestackFqdnOperationSource(Client),
+                    new GlobalRulestackFqdnResourceOperationSource(Client),
                     _fqdnListGlobalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

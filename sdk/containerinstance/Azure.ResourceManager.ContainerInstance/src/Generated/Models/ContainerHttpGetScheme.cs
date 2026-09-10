@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     public readonly partial struct ContainerHttpGetScheme : IEquatable<ContainerHttpGetScheme>
     {
         private readonly string _value;
+        /// <summary> http. </summary>
+        private const string HttpValue = "http";
+        /// <summary> https. </summary>
+        private const string HttpsValue = "https";
 
         /// <summary> Initializes a new instance of <see cref="ContainerHttpGetScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerHttpGetScheme(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string HttpValue = "http";
-        private const string HttpsValue = "https";
+            _value = value;
+        }
 
         /// <summary> http. </summary>
         public static ContainerHttpGetScheme Http { get; } = new ContainerHttpGetScheme(HttpValue);
+
         /// <summary> https. </summary>
         public static ContainerHttpGetScheme Https { get; } = new ContainerHttpGetScheme(HttpsValue);
+
         /// <summary> Determines if two <see cref="ContainerHttpGetScheme"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerHttpGetScheme left, ContainerHttpGetScheme right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerHttpGetScheme"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerHttpGetScheme left, ContainerHttpGetScheme right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerHttpGetScheme"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerHttpGetScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerHttpGetScheme(string value) => new ContainerHttpGetScheme(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerHttpGetScheme"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerHttpGetScheme?(string value) => value == null ? null : new ContainerHttpGetScheme(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerHttpGetScheme other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerHttpGetScheme other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

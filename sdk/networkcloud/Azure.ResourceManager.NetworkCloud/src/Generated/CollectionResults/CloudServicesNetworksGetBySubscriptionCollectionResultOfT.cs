@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 CloudServicesNetworkList result = CloudServicesNetworkList.FromResponse(response);
-                yield return Page<NetworkCloudCloudServicesNetworkData>.FromValues((IReadOnlyList<NetworkCloudCloudServicesNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudCloudServicesNetworkData>.FromValues((IReadOnlyList<NetworkCloudCloudServicesNetworkData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

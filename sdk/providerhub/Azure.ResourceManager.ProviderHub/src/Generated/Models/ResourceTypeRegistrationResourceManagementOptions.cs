@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> Resource management options. </summary>
     public partial class ResourceTypeRegistrationResourceManagementOptions
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeRegistrationResourceManagementOptions"/>. </summary>
         public ResourceTypeRegistrationResourceManagementOptions()
@@ -55,41 +27,54 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="batchProvisioningSupport"> Batch provisioning support. </param>
         /// <param name="deleteDependencies"> Delete dependencies. </param>
         /// <param name="nestedProvisioningSupport"> Nested provisioning support. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationResourceManagementOptions(BatchProvisioningSupport batchProvisioningSupport, IList<ResourceTypeRegistrationDeleteDependency> deleteDependencies, NestedProvisioningSupport nestedProvisioningSupport, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeRegistrationResourceManagementOptions(BatchProvisioningSupport batchProvisioningSupport, IList<ResourceTypeRegistrationDeleteDependency> deleteDependencies, NestedProvisioningSupport nestedProvisioningSupport, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BatchProvisioningSupport = batchProvisioningSupport;
             DeleteDependencies = deleteDependencies;
             NestedProvisioningSupport = nestedProvisioningSupport;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Batch provisioning support. </summary>
         internal BatchProvisioningSupport BatchProvisioningSupport { get; set; }
+
+        /// <summary> Delete dependencies. </summary>
+        public IList<ResourceTypeRegistrationDeleteDependency> DeleteDependencies { get; }
+
+        /// <summary> Nested provisioning support. </summary>
+        internal NestedProvisioningSupport NestedProvisioningSupport { get; set; }
+
         /// <summary> Supported operations. </summary>
         public ResourceManagementSupportedOperation? BatchProvisioningSupportSupportedOperations
         {
-            get => BatchProvisioningSupport is null ? default : BatchProvisioningSupport.SupportedOperations;
+            get
+            {
+                return BatchProvisioningSupport is null ? default : BatchProvisioningSupport.SupportedOperations;
+            }
             set
             {
                 if (BatchProvisioningSupport is null)
+                {
                     BatchProvisioningSupport = new BatchProvisioningSupport();
+                }
                 BatchProvisioningSupport.SupportedOperations = value;
             }
         }
 
-        /// <summary> Delete dependencies. </summary>
-        public IList<ResourceTypeRegistrationDeleteDependency> DeleteDependencies { get; }
-        /// <summary> Nested provisioning support. </summary>
-        internal NestedProvisioningSupport NestedProvisioningSupport { get; set; }
         /// <summary> Minimum API version. </summary>
         public string NestedProvisioningSupportMinimumApiVersion
         {
-            get => NestedProvisioningSupport is null ? default : NestedProvisioningSupport.MinimumApiVersion;
+            get
+            {
+                return NestedProvisioningSupport is null ? default : NestedProvisioningSupport.MinimumApiVersion;
+            }
             set
             {
                 if (NestedProvisioningSupport is null)
+                {
                     NestedProvisioningSupport = new NestedProvisioningSupport();
+                }
                 NestedProvisioningSupport.MinimumApiVersion = value;
             }
         }

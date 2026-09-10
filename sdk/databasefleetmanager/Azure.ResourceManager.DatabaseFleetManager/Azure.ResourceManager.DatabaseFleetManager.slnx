@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.ResourceManager.DatabaseFleetManager.csproj" />
+  <Project Path="tests/Azure.ResourceManager.DatabaseFleetManager.Tests.csproj" />
+</Solution>

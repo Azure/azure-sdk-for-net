@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Quota
         {
             TryGetApiVersion(ResourceType, out string currentQuotaLimitBaseApiVersion);
             _currentQuotaLimitBasesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quota", ResourceType.Namespace, Diagnostics);
-            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
+            _currentQuotaLimitBasesRestClient = new CurrentQuotaLimitBases(_currentQuotaLimitBasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, currentQuotaLimitBaseApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CurrentQuotaLimitBaseData> response = Response.FromValue(CurrentQuotaLimitBaseData.FromResponse(result), result);
                 if (response.Value == null)
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent, Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
+                HttpMessage message = _currentQuotaLimitBasesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, CurrentQuotaLimitBaseData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<CurrentQuotaLimitBaseResource> operation = new QuotaArmOperation<CurrentQuotaLimitBaseResource>(
-                    new CurrentQuotaLimitBaseOperationSource(Client),
+                    new CurrentQuotaLimitBaseResourceOperationSource(Client),
                     _currentQuotaLimitBasesClientDiagnostics,
                     Pipeline,
                     message.Request,

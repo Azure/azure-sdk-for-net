@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.PureStorageBlock
                     yield break;
                 }
                 StoragePoolListResult result = StoragePoolListResult.FromResponse(response);
-                yield return Page<PureStoragePoolData>.FromValues((IReadOnlyList<PureStoragePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PureStoragePoolData>.FromValues((IReadOnlyList<PureStoragePoolData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

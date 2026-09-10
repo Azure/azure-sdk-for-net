@@ -232,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                         var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
                                             ? SchemaConstants.GenAi_Properties_MaxValueLength
                                             : SchemaConstants.MessageData_Properties_MaxValueLength;
-                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
+                                        var stringValue = Convert.ToString(item.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }
                                 }
@@ -260,14 +260,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             logRecord.ForEachScope(s_processScope, properties);
 
-            if (eventName is null && availabilityInfo is null) // we will omit the following properties if we've detected a custom event or availability.
+            if (availabilityInfo is null)
             {
                 var categoryName = logRecord.CategoryName;
                 if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
                 {
                     properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
                 }
+            }
 
+            if (eventName is null && availabilityInfo is null) // we will omit the following properties if we've detected a custom event or availability.
+            {
                 if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
                 {
                     properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));

@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.NotNull(testPec, "Expected to find a PEC named 'sdk-eventgrid-test-pec'.");
 
             // Verify key fields on the retrieved PEC
-            Assert.NotNull(testPec.Data.PrivateEndpoint, "PEC must reference a Private Endpoint.");
-            Assert.IsNotEmpty(testPec.Data.PrivateEndpoint.Id.ToString(), "PEC's PrivateEndpoint.Id should not be empty.");
+            Assert.NotNull(testPec.Data.PrivateEndpointId, "PEC must reference a Private Endpoint.");
+            Assert.IsNotEmpty(testPec.Data.PrivateEndpointId.ToString(), "PEC's PrivateEndpointId should not be empty.");
 
             // Retrieve that one PEC directly
             var getSpecificPecResponse = await pecCollection.GetAsync(testPec.Data.Name);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             // Pick the one we want to update
             var targetPec = allPecs
-                .FirstOrDefault(conn => conn.Data.PrivateEndpoint.Id.ToString().Contains("sdk-eventgrid-test-pec"));
+                .FirstOrDefault(conn => conn.Data.PrivateEndpointId.ToString().Contains("sdk-eventgrid-test-pec"));
             Assert.NotNull(targetPec, "PEC 'sdk-eventgrid-test-pec' not found.");
 
             // Fetch it by name

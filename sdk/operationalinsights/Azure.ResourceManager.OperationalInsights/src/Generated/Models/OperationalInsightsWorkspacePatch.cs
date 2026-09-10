@@ -7,153 +7,288 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
     /// <summary> The top level Workspace resource container. </summary>
     public partial class OperationalInsightsWorkspacePatch : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePatch"/>. </summary>
         public OperationalInsightsWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            PrivateLinkScopedResources = new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Workspace properties. </param>
+        /// <param name="identity"> The identity of the resource. </param>
         /// <param name="tags"> Resource tags. Optional. </param>
-        /// <param name="provisioningState"> The provisioning state of the workspace. </param>
-        /// <param name="customerId"> This is a read-only property. Represents the ID associated with the workspace. </param>
-        /// <param name="sku"> The SKU of the workspace. </param>
-        /// <param name="retentionInDays"> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </param>
-        /// <param name="workspaceCapping"> The daily volume cap for ingestion. </param>
-        /// <param name="createdOn"> Workspace creation date. </param>
-        /// <param name="modifiedOn"> Workspace modification date. </param>
-        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Log Analytics ingestion. </param>
-        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Log Analytics query. </param>
-        /// <param name="forceCmkForQuery"> Indicates whether customer managed storage is mandatory for query management. </param>
-        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
-        /// <param name="features"> Workspace features. </param>
-        /// <param name="defaultDataCollectionRuleResourceId"> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </param>
-        /// <param name="replication"> workspace replication properties. </param>
-        /// <param name="failover"> workspace failover properties. </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, OperationalInsightsWorkspaceEntityStatus? provisioningState, Guid? customerId, OperationalInsightsWorkspaceSku sku, int? retentionInDays, OperationalInsightsWorkspaceCapping workspaceCapping, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, bool? forceCmkForQuery, IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources, OperationalInsightsWorkspaceFeatures features, ResourceIdentifier defaultDataCollectionRuleResourceId, OperationalInsightsWorkspaceReplicationProperties replication, OperationalInsightsWorkspaceFailoverProperties failover, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="eTag"></param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsWorkspacePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkspaceProperties properties, ManagedServiceIdentity identity, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Identity = identity;
             Tags = tags;
-            ProvisioningState = provisioningState;
-            CustomerId = customerId;
-            Sku = sku;
-            RetentionInDays = retentionInDays;
-            WorkspaceCapping = workspaceCapping;
-            CreatedOn = createdOn;
-            ModifiedOn = modifiedOn;
-            PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
-            PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
-            ForceCmkForQuery = forceCmkForQuery;
-            PrivateLinkScopedResources = privateLinkScopedResources;
-            Features = features;
-            DefaultDataCollectionRuleResourceId = defaultDataCollectionRuleResourceId;
-            Replication = replication;
-            Failover = failover;
-            ETag = etag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        /// <summary> Workspace properties. </summary>
+        [WirePath("properties")]
+        internal WorkspaceProperties Properties { get; set; }
+
+        /// <summary> The identity of the resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Resource tags. Optional. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The provisioning state of the workspace. </summary>
         [WirePath("properties.provisioningState")]
-        public OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get; }
+        public OperationalInsightsWorkspaceEntityStatus? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> This is a read-only property. Represents the ID associated with the workspace. </summary>
         [WirePath("properties.customerId")]
-        public Guid? CustomerId { get; }
+        public Guid? CustomerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomerId;
+            }
+        }
+
         /// <summary> The SKU of the workspace. </summary>
         [WirePath("properties.sku")]
-        public OperationalInsightsWorkspaceSku Sku { get; set; }
+        public OperationalInsightsWorkspaceSku Sku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Sku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.Sku = value;
+            }
+        }
+
         /// <summary> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </summary>
         [WirePath("properties.retentionInDays")]
-        public int? RetentionInDays { get; set; }
+        public int? RetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.RetentionInDays = value;
+            }
+        }
+
         /// <summary> The daily volume cap for ingestion. </summary>
         [WirePath("properties.workspaceCapping")]
-        public OperationalInsightsWorkspaceCapping WorkspaceCapping { get; set; }
+        public OperationalInsightsWorkspaceCapping WorkspaceCapping
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceCapping;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.WorkspaceCapping = value;
+            }
+        }
+
         /// <summary> Workspace creation date. </summary>
         [WirePath("properties.createdDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Workspace modification date. </summary>
         [WirePath("properties.modifiedDate")]
-        public DateTimeOffset? ModifiedOn { get; }
+        public DateTimeOffset? ModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ModifiedOn;
+            }
+        }
+
         /// <summary> The network access type for accessing Log Analytics ingestion. </summary>
         [WirePath("properties.publicNetworkAccessForIngestion")]
-        public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
+        public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccessForIngestion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.PublicNetworkAccessForIngestion = value;
+            }
+        }
+
         /// <summary> The network access type for accessing Log Analytics query. </summary>
         [WirePath("properties.publicNetworkAccessForQuery")]
-        public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get; set; }
+        public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccessForQuery;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.PublicNetworkAccessForQuery = value;
+            }
+        }
+
         /// <summary> Indicates whether customer managed storage is mandatory for query management. </summary>
         [WirePath("properties.forceCmkForQuery")]
-        public bool? ForceCmkForQuery { get; set; }
+        public bool? ForceCmkForQuery
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ForceCmkForQuery;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.ForceCmkForQuery = value;
+            }
+        }
+
         /// <summary> List of linked private link scope resources. </summary>
         [WirePath("properties.privateLinkScopedResources")]
-        public IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                return Properties.PrivateLinkScopedResources;
+            }
+        }
+
         /// <summary> Workspace features. </summary>
         [WirePath("properties.features")]
-        public OperationalInsightsWorkspaceFeatures Features { get; set; }
+        public OperationalInsightsWorkspaceFeatures Features
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Features;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.Features = value;
+            }
+        }
+
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>
         [WirePath("properties.defaultDataCollectionRuleResourceId")]
-        public ResourceIdentifier DefaultDataCollectionRuleResourceId { get; set; }
+        public ResourceIdentifier DefaultDataCollectionRuleResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DefaultDataCollectionRuleResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.DefaultDataCollectionRuleResourceId = value;
+            }
+        }
+
         /// <summary> workspace replication properties. </summary>
         [WirePath("properties.replication")]
-        public OperationalInsightsWorkspaceReplicationProperties Replication { get; set; }
+        public OperationalInsightsWorkspaceReplicationProperties Replication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Replication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.Replication = value;
+            }
+        }
+
         /// <summary> workspace failover properties. </summary>
         [WirePath("properties.failover")]
-        public OperationalInsightsWorkspaceFailoverProperties Failover { get; set; }
-        /// <summary> Resource Etag. </summary>
-        [WirePath("etag")]
-        public ETag? ETag { get; }
+        public OperationalInsightsWorkspaceFailoverProperties Failover
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Failover;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkspaceProperties();
+                }
+                Properties.Failover = value;
+            }
+        }
     }
 }

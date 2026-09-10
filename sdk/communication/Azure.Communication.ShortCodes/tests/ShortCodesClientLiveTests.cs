@@ -37,7 +37,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             #endregion Snippet:GetShortCodes
 
-            Assert.NotNull(shortCodes);
+            Assert.That(shortCodes, Is.Not.Null);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (ArgumentNullException ex)
             {
-                Assert.AreEqual("body", ex.ParamName);
+                Assert.That(ex.ParamName, Is.EqualTo("body"));
                 return;
             }
 
@@ -66,7 +66,7 @@ namespace Azure.Communication.ShortCodes.Tests
             var client = CreateClient();
             var response = await client.DeleteUSProgramBriefAsync(programBriefId);
 
-            Assert.AreEqual(204, response.Status);
+            Assert.That(response.Status, Is.EqualTo(204));
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace Azure.Communication.ShortCodes.Tests
             var pageable = client.GetUSProgramBriefsAsync();
             var programBriefs = await pageable.ToEnumerableAsync();
 
-            Assert.NotNull(programBriefs);
+            Assert.That(programBriefs, Is.Not.Null);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace Azure.Communication.ShortCodes.Tests
             }
             catch (RequestFailedException ex)
             {
-                Assert.AreEqual(404, ex.Status);
+                Assert.That(ex.Status, Is.EqualTo(404));
                 return;
             }
 

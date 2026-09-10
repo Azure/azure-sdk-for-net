@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -35,21 +36,54 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> The thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
-        internal AcsChatThreadCreatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<AcsChatThreadParticipantProperties> participants) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
+        /// <param name="retentionPolicy"> The retention policy for the chat. </param>
+        internal AcsChatThreadCreatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata, IReadOnlyList<AcsChatThreadParticipantProperties> participants, AcsChatRetentionPolicy retentionPolicy) : base(transactionId, threadId, additionalBinaryDataProperties, createTime, version)
         {
             CreatedByCommunicationIdentifier = createdByCommunicationIdentifier;
             Properties = properties;
             Metadata = metadata;
             Participants = participants;
+            RetentionPolicy = retentionPolicy;
         }
 
         /// <summary> The communication identifier of the user who created the thread. </summary>
         public CommunicationIdentifierModel CreatedByCommunicationIdentifier { get; }
+
+        /// <summary>
+        /// The thread properties
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, object> Properties { get; }
 
         /// <summary> The thread metadata. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
 
         /// <summary> The list of properties of participants who are part of the thread. </summary>
         public IReadOnlyList<AcsChatThreadParticipantProperties> Participants { get; }
+
+        /// <summary> The retention policy for the chat. </summary>
+        public AcsChatRetentionPolicy RetentionPolicy { get; }
     }
 }

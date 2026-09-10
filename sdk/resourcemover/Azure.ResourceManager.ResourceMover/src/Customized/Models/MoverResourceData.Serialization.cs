@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ResourceMover
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = ModelReaderWriter.Read<SystemData>(new System.BinaryData(System.Text.Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerResourceMoverContext.Default);
                     continue;
                 }
             }

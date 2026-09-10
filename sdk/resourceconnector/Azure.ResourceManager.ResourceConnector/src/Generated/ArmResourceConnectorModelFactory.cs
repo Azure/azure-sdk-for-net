@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceConnector;
@@ -43,20 +42,20 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                distro is null && provisioningState is null && publicKey is null && status is null && version is null && events is null && networkProfile is null && infrastructureConfigProvider is null ? default : new ApplianceProperties(
+                distro is null && infrastructureConfigProvider is null && provisioningState is null && publicKey is null && status is null && version is null && events is null && networkProfile is null ? default : new ApplianceProperties(
                     distro,
-                    new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, null),
+                    new AppliancePropertiesInfrastructureConfig(infrastructureConfigProvider, default),
                     provisioningState,
                     publicKey,
                     status,
                     version,
                     (events ?? new ChangeTrackingList<ApplianceEvent>()).ToList(),
                     networkProfile,
-                    null),
-                identity);
+                    default),
+                identity,
+                default);
         }
 
         /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
@@ -76,7 +75,16 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 message,
                 severity,
                 timestamp,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="proxyVersion"> Version of the proxy configuration. </param>
+        /// <param name="dnsVersion"> Version of the DNS configuration. </param>
+        /// <param name="gatewayVersion"> Version of the Arc Gateway configuration. </param>
+        /// <returns> A new <see cref="Models.ApplianceNetworkProfile"/> instance for mocking. </returns>
+        public static ApplianceNetworkProfile ApplianceNetworkProfile(string proxyVersion = default, string dnsVersion = default, string gatewayVersion = default)
+        {
+            return new ApplianceNetworkProfile(proxyVersion is null ? default : new ProxyConfiguration(proxyVersion, default), dnsVersion is null ? default : new DnsConfiguration(dnsVersion, default), gatewayVersion is null ? default : new GatewayConfiguration(gatewayVersion, default), default);
         }
 
         /// <summary> The Appliances patchable resource definition. </summary>
@@ -86,7 +94,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ResourceConnectorAppliancePatch(tags, additionalBinaryDataProperties: null);
+            return new ResourceConnectorAppliancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> The List Cluster User Credential appliance. </summary>
@@ -97,7 +105,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
 
-            return new ApplianceListCredentialResult(hybridConnectionConfig, kubeconfigs.ToList(), additionalBinaryDataProperties: null);
+            return new ApplianceListCredentialResult(hybridConnectionConfig, (kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>()).ToList(), default);
         }
 
         /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>
@@ -108,7 +116,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.HybridConnectionConfig"/> instance for mocking. </returns>
         public static HybridConnectionConfig HybridConnectionConfig(long? expirationTime = default, string hybridConnectionName = default, string relay = default, string token = default)
         {
-            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, additionalBinaryDataProperties: null);
+            return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, default);
         }
 
         /// <summary> Cluster User Credential appliance. </summary>
@@ -117,7 +125,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceCredentialKubeconfig"/> instance for mocking. </returns>
         public static ApplianceCredentialKubeconfig ApplianceCredentialKubeconfig(AccessProfileType? name = default, string value = default)
         {
-            return new ApplianceCredentialKubeconfig(name, value, additionalBinaryDataProperties: null);
+            return new ApplianceCredentialKubeconfig(name, value, default);
         }
 
         /// <summary> The List Cluster Keys Results appliance. </summary>
@@ -131,7 +139,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             kubeconfigs ??= new ChangeTrackingList<ApplianceCredentialKubeconfig>();
             sshKeys ??= new ChangeTrackingDictionary<string, ApplianceSshKey>();
 
-            return new ApplianceListKeysResult(artifactProfiles, kubeconfigs.ToList(), sshKeys, additionalBinaryDataProperties: null);
+            return new ApplianceListKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), (kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>()).ToList(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), default);
         }
 
         /// <summary> Appliance ArtifactProfile definition. </summary>
@@ -139,7 +147,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceArtifactProfile"/> instance for mocking. </returns>
         public static ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = default)
         {
-            return new ApplianceArtifactProfile(endpoint, additionalBinaryDataProperties: null);
+            return new ApplianceArtifactProfile(endpoint, default);
         }
 
         /// <summary> Appliance SSHKey definition. </summary>
@@ -157,7 +165,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 expirationTimeStamp,
                 privateKey,
                 publicKey,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The Upgrade Graph for appliance. </summary>
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraph"/> instance for mocking. </returns>
         public static ApplianceUpgradeGraph ApplianceUpgradeGraph(string id = default, string name = default, ApplianceUpgradeGraphProperties properties = default)
         {
-            return new ApplianceUpgradeGraph(id, name, properties, additionalBinaryDataProperties: null);
+            return new ApplianceUpgradeGraph(id, name, properties, default);
         }
 
         /// <summary> The Upgrade Graph Properties for appliance. </summary>
@@ -178,7 +186,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         {
             supportedVersions ??= new ChangeTrackingList<ApplianceSupportedVersion>();
 
-            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions.ToList(), additionalBinaryDataProperties: null);
+            return new ApplianceUpgradeGraphProperties(applianceVersion, (supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>()).ToList(), default);
         }
 
         /// <param name="metadataCatalogVersion"> The newer supported version catalog version. </param>
@@ -186,7 +194,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSupportedVersion"/> instance for mocking. </returns>
         public static ApplianceSupportedVersion ApplianceSupportedVersion(ApplianceSupportedVersionCatalogVersion metadataCatalogVersion = default, string version = default)
         {
-            return new ApplianceSupportedVersion(metadataCatalogVersion is null ? default : new ApplianceSupportedVersionMetadata(metadataCatalogVersion, null), version, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersion(metadataCatalogVersion is null ? default : new ApplianceSupportedVersionMetadata(metadataCatalogVersion, default), version, default);
         }
 
         /// <summary> The SupportedVersionCatalogVersion object for appliance. </summary>
@@ -196,7 +204,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersion"/> instance for mocking. </returns>
         public static ApplianceSupportedVersionCatalogVersion ApplianceSupportedVersionCatalogVersion(ApplianceSupportedVersionCatalogVersionProperties data = default, string name = default, string @namespace = default)
         {
-            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, default);
         }
 
         /// <summary> The SupportedVersionCatalogVersionData object for appliance. </summary>
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceSupportedVersionCatalogVersionProperties"/> instance for mocking. </returns>
         public static ApplianceSupportedVersionCatalogVersionProperties ApplianceSupportedVersionCatalogVersionProperties(string audience = default, string catalog = default, string offer = default, string version = default)
         {
-            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, additionalBinaryDataProperties: null);
+            return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, default);
         }
 
         /// <summary> The Get Telemetry Config Result appliance. </summary>
@@ -215,7 +223,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
         /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>
         public static ApplianceTelemetryConfigResult ApplianceTelemetryConfigResult(string telemetryInstrumentationKey = default)
         {
-            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, additionalBinaryDataProperties: null);
+            return new ApplianceTelemetryConfigResult(telemetryInstrumentationKey, default);
         }
     }
 }

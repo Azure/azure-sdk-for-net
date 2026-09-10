@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The properties of the schedule. </summary>
     public partial class ScheduleProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/>. </summary>
         /// <param name="frequency"> Frequency of the schedule. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="dayOfMonth"> UTC day on which cost analysis data will be emailed. Must be between 1 and 31. This property is applicable when frequency is Monthly and overrides weeksOfMonth or daysOfWeek. </param>
         /// <param name="startOn"> The start date and time of the scheduled action (UTC). </param>
         /// <param name="endOn"> The end date and time of the scheduled action (UTC). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<ScheduledActionDaysOfWeek> daysOfWeek, IList<ScheduledActionWeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScheduleProperties(ScheduleFrequency frequency, int? hourOfDay, IList<ScheduledActionDaysOfWeek> daysOfWeek, IList<ScheduledActionWeeksOfMonth> weeksOfMonth, int? dayOfMonth, DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             HourOfDay = hourOfDay;
@@ -76,26 +48,27 @@ namespace Azure.ResourceManager.CostManagement.Models
             DayOfMonth = dayOfMonth;
             StartOn = startOn;
             EndOn = endOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ScheduleProperties"/> for deserialization. </summary>
-        internal ScheduleProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Frequency of the schedule. </summary>
         public ScheduleFrequency Frequency { get; set; }
+
         /// <summary> UTC time at which cost analysis data will be emailed. </summary>
         public int? HourOfDay { get; set; }
+
         /// <summary> Day names in english on which cost analysis data will be emailed. This property is applicable when frequency is Weekly or Monthly. </summary>
         public IList<ScheduledActionDaysOfWeek> DaysOfWeek { get; }
+
         /// <summary> Weeks in which cost analysis data will be emailed. This property is applicable when frequency is Monthly and used in combination with daysOfWeek. </summary>
         public IList<ScheduledActionWeeksOfMonth> WeeksOfMonth { get; }
+
         /// <summary> UTC day on which cost analysis data will be emailed. Must be between 1 and 31. This property is applicable when frequency is Monthly and overrides weeksOfMonth or daysOfWeek. </summary>
         public int? DayOfMonth { get; set; }
+
         /// <summary> The start date and time of the scheduled action (UTC). </summary>
         public DateTimeOffset StartOn { get; set; }
+
         /// <summary> The end date and time of the scheduled action (UTC). </summary>
         public DateTimeOffset EndOn { get; set; }
     }

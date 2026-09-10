@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -57,7 +56,13 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsDisasterRecoveryData))]
     [ModelReaderWriterBuildable(typeof(EventHubsDisasterRecoveryResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsEncryption))]
+    [ModelReaderWriterBuildable(typeof(EventHubsExceptionWindow))]
+    [ModelReaderWriterBuildable(typeof(EventHubsFabricShortcutConfiguration))]
+    [ModelReaderWriterBuildable(typeof(EventHubsFabricShortcutData))]
+    [ModelReaderWriterBuildable(typeof(EventHubsFabricShortcutProperties))]
+    [ModelReaderWriterBuildable(typeof(EventHubsFabricShortcutResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsKeyVaultProperties))]
+    [ModelReaderWriterBuildable(typeof(EventHubsMaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(EventHubsNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(EventHubsNameAvailabilityResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceAuthorizationRuleResource))]
@@ -68,6 +73,7 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsNamespaceResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetData))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetIPRules))]
+    [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetListResult))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkRuleSetVirtualNetworkRules))]
     [ModelReaderWriterBuildable(typeof(EventHubsNetworkSecurityPerimeter))]
@@ -90,6 +96,11 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(EventHubsSchemaGroupResource))]
     [ModelReaderWriterBuildable(typeof(EventHubsSku))]
     [ModelReaderWriterBuildable(typeof(EventHubsThrottlingPolicy))]
+    [ModelReaderWriterBuildable(typeof(EventHubsUpgradePreferencesData))]
+    [ModelReaderWriterBuildable(typeof(EventHubsUpgradePreferencesProperties))]
+    [ModelReaderWriterBuildable(typeof(EventHubsUpgradePreferencesResource))]
+    [ModelReaderWriterBuildable(typeof(EventHubsUpgradeStatus))]
+    [ModelReaderWriterBuildable(typeof(FabricShortcutListResult))]
     [ModelReaderWriterBuildable(typeof(FailOverProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MessageTimestampDescription))]
@@ -100,7 +111,6 @@ namespace Azure.ResourceManager.EventHubs
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateLinkResourcesListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetentionDescription))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaGroupProperties))]

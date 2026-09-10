@@ -12,6 +12,8 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 To check the status of an unassign operation, call `GetUnassignProjectResourcesStatus` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
 
 ```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatus
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string sampleProjectName = "{projectName}";
 // Define assigned resource ID to be unassigned
 var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
@@ -23,7 +25,7 @@ var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 };
 
 // Start the unassign operation
-Operation sampleUnassignOperation = client.UnassignProjectResources(
+Operation sampleUnassignOperation = projectClient.UnassignProjectResources(
     WaitUntil.Started,
     sampleProjectName,
     sampleUnassignIds
@@ -40,7 +42,7 @@ Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call the API to get unassign job status
 Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-    client.GetUnassignProjectResourcesStatus(sampleProjectName, sampleJobId);
+    projectClient.GetUnassignProjectResourcesStatus(sampleProjectName, sampleJobId);
 
 Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 
@@ -59,6 +61,8 @@ if (sampleStatusResponse.Value.Errors != null && sampleStatusResponse.Value.Erro
 To check the status of an unassign operation asynchronously, call `GetUnassignProjectResourcesStatusAsync` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
 
 ```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatusAsync
+ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
 string sampleProjectName = "{projectName}";
 // Define assigned resource ID to be unassigned
 var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
@@ -70,7 +74,7 @@ var sampleUnassignIds = new ConversationAuthoringDeleteDeploymentDetails
 };
 
 // Start the unassign operation
-Operation sampleUnassignOperation = await client.UnassignProjectResourcesAsync(
+Operation sampleUnassignOperation = await projectClient.UnassignProjectResourcesAsync(
     WaitUntil.Started,
     sampleProjectName,
     sampleUnassignIds
@@ -87,7 +91,7 @@ Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call the API to get unassign job status
 Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-    await client.GetUnassignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
+    await projectClient.GetUnassignProjectResourcesStatusAsync(sampleProjectName, sampleJobId);
 
 Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 

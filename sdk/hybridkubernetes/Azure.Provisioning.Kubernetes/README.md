@@ -32,9 +32,12 @@ This example demonstrates how to define an Azure Arc-enabled Kubernetes connecte
 Infrastructure infra = new();
 
 ConnectedCluster cluster =
-    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2024_01_01)
+    new(nameof(cluster), ConnectedCluster.ResourceVersions.V2025_12_01_PREVIEW)
     {
-        AgentPublicKeyCertificate = "base64cert",
+        Properties = new ConnectedClusterProperties
+        {
+            AgentPublicKeyCertificate = "base64cert"
+        },
         Identity = new ManagedServiceIdentity
         {
             ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned

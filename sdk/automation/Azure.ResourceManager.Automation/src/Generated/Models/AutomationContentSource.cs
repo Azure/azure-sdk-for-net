@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the content source. </summary>
     public partial class AutomationContentSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AutomationContentSource"/>. </summary>
         public AutomationContentSource()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="sourceType"> Gets or sets the content source type. </param>
         /// <param name="value"> Gets or sets the value of the content. This is based on the content source type. </param>
         /// <param name="version"> Gets or sets the version of the content. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationContentSource(AutomationContentHash hash, AutomationContentSourceType? sourceType, string value, string version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationContentSource(AutomationContentHash hash, AutomationContentSourceType? sourceType, string value, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hash = hash;
             SourceType = sourceType;
             Value = value;
             Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the hash. </summary>
         public AutomationContentHash Hash { get; set; }
+
         /// <summary> Gets or sets the content source type. </summary>
         public AutomationContentSourceType? SourceType { get; set; }
+
         /// <summary> Gets or sets the value of the content. This is based on the content source type. </summary>
         public string Value { get; set; }
+
         /// <summary> Gets or sets the version of the content. </summary>
         public string Version { get; set; }
     }

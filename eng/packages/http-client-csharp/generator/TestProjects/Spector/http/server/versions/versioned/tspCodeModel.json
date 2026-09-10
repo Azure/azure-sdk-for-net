@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2021-01-01-preview",
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Server.Versions.Versioned.Versions",
       "valueType": {
         "$id": "2",
@@ -30,7 +34,8 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -44,7 +49,8 @@
             "$ref": "1"
           },
           "doc": "The version 2022-12-01-preview.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Server.Versions.Versioned",
@@ -52,7 +58,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [],
@@ -62,6 +69,7 @@
       "$id": "5",
       "kind": "client",
       "name": "VersionedClient",
+      "isExactName": false,
       "namespace": "Server.Versions.Versioned",
       "doc": "Illustrates versioned server.",
       "methods": [
@@ -69,6 +77,7 @@
           "$id": "6",
           "kind": "basic",
           "name": "withoutApiVersion",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2021-01-01-preview",
@@ -77,6 +86,7 @@
           "operation": {
             "$id": "7",
             "name": "withoutApiVersion",
+            "isExactName": false,
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [],
@@ -86,7 +96,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "HEAD",
@@ -110,6 +121,7 @@
           "$id": "8",
           "kind": "basic",
           "name": "withQueryApiVersion",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2021-01-01-preview",
@@ -118,6 +130,7 @@
           "operation": {
             "$id": "9",
             "name": "withQueryApiVersion",
+            "isExactName": false,
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
@@ -178,9 +191,11 @@
                     "crossLanguageDefinitionId": "Server.Versions.Versioned.withQueryApiVersion.apiVersion",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -189,7 +204,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "HEAD",
@@ -213,6 +229,7 @@
           "$id": "16",
           "kind": "basic",
           "name": "withPathApiVersion",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2021-01-01-preview",
@@ -221,6 +238,7 @@
           "operation": {
             "$id": "17",
             "name": "withPathApiVersion",
+            "isExactName": false,
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
@@ -259,7 +277,8 @@
                   {
                     "$ref": "13"
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -268,7 +287,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "HEAD",
@@ -292,6 +312,7 @@
           "$id": "21",
           "kind": "basic",
           "name": "withQueryOldApiVersion",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "2021-01-01-preview",
@@ -300,6 +321,7 @@
           "operation": {
             "$id": "22",
             "name": "withQueryOldApiVersion",
+            "isExactName": false,
             "resourceName": "Versioned",
             "accessibility": "public",
             "parameters": [
@@ -335,7 +357,8 @@
                   {
                     "$ref": "13"
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -344,7 +367,8 @@
                   200
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "HEAD",
@@ -385,7 +409,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Server.Versions.Versioned.endpoint"
+          "crossLanguageDefinitionId": "Server.Versions.Versioned.endpoint",
+          "isExactName": false
         },
         {
           "$ref": "13"

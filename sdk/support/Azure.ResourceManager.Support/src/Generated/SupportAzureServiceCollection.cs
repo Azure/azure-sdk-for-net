@@ -28,8 +28,6 @@ namespace Azure.ResourceManager.Support
     {
         private readonly ClientDiagnostics _servicesClientDiagnostics;
         private readonly Services _servicesRestClient;
-        private readonly ClientDiagnostics _classifyProblemsNoSubscriptionClientDiagnostics;
-        private readonly ClassifyProblemsNoSubscription _classifyProblemsNoSubscriptionRestClient;
 
         /// <summary> Initializes a new instance of SupportAzureServiceCollection for mocking. </summary>
         protected SupportAzureServiceCollection()
@@ -43,9 +41,7 @@ namespace Azure.ResourceManager.Support
         {
             TryGetApiVersion(SupportAzureServiceResource.ResourceType, out string supportAzureServiceApiVersion);
             _servicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
-            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
-            _classifyProblemsNoSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportAzureServiceResource.ResourceType.Namespace, Diagnostics);
-            _classifyProblemsNoSubscriptionRestClient = new ClassifyProblemsNoSubscription(_classifyProblemsNoSubscriptionClientDiagnostics, Pipeline, Endpoint, supportAzureServiceApiVersion ?? "2025-06-01-preview");
+            _servicesRestClient = new Services(_servicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, supportAzureServiceApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +117,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +166,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +194,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +222,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +279,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +336,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +397,7 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

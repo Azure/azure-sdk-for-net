@@ -190,7 +190,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
                 if (prop.NameEquals("identity"u8))
                 {
-                    DeserializeManagedServiceIdentity(prop, ref identity);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerComputeFleetContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("plan"u8))

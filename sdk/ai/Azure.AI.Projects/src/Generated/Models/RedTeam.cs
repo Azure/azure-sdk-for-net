@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Red team details. </summary>
+    [Experimental("AAIP001")]
     public partial class RedTeam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -33,7 +35,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="displayName"> Name of the red-team run. </param>
         /// <param name="turnCount"> Number of simulation rounds. </param>
         /// <param name="attackStrategies"> List of attack strategies or nested lists of attack strategies. </param>
-        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </param>
+        /// <param name="isSimulationOnly"> Simulation-only or Simulation + Evaluation. If `true` the scan outputs conversation not evaluation result. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="riskCategories"> List of risk categories to generate attack objectives for. </param>
         /// <param name="applicationScenario"> Application scenario for the red team operation, to generate scenario specific attacks. </param>
         /// <param name="tags"> Red team's tags. Unlike properties, tags are fully mutable. </param>
@@ -69,7 +71,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> List of attack strategies or nested lists of attack strategies. </summary>
         public IList<AttackStrategy> AttackStrategies { get; }
 
-        /// <summary> Simulation-only or Simulation + Evaluation. Default false, if true the scan outputs conversation not evaluation result. </summary>
+        /// <summary> Simulation-only or Simulation + Evaluation. If `true` the scan outputs conversation not evaluation result. The service defaults to `false` if a value is not specified by the caller. </summary>
         public bool? IsSimulationOnly { get; set; }
 
         /// <summary> List of risk categories to generate attack objectives for. </summary>

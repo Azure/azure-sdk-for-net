@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Reservations.Models
     public readonly partial struct SavingsPlanTerm : IEquatable<SavingsPlanTerm>
     {
         private readonly string _value;
+        /// <summary> P1Y. </summary>
+        private const string P1YValue = "P1Y";
+        /// <summary> P3Y. </summary>
+        private const string P3YValue = "P3Y";
 
         /// <summary> Initializes a new instance of <see cref="SavingsPlanTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SavingsPlanTerm(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string P1YValue = "P1Y";
-        private const string P3YValue = "P3Y";
+            _value = value;
+        }
 
         /// <summary> P1Y. </summary>
         public static SavingsPlanTerm P1Y { get; } = new SavingsPlanTerm(P1YValue);
+
         /// <summary> P3Y. </summary>
         public static SavingsPlanTerm P3Y { get; } = new SavingsPlanTerm(P3YValue);
+
         /// <summary> Determines if two <see cref="SavingsPlanTerm"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SavingsPlanTerm left, SavingsPlanTerm right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SavingsPlanTerm"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SavingsPlanTerm left, SavingsPlanTerm right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SavingsPlanTerm"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SavingsPlanTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SavingsPlanTerm(string value) => new SavingsPlanTerm(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SavingsPlanTerm"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SavingsPlanTerm?(string value) => value == null ? null : new SavingsPlanTerm(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SavingsPlanTerm other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SavingsPlanTerm other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

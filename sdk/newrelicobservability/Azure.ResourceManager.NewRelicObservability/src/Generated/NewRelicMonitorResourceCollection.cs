@@ -28,10 +28,6 @@ namespace Azure.ResourceManager.NewRelicObservability
     {
         private readonly ClientDiagnostics _monitorsClientDiagnostics;
         private readonly Monitors _monitorsRestClient;
-        private readonly ClientDiagnostics _billingInfoClientDiagnostics;
-        private readonly BillingInfo _billingInfoRestClient;
-        private readonly ClientDiagnostics _connectedPartnerResourcesClientDiagnostics;
-        private readonly ConnectedPartnerResources _connectedPartnerResourcesRestClient;
 
         /// <summary> Initializes a new instance of NewRelicMonitorResourceCollection for mocking. </summary>
         protected NewRelicMonitorResourceCollection()
@@ -45,11 +41,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         {
             TryGetApiVersion(NewRelicMonitorResource.ResourceType, out string newRelicMonitorResourceApiVersion);
             _monitorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitorResource.ResourceType.Namespace, Diagnostics);
-            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
-            _billingInfoClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitorResource.ResourceType.Namespace, Diagnostics);
-            _billingInfoRestClient = new BillingInfo(_billingInfoClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
-            _connectedPartnerResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NewRelicObservability", NewRelicMonitorResource.ResourceType.Namespace, Diagnostics);
-            _connectedPartnerResourcesRestClient = new ConnectedPartnerResources(_connectedPartnerResourcesClientDiagnostics, Pipeline, Endpoint, newRelicMonitorResourceApiVersion ?? "2025-05-01-preview");
+            _monitorsRestClient = new Monitors(_monitorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, newRelicMonitorResourceApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -76,7 +68,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,7 +126,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,7 +184,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,7 +233,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,7 +282,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +310,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,7 +338,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,7 +395,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -460,7 +452,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,7 +513,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-01-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

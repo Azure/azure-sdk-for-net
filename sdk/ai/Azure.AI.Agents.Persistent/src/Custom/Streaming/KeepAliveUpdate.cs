@@ -11,10 +11,11 @@ namespace Azure.AI.Agents.Persistent;
 /// <remarks>A KeepAliveUpdate is used to indicate ongoing activity or maintain a connection during streaming
 /// operations. It does not contain any run step data and is typically used internally to prevent timeouts or signal
 /// liveness in long-running processes.</remarks>
-public class KeepAliveUpdate : StreamingUpdate {
+public class KeepAliveUpdate : StreamingUpdate
+{
     internal KeepAliveUpdate() : base(StreamingUpdateReason.KeepAlive) { }
     internal static IEnumerable<StreamingUpdate> GetRunSteps()
     {
-        return [ new KeepAliveUpdate() ];
+        return [new KeepAliveUpdate()];
     }
 }

@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VirtualNetworkGatewayMigrationContent : IUtf8JsonSerializable, IJsonModel<VirtualNetworkGatewayMigrationContent>
+    /// <summary> Virtual network gateway migration parameters. </summary>
+    public partial class VirtualNetworkGatewayMigrationContent : IJsonModel<VirtualNetworkGatewayMigrationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualNetworkGatewayMigrationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkGatewayMigrationContent"/> for deserialization. </summary>
+        internal VirtualNetworkGatewayMigrationContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualNetworkGatewayMigrationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVirtualNetworkGatewayMigrationContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VirtualNetworkGatewayMigrationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayMigrationContent IPersistableModel<VirtualNetworkGatewayMigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VirtualNetworkGatewayMigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="virtualNetworkGatewayMigrationContent"> The <see cref="VirtualNetworkGatewayMigrationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VirtualNetworkGatewayMigrationContent virtualNetworkGatewayMigrationContent)
+        {
+            if (virtualNetworkGatewayMigrationContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(virtualNetworkGatewayMigrationContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VirtualNetworkGatewayMigrationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +85,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("migrationType"u8);
             writer.WriteStringValue(MigrationType.ToString());
             if (Optional.IsDefined(ResourceUri))
@@ -41,15 +97,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("resourceUrl"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -58,84 +114,56 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        VirtualNetworkGatewayMigrationContent IJsonModel<VirtualNetworkGatewayMigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VirtualNetworkGatewayMigrationContent IJsonModel<VirtualNetworkGatewayMigrationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VirtualNetworkGatewayMigrationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVirtualNetworkGatewayMigrationContent(document.RootElement, options);
         }
 
-        internal static VirtualNetworkGatewayMigrationContent DeserializeVirtualNetworkGatewayMigrationContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VirtualNetworkGatewayMigrationContent DeserializeVirtualNetworkGatewayMigrationContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             VirtualNetworkGatewayMigrationType migrationType = default;
-            Uri resourceUrl = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            Uri resourceUri = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("migrationType"u8))
+                if (prop.NameEquals("migrationType"u8))
                 {
-                    migrationType = new VirtualNetworkGatewayMigrationType(property.Value.GetString());
+                    migrationType = new VirtualNetworkGatewayMigrationType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("resourceUrl"u8))
+                if (prop.NameEquals("resourceUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceUrl = new Uri(property.Value.GetString());
+                    resourceUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualNetworkGatewayMigrationContent(migrationType, resourceUrl, serializedAdditionalRawData);
+            return new VirtualNetworkGatewayMigrationContent(migrationType, resourceUri, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<VirtualNetworkGatewayMigrationContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VirtualNetworkGatewayMigrationContent IPersistableModel<VirtualNetworkGatewayMigrationContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayMigrationContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVirtualNetworkGatewayMigrationContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayMigrationContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VirtualNetworkGatewayMigrationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

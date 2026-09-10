@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct TranslateRequiredQueryParametersConduct : IEquatable<TranslateRequiredQueryParametersConduct>
     {
         private readonly string _value;
+        /// <summary> Translates required query parameters to template ones. Is a default value. </summary>
+        private const string TemplateValue = "template";
+        /// <summary> Leaves required query parameters as they are (no translation done). </summary>
+        private const string QueryValue = "query";
 
         /// <summary> Initializes a new instance of <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TranslateRequiredQueryParametersConduct(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TemplateValue = "template";
-        private const string QueryValue = "query";
+            _value = value;
+        }
 
         /// <summary> Translates required query parameters to template ones. Is a default value. </summary>
         public static TranslateRequiredQueryParametersConduct Template { get; } = new TranslateRequiredQueryParametersConduct(TemplateValue);
+
         /// <summary> Leaves required query parameters as they are (no translation done). </summary>
         public static TranslateRequiredQueryParametersConduct Query { get; } = new TranslateRequiredQueryParametersConduct(QueryValue);
+
         /// <summary> Determines if two <see cref="TranslateRequiredQueryParametersConduct"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TranslateRequiredQueryParametersConduct left, TranslateRequiredQueryParametersConduct right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TranslateRequiredQueryParametersConduct"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TranslateRequiredQueryParametersConduct left, TranslateRequiredQueryParametersConduct right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TranslateRequiredQueryParametersConduct(string value) => new TranslateRequiredQueryParametersConduct(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TranslateRequiredQueryParametersConduct"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TranslateRequiredQueryParametersConduct?(string value) => value == null ? null : new TranslateRequiredQueryParametersConduct(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TranslateRequiredQueryParametersConduct other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TranslateRequiredQueryParametersConduct other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

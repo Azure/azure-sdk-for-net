@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             ExpressRoutePortAuthorizationResource expressRoutePortAuthorization = client.GetExpressRoutePortAuthorizationResource(expressRoutePortAuthorizationResourceId);
 
             // invoke the operation
-            await expressRoutePortAuthorization.DeleteAsync(WaitUntil.Completed);
+            await expressRoutePortAuthorization.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             ExpressRoutePortAuthorizationData data = new ExpressRoutePortAuthorizationData();
-            ArmOperation<ExpressRoutePortAuthorizationResource> lro = await expressRoutePortAuthorization.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<ExpressRoutePortAuthorizationResource> lro = await expressRoutePortAuthorization.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             ExpressRoutePortAuthorizationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

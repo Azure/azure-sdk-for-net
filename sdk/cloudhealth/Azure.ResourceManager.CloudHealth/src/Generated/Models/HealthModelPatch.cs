@@ -27,13 +27,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Initializes a new instance of <see cref="HealthModelPatch"/>. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthModelPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, HealthModelUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthModelPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
-            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,25 +40,5 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-
-        /// <summary> The resource-specific properties for this resource. </summary>
-        internal HealthModelUpdateProperties Properties { get; set; }
-
-        /// <summary> Configure to automatically discover entities from a given scope, such as a Service Group. The discovered entities will be linked to the root entity of the health model. </summary>
-        public ModelDiscoverySettings HealthModelUpdateDiscovery
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Discovery;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new HealthModelUpdateProperties();
-                }
-                Properties.Discovery = value;
-            }
-        }
     }
 }

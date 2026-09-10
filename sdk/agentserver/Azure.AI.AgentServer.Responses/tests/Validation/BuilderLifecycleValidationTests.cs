@@ -54,8 +54,8 @@ public class BuilderLifecycleValidationTests
         builder.EmitAdded();
         var textBuilder = builder.AddTextContent();
         textBuilder.EmitAdded();
-        textBuilder.EmitDone("Hello, world!");
-        builder.EmitContentDone(textBuilder);
+        textBuilder.EmitTextDone("Hello, world!");
+        textBuilder.EmitDone();
 
         // EmitDone with content should succeed
         var evt = builder.EmitDone();

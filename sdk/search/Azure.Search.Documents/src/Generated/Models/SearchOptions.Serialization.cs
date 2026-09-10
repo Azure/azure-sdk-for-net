@@ -239,10 +239,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("queryRewrites"u8);
                 writer.WriteStringValue(QueryRewritesRaw);
             }
-            if (Optional.IsDefined(SemanticFieldsRaw))
+            if (Optional.IsCollectionDefined(SemanticFields))
             {
                 writer.WritePropertyName("semanticFields"u8);
-                writer.WriteStringValue(SemanticFieldsRaw);
+                writer.WriteStringValue(string.Join(",", SemanticFields));
             }
             if (Optional.IsCollectionDefined(VectorQueries))
             {
@@ -335,7 +335,7 @@ namespace Azure.Search.Documents
             string queryAnswerRaw = default;
             string queryCaptionRaw = default;
             string queryRewritesRaw = default;
-            string semanticFieldsRaw = default;
+            IList<string> semanticFields = default;
             IList<VectorQuery> vectorQueries = default;
             VectorFilterMode? filterMode = default;
             HybridSearch hybridSearch = default;
@@ -569,7 +569,12 @@ namespace Azure.Search.Documents
                 }
                 if (prop.NameEquals("semanticFields"u8))
                 {
-                    semanticFieldsRaw = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    string stringValue = prop.Value.GetString();
+                    semanticFields = string.IsNullOrEmpty(stringValue) ? new List<string>() : new List<string>(stringValue.Split(','));
                     continue;
                 }
                 if (prop.NameEquals("vectorQueries"u8))
@@ -639,7 +644,7 @@ namespace Azure.Search.Documents
                 queryAnswerRaw,
                 queryCaptionRaw,
                 queryRewritesRaw,
-                semanticFieldsRaw,
+                semanticFields ?? new ChangeTrackingList<string>(),
                 vectorQueries ?? new ChangeTrackingList<VectorQuery>(),
                 filterMode,
                 hybridSearch,

@@ -5,6 +5,10 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.KubernetesConfiguration.Extensions;
@@ -33,6 +37,42 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Mocking
         {
             KubernetesClusterExtensionResource.ValidateResourceId(id);
             return new KubernetesClusterExtensionResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="KubernetesClusterExtensionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="KubernetesClusterExtensionResource"/> objects. </returns>
+        public virtual KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(ResourceIdentifier scope)
+        {
+            return new KubernetesClusterExtensionCollection(Client, scope);
+        }
+
+        /// <summary> Gets Kubernetes Cluster Extension. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="extensionName"> Name of the Extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(ResourceIdentifier scope, string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            return GetKubernetesClusterExtensions(scope).Get(extensionName, cancellationToken);
+        }
+
+        /// <summary> Gets Kubernetes Cluster Extension. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="extensionName"> Name of the Extension. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(ResourceIdentifier scope, string extensionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
+
+            return await GetKubernetesClusterExtensions(scope).GetAsync(extensionName, cancellationToken).ConfigureAwait(false);
         }
     }
 }

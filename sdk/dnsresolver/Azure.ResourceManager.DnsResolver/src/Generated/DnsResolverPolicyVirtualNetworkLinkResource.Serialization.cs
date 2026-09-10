@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DnsResolver
 {
+    /// <summary></summary>
     public partial class DnsResolverPolicyVirtualNetworkLinkResource : IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>
     {
-        private static DnsResolverPolicyVirtualNetworkLinkData s_dataDeserializationInstance;
-        private static DnsResolverPolicyVirtualNetworkLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DnsResolverPolicyVirtualNetworkLinkData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DnsResolverPolicyVirtualNetworkLinkData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DnsResolverPolicyVirtualNetworkLinkData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>)Data).Write(writer, options);
 
-        DnsResolverPolicyVirtualNetworkLinkData IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DnsResolverPolicyVirtualNetworkLinkData IJsonModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverPolicyVirtualNetworkLinkData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DnsResolverPolicyVirtualNetworkLinkData IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DnsResolverPolicyVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

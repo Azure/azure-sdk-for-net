@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public readonly partial struct FrontendEndpointCustomHttpsProvisioningState : IEquatable<FrontendEndpointCustomHttpsProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Enabling. </summary>
+        private const string EnablingValue = "Enabling";
+        /// <summary> Enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Disabling. </summary>
+        private const string DisablingValue = "Disabling";
+        /// <summary> Disabled. </summary>
+        private const string DisabledValue = "Disabled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="FrontendEndpointCustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FrontendEndpointCustomHttpsProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnablingValue = "Enabling";
-        private const string EnabledValue = "Enabled";
-        private const string DisablingValue = "Disabling";
-        private const string DisabledValue = "Disabled";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Enabling. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Enabling { get; } = new FrontendEndpointCustomHttpsProvisioningState(EnablingValue);
+
         /// <summary> Enabled. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Enabled { get; } = new FrontendEndpointCustomHttpsProvisioningState(EnabledValue);
+
         /// <summary> Disabling. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Disabling { get; } = new FrontendEndpointCustomHttpsProvisioningState(DisablingValue);
+
         /// <summary> Disabled. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Disabled { get; } = new FrontendEndpointCustomHttpsProvisioningState(DisabledValue);
+
         /// <summary> Failed. </summary>
         public static FrontendEndpointCustomHttpsProvisioningState Failed { get; } = new FrontendEndpointCustomHttpsProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FrontendEndpointCustomHttpsProvisioningState left, FrontendEndpointCustomHttpsProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FrontendEndpointCustomHttpsProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FrontendEndpointCustomHttpsProvisioningState left, FrontendEndpointCustomHttpsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontendEndpointCustomHttpsProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FrontendEndpointCustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FrontendEndpointCustomHttpsProvisioningState(string value) => new FrontendEndpointCustomHttpsProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FrontendEndpointCustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FrontendEndpointCustomHttpsProvisioningState?(string value) => value == null ? null : new FrontendEndpointCustomHttpsProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FrontendEndpointCustomHttpsProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FrontendEndpointCustomHttpsProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

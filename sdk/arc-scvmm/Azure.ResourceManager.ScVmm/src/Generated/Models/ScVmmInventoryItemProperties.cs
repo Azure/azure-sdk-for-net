@@ -12,73 +12,49 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     /// <summary>
     /// Defines the resource properties.
-    /// Please note <see cref="ScVmmInventoryItemProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualMachineInventoryItem"/>.
     /// </summary>
     public abstract partial class ScVmmInventoryItemProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemProperties"/>. </summary>
-        protected ScVmmInventoryItemProperties()
+        /// <param name="inventoryType"> They inventory type. </param>
+        private protected ScVmmInventoryItemProperties(ScVmmInventoryType inventoryType)
         {
+            InventoryType = inventoryType;
         }
 
         /// <summary> Initializes a new instance of <see cref="ScVmmInventoryItemProperties"/>. </summary>
         /// <param name="inventoryType"> They inventory type. </param>
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
-        /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
-        /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
+        /// <param name="uuid"> Gets the UUID (which is assigned by Vmm) for the inventory item. </param>
+        /// <param name="inventoryItemName"> Gets the Managed Object name in Vmm for the inventory item. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmInventoryItemProperties(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmInventoryItemProperties(ScVmmInventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ScVmmProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InventoryType = inventoryType;
             ManagedResourceId = managedResourceId;
             Uuid = uuid;
             InventoryItemName = inventoryItemName;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> They inventory type. </summary>
         internal ScVmmInventoryType InventoryType { get; set; }
+
         /// <summary> Gets the tracked resource id corresponding to the inventory resource. </summary>
         public string ManagedResourceId { get; }
-        /// <summary> Gets the UUID (which is assigned by VMM) for the inventory item. </summary>
+
+        /// <summary> Gets the UUID (which is assigned by Vmm) for the inventory item. </summary>
         public string Uuid { get; }
-        /// <summary> Gets the Managed Object name in VMM for the inventory item. </summary>
+
+        /// <summary> Gets the Managed Object name in Vmm for the inventory item. </summary>
         public string InventoryItemName { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public ScVmmProvisioningState? ProvisioningState { get; }
     }

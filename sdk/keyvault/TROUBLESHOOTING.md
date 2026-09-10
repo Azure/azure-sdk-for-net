@@ -185,7 +185,7 @@ Possible solutions include:
 2. Use a single instance of [DefaultAzureCredential] or other credential you use to authenticate your clients for each
    Key Vault or Managed HSM endpoint you need to access.
 3. You could cache a certificate, key, or secret in memory for a time to reduce calls to retrieve them. See our
-   [caching proxy sample](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/azure-key-vault-proxy/)
+   [caching proxy sample](https://learn.microsoft.com/samples/azure/azure-sdk-for-net/keyvault-proxy/)
    for one possible implementation.
 4. Use Azure App Configuration for storing non-secrets and references to Key Vault secrets. Storing all app configuration
    in Key Vault will increase the likelihood of requests being throttled as more application instances are started. See

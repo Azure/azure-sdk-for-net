@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     yield break;
                 }
                 CloudHsmClusterListResult result = CloudHsmClusterListResult.FromResponse(response);
-                yield return Page<CloudHsmClusterData>.FromValues((IReadOnlyList<CloudHsmClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CloudHsmClusterData>.FromValues((IReadOnlyList<CloudHsmClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

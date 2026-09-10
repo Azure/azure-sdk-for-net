@@ -7,8 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DevOpsInfrastructure;
 using Azure.ResourceManager.Models;
@@ -38,11 +38,43 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the current operation. </param>
+        /// <param name="maximumConcurrency"> Defines how many resources can there be created at any given time. </param>
+        /// <param name="organizationProfile"> Defines the organization in which the pool will be used. </param>
+        /// <param name="agentProfile"> Defines how the machine will be handled once it executed a job. </param>
+        /// <param name="fabricProfile"> Defines the type of fabric the agent will run on. </param>
+        /// <param name="devCenterProjectResourceId"> The resource id of the DevCenter Project the pool belongs to. </param>
+        /// <param name="runtimeWorkFolder"> The target work folder of the task agent on the machine. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolProperties"/> instance for mocking. </returns>
+        public static DevOpsPoolProperties DevOpsPoolProperties(DevOpsInfrastructureProvisioningState? provisioningState = default, int maximumConcurrency = default, DevOpsOrganizationProfile organizationProfile = default, DevOpsPoolAgentProfile agentProfile = default, DevOpsFabricProfile fabricProfile = default, string devCenterProjectResourceId = default, string runtimeWorkFolder = default)
+        {
+            return new DevOpsPoolProperties(
+                provisioningState,
+                maximumConcurrency,
+                organizationProfile,
+                agentProfile,
+                fabricProfile,
+                devCenterProjectResourceId,
+                runtimeWorkFolder is null ? default : new RuntimeConfiguration(runtimeWorkFolder, default),
+                default);
+        }
+
+        /// <summary>
+        /// Defines the organization in which the pool will be used.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsGitHubOrganizationProfile"/> and <see cref="Models.DevOpsAzureOrganizationProfile"/>.
+        /// </summary>
+        /// <param name="kind"> Discriminator property for DevOpsOrganizationProfile. </param>
+        /// <returns> A new <see cref="Models.DevOpsOrganizationProfile"/> instance for mocking. </returns>
+        public static DevOpsOrganizationProfile DevOpsOrganizationProfile(string kind = default)
+        {
+            return new UnknownDevOpsOrganizationProfile(kind, default);
         }
 
         /// <summary> GitHub organization profile. </summary>
@@ -52,7 +84,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             organizations ??= new ChangeTrackingList<DevOpsGitHubOrganization>();
 
-            return new DevOpsGitHubOrganizationProfile("GitHub", additionalBinaryDataProperties: null, organizations.ToList());
+            return new DevOpsGitHubOrganizationProfile(default, default, (organizations ?? new ChangeTrackingList<DevOpsGitHubOrganization>()).ToList());
         }
 
         /// <summary> Defines a GitHub organization. </summary>
@@ -63,19 +95,28 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             repositories ??= new ChangeTrackingList<string>();
 
-            return new DevOpsGitHubOrganization(uri, repositories.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsGitHubOrganization(uri, (repositories ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Azure DevOps organization profile. </summary>
+        /// <param name="description"> An extra description to add to the Azure DevOps pool. </param>
+        /// <param name="updateDescription"> Determines whether the service updates the Azure DevOps pool description. </param>
         /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
         /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
         /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
-        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(string description = default, bool? updateDescription = default, IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
         {
             organizations ??= new ChangeTrackingList<DevOpsOrganization>();
 
-            return new DevOpsAzureOrganizationProfile("AzureDevOps", additionalBinaryDataProperties: null, organizations.ToList(), permissionProfile, @alias);
+            return new DevOpsAzureOrganizationProfile(
+                default,
+                default,
+                description,
+                updateDescription,
+                (organizations ?? new ChangeTrackingList<DevOpsOrganization>()).ToList(),
+                permissionProfile,
+                @alias);
         }
 
         /// <summary> Defines an Azure DevOps organization. </summary>
@@ -91,11 +132,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
             return new DevOpsOrganization(
                 uri,
-                projects.ToList(),
+                (projects ?? new ChangeTrackingList<string>()).ToList(),
                 parallelism,
                 openAccess,
                 @alias,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Defines the type of Azure DevOps pool permission. </summary>
@@ -108,27 +149,132 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             users ??= new ChangeTrackingList<string>();
             groups ??= new ChangeTrackingList<string>();
 
-            return new DevOpsAzurePermissionProfile(kind, users.ToList(), groups.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsAzurePermissionProfile(kind, (users ?? new ChangeTrackingList<string>()).ToList(), (groups ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <summary>
+        /// The agent profile of the machines in the pool.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsStatelessAgentProfile"/> and <see cref="Models.DevOpsStateful"/>.
+        /// </summary>
+        /// <param name="kind"> Discriminator property for DevOpsPoolAgentProfile. </param>
+        /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolAgentProfile"/> instance for mocking. </returns>
+        public static DevOpsPoolAgentProfile DevOpsPoolAgentProfile(string kind = default, ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default)
+        {
+            return new UnknownDevOpsPoolAgentProfile(kind, resourcePredictions, resourcePredictionsProfile, default);
+        }
+
+        /// <summary> Defines pool buffer. </summary>
+        /// <returns> A new <see cref="Models.ResourcePredictions"/> instance for mocking. </returns>
+        public static ResourcePredictions ResourcePredictions()
+        {
+            return new ResourcePredictions(default);
+        }
+
+        /// <summary>
+        /// Determines how the stand-by scheme should be provided.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManualResourcePredictionsProfile"/> and <see cref="Models.AutomaticResourcePredictionsProfile"/>.
+        /// </summary>
+        /// <param name="kind"> Determines how the stand-by scheme should be provided. </param>
+        /// <returns> A new <see cref="Models.ResourcePredictionsProfile"/> instance for mocking. </returns>
+        public static ResourcePredictionsProfile ResourcePredictionsProfile(string kind = default)
+        {
+            return new UnknownResourcePredictionsProfile(default, default);
+        }
+
+        /// <summary> Customer provides the stand-by agent scheme. </summary>
+        /// <returns> A new <see cref="Models.ManualResourcePredictionsProfile"/> instance for mocking. </returns>
+        public static ManualResourcePredictionsProfile ManualResourcePredictionsProfile()
+        {
+            return new ManualResourcePredictionsProfile(default, default);
+        }
+
+        /// <summary> The stand-by agent scheme is determined based on historical demand. </summary>
+        /// <param name="predictionPreference"> Determines the balance between cost and performance. </param>
+        /// <returns> A new <see cref="Models.AutomaticResourcePredictionsProfile"/> instance for mocking. </returns>
+        public static AutomaticResourcePredictionsProfile AutomaticResourcePredictionsProfile(PredictionPreference? predictionPreference = default)
+        {
+            return new AutomaticResourcePredictionsProfile(default, default, predictionPreference);
+        }
+
+        /// <summary> Stateless profile meaning that the machines will be cleaned up after running a job. </summary>
+        /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <returns> A new <see cref="Models.DevOpsStatelessAgentProfile"/> instance for mocking. </returns>
+        public static DevOpsStatelessAgentProfile DevOpsStatelessAgentProfile(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default)
+        {
+            return new DevOpsStatelessAgentProfile(default, resourcePredictions, resourcePredictionsProfile, default);
+        }
+
+        /// <summary> Stateful profile meaning that the machines will be returned to the pool after running a job. </summary>
+        /// <param name="resourcePredictions"> Defines pool buffer/stand-by agents. </param>
+        /// <param name="resourcePredictionsProfile"> Defines how the pool buffer/stand-by agents is provided. </param>
+        /// <param name="maxAgentLifetime"> How long should stateful machines be kept around. The maximum is one week. </param>
+        /// <param name="gracePeriodTimeSpan"> How long should the machine be kept around after it ran a workload when there are no stand-by agents. The maximum is one week. </param>
+        /// <returns> A new <see cref="Models.DevOpsStateful"/> instance for mocking. </returns>
+        public static DevOpsStateful DevOpsStateful(ResourcePredictions resourcePredictions = default, ResourcePredictionsProfile resourcePredictionsProfile = default, string maxAgentLifetime = default, string gracePeriodTimeSpan = default)
+        {
+            return new DevOpsStateful(
+                default,
+                resourcePredictions,
+                resourcePredictionsProfile,
+                default,
+                maxAgentLifetime,
+                gracePeriodTimeSpan);
+        }
+
+        /// <summary>
+        /// Defines the type of fabric the agent will run on.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DevOpsVmssFabricProfile"/>.
+        /// </summary>
+        /// <param name="kind"> Discriminator property for DevOpsFabricProfile. </param>
+        /// <returns> A new <see cref="Models.DevOpsFabricProfile"/> instance for mocking. </returns>
+        public static DevOpsFabricProfile DevOpsFabricProfile(string kind = default)
+        {
+            return new UnknownDevOpsFabricProfile(kind, default);
+        }
+
+        /// <summary> The agents will run on Virtual Machine Scale Sets. </summary>
+        /// <param name="sku"> The Azure SKU of the machines in the pool. </param>
         /// <param name="images"> The VM images of the machines in the pool. </param>
         /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
         /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
         /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
         /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
-        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(DevOpsAzureSku sku = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
         {
             images ??= new ChangeTrackingList<DevOpsPoolVmImage>();
 
             return new DevOpsVmssFabricProfile(
-                "Vmss",
-                additionalBinaryDataProperties: null,
-                skuName is null ? default : new DevOpsAzureSku(skuName, null),
-                images.ToList(),
+                default,
+                default,
+                sku,
+                (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
                 osProfile,
                 storageProfile,
                 networkProfile);
+        }
+
+        /// <summary> The Azure SKU of the machines in the pool. </summary>
+        /// <param name="name"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="windowsNvmeDrive"> The drive letter for the NVMe striped volume on Windows (e.g., 'N'). Defaults to 'N' when not specified. </param>
+        /// <param name="linuxNvmePath"> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </param>
+        /// <param name="vmSizes"> Specifies VM sizes for instance-mix allocation. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzureSku"/> instance for mocking. </returns>
+        public static DevOpsAzureSku DevOpsAzureSku(string name = default, string windowsNvmeDrive = default, string linuxNvmePath = default, IEnumerable<DevOpsVmSize> vmSizes = default)
+        {
+            vmSizes ??= new ChangeTrackingList<DevOpsVmSize>();
+
+            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, (vmSizes ?? new ChangeTrackingList<DevOpsVmSize>()).ToList(), default);
+        }
+
+        /// <summary> Specifies the VM Size. </summary>
+        /// <param name="name"> Specifies the name of the VM Size. </param>
+        /// <returns> A new <see cref="Models.DevOpsVmSize"/> instance for mocking. </returns>
+        public static DevOpsVmSize DevOpsVmSize(string name = default)
+        {
+            return new DevOpsVmSize(name, default);
         }
 
         /// <summary> The VM image of the machines in the pool. </summary>
@@ -138,19 +284,36 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
         /// <param name="ephemeralType"> The ephemeral type of the image. </param>
         /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <param name="provisioningScriptStorageAccountResourceId"> The ARM resource ID of the storage account hosting provisioning scripts for this image. </param>
+        /// <param name="provisioningScriptManagedIdentityClientId"> The managed identity client ID used to access provisioning script content for this image. </param>
+        /// <param name="provisioningScriptShouldRestart"> Determines whether the machine should be restarted after provisioning script execution for this image. </param>
+        /// <param name="provisioningScriptEntryPoint"> The provisioning script entry point for this image. </param>
         /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
-        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default, ResourceIdentifier provisioningScriptStorageAccountResourceId = default, string provisioningScriptManagedIdentityClientId = default, bool? provisioningScriptShouldRestart = default, string provisioningScriptEntryPoint = default)
         {
             aliases ??= new ChangeTrackingList<string>();
 
             return new DevOpsPoolVmImage(
                 resourceId,
                 wellKnownImageName,
-                aliases.ToList(),
+                (aliases ?? new ChangeTrackingList<string>()).ToList(),
                 buffer,
                 ephemeralType,
                 isEphemeral,
-                additionalBinaryDataProperties: null);
+                provisioningScriptStorageAccountResourceId,
+                provisioningScriptManagedIdentityClientId,
+                provisioningScriptShouldRestart,
+                provisioningScriptEntryPoint,
+                default);
+        }
+
+        /// <summary> The OS profile of the machines in the pool. </summary>
+        /// <param name="secretsManagementSettings"> The secret management settings of the machines in the pool. </param>
+        /// <param name="logonType"> Determines how the service should be run. By default, this will be set to Service. </param>
+        /// <returns> A new <see cref="Models.DevOpsOSProfile"/> instance for mocking. </returns>
+        public static DevOpsOSProfile DevOpsOSProfile(SecretsManagementSettings secretsManagementSettings = default, DevOpsLogonType? logonType = default)
+        {
+            return new DevOpsOSProfile(secretsManagementSettings, logonType, default);
         }
 
         /// <summary> The secret management settings of the machines in the pool. </summary>
@@ -163,7 +326,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             observedCertificates ??= new ChangeTrackingList<Uri>();
 
-            return new SecretsManagementSettings(certificateStoreLocation, certificateStoreName, observedCertificates.ToList(), keyExportable, additionalBinaryDataProperties: null);
+            return new SecretsManagementSettings(certificateStoreLocation, certificateStoreName, (observedCertificates ?? new ChangeTrackingList<Uri>()).ToList(), keyExportable, default);
         }
 
         /// <summary> The storage profile of the VMSS. </summary>
@@ -174,7 +337,18 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             dataDisks ??= new ChangeTrackingList<DevOpsDataDisk>();
 
-            return new DevOpsStorageProfile(osDiskStorageAccountType, dataDisks.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsStorageProfile(osDiskStorageAccountType, (dataDisks ?? new ChangeTrackingList<DevOpsDataDisk>()).ToList(), default);
+        }
+
+        /// <summary> The data disk of the VMSS. </summary>
+        /// <param name="caching"> The type of caching to be enabled for the data disks. The default value for caching is readwrite. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/. </param>
+        /// <param name="diskSizeGiB"> The initial disk size in gigabytes. </param>
+        /// <param name="storageAccountType"> The storage Account type to be used for the data disk. If omitted, the default is "standard_lrs". </param>
+        /// <param name="driveLetter"> The drive letter for the empty data disk. If not specified, it will be the first available letter. </param>
+        /// <returns> A new <see cref="Models.DevOpsDataDisk"/> instance for mocking. </returns>
+        public static DevOpsDataDisk DevOpsDataDisk(DevOpsDataDiskCachingType? caching = default, int? diskSizeGiB = default, DevOpsStorageAccountType? storageAccountType = default, string driveLetter = default)
+        {
+            return new DevOpsDataDisk(caching, diskSizeGiB, storageAccountType, driveLetter, default);
         }
 
         /// <summary> The network profile of the machines in the pool. </summary>
@@ -186,7 +360,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             ipAddresses ??= new ChangeTrackingList<string>();
 
-            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The type used for update operations of the Pool. </summary>
@@ -198,7 +372,28 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DevOpsPoolPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new DevOpsPoolPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="provisioningState"> The status of the current operation. </param>
+        /// <param name="maximumConcurrency"> Defines how many resources can there be created at any given time. </param>
+        /// <param name="organizationProfile"> Defines the organization in which the pool will be used. </param>
+        /// <param name="agentProfile"> Defines how the machine will be handled once it executed a job. </param>
+        /// <param name="fabricProfile"> Defines the type of fabric the agent will run on. </param>
+        /// <param name="devCenterProjectResourceId"> The resource id of the DevCenter Project the pool belongs to. </param>
+        /// <param name="runtimeWorkFolder"> The target work folder of the task agent on the machine. </param>
+        /// <returns> A new <see cref="Models.PoolUpdateProperties"/> instance for mocking. </returns>
+        public static PoolUpdateProperties PoolUpdateProperties(DevOpsInfrastructureProvisioningState? provisioningState = default, int? maximumConcurrency = default, DevOpsOrganizationProfile organizationProfile = default, DevOpsPoolAgentProfile agentProfile = default, DevOpsFabricProfile fabricProfile = default, string devCenterProjectResourceId = default, string runtimeWorkFolder = default)
+        {
+            return new PoolUpdateProperties(
+                provisioningState,
+                maximumConcurrency,
+                organizationProfile,
+                agentProfile,
+                fabricProfile,
+                devCenterProjectResourceId,
+                runtimeWorkFolder is null ? default : new RuntimeConfiguration(runtimeWorkFolder, default),
+                default);
         }
 
         /// <summary> The parameters used to check the availability of a resource. </summary>
@@ -207,7 +402,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.CheckNameAvailability"/> instance for mocking. </returns>
         public static CheckNameAvailability CheckNameAvailability(string name = default, DevOpsInfrastructureResourceType @type = default)
         {
-            return new CheckNameAvailability(name, @type, additionalBinaryDataProperties: null);
+            return new CheckNameAvailability(name, @type, default);
         }
 
         /// <summary> The CheckNameAvailability operation response. </summary>
@@ -218,7 +413,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.DevOpsCheckNameAvailabilityResult"/> instance for mocking. </returns>
         public static DevOpsCheckNameAvailabilityResult DevOpsCheckNameAvailabilityResult(DevOpsAvailabilityStatus available = default, string message = default, string name = default, CheckNameAvailabilityReason reason = default)
         {
-            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, additionalBinaryDataProperties: null);
+            return new DevOpsCheckNameAvailabilityResult(available, message, name, reason, default);
         }
 
         /// <summary> Request body for deleting many resources by their IDs. </summary>
@@ -228,7 +423,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             resourceIds ??= new ChangeTrackingList<string>();
 
-            return new DevOpsDeleteResourcesDetails(resourceIds.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsDeleteResourcesDetails((resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> A ResourceDetailsObject. </summary>
@@ -245,8 +440,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Details of the ResourceDetailsObject. </summary>
@@ -256,7 +451,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.DevOpsResourceDetailsProperties"/> instance for mocking. </returns>
         public static DevOpsResourceDetailsProperties DevOpsResourceDetailsProperties(DevOpsResourceStatus status = default, string image = default, string imageVersion = default)
         {
-            return new DevOpsResourceDetailsProperties(status, image, imageVersion, additionalBinaryDataProperties: null);
+            return new DevOpsResourceDetailsProperties(status, image, imageVersion, default);
         }
 
         /// <summary> A ResourceSku. </summary>
@@ -273,8 +468,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Properties of a ResourceSku. </summary>
@@ -299,11 +494,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 tier,
                 size,
                 family,
-                locations.ToList(),
-                locationInfo.ToList(),
-                capabilities.ToList(),
-                restrictions.ToList(),
-                additionalBinaryDataProperties: null);
+                (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                (locationInfo ?? new ChangeTrackingList<ResourceSkuLocationInfo>()).ToList(),
+                (capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>()).ToList(),
+                (restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>()).ToList(),
+                default);
         }
 
         /// <summary> Describes an available Compute SKU Location Information. </summary>
@@ -316,7 +511,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             zones ??= new ChangeTrackingList<string>();
             zoneDetails ??= new ChangeTrackingList<ResourceSkuZoneDetails>();
 
-            return new ResourceSkuLocationInfo(location, zones.ToList(), zoneDetails.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceSkuLocationInfo(location, (zones ?? new ChangeTrackingList<string>()).ToList(), (zoneDetails ?? new ChangeTrackingList<ResourceSkuZoneDetails>()).ToList(), default);
         }
 
         /// <summary> Describes The zonal capabilities of a SKU. </summary>
@@ -328,7 +523,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             name ??= new ChangeTrackingList<string>();
             capabilities ??= new ChangeTrackingList<ResourceSkuCapabilities>();
 
-            return new ResourceSkuZoneDetails(name.ToList(), capabilities.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceSkuZoneDetails((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>()).ToList(), default);
         }
 
         /// <summary> Describes The SKU capabilities object. </summary>
@@ -337,7 +532,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.ResourceSkuCapabilities"/> instance for mocking. </returns>
         public static ResourceSkuCapabilities ResourceSkuCapabilities(string name = default, string value = default)
         {
-            return new ResourceSkuCapabilities(name, value, additionalBinaryDataProperties: null);
+            return new ResourceSkuCapabilities(name, value, default);
         }
 
         /// <summary> The restrictions of the SKU. </summary>
@@ -350,7 +545,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new ResourceSkuRestrictions(restrictionsType, values.ToList(), restrictionInfo, reasonCode, additionalBinaryDataProperties: null);
+            return new ResourceSkuRestrictions(restrictionsType, (values ?? new ChangeTrackingList<string>()).ToList(), restrictionInfo, reasonCode, default);
         }
 
         /// <summary> Describes an available Compute SKU Restriction Information. </summary>
@@ -362,7 +557,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             locations ??= new ChangeTrackingList<AzureLocation>();
             zones ??= new ChangeTrackingList<string>();
 
-            return new ResourceSkuRestrictionInfo(locations.ToList(), zones.ToList(), additionalBinaryDataProperties: null);
+            return new ResourceSkuRestrictionInfo((locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (zones ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Describes Resource Quota. </summary>
@@ -380,7 +575,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 unit,
                 currentValue,
                 limit,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The Quota Names. </summary>
@@ -389,7 +584,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
         public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = default, string localizedValue = default)
         {
-            return new DevOpsResourceQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
+            return new DevOpsResourceQuotaName(value, localizedValue, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -405,8 +600,71 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                imageVersion is null ? default : new ImageVersionProperties(imageVersion, null));
+                imageVersion is null ? default : new ImageVersionProperties(imageVersion, default),
+                default);
+        }
+
+        /// <summary> Azure DevOps organization profile. </summary>
+        /// <param name="organizations"> The list of Azure DevOps organizations the pool should be present in. </param>
+        /// <param name="permissionProfile"> The type of permission which determines which accounts are admins on the Azure DevOps pool. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
+        /// <returns> A new <see cref="Models.DevOpsAzureOrganizationProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsAzureOrganizationProfile DevOpsAzureOrganizationProfile(IEnumerable<DevOpsOrganization> organizations = default, DevOpsAzurePermissionProfile permissionProfile = default, string @alias = default)
+        {
+            return new DevOpsAzureOrganizationProfile(
+                default,
+                default,
+                default,
+                default,
+                (organizations ?? new ChangeTrackingList<DevOpsOrganization>()).ToList(),
+                permissionProfile,
+                @alias);
+        }
+
+        /// <summary> The agents will run on Virtual Machine Scale Sets. </summary>
+        /// <param name="skuName"> The Azure SKU name of the machines in the pool. </param>
+        /// <param name="images"> The VM images of the machines in the pool. </param>
+        /// <param name="osProfile"> The OS profile of the machines in the pool. </param>
+        /// <param name="storageProfile"> The storage profile of the machines in the pool. </param>
+        /// <param name="networkProfile"> The network profile of the machines in the pool. </param>
+        /// <returns> A new <see cref="Models.DevOpsVmssFabricProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsVmssFabricProfile DevOpsVmssFabricProfile(string skuName = default, IEnumerable<DevOpsPoolVmImage> images = default, DevOpsOSProfile osProfile = default, DevOpsStorageProfile storageProfile = default, DevOpsNetworkProfile networkProfile = default)
+        {
+            return new DevOpsVmssFabricProfile(
+                default,
+                default,
+                skuName is null ? default : new DevOpsAzureSku(skuName, default, default, default, default),
+                (images ?? new ChangeTrackingList<DevOpsPoolVmImage>()).ToList(),
+                osProfile,
+                storageProfile,
+                networkProfile);
+        }
+
+        /// <summary> The VM image of the machines in the pool. </summary>
+        /// <param name="resourceId"> The resource id of the image. </param>
+        /// <param name="wellKnownImageName"> The image to use from a well-known set of images made available to customers. </param>
+        /// <param name="aliases"> List of aliases to reference the image by. </param>
+        /// <param name="buffer"> The percentage of the buffer to be allocated to this image. </param>
+        /// <param name="ephemeralType"> The ephemeral type of the image. </param>
+        /// <param name="isEphemeral"> Read only. Determines if the image is ephemeral. </param>
+        /// <returns> A new <see cref="Models.DevOpsPoolVmImage"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DevOpsPoolVmImage DevOpsPoolVmImage(string resourceId = default, string wellKnownImageName = default, IEnumerable<string> aliases = default, string buffer = default, DevOpsEphemeralType? ephemeralType = default, bool? isEphemeral = default)
+        {
+            return new DevOpsPoolVmImage(
+                resourceId,
+                wellKnownImageName,
+                (aliases ?? new ChangeTrackingList<string>()).ToList(),
+                buffer,
+                ephemeralType,
+                isEphemeral,
+                default,
+                default,
+                default,
+                default,
+                default);
         }
     }
 }

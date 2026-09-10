@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct IsWorkloadManagementNetworkEnabled : IEquatable<IsWorkloadManagementNetworkEnabled>
     {
         private readonly string _value;
+        /// <summary> IsWorkloadManagementNetworkEnabled-True. </summary>
+        private const string TrueValue = "True";
+        /// <summary> IsWorkloadManagementNetworkEnabled-False. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="IsWorkloadManagementNetworkEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IsWorkloadManagementNetworkEnabled(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> IsWorkloadManagementNetworkEnabled-True. </summary>
         public static IsWorkloadManagementNetworkEnabled True { get; } = new IsWorkloadManagementNetworkEnabled(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> IsWorkloadManagementNetworkEnabled-False. </summary>
         public static IsWorkloadManagementNetworkEnabled False { get; } = new IsWorkloadManagementNetworkEnabled(FalseValue);
+
         /// <summary> Determines if two <see cref="IsWorkloadManagementNetworkEnabled"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IsWorkloadManagementNetworkEnabled left, IsWorkloadManagementNetworkEnabled right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IsWorkloadManagementNetworkEnabled"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IsWorkloadManagementNetworkEnabled left, IsWorkloadManagementNetworkEnabled right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IsWorkloadManagementNetworkEnabled"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IsWorkloadManagementNetworkEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IsWorkloadManagementNetworkEnabled(string value) => new IsWorkloadManagementNetworkEnabled(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IsWorkloadManagementNetworkEnabled"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IsWorkloadManagementNetworkEnabled?(string value) => value == null ? null : new IsWorkloadManagementNetworkEnabled(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IsWorkloadManagementNetworkEnabled other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IsWorkloadManagementNetworkEnabled other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

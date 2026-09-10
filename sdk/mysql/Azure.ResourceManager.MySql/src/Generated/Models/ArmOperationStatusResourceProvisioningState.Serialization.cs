@@ -16,7 +16,10 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    /// <summary> Standard Azure Resource Manager operation status response. </summary>
+    /// <summary>
+    /// Standard Azure Resource Manager operation status response, used as the response
+    /// body for `GetResourceOperationStatus`.
+    /// </summary>
     internal partial class ArmOperationStatusResourceProvisioningState : IJsonModel<ArmOperationStatusResourceProvisioningState>
     {
         /// <summary> Initializes a new instance of <see cref="ArmOperationStatusResourceProvisioningState"/> for deserialization. </summary>
@@ -84,20 +87,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
@@ -154,8 +159,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             ResourceProvisioningState status = default;
             string id = default;
             string name = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             double? percentComplete = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,6 +169,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 if (prop.NameEquals("status"u8))
                 {
                     status = new ResourceProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("id"u8))
+                {
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -177,7 +187,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -186,7 +196,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("percentComplete"u8))
@@ -216,8 +226,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 status,
                 id,
                 name,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 error,
                 additionalBinaryDataProperties);

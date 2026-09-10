@@ -87,7 +87,49 @@ public class ConfigurationAndDISamples
 
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.AddClient<MyClient, MyClientSettings>("MyClient")
-            .PostConfigure(settings => settings.CredentialProvider = new MyTokenProvider());
+            .ConfigureCredential(credential =>
+                credential["Key"] = Environment.GetEnvironmentVariable("MY_API_KEY"));
+
+        IServiceProvider provider = builder.Services.BuildServiceProvider();
+
+        MyClient client = provider.GetRequiredService<MyClient>();
+
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Used for documentation")]
+    public void CustomCredentialResolverExample()
+    {
+        #region Snippet:CustomCredentialResolverExample
+
+        ConfigurationManager configuration = new();
+        configuration.AddJsonFile("appsettings.json");
+
+        // Resolve the credential by walking a chain of CredentialResolver
+        // instances against the named section. The first resolver whose
+        // TryResolve returns true wins. The returned CredentialSettings
+        // exposes the resolved provider via Credential.TokenProvider
+        // and the inline ApiKey via Credential.Key.
+        CredentialSettings? credential = configuration.GetCredentialSettings(
+            "MyClient:Credential",
+            new MyCredentialResolver());
+
+        #endregion
+    }
+
+    [Test]
+    [Ignore("Used for documentation")]
+    public void DependencyInjectionWithCredentialResolverExample()
+    {
+        #region Snippet:DependencyInjectionWithCredentialResolverExample
+
+        HostApplicationBuilder builder = Host.CreateApplicationBuilder();
+
+        // Register the resolver once. AddClient/AddKeyedClient will then
+        // auto-resolve credentials from the registered resolver chain.
+        builder.AddCredentialResolver<MyCredentialResolver>();
+        builder.AddClient<MyClient, MyClientSettings>("MyClient");
 
         IServiceProvider provider = builder.Services.BuildServiceProvider();
 
@@ -182,6 +224,25 @@ public class ConfigurationAndDISamples
         {
             string token = "custom-token-from-provider";
             return new ValueTask<AuthenticationToken>(new AuthenticationToken(token, "Bearer", DateTimeOffset.UtcNow.AddHours(1)));
+        }
+    }
+
+    private class MyCredentialResolver : CredentialResolver
+    {
+        public override bool TryResolve(
+            IConfigurationSection credentialSection,
+            [System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out AuthenticationTokenProvider? provider)
+        {
+            // Only handle sections that opt into this resolver via CredentialSource.
+            if (string.Equals(credentialSection["CredentialSource"], "MyCredential", StringComparison.OrdinalIgnoreCase))
+            {
+                provider = new MyTokenProvider();
+                return true;
+            }
+
+            // Defer to the next resolver in the chain.
+            provider = null;
+            return false;
         }
     }
 }

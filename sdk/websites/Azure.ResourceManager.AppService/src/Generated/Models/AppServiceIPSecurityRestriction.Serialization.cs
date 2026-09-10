@@ -8,17 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceIPSecurityRestriction : IUtf8JsonSerializable, IJsonModel<AppServiceIPSecurityRestriction>
+    /// <summary> IP security restriction on an app. </summary>
+    public partial class AppServiceIPSecurityRestriction : IJsonModel<AppServiceIPSecurityRestriction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceIPSecurityRestriction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppServiceIPSecurityRestriction PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceIPSecurityRestriction IPersistableModel<AppServiceIPSecurityRestriction>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<AppServiceIPSecurityRestriction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AppServiceIPSecurityRestriction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,12 +70,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(IPAddressOrCidr))
             {
                 writer.WritePropertyName("ipAddress"u8);
@@ -99,23 +138,28 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
+                    foreach (string item0 in item.Value)
                     {
+                        if (item0 == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteStringValue(item0);
                     }
                     writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -124,27 +168,32 @@ namespace Azure.ResourceManager.AppService.Models
             }
         }
 
-        AppServiceIPSecurityRestriction IJsonModel<AppServiceIPSecurityRestriction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AppServiceIPSecurityRestriction IJsonModel<AppServiceIPSecurityRestriction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AppServiceIPSecurityRestriction JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
         }
 
-        internal static AppServiceIPSecurityRestriction DeserializeAppServiceIPSecurityRestriction(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AppServiceIPSecurityRestriction DeserializeAppServiceIPSecurityRestriction(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string ipAddress = default;
+            string ipAddressOrCidr = default;
             string subnetMask = default;
             ResourceIdentifier vnetSubnetResourceId = default;
             int? vnetTrafficTag = default;
@@ -155,101 +204,107 @@ namespace Azure.ResourceManager.AppService.Models
             string name = default;
             string description = default;
             IDictionary<string, IList<string>> headers = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("ipAddress"u8))
+                if (prop.NameEquals("ipAddress"u8))
                 {
-                    ipAddress = property.Value.GetString();
+                    ipAddressOrCidr = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subnetMask"u8))
+                if (prop.NameEquals("subnetMask"u8))
                 {
-                    subnetMask = property.Value.GetString();
+                    subnetMask = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vnetSubnetResourceId"u8))
+                if (prop.NameEquals("vnetSubnetResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    vnetSubnetResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vnetTrafficTag"u8))
+                if (prop.NameEquals("vnetTrafficTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vnetTrafficTag = property.Value.GetInt32();
+                    vnetTrafficTag = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("subnetTrafficTag"u8))
+                if (prop.NameEquals("subnetTrafficTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    subnetTrafficTag = property.Value.GetInt32();
+                    subnetTrafficTag = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("action"u8))
+                if (prop.NameEquals("action"u8))
                 {
-                    action = property.Value.GetString();
+                    action = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tag"u8))
+                if (prop.NameEquals("tag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    tag = new AppServiceIPFilterTag(property.Value.GetString());
+                    tag = new AppServiceIPFilterTag(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("priority"u8))
+                if (prop.NameEquals("priority"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    priority = property.Value.GetInt32();
+                    priority = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("description"u8))
+                if (prop.NameEquals("description"u8))
                 {
-                    description = property.Value.GetString();
+                    description = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("headers"u8))
+                if (prop.NameEquals("headers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, IList<string>> dictionary = new Dictionary<string, IList<string>>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
                             List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
+                            foreach (var item in prop0.Value.EnumerateArray())
                             {
-                                array.Add(item.GetString());
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(item.GetString());
+                                }
                             }
-                            dictionary.Add(property0.Name, array);
+                            dictionary.Add(prop0.Name, array);
                         }
                     }
                     headers = dictionary;
@@ -257,12 +312,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AppServiceIPSecurityRestriction(
-                ipAddress,
+                ipAddressOrCidr,
                 subnetMask,
                 vnetSubnetResourceId,
                 vnetTrafficTag,
@@ -273,292 +327,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 description,
                 headers ?? new ChangeTrackingDictionary<string, IList<string>>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddressOrCidr), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ipAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IPAddressOrCidr))
-                {
-                    builder.Append("  ipAddress: ");
-                    if (IPAddressOrCidr.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{IPAddressOrCidr}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{IPAddressOrCidr}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetMask), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnetMask: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubnetMask))
-                {
-                    builder.Append("  subnetMask: ");
-                    if (SubnetMask.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubnetMask}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubnetMask}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetSubnetResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vnetSubnetResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VnetSubnetResourceId))
-                {
-                    builder.Append("  vnetSubnetResourceId: ");
-                    builder.AppendLine($"'{VnetSubnetResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetTrafficTag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  vnetTrafficTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VnetTrafficTag))
-                {
-                    builder.Append("  vnetTrafficTag: ");
-                    builder.AppendLine($"{VnetTrafficTag.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubnetTrafficTag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subnetTrafficTag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubnetTrafficTag))
-                {
-                    builder.Append("  subnetTrafficTag: ");
-                    builder.AppendLine($"{SubnetTrafficTag.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  action: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Action))
-                {
-                    builder.Append("  action: ");
-                    if (Action.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Action}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Action}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Tag))
-                {
-                    builder.Append("  tag: ");
-                    builder.AppendLine($"'{Tag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Priority), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  priority: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Priority))
-                {
-                    builder.Append("  priority: ");
-                    builder.AppendLine($"{Priority.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  description: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Description))
-                {
-                    builder.Append("  description: ");
-                    if (Description.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Description}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Description}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  headers: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Headers))
-                {
-                    if (Headers.Any())
-                    {
-                        builder.Append("  headers: ");
-                        builder.AppendLine("{");
-                        foreach (var item in Headers)
-                        {
-                            builder.Append($"    '{item.Key}': ");
-                            if (item.Value == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            builder.AppendLine("[");
-                            foreach (var item0 in item.Value)
-                            {
-                                if (item0 == null)
-                                {
-                                    builder.Append("null");
-                                    continue;
-                                }
-                                if (item0.Contains(Environment.NewLine))
-                                {
-                                    builder.AppendLine("      '''");
-                                    builder.AppendLine($"{item0}'''");
-                                }
-                                else
-                                {
-                                    builder.AppendLine($"      '{item0}'");
-                                }
-                            }
-                            builder.AppendLine("    ]");
-                        }
-                        builder.AppendLine("  }");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<AppServiceIPSecurityRestriction>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        AppServiceIPSecurityRestriction IPersistableModel<AppServiceIPSecurityRestriction>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AppServiceIPSecurityRestriction>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAppServiceIPSecurityRestriction(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(AppServiceIPSecurityRestriction)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<AppServiceIPSecurityRestriction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

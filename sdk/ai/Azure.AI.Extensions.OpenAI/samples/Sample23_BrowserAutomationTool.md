@@ -40,7 +40,7 @@ Synchronous sample:
 AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -60,7 +60,7 @@ Asynchronous sample:
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
     new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -68,7 +68,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are an Agent helping with browser automation tasks.\n" +
     "You can answer questions, provide information, and assist with various tasks\n" +
     "related to web browsing using the Browser Automation tool available to you.",
-    Tools = {playwrightTool}
+    Tools = { playwrightTool }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",

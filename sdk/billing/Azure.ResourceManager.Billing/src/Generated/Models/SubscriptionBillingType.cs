@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct SubscriptionBillingType : IEquatable<SubscriptionBillingType>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Benefit. </summary>
+        private const string BenefitValue = "Benefit";
+        /// <summary> Free. </summary>
+        private const string FreeValue = "Free";
+        /// <summary> Paid. </summary>
+        private const string PaidValue = "Paid";
+        /// <summary> PrePaid. </summary>
+        private const string PrePaidValue = "PrePaid";
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SubscriptionBillingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string BenefitValue = "Benefit";
-        private const string FreeValue = "Free";
-        private const string PaidValue = "Paid";
-        private const string PrePaidValue = "PrePaid";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static SubscriptionBillingType None { get; } = new SubscriptionBillingType(NoneValue);
+
         /// <summary> Benefit. </summary>
         public static SubscriptionBillingType Benefit { get; } = new SubscriptionBillingType(BenefitValue);
+
         /// <summary> Free. </summary>
         public static SubscriptionBillingType Free { get; } = new SubscriptionBillingType(FreeValue);
+
         /// <summary> Paid. </summary>
         public static SubscriptionBillingType Paid { get; } = new SubscriptionBillingType(PaidValue);
+
         /// <summary> PrePaid. </summary>
         public static SubscriptionBillingType PrePaid { get; } = new SubscriptionBillingType(PrePaidValue);
+
         /// <summary> Determines if two <see cref="SubscriptionBillingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SubscriptionBillingType left, SubscriptionBillingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SubscriptionBillingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SubscriptionBillingType left, SubscriptionBillingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SubscriptionBillingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SubscriptionBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SubscriptionBillingType(string value) => new SubscriptionBillingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SubscriptionBillingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SubscriptionBillingType?(string value) => value == null ? null : new SubscriptionBillingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SubscriptionBillingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SubscriptionBillingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

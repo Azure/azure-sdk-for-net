@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ImpactReporting;
 using Azure.ResourceManager.Models;
@@ -33,14 +32,14 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Workload impact properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed . </param>
-        /// <param name="endOn"> Time at which impact has ended . </param>
+        /// <param name="startsOn"> Time at which impact was observed . </param>
+        /// <param name="endsOn"> Time at which impact has ended . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
         /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
-        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
+        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
         {
             armCorrelationIds ??= new ChangeTrackingList<string>();
             performance ??= new ChangeTrackingList<ImpactPerformance>();
@@ -64,23 +63,87 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
             return new WorkloadImpactProperties(
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 impactedResourceId,
                 impactUniqueId,
                 reportedTimeUtc,
                 impactCategory,
                 impactDescription,
-                armCorrelationIds.ToList(),
-                performance.ToList(),
+                (armCorrelationIds ?? new ChangeTrackingList<string>()).ToList(),
+                (performance ?? new ChangeTrackingList<ImpactPerformance>()).ToList(),
                 connectivity,
-                additionalProperties,
+                additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 errorDetails,
                 workload,
                 impactGroupId,
                 confidenceLevel,
                 clientIncidentDetails,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Details about impacted performance metrics. Applicable for performance related impact. </summary>
+        /// <param name="metricName"> Name of the Metric examples:  Disk, IOPs, CPU, GPU, Memory, details can be found from /impactCategories API. </param>
+        /// <param name="expected"> Threshold value for the metric. </param>
+        /// <param name="actual"> Observed value for the metric. </param>
+        /// <param name="expectedValueRange"> Max and Min Threshold values for the metric. </param>
+        /// <param name="unit"> Unit of the metric ex: Bytes, Percentage, Count, Seconds, Milliseconds, Bytes/Second, Count/Second, etc.., Other. </param>
+        /// <returns> A new <see cref="Models.ImpactPerformance"/> instance for mocking. </returns>
+        public static ImpactPerformance ImpactPerformance(string metricName = default, double? expected = default, double? actual = default, ImpactMetricExpectedValueRange expectedValueRange = default, ImpactMetricUnit? unit = default)
+        {
+            return new ImpactPerformance(
+                metricName,
+                expected,
+                actual,
+                expectedValueRange,
+                unit,
+                default);
+        }
+
+        /// <summary> Max and Min Threshold values for the metric. </summary>
+        /// <param name="min"> Min threshold value for the metric. </param>
+        /// <param name="max"> Max threshold value for the metric. </param>
+        /// <returns> A new <see cref="Models.ImpactMetricExpectedValueRange"/> instance for mocking. </returns>
+        public static ImpactMetricExpectedValueRange ImpactMetricExpectedValueRange(double min = default, double max = default)
+        {
+            return new ImpactMetricExpectedValueRange(min, max, default);
+        }
+
+        /// <param name="protocol"> Protocol used for the connection. </param>
+        /// <param name="port"> Port number for the connection. </param>
+        /// <param name="sourceAzureResourceId"> Azure resource id, example /subscription/{subscription}/resourceGroup/{rg}/Microsoft.compute/virtualMachine/{vmName}. </param>
+        /// <param name="targetAzureResourceId"> Azure resource id, example /subscription/{subscription}/resourceGroup/{rg}/Microsoft.compute/virtualMachine/{vmName}. </param>
+        /// <returns> A new <see cref="Models.ImpactConnectivityDetails"/> instance for mocking. </returns>
+        public static ImpactConnectivityDetails ImpactConnectivityDetails(ImpactProtocol? protocol = default, int? port = default, ResourceIdentifier sourceAzureResourceId = default, ResourceIdentifier targetAzureResourceId = default)
+        {
+            return new ImpactConnectivityDetails(protocol, port, sourceAzureResourceId is null ? default : new ImpactSourceOrTarget(sourceAzureResourceId, default), targetAzureResourceId is null ? default : new ImpactSourceOrTarget(targetAzureResourceId, default), default);
+        }
+
+        /// <summary> ARM error code and error message associated with the impact. </summary>
+        /// <param name="errorCode"> ARM Error code associated with the impact. </param>
+        /// <param name="errorMessage"> ARM Error Message associated with the impact. </param>
+        /// <returns> A new <see cref="Models.ImpactErrorDetails"/> instance for mocking. </returns>
+        public static ImpactErrorDetails ImpactErrorDetails(string errorCode = default, string errorMessage = default)
+        {
+            return new ImpactErrorDetails(errorCode, errorMessage, default);
+        }
+
+        /// <summary> Information about the impacted workload. </summary>
+        /// <param name="context"> the scenario for the workload. </param>
+        /// <param name="toolset"> Tool used to interact with Azure. SDK, AzPortal, etc.., Other. </param>
+        /// <returns> A new <see cref="Models.ImpactedWorkload"/> instance for mocking. </returns>
+        public static ImpactedWorkload ImpactedWorkload(string context = default, ImpactToolset? toolset = default)
+        {
+            return new ImpactedWorkload(context, toolset, default);
+        }
+
+        /// <summary> Client incident details ex: incidentId , incident source. </summary>
+        /// <param name="clientIncidentId"> Client incident id. ex : id of the incident created to investigate and address the impact if any. </param>
+        /// <param name="clientIncidentSource"> Client incident source. ex : source system name where the incident is created. </param>
+        /// <returns> A new <see cref="Models.ImpactClientIncidentDetails"/> instance for mocking. </returns>
+        public static ImpactClientIncidentDetails ImpactClientIncidentDetails(string clientIncidentId = default, ImpactIncidentSource? clientIncidentSource = default)
+        {
+            return new ImpactClientIncidentDetails(clientIncidentId, clientIncidentSource, default);
         }
 
         /// <summary> ImpactCategory resource. </summary>
@@ -97,8 +160,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Impact category properties. </summary>
@@ -117,8 +180,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 categoryId,
                 parentCategoryId,
                 description,
-                requiredImpactProperties.ToList(),
-                additionalBinaryDataProperties: null);
+                (requiredImpactProperties ?? new ChangeTrackingList<RequiredImpactProperties>()).ToList(),
+                default);
         }
 
         /// <summary> Required impact properties. </summary>
@@ -129,7 +192,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         {
             allowedValues ??= new ChangeTrackingList<string>();
 
-            return new RequiredImpactProperties(name, allowedValues.ToList(), additionalBinaryDataProperties: null);
+            return new RequiredImpactProperties(name, (allowedValues ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Insight resource. </summary>
@@ -146,8 +209,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Impact category properties. </summary>
@@ -176,8 +239,28 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 eventOn,
                 insightUniqueId,
                 impact,
-                additionalDetails,
-                additionalBinaryDataProperties: null);
+                additionalDetails ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                default);
+        }
+
+        /// <summary> Article details of the insight like title, description etc. </summary>
+        /// <param name="title"> Title of the insight. </param>
+        /// <param name="description"> Description of the insight. </param>
+        /// <returns> A new <see cref="Models.ImpactInsightContent"/> instance for mocking. </returns>
+        public static ImpactInsightContent ImpactInsightContent(string title = default, string description = default)
+        {
+            return new ImpactInsightContent(title, description, default);
+        }
+
+        /// <summary> details of of the impact for which insight has been generated. </summary>
+        /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
+        /// <param name="startsOn"> Time at which impact was started according to reported impact. </param>
+        /// <param name="endsOn"> Time at which impact was ended according to reported impact. </param>
+        /// <param name="impactId"> Azure Id of the impact. </param>
+        /// <returns> A new <see cref="Models.ImpactDetails"/> instance for mocking. </returns>
+        public static ImpactDetails ImpactDetails(ResourceIdentifier impactedResourceId = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactId = default)
+        {
+            return new ImpactDetails(impactedResourceId, startsOn, endsOn, impactId, default);
         }
 
         /// <summary> A connector is a resource that can be used to proactively report impacts against workloads in Azure to Microsoft. </summary>
@@ -194,8 +277,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Details of the Connector. </summary>
@@ -213,7 +296,14 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 tenantId,
                 connectorType,
                 lastRanOn,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <param name="connectorType"> connector type. </param>
+        /// <returns> A new <see cref="Models.ImpactConnectorPatch"/> instance for mocking. </returns>
+        public static ImpactConnectorPatch ImpactConnectorPatch(ImpactConnectorType? connectorType = default)
+        {
+            return new ImpactConnectorPatch(connectorType is null ? default : new ConnectorUpdateProperties(connectorType, default), default);
         }
     }
 }

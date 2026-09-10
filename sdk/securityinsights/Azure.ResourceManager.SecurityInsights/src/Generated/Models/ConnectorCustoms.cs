@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="ConnectorCustoms"/>. </summary>
         /// <param name="name"> Customs permissions name. </param>
         /// <param name="description"> Customs permissions description. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectorCustoms(string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectorCustoms(string name, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name, description, additionalBinaryDataProperties)
         {
         }
     }

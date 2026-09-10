@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.EventHubs.Models
      * This type is preserved for backward compatibility with the 1.2.x API surface.
      * New code should use <see cref="EventHubsNetworkSecurityPerimeterConfigurationData"/> instead.
      */
+    /// <summary>
+    /// Network Security Perimeter related configurations of a given namespace.
+    /// Preserved for backward compatibility with the 1.2.x API surface; hidden from
+    /// IntelliSense. New code should use <see cref="EventHubsNetworkSecurityPerimeterConfigurationData"/>.
+    /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class EventHubsNetworkSecurityPerimeterConfiguration : ResourceData,
         IJsonModel<EventHubsNetworkSecurityPerimeterConfiguration>,

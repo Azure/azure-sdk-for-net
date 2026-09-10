@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.RecoveryServices
                     yield break;
                 }
                 PrivateLinkResources result = PrivateLinkResources.FromResponse(response);
-                yield return Page<RecoveryServicesPrivateLinkResourceData>.FromValues((IReadOnlyList<RecoveryServicesPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RecoveryServicesPrivateLinkResourceData>.FromValues((IReadOnlyList<RecoveryServicesPrivateLinkResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

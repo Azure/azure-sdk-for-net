@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public readonly partial struct RaiPolicyContentLevel : IEquatable<RaiPolicyContentLevel>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="RaiPolicyContentLevel"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RaiPolicyContentLevel(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string LowValue = "Low";
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> Low. </summary>
+        /// <summary> Initializes a new instance of <see cref="RaiPolicyContentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public RaiPolicyContentLevel(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Low. </summary>
         public static RaiPolicyContentLevel Low { get; } = new RaiPolicyContentLevel(LowValue);
-        /// <summary> Medium. </summary>
+
+        /// <summary> Gets the Medium. </summary>
         public static RaiPolicyContentLevel Medium { get; } = new RaiPolicyContentLevel(MediumValue);
-        /// <summary> High. </summary>
+
+        /// <summary> Gets the High. </summary>
         public static RaiPolicyContentLevel High { get; } = new RaiPolicyContentLevel(HighValue);
+
         /// <summary> Determines if two <see cref="RaiPolicyContentLevel"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RaiPolicyContentLevel left, RaiPolicyContentLevel right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RaiPolicyContentLevel"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RaiPolicyContentLevel left, RaiPolicyContentLevel right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RaiPolicyContentLevel"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RaiPolicyContentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RaiPolicyContentLevel(string value) => new RaiPolicyContentLevel(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RaiPolicyContentLevel"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RaiPolicyContentLevel?(string value) => value == null ? null : new RaiPolicyContentLevel(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RaiPolicyContentLevel other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RaiPolicyContentLevel other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

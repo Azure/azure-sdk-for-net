@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthEventImpactedServiceRegion : IUtf8JsonSerializable, IJsonModel<ResourceHealthEventImpactedServiceRegion>
+    /// <summary> Azure region impacted by the service health event. </summary>
+    public partial class ResourceHealthEventImpactedServiceRegion : IJsonModel<ResourceHealthEventImpactedServiceRegion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthEventImpactedServiceRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceHealthEventImpactedServiceRegion PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthEventImpactedServiceRegion IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceHealthEventImpactedServiceRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceHealthEventImpactedServiceRegion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ImpactedRegion))
             {
                 writer.WritePropertyName("impactedRegion"u8);
@@ -48,8 +88,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 writer.WritePropertyName("impactedSubscriptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ImpactedSubscriptions)
+                foreach (string item in ImpactedSubscriptions)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -58,8 +103,13 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 writer.WritePropertyName("impactedTenants"u8);
                 writer.WriteStartArray();
-                foreach (var item in ImpactedTenants)
+                foreach (string item in ImpactedTenants)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -73,21 +123,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 writer.WritePropertyName("updates"u8);
                 writer.WriteStartArray();
-                foreach (var item in Updates)
+                foreach (ResourceHealthEventUpdate item in Updates)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -96,22 +146,27 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
         }
 
-        ResourceHealthEventImpactedServiceRegion IJsonModel<ResourceHealthEventImpactedServiceRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthEventImpactedServiceRegion IJsonModel<ResourceHealthEventImpactedServiceRegion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceHealthEventImpactedServiceRegion JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
         }
 
-        internal static ResourceHealthEventImpactedServiceRegion DeserializeResourceHealthEventImpactedServiceRegion(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceHealthEventImpactedServiceRegion DeserializeResourceHealthEventImpactedServiceRegion(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -120,71 +175,84 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             ResourceHealthEventStatusValue? status = default;
             IReadOnlyList<string> impactedSubscriptions = default;
             IReadOnlyList<string> impactedTenants = default;
-            DateTimeOffset? lastUpdateTime = default;
+            DateTimeOffset? lastUpdateOn = default;
             IReadOnlyList<ResourceHealthEventUpdate> updates = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("impactedRegion"u8))
+                if (prop.NameEquals("impactedRegion"u8))
                 {
-                    impactedRegion = property.Value.GetString();
+                    impactedRegion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new ResourceHealthEventStatusValue(property.Value.GetString());
+                    status = new ResourceHealthEventStatusValue(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("impactedSubscriptions"u8))
+                if (prop.NameEquals("impactedSubscriptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     impactedSubscriptions = array;
                     continue;
                 }
-                if (property.NameEquals("impactedTenants"u8))
+                if (prop.NameEquals("impactedTenants"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     impactedTenants = array;
                     continue;
                 }
-                if (property.NameEquals("lastUpdateTime"u8))
+                if (prop.NameEquals("lastUpdateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastUpdateTime = property.Value.GetDateTimeOffset("O");
+                    lastUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("updates"u8))
+                if (prop.NameEquals("updates"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceHealthEventUpdate> array = new List<ResourceHealthEventUpdate>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResourceHealthEventUpdate.DeserializeResourceHealthEventUpdate(item, options));
                     }
@@ -193,49 +261,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ResourceHealthEventImpactedServiceRegion(
                 impactedRegion,
                 status,
                 impactedSubscriptions ?? new ChangeTrackingList<string>(),
                 impactedTenants ?? new ChangeTrackingList<string>(),
-                lastUpdateTime,
+                lastUpdateOn,
                 updates ?? new ChangeTrackingList<ResourceHealthEventUpdate>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ResourceHealthEventImpactedServiceRegion IPersistableModel<ResourceHealthEventImpactedServiceRegion>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventImpactedServiceRegion>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceHealthEventImpactedServiceRegion(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventImpactedServiceRegion)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ResourceHealthEventImpactedServiceRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

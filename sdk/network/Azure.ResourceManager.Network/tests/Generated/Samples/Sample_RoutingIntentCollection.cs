@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 RoutingPolicies = { new RoutingPolicy("InternetTraffic", new string[] { "Internet" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1"), new RoutingPolicy("PrivateTrafficPolicy", new string[] { "PrivateTraffic" }, "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azfw1") },
             };
-            ArmOperation<RoutingIntentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routingIntentName, data);
+            ArmOperation<RoutingIntentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, routingIntentName, data, cancellationToken: System.Threading.CancellationToken.None);
             RoutingIntentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

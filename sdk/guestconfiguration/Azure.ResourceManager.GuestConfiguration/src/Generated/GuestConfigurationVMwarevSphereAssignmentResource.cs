@@ -14,14 +14,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a GuestConfigurationVMwarevSphereAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVMwarevSphereAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGuestConfigurationVMwarevSphereAssignments method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationVMwarevSphereAssignments method.
     /// </summary>
     public partial class GuestConfigurationVMwarevSphereAssignmentResource : ArmResource
     {
@@ -54,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationVMwarevSphereAssignmentApiVersion);
             _guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignments(_guestConfigurationConnectedVMwarevSphereAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationConnectedVMwarevSphereAssignmentsReportsRestClient = new GuestConfigurationConnectedVMwarevSphereAssignmentsReports(_guestConfigurationConnectedVMwarevSphereAssignmentsReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVMwarevSphereAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

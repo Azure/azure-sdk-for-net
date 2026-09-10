@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,38 +15,67 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct OutboundRuleStatus : IEquatable<OutboundRuleStatus>
     {
         private readonly string _value;
+        private const string InactiveValue = "Inactive";
+        private const string ActiveValue = "Active";
+        private const string ProvisioningValue = "Provisioning";
+        private const string DeletingValue = "Deleting";
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="OutboundRuleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OutboundRuleStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string InactiveValue = "Inactive";
-        private const string ActiveValue = "Active";
-
-        /// <summary> Inactive. </summary>
+        /// <summary> Gets the Inactive. </summary>
         public static OutboundRuleStatus Inactive { get; } = new OutboundRuleStatus(InactiveValue);
-        /// <summary> Active. </summary>
+
+        /// <summary> Gets the Active. </summary>
         public static OutboundRuleStatus Active { get; } = new OutboundRuleStatus(ActiveValue);
+
+        /// <summary> Gets the Provisioning. </summary>
+        public static OutboundRuleStatus Provisioning { get; } = new OutboundRuleStatus(ProvisioningValue);
+
+        /// <summary> Gets the Deleting. </summary>
+        public static OutboundRuleStatus Deleting { get; } = new OutboundRuleStatus(DeletingValue);
+
+        /// <summary> Gets the Failed. </summary>
+        public static OutboundRuleStatus Failed { get; } = new OutboundRuleStatus(FailedValue);
+
         /// <summary> Determines if two <see cref="OutboundRuleStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OutboundRuleStatus left, OutboundRuleStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OutboundRuleStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OutboundRuleStatus left, OutboundRuleStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OutboundRuleStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OutboundRuleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OutboundRuleStatus(string value) => new OutboundRuleStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OutboundRuleStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OutboundRuleStatus?(string value) => value == null ? null : new OutboundRuleStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OutboundRuleStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OutboundRuleStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

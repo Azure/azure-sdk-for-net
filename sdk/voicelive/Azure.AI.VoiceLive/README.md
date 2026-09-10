@@ -141,7 +141,7 @@ Uri endpoint = new Uri("https://your-resource.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 VoiceLiveClient client = new VoiceLiveClient(endpoint, credential);
 
-var model = "gpt-4o-mini-realtime-preview"; // Specify the model to use
+var model = "gpt-realtime"; // Specify the model to use
 // Start a new session
 VoiceLiveSession session = await client.StartSessionAsync(model).ConfigureAwait(false);
 

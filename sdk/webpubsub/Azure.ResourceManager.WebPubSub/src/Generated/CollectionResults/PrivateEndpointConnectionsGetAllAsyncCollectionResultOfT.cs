@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 PrivateEndpointConnectionList result = PrivateEndpointConnectionList.FromResponse(response);
-                yield return Page<WebPubSubPrivateEndpointConnectionData>.FromValues((IReadOnlyList<WebPubSubPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebPubSubPrivateEndpointConnectionData>.FromValues((IReadOnlyList<WebPubSubPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ExtendedLocations;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ExtendedLocations.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableExtendedLocationsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableExtendedLocationsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableExtendedLocationsResourceGroupResource for mocking. </summary>
         protected MockableExtendedLocationsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableExtendedLocationsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableExtendedLocationsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableExtendedLocationsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of CustomLocationResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
+        /// <summary> Gets a collection of CustomLocations in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of CustomLocations and their operations over a CustomLocationResource. </returns>
         public virtual CustomLocationCollection GetCustomLocations()
         {
             return GetCachedClient(client => new CustomLocationCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// Gets the details of the customLocation with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomLocations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-08-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<CustomLocationResource>> GetCustomLocationAsync(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return await GetCustomLocations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         /// Gets the details of the customLocation with a specified resource group and name.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ExtendedLocation/customLocations/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CustomLocations_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CustomLocations_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-08-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="CustomLocationResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2021-08-31-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
         [ForwardsClientCalls]
         public virtual Response<CustomLocationResource> GetCustomLocation(string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
             return GetCustomLocations().Get(resourceName, cancellationToken);
         }
     }

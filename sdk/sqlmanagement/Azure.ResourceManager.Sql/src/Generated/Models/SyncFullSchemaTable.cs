@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary> Properties of the table in the database full schema. </summary>
     public partial class SyncFullSchemaTable
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SyncFullSchemaTable"/>. </summary>
         internal SyncFullSchemaTable()
@@ -57,29 +29,33 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="hasError"> If there is error in the table. </param>
         /// <param name="name"> Name of the table. </param>
         /// <param name="quotedName"> Quoted name of the table. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SyncFullSchemaTable(IReadOnlyList<SyncFullSchemaTableColumn> columns, string errorId, bool? hasError, string name, string quotedName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SyncFullSchemaTable(IReadOnlyList<SyncFullSchemaTableColumn> columns, string errorId, bool? hasError, string name, string quotedName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Columns = columns;
             ErrorId = errorId;
             HasError = hasError;
             Name = name;
             QuotedName = quotedName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of columns in the table of database full schema. </summary>
         [WirePath("columns")]
         public IReadOnlyList<SyncFullSchemaTableColumn> Columns { get; }
+
         /// <summary> Error id of the table. </summary>
         [WirePath("errorId")]
         public string ErrorId { get; }
+
         /// <summary> If there is error in the table. </summary>
         [WirePath("hasError")]
         public bool? HasError { get; }
+
         /// <summary> Name of the table. </summary>
         [WirePath("name")]
         public string Name { get; }
+
         /// <summary> Quoted name of the table. </summary>
         [WirePath("quotedName")]
         public string QuotedName { get; }

@@ -13,11 +13,11 @@ namespace Azure.Provisioning.ContainerService
     public enum ManagedClusterAdvancedNetworkPolicy
     {
         /// <summary> Enable Layer7 network policies (FQDN, HTTP/S, Kafka). This option is a superset of the FQDN option. </summary>
-        L7,
+        L7 = 0,
         /// <summary> Enable FQDN based network policies. </summary>
         [DataMember(Name = "FQDN")]
-        Fqdn,
+        Fqdn = 1,
         /// <summary> Disable Layer 7 network policies (FQDN, HTTP/S, Kafka). </summary>
-        None
+        None = 2
     }
 }

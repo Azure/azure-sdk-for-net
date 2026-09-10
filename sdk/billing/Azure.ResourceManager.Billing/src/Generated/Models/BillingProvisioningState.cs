@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingProvisioningState : IEquatable<BillingProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> New. </summary>
+        private const string NewValue = "New";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Provisioning. </summary>
+        private const string ProvisioningValue = "Provisioning";
+        /// <summary> PendingBilling. </summary>
+        private const string PendingBillingValue = "PendingBilling";
+        /// <summary> ConfirmedBilling. </summary>
+        private const string ConfirmedBillingValue = "ConfirmedBilling";
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> Expired. </summary>
+        private const string ExpiredValue = "Expired";
 
         /// <summary> Initializes a new instance of <see cref="BillingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string NewValue = "New";
-        private const string PendingValue = "Pending";
-        private const string ProvisioningValue = "Provisioning";
-        private const string PendingBillingValue = "PendingBilling";
-        private const string ConfirmedBillingValue = "ConfirmedBilling";
-        private const string CreatingValue = "Creating";
-        private const string CreatedValue = "Created";
-        private const string ExpiredValue = "Expired";
+            _value = value;
+        }
 
         /// <summary> Succeeded. </summary>
         public static BillingProvisioningState Succeeded { get; } = new BillingProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static BillingProvisioningState Canceled { get; } = new BillingProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static BillingProvisioningState Failed { get; } = new BillingProvisioningState(FailedValue);
+
         /// <summary> New. </summary>
         public static BillingProvisioningState New { get; } = new BillingProvisioningState(NewValue);
+
         /// <summary> Pending. </summary>
         public static BillingProvisioningState Pending { get; } = new BillingProvisioningState(PendingValue);
+
         /// <summary> Provisioning. </summary>
         public static BillingProvisioningState Provisioning { get; } = new BillingProvisioningState(ProvisioningValue);
+
         /// <summary> PendingBilling. </summary>
         public static BillingProvisioningState PendingBilling { get; } = new BillingProvisioningState(PendingBillingValue);
+
         /// <summary> ConfirmedBilling. </summary>
         public static BillingProvisioningState ConfirmedBilling { get; } = new BillingProvisioningState(ConfirmedBillingValue);
+
         /// <summary> Creating. </summary>
         public static BillingProvisioningState Creating { get; } = new BillingProvisioningState(CreatingValue);
+
         /// <summary> Created. </summary>
         public static BillingProvisioningState Created { get; } = new BillingProvisioningState(CreatedValue);
+
         /// <summary> Expired. </summary>
         public static BillingProvisioningState Expired { get; } = new BillingProvisioningState(ExpiredValue);
+
         /// <summary> Determines if two <see cref="BillingProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingProvisioningState left, BillingProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingProvisioningState left, BillingProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingProvisioningState(string value) => new BillingProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingProvisioningState?(string value) => value == null ? null : new BillingProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

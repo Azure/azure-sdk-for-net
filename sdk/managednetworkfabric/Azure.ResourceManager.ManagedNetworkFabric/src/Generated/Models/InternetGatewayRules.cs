@@ -7,76 +7,62 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Rules for the InternetGateways. </summary>
     public partial class InternetGatewayRules
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
-        /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="addressList"/> is null. </exception>
-        public InternetGatewayRules(InternetGatewayRuleAction action, IEnumerable<string> addressList)
+        public InternetGatewayRules(InternetGatewayRuleAction action)
         {
-            Argument.AssertNotNull(addressList, nameof(addressList));
-
             Action = action;
-            AddressList = addressList.ToList();
+            AddressList = new ChangeTrackingList<string>();
+            DestinationAddressList = new ChangeTrackingList<string>();
+            SourceAddressList = new ChangeTrackingList<string>();
+            HeaderAddressList = new ChangeTrackingList<NetworkFabricHeaderAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/>. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="condition"> Specify rule condition. </param>
+        /// <param name="destinationAddressList"> List of Addresses to be allowed or denied. </param>
+        /// <param name="sourceAddressList"> List of source IPv4 and IPv6 address to be allowed or denied. </param>
+        /// <param name="headerAddressList"> List of header Name and source addresses associated with the header. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal InternetGatewayRules(InternetGatewayRuleAction action, IList<string> addressList, NetworkFabricRuleCondition? condition, IList<string> destinationAddressList, IList<string> sourceAddressList, IList<NetworkFabricHeaderAddress> headerAddressList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             AddressList = addressList;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="InternetGatewayRules"/> for deserialization. </summary>
-        internal InternetGatewayRules()
-        {
+            Condition = condition;
+            DestinationAddressList = destinationAddressList;
+            SourceAddressList = sourceAddressList;
+            HeaderAddressList = headerAddressList;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specify action. </summary>
         public InternetGatewayRuleAction Action { get; set; }
+
         /// <summary> List of Addresses to be allowed or denied. </summary>
         public IList<string> AddressList { get; }
+
+        /// <summary> Specify rule condition. </summary>
+        public NetworkFabricRuleCondition? Condition { get; set; }
+
+        /// <summary> List of Addresses to be allowed or denied. </summary>
+        public IList<string> DestinationAddressList { get; }
+
+        /// <summary> List of source IPv4 and IPv6 address to be allowed or denied. </summary>
+        public IList<string> SourceAddressList { get; }
+
+        /// <summary> List of header Name and source addresses associated with the header. </summary>
+        public IList<NetworkFabricHeaderAddress> HeaderAddressList { get; }
     }
 }

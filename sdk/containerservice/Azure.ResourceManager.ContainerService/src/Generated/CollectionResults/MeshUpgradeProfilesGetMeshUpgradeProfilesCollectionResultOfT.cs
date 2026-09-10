@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ContainerService
                     yield break;
                 }
                 MeshUpgradeProfileList result = MeshUpgradeProfileList.FromResponse(response);
-                yield return Page<MeshUpgradeProfileData>.FromValues((IReadOnlyList<MeshUpgradeProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MeshUpgradeProfileData>.FromValues((IReadOnlyList<MeshUpgradeProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="WorkIQPreviewTool"/>, and <see cref="MemorySearchPreviewTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="A2ATool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ProgrammaticToolCallingParam"/>, and <see cref="ToolSearchTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ProjectsAgentTool : IJsonModel<ProjectsAgentTool>
@@ -127,6 +127,8 @@ namespace Azure.AI.Projects.Agents
             {
                 switch (discriminator.GetString())
                 {
+                    case "fabric_iq_preview":
+                        return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
                     case "bing_grounding":
                         return BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":
@@ -147,10 +149,16 @@ namespace Azure.AI.Projects.Agents
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "a2a":
+                        return A2ATool.DeserializeA2ATool(element, options);
                     case "work_iq_preview":
                         return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
+                    case "web_iq_preview":
+                        return WebIQPreviewTool.DeserializeWebIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
+                    case "mcp":
+                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
                     case "code_interpreter":
                         return OpenAI.InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
                     case "function":
@@ -161,8 +169,8 @@ namespace Azure.AI.Projects.Agents
                         return OpenAI.InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return InternalWebSearchTool.DeserializeInternalWebSearchTool(element, options);
-                    case "mcp":
-                        return OpenAI.InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                    case "programmatic_tool_calling":
+                        return ProgrammaticToolCallingParam.DeserializeProgrammaticToolCallingParam(element, options);
                     case "image_generation":
                         return OpenAI.InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":
@@ -175,6 +183,12 @@ namespace Azure.AI.Projects.Agents
                         return InternalWebSearchPreviewTool.DeserializeInternalWebSearchPreviewTool(element, options);
                     case "apply_patch":
                         return InternalApplyPatchToolParam.DeserializeInternalApplyPatchToolParam(element, options);
+                    case "computer":
+                        return InternalComputerTool.DeserializeInternalComputerTool(element, options);
+                    case "namespace":
+                        return InternalNamespaceToolParam.DeserializeInternalNamespaceToolParam(element, options);
+                    case "tool_search":
+                        return ToolSearchTool.DeserializeToolSearchTool(element, options);
                 }
             }
             return UnknownTool.DeserializeUnknownTool(element, options);

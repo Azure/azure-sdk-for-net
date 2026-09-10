@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePurgeContent : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePurgeContent>
+    /// <summary> Describes the body of a purge request for an App Insights Workspace. </summary>
+    public partial class OperationalInsightsWorkspacePurgeContent : IJsonModel<OperationalInsightsWorkspacePurgeContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePurgeContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspacePurgeContent"/> for deserialization. </summary>
+        internal OperationalInsightsWorkspacePurgeContent()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsWorkspacePurgeContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOperationalInsightsWorkspacePurgeContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OperationalInsightsWorkspacePurgeContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsWorkspacePurgeContent IPersistableModel<OperationalInsightsWorkspacePurgeContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OperationalInsightsWorkspacePurgeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="operationalInsightsWorkspacePurgeContent"> The <see cref="OperationalInsightsWorkspacePurgeContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(OperationalInsightsWorkspacePurgeContent operationalInsightsWorkspacePurgeContent)
+        {
+            if (operationalInsightsWorkspacePurgeContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(operationalInsightsWorkspacePurgeContent, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OperationalInsightsWorkspacePurgeContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,30 +85,29 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("table"u8);
             writer.WriteStringValue(Table);
             writer.WritePropertyName("filters"u8);
             writer.WriteStartArray();
-            foreach (var item in Filters)
+            foreach (OperationalInsightsWorkspacePurgeFilter item in Filters)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,41 +116,45 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             }
         }
 
-        OperationalInsightsWorkspacePurgeContent IJsonModel<OperationalInsightsWorkspacePurgeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OperationalInsightsWorkspacePurgeContent IJsonModel<OperationalInsightsWorkspacePurgeContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OperationalInsightsWorkspacePurgeContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOperationalInsightsWorkspacePurgeContent(document.RootElement, options);
         }
 
-        internal static OperationalInsightsWorkspacePurgeContent DeserializeOperationalInsightsWorkspacePurgeContent(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OperationalInsightsWorkspacePurgeContent DeserializeOperationalInsightsWorkspacePurgeContent(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string table = default;
             IList<OperationalInsightsWorkspacePurgeFilter> filters = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("table"u8))
+                if (prop.NameEquals("table"u8))
                 {
-                    table = property.Value.GetString();
+                    table = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filters"u8))
+                if (prop.NameEquals("filters"u8))
                 {
                     List<OperationalInsightsWorkspacePurgeFilter> array = new List<OperationalInsightsWorkspacePurgeFilter>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(OperationalInsightsWorkspacePurgeFilter.DeserializeOperationalInsightsWorkspacePurgeFilter(item, options));
                     }
@@ -103,42 +163,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new OperationalInsightsWorkspacePurgeContent(table, filters, serializedAdditionalRawData);
+            return new OperationalInsightsWorkspacePurgeContent(table, filters, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<OperationalInsightsWorkspacePurgeContent>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OperationalInsightsWorkspacePurgeContent IPersistableModel<OperationalInsightsWorkspacePurgeContent>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePurgeContent>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOperationalInsightsWorkspacePurgeContent(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePurgeContent)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OperationalInsightsWorkspacePurgeContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             VirtualNetworkData vnetData = new VirtualNetworkData()
             {
                 Location = "eastus",
-                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicy = "Disabled" } }
+                Subnets = { new SubnetData() { Name = SubnetName, AddressPrefix = "10.0.0.0/24", PrivateEndpointNetworkPolicies = "Disabled" } }
             };
             vnetData.AddressPrefixes.Add("10.0.0.0/16");
             vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             await Connection.DeleteAsync(WaitUntil.Completed);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { AppConfigurationPrivateEndpointConnectionResource connection = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAsync(Connection.Data.Name); });
 
-            Assert.AreEqual(404, exception.Status);
+            Assert.That(exception.Status, Is.EqualTo(404));
         }
 
         [Test]
         public async Task GetTest()
         {
             AppConfigurationPrivateEndpointConnectionResource connection = await Connection.GetAsync();
-            Assert.IsTrue(Connection.Data.Name.Equals(connection.Data.Name));
+            Assert.That(Connection.Data.Name.Equals(connection.Data.Name), Is.True);
         }
 
         [Ignore("Not available on this resource")]
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         {
             IEnumerable<AzureLocation> locations = (await Connection.GetAvailableLocationsAsync()).Value;
 
-            Assert.IsNotEmpty(locations);
+            Assert.That(locations, Is.Not.Empty);
         }
     }
 }

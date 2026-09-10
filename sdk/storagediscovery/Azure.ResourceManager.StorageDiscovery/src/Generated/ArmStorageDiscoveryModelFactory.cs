@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageDiscovery;
@@ -36,10 +35,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> Storage Discovery Workspace Properties. </summary>
@@ -57,10 +56,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             return new StorageDiscoveryWorkspaceProperties(
                 sku,
                 description,
-                workspaceRoots.ToList(),
-                scopes.ToList(),
+                (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
+                (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(),
                 provisioningState,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Storage Discovery Scope. This had added validations. </summary>
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             tagKeysOnly ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageDiscoveryScope(displayName, resourceTypes.ToList(), tagKeysOnly.ToList(), tags, additionalBinaryDataProperties: null);
+            return new StorageDiscoveryScope(displayName, (resourceTypes ?? new ChangeTrackingList<StorageDiscoveryResourceKind>()).ToList(), (tagKeysOnly ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> The template for adding updateable properties. </summary>
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new StorageDiscoveryWorkspacePatch(tags, properties, additionalBinaryDataProperties: null);
+            return new StorageDiscoveryWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
         /// <summary> The template for adding updateable properties. </summary>
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             workspaceRoots ??= new ChangeTrackingList<ResourceIdentifier>();
             scopes ??= new ChangeTrackingList<StorageDiscoveryScope>();
 
-            return new StorageDiscoveryWorkspacePatchProperties(sku, description, workspaceRoots.ToList(), scopes.ToList(), additionalBinaryDataProperties: null);
+            return new StorageDiscoveryWorkspacePatchProperties(sku, description, (workspaceRoots ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (scopes ?? new ChangeTrackingList<StorageDiscoveryScope>()).ToList(), default);
         }
     }
 }

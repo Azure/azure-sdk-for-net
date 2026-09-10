@@ -23,8 +23,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_Export
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Operation operation = client.Export(
+            Operation operation = projectClient.Export(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,
@@ -48,8 +50,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             ConversationAnalysisAuthoring client = new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample3_ConversationsAuthoring_ExportAsync
+            ConversationAuthoringProject projectClient = client.GetConversationAuthoringProjectClient();
+
             string projectName = "{projectName}";
-            Operation operation = await client.ExportAsync(
+            Operation operation = await projectClient.ExportAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 stringIndexType: StringIndexType.Utf16CodeUnit,

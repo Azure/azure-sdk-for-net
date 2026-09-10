@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             bool? force = false;
-            await networkManagerRoutingRule.DeleteAsync(WaitUntil.Completed, force: force);
+            await networkManagerRoutingRule.DeleteAsync(WaitUntil.Completed, force: force, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Destination = new RoutingRuleRouteDestination(RoutingRuleDestinationType.AddressPrefix, "10.0.0.0/16"),
                 NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualNetworkGateway),
             };
-            ArmOperation<NetworkManagerRoutingRuleResource> lro = await networkManagerRoutingRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerRoutingRuleResource> lro = await networkManagerRoutingRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Destination = new RoutingRuleRouteDestination(RoutingRuleDestinationType.AddressPrefix, "10.0.0.0/16"),
                 NextHop = new RoutingRuleNextHop(RoutingRuleNextHopType.VirtualNetworkGateway),
             };
-            ArmOperation<NetworkManagerRoutingRuleResource> lro = await networkManagerRoutingRule.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkManagerRoutingRuleResource> lro = await networkManagerRoutingRule.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkManagerRoutingRuleResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

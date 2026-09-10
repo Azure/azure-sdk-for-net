@@ -93,7 +93,10 @@ describe("Configuration tests", async () => {
       strictEqual(program.diagnostics.length, 0);
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
-        ["Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
+        [
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+        ]
       );
     });
 
@@ -107,7 +110,10 @@ describe("Configuration tests", async () => {
       strictEqual(program.diagnostics.length, 0);
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
-        ["Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
+        [
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+        ]
       );
     });
 
@@ -123,7 +129,10 @@ describe("Configuration tests", async () => {
       strictEqual(program.diagnostics.length, 0);
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
-        ["Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
+        [
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+        ]
       );
     });
 
@@ -145,7 +154,8 @@ describe("Configuration tests", async () => {
         [
           "Existing.Decorator.One",
           "Existing.Decorator.Two",
-          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
         ]
       );
     });
@@ -162,7 +172,10 @@ describe("Configuration tests", async () => {
       strictEqual(program.diagnostics.length, 0);
       deepStrictEqual(
         context.options["sdk-context-options"]?.additionalDecorators,
-        ["Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"]
+        [
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
+        ]
       );
     });
     it("preserves existing properties in sdk-context-options", async () => {
@@ -185,7 +198,8 @@ describe("Configuration tests", async () => {
         context.options["sdk-context-options"]?.additionalDecorators,
         [
           "Existing.Decorator",
-          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter"
+          "Azure\\.ClientGenerator\\.Core\\.@useSystemTextJsonConverter",
+          "TypeSpec\\.HttpClient\\.CSharp\\.@dynamicModel"
         ]
       );
     });

@@ -4,9 +4,10 @@
     Generates the emitter version dependency dashboard (doc/GeneratorVersions/Emitter_Version_Dashboard.md).
 
 .DESCRIPTION
-    Reads version information from the emitter package.json files and queries the npm
-    registry for the latest published versions, to produce a checked-in Markdown
-    dashboard showing the dependency chain across all C# TypeSpec emitters.
+    Validates management dependencies against the repository-approved Azure emitter
+    version, then reads version information from the emitter package.json files and
+    queries the npm registry for the latest published versions to produce a checked-in
+    Markdown dashboard showing the dependency chain across all C# TypeSpec emitters.
 
     Run this script whenever emitter dependency versions change to keep the dashboard
     up to date. Requires network access to query the npm registry.
@@ -17,7 +18,8 @@
 
 param(
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot ".." "..")).Path,
-    [string]$OutputPath
+    [string]$OutputPath,
+    [switch]$ValidateOnly
 )
 
 if (-not $OutputPath) {
@@ -40,18 +42,87 @@ function Get-PackageJsonVersion([string]$PackageJsonPath) {
     return $json.version
 }
 
+function Assert-VersionNotNewerThanApproved(
+    [string]$Name,
+    [string]$Version,
+    [string]$ApprovedVersion,
+    [string]$ApprovedVersionPath
+) {
+    try {
+        $current = [System.Management.Automation.SemanticVersion]::new($Version)
+        $approved = [System.Management.Automation.SemanticVersion]::new($ApprovedVersion)
+    }
+    catch {
+        throw "Unable to compare $Name version '$Version' with approved version '$ApprovedVersion': $($_.Exception.Message)"
+    }
+
+    if ($current.CompareTo($approved) -gt 0) {
+        throw "$Name version '$Version' is newer than the approved version '$ApprovedVersion' in '$ApprovedVersionPath'. Wait for the approved emitter package descriptor to be updated before advancing this dependency."
+    }
+}
+
+function Invoke-PublicNpmView([string]$PackageSpec, [string]$Field) {
+    $registry = "https://packagefeedproxy.microsoft.io/npm/"
+    $arguments = @("view", $PackageSpec, $Field, "--registry=$registry")
+    $userConfig = $env:NPM_CONFIG_USERCONFIG
+    try {
+        # Scoped registries in a caller's project or user config override --registry.
+        # Run outside the repository with user configuration disabled so this query
+        # is always resolved from the public npm proxy.
+        $env:NPM_CONFIG_USERCONFIG = if ($IsWindows) { "NUL" } else { "/dev/null" }
+        Push-Location ([System.IO.Path]::GetTempPath())
+        $output = npm @arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        Pop-Location
+        if ($null -eq $userConfig) {
+            Remove-Item Env:NPM_CONFIG_USERCONFIG -ErrorAction SilentlyContinue
+        }
+        else {
+            $env:NPM_CONFIG_USERCONFIG = $userConfig
+        }
+    }
+
+    return @{
+        ExitCode = $exitCode
+        Output = ($output | Out-String).Trim()
+    }
+}
+
 function Get-NpmLatestVersion([string]$PackageName) {
     try {
-        $result = npm view $PackageName dist-tags.latest 2>&1
-        if ($LASTEXITCODE -eq 0 -and $result) {
-            return ($result | Out-String).Trim()
+        $result = Invoke-PublicNpmView $PackageName "dist-tags.latest"
+        if ($result.ExitCode -eq 0 -and $result.Output) {
+            return $result.Output
         }
     } catch {}
     return "unavailable"
 }
 
+function Test-NpmVersionExists([string]$PackageName, [string]$Version) {
+    if (-not $PackageName -or -not $Version -or $Version -eq "unavailable")
+    {
+        return $false
+    }
+    try {
+        $result = Invoke-PublicNpmView "$PackageName@$Version" "version"
+        if ($result.ExitCode -eq 0 -and $result.Output -eq $Version) {
+            return $true
+        }
+    }
+    catch {}
+
+    return $false
+}
+
+
 function Get-NpmVersionLink([string]$PackageName, [string]$Version) {
-    return "https://www.npmjs.com/package/$PackageName/v/$Version"
+    if (-not (Test-NpmVersionExists $PackageName $Version)) {
+        return $Version
+    }
+    $url = "https://www.npmjs.com/package/$PackageName/v/$Version"
+    return "[$Version]($url)"
 }
 
 function Get-ShortVersion([string]$Version) {
@@ -66,6 +137,8 @@ function Get-ShortVersion([string]$Version) {
 $azureEmitterPkg   = Join-Path $RepoRoot "eng" "packages" "http-client-csharp" "package.json"
 $mgmtEmitterPkg    = Join-Path $RepoRoot "eng" "packages" "http-client-csharp-mgmt" "package.json"
 $provEmitterPkg    = Join-Path $RepoRoot "eng" "packages" "http-client-csharp-provisioning" "package.json"
+$approvedEmitterPkg = Join-Path $RepoRoot "eng" "azure-typespec-http-client-csharp-emitter-package.json"
+$generationPackagesProps = Join-Path $RepoRoot "eng" "centralpackagemanagement" "Directory.Generation.Packages.props"
 
 $azureEmitterVersion   = Get-PackageJsonVersion $azureEmitterPkg
 $mgmtEmitterVersion    = Get-PackageJsonVersion $mgmtEmitterPkg
@@ -74,6 +147,26 @@ $provEmitterVersion    = Get-PackageJsonVersion $provEmitterPkg
 $baseDep_azure   = Get-NpmDependencyVersion $azureEmitterPkg "@typespec/http-client-csharp"
 $azureDep_mgmt   = Get-NpmDependencyVersion $mgmtEmitterPkg "@azure-typespec/http-client-csharp"
 $mgmtDep_prov    = Get-NpmDependencyVersion $provEmitterPkg "@azure-typespec/http-client-csharp-mgmt"
+$approvedAzureVersion = Get-NpmDependencyVersion $approvedEmitterPkg "@azure-typespec/http-client-csharp"
+
+[xml]$generationPackages = Get-Content $generationPackagesProps -Raw
+$azureGeneratorVersion = [string]$generationPackages.Project.PropertyGroup.AzureGeneratorVersion
+
+Assert-VersionNotNewerThanApproved `
+    "Management emitter dependency" `
+    $azureDep_mgmt `
+    $approvedAzureVersion `
+    $approvedEmitterPkg
+Assert-VersionNotNewerThanApproved `
+    "Azure.Generator dependency" `
+    $azureGeneratorVersion `
+    $approvedAzureVersion `
+    $approvedEmitterPkg
+
+if ($ValidateOnly) {
+    Write-Host "Management emitter and generator versions do not exceed the approved Azure emitter version."
+    return
+}
 
 # --- Query npm registry for latest published versions ---
 
@@ -83,16 +176,21 @@ $latestAzure = Get-NpmLatestVersion "@azure-typespec/http-client-csharp"
 $latestMgmt  = Get-NpmLatestVersion "@azure-typespec/http-client-csharp-mgmt"
 $latestProv  = Get-NpmLatestVersion "@azure-typespec/http-client-csharp-provisioning"
 
-# --- Build version links ---
+# --- Version cells ---
+# These are rendered as plain text rather than links to npmjs.com. The npm website
+# blocks automated requests, so the repo's link checker (eng/common/scripts/Verify-Links.ps1)
+# cannot verify them. Because the "Latest on npm" column tracks a moving target, every
+# regeneration after a new publish would introduce a fresh, unverifiable URL and fail CI.
+# The ignore list is matched by exact string (Verify-Links.ps1), so it cannot cover them either.
 
-$linkBaseDep    = Get-NpmVersionLink "@typespec/http-client-csharp" $baseDep_azure
-$linkAzureDep   = Get-NpmVersionLink "@azure-typespec/http-client-csharp" $azureDep_mgmt
-$linkMgmtDep    = Get-NpmVersionLink "@azure-typespec/http-client-csharp-mgmt" $mgmtDep_prov
+$linkBaseDep    = $baseDep_azure
+$linkAzureDep   = $azureDep_mgmt
+$linkMgmtDep    = $mgmtDep_prov
 
-$linkLatestBase  = Get-NpmVersionLink "@typespec/http-client-csharp" $latestBase
-$linkLatestAzure = Get-NpmVersionLink "@azure-typespec/http-client-csharp" $latestAzure
-$linkLatestMgmt  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-mgmt" $latestMgmt
-$linkLatestProv  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-provisioning" $latestProv
+$linkLatestBase  = $latestBase
+$linkLatestAzure = $latestAzure
+$linkLatestMgmt  = $latestMgmt
+$linkLatestProv  = $latestProv
 
 # --- Resolve the git commit that corresponds to each dependency version ---
 # We query the npm registry for the exact publish timestamp of each dependency
@@ -185,7 +283,7 @@ $md = @"
 > **Auto-generated** by ``Emitter_Version_Dashboard`` on $timestamp.
 > Run that script to refresh this file after dependency version changes.
 
-## Dependency Chain
+## Latest Published Version Chain
 
 ``````
 @typespec/http-client-csharp ($(Get-ShortVersion $latestBase))
@@ -198,9 +296,9 @@ $md = @"
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| ``@azure-typespec/http-client-csharp`` | ``@typespec/http-client-csharp`` | [$baseDep_azure]($linkBaseDep) | [$latestBase]($linkLatestBase) | $(if ($commitBaseLink) { "[$($commitBase.Short)]($commitBaseLink)" } else { $commitBase.Short }) |
-| ``@azure-typespec/http-client-csharp-mgmt`` | ``@azure-typespec/http-client-csharp`` | [$azureDep_mgmt]($linkAzureDep) | [$latestAzure]($linkLatestAzure) | $(if ($commitLinkAzure) { "[$($commitAzure.Short)]($commitLinkAzure)" } else { $commitAzure.Short }) |
-| ``@azure-typespec/http-client-csharp-provisioning`` | ``@azure-typespec/http-client-csharp-mgmt`` | [$mgmtDep_prov]($linkMgmtDep) | [$latestMgmt]($linkLatestMgmt) | $(if ($commitLinkMgmt) { "[$($commitMgmt.Short)]($commitLinkMgmt)" } else { $commitMgmt.Short }) |
+| ``@azure-typespec/http-client-csharp`` | ``@typespec/http-client-csharp`` | $linkBaseDep | $linkLatestBase | $(if ($commitBaseLink) { "[$($commitBase.Short)]($commitBaseLink)" } else { $commitBase.Short }) |
+| ``@azure-typespec/http-client-csharp-mgmt`` | ``@azure-typespec/http-client-csharp`` | $linkAzureDep | $linkLatestAzure | $(if ($commitLinkAzure) { "[$($commitAzure.Short)]($commitLinkAzure)" } else { $commitAzure.Short }) |
+| ``@azure-typespec/http-client-csharp-provisioning`` | ``@azure-typespec/http-client-csharp-mgmt`` | $linkMgmtDep | $linkLatestMgmt | $(if ($commitLinkMgmt) { "[$($commitMgmt.Short)]($commitLinkMgmt)" } else { $commitMgmt.Short }) |
 
 ## Source Files
 

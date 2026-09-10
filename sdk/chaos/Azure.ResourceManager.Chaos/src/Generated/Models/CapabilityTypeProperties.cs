@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos.Models
         {
             get
             {
-                return RuntimeProperties.Kind;
+                return RuntimeProperties is null ? default : RuntimeProperties.Kind;
             }
         }
     }

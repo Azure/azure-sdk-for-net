@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             TryGetApiVersion(ResourceType, out string localRulestackCertificateObjectApiVersion);
             _certificateObjectLocalRulestackClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _certificateObjectLocalRulestackRestClient = new CertificateObjectLocalRulestack(_certificateObjectLocalRulestackClientDiagnostics, Pipeline, Endpoint, localRulestackCertificateObjectApiVersion ?? "2025-10-08");
+            _certificateObjectLocalRulestackRestClient = new CertificateObjectLocalRulestack(_certificateObjectLocalRulestackClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, localRulestackCertificateObjectApiVersion ?? "2025-10-08");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
+                    new LocalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 HttpMessage message = _certificateObjectLocalRulestackRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, LocalRulestackCertificateObjectData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NgfwArmOperation<LocalRulestackCertificateObjectResource> operation = new NgfwArmOperation<LocalRulestackCertificateObjectResource>(
-                    new LocalRulestackCertificateObjectOperationSource(Client),
+                    new LocalRulestackCertificateObjectResourceOperationSource(Client),
                     _certificateObjectLocalRulestackClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -36,8 +36,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="authConfig"> The authentication configuration for the cluster. </param>
         /// <param name="encryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
+        /// <param name="networkBypassMode"> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator, string serverVersion, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IList<MongoClusterPreviewFeature> previewFeatures, AuthConfigProperties authConfig, EncryptionProperties encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoClusterUpdateProperties(MongoClusterAdministratorProperties administrator, string serverVersion, MongoClusterPublicNetworkAccess? publicNetworkAccess, HighAvailabilityProperties highAvailability, MongoClusterStorageProperties storage, ShardingProperties sharding, ComputeProperties compute, BackupProperties backup, DataApiProperties dataApi, IList<MongoClusterPreviewFeature> previewFeatures, AuthConfigProperties authConfig, EncryptionProperties encryption, MongoClusterNetworkBypassMode? networkBypassMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Administrator = administrator;
             ServerVersion = serverVersion;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             PreviewFeatures = previewFeatures;
             AuthConfig = authConfig;
             Encryption = encryption;
+            NetworkBypassMode = networkBypassMode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -89,6 +91,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> The encryption configuration for the cluster. Depends on identity being configured. </summary>
         internal EncryptionProperties Encryption { get; set; }
+
+        /// <summary> The network bypass mode for the cluster. Setting to 'AzureCosmosDB' allows Azure Cosmos DB service to bypass network restrictions. </summary>
+        public MongoClusterNetworkBypassMode? NetworkBypassMode { get; set; }
 
         /// <summary> The target high availability mode requested for the cluster. </summary>
         public HighAvailabilityMode? HighAvailabilityTargetMode

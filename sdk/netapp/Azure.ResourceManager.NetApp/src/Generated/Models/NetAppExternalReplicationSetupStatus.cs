@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppExternalReplicationSetupStatus : IEquatable<NetAppExternalReplicationSetupStatus>
     {
         private readonly string _value;
+        /// <summary> Your cluster needs to be peered by using the 'peerExternalCluster' action. </summary>
+        private const string ClusterPeerRequiredValue = "ClusterPeerRequired";
+        /// <summary> The peering needs to be accepted on your cluster before the setup can proceed. </summary>
+        private const string ClusterPeerPendingValue = "ClusterPeerPending";
+        /// <summary> Need to call 'authorizeExternalReplication' and accept the returned 'vserver peer accept' command on your cluster to finish setting up the external replication. </summary>
+        private const string VServerPeerRequiredValue = "VServerPeerRequired";
+        /// <summary> Need to call 'authorizeExternalReplication' to finish setting up the external replication. </summary>
+        private const string ReplicationCreateRequiredValue = "ReplicationCreateRequired";
+        /// <summary> External Replication setup is complete, you can now monitor the 'mirrorState' in the replication status for the health of the replication. </summary>
+        private const string NoActionRequiredValue = "NoActionRequired";
 
         /// <summary> Initializes a new instance of <see cref="NetAppExternalReplicationSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppExternalReplicationSetupStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ClusterPeerRequiredValue = "ClusterPeerRequired";
-        private const string ClusterPeerPendingValue = "ClusterPeerPending";
-        private const string VServerPeerRequiredValue = "VServerPeerRequired";
-        private const string ReplicationCreateRequiredValue = "ReplicationCreateRequired";
-        private const string NoActionRequiredValue = "NoActionRequired";
+            _value = value;
+        }
 
         /// <summary> Your cluster needs to be peered by using the 'peerExternalCluster' action. </summary>
         public static NetAppExternalReplicationSetupStatus ClusterPeerRequired { get; } = new NetAppExternalReplicationSetupStatus(ClusterPeerRequiredValue);
+
         /// <summary> The peering needs to be accepted on your cluster before the setup can proceed. </summary>
         public static NetAppExternalReplicationSetupStatus ClusterPeerPending { get; } = new NetAppExternalReplicationSetupStatus(ClusterPeerPendingValue);
+
         /// <summary> Need to call 'authorizeExternalReplication' and accept the returned 'vserver peer accept' command on your cluster to finish setting up the external replication. </summary>
         public static NetAppExternalReplicationSetupStatus VServerPeerRequired { get; } = new NetAppExternalReplicationSetupStatus(VServerPeerRequiredValue);
+
         /// <summary> Need to call 'authorizeExternalReplication' to finish setting up the external replication. </summary>
         public static NetAppExternalReplicationSetupStatus ReplicationCreateRequired { get; } = new NetAppExternalReplicationSetupStatus(ReplicationCreateRequiredValue);
+
         /// <summary> External Replication setup is complete, you can now monitor the 'mirrorState' in the replication status for the health of the replication. </summary>
         public static NetAppExternalReplicationSetupStatus NoActionRequired { get; } = new NetAppExternalReplicationSetupStatus(NoActionRequiredValue);
+
         /// <summary> Determines if two <see cref="NetAppExternalReplicationSetupStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppExternalReplicationSetupStatus left, NetAppExternalReplicationSetupStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppExternalReplicationSetupStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppExternalReplicationSetupStatus left, NetAppExternalReplicationSetupStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppExternalReplicationSetupStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppExternalReplicationSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppExternalReplicationSetupStatus(string value) => new NetAppExternalReplicationSetupStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppExternalReplicationSetupStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppExternalReplicationSetupStatus?(string value) => value == null ? null : new NetAppExternalReplicationSetupStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppExternalReplicationSetupStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppExternalReplicationSetupStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

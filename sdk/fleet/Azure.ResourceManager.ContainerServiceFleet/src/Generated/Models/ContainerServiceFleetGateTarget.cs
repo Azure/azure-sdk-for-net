@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="id"> The resource id that the Gate is controlling the rollout of. </param>
         /// <param name="updateRunProperties"> The properties of the Update Run that the Gate is targeting. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetGateTarget(ResourceIdentifier id, UpdateRunGateTargetProperties updateRunProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetGateTarget(ResourceIdentifier id, ContainerServiceFleetUpdateRunGateTargetProperties updateRunProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             UpdateRunProperties = updateRunProperties;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ResourceIdentifier Id { get; set; }
 
         /// <summary> The properties of the Update Run that the Gate is targeting. </summary>
-        public UpdateRunGateTargetProperties UpdateRunProperties { get; set; }
+        public ContainerServiceFleetUpdateRunGateTargetProperties UpdateRunProperties { get; set; }
     }
 }

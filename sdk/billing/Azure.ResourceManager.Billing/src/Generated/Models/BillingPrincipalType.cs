@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingPrincipalType : IEquatable<BillingPrincipalType>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> User. </summary>
+        private const string UserValue = "User";
+        /// <summary> Group. </summary>
+        private const string GroupValue = "Group";
+        /// <summary> DirectoryRole. </summary>
+        private const string DirectoryRoleValue = "DirectoryRole";
+        /// <summary> ServicePrincipal. </summary>
+        private const string ServicePrincipalValue = "ServicePrincipal";
+        /// <summary> Everyone. </summary>
+        private const string EveryoneValue = "Everyone";
 
         /// <summary> Initializes a new instance of <see cref="BillingPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingPrincipalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string NoneValue = "None";
-        private const string UserValue = "User";
-        private const string GroupValue = "Group";
-        private const string DirectoryRoleValue = "DirectoryRole";
-        private const string ServicePrincipalValue = "ServicePrincipal";
-        private const string EveryoneValue = "Everyone";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static BillingPrincipalType Unknown { get; } = new BillingPrincipalType(UnknownValue);
+
         /// <summary> None. </summary>
         public static BillingPrincipalType None { get; } = new BillingPrincipalType(NoneValue);
+
         /// <summary> User. </summary>
         public static BillingPrincipalType User { get; } = new BillingPrincipalType(UserValue);
+
         /// <summary> Group. </summary>
         public static BillingPrincipalType Group { get; } = new BillingPrincipalType(GroupValue);
+
         /// <summary> DirectoryRole. </summary>
         public static BillingPrincipalType DirectoryRole { get; } = new BillingPrincipalType(DirectoryRoleValue);
+
         /// <summary> ServicePrincipal. </summary>
         public static BillingPrincipalType ServicePrincipal { get; } = new BillingPrincipalType(ServicePrincipalValue);
+
         /// <summary> Everyone. </summary>
         public static BillingPrincipalType Everyone { get; } = new BillingPrincipalType(EveryoneValue);
+
         /// <summary> Determines if two <see cref="BillingPrincipalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingPrincipalType left, BillingPrincipalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingPrincipalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingPrincipalType left, BillingPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingPrincipalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingPrincipalType(string value) => new BillingPrincipalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingPrincipalType?(string value) => value == null ? null : new BillingPrincipalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingPrincipalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingPrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(WorkloadNetworkDnsServiceResource.ResourceType, out string workloadNetworkDnsServiceApiVersion);
             _workloadNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", WorkloadNetworkDnsServiceResource.ResourceType.Namespace, Diagnostics);
-            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Endpoint, workloadNetworkDnsServiceApiVersion ?? "2025-09-01");
+            _workloadNetworksRestClient = new WorkloadNetworks(_workloadNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, workloadNetworkDnsServiceApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AvsArmOperation<WorkloadNetworkDnsServiceResource> operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(
-                    new WorkloadNetworkDnsServiceOperationSource(Client),
+                    new WorkloadNetworkDnsServiceResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Avs
                 HttpMessage message = _workloadNetworksRestClient.CreateCreateDnsServiceRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, dnsServiceId, WorkloadNetworkDnsServiceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AvsArmOperation<WorkloadNetworkDnsServiceResource> operation = new AvsArmOperation<WorkloadNetworkDnsServiceResource>(
-                    new WorkloadNetworkDnsServiceOperationSource(Client),
+                    new WorkloadNetworkDnsServiceResourceOperationSource(Client),
                     _workloadNetworksClientDiagnostics,
                     Pipeline,
                     message.Request,

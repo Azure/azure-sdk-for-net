@@ -7,59 +7,79 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary>
     /// Specifies the Intrusion Detection signature profile to apply.
-    ///
     /// Values:
-    /// - Off: IDPS profiles disabled; uses the same signature set that existed before profiles.
-    /// - Emerging: Signatures of the newest, most recent threats.
-    /// - Core: Complete, modern, standard set of signatures.
-    /// - Extended: Core signatures plus older legacy signatures for maximum coverage.
+    /// <list type="bullet"><item><description>Off: IDPS profiles disabled; uses the same signature set that existed before profiles.</description></item><item><description>Emerging: Signatures of the newest, most recent threats.</description></item><item><description>Core: Complete, modern, standard set of signatures.</description></item><item><description>Extended: Core signatures plus older legacy signatures for maximum coverage.</description></item></list>
     /// </summary>
     public readonly partial struct FirewallPolicyIntrusionDetectionProfileType : IEquatable<FirewallPolicyIntrusionDetectionProfileType>
     {
         private readonly string _value;
+        /// <summary> Off. </summary>
+        private const string OffValue = "Off";
+        /// <summary> Emerging. </summary>
+        private const string EmergingValue = "Emerging";
+        /// <summary> Core. </summary>
+        private const string CoreValue = "Core";
+        /// <summary> Extended. </summary>
+        private const string ExtendedValue = "Extended";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyIntrusionDetectionProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyIntrusionDetectionProfileType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OffValue = "Off";
-        private const string EmergingValue = "Emerging";
-        private const string CoreValue = "Core";
-        private const string ExtendedValue = "Extended";
+            _value = value;
+        }
 
         /// <summary> Off. </summary>
         public static FirewallPolicyIntrusionDetectionProfileType Off { get; } = new FirewallPolicyIntrusionDetectionProfileType(OffValue);
+
         /// <summary> Emerging. </summary>
         public static FirewallPolicyIntrusionDetectionProfileType Emerging { get; } = new FirewallPolicyIntrusionDetectionProfileType(EmergingValue);
+
         /// <summary> Core. </summary>
         public static FirewallPolicyIntrusionDetectionProfileType Core { get; } = new FirewallPolicyIntrusionDetectionProfileType(CoreValue);
+
         /// <summary> Extended. </summary>
         public static FirewallPolicyIntrusionDetectionProfileType Extended { get; } = new FirewallPolicyIntrusionDetectionProfileType(ExtendedValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProfileType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyIntrusionDetectionProfileType left, FirewallPolicyIntrusionDetectionProfileType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyIntrusionDetectionProfileType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyIntrusionDetectionProfileType left, FirewallPolicyIntrusionDetectionProfileType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyIntrusionDetectionProfileType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyIntrusionDetectionProfileType(string value) => new FirewallPolicyIntrusionDetectionProfileType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyIntrusionDetectionProfileType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyIntrusionDetectionProfileType?(string value) => value == null ? null : new FirewallPolicyIntrusionDetectionProfileType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyIntrusionDetectionProfileType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyIntrusionDetectionProfileType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

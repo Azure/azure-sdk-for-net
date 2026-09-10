@@ -86,7 +86,7 @@ namespace Azure.Developer.LoadTesting
             if (Optional.IsDefined(ErrorRateTimeWindow))
             {
                 writer.WritePropertyName("errorRateTimeWindowInSeconds"u8);
-                writer.WriteNumberValue(Convert.ToInt32(ErrorRateTimeWindow.Value.TotalSeconds));
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(ErrorRateTimeWindow.Value.TotalSeconds)));
             }
             if (Optional.IsDefined(MaximumVirtualUsersPerEngine))
             {

@@ -12,16 +12,27 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary>
     /// Base backup policy with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PeriodicBackupPolicy"/> and <see cref="ContinuousBackupPolicy"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="PeriodicBackupPolicy"/> and <see cref="ContinuousBackupPolicy"/>.
     /// </summary>
     public partial class BackupPolicy : ProvisionableConstruct
     {
+        private BicepValue<BackupPolicyKind> _kind;
         private BicepValue<int> _retentionDays;
         private BicepValue<bool> _isEnabled;
 
         /// <summary> Creates a new BackupPolicy. </summary>
         public BackupPolicy()
         {
+        }
+
+        /// <summary> The backup policy kind. </summary>
+        internal BicepValue<BackupPolicyKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
         }
 
         /// <summary> Gets or sets the RetentionDays. </summary>
@@ -58,8 +69,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _kind = DefineProperty<BackupPolicyKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _retentionDays = DefineProperty<int>(nameof(RetentionDays), new string[] { "retentionDays" });
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BackupPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

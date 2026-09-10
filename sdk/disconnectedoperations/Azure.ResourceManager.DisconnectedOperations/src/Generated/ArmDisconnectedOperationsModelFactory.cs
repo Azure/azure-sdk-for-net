@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DisconnectedOperations;
 using Azure.ResourceManager.Models;
@@ -36,10 +35,10 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The disconnected operation properties. </summary>
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 deviceVersion,
                 billingConfiguration,
                 benefitPlans,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The billing configuration. </summary>
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <returns> A new <see cref="Models.DisconnectedOperationsBillingConfiguration"/> instance for mocking. </returns>
         public static DisconnectedOperationsBillingConfiguration DisconnectedOperationsBillingConfiguration(DisconnectedOperationsAutoRenew autoRenew = default, DisconnectedOperationsBillingStatus billingStatus = default, DisconnectedOperationsBillingPeriod current = default, DisconnectedOperationsBillingPeriod upcoming = default)
         {
-            return new DisconnectedOperationsBillingConfiguration(autoRenew, billingStatus, current, upcoming, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationsBillingConfiguration(autoRenew, billingStatus, current, upcoming, default);
         }
 
         /// <summary> The billing period. </summary>
@@ -87,7 +86,16 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <returns> A new <see cref="Models.DisconnectedOperationsBillingPeriod"/> instance for mocking. </returns>
         public static DisconnectedOperationsBillingPeriod DisconnectedOperationsBillingPeriod(int cores = default, DisconnectedOperationsPricingModel pricingModel = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, default);
+        }
+
+        /// <summary> The benefit plans. </summary>
+        /// <param name="azureHybridWindowsServerBenefit"> Azure Hybrid Windows Server Benefit plan. </param>
+        /// <param name="windowsServerVmCount"> Number of Windows Server VMs to license under the Azure Hybrid Benefit plan. </param>
+        /// <returns> A new <see cref="Models.DisconnectedOperationsBenefitPlans"/> instance for mocking. </returns>
+        public static DisconnectedOperationsBenefitPlans DisconnectedOperationsBenefitPlans(DisconnectedOperationsBenefitPlanStatus? azureHybridWindowsServerBenefit = default, int? windowsServerVmCount = default)
+        {
+            return new DisconnectedOperationsBenefitPlans(azureHybridWindowsServerBenefit, windowsServerVmCount, default);
         }
 
         /// <summary> The type used for update operations of the DisconnectedOperation. </summary>
@@ -98,7 +106,25 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DisconnectedOperationPatch(tags, properties, additionalBinaryDataProperties: null);
+            return new DisconnectedOperationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the DisconnectedOperation. </summary>
+        /// <param name="connectionIntent"> The connection intent. </param>
+        /// <param name="registrationStatus"> The registration intent. </param>
+        /// <param name="deviceVersion"> The device version. </param>
+        /// <param name="billingConfiguration"> The billing configuration. </param>
+        /// <param name="benefitPlans"> The benefit plans. </param>
+        /// <returns> A new <see cref="Models.DisconnectedOperationUpdateProperties"/> instance for mocking. </returns>
+        public static DisconnectedOperationUpdateProperties DisconnectedOperationUpdateProperties(DisconnectedOperationsConnectionIntent? connectionIntent = default, DisconnectedOperationsRegistrationStatus? registrationStatus = default, string deviceVersion = default, DisconnectedOperationsBillingConfiguration billingConfiguration = default, DisconnectedOperationsBenefitPlans benefitPlans = default)
+        {
+            return new DisconnectedOperationUpdateProperties(
+                connectionIntent,
+                registrationStatus,
+                deviceVersion,
+                billingConfiguration,
+                benefitPlans,
+                default);
         }
 
         /// <summary> The disconnected operation manifest. </summary>
@@ -124,7 +150,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 cloud,
                 billingConfiguration,
                 benefitPlans,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Holds the release information of a disconnected operations image. </summary>
@@ -141,8 +167,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The image properties. </summary>
@@ -166,9 +192,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseNotes,
                 releaseOn,
                 releaseType,
-                compatibleVersions.ToList(),
+                (compatibleVersions ?? new ChangeTrackingList<string>()).ToList(),
                 updateProperties,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The update properties of the Update Release type Image. </summary>
@@ -186,7 +212,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 osVersion,
                 agentVersion,
                 featureUpdates,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The image download properties. </summary>
@@ -213,12 +239,12 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 releaseNotes,
                 releaseOn,
                 releaseType,
-                compatibleVersions.ToList(),
+                (compatibleVersions ?? new ChangeTrackingList<string>()).ToList(),
                 updateProperties,
                 transactionId,
                 downloadLink,
                 linkExpiresOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Disconnected operations artifact resource. </summary>
@@ -235,8 +261,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The artifact properties. </summary>
@@ -254,7 +280,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 title,
                 description,
                 size,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> The artifact download properties. </summary>
@@ -276,7 +302,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 size,
                 downloadLink,
                 linkExpiresOn,
-                additionalBinaryDataProperties: null);
+                default);
         }
 
         /// <summary> Hardware settings resource. </summary>
@@ -293,8 +319,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                properties);
+                properties,
+                default);
         }
 
         /// <summary> The hardware setting properties. </summary>
@@ -322,7 +348,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
                 versionAtRegistration,
                 solutionBuilderExtension,
                 deviceId,
-                additionalBinaryDataProperties: null);
+                default);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoClusterPrincipalRole : IEquatable<KustoClusterPrincipalRole>
     {
         private readonly string _value;
+        /// <summary> AllDatabasesAdmin. </summary>
+        private const string AllDatabasesAdminValue = "AllDatabasesAdmin";
+        /// <summary> AllDatabasesViewer. </summary>
+        private const string AllDatabasesViewerValue = "AllDatabasesViewer";
+        /// <summary> AllDatabasesMonitor. </summary>
+        private const string AllDatabasesMonitorValue = "AllDatabasesMonitor";
 
         /// <summary> Initializes a new instance of <see cref="KustoClusterPrincipalRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoClusterPrincipalRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllDatabasesAdminValue = "AllDatabasesAdmin";
-        private const string AllDatabasesViewerValue = "AllDatabasesViewer";
-        private const string AllDatabasesMonitorValue = "AllDatabasesMonitor";
+            _value = value;
+        }
 
         /// <summary> AllDatabasesAdmin. </summary>
         public static KustoClusterPrincipalRole AllDatabasesAdmin { get; } = new KustoClusterPrincipalRole(AllDatabasesAdminValue);
+
         /// <summary> AllDatabasesViewer. </summary>
         public static KustoClusterPrincipalRole AllDatabasesViewer { get; } = new KustoClusterPrincipalRole(AllDatabasesViewerValue);
+
         /// <summary> AllDatabasesMonitor. </summary>
         public static KustoClusterPrincipalRole AllDatabasesMonitor { get; } = new KustoClusterPrincipalRole(AllDatabasesMonitorValue);
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoClusterPrincipalRole left, KustoClusterPrincipalRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoClusterPrincipalRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoClusterPrincipalRole left, KustoClusterPrincipalRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoClusterPrincipalRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoClusterPrincipalRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoClusterPrincipalRole(string value) => new KustoClusterPrincipalRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoClusterPrincipalRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoClusterPrincipalRole?(string value) => value == null ? null : new KustoClusterPrincipalRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoClusterPrincipalRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoClusterPrincipalRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

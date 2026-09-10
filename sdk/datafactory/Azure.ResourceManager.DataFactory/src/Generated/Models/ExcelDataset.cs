@@ -15,16 +15,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class ExcelDataset : DataFactoryDatasetProperties
     {
         /// <summary> Initializes a new instance of <see cref="ExcelDataset"/>. </summary>
-        /// <param name="linkedServiceName"> Linked service reference. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
-        public ExcelDataset(DataFactoryLinkedServiceReference linkedServiceName) : base(linkedServiceName)
-        {
-            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
-
-            DatasetType = "Excel";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -33,52 +23,133 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for dataset. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Dataset. </param>
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="dataLocation">
-        /// The location of the excel storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </param>
-        /// <param name="sheetName"> The sheet name of excel file. Type: string (or Expression with resultType string). </param>
-        /// <param name="sheetIndex"> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </param>
-        /// <param name="range"> The partial data of one sheet. Type: string (or Expression with resultType string). </param>
-        /// <param name="firstRowAsHeader"> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="compression"> The data compression method used for the json dataset. </param>
-        /// <param name="nullValue"> The null value string. Type: string (or Expression with resultType string). </param>
-        internal ExcelDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DatasetLocation dataLocation, DataFactoryElement<string> sheetName, DataFactoryElement<int> sheetIndex, DataFactoryElement<string> range, DataFactoryElement<bool> firstRowAsHeader, DatasetCompression compression, DataFactoryElement<string> nullValue) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        /// <param name="additionalProperties"></param>
+        /// <param name="typeProperties"> Excel dataset properties. </param>
+        internal ExcelDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, ExcelDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
-            DataLocation = dataLocation;
-            SheetName = sheetName;
-            SheetIndex = sheetIndex;
-            Range = range;
-            FirstRowAsHeader = firstRowAsHeader;
-            Compression = compression;
-            NullValue = nullValue;
-            DatasetType = datasetType ?? "Excel";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExcelDataset"/> for deserialization. </summary>
-        internal ExcelDataset()
+        /// <summary> Excel dataset properties. </summary>
+        internal ExcelDatasetTypeProperties TypeProperties { get; set; }
+
+        /// <summary> The location of the excel storage. </summary>
+        public DatasetLocation DataLocation
         {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.DataLocation;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.DataLocation = value;
+            }
         }
 
-        /// <summary>
-        /// The location of the excel storage.
-        /// Please note <see cref="DatasetLocation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonS3CompatibleLocation"/>, <see cref="AmazonS3Location"/>, <see cref="AzureBlobFSLocation"/>, <see cref="AzureBlobStorageLocation"/>, <see cref="AzureDataLakeStoreLocation"/>, <see cref="AzureFileStorageLocation"/>, <see cref="FileServerLocation"/>, <see cref="FtpServerLocation"/>, <see cref="GoogleCloudStorageLocation"/>, <see cref="HdfsLocation"/>, <see cref="HttpServerLocation"/>, <see cref="LakeHouseLocation"/>, <see cref="OracleCloudStorageLocation"/> and <see cref="SftpLocation"/>.
-        /// </summary>
-        public DatasetLocation DataLocation { get; set; }
         /// <summary> The sheet name of excel file. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> SheetName { get; set; }
+        public DataFactoryElement<string> SheetName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SheetName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.SheetName = value;
+            }
+        }
+
         /// <summary> The sheet index of excel file and default value is 0. Type: integer (or Expression with resultType integer). </summary>
-        public DataFactoryElement<int> SheetIndex { get; set; }
+        public DataFactoryElement<int> SheetIndex
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.SheetIndex;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.SheetIndex = value;
+            }
+        }
+
         /// <summary> The partial data of one sheet. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> Range { get; set; }
+        public DataFactoryElement<string> Range
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Range;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.Range = value;
+            }
+        }
+
         /// <summary> When used as input, treat the first row of data as headers. When used as output,write the headers into the output as the first row of data. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>
-        public DataFactoryElement<bool> FirstRowAsHeader { get; set; }
+        public DataFactoryElement<bool> FirstRowAsHeader
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.FirstRowAsHeader;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.FirstRowAsHeader = value;
+            }
+        }
+
         /// <summary> The data compression method used for the json dataset. </summary>
-        public DatasetCompression Compression { get; set; }
+        public DatasetCompression Compression
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.Compression;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.Compression = value;
+            }
+        }
+
         /// <summary> The null value string. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> NullValue { get; set; }
+        public DataFactoryElement<string> NullValue
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.NullValue;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new ExcelDatasetTypeProperties();
+                }
+                TypeProperties.NullValue = value;
+            }
+        }
     }
 }

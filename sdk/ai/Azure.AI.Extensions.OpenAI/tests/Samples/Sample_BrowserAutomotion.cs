@@ -3,14 +3,15 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.AI.Projects;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
-using Azure.AI.Projects;
-using Azure.AI.Projects.Agents;
 
 namespace Azure.AI.Extensions.OpenAI.Tests.Samples;
+#pragma warning disable AAIP001
 
 public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
 {
@@ -62,7 +63,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -70,7 +71,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
             Instructions = "You are an Agent helping with browser automation tasks.\n" +
             "You can answer questions, provide information, and assist with various tasks\n" +
             "related to web browsing using the Browser Automation tool available to you.",
-            Tools = {playwrightTool}
+            Tools = { playwrightTool }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName: "myAgent",
@@ -126,7 +127,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
         BrowserAutomationPreviewTool playwrightTool = new(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+                new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

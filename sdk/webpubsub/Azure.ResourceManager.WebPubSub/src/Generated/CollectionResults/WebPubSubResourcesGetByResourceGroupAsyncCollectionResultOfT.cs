@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 WebPubSubResourceList result = WebPubSubResourceList.FromResponse(response);
-                yield return Page<WebPubSubData>.FromValues((IReadOnlyList<WebPubSubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WebPubSubData>.FromValues((IReadOnlyList<WebPubSubData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct SiteRecoverySqlServerLicenseType : IEquatable<SiteRecoverySqlServerLicenseType>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> NoLicenseType. </summary>
+        private const string NoLicenseTypeValue = "NoLicenseType";
+        /// <summary> PAYG. </summary>
+        private const string PaygValue = "PAYG";
+        /// <summary> AHUB. </summary>
+        private const string AhubValue = "AHUB";
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SiteRecoverySqlServerLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string NoLicenseTypeValue = "NoLicenseType";
-        private const string PaygValue = "PAYG";
-        private const string AhubValue = "AHUB";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static SiteRecoverySqlServerLicenseType NotSpecified { get; } = new SiteRecoverySqlServerLicenseType(NotSpecifiedValue);
+
         /// <summary> NoLicenseType. </summary>
         public static SiteRecoverySqlServerLicenseType NoLicenseType { get; } = new SiteRecoverySqlServerLicenseType(NoLicenseTypeValue);
+
         /// <summary> PAYG. </summary>
         public static SiteRecoverySqlServerLicenseType Payg { get; } = new SiteRecoverySqlServerLicenseType(PaygValue);
+
         /// <summary> AHUB. </summary>
         public static SiteRecoverySqlServerLicenseType Ahub { get; } = new SiteRecoverySqlServerLicenseType(AhubValue);
+
         /// <summary> Determines if two <see cref="SiteRecoverySqlServerLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SiteRecoverySqlServerLicenseType left, SiteRecoverySqlServerLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SiteRecoverySqlServerLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SiteRecoverySqlServerLicenseType left, SiteRecoverySqlServerLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SiteRecoverySqlServerLicenseType(string value) => new SiteRecoverySqlServerLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SiteRecoverySqlServerLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SiteRecoverySqlServerLicenseType?(string value) => value == null ? null : new SiteRecoverySqlServerLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SiteRecoverySqlServerLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SiteRecoverySqlServerLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

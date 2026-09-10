@@ -41,13 +41,19 @@ public class ResponseExecutionTrackerTests : IDisposable
     }
 
     [Test]
-    public void MarkCompleted_SetsCompletedAt()
+    public void TryEvict_RemovesExecution_TryGetReturnsFalse()
     {
         _tracker.Create("resp_002");
-        _tracker.MarkCompleted("resp_002");
+        var evicted = _tracker.TryEvict("resp_002");
 
-        _tracker.TryGet("resp_002", out var execution);
-        Assert.That(execution!.CompletedAt, Is.Not.Null);
+        Assert.That(evicted, Is.True);
+        Assert.That(_tracker.TryGet("resp_002", out _), Is.False);
+    }
+
+    [Test]
+    public void TryEvict_UnknownId_ReturnsFalse()
+    {
+        Assert.That(_tracker.TryEvict("resp_missing"), Is.False);
     }
 
     [Test]

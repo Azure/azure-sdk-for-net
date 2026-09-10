@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomDomainConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomDomainConfiguration>
+    /// <summary> Configuration properties for apps environment custom domain. </summary>
+    public partial class ContainerAppCustomDomainConfiguration : IJsonModel<ContainerAppCustomDomainConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomDomainConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppCustomDomainConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeContainerAppCustomDomainConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppCustomDomainConfiguration IPersistableModel<ContainerAppCustomDomainConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ContainerAppCustomDomainConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ContainerAppCustomDomainConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(CustomDomainVerificationId))
             {
                 writer.WritePropertyName("customDomainVerificationId"u8);
@@ -53,7 +92,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
-                writer.WriteBase64StringValue(CertificateValue, "D");
+                writer.WriteStartArray();
+                foreach (byte item in CertificateValue)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(CertificatePassword))
             {
@@ -75,15 +119,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("subjectName"u8);
                 writer.WriteStringValue(SubjectName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,22 +136,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
-        ContainerAppCustomDomainConfiguration IJsonModel<ContainerAppCustomDomainConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ContainerAppCustomDomainConfiguration IJsonModel<ContainerAppCustomDomainConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ContainerAppCustomDomainConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeContainerAppCustomDomainConfiguration(document.RootElement, options);
         }
 
-        internal static ContainerAppCustomDomainConfiguration DeserializeContainerAppCustomDomainConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ContainerAppCustomDomainConfiguration DeserializeContainerAppCustomDomainConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,290 +166,79 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             byte[] certificateValue = default;
             string certificatePassword = default;
-            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? expireOn = default;
             string thumbprint = default;
             string subjectName = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("customDomainVerificationId"u8))
+                if (prop.NameEquals("customDomainVerificationId"u8))
                 {
-                    customDomainVerificationId = property.Value.GetString();
+                    customDomainVerificationId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dnsSuffix"u8))
+                if (prop.NameEquals("dnsSuffix"u8))
                 {
-                    dnsSuffix = property.Value.GetString();
+                    dnsSuffix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("certificateKeyVaultProperties"u8))
+                if (prop.NameEquals("certificateKeyVaultProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
+                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateValue"u8))
+                if (prop.NameEquals("certificateValue"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    certificateValue = property.Value.GetBytesFromBase64("D");
+                    certificateValue = prop.Value.GetBytesFromBase64("D");
                     continue;
                 }
-                if (property.NameEquals("certificatePassword"u8))
+                if (prop.NameEquals("certificatePassword"u8))
                 {
-                    certificatePassword = property.Value.GetString();
+                    certificatePassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("expirationDate"u8))
+                if (prop.NameEquals("expirationDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expirationDate = property.Value.GetDateTimeOffset("O");
+                    expireOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("thumbprint"u8))
+                if (prop.NameEquals("thumbprint"u8))
                 {
-                    thumbprint = property.Value.GetString();
+                    thumbprint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("subjectName"u8))
+                if (prop.NameEquals("subjectName"u8))
                 {
-                    subjectName = property.Value.GetString();
+                    subjectName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCustomDomainConfiguration(
                 customDomainVerificationId,
                 dnsSuffix,
                 certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
-                expirationDate,
+                expireOn,
                 thumbprint,
                 subjectName,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomDomainVerificationId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customDomainVerificationId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomDomainVerificationId))
-                {
-                    builder.Append("  customDomainVerificationId: ");
-                    if (CustomDomainVerificationId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomDomainVerificationId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomDomainVerificationId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsSuffix), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  dnsSuffix: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DnsSuffix))
-                {
-                    builder.Append("  dnsSuffix: ");
-                    if (DnsSuffix.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DnsSuffix}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DnsSuffix}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateKeyVaultProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateKeyVaultProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateKeyVaultProperties))
-                {
-                    builder.Append("  certificateKeyVaultProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CertificateKeyVaultProperties, options, 2, false, "  certificateKeyVaultProperties: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateValue), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateValue: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateValue))
-                {
-                    builder.Append("  certificateValue: ");
-                    builder.AppendLine($"'{CertificateValue.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificatePassword), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificatePassword: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificatePassword))
-                {
-                    builder.Append("  certificatePassword: ");
-                    if (CertificatePassword.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CertificatePassword}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CertificatePassword}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  expirationDate: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ExpireOn))
-                {
-                    builder.Append("  expirationDate: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Thumbprint), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  thumbprint: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Thumbprint))
-                {
-                    builder.Append("  thumbprint: ");
-                    if (Thumbprint.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Thumbprint}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Thumbprint}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SubjectName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  subjectName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SubjectName))
-                {
-                    builder.Append("  subjectName: ");
-                    if (SubjectName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SubjectName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SubjectName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ContainerAppCustomDomainConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ContainerAppCustomDomainConfiguration IPersistableModel<ContainerAppCustomDomainConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerAppCustomDomainConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ContainerAppCustomDomainConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

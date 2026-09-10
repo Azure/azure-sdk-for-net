@@ -6,29 +6,19 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
+using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.Agents.Persistent
 {
-    /// <summary> Client options for PersistentAgentsAdministrationClient. </summary>
+    /// <summary> Client options for <see cref="PersistentAgentsAdministrationClient"/>. </summary>
     public partial class PersistentAgentsAdministrationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2025_05_15_Preview;
 
-        /// <summary> The version of the service to use. </summary>
-        public enum ServiceVersion
-        {
-            /// <summary> Service version "2025-05-01". </summary>
-            V2025_05_01 = 1,
-            /// <summary> Service version "v1". </summary>
-            V1 = 2,
-            /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 3,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of PersistentAgentsAdministrationClientOptions. </summary>
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClientOptions. </summary>
+        /// <param name="version"> The service version. </param>
         public PersistentAgentsAdministrationClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
@@ -38,6 +28,41 @@ namespace Azure.AI.Agents.Persistent
                 ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()
             };
+            ConfigureLogging();
+        }
+
+        /// <summary> Initializes a new instance of PersistentAgentsAdministrationClientOptions from configuration. </summary>
+        /// <param name="section"> The configuration section. </param>
+        [Experimental("SCME0002")]
+        internal PersistentAgentsAdministrationClientOptions(IConfigurationSection section) : base(section, null)
+        {
+            Version = "2025-05-15-preview";
+            if (section is null || !section.Exists())
+            {
+                return;
+            }
+            if (section["Version"] is string version)
+            {
+                Version = version;
+            }
+            ConfigureLogging();
+        }
+
+        /// <summary> Gets the Version. </summary>
+        internal string Version { get; }
+
+        /// <summary> Configures logging for the client options. </summary>
+        partial void ConfigureLogging();
+
+        /// <summary> The version of the service to use. </summary>
+        public enum ServiceVersion
+        {
+            /// <summary> Azure AI API version 2025-05-01. </summary>
+            V2025_05_01 = 1,
+            /// <summary> Azure AI API version v1. </summary>
+            V1 = 2,
+            /// <summary> Azure AI API version 2025-05-15-preview. </summary>
+            V2025_05_15_Preview = 3
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string cloudVmClusterDBNodeApiVersion);
             _dbNodesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
+            _dbNodesRestClient = new DbNodes(_dbNodesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cloudVmClusterDBNodeApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DBNodeAction.ToRequestContent(body), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<CloudVmClusterDBNodeResource> operation = new OracleDatabaseArmOperation<CloudVmClusterDBNodeResource>(
-                    new CloudVmClusterDBNodeOperationSource(Client),
+                    new CloudVmClusterDBNodeResourceOperationSource(Client),
                     _dbNodesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _dbNodesRestClient.CreateActionRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DBNodeAction.ToRequestContent(body), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<CloudVmClusterDBNodeResource> operation = new OracleDatabaseArmOperation<CloudVmClusterDBNodeResource>(
-                    new CloudVmClusterDBNodeOperationSource(Client),
+                    new CloudVmClusterDBNodeResourceOperationSource(Client),
                     _dbNodesClientDiagnostics,
                     Pipeline,
                     message.Request,

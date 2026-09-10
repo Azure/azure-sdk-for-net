@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 PolicyModelListResult result = PolicyModelListResult.FromResponse(response);
-                yield return Page<DataReplicationPolicyData>.FromValues((IReadOnlyList<DataReplicationPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataReplicationPolicyData>.FromValues((IReadOnlyList<DataReplicationPolicyData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

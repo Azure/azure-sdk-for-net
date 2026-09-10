@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Sql.Models
 {
     internal static partial class ActionRetryableStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this ActionRetryableState value) => value switch
         {
             ActionRetryableState.Yes => "Yes",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Sql.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ActionRetryableState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static ActionRetryableState ToActionRetryableState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Yes")) return ActionRetryableState.Yes;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "No")) return ActionRetryableState.No;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Yes"))
+            {
+                return ActionRetryableState.Yes;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "No"))
+            {
+                return ActionRetryableState.No;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ActionRetryableState value.");
         }
     }

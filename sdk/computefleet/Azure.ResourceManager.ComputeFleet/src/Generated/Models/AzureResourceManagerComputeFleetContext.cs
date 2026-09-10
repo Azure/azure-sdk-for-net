@@ -6,9 +6,9 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ComputeFleet.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ComputeFleet
 {
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.ComputeFleet
     [ModelReaderWriterBuildable(typeof(LocationProfile))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(RegularPriorityProfile))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceArtifactReference))]
     [ModelReaderWriterBuildable(typeof(SpotPriorityProfile))]
-    [ModelReaderWriterBuildable(typeof(SubResource))]
+    [ModelReaderWriterBuildable(typeof(Models.SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineListResult))]
     [ModelReaderWriterBuildable(typeof(VirtualMachineScaleSetListResult))]
     [ModelReaderWriterBuildable(typeof(WindowsSetupAdditionalInformation))]
     [ModelReaderWriterBuildable(typeof(WinRMConfiguration))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZonePreference))]
     public partial class AzureResourceManagerComputeFleetContext : ModelReaderWriterContext
     {

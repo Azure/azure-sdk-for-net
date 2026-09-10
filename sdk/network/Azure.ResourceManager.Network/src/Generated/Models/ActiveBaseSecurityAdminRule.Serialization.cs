@@ -7,19 +7,60 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
+    /// <summary>
+    /// Network base admin rule.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ActiveSecurityAdminRule"/> and <see cref="ActiveDefaultSecurityAdminRule"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownActiveBaseSecurityAdminRule))]
-    public partial class ActiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<ActiveBaseSecurityAdminRule>
+    public abstract partial class ActiveBaseSecurityAdminRule : IJsonModel<ActiveBaseSecurityAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActiveBaseSecurityAdminRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActiveBaseSecurityAdminRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeActiveBaseSecurityAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ActiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActiveBaseSecurityAdminRule IPersistableModel<ActiveBaseSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ActiveBaseSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ActiveBaseSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,12 +72,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -66,7 +106,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in RuleCollectionAppliesToGroups)
+                foreach (NetworkManagerSecurityGroupItem item in RuleCollectionAppliesToGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -76,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ruleGroups"u8);
                 writer.WriteStartArray();
-                foreach (var item in RuleGroups)
+                foreach (NetworkConfigurationGroup item in RuleGroups)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -84,15 +124,15 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -101,249 +141,42 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        ActiveBaseSecurityAdminRule IJsonModel<ActiveBaseSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ActiveBaseSecurityAdminRule IJsonModel<ActiveBaseSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ActiveBaseSecurityAdminRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeActiveBaseSecurityAdminRule(document.RootElement, options);
         }
 
-        internal static ActiveBaseSecurityAdminRule DeserializeActiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ActiveBaseSecurityAdminRule DeserializeActiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("kind", out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element, options);
-                    case "Default": return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element, options);
+                    case "Custom":
+                        return ActiveSecurityAdminRule.DeserializeActiveSecurityAdminRule(element, options);
+                    case "Default":
+                        return ActiveDefaultSecurityAdminRule.DeserializeActiveDefaultSecurityAdminRule(element, options);
                 }
             }
             return UnknownActiveBaseSecurityAdminRule.DeserializeUnknownActiveBaseSecurityAdminRule(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  commitTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CommitOn))
-                {
-                    builder.Append("  commitTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CommitOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Region), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  region: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Region))
-                {
-                    builder.Append("  region: ");
-                    if (Region.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Region}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Region}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigurationDescription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  configurationDescription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConfigurationDescription))
-                {
-                    builder.Append("  configurationDescription: ");
-                    if (ConfigurationDescription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ConfigurationDescription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ConfigurationDescription}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionDescription), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleCollectionDescription: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RuleCollectionDescription))
-                {
-                    builder.Append("  ruleCollectionDescription: ");
-                    if (RuleCollectionDescription.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RuleCollectionDescription}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RuleCollectionDescription}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleCollectionAppliesToGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleCollectionAppliesToGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
-                {
-                    if (RuleCollectionAppliesToGroups.Any())
-                    {
-                        builder.Append("  ruleCollectionAppliesToGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RuleCollectionAppliesToGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleCollectionAppliesToGroups: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleGroups), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  ruleGroups: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(RuleGroups))
-                {
-                    if (RuleGroups.Any())
-                    {
-                        builder.Append("  ruleGroups: ");
-                        builder.AppendLine("[");
-                        foreach (var item in RuleGroups)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  ruleGroups: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine($"'{Kind.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ActiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ActiveBaseSecurityAdminRule IPersistableModel<ActiveBaseSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ActiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeActiveBaseSecurityAdminRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ActiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ActiveBaseSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

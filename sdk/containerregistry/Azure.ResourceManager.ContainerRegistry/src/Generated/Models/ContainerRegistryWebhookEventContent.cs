@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         {
             get
             {
-                return Actor.Name;
+                return Actor is null ? default : Actor.Name;
             }
         }
     }

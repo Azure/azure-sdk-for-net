@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchAccountPoolProvisioningState
     {
         /// <summary> The pool is available to run tasks subject to the availability of compute nodes. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> The user has requested that the pool be deleted, but the delete operation has not yet completed. </summary>
-        Deleting
+        Deleting = 1
     }
 }

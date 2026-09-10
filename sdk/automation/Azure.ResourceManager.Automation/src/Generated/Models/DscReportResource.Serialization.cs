@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscReportResource : IUtf8JsonSerializable, IJsonModel<DscReportResource>
+    /// <summary> Definition of the DSC Report Resource. </summary>
+    public partial class DscReportResource : IJsonModel<DscReportResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscReportResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscReportResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDscReportResource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscReportResource IPersistableModel<DscReportResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DscReportResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DscReportResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
@@ -48,7 +88,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
-                foreach (var item in DependsOn)
+                foreach (DscReportResourceNavigation item in DependsOn)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -89,15 +129,15 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +146,27 @@ namespace Azure.ResourceManager.Automation.Models
             }
         }
 
-        DscReportResource IJsonModel<DscReportResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DscReportResource IJsonModel<DscReportResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DscReportResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDscReportResource(document.RootElement, options);
         }
 
-        internal static DscReportResource DeserializeDscReportResource(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DscReportResource DeserializeDscReportResource(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,84 +180,82 @@ namespace Azure.ResourceManager.Automation.Models
             string error = default;
             string status = default;
             double? durationInSeconds = default;
-            DateTimeOffset? startDate = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            DateTimeOffset? startOn = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sourceInfo"u8))
+                if (prop.NameEquals("sourceInfo"u8))
                 {
-                    sourceInfo = property.Value.GetString();
+                    sourceInfo = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dependsOn"u8))
+                if (prop.NameEquals("dependsOn"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item, options));
                     }
                     dependsOn = array;
                     continue;
                 }
-                if (property.NameEquals("moduleName"u8))
+                if (prop.NameEquals("moduleName"u8))
                 {
-                    moduleName = property.Value.GetString();
+                    moduleName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("moduleVersion"u8))
+                if (prop.NameEquals("moduleVersion"u8))
                 {
-                    moduleVersion = property.Value.GetString();
+                    moduleVersion = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceName"u8))
+                if (prop.NameEquals("resourceName"u8))
                 {
-                    resourceName = property.Value.GetString();
+                    resourceName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("error"u8))
+                if (prop.NameEquals("error"u8))
                 {
-                    error = property.Value.GetString();
+                    error = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("durationInSeconds"u8))
+                if (prop.NameEquals("durationInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    durationInSeconds = property.Value.GetDouble();
+                    durationInSeconds = prop.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("startDate"u8))
+                if (prop.NameEquals("startDate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startDate = property.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DscReportResource(
                 resourceId,
                 sourceInfo,
@@ -223,39 +266,8 @@ namespace Azure.ResourceManager.Automation.Models
                 error,
                 status,
                 durationInSeconds,
-                startDate,
-                serializedAdditionalRawData);
+                startOn,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DscReportResource>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DscReportResource IPersistableModel<DscReportResource>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDscReportResource(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DscReportResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

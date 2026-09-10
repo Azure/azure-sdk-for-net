@@ -14,17 +14,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VmmFabricDetails : FabricSpecificDetails
     {
         /// <summary> Initializes a new instance of <see cref="VmmFabricDetails"/>. </summary>
-        internal VmmFabricDetails()
+        internal VmmFabricDetails() : base("VMM")
         {
-            InstanceType = "VMM";
         }
 
         /// <summary> Initializes a new instance of <see cref="VmmFabricDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VmmFabricDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VmmFabricDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "VMM";
         }
     }
 }

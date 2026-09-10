@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(NotificationHubsPrivateLinkResource.ResourceType, out string notificationHubsPrivateLinkResourceApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", NotificationHubsPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, notificationHubsPrivateLinkResourceApiVersion ?? "2023-10-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubsPrivateLinkResourceApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 

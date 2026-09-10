@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,44 +15,102 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     public readonly partial struct SecurityAssessmentType : IEquatable<SecurityAssessmentType>
     {
         private readonly string _value;
+        /// <summary> Unknown assessment type. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Microsoft Defender for Cloud managed assessments. </summary>
+        private const string BuiltInValue = "BuiltIn";
+        /// <summary> User defined custom assessments. </summary>
+        private const string CustomValue = "Custom";
+        /// <summary> User defined policies that are automatically ingested from Azure Policy to Microsoft Defender for Cloud. </summary>
+        private const string CustomPolicyValue = "CustomPolicy";
+        /// <summary> User assessments pushed directly by the user or other third party to Microsoft Defender for Cloud. </summary>
+        private const string CustomerManagedValue = "CustomerManaged";
+        /// <summary> Microsoft Defender for Cloud managed policies. </summary>
+        private const string BuiltInPolicyValue = "BuiltInPolicy";
+        /// <summary> Third party assessments that are verified by Microsoft Defender for Cloud. </summary>
+        private const string VerifiedPartnerValue = "VerifiedPartner";
+        /// <summary> Microsoft Defender for Cloud managed policies that are manually created by the user. </summary>
+        private const string ManualBuiltInPolicyValue = "ManualBuiltInPolicy";
+        /// <summary> Microsoft Defender for Cloud managed assessments that are manually created by the user. </summary>
+        private const string ManualBuiltInValue = "ManualBuiltIn";
+        /// <summary> User defined policies that are manually created by the user. </summary>
+        private const string ManualCustomPolicyValue = "ManualCustomPolicy";
+        /// <summary> Microsoft Defender for Cloud managed assessments that are dynamically created by the system. </summary>
+        private const string DynamicBuiltInValue = "DynamicBuiltIn";
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SecurityAssessmentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string BuiltInValue = "BuiltIn";
-        private const string CustomPolicyValue = "CustomPolicy";
-        private const string CustomerManagedValue = "CustomerManaged";
-        private const string VerifiedPartnerValue = "VerifiedPartner";
+        /// <summary> Unknown assessment type. </summary>
+        public static SecurityAssessmentType Unknown { get; } = new SecurityAssessmentType(UnknownValue);
 
         /// <summary> Microsoft Defender for Cloud managed assessments. </summary>
         public static SecurityAssessmentType BuiltIn { get; } = new SecurityAssessmentType(BuiltInValue);
+
+        /// <summary> User defined custom assessments. </summary>
+        public static SecurityAssessmentType Custom { get; } = new SecurityAssessmentType(CustomValue);
+
         /// <summary> User defined policies that are automatically ingested from Azure Policy to Microsoft Defender for Cloud. </summary>
         public static SecurityAssessmentType CustomPolicy { get; } = new SecurityAssessmentType(CustomPolicyValue);
+
         /// <summary> User assessments pushed directly by the user or other third party to Microsoft Defender for Cloud. </summary>
         public static SecurityAssessmentType CustomerManaged { get; } = new SecurityAssessmentType(CustomerManagedValue);
-        /// <summary> An assessment that was created by a verified 3rd party if the user connected it to ASC. </summary>
+
+        /// <summary> Microsoft Defender for Cloud managed policies. </summary>
+        public static SecurityAssessmentType BuiltInPolicy { get; } = new SecurityAssessmentType(BuiltInPolicyValue);
+
+        /// <summary> Third party assessments that are verified by Microsoft Defender for Cloud. </summary>
         public static SecurityAssessmentType VerifiedPartner { get; } = new SecurityAssessmentType(VerifiedPartnerValue);
+
+        /// <summary> Microsoft Defender for Cloud managed policies that are manually created by the user. </summary>
+        public static SecurityAssessmentType ManualBuiltInPolicy { get; } = new SecurityAssessmentType(ManualBuiltInPolicyValue);
+
+        /// <summary> Microsoft Defender for Cloud managed assessments that are manually created by the user. </summary>
+        public static SecurityAssessmentType ManualBuiltIn { get; } = new SecurityAssessmentType(ManualBuiltInValue);
+
+        /// <summary> User defined policies that are manually created by the user. </summary>
+        public static SecurityAssessmentType ManualCustomPolicy { get; } = new SecurityAssessmentType(ManualCustomPolicyValue);
+
+        /// <summary> Microsoft Defender for Cloud managed assessments that are dynamically created by the system. </summary>
+        public static SecurityAssessmentType DynamicBuiltIn { get; } = new SecurityAssessmentType(DynamicBuiltInValue);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SecurityAssessmentType left, SecurityAssessmentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SecurityAssessmentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SecurityAssessmentType left, SecurityAssessmentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SecurityAssessmentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SecurityAssessmentType(string value) => new SecurityAssessmentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SecurityAssessmentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SecurityAssessmentType?(string value) => value == null ? null : new SecurityAssessmentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SecurityAssessmentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SecurityAssessmentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Server administrator associated to a Microsoft Entra principal. </summary>
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent"/>. </summary>
         public PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent()
@@ -51,26 +23,70 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent"/>. </summary>
-        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
-        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
-        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent(PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Properties of the server administrator associated to a Microsoft Entra principal. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlFlexibleServerMicrosoftEntraAdministratorCreateOrUpdateContent(AdministratorMicrosoftEntraPropertiesForAdd properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PrincipalType = principalType;
-            PrincipalName = principalName;
-            TenantId = tenantId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the server administrator associated to a Microsoft Entra principal. </summary>
+        [WirePath("properties")]
+        internal AdministratorMicrosoftEntraPropertiesForAdd Properties { get; set; }
 
         /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
         [WirePath("properties.principalType")]
-        public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
+        public PostgreSqlFlexibleServerPrincipalType? PrincipalType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraPropertiesForAdd();
+                }
+                Properties.PrincipalType = value;
+            }
+        }
+
         /// <summary> Name of the Microsoft Entra principal. </summary>
         [WirePath("properties.principalName")]
-        public string PrincipalName { get; set; }
+        public string PrincipalName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrincipalName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraPropertiesForAdd();
+                }
+                Properties.PrincipalName = value;
+            }
+        }
+
         /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
         [WirePath("properties.tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AdministratorMicrosoftEntraPropertiesForAdd();
+                }
+                Properties.TenantId = value;
+            }
+        }
     }
 }

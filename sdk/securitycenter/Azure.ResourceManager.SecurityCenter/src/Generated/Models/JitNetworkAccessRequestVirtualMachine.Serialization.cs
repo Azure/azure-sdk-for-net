@@ -10,13 +10,60 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestVirtualMachine : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessRequestVirtualMachine>
+    /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
+    public partial class JitNetworkAccessRequestVirtualMachine : IJsonModel<JitNetworkAccessRequestVirtualMachine>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessRequestVirtualMachine>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="JitNetworkAccessRequestVirtualMachine"/> for deserialization. </summary>
+        internal JitNetworkAccessRequestVirtualMachine()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JitNetworkAccessRequestVirtualMachine PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeJitNetworkAccessRequestVirtualMachine(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JitNetworkAccessRequestVirtualMachine IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<JitNetworkAccessRequestVirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<JitNetworkAccessRequestVirtualMachine>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,30 +75,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("ports"u8);
             writer.WriteStartArray();
-            foreach (var item in Ports)
+            foreach (JitNetworkAccessRequestPort item in Ports)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -60,41 +106,45 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        JitNetworkAccessRequestVirtualMachine IJsonModel<JitNetworkAccessRequestVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        JitNetworkAccessRequestVirtualMachine IJsonModel<JitNetworkAccessRequestVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual JitNetworkAccessRequestVirtualMachine JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeJitNetworkAccessRequestVirtualMachine(document.RootElement, options);
         }
 
-        internal static JitNetworkAccessRequestVirtualMachine DeserializeJitNetworkAccessRequestVirtualMachine(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static JitNetworkAccessRequestVirtualMachine DeserializeJitNetworkAccessRequestVirtualMachine(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             IList<JitNetworkAccessRequestPort> ports = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("ports"u8))
+                if (prop.NameEquals("ports"u8))
                 {
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item, options));
                     }
@@ -103,42 +153,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new JitNetworkAccessRequestVirtualMachine(id, ports, serializedAdditionalRawData);
+            return new JitNetworkAccessRequestVirtualMachine(id, ports, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        JitNetworkAccessRequestVirtualMachine IPersistableModel<JitNetworkAccessRequestVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeJitNetworkAccessRequestVirtualMachine(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestVirtualMachine)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<JitNetworkAccessRequestVirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

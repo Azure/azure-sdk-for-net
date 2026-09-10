@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(ResourceType, out string dataReplicationProtectedItemApiVersion);
             _protectedItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _protectedItemRestClient = new ProtectedItem(_protectedItemClientDiagnostics, Pipeline, Endpoint, dataReplicationProtectedItemApiVersion ?? "2024-09-01");
+            _protectedItemRestClient = new ProtectedItem(_protectedItemClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationProtectedItemApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _protectedItemRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DataReplicationProtectedItemPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource> operation = new RecoveryServicesDataReplicationArmOperation<DataReplicationProtectedItemResource>(
-                    new DataReplicationProtectedItemOperationSource(Client),
+                    new DataReplicationProtectedItemResourceOperationSource(Client),
                     _protectedItemClientDiagnostics,
                     Pipeline,
                     message.Request,

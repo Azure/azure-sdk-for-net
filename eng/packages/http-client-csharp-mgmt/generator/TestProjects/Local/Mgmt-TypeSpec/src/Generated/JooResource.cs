@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string jooApiVersion);
             _joosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Endpoint, jooApiVersion ?? "2024-05-01");
+            _joosRestClient = new Joos(_joosClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, jooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 

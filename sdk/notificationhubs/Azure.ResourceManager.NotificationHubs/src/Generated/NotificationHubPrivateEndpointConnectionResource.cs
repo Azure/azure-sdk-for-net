@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             TryGetApiVersion(ResourceType, out string notificationHubPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NotificationHubs", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, notificationHubPrivateEndpointConnectionApiVersion ?? "2023-10-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notificationHubPrivateEndpointConnectionApiVersion ?? "2023-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource> operation = new NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource>(
-                    new NotificationHubPrivateEndpointConnectionOperationSource(Client),
+                    new NotificationHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NotificationHubPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource> operation = new NotificationHubsArmOperation<NotificationHubPrivateEndpointConnectionResource>(
-                    new NotificationHubPrivateEndpointConnectionOperationSource(Client),
+                    new NotificationHubPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
         {
             TryGetApiVersion(KeyVaultSecretProviderClassResource.ResourceType, out string keyVaultSecretProviderClassApiVersion);
             _azureKeyVaultSecretProviderClassesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecretsStoreExtension", KeyVaultSecretProviderClassResource.ResourceType.Namespace, Diagnostics);
-            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
+            _azureKeyVaultSecretProviderClassesRestClient = new AzureKeyVaultSecretProviderClasses(_azureKeyVaultSecretProviderClassesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, keyVaultSecretProviderClassApiVersion ?? "2024-08-21-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
-                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    new KeyVaultSecretProviderClassResourceOperationSource(Client),
                     _azureKeyVaultSecretProviderClassesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecretsStoreExtension
                 HttpMessage message = _azureKeyVaultSecretProviderClassesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, azureKeyVaultSecretProviderClassName, KeyVaultSecretProviderClassData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource> operation = new SecretsStoreExtensionArmOperation<KeyVaultSecretProviderClassResource>(
-                    new KeyVaultSecretProviderClassOperationSource(Client),
+                    new KeyVaultSecretProviderClassResourceOperationSource(Client),
                     _azureKeyVaultSecretProviderClassesClientDiagnostics,
                     Pipeline,
                     message.Request,

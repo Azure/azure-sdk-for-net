@@ -3,6 +3,7 @@
 
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -12,7 +13,7 @@ internal class TypeFilterVisitor : ScmLibraryVisitor
     protected override TypeProvider? VisitType(TypeProvider type)
     {
         // This visitor is used to filter types, so we return null to remove the type from the output.
-        if (type is not null && type.Name.EndsWith("ClientBuilderExtensions"))
+        if (type is not null && (type.Name.EndsWith("ClientBuilderExtensions", StringComparison.Ordinal) || type.Name.EndsWith("HostExtensions", StringComparison.Ordinal)))
         {
             return null;
         }

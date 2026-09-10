@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DataBox.Mocking
 
         private ClientDiagnostics JobResourcesClientDiagnostics => _jobResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private JobResources JobResourcesRestClient => _jobResourcesRestClient ??= new JobResources(JobResourcesClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+        private JobResources JobResourcesRestClient => _jobResourcesRestClient ??= new JobResources(JobResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
 
         private ClientDiagnostics ServiceOperationGroupClientDiagnostics => _serviceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataBox.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceOperationGroup ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroup(ServiceOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-07-01");
+        private ServiceOperationGroup ServiceOperationGroupRestClient => _serviceOperationGroupRestClient ??= new ServiceOperationGroup(ServiceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
 
         /// <summary>
         /// Lists all the jobs available under the subscription.

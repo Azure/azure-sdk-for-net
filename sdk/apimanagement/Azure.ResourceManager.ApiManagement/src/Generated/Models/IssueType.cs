@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct IssueType : IEquatable<IssueType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="IssueType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public IssueType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string UnknownValue = "Unknown";
         private const string AgentStoppedValue = "AgentStopped";
         private const string GuestFirewallValue = "GuestFirewall";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.ApiManagement.Models
         private const string PortThrottledValue = "PortThrottled";
         private const string PlatformValue = "Platform";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Initializes a new instance of <see cref="IssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public IssueType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Unknown. </summary>
         public static IssueType Unknown { get; } = new IssueType(UnknownValue);
-        /// <summary> AgentStopped. </summary>
+
+        /// <summary> Gets the AgentStopped. </summary>
         public static IssueType AgentStopped { get; } = new IssueType(AgentStoppedValue);
-        /// <summary> GuestFirewall. </summary>
+
+        /// <summary> Gets the GuestFirewall. </summary>
         public static IssueType GuestFirewall { get; } = new IssueType(GuestFirewallValue);
-        /// <summary> DnsResolution. </summary>
+
+        /// <summary> Gets the DnsResolution. </summary>
         public static IssueType DnsResolution { get; } = new IssueType(DnsResolutionValue);
-        /// <summary> SocketBind. </summary>
+
+        /// <summary> Gets the SocketBind. </summary>
         public static IssueType SocketBind { get; } = new IssueType(SocketBindValue);
-        /// <summary> NetworkSecurityRule. </summary>
+
+        /// <summary> Gets the NetworkSecurityRule. </summary>
         public static IssueType NetworkSecurityRule { get; } = new IssueType(NetworkSecurityRuleValue);
-        /// <summary> UserDefinedRoute. </summary>
+
+        /// <summary> Gets the UserDefinedRoute. </summary>
         public static IssueType UserDefinedRoute { get; } = new IssueType(UserDefinedRouteValue);
-        /// <summary> PortThrottled. </summary>
+
+        /// <summary> Gets the PortThrottled. </summary>
         public static IssueType PortThrottled { get; } = new IssueType(PortThrottledValue);
-        /// <summary> Platform. </summary>
+
+        /// <summary> Gets the Platform. </summary>
         public static IssueType Platform { get; } = new IssueType(PlatformValue);
+
         /// <summary> Determines if two <see cref="IssueType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IssueType left, IssueType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IssueType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IssueType left, IssueType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IssueType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IssueType(string value) => new IssueType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IssueType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IssueType?(string value) => value == null ? null : new IssueType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IssueType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IssueType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

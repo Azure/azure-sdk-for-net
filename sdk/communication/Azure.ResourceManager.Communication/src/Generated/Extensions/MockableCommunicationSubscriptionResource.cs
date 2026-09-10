@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Communication.Mocking
 
         private ClientDiagnostics CommunicationServicesClientDiagnostics => _communicationServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CommunicationServices CommunicationServicesRestClient => _communicationServicesRestClient ??= new CommunicationServices(CommunicationServicesClientDiagnostics, Pipeline, Endpoint, "2026-03-18");
+        private CommunicationServices CommunicationServicesRestClient => _communicationServicesRestClient ??= new CommunicationServices(CommunicationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-18");
 
         private ClientDiagnostics EmailServicesClientDiagnostics => _emailServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Communication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private EmailServices EmailServicesRestClient => _emailServicesRestClient ??= new EmailServices(EmailServicesClientDiagnostics, Pipeline, Endpoint, "2026-03-18");
+        private EmailServices EmailServicesRestClient => _emailServicesRestClient ??= new EmailServices(EmailServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-18");
 
         /// <summary>
         /// Handles requests to list all resources in a subscription.
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
+            return new MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsAsyncCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Communication.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new MockableCommunicationSubscriptionResourceGetVerifiedExchangeOnlineDomainsEmailServicesCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
+            return new MicrosoftCommunicationEmailServicesListVerifiedExchangeOnlineDomainsCollectionResultOfT(EmailServicesRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices");
         }
     }
 }

@@ -1,0 +1,6 @@
+directory: specification/applicationinsights/resource-manager/Microsoft.Insights/ApplicationInsights
+commit: 1c2baeed6d7d5358e13535ea79a4885a3a37711d
+repo: Azure/azure-rest-api-specs
+additionalDirectories:
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CustomHttpsProvisioningState : IEquatable<CustomHttpsProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CustomHttpsProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CustomHttpsProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnablingValue = "Enabling";
         private const string EnabledValue = "Enabled";
         private const string DisablingValue = "Disabling";
         private const string DisabledValue = "Disabled";
         private const string FailedValue = "Failed";
 
-        /// <summary> Enabling. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CustomHttpsProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabling. </summary>
         public static CustomHttpsProvisioningState Enabling { get; } = new CustomHttpsProvisioningState(EnablingValue);
-        /// <summary> Enabled. </summary>
+
+        /// <summary> Gets the Enabled. </summary>
         public static CustomHttpsProvisioningState Enabled { get; } = new CustomHttpsProvisioningState(EnabledValue);
-        /// <summary> Disabling. </summary>
+
+        /// <summary> Gets the Disabling. </summary>
         public static CustomHttpsProvisioningState Disabling { get; } = new CustomHttpsProvisioningState(DisablingValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static CustomHttpsProvisioningState Disabled { get; } = new CustomHttpsProvisioningState(DisabledValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CustomHttpsProvisioningState Failed { get; } = new CustomHttpsProvisioningState(FailedValue);
+
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomHttpsProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomHttpsProvisioningState left, CustomHttpsProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomHttpsProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomHttpsProvisioningState(string value) => new CustomHttpsProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomHttpsProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomHttpsProvisioningState?(string value) => value == null ? null : new CustomHttpsProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomHttpsProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomHttpsProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

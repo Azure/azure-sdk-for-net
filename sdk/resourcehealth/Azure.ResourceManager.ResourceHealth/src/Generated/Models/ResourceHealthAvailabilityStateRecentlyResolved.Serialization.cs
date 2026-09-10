@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
-    public partial class ResourceHealthAvailabilityStateRecentlyResolved : IUtf8JsonSerializable, IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>
+    /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
+    public partial class ResourceHealthAvailabilityStateRecentlyResolved : IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceHealthAvailabilityStateRecentlyResolved PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeResourceHealthAvailabilityStateRecentlyResolved(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthAvailabilityStateRecentlyResolved IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(UnavailableOccuredOn))
             {
                 writer.WritePropertyName("unavailableOccuredTime"u8);
@@ -49,15 +89,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("unavailableSummary"u8);
                 writer.WriteStringValue(UnavailableSummary);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -66,94 +106,66 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             }
         }
 
-        ResourceHealthAvailabilityStateRecentlyResolved IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ResourceHealthAvailabilityStateRecentlyResolved IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceHealthAvailabilityStateRecentlyResolved JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceHealthAvailabilityStateRecentlyResolved(document.RootElement, options);
         }
 
-        internal static ResourceHealthAvailabilityStateRecentlyResolved DeserializeResourceHealthAvailabilityStateRecentlyResolved(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ResourceHealthAvailabilityStateRecentlyResolved DeserializeResourceHealthAvailabilityStateRecentlyResolved(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? unavailableOccuredTime = default;
-            DateTimeOffset? resolvedTime = default;
+            DateTimeOffset? unavailableOccuredOn = default;
+            DateTimeOffset? resolvedOn = default;
             string unavailableSummary = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("unavailableOccuredTime"u8))
+                if (prop.NameEquals("unavailableOccuredTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    unavailableOccuredTime = property.Value.GetDateTimeOffset("O");
+                    unavailableOccuredOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("resolvedTime"u8))
+                if (prop.NameEquals("resolvedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resolvedTime = property.Value.GetDateTimeOffset("O");
+                    resolvedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("unavailableSummary"u8))
+                if (prop.NameEquals("unavailableSummary"u8))
                 {
-                    unavailableSummary = property.Value.GetString();
+                    unavailableSummary = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredTime, resolvedTime, unavailableSummary, serializedAdditionalRawData);
+            return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredOn, resolvedOn, unavailableSummary, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceHealthContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ResourceHealthAvailabilityStateRecentlyResolved IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceHealthAvailabilityStateRecentlyResolved(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

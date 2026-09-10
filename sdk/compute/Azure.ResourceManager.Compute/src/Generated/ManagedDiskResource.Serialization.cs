@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Compute
 {
+    /// <summary></summary>
     public partial class ManagedDiskResource : IJsonModel<ManagedDiskData>
     {
-        private static ManagedDiskData s_dataDeserializationInstance;
-        private static ManagedDiskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedDiskData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedDiskData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedDiskData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedDiskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDiskData>)Data).Write(writer, options);
 
-        ManagedDiskData IJsonModel<ManagedDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDiskData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedDiskData IJsonModel<ManagedDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedDiskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDiskData>(Data, options, AzureResourceManagerComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedDiskData IPersistableModel<ManagedDiskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDiskData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<ManagedDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDiskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

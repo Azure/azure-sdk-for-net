@@ -10,125 +10,47 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticEncryptionConfiguration : IUtf8JsonSerializable, IJsonModel<ElasticEncryptionConfiguration>
+    /// <summary> CMK Encryption Configuration. </summary>
+    public partial class ElasticEncryptionConfiguration : IJsonModel<ElasticEncryptionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticEncryptionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ElasticEncryptionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <summary> Initializes a new instance of <see cref="ElasticEncryptionConfiguration"/> for deserialization. </summary>
+        internal ElasticEncryptionConfiguration()
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ElasticEncryptionConfiguration DeserializeElasticEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticEncryptionConfiguration)} does not support writing '{format}' format.");
-            }
-
-            writer.WritePropertyName("elasticPoolEncryptionKeySource"u8);
-            writer.WriteStringValue(ElasticPoolEncryptionKeySource.ToString());
-            writer.WritePropertyName("keyVaultPrivateEndpointResourceId"u8);
-            writer.WriteStringValue(KeyVaultPrivateEndpointResourceId);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ElasticEncryptionConfiguration IJsonModel<ElasticEncryptionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticEncryptionConfiguration)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticEncryptionConfiguration(document.RootElement, options);
-        }
-
-        internal static ElasticEncryptionConfiguration DeserializeElasticEncryptionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ElasticPoolEncryptionKeySource elasticPoolEncryptionKeySource = default;
             ResourceIdentifier keyVaultPrivateEndpointResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("elasticPoolEncryptionKeySource"u8))
+                if (prop.NameEquals("elasticPoolEncryptionKeySource"u8))
                 {
-                    elasticPoolEncryptionKeySource = new ElasticPoolEncryptionKeySource(property.Value.GetString());
+                    elasticPoolEncryptionKeySource = new ElasticPoolEncryptionKeySource(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultPrivateEndpointResourceId"u8))
+                if (prop.NameEquals("keyVaultPrivateEndpointResourceId"u8))
                 {
-                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultPrivateEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticEncryptionConfiguration(elasticPoolEncryptionKeySource, keyVaultPrivateEndpointResourceId, serializedAdditionalRawData);
+            return new ElasticEncryptionConfiguration(elasticPoolEncryptionKeySource, keyVaultPrivateEndpointResourceId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ElasticEncryptionConfiguration>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticEncryptionConfiguration)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ElasticEncryptionConfiguration IPersistableModel<ElasticEncryptionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticEncryptionConfiguration(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticEncryptionConfiguration)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ElasticEncryptionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

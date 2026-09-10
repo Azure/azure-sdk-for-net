@@ -9,6 +9,10 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "v1",
+        "v2"
+      ],
       "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.Versions",
       "valueType": {
         "$id": "2",
@@ -30,7 +34,8 @@
             "$ref": "1"
           },
           "doc": "The version v1.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         },
         {
           "$id": "4",
@@ -44,7 +49,8 @@
             "$ref": "1"
           },
           "doc": "The version v2.",
-          "decorators": []
+          "decorators": [],
+          "isExactName": false
         }
       ],
       "namespace": "Versioning.ReturnTypeChangedFrom",
@@ -52,7 +58,8 @@
       "isFixed": true,
       "isFlags": false,
       "usage": "Input,ApiVersionEnum",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "constants": [
@@ -70,7 +77,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
@@ -86,12 +94,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "testContentType",
+      "name": "TestRequestContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -102,12 +111,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "TestRequestContentType2",
+      "name": "TestRequestContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -118,7 +128,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [],
@@ -127,6 +138,7 @@
       "$id": "13",
       "kind": "client",
       "name": "ReturnTypeChangedFromClient",
+      "isExactName": false,
       "namespace": "Versioning.ReturnTypeChangedFrom",
       "doc": "Test for the `@returnTypeChangedFrom` decorator.",
       "methods": [
@@ -134,6 +146,7 @@
           "$id": "14",
           "kind": "basic",
           "name": "test",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [
             "v1",
@@ -142,6 +155,7 @@
           "operation": {
             "$id": "15",
             "name": "test",
+            "isExactName": false,
             "resourceName": "ReturnTypeChangedFrom",
             "accessibility": "public",
             "parameters": [
@@ -176,9 +190,11 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "18",
@@ -211,9 +227,11 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "20",
@@ -257,9 +275,16 @@
                     "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.test.body",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "body"
+                  }
+                }
               }
             ],
             "responses": [
@@ -286,7 +311,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "POST",
@@ -344,7 +374,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/return-type-changed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.endpoint"
+          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.endpoint",
+          "isExactName": false
         },
         {
           "$id": "27",
@@ -371,7 +402,8 @@
           "serverUrlTemplate": "{endpoint}/versioning/return-type-changed-from/api-version:{version}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version"
+          "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

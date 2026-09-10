@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> Describes the partner that created the assessment. </summary>
     public partial class SecurityAssessmentMetadataPartner
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPartner"/>. </summary>
         /// <param name="partnerName"> Name of the company of the partner. </param>
@@ -62,24 +34,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="partnerName"> Name of the company of the partner. </param>
         /// <param name="productName"> Name of the product of the partner that created the assessment. </param>
         /// <param name="secret"> Secret to authenticate the partner and verify it created the assessment - write only. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityAssessmentMetadataPartner(string partnerName, string productName, string secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityAssessmentMetadataPartner(string partnerName, string productName, string secret, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PartnerName = partnerName;
             ProductName = productName;
             Secret = secret;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SecurityAssessmentMetadataPartner"/> for deserialization. </summary>
-        internal SecurityAssessmentMetadataPartner()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the company of the partner. </summary>
         public string PartnerName { get; set; }
+
         /// <summary> Name of the product of the partner that created the assessment. </summary>
         public string ProductName { get; set; }
+
         /// <summary> Secret to authenticate the partner and verify it created the assessment - write only. </summary>
         public string Secret { get; set; }
     }

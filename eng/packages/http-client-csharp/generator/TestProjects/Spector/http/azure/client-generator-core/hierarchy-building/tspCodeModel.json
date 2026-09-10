@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "pet",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,12 +34,13 @@
         "decorators": []
       },
       "value": "dog",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "5",
       "kind": "constant",
-      "name": "updatePetAsAnimalContentType",
+      "name": "UpdatePetAsAnimalContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -49,12 +51,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "7",
       "kind": "constant",
-      "name": "updatePetAsAnimalContentType1",
+      "name": "UpdatePetAsAnimalContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -65,12 +68,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "9",
       "kind": "constant",
-      "name": "updateDogAsAnimalContentType",
+      "name": "UpdatePetAsAnimalContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -81,12 +85,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "11",
       "kind": "constant",
-      "name": "updateDogAsAnimalContentType1",
+      "name": "UpdatePetAsAnimalContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -97,12 +102,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "13",
       "kind": "constant",
-      "name": "updatePetAsPetContentType",
+      "name": "UpdatePetAsAnimalContentType4",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -113,12 +119,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "15",
       "kind": "constant",
-      "name": "updatePetAsPetContentType1",
+      "name": "UpdatePetAsAnimalContentType5",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -129,12 +136,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "17",
       "kind": "constant",
-      "name": "updateDogAsPetContentType",
+      "name": "UpdatePetAsAnimalContentType6",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -145,12 +153,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "19",
       "kind": "constant",
-      "name": "updateDogAsPetContentType1",
+      "name": "UpdatePetAsAnimalContentType7",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -161,12 +170,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "21",
       "kind": "constant",
-      "name": "updateDogAsDogContentType",
+      "name": "UpdatePetAsAnimalContentType8",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -177,12 +187,13 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "23",
       "kind": "constant",
-      "name": "updateDogAsDogContentType1",
+      "name": "UpdatePetAsAnimalContentType9",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -193,7 +204,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -201,6 +213,7 @@
       "$id": "25",
       "kind": "model",
       "name": "Animal",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Animal",
       "usage": "Input,Output,Json",
@@ -210,10 +223,12 @@
           "name": "Animal"
         }
       },
+      "isExactName": false,
       "discriminatorProperty": {
         "$id": "26",
         "kind": "property",
         "name": "kind",
+        "apiVersions": [],
         "serializedName": "kind",
         "doc": "The kind of animal",
         "type": {
@@ -234,7 +249,8 @@
             "name": "kind"
           }
         },
-        "isHttpMetadata": false
+        "isHttpMetadata": false,
+        "isExactName": false
       },
       "properties": [
         {
@@ -244,6 +260,7 @@
           "$id": "28",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "Name of the animal",
           "type": {
@@ -264,7 +281,8 @@
               "name": "name"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ],
       "discriminatedSubtypes": {
@@ -272,6 +290,7 @@
           "$id": "30",
           "kind": "model",
           "name": "Pet",
+          "apiVersions": [],
           "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
           "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Pet",
           "usage": "Input,Output,Json",
@@ -282,10 +301,12 @@
               "name": "Pet"
             }
           },
+          "isExactName": false,
           "discriminatorProperty": {
             "$id": "31",
             "kind": "property",
             "name": "kind",
+            "apiVersions": [],
             "serializedName": "kind",
             "type": {
               "$ref": "1"
@@ -301,7 +322,8 @@
                 "name": "kind"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           },
           "baseModel": {
             "$ref": "25"
@@ -314,6 +336,7 @@
               "$id": "32",
               "kind": "property",
               "name": "trained",
+              "apiVersions": [],
               "serializedName": "trained",
               "doc": "Whether the pet is trained",
               "type": {
@@ -334,7 +357,8 @@
                   "name": "trained"
                 }
               },
-              "isHttpMetadata": false
+              "isHttpMetadata": false,
+              "isExactName": false
             }
           ],
           "discriminatedSubtypes": {
@@ -342,6 +366,7 @@
               "$id": "34",
               "kind": "model",
               "name": "Dog",
+              "apiVersions": [],
               "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.Dog",
               "usage": "Input,Output,Json",
@@ -352,6 +377,7 @@
                   "name": "Dog"
                 }
               },
+              "isExactName": false,
               "baseModel": {
                 "$ref": "30"
               },
@@ -360,6 +386,7 @@
                   "$id": "35",
                   "kind": "property",
                   "name": "kind",
+                  "apiVersions": [],
                   "serializedName": "kind",
                   "type": {
                     "$ref": "3"
@@ -375,12 +402,14 @@
                       "name": "kind"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 },
                 {
                   "$id": "36",
                   "kind": "property",
                   "name": "breed",
+                  "apiVersions": [],
                   "serializedName": "breed",
                   "doc": "The breed of the dog",
                   "type": {
@@ -401,7 +430,8 @@
                       "name": "breed"
                     }
                   },
-                  "isHttpMetadata": false
+                  "isHttpMetadata": false,
+                  "isExactName": false
                 }
               ]
             }
@@ -424,6 +454,7 @@
       "$id": "38",
       "kind": "client",
       "name": "HierarchyBuildingClient",
+      "isExactName": false,
       "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
       "doc": "Test for @hierarchyBuilding decorator.",
       "methods": [],
@@ -456,7 +487,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint"
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,
@@ -468,18 +500,21 @@
           "$id": "42",
           "kind": "client",
           "name": "AnimalOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
           "methods": [
             {
               "$id": "43",
               "kind": "basic",
               "name": "updatePetAsAnimal",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Update a pet as an animal",
               "operation": {
                 "$id": "44",
                 "name": "updatePetAsAnimal",
+                "isExactName": false,
                 "resourceName": "AnimalOperations",
                 "doc": "Update a pet as an animal",
                 "accessibility": "public",
@@ -517,9 +552,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "47",
@@ -552,9 +589,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "49",
@@ -590,9 +629,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updatePetAsAnimal.animal",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "animal"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -607,7 +653,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -648,12 +699,14 @@
               "$id": "51",
               "kind": "basic",
               "name": "updateDogAsAnimal",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Update a dog as an animal",
               "operation": {
                 "$id": "52",
                 "name": "updateDogAsAnimal",
+                "isExactName": false,
                 "resourceName": "AnimalOperations",
                 "doc": "Update a dog as an animal",
                 "accessibility": "public",
@@ -691,9 +744,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "55",
@@ -726,9 +781,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "57",
@@ -764,9 +821,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.updateDogAsAnimal.animal",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "animal"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -781,7 +845,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -848,7 +917,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.AnimalOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -864,18 +934,21 @@
           "$id": "62",
           "kind": "client",
           "name": "PetOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
           "methods": [
             {
               "$id": "63",
               "kind": "basic",
               "name": "updatePetAsPet",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Update a pet as a pet",
               "operation": {
                 "$id": "64",
                 "name": "updatePetAsPet",
+                "isExactName": false,
                 "resourceName": "PetOperations",
                 "doc": "Update a pet as a pet",
                 "accessibility": "public",
@@ -913,9 +986,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "67",
@@ -948,9 +1023,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "69",
@@ -986,9 +1063,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updatePetAsPet.pet",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "pet"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -1003,7 +1087,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1044,12 +1133,14 @@
               "$id": "71",
               "kind": "basic",
               "name": "updateDogAsPet",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Update a dog as a pet",
               "operation": {
                 "$id": "72",
                 "name": "updateDogAsPet",
+                "isExactName": false,
                 "resourceName": "PetOperations",
                 "doc": "Update a dog as a pet",
                 "accessibility": "public",
@@ -1087,9 +1178,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "75",
@@ -1122,9 +1215,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "77",
@@ -1160,9 +1255,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.updateDogAsPet.pet",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "pet"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -1177,7 +1279,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1244,7 +1351,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.PetOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,
@@ -1260,18 +1368,21 @@
           "$id": "82",
           "kind": "client",
           "name": "DogOperations",
+          "isExactName": false,
           "namespace": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding",
           "methods": [
             {
               "$id": "83",
               "kind": "basic",
               "name": "updateDogAsDog",
+              "isExactName": false,
               "accessibility": "public",
               "apiVersions": [],
               "doc": "Update a dog as a dog",
               "operation": {
                 "$id": "84",
                 "name": "updateDogAsDog",
+                "isExactName": false,
                 "resourceName": "DogOperations",
                 "doc": "Update a dog as a dog",
                 "accessibility": "public",
@@ -1309,9 +1420,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.contentType",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "87",
@@ -1344,9 +1457,11 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.accept",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false
                   },
                   {
                     "$id": "89",
@@ -1382,9 +1497,16 @@
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.updateDogAsDog.dog",
                         "readOnly": false,
                         "access": "public",
-                        "decorators": []
+                        "decorators": [],
+                        "isExactName": false
                       }
-                    ]
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "dog"
+                      }
+                    }
                   }
                 ],
                 "responses": [
@@ -1399,7 +1521,12 @@
                     "isErrorResponse": false,
                     "contentTypes": [
                       "application/json"
-                    ]
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",
@@ -1466,7 +1593,8 @@
               "serverUrlTemplate": "{endpoint}",
               "skipUrlEncoding": false,
               "readOnly": false,
-              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint"
+              "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.HierarchyBuilding.DogOperations.endpoint",
+              "isExactName": false
             }
           ],
           "initializedBy": 0,

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             TryGetApiVersion(DataReplicationEventResource.ResourceType, out string dataReplicationEventApiVersion);
             _eventClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationEventResource.ResourceType.Namespace, Diagnostics);
-            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Endpoint, dataReplicationEventApiVersion ?? "2024-09-01");
+            _eventRestClient = new Event(_eventClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationEventApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 

@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Samples
@@ -13,10 +14,10 @@ namespace Azure.Data.AppConfiguration.Samples
         [Test]
         public void GetSettingIfChanged()
         {
-            string connectionString = TestEnvironment.ConnectionString;
+            string endpoint = TestEnvironment.Endpoint;
 
             #region Snippet:AzConfigSample5_CreateConfigurationClient
-            ConfigurationClient client = new ConfigurationClient(connectionString);
+            ConfigurationClient client = new ConfigurationClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
             #region Snippet:AzConfigSample5_SetConfigurationSetting

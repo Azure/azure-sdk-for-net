@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Subscription;
 
 namespace Azure.ResourceManager.Subscription.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Subscription.Models
     public readonly partial struct AcceptOwnershipProvisioningState : IEquatable<AcceptOwnershipProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
 
         /// <summary> Initializes a new instance of <see cref="AcceptOwnershipProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AcceptOwnershipProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string AcceptedValue = "Accepted";
-        private const string SucceededValue = "Succeeded";
+            _value = value;
+        }
 
         /// <summary> Pending. </summary>
         public static AcceptOwnershipProvisioningState Pending { get; } = new AcceptOwnershipProvisioningState(PendingValue);
+
         /// <summary> Accepted. </summary>
         public static AcceptOwnershipProvisioningState Accepted { get; } = new AcceptOwnershipProvisioningState(AcceptedValue);
+
         /// <summary> Succeeded. </summary>
         public static AcceptOwnershipProvisioningState Succeeded { get; } = new AcceptOwnershipProvisioningState(SucceededValue);
+
         /// <summary> Determines if two <see cref="AcceptOwnershipProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AcceptOwnershipProvisioningState left, AcceptOwnershipProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AcceptOwnershipProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AcceptOwnershipProvisioningState left, AcceptOwnershipProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AcceptOwnershipProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AcceptOwnershipProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AcceptOwnershipProvisioningState(string value) => new AcceptOwnershipProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AcceptOwnershipProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AcceptOwnershipProvisioningState?(string value) => value == null ? null : new AcceptOwnershipProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AcceptOwnershipProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AcceptOwnershipProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

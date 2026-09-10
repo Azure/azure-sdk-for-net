@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateSyncMigrationInputSqlServerTaskInput : IUtf8JsonSerializable, IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>
+    /// <summary> Input for task that validates migration input for SQL sync migrations. </summary>
+    public partial class ValidateSyncMigrationInputSqlServerTaskInput : IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/> for deserialization. </summary>
+        internal ValidateSyncMigrationInputSqlServerTaskInput()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ValidateSyncMigrationInputSqlServerTaskInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeValidateSyncMigrationInputSqlServerTaskInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ValidateSyncMigrationInputSqlServerTaskInput IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,32 +74,31 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("sourceConnectionInfo"u8);
             writer.WriteObjectValue(SourceConnectionInfo, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
             writer.WriteObjectValue(TargetConnectionInfo, options);
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
-            foreach (var item in SelectedDatabases)
+            foreach (MigrateSqlServerSqlDBSyncDatabaseInput item in SelectedDatabases)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,22 +107,27 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ValidateSyncMigrationInputSqlServerTaskInput IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ValidateSyncMigrationInputSqlServerTaskInput IJsonModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ValidateSyncMigrationInputSqlServerTaskInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeValidateSyncMigrationInputSqlServerTaskInput(document.RootElement, options);
         }
 
-        internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ValidateSyncMigrationInputSqlServerTaskInput DeserializeValidateSyncMigrationInputSqlServerTaskInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,24 +135,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataMigrationSqlConnectionInfo sourceConnectionInfo = default;
             DataMigrationSqlConnectionInfo targetConnectionInfo = default;
             IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("sourceConnectionInfo"u8))
+                if (prop.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    sourceConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("targetConnectionInfo"u8))
+                if (prop.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(property.Value, options);
+                    targetConnectionInfo = DataMigrationSqlConnectionInfo.DeserializeDataMigrationSqlConnectionInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("selectedDatabases"u8))
+                if (prop.NameEquals("selectedDatabases"u8))
                 {
                     List<MigrateSqlServerSqlDBSyncDatabaseInput> array = new List<MigrateSqlServerSqlDBSyncDatabaseInput>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item, options));
                     }
@@ -111,42 +160,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, serializedAdditionalRawData);
+            return new ValidateSyncMigrationInputSqlServerTaskInput(sourceConnectionInfo, targetConnectionInfo, selectedDatabases, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ValidateSyncMigrationInputSqlServerTaskInput IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeValidateSyncMigrationInputSqlServerTaskInput(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ValidateSyncMigrationInputSqlServerTaskInput)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ValidateSyncMigrationInputSqlServerTaskInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

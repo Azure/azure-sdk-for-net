@@ -54,6 +54,15 @@ internal static partial class ItemMessageValidator
             }
         }
 
+        // Optional: phase
+        if (element.TryGetProperty("phase", out var phaseProp) && phaseProp.ValueKind != JsonValueKind.Null)
+        {
+            if (phaseProp.ValueKind != JsonValueKind.String)
+                errors.Add(new ValidationError("$.phase", $"Expected string, got {phaseProp.ValueKind}"));
+            else if (phaseProp.GetString() is not ("commentary" or "final_answer"))
+                errors.Add(new ValidationError("$.phase", $"Value '{phaseProp.GetString()}' is not valid. Allowed: commentary, final_answer"));
+        }
+
         // Required: role
         if (!element.TryGetProperty("role", out var roleProp))
             errors.Add(new ValidationError("$.role", "Required property 'role' is missing"));

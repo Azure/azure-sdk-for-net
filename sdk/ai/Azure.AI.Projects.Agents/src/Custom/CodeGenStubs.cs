@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 global using Microsoft.TypeSpec.Generator.Customizations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents;
 
 // Public type renames
 
-[CodeGenType("AgentRecord")] public partial class ProjectsAgentRecord
+[CodeGenType("AgentRecord")]
+public partial class ProjectsAgentRecord
 {
     [CodeGenMember("Object")]
     private string Object { get; } = "agent";
@@ -19,6 +21,8 @@ namespace Azure.AI.Projects.Agents;
 
 // Internal types
 [CodeGenType("ApproximateLocation")] internal partial class InternalApproximateLocation { }
+[CodeGenType("AgentVersionStatus ")] public partial struct AgentVersionStatus { }
+[CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("CodeInterpreterTool")] internal partial class InternalCodeInterpreterTool { }
 [CodeGenType("CodeInterpreterToolAuto")] internal partial class InternalCodeInterpreterToolAuto { }
 [CodeGenType("CodeInterpreterToolCallItemParam")] internal partial class InternalCodeInterpreterToolCallItemParam { }
@@ -48,8 +52,12 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }
 [CodeGenType("MCPToolRequireApprovalAlways")] internal partial class InternalMCPToolRequireApprovalAlways { }
 [CodeGenType("MCPToolRequireApprovalNever")] internal partial class InternalMCPToolRequireApprovalNever { }
-[CodeGenType("RankingOptions")] internal partial class InternalRankingOptions { }
 [CodeGenType("RankingOptionsRanker")] internal readonly partial struct RankingOptionsRanker { }
 [CodeGenType("TopLogProb")] internal partial class InternalTopLogProb { }
 [CodeGenType("VectorStoreFileAttributes")] internal partial class InternalVectorStoreFileAttributes { }
 [CodeGenType("WebSearchPreviewToolSearchContextSize")] internal readonly partial struct WebSearchPreviewToolSearchContextSize { }
+[CodeGenType("ComputerTool")] internal partial class InternalComputerTool { }
+[CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
+[CodeGenType("NamespaceToolParam")] internal partial class InternalNamespaceToolParam { }
+[CodeGenType("ToolSearchToolParam")] public partial class ToolSearchTool { }
+[CodeGenType("ToolSearchExecutionType")] public partial struct ToolSearchExecutionKind { }

@@ -1205,6 +1205,7 @@ function Get-ReleasePlan-Link($releasePlanWorkItemId)
   $fields += "System.Title"
   $fields += "Custom.ReleasePlanLink"
   $fields += "Custom.ReleasePlanSubmittedby"
+  $fields += "Custom.ReleasePlanID"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [System.Id] = $releasePlanWorkItemId"
@@ -1239,8 +1240,6 @@ function Get-ReleasePlansForCPEXAttestation()
   $query += " AND [System.Tags] NOT CONTAINS 'APEX out of scope'"
   $query += " AND [System.Tags] NOT CONTAINS 'validate APEX out of scope'"
   $query += " AND [Custom.ProductServiceTreeID] <> ''"
-  $query += " AND [Custom.ProductLifecycle] <> ''"
-  $query += " AND [Custom.ProductType] IN ('Feature', 'Offering', 'Sku')"
 
   $workItems = Invoke-Query $fields $query
   return $workItems

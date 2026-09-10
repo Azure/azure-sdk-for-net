@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.MachineLearning
 {
+    /// <summary></summary>
     public partial class MachineLearningMarketplaceSubscriptionResource : IJsonModel<MachineLearningMarketplaceSubscriptionData>
     {
-        private static MachineLearningMarketplaceSubscriptionData s_dataDeserializationInstance;
-        private static MachineLearningMarketplaceSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<MachineLearningMarketplaceSubscriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<MachineLearningMarketplaceSubscriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new MachineLearningMarketplaceSubscriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MachineLearningMarketplaceSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)Data).Write(writer, options);
 
-        MachineLearningMarketplaceSubscriptionData IJsonModel<MachineLearningMarketplaceSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningMarketplaceSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        MachineLearningMarketplaceSubscriptionData IJsonModel<MachineLearningMarketplaceSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningMarketplaceSubscriptionData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         MachineLearningMarketplaceSubscriptionData IPersistableModel<MachineLearningMarketplaceSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningMarketplaceSubscriptionData>(data, options, AzureResourceManagerMachineLearningContext.Default);
 
-        string IPersistableModel<MachineLearningMarketplaceSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningMarketplaceSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<MachineLearningMarketplaceSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

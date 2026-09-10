@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     Properties = new BatchAccountUpdateProperties();
                 }
-                Properties.PublicNetworkAccess = value.Value;
+                Properties.PublicNetworkAccess = value;
             }
         }
 

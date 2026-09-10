@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
@@ -14,263 +15,432 @@ namespace Azure.Storage.Files.Shares.Models
     public readonly partial struct ShareErrorCode : IEquatable<ShareErrorCode>
     {
         private readonly string _value;
+        /// <summary> AccountAlreadyExists. </summary>
+        private const string AccountAlreadyExistsValue = "AccountAlreadyExists";
+        /// <summary> AccountBeingCreated. </summary>
+        private const string AccountBeingCreatedValue = "AccountBeingCreated";
+        /// <summary> AccountIsDisabled. </summary>
+        private const string AccountIsDisabledValue = "AccountIsDisabled";
+        /// <summary> AuthenticationFailed. </summary>
+        private const string AuthenticationFailedValue = "AuthenticationFailed";
+        /// <summary> AuthorizationFailure. </summary>
+        private const string AuthorizationFailureValue = "AuthorizationFailure";
+        /// <summary> ConditionHeadersNotSupported. </summary>
+        private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
+        /// <summary> ConditionNotMet. </summary>
+        private const string ConditionNotMetValue = "ConditionNotMet";
+        /// <summary> EmptyMetadataKey. </summary>
+        private const string EmptyMetadataKeyValue = "EmptyMetadataKey";
+        /// <summary> FileShareProvisionedBandwidthDowngradeNotAllowed. </summary>
+        private const string FileShareProvisionedBandwidthDowngradeNotAllowedValue = "FileShareProvisionedBandwidthDowngradeNotAllowed";
+        /// <summary> FileShareProvisionedIopsDowngradeNotAllowed. </summary>
+        private const string FileShareProvisionedIopsDowngradeNotAllowedValue = "FileShareProvisionedIopsDowngradeNotAllowed";
+        /// <summary> InsufficientAccountPermissions. </summary>
+        private const string InsufficientAccountPermissionsValue = "InsufficientAccountPermissions";
+        /// <summary> InternalError. </summary>
+        private const string InternalErrorValue = "InternalError";
+        /// <summary> InvalidAuthenticationInfo. </summary>
+        private const string InvalidAuthenticationInfoValue = "InvalidAuthenticationInfo";
+        /// <summary> InvalidHeaderValue. </summary>
+        private const string InvalidHeaderValueValue = "InvalidHeaderValue";
+        /// <summary> InvalidHttpVerb. </summary>
+        private const string InvalidHttpVerbValue = "InvalidHttpVerb";
+        /// <summary> InvalidInput. </summary>
+        private const string InvalidInputValue = "InvalidInput";
+        /// <summary> InvalidMd5. </summary>
+        private const string InvalidMd5Value = "InvalidMd5";
+        /// <summary> InvalidMetadata. </summary>
+        private const string InvalidMetadataValue = "InvalidMetadata";
+        /// <summary> InvalidQueryParameterValue. </summary>
+        private const string InvalidQueryParameterValueValue = "InvalidQueryParameterValue";
+        /// <summary> InvalidRange. </summary>
+        private const string InvalidRangeValue = "InvalidRange";
+        /// <summary> InvalidResourceName. </summary>
+        private const string InvalidResourceNameValue = "InvalidResourceName";
+        /// <summary> InvalidUri. </summary>
+        private const string InvalidUriValue = "InvalidUri";
+        /// <summary> InvalidXmlDocument. </summary>
+        private const string InvalidXmlDocumentValue = "InvalidXmlDocument";
+        /// <summary> InvalidXmlNodeValue. </summary>
+        private const string InvalidXmlNodeValueValue = "InvalidXmlNodeValue";
+        /// <summary> Md5Mismatch. </summary>
+        private const string Md5MismatchValue = "Md5Mismatch";
+        /// <summary> MetadataTooLarge. </summary>
+        private const string MetadataTooLargeValue = "MetadataTooLarge";
+        /// <summary> MissingContentLengthHeader. </summary>
+        private const string MissingContentLengthHeaderValue = "MissingContentLengthHeader";
+        /// <summary> MissingRequiredQueryParameter. </summary>
+        private const string MissingRequiredQueryParameterValue = "MissingRequiredQueryParameter";
+        /// <summary> MissingRequiredHeader. </summary>
+        private const string MissingRequiredHeaderValue = "MissingRequiredHeader";
+        /// <summary> MissingRequiredXmlNode. </summary>
+        private const string MissingRequiredXmlNodeValue = "MissingRequiredXmlNode";
+        /// <summary> MultipleConditionHeadersNotSupported. </summary>
+        private const string MultipleConditionHeadersNotSupportedValue = "MultipleConditionHeadersNotSupported";
+        /// <summary> OperationTimedOut. </summary>
+        private const string OperationTimedOutValue = "OperationTimedOut";
+        /// <summary> OutOfRangeInput. </summary>
+        private const string OutOfRangeInputValue = "OutOfRangeInput";
+        /// <summary> OutOfRangeQueryParameterValue. </summary>
+        private const string OutOfRangeQueryParameterValueValue = "OutOfRangeQueryParameterValue";
+        /// <summary> RequestBodyTooLarge. </summary>
+        private const string RequestBodyTooLargeValue = "RequestBodyTooLarge";
+        /// <summary> ResourceTypeMismatch. </summary>
+        private const string ResourceTypeMismatchValue = "ResourceTypeMismatch";
+        /// <summary> RequestUrlFailedToParse. </summary>
+        private const string RequestUrlFailedToParseValue = "RequestUrlFailedToParse";
+        /// <summary> ResourceAlreadyExists. </summary>
+        private const string ResourceAlreadyExistsValue = "ResourceAlreadyExists";
+        /// <summary> ResourceNotFound. </summary>
+        private const string ResourceNotFoundValue = "ResourceNotFound";
+        /// <summary> ServerBusy. </summary>
+        private const string ServerBusyValue = "ServerBusy";
+        /// <summary> UnsupportedHeader. </summary>
+        private const string UnsupportedHeaderValue = "UnsupportedHeader";
+        /// <summary> UnsupportedXmlNode. </summary>
+        private const string UnsupportedXmlNodeValue = "UnsupportedXmlNode";
+        /// <summary> UnsupportedQueryParameter. </summary>
+        private const string UnsupportedQueryParameterValue = "UnsupportedQueryParameter";
+        /// <summary> UnsupportedHttpVerb. </summary>
+        private const string UnsupportedHttpVerbValue = "UnsupportedHttpVerb";
+        /// <summary> CannotDeleteFileOrDirectory. </summary>
+        private const string CannotDeleteFileOrDirectoryValue = "CannotDeleteFileOrDirectory";
+        /// <summary> ClientCacheFlushDelay. </summary>
+        private const string ClientCacheFlushDelayValue = "ClientCacheFlushDelay";
+        /// <summary> DeletePending. </summary>
+        private const string DeletePendingValue = "DeletePending";
+        /// <summary> DirectoryNotEmpty. </summary>
+        private const string DirectoryNotEmptyValue = "DirectoryNotEmpty";
+        /// <summary> FileLockConflict. </summary>
+        private const string FileLockConflictValue = "FileLockConflict";
+        /// <summary> InvalidFileOrDirectoryPathName. </summary>
+        private const string InvalidFileOrDirectoryPathNameValue = "InvalidFileOrDirectoryPathName";
+        /// <summary> ParentNotFound. </summary>
+        private const string ParentNotFoundValue = "ParentNotFound";
+        /// <summary> ReadOnlyAttribute. </summary>
+        private const string ReadOnlyAttributeValue = "ReadOnlyAttribute";
+        /// <summary> ShareAlreadyExists. </summary>
+        private const string ShareAlreadyExistsValue = "ShareAlreadyExists";
+        /// <summary> ShareBeingDeleted. </summary>
+        private const string ShareBeingDeletedValue = "ShareBeingDeleted";
+        /// <summary> ShareDisabled. </summary>
+        private const string ShareDisabledValue = "ShareDisabled";
+        /// <summary> ShareNotFound. </summary>
+        private const string ShareNotFoundValue = "ShareNotFound";
+        /// <summary> SharingViolation. </summary>
+        private const string SharingViolationValue = "SharingViolation";
+        /// <summary> ShareSnapshotInProgress. </summary>
+        private const string ShareSnapshotInProgressValue = "ShareSnapshotInProgress";
+        /// <summary> ShareSnapshotCountExceeded. </summary>
+        private const string ShareSnapshotCountExceededValue = "ShareSnapshotCountExceeded";
+        /// <summary> ShareSnapshotOperationNotSupported. </summary>
+        private const string ShareSnapshotOperationNotSupportedValue = "ShareSnapshotOperationNotSupported";
+        /// <summary> ShareHasSnapshots. </summary>
+        private const string ShareHasSnapshotsValue = "ShareHasSnapshots";
+        /// <summary> PreviousSnapshotNotFound. </summary>
+        private const string PreviousSnapshotNotFoundValue = "PreviousSnapshotNotFound";
+        /// <summary> ContainerQuotaDowngradeNotAllowed. </summary>
+        private const string ContainerQuotaDowngradeNotAllowedValue = "ContainerQuotaDowngradeNotAllowed";
+        /// <summary> AuthorizationSourceIPMismatch. </summary>
+        private const string AuthorizationSourceIPMismatchValue = "AuthorizationSourceIPMismatch";
+        /// <summary> AuthorizationProtocolMismatch. </summary>
+        private const string AuthorizationProtocolMismatchValue = "AuthorizationProtocolMismatch";
+        /// <summary> AuthorizationPermissionMismatch. </summary>
+        private const string AuthorizationPermissionMismatchValue = "AuthorizationPermissionMismatch";
+        /// <summary> AuthorizationServiceMismatch. </summary>
+        private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
+        /// <summary> AuthorizationResourceTypeMismatch. </summary>
+        private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
+        /// <summary> FeatureVersionMismatch. </summary>
+        private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
+        /// <summary> ShareSnapshotNotFound. </summary>
+        private const string ShareSnapshotNotFoundValue = "ShareSnapshotNotFound";
+        /// <summary> FileShareProvisionedIopsInvalid. </summary>
+        private const string FileShareProvisionedIopsInvalidValue = "FileShareProvisionedIopsInvalid";
+        /// <summary> FileShareProvisionedBandwidthInvalid. </summary>
+        private const string FileShareProvisionedBandwidthInvalidValue = "FileShareProvisionedBandwidthInvalid";
+        /// <summary> FileShareProvisionedStorageInvalid. </summary>
+        private const string FileShareProvisionedStorageInvalidValue = "FileShareProvisionedStorageInvalid";
+        /// <summary> TotalSharesProvisionedCapacityExceedsAccountLimit. </summary>
+        private const string TotalSharesProvisionedCapacityExceedsAccountLimitValue = "TotalSharesProvisionedCapacityExceedsAccountLimit";
+        /// <summary> TotalSharesProvisionedIopsExceedsAccountLimit. </summary>
+        private const string TotalSharesProvisionedIopsExceedsAccountLimitValue = "TotalSharesProvisionedIopsExceedsAccountLimit";
+        /// <summary> TotalSharesProvisionedBandwidthExceedsAccountLimit. </summary>
+        private const string TotalSharesProvisionedBandwidthExceedsAccountLimitValue = "TotalSharesProvisionedBandwidthExceedsAccountLimit";
+        /// <summary> TotalSharesCountExceedsAccountLimit. </summary>
+        private const string TotalSharesCountExceedsAccountLimitValue = "TotalSharesCountExceedsAccountLimit";
 
         /// <summary> Initializes a new instance of <see cref="ShareErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareErrorCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AccountAlreadyExistsValue = "AccountAlreadyExists";
-        private const string AccountBeingCreatedValue = "AccountBeingCreated";
-        private const string AccountIsDisabledValue = "AccountIsDisabled";
-        private const string AuthenticationFailedValue = "AuthenticationFailed";
-        private const string AuthorizationFailureValue = "AuthorizationFailure";
-        private const string ConditionHeadersNotSupportedValue = "ConditionHeadersNotSupported";
-        private const string ConditionNotMetValue = "ConditionNotMet";
-        private const string EmptyMetadataKeyValue = "EmptyMetadataKey";
-        private const string FileShareProvisionedBandwidthDowngradeNotAllowedValue = "FileShareProvisionedBandwidthDowngradeNotAllowed";
-        private const string FileShareProvisionedIopsDowngradeNotAllowedValue = "FileShareProvisionedIopsDowngradeNotAllowed";
-        private const string InsufficientAccountPermissionsValue = "InsufficientAccountPermissions";
-        private const string InternalErrorValue = "InternalError";
-        private const string InvalidAuthenticationInfoValue = "InvalidAuthenticationInfo";
-        private const string InvalidHeaderValueValue = "InvalidHeaderValue";
-        private const string InvalidHttpVerbValue = "InvalidHttpVerb";
-        private const string InvalidInputValue = "InvalidInput";
-        private const string InvalidMd5Value = "InvalidMd5";
-        private const string InvalidMetadataValue = "InvalidMetadata";
-        private const string InvalidQueryParameterValueValue = "InvalidQueryParameterValue";
-        private const string InvalidRangeValue = "InvalidRange";
-        private const string InvalidResourceNameValue = "InvalidResourceName";
-        private const string InvalidUriValue = "InvalidUri";
-        private const string InvalidXmlDocumentValue = "InvalidXmlDocument";
-        private const string InvalidXmlNodeValueValue = "InvalidXmlNodeValue";
-        private const string Md5MismatchValue = "Md5Mismatch";
-        private const string MetadataTooLargeValue = "MetadataTooLarge";
-        private const string MissingContentLengthHeaderValue = "MissingContentLengthHeader";
-        private const string MissingRequiredQueryParameterValue = "MissingRequiredQueryParameter";
-        private const string MissingRequiredHeaderValue = "MissingRequiredHeader";
-        private const string MissingRequiredXmlNodeValue = "MissingRequiredXmlNode";
-        private const string MultipleConditionHeadersNotSupportedValue = "MultipleConditionHeadersNotSupported";
-        private const string OperationTimedOutValue = "OperationTimedOut";
-        private const string OutOfRangeInputValue = "OutOfRangeInput";
-        private const string OutOfRangeQueryParameterValueValue = "OutOfRangeQueryParameterValue";
-        private const string RequestBodyTooLargeValue = "RequestBodyTooLarge";
-        private const string ResourceTypeMismatchValue = "ResourceTypeMismatch";
-        private const string RequestUrlFailedToParseValue = "RequestUrlFailedToParse";
-        private const string ResourceAlreadyExistsValue = "ResourceAlreadyExists";
-        private const string ResourceNotFoundValue = "ResourceNotFound";
-        private const string ServerBusyValue = "ServerBusy";
-        private const string UnsupportedHeaderValue = "UnsupportedHeader";
-        private const string UnsupportedXmlNodeValue = "UnsupportedXmlNode";
-        private const string UnsupportedQueryParameterValue = "UnsupportedQueryParameter";
-        private const string UnsupportedHttpVerbValue = "UnsupportedHttpVerb";
-        private const string CannotDeleteFileOrDirectoryValue = "CannotDeleteFileOrDirectory";
-        private const string ClientCacheFlushDelayValue = "ClientCacheFlushDelay";
-        private const string DeletePendingValue = "DeletePending";
-        private const string DirectoryNotEmptyValue = "DirectoryNotEmpty";
-        private const string FileLockConflictValue = "FileLockConflict";
-        private const string InvalidFileOrDirectoryPathNameValue = "InvalidFileOrDirectoryPathName";
-        private const string ParentNotFoundValue = "ParentNotFound";
-        private const string ReadOnlyAttributeValue = "ReadOnlyAttribute";
-        private const string ShareAlreadyExistsValue = "ShareAlreadyExists";
-        private const string ShareBeingDeletedValue = "ShareBeingDeleted";
-        private const string ShareDisabledValue = "ShareDisabled";
-        private const string ShareNotFoundValue = "ShareNotFound";
-        private const string SharingViolationValue = "SharingViolation";
-        private const string ShareSnapshotInProgressValue = "ShareSnapshotInProgress";
-        private const string ShareSnapshotCountExceededValue = "ShareSnapshotCountExceeded";
-        private const string ShareSnapshotOperationNotSupportedValue = "ShareSnapshotOperationNotSupported";
-        private const string ShareHasSnapshotsValue = "ShareHasSnapshots";
-        private const string PreviousSnapshotNotFoundValue = "PreviousSnapshotNotFound";
-        private const string ContainerQuotaDowngradeNotAllowedValue = "ContainerQuotaDowngradeNotAllowed";
-        private const string AuthorizationSourceIPMismatchValue = "AuthorizationSourceIPMismatch";
-        private const string AuthorizationProtocolMismatchValue = "AuthorizationProtocolMismatch";
-        private const string AuthorizationPermissionMismatchValue = "AuthorizationPermissionMismatch";
-        private const string AuthorizationServiceMismatchValue = "AuthorizationServiceMismatch";
-        private const string AuthorizationResourceTypeMismatchValue = "AuthorizationResourceTypeMismatch";
-        private const string FeatureVersionMismatchValue = "FeatureVersionMismatch";
-        private const string ShareSnapshotNotFoundValue = "ShareSnapshotNotFound";
-        private const string FileShareProvisionedIopsInvalidValue = "FileShareProvisionedIopsInvalid";
-        private const string FileShareProvisionedBandwidthInvalidValue = "FileShareProvisionedBandwidthInvalid";
-        private const string FileShareProvisionedStorageInvalidValue = "FileShareProvisionedStorageInvalid";
-        private const string TotalSharesProvisionedCapacityExceedsAccountLimitValue = "TotalSharesProvisionedCapacityExceedsAccountLimit";
-        private const string TotalSharesProvisionedIopsExceedsAccountLimitValue = "TotalSharesProvisionedIopsExceedsAccountLimit";
-        private const string TotalSharesProvisionedBandwidthExceedsAccountLimitValue = "TotalSharesProvisionedBandwidthExceedsAccountLimit";
-        private const string TotalSharesCountExceedsAccountLimitValue = "TotalSharesCountExceedsAccountLimit";
+            _value = value;
+        }
 
         /// <summary> AccountAlreadyExists. </summary>
         public static ShareErrorCode AccountAlreadyExists { get; } = new ShareErrorCode(AccountAlreadyExistsValue);
+
         /// <summary> AccountBeingCreated. </summary>
         public static ShareErrorCode AccountBeingCreated { get; } = new ShareErrorCode(AccountBeingCreatedValue);
+
         /// <summary> AccountIsDisabled. </summary>
         public static ShareErrorCode AccountIsDisabled { get; } = new ShareErrorCode(AccountIsDisabledValue);
+
         /// <summary> AuthenticationFailed. </summary>
         public static ShareErrorCode AuthenticationFailed { get; } = new ShareErrorCode(AuthenticationFailedValue);
+
         /// <summary> AuthorizationFailure. </summary>
         public static ShareErrorCode AuthorizationFailure { get; } = new ShareErrorCode(AuthorizationFailureValue);
+
         /// <summary> ConditionHeadersNotSupported. </summary>
         public static ShareErrorCode ConditionHeadersNotSupported { get; } = new ShareErrorCode(ConditionHeadersNotSupportedValue);
+
         /// <summary> ConditionNotMet. </summary>
         public static ShareErrorCode ConditionNotMet { get; } = new ShareErrorCode(ConditionNotMetValue);
+
         /// <summary> EmptyMetadataKey. </summary>
         public static ShareErrorCode EmptyMetadataKey { get; } = new ShareErrorCode(EmptyMetadataKeyValue);
+
         /// <summary> FileShareProvisionedBandwidthDowngradeNotAllowed. </summary>
         public static ShareErrorCode FileShareProvisionedBandwidthDowngradeNotAllowed { get; } = new ShareErrorCode(FileShareProvisionedBandwidthDowngradeNotAllowedValue);
+
         /// <summary> FileShareProvisionedIopsDowngradeNotAllowed. </summary>
         public static ShareErrorCode FileShareProvisionedIopsDowngradeNotAllowed { get; } = new ShareErrorCode(FileShareProvisionedIopsDowngradeNotAllowedValue);
+
         /// <summary> InsufficientAccountPermissions. </summary>
         public static ShareErrorCode InsufficientAccountPermissions { get; } = new ShareErrorCode(InsufficientAccountPermissionsValue);
+
         /// <summary> InternalError. </summary>
         public static ShareErrorCode InternalError { get; } = new ShareErrorCode(InternalErrorValue);
+
         /// <summary> InvalidAuthenticationInfo. </summary>
         public static ShareErrorCode InvalidAuthenticationInfo { get; } = new ShareErrorCode(InvalidAuthenticationInfoValue);
+
         /// <summary> InvalidHeaderValue. </summary>
         public static ShareErrorCode InvalidHeaderValue { get; } = new ShareErrorCode(InvalidHeaderValueValue);
+
         /// <summary> InvalidHttpVerb. </summary>
         public static ShareErrorCode InvalidHttpVerb { get; } = new ShareErrorCode(InvalidHttpVerbValue);
+
         /// <summary> InvalidInput. </summary>
         public static ShareErrorCode InvalidInput { get; } = new ShareErrorCode(InvalidInputValue);
+
         /// <summary> InvalidMd5. </summary>
         public static ShareErrorCode InvalidMd5 { get; } = new ShareErrorCode(InvalidMd5Value);
+
         /// <summary> InvalidMetadata. </summary>
         public static ShareErrorCode InvalidMetadata { get; } = new ShareErrorCode(InvalidMetadataValue);
+
         /// <summary> InvalidQueryParameterValue. </summary>
         public static ShareErrorCode InvalidQueryParameterValue { get; } = new ShareErrorCode(InvalidQueryParameterValueValue);
+
         /// <summary> InvalidRange. </summary>
         public static ShareErrorCode InvalidRange { get; } = new ShareErrorCode(InvalidRangeValue);
+
         /// <summary> InvalidResourceName. </summary>
         public static ShareErrorCode InvalidResourceName { get; } = new ShareErrorCode(InvalidResourceNameValue);
+
         /// <summary> InvalidUri. </summary>
         public static ShareErrorCode InvalidUri { get; } = new ShareErrorCode(InvalidUriValue);
+
         /// <summary> InvalidXmlDocument. </summary>
         public static ShareErrorCode InvalidXmlDocument { get; } = new ShareErrorCode(InvalidXmlDocumentValue);
+
         /// <summary> InvalidXmlNodeValue. </summary>
         public static ShareErrorCode InvalidXmlNodeValue { get; } = new ShareErrorCode(InvalidXmlNodeValueValue);
+
         /// <summary> Md5Mismatch. </summary>
         public static ShareErrorCode Md5Mismatch { get; } = new ShareErrorCode(Md5MismatchValue);
+
         /// <summary> MetadataTooLarge. </summary>
         public static ShareErrorCode MetadataTooLarge { get; } = new ShareErrorCode(MetadataTooLargeValue);
+
         /// <summary> MissingContentLengthHeader. </summary>
         public static ShareErrorCode MissingContentLengthHeader { get; } = new ShareErrorCode(MissingContentLengthHeaderValue);
+
         /// <summary> MissingRequiredQueryParameter. </summary>
         public static ShareErrorCode MissingRequiredQueryParameter { get; } = new ShareErrorCode(MissingRequiredQueryParameterValue);
+
         /// <summary> MissingRequiredHeader. </summary>
         public static ShareErrorCode MissingRequiredHeader { get; } = new ShareErrorCode(MissingRequiredHeaderValue);
+
         /// <summary> MissingRequiredXmlNode. </summary>
         public static ShareErrorCode MissingRequiredXmlNode { get; } = new ShareErrorCode(MissingRequiredXmlNodeValue);
+
         /// <summary> MultipleConditionHeadersNotSupported. </summary>
         public static ShareErrorCode MultipleConditionHeadersNotSupported { get; } = new ShareErrorCode(MultipleConditionHeadersNotSupportedValue);
+
         /// <summary> OperationTimedOut. </summary>
         public static ShareErrorCode OperationTimedOut { get; } = new ShareErrorCode(OperationTimedOutValue);
+
         /// <summary> OutOfRangeInput. </summary>
         public static ShareErrorCode OutOfRangeInput { get; } = new ShareErrorCode(OutOfRangeInputValue);
+
         /// <summary> OutOfRangeQueryParameterValue. </summary>
         public static ShareErrorCode OutOfRangeQueryParameterValue { get; } = new ShareErrorCode(OutOfRangeQueryParameterValueValue);
+
         /// <summary> RequestBodyTooLarge. </summary>
         public static ShareErrorCode RequestBodyTooLarge { get; } = new ShareErrorCode(RequestBodyTooLargeValue);
+
         /// <summary> ResourceTypeMismatch. </summary>
         public static ShareErrorCode ResourceTypeMismatch { get; } = new ShareErrorCode(ResourceTypeMismatchValue);
+
         /// <summary> RequestUrlFailedToParse. </summary>
         public static ShareErrorCode RequestUrlFailedToParse { get; } = new ShareErrorCode(RequestUrlFailedToParseValue);
+
         /// <summary> ResourceAlreadyExists. </summary>
         public static ShareErrorCode ResourceAlreadyExists { get; } = new ShareErrorCode(ResourceAlreadyExistsValue);
+
         /// <summary> ResourceNotFound. </summary>
         public static ShareErrorCode ResourceNotFound { get; } = new ShareErrorCode(ResourceNotFoundValue);
+
         /// <summary> ServerBusy. </summary>
         public static ShareErrorCode ServerBusy { get; } = new ShareErrorCode(ServerBusyValue);
+
         /// <summary> UnsupportedHeader. </summary>
         public static ShareErrorCode UnsupportedHeader { get; } = new ShareErrorCode(UnsupportedHeaderValue);
+
         /// <summary> UnsupportedXmlNode. </summary>
         public static ShareErrorCode UnsupportedXmlNode { get; } = new ShareErrorCode(UnsupportedXmlNodeValue);
+
         /// <summary> UnsupportedQueryParameter. </summary>
         public static ShareErrorCode UnsupportedQueryParameter { get; } = new ShareErrorCode(UnsupportedQueryParameterValue);
+
         /// <summary> UnsupportedHttpVerb. </summary>
         public static ShareErrorCode UnsupportedHttpVerb { get; } = new ShareErrorCode(UnsupportedHttpVerbValue);
+
         /// <summary> CannotDeleteFileOrDirectory. </summary>
         public static ShareErrorCode CannotDeleteFileOrDirectory { get; } = new ShareErrorCode(CannotDeleteFileOrDirectoryValue);
+
         /// <summary> ClientCacheFlushDelay. </summary>
         public static ShareErrorCode ClientCacheFlushDelay { get; } = new ShareErrorCode(ClientCacheFlushDelayValue);
+
         /// <summary> DeletePending. </summary>
         public static ShareErrorCode DeletePending { get; } = new ShareErrorCode(DeletePendingValue);
+
         /// <summary> DirectoryNotEmpty. </summary>
         public static ShareErrorCode DirectoryNotEmpty { get; } = new ShareErrorCode(DirectoryNotEmptyValue);
+
         /// <summary> FileLockConflict. </summary>
         public static ShareErrorCode FileLockConflict { get; } = new ShareErrorCode(FileLockConflictValue);
+
         /// <summary> InvalidFileOrDirectoryPathName. </summary>
         public static ShareErrorCode InvalidFileOrDirectoryPathName { get; } = new ShareErrorCode(InvalidFileOrDirectoryPathNameValue);
+
         /// <summary> ParentNotFound. </summary>
         public static ShareErrorCode ParentNotFound { get; } = new ShareErrorCode(ParentNotFoundValue);
+
         /// <summary> ReadOnlyAttribute. </summary>
         public static ShareErrorCode ReadOnlyAttribute { get; } = new ShareErrorCode(ReadOnlyAttributeValue);
+
         /// <summary> ShareAlreadyExists. </summary>
         public static ShareErrorCode ShareAlreadyExists { get; } = new ShareErrorCode(ShareAlreadyExistsValue);
+
         /// <summary> ShareBeingDeleted. </summary>
         public static ShareErrorCode ShareBeingDeleted { get; } = new ShareErrorCode(ShareBeingDeletedValue);
+
         /// <summary> ShareDisabled. </summary>
         public static ShareErrorCode ShareDisabled { get; } = new ShareErrorCode(ShareDisabledValue);
+
         /// <summary> ShareNotFound. </summary>
         public static ShareErrorCode ShareNotFound { get; } = new ShareErrorCode(ShareNotFoundValue);
+
         /// <summary> SharingViolation. </summary>
         public static ShareErrorCode SharingViolation { get; } = new ShareErrorCode(SharingViolationValue);
+
         /// <summary> ShareSnapshotInProgress. </summary>
         public static ShareErrorCode ShareSnapshotInProgress { get; } = new ShareErrorCode(ShareSnapshotInProgressValue);
+
         /// <summary> ShareSnapshotCountExceeded. </summary>
         public static ShareErrorCode ShareSnapshotCountExceeded { get; } = new ShareErrorCode(ShareSnapshotCountExceededValue);
+
         /// <summary> ShareSnapshotOperationNotSupported. </summary>
         public static ShareErrorCode ShareSnapshotOperationNotSupported { get; } = new ShareErrorCode(ShareSnapshotOperationNotSupportedValue);
+
         /// <summary> ShareHasSnapshots. </summary>
         public static ShareErrorCode ShareHasSnapshots { get; } = new ShareErrorCode(ShareHasSnapshotsValue);
+
         /// <summary> PreviousSnapshotNotFound. </summary>
         public static ShareErrorCode PreviousSnapshotNotFound { get; } = new ShareErrorCode(PreviousSnapshotNotFoundValue);
+
         /// <summary> ContainerQuotaDowngradeNotAllowed. </summary>
         public static ShareErrorCode ContainerQuotaDowngradeNotAllowed { get; } = new ShareErrorCode(ContainerQuotaDowngradeNotAllowedValue);
+
         /// <summary> AuthorizationSourceIPMismatch. </summary>
         public static ShareErrorCode AuthorizationSourceIPMismatch { get; } = new ShareErrorCode(AuthorizationSourceIPMismatchValue);
+
         /// <summary> AuthorizationProtocolMismatch. </summary>
         public static ShareErrorCode AuthorizationProtocolMismatch { get; } = new ShareErrorCode(AuthorizationProtocolMismatchValue);
+
         /// <summary> AuthorizationPermissionMismatch. </summary>
         public static ShareErrorCode AuthorizationPermissionMismatch { get; } = new ShareErrorCode(AuthorizationPermissionMismatchValue);
+
         /// <summary> AuthorizationServiceMismatch. </summary>
         public static ShareErrorCode AuthorizationServiceMismatch { get; } = new ShareErrorCode(AuthorizationServiceMismatchValue);
+
         /// <summary> AuthorizationResourceTypeMismatch. </summary>
         public static ShareErrorCode AuthorizationResourceTypeMismatch { get; } = new ShareErrorCode(AuthorizationResourceTypeMismatchValue);
+
         /// <summary> FeatureVersionMismatch. </summary>
         public static ShareErrorCode FeatureVersionMismatch { get; } = new ShareErrorCode(FeatureVersionMismatchValue);
+
         /// <summary> ShareSnapshotNotFound. </summary>
         public static ShareErrorCode ShareSnapshotNotFound { get; } = new ShareErrorCode(ShareSnapshotNotFoundValue);
+
         /// <summary> FileShareProvisionedIopsInvalid. </summary>
         public static ShareErrorCode FileShareProvisionedIopsInvalid { get; } = new ShareErrorCode(FileShareProvisionedIopsInvalidValue);
+
         /// <summary> FileShareProvisionedBandwidthInvalid. </summary>
         public static ShareErrorCode FileShareProvisionedBandwidthInvalid { get; } = new ShareErrorCode(FileShareProvisionedBandwidthInvalidValue);
+
         /// <summary> FileShareProvisionedStorageInvalid. </summary>
         public static ShareErrorCode FileShareProvisionedStorageInvalid { get; } = new ShareErrorCode(FileShareProvisionedStorageInvalidValue);
+
         /// <summary> TotalSharesProvisionedCapacityExceedsAccountLimit. </summary>
         public static ShareErrorCode TotalSharesProvisionedCapacityExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedCapacityExceedsAccountLimitValue);
+
         /// <summary> TotalSharesProvisionedIopsExceedsAccountLimit. </summary>
         public static ShareErrorCode TotalSharesProvisionedIopsExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedIopsExceedsAccountLimitValue);
+
         /// <summary> TotalSharesProvisionedBandwidthExceedsAccountLimit. </summary>
         public static ShareErrorCode TotalSharesProvisionedBandwidthExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesProvisionedBandwidthExceedsAccountLimitValue);
+
         /// <summary> TotalSharesCountExceedsAccountLimit. </summary>
         public static ShareErrorCode TotalSharesCountExceedsAccountLimit { get; } = new ShareErrorCode(TotalSharesCountExceedsAccountLimitValue);
+
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ShareErrorCode left, ShareErrorCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ShareErrorCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ShareErrorCode left, ShareErrorCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareErrorCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ShareErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ShareErrorCode(string value) => new ShareErrorCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ShareErrorCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ShareErrorCode?(string value) => value == null ? null : new ShareErrorCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ShareErrorCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ShareErrorCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

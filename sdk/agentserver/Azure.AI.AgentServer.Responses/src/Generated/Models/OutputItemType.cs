@@ -17,13 +17,18 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string OutputMessageValue = "output_message";
         private const string FileSearchCallValue = "file_search_call";
         private const string FunctionCallValue = "function_call";
+        private const string FunctionCallOutputValue = "function_call_output";
         private const string WebSearchCallValue = "web_search_call";
         private const string ComputerCallValue = "computer_call";
+        private const string ComputerCallOutputValue = "computer_call_output";
         private const string ReasoningValue = "reasoning";
+        private const string ToolSearchCallValue = "tool_search_call";
+        private const string ToolSearchOutputValue = "tool_search_output";
         private const string CompactionValue = "compaction";
         private const string ImageGenerationCallValue = "image_generation_call";
         private const string CodeInterpreterCallValue = "code_interpreter_call";
         private const string LocalShellCallValue = "local_shell_call";
+        private const string LocalShellCallOutputValue = "local_shell_call_output";
         private const string ShellCallValue = "shell_call";
         private const string ShellCallOutputValue = "shell_call_output";
         private const string ApplyPatchCallValue = "apply_patch_call";
@@ -31,13 +36,10 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string McpCallValue = "mcp_call";
         private const string McpListToolsValue = "mcp_list_tools";
         private const string McpApprovalRequestValue = "mcp_approval_request";
-        private const string CustomToolCallValue = "custom_tool_call";
-        private const string MessageValue = "message";
-        private const string ComputerCallOutputValue = "computer_call_output";
-        private const string FunctionCallOutputValue = "function_call_output";
-        private const string LocalShellCallOutputValue = "local_shell_call_output";
         private const string McpApprovalResponseValue = "mcp_approval_response";
+        private const string CustomToolCallValue = "custom_tool_call";
         private const string CustomToolCallOutputValue = "custom_tool_call_output";
+        private const string MessageValue = "message";
         private const string StructuredOutputsValue = "structured_outputs";
         private const string OauthConsentRequestValue = "oauth_consent_request";
         private const string MemorySearchCallValue = "memory_search_call";
@@ -80,14 +82,26 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the FunctionCall. </summary>
         public static OutputItemType FunctionCall { get; } = new OutputItemType(FunctionCallValue);
 
+        /// <summary> Gets the FunctionCallOutput. </summary>
+        public static OutputItemType FunctionCallOutput { get; } = new OutputItemType(FunctionCallOutputValue);
+
         /// <summary> Gets the WebSearchCall. </summary>
         public static OutputItemType WebSearchCall { get; } = new OutputItemType(WebSearchCallValue);
 
         /// <summary> Gets the ComputerCall. </summary>
         public static OutputItemType ComputerCall { get; } = new OutputItemType(ComputerCallValue);
 
+        /// <summary> Gets the ComputerCallOutput. </summary>
+        public static OutputItemType ComputerCallOutput { get; } = new OutputItemType(ComputerCallOutputValue);
+
         /// <summary> Gets the Reasoning. </summary>
         public static OutputItemType Reasoning { get; } = new OutputItemType(ReasoningValue);
+
+        /// <summary> Gets the ToolSearchCall. </summary>
+        public static OutputItemType ToolSearchCall { get; } = new OutputItemType(ToolSearchCallValue);
+
+        /// <summary> Gets the ToolSearchOutput. </summary>
+        public static OutputItemType ToolSearchOutput { get; } = new OutputItemType(ToolSearchOutputValue);
 
         /// <summary> Gets the Compaction. </summary>
         public static OutputItemType Compaction { get; } = new OutputItemType(CompactionValue);
@@ -100,6 +114,9 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Gets the LocalShellCall. </summary>
         public static OutputItemType LocalShellCall { get; } = new OutputItemType(LocalShellCallValue);
+
+        /// <summary> Gets the LocalShellCallOutput. </summary>
+        public static OutputItemType LocalShellCallOutput { get; } = new OutputItemType(LocalShellCallOutputValue);
 
         /// <summary> Gets the ShellCall. </summary>
         public static OutputItemType ShellCall { get; } = new OutputItemType(ShellCallValue);
@@ -122,26 +139,17 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Gets the McpApprovalRequest. </summary>
         public static OutputItemType McpApprovalRequest { get; } = new OutputItemType(McpApprovalRequestValue);
 
-        /// <summary> Gets the CustomToolCall. </summary>
-        public static OutputItemType CustomToolCall { get; } = new OutputItemType(CustomToolCallValue);
-
-        /// <summary> Gets the Message. </summary>
-        public static OutputItemType Message { get; } = new OutputItemType(MessageValue);
-
-        /// <summary> Gets the ComputerCallOutput. </summary>
-        public static OutputItemType ComputerCallOutput { get; } = new OutputItemType(ComputerCallOutputValue);
-
-        /// <summary> Gets the FunctionCallOutput. </summary>
-        public static OutputItemType FunctionCallOutput { get; } = new OutputItemType(FunctionCallOutputValue);
-
-        /// <summary> Gets the LocalShellCallOutput. </summary>
-        public static OutputItemType LocalShellCallOutput { get; } = new OutputItemType(LocalShellCallOutputValue);
-
         /// <summary> Gets the McpApprovalResponse. </summary>
         public static OutputItemType McpApprovalResponse { get; } = new OutputItemType(McpApprovalResponseValue);
 
+        /// <summary> Gets the CustomToolCall. </summary>
+        public static OutputItemType CustomToolCall { get; } = new OutputItemType(CustomToolCallValue);
+
         /// <summary> Gets the CustomToolCallOutput. </summary>
         public static OutputItemType CustomToolCallOutput { get; } = new OutputItemType(CustomToolCallOutputValue);
+
+        /// <summary> Gets the Message. </summary>
+        public static OutputItemType Message { get; } = new OutputItemType(MessageValue);
 
         /// <summary> Gets the StructuredOutputs. </summary>
         public static OutputItemType StructuredOutputs { get; } = new OutputItemType(StructuredOutputsValue);

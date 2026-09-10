@@ -6,51 +6,62 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Azure.Analytics.Purview.DataMap
 {
     /// <summary> Business metadata to send to the service. </summary>
     public partial class BusinessMetadataOptions
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <param name="filePath"> The file path for the file file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filePath"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public BusinessMetadataOptions(string filePath)
+        {
+            Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
+
+            File = new FileBinaryContent(filePath);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <param name="file"> The content for the file file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        [Experimental("SCME0004")]
+        public BusinessMetadataOptions(Stream @file)
+        {
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            File = new FileBinaryContent(@file);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
+        /// <param name="file"> The content for the file file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
+        [Experimental("SCME0004")]
+        public BusinessMetadataOptions(BinaryData @file)
+        {
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            File = new FileBinaryContent(@file);
+        }
 
         /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public BusinessMetadataOptions(BinaryData @file)
+        [Experimental("SCME0004")]
+        public BusinessMetadataOptions(FileBinaryContent @file)
         {
             Argument.AssertNotNull(@file, nameof(@file));
 
             File = @file;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
-        /// <param name="file"> InputStream of file. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BusinessMetadataOptions(BinaryData @file, IDictionary<string, BinaryData> additionalBinaryDataProperties)
-        {
-            File = @file;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
-        }
-
-        /// <summary>
-        /// InputStream of file
-        /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
-        /// <description> Creates a payload of "AQID". </description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData File { get; }
+        /// <summary> InputStream of file. </summary>
+        [Experimental("SCME0004")]
+        public FileBinaryContent File { get; }
     }
 }

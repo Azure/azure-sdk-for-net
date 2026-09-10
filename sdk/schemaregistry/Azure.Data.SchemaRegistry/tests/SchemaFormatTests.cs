@@ -16,25 +16,25 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyAvroFormat()
         {
-            Assert.AreEqual("Avro", SchemaFormat.Avro.ToString());
+            Assert.That(SchemaFormat.Avro.ToString(), Is.EqualTo("Avro"));
         }
 
         [Test]
         public void VerifyJsonFormat()
         {
-            Assert.AreEqual("JSON", SchemaFormat.Json.ToString());
+            Assert.That(SchemaFormat.Json.ToString(), Is.EqualTo("JSON"));
         }
 
         [Test]
         public void VerifyCustomFormat()
         {
-            Assert.AreEqual("Custom", SchemaFormat.Custom.ToString());
+            Assert.That(SchemaFormat.Custom.ToString(), Is.EqualTo("Custom"));
         }
 
         [Test]
         public void VerifyDefault()
         {
-            Assert.AreEqual("MyValue", (new SchemaFormat("MyValue")).ToString());
+            Assert.That((new SchemaFormat("MyValue")).ToString(), Is.EqualTo("MyValue"));
         }
 
         //[Test]
@@ -46,25 +46,25 @@ namespace Azure.Data.SchemaRegistry.Tests
         [Test]
         public void VerifyAvroToContentType()
         {
-            Assert.AreEqual(AvroContentType, SchemaFormat.Avro.ContentType);
+            Assert.That(SchemaFormat.Avro.ContentType, Is.EqualTo(AvroContentType));
         }
 
         [Test]
         public void VerifyJsonToContentType()
         {
-            Assert.AreEqual(JsonContentType, SchemaFormat.Json.ContentType);
+            Assert.That(SchemaFormat.Json.ContentType, Is.EqualTo(JsonContentType));
         }
 
         [Test]
         public void VerifyCustomToContentType()
         {
-            Assert.AreEqual(CustomContentType, SchemaFormat.Custom.ContentType);
+            Assert.That(SchemaFormat.Custom.ContentType, Is.EqualTo(CustomContentType));
         }
 
         [Test]
         public void VerifyDefaultToContentType()
         {
-            Assert.AreEqual("application/json; serialization=MyValue", (new SchemaFormat("MyValue")).ContentType);
+            Assert.That((new SchemaFormat("MyValue")).ContentType, Is.EqualTo("application/json; serialization=MyValue"));
         }
 
         //[Test]
@@ -77,28 +77,28 @@ namespace Azure.Data.SchemaRegistry.Tests
         public void VerifyAvroFromContentType()
         {
             var fromContentType = SchemaFormat.FromContentType(AvroContentType);
-            Assert.AreEqual(SchemaFormat.Avro, fromContentType);
+            Assert.That(fromContentType, Is.EqualTo(SchemaFormat.Avro));
         }
 
         [Test]
         public void VerifyJsonFromContentType()
         {
             var fromContentType = SchemaFormat.FromContentType(JsonContentType);
-            Assert.AreEqual(SchemaFormat.Json, fromContentType);
+            Assert.That(fromContentType, Is.EqualTo(SchemaFormat.Json));
         }
 
         [Test]
         public void VerifyCustomFromContentType()
         {
             var fromContentType = SchemaFormat.FromContentType(CustomContentType);
-            Assert.AreEqual(SchemaFormat.Custom, fromContentType);
+            Assert.That(fromContentType, Is.EqualTo(SchemaFormat.Custom));
         }
 
         [Test]
         public void VerifyDefaultFromContentType()
         {
             var fromContentType = SchemaFormat.FromContentType("MyValue");
-            Assert.AreEqual(new SchemaFormat("MyValue"), fromContentType);
+            Assert.That(fromContentType, Is.EqualTo(new SchemaFormat("MyValue")));
         }
 
         //[Test]

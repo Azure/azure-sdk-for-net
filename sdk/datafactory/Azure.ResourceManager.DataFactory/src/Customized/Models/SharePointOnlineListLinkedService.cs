@@ -3,32 +3,30 @@
 
 #nullable disable
 
-using System;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> SharePoint Online List linked service. </summary>
-    public partial class SharePointOnlineListLinkedService : DataFactoryLinkedServiceProperties
+    // Workaround for https://github.com/Azure/azure-sdk-for-net/issues/59298 :
+    // identity-aliased Azure.Core.Expressions.DataFactory model types can be omitted from generated
+    // model surfaces. This partial restores the GA API surface for compatibility.
+    // TODO: remove once the generator preserves members whose types use @@alternateType identity (#59298).
+    public partial class SharePointOnlineListLinkedService
     {
-        /// <summary> Initializes a new instance of <see cref="SharePointOnlineListLinkedService"/>. </summary>
-        /// <param name="siteUri"> The URL of the SharePoint Online site. For example, https://contoso.sharepoint.com/sites/siteName. Type: string (or Expression with resultType string). </param>
-        /// <param name="tenantId"> The tenant ID under which your application resides. You can find it from Azure portal Active Directory overview page. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The application (client) ID of your application registered in Azure Active Directory. Make sure to grant SharePoint site permission to this application. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The client secret of your application registered in Azure Active Directory. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="siteUri"/>, <paramref name="tenantId"/>, <paramref name="servicePrincipalId"/> or <paramref name="servicePrincipalKey"/> is null. </exception>
-        public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, Core.Expressions.DataFactory.DataFactorySecret servicePrincipalKey)
-        {
-            Argument.AssertNotNull(siteUri, nameof(siteUri));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-            Argument.AssertNotNull(servicePrincipalId, nameof(servicePrincipalId));
-            Argument.AssertNotNull(servicePrincipalKey, nameof(servicePrincipalKey));
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCert { get; set; }
 
-            SiteUri = siteUri;
-            TenantId = tenantId;
-            ServicePrincipalId = servicePrincipalId;
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret ServicePrincipalEmbeddedCertPassword { get; set; }
+
+        /// <summary> Property restored as workaround for issue #59298. </summary>
+        public DataFactorySecret ServicePrincipalKey { get; set; }
+
+        /// <summary> Initializes a new instance restored as workaround for issue #59298. </summary>
+        public SharePointOnlineListLinkedService(DataFactoryElement<string> siteUri, DataFactoryElement<string> tenantId, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey)
+            : this(siteUri, tenantId, servicePrincipalId)
+        {
             ServicePrincipalKey = servicePrincipalKey;
-            LinkedServiceType = "SharePointOnlineList";
         }
     }
 }

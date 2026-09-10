@@ -14,33 +14,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAccountKeyDatastoreCredentials : MachineLearningDatastoreCredentials
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreCredentials"/>. </summary>
-        /// <param name="secrets"> [Required] Storage account secrets. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="secrets"/> is null. </exception>
-        public MachineLearningAccountKeyDatastoreCredentials(MachineLearningAccountKeyDatastoreSecrets secrets)
-        {
-            Argument.AssertNotNull(secrets, nameof(secrets));
-
-            Secrets = secrets;
-            CredentialsType = CredentialsType.AccountKey;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secrets"> [Required] Storage account secrets. </param>
-        internal MachineLearningAccountKeyDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningAccountKeyDatastoreSecrets secrets) : base(credentialsType, serializedAdditionalRawData)
+        internal MachineLearningAccountKeyDatastoreCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningAccountKeyDatastoreSecrets secrets) : base(credentialsType, additionalBinaryDataProperties)
         {
             Secrets = secrets;
-            CredentialsType = credentialsType;
         }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningAccountKeyDatastoreCredentials"/> for deserialization. </summary>
-        internal MachineLearningAccountKeyDatastoreCredentials()
-        {
-        }
-
-        /// <summary> [Required] Storage account secrets. </summary>
-        [WirePath("secrets")]
-        public MachineLearningAccountKeyDatastoreSecrets Secrets { get; set; }
     }
 }

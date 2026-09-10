@@ -10,78 +10,17 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class ElasticVolumeBackupProperties : IUtf8JsonSerializable, IJsonModel<ElasticVolumeBackupProperties>
+    /// <summary> Elastic Volume Backup Properties. </summary>
+    public partial class ElasticVolumeBackupProperties : IJsonModel<ElasticVolumeBackupProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticVolumeBackupProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ElasticVolumeBackupProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ElasticVolumeBackupProperties DeserializeElasticVolumeBackupProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticVolumeBackupProperties)} does not support writing '{format}' format.");
-            }
-
-            if (Optional.IsDefined(ElasticBackupPolicyResourceId))
-            {
-                writer.WritePropertyName("elasticBackupPolicyResourceId"u8);
-                writer.WriteStringValue(ElasticBackupPolicyResourceId);
-            }
-            if (Optional.IsDefined(PolicyEnforcement))
-            {
-                writer.WritePropertyName("policyEnforcement"u8);
-                writer.WriteStringValue(PolicyEnforcement.Value.ToString());
-            }
-            if (Optional.IsDefined(ElasticBackupVaultResourceId))
-            {
-                writer.WritePropertyName("elasticBackupVaultResourceId"u8);
-                writer.WriteStringValue(ElasticBackupVaultResourceId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        ElasticVolumeBackupProperties IJsonModel<ElasticVolumeBackupProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ElasticVolumeBackupProperties)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticVolumeBackupProperties(document.RootElement, options);
-        }
-
-        internal static ElasticVolumeBackupProperties DeserializeElasticVolumeBackupProperties(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -89,75 +28,42 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier elasticBackupPolicyResourceId = default;
             ElasticVolumePolicyEnforcement? policyEnforcement = default;
             ResourceIdentifier elasticBackupVaultResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("elasticBackupPolicyResourceId"u8))
+                if (prop.NameEquals("elasticBackupPolicyResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elasticBackupPolicyResourceId = new ResourceIdentifier(property.Value.GetString());
+                    elasticBackupPolicyResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("policyEnforcement"u8))
+                if (prop.NameEquals("policyEnforcement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyEnforcement = new ElasticVolumePolicyEnforcement(property.Value.GetString());
+                    policyEnforcement = new ElasticVolumePolicyEnforcement(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("elasticBackupVaultResourceId"u8))
+                if (prop.NameEquals("elasticBackupVaultResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    elasticBackupVaultResourceId = new ResourceIdentifier(property.Value.GetString());
+                    elasticBackupVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticVolumeBackupProperties(elasticBackupPolicyResourceId, policyEnforcement, elasticBackupVaultResourceId, serializedAdditionalRawData);
+            return new ElasticVolumeBackupProperties(elasticBackupPolicyResourceId, policyEnforcement, elasticBackupVaultResourceId, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ElasticVolumeBackupProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ElasticVolumeBackupProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ElasticVolumeBackupProperties IPersistableModel<ElasticVolumeBackupProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticVolumeBackupProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticVolumeBackupProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ElasticVolumeBackupProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ElasticVolumeBackupProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

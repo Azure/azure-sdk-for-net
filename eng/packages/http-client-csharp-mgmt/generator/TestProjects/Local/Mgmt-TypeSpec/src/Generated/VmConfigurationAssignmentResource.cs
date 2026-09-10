@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string vmConfigurationAssignmentApiVersion);
             _vmConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
+            _vmConfigurationAssignmentsRestClient = new VmConfigurationAssignments(_vmConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, vmConfigurationAssignmentApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<VmConfigurationAssignmentData> response = Response.FromValue(VmConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)
@@ -169,7 +169,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                HttpMessage message = _vmConfigurationAssignmentsRestClient.CreateGetRequest(Id.Parent.ToString(), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<VmConfigurationAssignmentData> response = Response.FromValue(VmConfigurationAssignmentData.FromResponse(result), result);
                 if (response.Value == null)

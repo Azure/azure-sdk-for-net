@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Automation
 {
+    /// <summary></summary>
     public partial class SoftwareUpdateConfigurationResource : IJsonModel<SoftwareUpdateConfigurationData>
     {
-        private static SoftwareUpdateConfigurationData s_dataDeserializationInstance;
-        private static SoftwareUpdateConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SoftwareUpdateConfigurationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SoftwareUpdateConfigurationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SoftwareUpdateConfigurationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SoftwareUpdateConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareUpdateConfigurationData>)Data).Write(writer, options);
 
-        SoftwareUpdateConfigurationData IJsonModel<SoftwareUpdateConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareUpdateConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SoftwareUpdateConfigurationData IJsonModel<SoftwareUpdateConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SoftwareUpdateConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SoftwareUpdateConfigurationData>(Data, options, AzureResourceManagerAutomationContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SoftwareUpdateConfigurationData IPersistableModel<SoftwareUpdateConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareUpdateConfigurationData>(data, options, AzureResourceManagerAutomationContext.Default);
 
-        string IPersistableModel<SoftwareUpdateConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SoftwareUpdateConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SoftwareUpdateConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

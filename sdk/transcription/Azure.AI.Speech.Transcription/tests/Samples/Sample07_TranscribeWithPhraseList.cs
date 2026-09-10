@@ -22,6 +22,7 @@ namespace Azure.AI.Speech.Transcription.Samples
         /// <summary>
         /// Transcribe audio with a custom phrase list to improve recognition accuracy.
         /// </summary>
+        [Ignore("Flaky timeout in CI playback — see https://github.com/Azure/azure-sdk-for-net/issues/58025")]
         [RecordedTest]
         public async Task TranscribeWithPhraseList()
         {
@@ -58,7 +59,7 @@ namespace Azure.AI.Speech.Transcription.Samples
             TranscriptionResult result = response.Value;
 
             Console.WriteLine("Transcription with custom phrase list:");
-            var channelPhrases = result.PhrasesByChannel.First();
+            var channelPhrases = result.CombinedPhrases.First();
             Console.WriteLine(channelPhrases.Text);
             #endregion Snippet:TranscribeWithPhraseListSample
         }

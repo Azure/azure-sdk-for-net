@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 NetworkManagerId = new ResourceIdentifier("/subscriptions/subscriptionC/resourceGroup/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager"),
             };
-            ArmOperation<SubscriptionNetworkManagerConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkManagerConnectionName, data);
+            ArmOperation<SubscriptionNetworkManagerConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkManagerConnectionName, data, cancellationToken: System.Threading.CancellationToken.None);
             SubscriptionNetworkManagerConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -18,34 +19,28 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="names"/> is null. </exception>
-        public NamedPartitionSchemeDescription(int count, IEnumerable<string> names)
+        public NamedPartitionSchemeDescription(int count, IEnumerable<string> names) : base(ApplicationPartitionScheme.Named)
         {
             Argument.AssertNotNull(names, nameof(names));
 
             Count = count;
             Names = names.ToList();
-            PartitionScheme = ApplicationPartitionScheme.Named;
         }
 
         /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/>. </summary>
         /// <param name="partitionScheme"> Specifies how the service is partitioned. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="names"> Array of size specified by the ‘count’ parameter, for the names of the partitions. </param>
-        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> serializedAdditionalRawData, int count, IList<string> names) : base(partitionScheme, serializedAdditionalRawData)
+        internal NamedPartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, IDictionary<string, BinaryData> additionalBinaryDataProperties, int count, IList<string> names) : base(partitionScheme, additionalBinaryDataProperties)
         {
             Count = count;
             Names = names;
-            PartitionScheme = partitionScheme;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NamedPartitionSchemeDescription"/> for deserialization. </summary>
-        internal NamedPartitionSchemeDescription()
-        {
         }
 
         /// <summary> The number of partitions. </summary>
         public int Count { get; set; }
+
         /// <summary> Array of size specified by the ‘count’ parameter, for the names of the partitions. </summary>
         public IList<string> Names { get; }
     }

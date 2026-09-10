@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkFunction
         {
             TryGetApiVersion(CollectorPolicyResource.ResourceType, out string collectorPolicyApiVersion);
             _collectorPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkFunction", CollectorPolicyResource.ResourceType.Namespace, Diagnostics);
-            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
+            _collectorPoliciesRestClient = new CollectorPolicies(_collectorPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, collectorPolicyApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                    new CollectorPolicyResourceOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetworkFunction
                 HttpMessage message = _collectorPoliciesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, collectorPolicyName, CollectorPolicyData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkFunctionArmOperation<CollectorPolicyResource> operation = new NetworkFunctionArmOperation<CollectorPolicyResource>(
-                    new CollectorPolicyOperationSource(Client),
+                    new CollectorPolicyResourceOperationSource(Client),
                     _collectorPoliciesClientDiagnostics,
                     Pipeline,
                     message.Request,

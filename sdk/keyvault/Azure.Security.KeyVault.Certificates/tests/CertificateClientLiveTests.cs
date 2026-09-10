@@ -243,6 +243,58 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         }
 
         [RecordedTest]
+        public async Task VerifyCreateCertificateWithPlatformManaged()
+        {
+            // PlatformManaged is only available on the 2026-03-01-preview API. Build a dedicated
+            // client at that version rather than gating on the fixture's ServiceVersion so this
+            // single recording is exercised exactly once instead of per fixture variant.
+            CertificateClientOptions options = new CertificateClientOptions(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview)
+            {
+                Diagnostics =
+                {
+                    IsLoggingContentEnabled = Debugger.IsAttached || Mode == RecordedTestMode.Live,
+                    LoggedHeaderNames = { "x-ms-request-id" },
+                }
+            };
+            CertificateClient previewClient = InstrumentClient(new CertificateClient(
+                VaultUri,
+                TestEnvironment.Credential,
+                InstrumentClientOptions(options)));
+
+            string certName = Recording.GenerateId();
+
+            CertificatePolicy certificatePolicy = new CertificatePolicy
+            {
+                PlatformManaged = new PlatformManaged("PublicTLSServerAuth"),
+            };
+
+            // Service expects snake_case metadata.sans.dns_names. The published design doc
+            // shows metadata.subjectAlternateNames.dnsNames, but the deployed service rejects
+            // that shape; defer to the working contract.
+            certificatePolicy.PlatformManaged.Metadata["sans"] = BinaryData.FromObjectAsJson(
+                new Dictionary<string, string[]> { ["dns_names"] = new[] { "sanitized.example.invalid" } });
+
+            // Verifies the SDK can send a PlatformManaged create request and the service
+            // accepts the policy round-trip. We intentionally do not WaitForCompletionAsync:
+            // OneCert backend issuance is asynchronous service behavior, not SDK behavior,
+            // and the issuer registration is not always available in test environments.
+            CertificateOperation operation = await previewClient.StartCreateCertificateAsync(certName, certificatePolicy);
+            operation = InstrumentOperation(operation);
+
+            RegisterForCleanup(certName);
+
+            Assert.NotNull(operation);
+            Assert.NotNull(operation.Id);
+
+            CertificatePolicy returnedPolicy = await previewClient.GetCertificatePolicyAsync(certName);
+
+            Assert.NotNull(returnedPolicy);
+            Assert.NotNull(returnedPolicy.PlatformManaged);
+            Assert.AreEqual("PublicTLSServerAuth", returnedPolicy.PlatformManaged.CertificateUsage);
+            Assert.IsTrue(returnedPolicy.PlatformManaged.Metadata.ContainsKey("sans"));
+        }
+
+        [RecordedTest]
         public async Task VerifyCertificateOperationError()
         {
             string issuerName = Recording.GenerateId();

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A configuration which will update any network groups ip addresses at commit times.",
                 NetworkGroupAddressSpaceAggregationOption = AddressSpaceAggregationOption.Manual,
             };
-            ArmOperation<SecurityAdminConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            ArmOperation<SecurityAdminConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityAdminConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Description = "A sample policy",
                 ApplyOnNetworkIntentPolicyBasedServices = { NetworkIntentPolicyBasedService.None },
             };
-            ArmOperation<SecurityAdminConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            ArmOperation<SecurityAdminConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data, cancellationToken: System.Threading.CancellationToken.None);
             SecurityAdminConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

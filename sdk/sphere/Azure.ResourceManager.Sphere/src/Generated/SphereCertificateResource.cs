@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sphere
         {
             TryGetApiVersion(ResourceType, out string sphereCertificateApiVersion);
             _certificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sphere", ResourceType.Namespace, Diagnostics);
-            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Endpoint, sphereCertificateApiVersion ?? "2024-04-01");
+            _certificatesRestClient = new Certificates(_certificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sphereCertificateApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

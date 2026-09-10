@@ -7,7 +7,6 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> json text configuration. </summary>
     internal partial class JsonTextConfigurationInternal
     {
         /// <summary> Initializes a new instance of <see cref="JsonTextConfigurationInternal"/>. </summary>

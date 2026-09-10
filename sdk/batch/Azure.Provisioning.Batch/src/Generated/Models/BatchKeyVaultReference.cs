@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Batch
         {
         }
 
-        /// <summary> Gets or sets the Id. </summary>
+        /// <summary> Gets the Id. </summary>
         public BicepValue<ResourceIdentifier> Id
         {
             get
@@ -31,14 +31,9 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _id;
             }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Uri. </summary>
+        /// <summary> Gets the Uri. </summary>
         public BicepValue<Uri> Uri
         {
             get
@@ -46,19 +41,18 @@ namespace Azure.Provisioning.Batch
                 Initialize();
                 return _uri;
             }
-            set
-            {
-                Initialize();
-                _uri.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for BatchKeyVaultReference. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
-            _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "url" }, isRequired: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
+            _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "url" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchKeyVaultReference that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

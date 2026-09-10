@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSapAseRestoreContent"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadSapAseRestoreContent(string objectType) : base("AzureWorkloadSAPAseRestoreRequest")
+        private protected WorkloadSapAseRestoreContent(string objectType) : base(objectType)
         {
         }
     }

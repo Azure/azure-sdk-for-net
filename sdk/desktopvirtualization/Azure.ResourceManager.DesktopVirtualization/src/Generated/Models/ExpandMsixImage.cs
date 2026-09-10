@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Detailed properties for ExpandMsixImage. </param>
-        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ExpandMsixImageProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ExpandMsixImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpandMsixImageProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Detailed properties for ExpandMsixImage. </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.IsRegularRegistration = value.Value;
+                Properties.IsRegularRegistration = value;
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.IsActive = value.Value;
+                Properties.IsActive = value;
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.LastUpdatedOn = value.Value;
+                Properties.LastUpdatedOn = value;
             }
         }
 
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     Properties = new ExpandMsixImageProperties();
                 }
-                Properties.CertificateExpiry = value.Value;
+                Properties.CertificateExpiry = value;
             }
         }
     }

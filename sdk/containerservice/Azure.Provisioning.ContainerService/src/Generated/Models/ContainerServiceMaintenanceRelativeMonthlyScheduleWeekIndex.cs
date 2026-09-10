@@ -11,14 +11,14 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex
     {
         /// <summary> First week of the month. </summary>
-        First,
+        First = 0,
         /// <summary> Second week of the month. </summary>
-        Second,
+        Second = 1,
         /// <summary> Third week of the month. </summary>
-        Third,
+        Third = 2,
         /// <summary> Fourth week of the month. </summary>
-        Fourth,
+        Fourth = 3,
         /// <summary> Last week of the month. </summary>
-        Last
+        Last = 4
     }
 }

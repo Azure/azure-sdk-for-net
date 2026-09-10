@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -16,14 +15,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
-        public BackupJobExtendedInfo()
-        {
-            AdditionalDetails = new ChangeTrackingDictionary<string, string>();
-            SubTasks = new ChangeTrackingList<BackupJobSubTask>();
-            WarningDetails = new ChangeTrackingList<UserFacingWarningDetail>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="BackupJobExtendedInfo"/>. </summary>
         /// <param name="additionalDetails"> Job's Additional Details. </param>

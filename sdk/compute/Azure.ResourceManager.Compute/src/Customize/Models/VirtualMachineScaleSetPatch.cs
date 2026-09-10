@@ -8,6 +8,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
+    // Backward compatibility: flatten patch properties (UpgradePolicy, VirtualMachineProfile, etc.)
+    // after @@flattenProperty was disabled for C# in the TypeSpec migration.
     public partial class VirtualMachineScaleSetPatch : ComputeResourcePatch
     {
         /// <summary> The upgrade policy. </summary>

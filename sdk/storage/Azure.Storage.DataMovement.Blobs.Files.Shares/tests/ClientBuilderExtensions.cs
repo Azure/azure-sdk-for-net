@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             TokenCredential credential)
         {
             containerName ??= clientBuilder.GetNewContainerName();
-            BlobServiceClient service = clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigDefault, credential);
+            BlobServiceClient service = clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, credential);
             BlobContainerClient container = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetBlobContainerClient(containerName));
             await container.CreateIfNotExistsAsync();
             return new DisposingContainer(container);

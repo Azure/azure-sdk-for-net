@@ -78,7 +78,8 @@ public static class FetchToFromLroResponseTool
 
             // Step 2: Scan custom files for Fetch() calls and replace
             var totalFixes = 0;
-            var normalizedGenerated = Path.GetFullPath(generatedPath);
+            // Normalize to exactly one trailing separator so "Generated" won't match "GeneratedFoo/"
+            var normalizedGenerated = Path.TrimEndingDirectorySeparator(Path.GetFullPath(generatedPath)) + Path.DirectorySeparatorChar;
 
             foreach (var file in Directory.GetFiles(srcPath, "*.cs", SearchOption.AllDirectories))
             {

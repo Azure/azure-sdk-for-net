@@ -87,6 +87,10 @@ namespace Azure.Provisioning.ContainerService
             _managedOutboundIPProfile = DefineModelProperty<ManagedClusterManagedOutboundIPProfile>(nameof(ManagedOutboundIPProfile), new string[] { "managedOutboundIPProfile" });
             _effectiveOutboundIPs = DefineListProperty<WritableSubResource>(nameof(EffectiveOutboundIPs), new string[] { "effectiveOutboundIPs" }, isOutput: true);
             _idleTimeoutInMinutes = DefineProperty<int>(nameof(IdleTimeoutInMinutes), new string[] { "idleTimeoutInMinutes" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterNatGatewayProfile that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

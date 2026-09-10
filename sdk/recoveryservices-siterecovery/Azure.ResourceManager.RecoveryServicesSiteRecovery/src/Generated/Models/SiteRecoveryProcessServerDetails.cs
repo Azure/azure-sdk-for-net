@@ -9,43 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Process server details. </summary>
     public partial class SiteRecoveryProcessServerDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServerDetails"/>. </summary>
         internal SiteRecoveryProcessServerDetails()
@@ -84,8 +56,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="historicHealth"> The historic health of the process server based on the health in last 24 hours. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProcessServerDetails(string id, string name, string biosId, ResourceIdentifier fabricObjectId, string fqdn, IReadOnlyList<IPAddress> ipAddresses, string version, DateTimeOffset? lastHeartbeatReceivedOn, long? totalMemoryInBytes, long? availableMemoryInBytes, long? usedMemoryInBytes, double? memoryUsagePercentage, long? totalSpaceInBytes, long? availableSpaceInBytes, long? usedSpaceInBytes, double? freeSpacePercentage, long? throughputUploadPendingDataInBytes, long? throughputInBytes, double? processorUsagePercentage, RcmComponentStatus? throughputStatus, long? systemLoad, RcmComponentStatus? systemLoadStatus, RcmComponentStatus? diskUsageStatus, RcmComponentStatus? memoryUsageStatus, RcmComponentStatus? processorUsageStatus, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? protectedItemCount, SiteRecoveryProtectionHealth? historicHealth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -116,65 +88,93 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             HistoricHealth = historicHealth;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The process server Id. </summary>
         public string Id { get; }
+
         /// <summary> The process server name. </summary>
         public string Name { get; }
+
         /// <summary> The process server Bios Id. </summary>
         public string BiosId { get; }
+
         /// <summary> The fabric object Id. </summary>
         public ResourceIdentifier FabricObjectId { get; }
+
         /// <summary> The process server Fqdn. </summary>
         public string Fqdn { get; }
+
         /// <summary> The list of IP addresses for communicating with the RCM component. </summary>
         public IReadOnlyList<IPAddress> IPAddresses { get; }
+
         /// <summary> The version. </summary>
         public string Version { get; }
+
         /// <summary> The last heartbeat received from the process server. </summary>
         public DateTimeOffset? LastHeartbeatReceivedOn { get; }
+
         /// <summary> The total memory. </summary>
         public long? TotalMemoryInBytes { get; }
+
         /// <summary> The available memory. </summary>
         public long? AvailableMemoryInBytes { get; }
+
         /// <summary> The used memory. </summary>
         public long? UsedMemoryInBytes { get; }
+
         /// <summary> The memory usage percentage. </summary>
         public double? MemoryUsagePercentage { get; }
+
         /// <summary> The total disk space. </summary>
         public long? TotalSpaceInBytes { get; }
+
         /// <summary> The available disk space. </summary>
         public long? AvailableSpaceInBytes { get; }
+
         /// <summary> The used disk space. </summary>
         public long? UsedSpaceInBytes { get; }
+
         /// <summary> The free disk space percentage. </summary>
         public double? FreeSpacePercentage { get; }
+
         /// <summary> The uploading pending data in bytes. </summary>
         public long? ThroughputUploadPendingDataInBytes { get; }
+
         /// <summary> The throughput in bytes. </summary>
         public long? ThroughputInBytes { get; }
+
         /// <summary> The processor usage percentage. </summary>
         public double? ProcessorUsagePercentage { get; }
+
         /// <summary> The throughput status. </summary>
         public RcmComponentStatus? ThroughputStatus { get; }
+
         /// <summary> The system load. </summary>
         public long? SystemLoad { get; }
+
         /// <summary> The system load status. </summary>
         public RcmComponentStatus? SystemLoadStatus { get; }
+
         /// <summary> The disk usage status. </summary>
         public RcmComponentStatus? DiskUsageStatus { get; }
+
         /// <summary> The memory usage status. </summary>
         public RcmComponentStatus? MemoryUsageStatus { get; }
+
         /// <summary> The processor usage status. </summary>
         public RcmComponentStatus? ProcessorUsageStatus { get; }
+
         /// <summary> The health of the process server. </summary>
         public SiteRecoveryProtectionHealth? Health { get; }
+
         /// <summary> The health errors. </summary>
         public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
+
         /// <summary> The protected item count. </summary>
         public int? ProtectedItemCount { get; }
+
         /// <summary> The historic health of the process server based on the health in last 24 hours. </summary>
         public SiteRecoveryProtectionHealth? HistoricHealth { get; }
     }

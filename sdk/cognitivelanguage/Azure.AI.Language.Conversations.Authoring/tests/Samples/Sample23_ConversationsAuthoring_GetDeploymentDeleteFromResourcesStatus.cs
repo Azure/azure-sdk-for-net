@@ -23,12 +23,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatus
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             string jobId = "{jobId}";
             // Retrieve the job status
             Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-                client.GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId);
+                deploymentClient.GetDeploymentDeleteFromResourcesStatus(projectName, deploymentName, jobId);
 
             ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 
@@ -50,12 +52,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 new ConversationAnalysisAuthoring(endpoint, credential);
 
             #region Snippet:Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatusAsync
+            ConversationAuthoringDeployment deploymentClient = client.GetConversationAuthoringDeploymentClient();
+
             string projectName = "{projectName}";
             string deploymentName = "{deploymentName}";
             string jobId = "{jobId}";
             // Retrieve the job status asynchronously
             Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response =
-                await client.GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId);
+                await deploymentClient.GetDeploymentDeleteFromResourcesStatusAsync(projectName, deploymentName, jobId);
 
             ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
 

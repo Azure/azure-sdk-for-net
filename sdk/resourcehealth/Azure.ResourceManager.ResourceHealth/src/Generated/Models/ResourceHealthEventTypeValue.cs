@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ResourceHealth;
 
 namespace Azure.ResourceManager.ResourceHealth.Models
 {
@@ -14,50 +15,82 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public readonly partial struct ResourceHealthEventTypeValue : IEquatable<ResourceHealthEventTypeValue>
     {
         private readonly string _value;
+        /// <summary> ServiceIssue. </summary>
+        private const string ServiceIssueValue = "ServiceIssue";
+        /// <summary> PlannedMaintenance. </summary>
+        private const string PlannedMaintenanceValue = "PlannedMaintenance";
+        /// <summary> HealthAdvisory. </summary>
+        private const string HealthAdvisoryValue = "HealthAdvisory";
+        /// <summary> RCA. </summary>
+        private const string RcaValue = "RCA";
+        /// <summary> EmergingIssues. </summary>
+        private const string EmergingIssuesValue = "EmergingIssues";
+        /// <summary> SecurityAdvisory. </summary>
+        private const string SecurityAdvisoryValue = "SecurityAdvisory";
+        /// <summary> Billing. </summary>
+        private const string BillingValue = "Billing";
 
         /// <summary> Initializes a new instance of <see cref="ResourceHealthEventTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ResourceHealthEventTypeValue(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ServiceIssueValue = "ServiceIssue";
-        private const string PlannedMaintenanceValue = "PlannedMaintenance";
-        private const string HealthAdvisoryValue = "HealthAdvisory";
-        private const string RcaValue = "RCA";
-        private const string EmergingIssuesValue = "EmergingIssues";
-        private const string SecurityAdvisoryValue = "SecurityAdvisory";
+            _value = value;
+        }
 
         /// <summary> ServiceIssue. </summary>
         public static ResourceHealthEventTypeValue ServiceIssue { get; } = new ResourceHealthEventTypeValue(ServiceIssueValue);
+
         /// <summary> PlannedMaintenance. </summary>
         public static ResourceHealthEventTypeValue PlannedMaintenance { get; } = new ResourceHealthEventTypeValue(PlannedMaintenanceValue);
+
         /// <summary> HealthAdvisory. </summary>
         public static ResourceHealthEventTypeValue HealthAdvisory { get; } = new ResourceHealthEventTypeValue(HealthAdvisoryValue);
+
         /// <summary> RCA. </summary>
         public static ResourceHealthEventTypeValue Rca { get; } = new ResourceHealthEventTypeValue(RcaValue);
+
         /// <summary> EmergingIssues. </summary>
         public static ResourceHealthEventTypeValue EmergingIssues { get; } = new ResourceHealthEventTypeValue(EmergingIssuesValue);
+
         /// <summary> SecurityAdvisory. </summary>
         public static ResourceHealthEventTypeValue SecurityAdvisory { get; } = new ResourceHealthEventTypeValue(SecurityAdvisoryValue);
+
+        /// <summary> Billing. </summary>
+        public static ResourceHealthEventTypeValue Billing { get; } = new ResourceHealthEventTypeValue(BillingValue);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventTypeValue"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ResourceHealthEventTypeValue left, ResourceHealthEventTypeValue right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ResourceHealthEventTypeValue"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ResourceHealthEventTypeValue left, ResourceHealthEventTypeValue right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ResourceHealthEventTypeValue"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ResourceHealthEventTypeValue(string value) => new ResourceHealthEventTypeValue(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ResourceHealthEventTypeValue"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ResourceHealthEventTypeValue?(string value) => value == null ? null : new ResourceHealthEventTypeValue(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ResourceHealthEventTypeValue other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ResourceHealthEventTypeValue other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

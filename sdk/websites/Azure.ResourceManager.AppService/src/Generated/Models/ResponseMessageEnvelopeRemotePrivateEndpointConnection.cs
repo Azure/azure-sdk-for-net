@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -15,37 +17,8 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
     public partial class ResponseMessageEnvelopeRemotePrivateEndpointConnection : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
         internal ResponseMessageEnvelopeRemotePrivateEndpointConnection()
@@ -55,10 +28,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </param>
         /// <param name="tags"> Tags associated with resource. </param>
         /// <param name="plan"> Azure resource manager plan. </param>
@@ -68,8 +41,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Azure-AsyncOperation Error info. </param>
         /// <param name="identity"> MSI resource. </param>
         /// <param name="zones"> Logical Availability Zones the service is hosted in. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ResponseMessageEnvelopeRemotePrivateEndpointConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, AppServiceArmPlan plan, RemotePrivateEndpointConnection properties, AppServiceSkuDescription sku, string status, ResponseError error, ManagedServiceIdentity identity, IReadOnlyList<string> zones, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Tags = tags;
@@ -80,30 +53,37 @@ namespace Azure.ResourceManager.AppService.Models
             Error = error;
             Identity = identity;
             Zones = zones;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Geographical region resource belongs to e.g. SouthCentralUS, SouthEastAsia. </summary>
         [WirePath("location")]
         public AzureLocation? Location { get; }
+
         /// <summary> Tags associated with resource. </summary>
         [WirePath("tags")]
         public IReadOnlyDictionary<string, string> Tags { get; }
+
         /// <summary> Azure resource manager plan. </summary>
         [WirePath("plan")]
         public AppServiceArmPlan Plan { get; }
+
         /// <summary> Resource specific properties. </summary>
         [WirePath("properties")]
         public RemotePrivateEndpointConnection Properties { get; }
+
         /// <summary> SKU description of the resource. </summary>
         [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; }
+
         /// <summary> Azure-AsyncOperation Status info. </summary>
         [WirePath("status")]
         public string Status { get; }
+
         /// <summary> MSI resource. </summary>
         [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; }
+
         /// <summary> Logical Availability Zones the service is hosted in. </summary>
         [WirePath("zones")]
         public IReadOnlyList<string> Zones { get; }

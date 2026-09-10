@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block };
 
-            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction);
-            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource
+            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority)
             {
-                Id = new ResourceIdentifier(_dnsResolverDomainList.Id),
-            });
+                ActionType = dnsSecurityRuleAction.ActionType,
+            };
+            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource() { Id = _dnsResolverDomainList.Id });
 
             // ACT
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
@@ -83,7 +83,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block };
 
-            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction);
+            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority)
+            {
+                ActionType = dnsSecurityRuleAction.ActionType,
+            };
             dnsSecurityRuleData.ManagedDomainLists.Add(ManagedDomainList.AzureDnsThreatIntel);
 
             // ACT
@@ -103,11 +106,11 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block };
 
-            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction);
-            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource
+            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority)
             {
-                Id = new ResourceIdentifier(_dnsResolverDomainList.Id),
-            });
+                ActionType = dnsSecurityRuleAction.ActionType,
+            };
+            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource() { Id = _dnsResolverDomainList.Id });
 
             await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 
@@ -129,11 +132,11 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block };
 
-            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction);
-            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource
+            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority)
             {
-                Id = new ResourceIdentifier(_dnsResolverDomainList.Id),
-            });
+                ActionType = dnsSecurityRuleAction.ActionType,
+            };
+            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource() { Id = _dnsResolverDomainList.Id });
 
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 
@@ -156,11 +159,11 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             await CreateDnsResolverCollection();
             var dnsSecurityRuleAction = new DnsSecurityRuleAction() { ActionType = DnsSecurityRuleActionType.Block };
 
-            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority, dnsSecurityRuleAction);
-            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource
+            var dnsSecurityRuleData = new DnsSecurityRuleData(this.DefaultLocation, this.DefaultDnsSecurityRulePriority)
             {
-                Id = new ResourceIdentifier(_dnsResolverDomainList.Id),
-            });
+                ActionType = dnsSecurityRuleAction.ActionType,
+            };
+            dnsSecurityRuleData.DnsResolverDomainLists.Add(new WritableSubResource() { Id = _dnsResolverDomainList.Id });
 
             var createdDnsSecurityRule = await _dnsResolverPolicy.GetDnsSecurityRules().CreateOrUpdateAsync(WaitUntil.Completed, dnsSecurityRuleName, dnsSecurityRuleData);
 

@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryReplicationProtectionClusterProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>
+    /// <summary> Replication protection cluster custom data details. </summary>
+    public partial class SiteRecoveryReplicationProtectionClusterProperties : IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryReplicationProtectionClusterProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSiteRecoveryReplicationProtectionClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryReplicationProtectionClusterProperties IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(ProtectionClusterType))
             {
                 writer.WritePropertyName("protectionClusterType"u8);
@@ -98,8 +139,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("allowedOperations"u8);
                 writer.WriteStartArray();
-                foreach (var item in AllowedOperations)
+                foreach (string item in AllowedOperations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -113,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
-                foreach (var item in HealthErrors)
+                foreach (SiteRecoveryHealthError item in HealthErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -158,8 +204,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("clusterNodeFqdns"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClusterNodeFqdns)
+                foreach (string item in ClusterNodeFqdns)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -168,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("clusterProtectedItemIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClusterProtectedItemIds)
+                foreach (ResourceIdentifier item in ClusterProtectedItemIds)
                 {
                     if (item == null)
                     {
@@ -193,7 +244,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 writer.WritePropertyName("clusterRegisteredNodes"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClusterRegisteredNodes)
+                foreach (RegisteredClusterNodes item in ClusterRegisteredNodes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -214,15 +265,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -231,22 +282,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        SiteRecoveryReplicationProtectionClusterProperties IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SiteRecoveryReplicationProtectionClusterProperties IJsonModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SiteRecoveryReplicationProtectionClusterProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSiteRecoveryReplicationProtectionClusterProperties(document.RootElement, options);
         }
 
-        internal static SiteRecoveryReplicationProtectionClusterProperties DeserializeSiteRecoveryReplicationProtectionClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SiteRecoveryReplicationProtectionClusterProperties DeserializeSiteRecoveryReplicationProtectionClusterProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -266,8 +322,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IList<string> allowedOperations = default;
             string replicationHealth = default;
             IList<SiteRecoveryHealthError> healthErrors = default;
-            DateTimeOffset? lastSuccessfulFailoverTime = default;
-            DateTimeOffset? lastSuccessfulTestFailoverTime = default;
+            DateTimeOffset? lastSuccessfulFailoverOn = default;
+            DateTimeOffset? lastSuccessfulTestFailoverOn = default;
             string policyFriendlyName = default;
             CurrentScenarioDetails currentScenario = default;
             ResourceIdentifier recoveryContainerId = default;
@@ -281,180 +337,193 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ReplicationClusterProviderSpecificSettings providerSpecificDetails = default;
             SharedDiskReplicationItemProperties sharedDiskProperties = default;
             ResourceIdentifier policyId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("protectionClusterType"u8))
+                if (prop.NameEquals("protectionClusterType"u8))
                 {
-                    protectionClusterType = property.Value.GetString();
+                    protectionClusterType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryFabricFriendlyName"u8))
+                if (prop.NameEquals("primaryFabricFriendlyName"u8))
                 {
-                    primaryFabricFriendlyName = property.Value.GetString();
+                    primaryFabricFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryFabricProvider"u8))
+                if (prop.NameEquals("primaryFabricProvider"u8))
                 {
-                    primaryFabricProvider = property.Value.GetString();
+                    primaryFabricProvider = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricFriendlyName"u8))
+                if (prop.NameEquals("recoveryFabricFriendlyName"u8))
                 {
-                    recoveryFabricFriendlyName = property.Value.GetString();
+                    recoveryFabricFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricId"u8))
+                if (prop.NameEquals("recoveryFabricId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryFabricId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryFabricId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryProtectionContainerFriendlyName"u8))
+                if (prop.NameEquals("primaryProtectionContainerFriendlyName"u8))
                 {
-                    primaryProtectionContainerFriendlyName = property.Value.GetString();
+                    primaryProtectionContainerFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryProtectionContainerFriendlyName"u8))
+                if (prop.NameEquals("recoveryProtectionContainerFriendlyName"u8))
                 {
-                    recoveryProtectionContainerFriendlyName = property.Value.GetString();
+                    recoveryProtectionContainerFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionState"u8))
+                if (prop.NameEquals("protectionState"u8))
                 {
-                    protectionState = property.Value.GetString();
+                    protectionState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("protectionStateDescription"u8))
+                if (prop.NameEquals("protectionStateDescription"u8))
                 {
-                    protectionStateDescription = property.Value.GetString();
+                    protectionStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("activeLocation"u8))
+                if (prop.NameEquals("activeLocation"u8))
                 {
-                    activeLocation = property.Value.GetString();
+                    activeLocation = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverState"u8))
+                if (prop.NameEquals("testFailoverState"u8))
                 {
-                    testFailoverState = property.Value.GetString();
+                    testFailoverState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("testFailoverStateDescription"u8))
+                if (prop.NameEquals("testFailoverStateDescription"u8))
                 {
-                    testFailoverStateDescription = property.Value.GetString();
+                    testFailoverStateDescription = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allowedOperations"u8))
+                if (prop.NameEquals("allowedOperations"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     allowedOperations = array;
                     continue;
                 }
-                if (property.NameEquals("replicationHealth"u8))
+                if (prop.NameEquals("replicationHealth"u8))
                 {
-                    replicationHealth = property.Value.GetString();
+                    replicationHealth = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("healthErrors"u8))
+                if (prop.NameEquals("healthErrors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
-                if (property.NameEquals("lastSuccessfulFailoverTime"u8))
+                if (prop.NameEquals("lastSuccessfulFailoverTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessfulFailoverTime = property.Value.GetDateTimeOffset("O");
+                    lastSuccessfulFailoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastSuccessfulTestFailoverTime"u8))
+                if (prop.NameEquals("lastSuccessfulTestFailoverTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastSuccessfulTestFailoverTime = property.Value.GetDateTimeOffset("O");
+                    lastSuccessfulTestFailoverOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("policyFriendlyName"u8))
+                if (prop.NameEquals("policyFriendlyName"u8))
                 {
-                    policyFriendlyName = property.Value.GetString();
+                    policyFriendlyName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("currentScenario"u8))
+                if (prop.NameEquals("currentScenario"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value, options);
+                    currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("recoveryContainerId"u8))
+                if (prop.NameEquals("recoveryContainerId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryContainerId = new ResourceIdentifier(property.Value.GetString());
+                    recoveryContainerId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("agentClusterId"u8))
+                if (prop.NameEquals("agentClusterId"u8))
                 {
-                    agentClusterId = property.Value.GetString();
+                    agentClusterId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterFqdn"u8))
+                if (prop.NameEquals("clusterFqdn"u8))
                 {
-                    clusterFqdn = property.Value.GetString();
+                    clusterFqdn = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clusterNodeFqdns"u8))
+                if (prop.NameEquals("clusterNodeFqdns"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     clusterNodeFqdns = array;
                     continue;
                 }
-                if (property.NameEquals("clusterProtectedItemIds"u8))
+                if (prop.NameEquals("clusterProtectedItemIds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
                         {
@@ -468,67 +537,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     clusterProtectedItemIds = array;
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    provisioningState = property.Value.GetString();
+                    provisioningState = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("areAllClusterNodesRegistered"u8))
+                if (prop.NameEquals("areAllClusterNodesRegistered"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    areAllClusterNodesRegistered = property.Value.GetBoolean();
+                    areAllClusterNodesRegistered = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("clusterRegisteredNodes"u8))
+                if (prop.NameEquals("clusterRegisteredNodes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<RegisteredClusterNodes> array = new List<RegisteredClusterNodes>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(RegisteredClusterNodes.DeserializeRegisteredClusterNodes(item, options));
                     }
                     clusterRegisteredNodes = array;
                     continue;
                 }
-                if (property.NameEquals("providerSpecificDetails"u8))
+                if (prop.NameEquals("providerSpecificDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationClusterProviderSpecificSettings.DeserializeReplicationClusterProviderSpecificSettings(property.Value, options);
+                    providerSpecificDetails = ReplicationClusterProviderSpecificSettings.DeserializeReplicationClusterProviderSpecificSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("sharedDiskProperties"u8))
+                if (prop.NameEquals("sharedDiskProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sharedDiskProperties = SharedDiskReplicationItemProperties.DeserializeSharedDiskReplicationItemProperties(property.Value, options);
+                    sharedDiskProperties = SharedDiskReplicationItemProperties.DeserializeSharedDiskReplicationItemProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("policyId"u8))
+                if (prop.NameEquals("policyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    policyId = new ResourceIdentifier(property.Value.GetString());
+                    policyId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SiteRecoveryReplicationProtectionClusterProperties(
                 protectionClusterType,
                 primaryFabricFriendlyName,
@@ -545,8 +613,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 allowedOperations ?? new ChangeTrackingList<string>(),
                 replicationHealth,
                 healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
-                lastSuccessfulFailoverTime,
-                lastSuccessfulTestFailoverTime,
+                lastSuccessfulFailoverOn,
+                lastSuccessfulTestFailoverOn,
                 policyFriendlyName,
                 currentScenario,
                 recoveryContainerId,
@@ -560,38 +628,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 providerSpecificDetails,
                 sharedDiskProperties,
                 policyId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SiteRecoveryReplicationProtectionClusterProperties IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSiteRecoveryReplicationProtectionClusterProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryReplicationProtectionClusterProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SiteRecoveryReplicationProtectionClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

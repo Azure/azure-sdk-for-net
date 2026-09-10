@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubReplicaRoleType : IEquatable<IotHubReplicaRoleType>
     {
         private readonly string _value;
+        /// <summary> primary. </summary>
+        private const string PrimaryValue = "primary";
+        /// <summary> secondary. </summary>
+        private const string SecondaryValue = "secondary";
 
         /// <summary> Initializes a new instance of <see cref="IotHubReplicaRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubReplicaRoleType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PrimaryValue = "primary";
-        private const string SecondaryValue = "secondary";
+            _value = value;
+        }
 
         /// <summary> primary. </summary>
         public static IotHubReplicaRoleType Primary { get; } = new IotHubReplicaRoleType(PrimaryValue);
+
         /// <summary> secondary. </summary>
         public static IotHubReplicaRoleType Secondary { get; } = new IotHubReplicaRoleType(SecondaryValue);
+
         /// <summary> Determines if two <see cref="IotHubReplicaRoleType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubReplicaRoleType left, IotHubReplicaRoleType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubReplicaRoleType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubReplicaRoleType left, IotHubReplicaRoleType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubReplicaRoleType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubReplicaRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubReplicaRoleType(string value) => new IotHubReplicaRoleType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubReplicaRoleType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubReplicaRoleType?(string value) => value == null ? null : new IotHubReplicaRoleType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubReplicaRoleType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubReplicaRoleType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

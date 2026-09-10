@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     yield break;
                 }
                 MySqlFlexibleServerLogFileListResult result = MySqlFlexibleServerLogFileListResult.FromResponse(response);
-                yield return Page<MySqlFlexibleServerLogFile>.FromValues((IReadOnlyList<MySqlFlexibleServerLogFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<MySqlFlexibleServerLogFile>.FromValues((IReadOnlyList<MySqlFlexibleServerLogFile>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -81,15 +81,25 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
             }
+            if (Optional.IsDefined(FileData))
+            {
+                writer.WritePropertyName("file_data"u8);
+                writer.WriteStringValue(FileData);
+            }
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (Optional.IsDefined(FileUrl))
             {
                 writer.WritePropertyName("file_url"u8);
                 writer.WriteStringValue(FileUrl.AbsoluteUri);
             }
-            if (Optional.IsDefined(FileData))
+            if (Optional.IsDefined(Detail))
             {
-                writer.WritePropertyName("file_data"u8);
-                writer.WriteStringValue(FileData);
+                writer.WritePropertyName("detail"u8);
+                writer.WriteStringValue(Detail.Value.ToSerialString());
             }
         }
 
@@ -122,8 +132,10 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string fileId = default;
             string filename = default;
-            Uri fileUrl = default;
             string fileData = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
+            Uri fileUrl = default;
+            FileInputDetail? detail = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -146,6 +158,20 @@ namespace Azure.AI.Projects
                     filename = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("file_data"u8))
+                {
+                    fileData = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("file_url"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -155,9 +181,13 @@ namespace Azure.AI.Projects
                     fileUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
-                if (prop.NameEquals("file_data"u8))
+                if (prop.NameEquals("detail"u8))
                 {
-                    fileData = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    detail = prop.Value.GetString().ToFileInputDetail();
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,8 +200,10 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties,
                 fileId,
                 filename,
+                fileData,
+                promptCacheBreakpoint,
                 fileUrl,
-                fileData);
+                detail);
         }
     }
 }

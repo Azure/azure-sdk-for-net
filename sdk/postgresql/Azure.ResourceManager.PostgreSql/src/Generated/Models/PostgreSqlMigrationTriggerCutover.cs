@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PostgreSql.FlexibleServers;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     public readonly partial struct PostgreSqlMigrationTriggerCutover : IEquatable<PostgreSqlMigrationTriggerCutover>
     {
         private readonly string _value;
+        /// <summary> Cutover must be triggered for the entire migration. </summary>
+        private const string TrueValue = "True";
+        /// <summary> Cutover must not be triggered for the entire migration. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PostgreSqlMigrationTriggerCutover(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
-
-        /// <summary> True. </summary>
+        /// <summary> Cutover must be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationTriggerCutover True { get; } = new PostgreSqlMigrationTriggerCutover(TrueValue);
-        /// <summary> False. </summary>
+
+        /// <summary> Cutover must not be triggered for the entire migration. </summary>
         public static PostgreSqlMigrationTriggerCutover False { get; } = new PostgreSqlMigrationTriggerCutover(FalseValue);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationTriggerCutover"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PostgreSqlMigrationTriggerCutover left, PostgreSqlMigrationTriggerCutover right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PostgreSqlMigrationTriggerCutover"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PostgreSqlMigrationTriggerCutover left, PostgreSqlMigrationTriggerCutover right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PostgreSqlMigrationTriggerCutover(string value) => new PostgreSqlMigrationTriggerCutover(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PostgreSqlMigrationTriggerCutover"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PostgreSqlMigrationTriggerCutover?(string value) => value == null ? null : new PostgreSqlMigrationTriggerCutover(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PostgreSqlMigrationTriggerCutover other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PostgreSqlMigrationTriggerCutover other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

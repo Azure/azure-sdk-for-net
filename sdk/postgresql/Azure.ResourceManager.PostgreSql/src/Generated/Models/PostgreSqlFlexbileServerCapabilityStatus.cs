@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The status of the capability. </summary>
+    /// <summary> Status of the capability. </summary>
     public enum PostgreSqlFlexbileServerCapabilityStatus
     {
         /// <summary> Visible. </summary>

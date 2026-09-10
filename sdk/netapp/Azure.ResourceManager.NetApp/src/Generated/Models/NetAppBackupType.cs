@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NetApp;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NetApp.Models
     public readonly partial struct NetAppBackupType : IEquatable<NetAppBackupType>
     {
         private readonly string _value;
+        /// <summary> Manual backup. </summary>
+        private const string ManualValue = "Manual";
+        /// <summary> Scheduled backup. </summary>
+        private const string ScheduledValue = "Scheduled";
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetAppBackupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManualValue = "Manual";
-        private const string ScheduledValue = "Scheduled";
+            _value = value;
+        }
 
         /// <summary> Manual backup. </summary>
         public static NetAppBackupType Manual { get; } = new NetAppBackupType(ManualValue);
+
         /// <summary> Scheduled backup. </summary>
         public static NetAppBackupType Scheduled { get; } = new NetAppBackupType(ScheduledValue);
+
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetAppBackupType left, NetAppBackupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetAppBackupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetAppBackupType left, NetAppBackupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetAppBackupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetAppBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetAppBackupType(string value) => new NetAppBackupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetAppBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetAppBackupType?(string value) => value == null ? null : new NetAppBackupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetAppBackupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetAppBackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -3,6 +3,7 @@
 
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -30,8 +31,9 @@ public class CreateAsyncTests : IDisposable
             Options.Create(new InMemoryProviderOptions()), TimeProvider.System);
         _tracker = new ResponseExecutionTracker(NullLogger<ResponseExecutionTracker>.Instance);
         _orchestrator = new ResponseOrchestrator(
-            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), new InMemoryStreamProvider(_provider), _tracker,
-            NullLogger<ResponseOrchestrator>.Instance);
+            _handler, _provider, new InMemoryCancellationSignalProvider(_provider), TestEventStreams.CreateInMemoryRegistry(), _tracker,
+            NullLogger<ResponseOrchestrator>.Instance,
+            Options.Create(new ResponsesServerOptions()));
     }
 
     [Test]
@@ -160,8 +162,8 @@ public class CreateAsyncTests : IDisposable
 
         await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        // FinalizeExecution should have called MarkCompleted
-        Assert.That(execution.CompletedAt, Is.Not.Null);
+        // FinalizeExecution should have evicted from tracker
+        Assert.That(_tracker.TryGet("resp_create_06", out _), Is.False);
     }
 
     [Test]
@@ -179,15 +181,15 @@ public class CreateAsyncTests : IDisposable
 
         var result = await _orchestrator.CreateAsync(new CreateResponse(), execution, context, CancellationToken.None);
 
-        // Before consuming: not finalized yet
-        Assert.That(execution.CompletedAt, Is.Null);
+        // Before consuming: not finalized yet (still in tracker)
+        Assert.That(_tracker.TryGet("resp_create_07", out _), Is.True);
 
         // Consume the stream
         await foreach (var _ in result.Events!)
         { }
 
-        // After consuming: should be finalized
-        Assert.That(execution.CompletedAt, Is.Not.Null);
+        // After consuming: should be evicted from tracker
+        Assert.That(_tracker.TryGet("resp_create_07", out _), Is.False);
     }
 
     [Test]

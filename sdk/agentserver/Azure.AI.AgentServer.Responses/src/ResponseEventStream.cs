@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -38,6 +40,31 @@ public class ResponseEventStream
             Conversation = conversationId != null ? new ConversationReference(conversationId) : null,
             PreviousResponseId = request.PreviousResponseId,
         };
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ResponseEventStream"/> seeded from a prior durable
+    /// snapshot for a crash-recovery re-invocation. The recovered handler passes
+    /// <see cref="ResponseContext.PersistedResponse"/> so the resumed stream continues from the
+    /// output items already emitted before the crash rather than restarting: the seeded response's
+    /// output items are retained and the output-index allocator is advanced to
+    /// <c>persistedResponse.Output.Count</c> so new <c>AddOutputItem*</c> calls do not collide with
+    /// the already-emitted slots (mirrors Python's <c>ResponseEventStream(response=...)</c> recovery
+    /// branch). Emit <see cref="EmitCreated"/> (idempotent on recovery) then
+    /// <see cref="EmitInProgress"/> as the client-visible reset carrying the seeded output.
+    /// </summary>
+    /// <param name="context">Context providing the response ID and recovery state.</param>
+    /// <param name="persistedResponse">The last durable snapshot to seed the resumed stream from.</param>
+    public ResponseEventStream(ResponseContext context, Models.ResponseObject persistedResponse)
+    {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(persistedResponse);
+
+        _response = persistedResponse;
+
+        // Advance the output-index allocator past the already-emitted items so the resumed handler's
+        // next AddOutputItem* lands at the correct next slot (no collision with seeded output).
+        _outputIndex = persistedResponse.Output.Count;
     }
 
     /// <summary>
@@ -109,6 +136,22 @@ public class ResponseEventStream
     }
 
     /// <summary>
+    /// Produces a checkpoint control signal to <c>yield</c> at a phase boundary so the framework
+    /// persists the current <see cref="Response"/> snapshot as a resume watermark.
+    /// <para>
+    /// Usage inside a handler: <c>yield return stream.Checkpoint();</c>. The <c>yield</c> is
+    /// <b>backpressured</b> — control does not return to the handler until the persist completes.
+    /// The checkpoint is a <b>no-op</b> unless the response is a resilient background response
+    /// (<c>ResilientBackground=true</c> + <c>store=true</c> + <c>background=true</c>). On recovery,
+    /// <see cref="ResponseContext.PersistedResponse"/> is hydrated from the last successful
+    /// checkpoint, so an idempotent handler resumes from its last phase rather than restarting.
+    /// </para>
+    /// The signal is never emitted to the SSE wire; it does not consume a sequence number.
+    /// </summary>
+    /// <returns>A checkpoint control event to yield for persistence.</returns>
+    public ResponseStreamEvent Checkpoint() => new ResponseCheckpointEvent(_response);
+
+    /// <summary>
     /// Produces a <c>response.completed</c> event.
     /// Sets <c>Status = Completed</c>, <c>CompletedAt</c>, and <c>Usage</c>
     /// before creating the event.
@@ -131,12 +174,25 @@ public class ResponseEventStream
     /// <param name="usage">Optional token usage data to include in the response.</param>
     /// <returns>A <see cref="ResponseFailedEvent"/> with the finalized response.</returns>
     public virtual ResponseFailedEvent EmitFailed(
-        ResponseErrorCode code = ResponseErrorCode.ServerError,
+        ResponseErrorCode code,
         string message = "An internal server error occurred.",
         ResponseUsage? usage = null)
     {
         _response.SetFailed(code, message, usage);
         return new ResponseFailedEvent(NextSequenceNumber(), _response);
+    }
+
+    /// <summary>
+    /// Produces a <c>response.failed</c> event with a <see cref="ResponseErrorCode.ServerError"/> code.
+    /// </summary>
+    /// <param name="message">The error message. Defaults to "An internal server error occurred.".</param>
+    /// <param name="usage">Optional token usage data to include in the response.</param>
+    /// <returns>A <see cref="ResponseFailedEvent"/> with the finalized response.</returns>
+    public virtual ResponseFailedEvent EmitFailed(
+        string message = "An internal server error occurred.",
+        ResponseUsage? usage = null)
+    {
+        return EmitFailed(ResponseErrorCode.ServerError, message, usage);
     }
 
     /// <summary>
@@ -298,6 +354,162 @@ public class ResponseEventStream
     }
 
     /// <summary>
+    /// Creates a structured outputs item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the structured outputs item.</returns>
+    public virtual OutputItemBuilder<StructuredOutputsOutputItem> AddOutputItemStructuredOutputs()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewStructuredOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<StructuredOutputsOutputItem>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a computer tool call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the computer tool call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemComputerToolCall> AddOutputItemComputerCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewComputerCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemComputerToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a computer tool call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the computer tool call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemComputerToolCallOutput> AddOutputItemComputerCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewComputerCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemComputerToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a local shell call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the local shell call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemLocalShellToolCall> AddOutputItemLocalShellCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewLocalShellCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemLocalShellToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a local shell call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the local shell call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemLocalShellToolCallOutput> AddOutputItemLocalShellCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewLocalShellCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemLocalShellToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a function shell call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the function shell call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemFunctionShellCall> AddOutputItemFunctionShellCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewFunctionShellCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemFunctionShellCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a function shell call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the function shell call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemFunctionShellCallOutput> AddOutputItemFunctionShellCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewFunctionShellCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemFunctionShellCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an apply-patch call output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the apply-patch call output item.</returns>
+    public virtual OutputItemBuilder<OutputItemApplyPatchToolCall> AddOutputItemApplyPatchCall()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewApplyPatchCallItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemApplyPatchToolCall>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an apply-patch call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the apply-patch call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemApplyPatchToolCallOutput> AddOutputItemApplyPatchCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewApplyPatchCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemApplyPatchToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a custom tool call output result scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the custom tool call output result.</returns>
+    public virtual OutputItemBuilder<OutputItemCustomToolCallOutput> AddOutputItemCustomToolCallOutput()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewCustomToolCallOutputItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemCustomToolCallOutput>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an MCP approval request output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the MCP approval request output item.</returns>
+    public virtual OutputItemBuilder<OutputItemMcpApprovalRequest> AddOutputItemMcpApprovalRequest()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewMcpApprovalRequestItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemMcpApprovalRequest>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates an MCP approval response output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the MCP approval response output item.</returns>
+    public virtual OutputItemBuilder<OutputItemMcpApprovalResponseResource> AddOutputItemMcpApprovalResponse()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewMcpApprovalResponseItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemMcpApprovalResponseResource>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
+    /// Creates a compaction output item scope with the next output index
+    /// and an auto-generated item ID.
+    /// </summary>
+    /// <returns>A new <see cref="OutputItemBuilder{T}"/> for the compaction output item.</returns>
+    public virtual OutputItemBuilder<OutputItemCompactionBody> AddOutputItemCompaction()
+    {
+        var outputIndex = _outputIndex++;
+        var itemId = IdGenerator.NewCompactionItemId(_context.ResponseId);
+        return new OutputItemBuilder<OutputItemCompactionBody>(this, outputIndex, itemId);
+    }
+
+    /// <summary>
     /// Creates an output item scope with the next output index.
     /// Use for output item types that have no dedicated <c>Add*()</c> factory
     /// and no streaming sub-events (no deltas, no status transitions).
@@ -333,9 +545,22 @@ public class ResponseEventStream
     /// <returns>An enumerable of events: <c>output_item.added</c> → text content convenience → <c>output_item.done</c>.</returns>
     public IEnumerable<ResponseStreamEvent> OutputItemMessage(string text)
     {
+        return OutputItemMessage(text, Array.Empty<Annotation>());
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete message output-item lifecycle
+    /// with a single text content part and annotations (S-056).
+    /// </summary>
+    /// <param name="text">The complete message text.</param>
+    /// <param name="annotations">The annotations to attach to the text content part.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → text content convenience (with annotations) → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMessage(
+        string text, IEnumerable<Annotation> annotations)
+    {
         var builder = AddOutputItemMessage();
         yield return builder.EmitAdded();
-        foreach (var evt in builder.TextContent(text))
+        foreach (var evt in builder.TextContent(text, annotations))
         {
             yield return evt;
         }
@@ -416,9 +641,17 @@ public class ResponseEventStream
     public IEnumerable<ResponseStreamEvent> OutputItemFunctionCallOutput(string callId, BinaryData output)
     {
         var itemId = IdGenerator.NewFunctionCallOutputItemId(_context.ResponseId);
-        var builder = AddOutputItem<FunctionToolCallOutputResource>(itemId);
-        var item = new FunctionToolCallOutputResource(callId, output);
-        item.Id = itemId;
+        var builder = AddOutputItem<OutputItemFunctionToolCallOutput>(itemId);
+        var item = new OutputItemFunctionToolCallOutput(
+            OutputItemType.FunctionCallOutput,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: itemId,
+            callId: callId,
+            output: output,
+            status: null);
         yield return builder.EmitAdded(item);
         yield return builder.EmitDone(item);
     }
@@ -460,6 +693,296 @@ public class ResponseEventStream
         yield return builder.EmitDone();
     }
 
+    /// <summary>
+    /// Convenience generator that yields the complete image generation call output-item lifecycle
+    /// from a final base64-encoded image result.
+    /// </summary>
+    /// <param name="resultBase64">
+    /// The base64-encoded image data (PNG, JPEG, or WebP). For example:
+    /// <c>Convert.ToBase64String(imageBytes)</c>.
+    /// </param>
+    /// <returns>
+    /// An enumerable of events: <c>output_item.added</c> → <c>image_gen_call.in_progress</c> →
+    /// <c>image_gen_call.generating</c> → <c>image_gen_call.completed</c> → <c>output_item.done</c>.
+    /// </returns>
+    /// <remarks>
+    /// For streaming partial images (progressive rendering), use
+    /// <see cref="AddOutputItemImageGenCall"/> to get a builder and call
+    /// <see cref="OutputItemImageGenCallBuilder.EmitPartialImage"/> between
+    /// <c>EmitGenerating()</c> and <c>EmitCompleted()</c>.
+    /// </remarks>
+    public IEnumerable<ResponseStreamEvent> OutputItemImageGenCall(string resultBase64)
+    {
+        var builder = AddOutputItemImageGenCall();
+        yield return builder.EmitAdded();
+        yield return builder.EmitInProgress();
+        yield return builder.EmitGenerating();
+        yield return builder.EmitCompleted();
+        yield return builder.EmitDone(resultBase64);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete structured outputs item lifecycle.
+    /// Use this to return any open-ended structured information as a JSON object. This is
+    /// useful when none of the existing output item types (message, function call, image, etc.)
+    /// fit your use case — for example, returning analytics results, classification labels,
+    /// form data, or any custom JSON payload.
+    /// </summary>
+    /// <param name="output">
+    /// The structured data to return. Use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>
+    /// to serialize a strongly typed object, or <see cref="BinaryData.FromString(string)"/> to pass raw JSON.
+    /// <para>
+    /// Example:
+    /// <c>BinaryData.FromObjectAsJson(new { sentiment = "positive", confidence = 0.95 })</c>
+    /// </para>
+    /// </param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemStructuredOutputs(BinaryData output)
+    {
+        var builder = AddOutputItemStructuredOutputs();
+        var item = new StructuredOutputsOutputItem(output, builder.ItemId);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete computer tool call output-item lifecycle.
+    /// Computer call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the computer tool call.</param>
+    /// <param name="action">The computer action to perform.</param>
+    /// <param name="pendingSafetyChecks">The safety checks that must pass before execution.</param>
+    /// <param name="status">The status of the computer tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemComputerCall(
+        string callId,
+        ComputerAction action,
+        IEnumerable<ComputerCallSafetyCheckParam> pendingSafetyChecks,
+        ItemComputerToolCallStatus status)
+    {
+        var builder = AddOutputItemComputerCall();
+        var item = new OutputItemComputerToolCall(builder.ItemId, callId, pendingSafetyChecks, status);
+        item.Action = action;
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete computer tool call output resource lifecycle.
+    /// Computer call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the computer tool call this output is for.</param>
+    /// <param name="output">The screenshot image output from the computer tool.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemComputerCallOutput(
+        string callId,
+        ComputerScreenshotImage output)
+    {
+        var builder = AddOutputItemComputerCallOutput();
+        var item = new OutputItemComputerToolCallOutput(
+            OutputItemType.ComputerCallOutput,
+            createdBy: null,
+            agentReference: null,
+            responseId: null,
+            additionalBinaryDataProperties: null,
+            id: builder.ItemId,
+            callId: callId,
+            acknowledgedSafetyChecks: null,
+            output: output,
+            status: null);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete local shell tool call lifecycle.
+    /// Local shell calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the shell call.</param>
+    /// <param name="action">The shell exec action to perform.</param>
+    /// <param name="status">The status of the shell tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemLocalShellCall(
+        string callId,
+        LocalShellExecAction action,
+        ItemLocalShellToolCallStatus status)
+    {
+        var builder = AddOutputItemLocalShellCall();
+        var item = new OutputItemLocalShellToolCall(builder.ItemId, callId, action, status);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete local shell tool call output lifecycle.
+    /// Local shell call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="output">The output text from the shell command.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemLocalShellCallOutput(string output)
+    {
+        var builder = AddOutputItemLocalShellCallOutput();
+        var item = new OutputItemLocalShellToolCallOutput(builder.ItemId, output);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function shell call lifecycle.
+    /// Function shell calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the function shell call.</param>
+    /// <param name="action">The function shell action to perform.</param>
+    /// <param name="status">The status of the function shell call.</param>
+    /// <param name="environment">The execution environment for the shell call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionShellCall(
+        string callId,
+        FunctionShellAction action,
+        LocalShellCallStatus status,
+        FunctionShellCallEnvironment environment)
+    {
+        var builder = AddOutputItemFunctionShellCall();
+        var item = new OutputItemFunctionShellCall(builder.ItemId, callId, action, status, environment);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete function shell call output lifecycle.
+    /// Function shell call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the function shell call this output is for.</param>
+    /// <param name="status">The output status.</param>
+    /// <param name="output">The output content from the shell call.</param>
+    /// <param name="maxOutputLength">Optional maximum output length.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemFunctionShellCallOutput(
+        string callId,
+        LocalShellCallOutputStatusEnum status,
+        IEnumerable<FunctionShellCallOutputContent> output,
+        long? maxOutputLength = null)
+    {
+        var builder = AddOutputItemFunctionShellCallOutput();
+        var item = new OutputItemFunctionShellCallOutput(builder.ItemId, callId, status, output, maxOutputLength);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete apply-patch tool call lifecycle.
+    /// Apply-patch calls have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID for the apply-patch call.</param>
+    /// <param name="status">The status of the apply-patch call.</param>
+    /// <param name="operation">The file operation to apply.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemApplyPatchCall(
+        string callId,
+        ApplyPatchCallStatus status,
+        ApplyPatchFileOperation operation)
+    {
+        var builder = AddOutputItemApplyPatchCall();
+        var item = new OutputItemApplyPatchToolCall(builder.ItemId, callId, status, operation);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete apply-patch tool call output lifecycle.
+    /// Apply-patch call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the apply-patch call this output is for.</param>
+    /// <param name="status">The output status.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemApplyPatchCallOutput(
+        string callId,
+        ApplyPatchCallOutputStatus status)
+    {
+        var builder = AddOutputItemApplyPatchCallOutput();
+        var item = new OutputItemApplyPatchToolCallOutput(builder.ItemId, callId, status);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete custom tool call output lifecycle.
+    /// Custom tool call outputs have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="callId">The call ID of the custom tool call this output is for.</param>
+    /// <param name="output">The output data from the custom tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemCustomToolCallOutput(string callId, BinaryData output)
+    {
+        var builder = AddOutputItemCustomToolCallOutput();
+        var item = new OutputItemCustomToolCallOutput(callId, output, FunctionCallOutputStatusEnum.Completed);
+        item.Id = builder.ItemId;
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete MCP approval request lifecycle.
+    /// MCP approval requests have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="serverLabel">The label of the MCP server.</param>
+    /// <param name="name">The name of the tool requiring approval.</param>
+    /// <param name="arguments">The arguments JSON for the tool call.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMcpApprovalRequest(
+        string serverLabel,
+        string name,
+        string arguments)
+    {
+        var builder = AddOutputItemMcpApprovalRequest();
+        var item = new OutputItemMcpApprovalRequest(builder.ItemId, serverLabel, name, arguments);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete MCP approval response lifecycle.
+    /// MCP approval responses have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="approvalRequestId">The ID of the approval request being responded to.</param>
+    /// <param name="approve">Whether the MCP tool call is approved.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemMcpApprovalResponse(
+        string approvalRequestId,
+        bool approve)
+    {
+        var builder = AddOutputItemMcpApprovalResponse();
+        var item = new OutputItemMcpApprovalResponseResource(builder.ItemId, approvalRequestId, approve);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
+    /// <summary>
+    /// Convenience generator that yields the complete compaction output-item lifecycle.
+    /// Compaction items have no intermediate events — only <c>output_item.added</c> and
+    /// <c>output_item.done</c>.
+    /// </summary>
+    /// <param name="encryptedContent">The encrypted compaction content.</param>
+    /// <returns>An enumerable of events: <c>output_item.added</c> → <c>output_item.done</c>.</returns>
+    public IEnumerable<ResponseStreamEvent> OutputItemCompaction(string encryptedContent)
+    {
+        var builder = AddOutputItemCompaction();
+        var item = new OutputItemCompactionBody(builder.ItemId, encryptedContent);
+        yield return builder.EmitAdded(item);
+        yield return builder.EmitDone(item);
+    }
+
     // ── Raw Event Interop ─────────────────────────────────────
 
     /// <summary>
@@ -468,4 +991,161 @@ public class ResponseEventStream
     /// </summary>
     /// <returns>The next sequence number.</returns>
     public virtual long NextSequenceNumber() => _sequenceNumber++;
+
+    /// <summary>
+    /// Gets the internal metadata map for this response — the .NET equivalent of Python's
+    /// <c>stream.internal_metadata</c>. Unlike <see cref="Models.ResponseObject.Metadata"/> (the
+    /// client's own metadata, which is never stripped), internal metadata is framework-reserved:
+    /// every mutation is folded into the response snapshot as a compact JSON string under the
+    /// reserved key <c>_internal_metadata</c> inside <see cref="Models.ResponseObject.Metadata"/>,
+    /// so it is persisted <em>with</em> the response on every snapshot the orchestrator writes and
+    /// survives crash/recovery (read back on recovery via
+    /// <see cref="ResponseContext.PersistedResponse"/>). It is stripped from every client-facing
+    /// ingress/egress payload by <see cref="Internal.Resilience.InternalMetadataEgress"/>. Keys are
+    /// free-form; values are strings. On a mock-constructed stream (no backing response) the map is
+    /// purely in-memory.
+    /// </summary>
+    public virtual IDictionary<string, string> InternalMetadata => _internalMetadata ??= new WriteThroughInternalMetadata(this);
+
+    private WriteThroughInternalMetadata? _internalMetadata;
+
+    /// <summary>
+    /// Serializes the accumulated internal-metadata map into
+    /// <c>_response.Metadata["_internal_metadata"]</c> so it rides on — and is persisted with —
+    /// the response snapshot. A no-op when there is no backing response (mock ctor).
+    /// </summary>
+    private void PersistInternalMetadata(IReadOnlyDictionary<string, string> map)
+    {
+        if (_response is null)
+        {
+            return;
+        }
+
+        if (map.Count == 0)
+        {
+            _response.Metadata?.AdditionalProperties.Remove(InternalMetadataEgress.ResponseInternalMetadataKey);
+            return;
+        }
+
+        _response.Metadata ??= new Models.Metadata();
+        _response.Metadata.AdditionalProperties[InternalMetadataEgress.ResponseInternalMetadataKey] =
+            JsonSerializer.Serialize(map);
+    }
+
+    /// <summary>
+    /// Reads the internal-metadata map previously folded into the backing response's metadata
+    /// (e.g., seeded from a persisted snapshot on recovery), or an empty map when absent.
+    /// </summary>
+    private Dictionary<string, string> ReadPersistedInternalMetadata()
+    {
+        if (_response?.Metadata is { } metadata &&
+            metadata.AdditionalProperties.TryGetValue(InternalMetadataEgress.ResponseInternalMetadataKey, out var json) &&
+            !string.IsNullOrEmpty(json))
+        {
+            try
+            {
+                var parsed = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                if (parsed is not null)
+                {
+                    return new Dictionary<string, string>(parsed, StringComparer.Ordinal);
+                }
+            }
+            catch (JsonException)
+            {
+                // A malformed value is treated as absent rather than faulting the handler.
+            }
+        }
+
+        return new Dictionary<string, string>(StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// A write-through <see cref="IDictionary{TKey, TValue}"/> that re-folds the accumulated map
+    /// into the owning stream's response snapshot on every mutation, so developer writes to
+    /// <see cref="InternalMetadata"/> are durably persisted with the response.
+    /// </summary>
+    private sealed class WriteThroughInternalMetadata : IDictionary<string, string>
+    {
+        private readonly ResponseEventStream _owner;
+        private readonly Dictionary<string, string> _inner;
+
+        public WriteThroughInternalMetadata(ResponseEventStream owner)
+        {
+            _owner = owner;
+            _inner = owner.ReadPersistedInternalMetadata();
+        }
+
+        private void Persist() => _owner.PersistInternalMetadata(_inner);
+
+        public string this[string key]
+        {
+            get => _inner[key];
+            set
+            {
+                _inner[key] = value;
+                Persist();
+            }
+        }
+
+        public ICollection<string> Keys => _inner.Keys;
+
+        public ICollection<string> Values => _inner.Values;
+
+        public int Count => _inner.Count;
+
+        public bool IsReadOnly => false;
+
+        public void Add(string key, string value)
+        {
+            _inner.Add(key, value);
+            Persist();
+        }
+
+        public void Add(KeyValuePair<string, string> item)
+        {
+            ((IDictionary<string, string>)_inner).Add(item);
+            Persist();
+        }
+
+        public void Clear()
+        {
+            _inner.Clear();
+            Persist();
+        }
+
+        public bool Contains(KeyValuePair<string, string> item) => ((IDictionary<string, string>)_inner).Contains(item);
+
+        public bool ContainsKey(string key) => _inner.ContainsKey(key);
+
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+            => ((IDictionary<string, string>)_inner).CopyTo(array, arrayIndex);
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => _inner.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => _inner.GetEnumerator();
+
+        public bool Remove(string key)
+        {
+            if (_inner.Remove(key))
+            {
+                Persist();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Remove(KeyValuePair<string, string> item)
+        {
+            if (((IDictionary<string, string>)_inner).Remove(item))
+            {
+                Persist();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryGetValue(string key, out string value) => _inner.TryGetValue(key, out value!);
+    }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct LegacyApiState : IEquatable<LegacyApiState>
     {
         private readonly string _value;
+        /// <summary> Legacy Configuration API (v1) is enabled for the service and self-hosted gateways can connect to it. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> Legacy Configuration API (v1) is disabled for the service and self-hosted gateways can not connect to it. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="LegacyApiState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LegacyApiState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> Legacy Configuration API (v1) is enabled for the service and self-hosted gateways can connect to it. </summary>
         public static LegacyApiState Enabled { get; } = new LegacyApiState(EnabledValue);
+
         /// <summary> Legacy Configuration API (v1) is disabled for the service and self-hosted gateways can not connect to it. </summary>
         public static LegacyApiState Disabled { get; } = new LegacyApiState(DisabledValue);
+
         /// <summary> Determines if two <see cref="LegacyApiState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LegacyApiState left, LegacyApiState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LegacyApiState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LegacyApiState left, LegacyApiState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LegacyApiState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LegacyApiState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LegacyApiState(string value) => new LegacyApiState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LegacyApiState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LegacyApiState?(string value) => value == null ? null : new LegacyApiState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LegacyApiState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LegacyApiState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,14 +14,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
     /// <summary>
     /// A class representing a GuestConfigurationVmAssignment along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GuestConfigurationVmAssignmentResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetGuestConfigurationVmAssignments method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetGuestConfigurationVmAssignments method.
     /// </summary>
     public partial class GuestConfigurationVmAssignmentResource : ArmResource
     {
@@ -54,9 +53,9 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             TryGetApiVersion(ResourceType, out string guestConfigurationVmAssignmentApiVersion);
             _guestConfigurationAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentsRestClient = new GuestConfigurationAssignments(_guestConfigurationAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             _guestConfigurationAssignmentReportsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ResourceType.Namespace, Diagnostics);
-            _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
+            _guestConfigurationAssignmentReportsRestClient = new GuestConfigurationAssignmentReports(_guestConfigurationAssignmentReportsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, guestConfigurationVmAssignmentApiVersion ?? "2024-04-05");
             ValidateResourceId(id);
         }
 

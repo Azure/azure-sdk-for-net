@@ -11,6 +11,11 @@
 #                           check for errors which would prevent release (i.e. 
 #                           public API surface).
 #
+# NpmConfigUserConfig - Optional path to a user npm config file to use when invoking
+#                       npm commands in the context of this step. If specified, this
+#                       will be set as the npm_config_userconfig environment variable
+#                       so that npm uses the provided config file instead of the default
+#                       user config.
 # This check recognizes the setting of variable "Skip.SpellCheck"
 # if set to 'true', spellchecking will not be invoked.
 
@@ -24,9 +29,13 @@ parameters:
   - name: ScriptToValidateUpgrade
     type: string
     default: ''
+  - name: NpmConfigUserConfig
+    type: string
+    default: ''
 
 steps:
   - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
     - task: PowerShell@2
       displayName: Check spelling (cspell)
       condition: and(succeeded(), ne(variables['Skip.SpellCheck'],'true'))

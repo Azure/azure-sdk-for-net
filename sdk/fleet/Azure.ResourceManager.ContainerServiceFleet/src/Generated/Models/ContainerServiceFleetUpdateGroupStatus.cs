@@ -21,21 +21,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ContainerServiceFleetUpdateGroupStatus()
         {
             Members = new ChangeTrackingList<MemberUpdateStatus>();
-            BeforeGates = new ChangeTrackingList<UpdateRunGateStatus>();
-            AfterGates = new ChangeTrackingList<UpdateRunGateStatus>();
+            BeforeGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
+            AfterGates = new ChangeTrackingList<ContainerServiceFleetUpdateRunGateStatus>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateGroupStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateGroup. </param>
         /// <param name="name"> The name of the UpdateGroup. </param>
+        /// <param name="maxConcurrency">   The max number of upgrades that can run concurrently in this group, resolved from the UpdateStrategy.UpdateGroup.maxConcurrency value. If no value was provided, this value defaults to "1". </param>
         /// <param name="members"> The list of member this UpdateGroup updates. </param>
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateGroup. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateGroup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<UpdateRunGateStatus> beforeGates, IReadOnlyList<UpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateGroupStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<MemberUpdateStatus> members, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
+            MaxConcurrency = maxConcurrency;
             Members = members;
             BeforeGates = beforeGates;
             AfterGates = afterGates;
@@ -48,13 +50,16 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The name of the UpdateGroup. </summary>
         public string Name { get; }
 
+        /// <summary>   The max number of upgrades that can run concurrently in this group, resolved from the UpdateStrategy.UpdateGroup.maxConcurrency value. If no value was provided, this value defaults to "1". </summary>
+        public int? MaxConcurrency { get; }
+
         /// <summary> The list of member this UpdateGroup updates. </summary>
         public IReadOnlyList<MemberUpdateStatus> Members { get; }
 
         /// <summary> The list of Gates that will run before this UpdateGroup. </summary>
-        public IReadOnlyList<UpdateRunGateStatus> BeforeGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> BeforeGates { get; }
 
         /// <summary> The list of Gates that will run after this UpdateGroup. </summary>
-        public IReadOnlyList<UpdateRunGateStatus> AfterGates { get; }
+        public IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> AfterGates { get; }
     }
 }

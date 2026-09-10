@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
                 FlowTimeoutInMinutes = 10,
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -93,12 +93,11 @@ namespace Azure.ResourceManager.Network.Samples
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 BgpCommunities = new VirtualNetworkBgpCommunities("12076:20000"),
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -144,13 +143,11 @@ AddressPrefix = "10.0.0.0/24",
 Delegations = {new ServiceDelegation
 {
 ServiceName = "Microsoft.Sql/managedInstances",
-Name = "myDelegation",
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("westcentralus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -193,7 +190,6 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 Encryption = new VirtualNetworkEncryption(true)
                 {
@@ -201,7 +197,7 @@ Name = "test-1",
                 },
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -252,11 +248,10 @@ IpamPoolPrefixAllocations = {new IpamPoolPrefixAllocation
 NumberOfIPAddresses = "80",
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/nm1/ipamPools/testIpamPool"),
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -303,11 +298,10 @@ ServiceEndpoints = {new ServiceEndpointProperties
 {
 Service = "Microsoft.Storage",
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -358,11 +352,10 @@ ServiceEndpointPolicies = {new ServiceEndpointPolicyData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/vnetTest/providers/Microsoft.Network/serviceEndpointPolicies/ServiceEndpointPolicy1"),
 }},
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus2euap"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -405,11 +398,10 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefix = "10.0.0.0/24",
-Name = "test-1",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -452,11 +444,10 @@ Name = "test-1",
                 Subnets = {new SubnetData
 {
 AddressPrefixes = {"10.0.0.0/28", "10.0.1.0/28"},
-Name = "test-2",
 }},
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data);
+            ArmOperation<VirtualNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, data, cancellationToken: System.Threading.CancellationToken.None);
             VirtualNetworkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

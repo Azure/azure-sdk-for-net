@@ -22,14 +22,23 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="PirSharedGalleryResourceData"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="location"> Resource location. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="uniqueId"> The unique id of this shared gallery. </param>
-        internal PirSharedGalleryResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, string uniqueId) : base(name, location, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="galleryIdentifier"> The identifier information of shared gallery. </param>
+        internal PirSharedGalleryResourceData(string name, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedGalleryIdentifier galleryIdentifier) : base(name, location, additionalBinaryDataProperties)
         {
-            UniqueId = uniqueId;
+            GalleryIdentifier = galleryIdentifier;
         }
 
+        /// <summary> The identifier information of shared gallery. </summary>
+        internal SharedGalleryIdentifier GalleryIdentifier { get; }
+
         /// <summary> The unique id of this shared gallery. </summary>
-        public string UniqueId { get; }
+        public string UniqueId
+        {
+            get
+            {
+                return GalleryIdentifier is null ? default : GalleryIdentifier.UniqueId;
+            }
+        }
     }
 }

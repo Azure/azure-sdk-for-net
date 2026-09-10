@@ -193,6 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
+            if (Optional.IsDefined(DataDiskMetadata))
+            {
+                writer.WritePropertyName("dataDiskMetadata"u8);
+                writer.WriteObjectValue(DataDiskMetadata, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -221,8 +226,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             string objectType = "IaasVMRecoveryPoint";
-            RecoveryPointThreatStatus? threatStatus = default;
-            IList<RecoveryPointThreatInformation> threatInfo = default;
+            BackupThreatStatus? threatStatus = default;
+            IList<BackupThreatInfo> threatInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string recoveryPointType = default;
             DateTimeOffset? recoveryPointOn = default;
@@ -243,6 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointProperties recoveryPointProperties = default;
             bool? isPrivateAccessEnabledOnAnyDisk = default;
             ExtendedLocation extendedLocation = default;
+            DataDiskDetails dataDiskMetadata = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -256,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    threatStatus = new RecoveryPointThreatStatus(prop.Value.GetString());
+                    threatStatus = new BackupThreatStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("threatInfo"u8))
@@ -265,10 +271,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    List<RecoveryPointThreatInformation> array = new List<RecoveryPointThreatInformation>();
+                    List<BackupThreatInfo> array = new List<BackupThreatInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointThreatInformation.DeserializeRecoveryPointThreatInformation(item, options));
+                        array.Add(BackupThreatInfo.DeserializeBackupThreatInfo(item, options));
                     }
                     threatInfo = array;
                     continue;
@@ -442,6 +448,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesBackupContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("dataDiskMetadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataDiskMetadata = DataDiskDetails.DeserializeDataDiskDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -450,7 +465,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new IaasVmRecoveryPoint(
                 objectType,
                 threatStatus,
-                threatInfo ?? new ChangeTrackingList<RecoveryPointThreatInformation>(),
+                threatInfo ?? new ChangeTrackingList<BackupThreatInfo>(),
                 additionalBinaryDataProperties,
                 recoveryPointType,
                 recoveryPointOn,
@@ -470,7 +485,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 securityType,
                 recoveryPointProperties,
                 isPrivateAccessEnabledOnAnyDisk,
-                extendedLocation);
+                extendedLocation,
+                dataDiskMetadata);
         }
     }
 }

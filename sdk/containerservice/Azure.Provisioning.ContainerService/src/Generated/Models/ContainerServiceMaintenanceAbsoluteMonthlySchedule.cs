@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerService
             base.DefineProvisionableProperties();
             _intervalMonths = DefineProperty<int>(nameof(IntervalMonths), new string[] { "intervalMonths" }, isRequired: true);
             _dayOfMonth = DefineProperty<int>(nameof(DayOfMonth), new string[] { "dayOfMonth" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerServiceMaintenanceAbsoluteMonthlySchedule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,9 +10,8 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-
-using Azure.AI.Projects;
 using Azure.AI.Extensions.OpenAI.Tests.Utils;
+using Azure.AI.Projects;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -24,6 +23,8 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 [LiveParallelizable(ParallelScope.All)]
 public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnvironment>
 {
+    private static AzureCliCredential _credential = null;
+
     public enum OpenAIClientMode
     {
         UseExternalOpenAI,
@@ -55,12 +56,22 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         {
             nameof(OpenAIClientOptions) => (T)new OpenAIClientOptions(),
             nameof(ProjectOpenAIClientOptions) => (T)(object)new ProjectOpenAIClientOptions(),
-            nameof(ProjectResponsesClientOptions) => (T)(object)new ProjectResponsesClientOptions(),
             _ => throw new NotImplementedException()
         };
         options.Endpoint = endpoint;
         options.RetryPolicy = new ClientRetryPolicy(maxRetries: 0);
         options.NetworkTimeout = TimeSpan.FromMinutes(2);
+        return GetConfiguredOptions(options, instrument);
+    }
+
+    protected ProjectResponsesClientOptions CreateTestProjectResponsesClientOptions(Uri endpoint = null, bool instrument = true)
+    {
+        ProjectResponsesClientOptions options = new()
+        {
+            Endpoint = endpoint,
+            RetryPolicy = new ClientRetryPolicy(maxRetries: 0),
+            NetworkTimeout = TimeSpan.FromMinutes(2),
+        };
         return GetConfiguredOptions(options, instrument);
     }
 
@@ -104,7 +115,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ProjectResponsesClient GetTestProjectResponsesClient(bool endpointInConstructor = true, bool endpointInOptions = false, string defaultAgentName = null, string defaultModelName = null, string defaultConversationId = null)
     {
-        ProjectResponsesClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectResponsesClientOptions>(
+        ProjectResponsesClientOptions clientOptions = CreateTestProjectResponsesClientOptions(
             endpoint: endpointInOptions ? new Uri($"{TestEnvironment.FOUNDRY_PROJECT_ENDPOINT}/openai/v1") : null);
 
         AgentReference defaultAgent = null;
@@ -134,7 +145,8 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null)
     {
-        OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
+        ResponsesClientOptions options = new() { Endpoint = overrideEndpoint };
+        options = GetConfiguredOptions(options, instrument: true);
 
         return CreateProxyFromClient(
             new ResponsesClient(
@@ -170,14 +182,15 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         // This path should allow launching az command.
         if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
         {
-            return new AzureCliCredential();
+            System.Threading.Interlocked.CompareExchange(ref _credential, new AzureCliCredential(), null);
+            return _credential;
         }
         return TestEnvironment.Credential;
     }
 
     protected AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
 
-    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
+    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime = 500)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {

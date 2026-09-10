@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmPublicIPAddressApiVersion);
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Endpoint, hciVmPublicIPAddressApiVersion ?? "2025-09-01-preview");
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmPublicIPAddressApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmPublicIPAddressPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Hci.Vm
                 HttpMessage message = _publicIPAddressesRestClient.CreateUpdateTagsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HciVmPublicIPAddressPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 VmArmOperation<HciVmPublicIPAddressResource> operation = new VmArmOperation<HciVmPublicIPAddressResource>(
-                    new HciVmPublicIPAddressOperationSource(Client),
+                    new HciVmPublicIPAddressResourceOperationSource(Client),
                     _publicIPAddressesClientDiagnostics,
                     Pipeline,
                     message.Request,

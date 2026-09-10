@@ -1,0 +1,299 @@
+<#
+.SYNOPSIS
+Validates CODEOWNERS coverage for package directories described by package-info JSON files.
+
+.DESCRIPTION
+Reads package-info JSON files from a directory and runs `azsdk config codeowners check-package`
+for each eligible package directory. Packages can be excluded by package-info artifact details or SDK type.
+
+When a PR diff file is supplied, the script applies PR-aware behavior:
+- packages with no direct file changes under their package directory are skipped,
+- packages whose directory is brand new on the target branch are skipped,
+- packages with direct changes under an existing directory are validated regardless of release status.
+
+Without a PR diff file, the script validates packages that are intended to release.
+
+.PARAMETER AzsdkPath
+Path to the `azsdk` CLI executable used to run CODEOWNERS validation.
+
+.PARAMETER PackageInfoDirectory
+Directory containing package-info JSON files, typically produced by `Save-Package-Properties.ps1`
+or downloaded from a pipeline artifact such as `PackageInfo`.
+
+.PARAMETER SdkTypes
+Array of SDK types that should be validated. Package-info entries whose `SdkType` is not in this
+list are skipped.
+
+.PARAMETER Repo
+Repository name passed through to the AZSDK CLI for CODEOWNERS cache lookup.
+
+.PARAMETER PrDiffFile
+Optional path to a `diff.json` file produced by `Generate-PR-Diff.ps1`. When supplied, the script
+switches to PR-aware validation behavior and only blocks on direct changes to existing package
+directories. If omitted, PR-aware validation is disabled.
+
+.PARAMETER TargetCommittish
+Git committish used to inspect existing files for a package directory when `PrDiffFile` is
+supplied. Default: the PR target branch from Azure Pipelines, normalized to `origin/<branch>`.
+
+.EXAMPLE
+pwsh -File eng/common/scripts/Test-CodeownersForArtifacts.ps1 `
+  -AzsdkPath "$(AZSDK)" `
+  -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+  -SdkTypes @('client', 'compat', 'data', 'functions', 'datamovement') `
+  -Repo 'Azure/azure-sdk-for-net'
+
+.EXAMPLE
+pwsh -File eng/common/scripts/Test-CodeownersForArtifacts.ps1 `
+  -AzsdkPath "$(AZSDK)" `
+  -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+  -SdkTypes @('client', 'compat', 'data', 'functions', 'datamovement') `
+  -Repo 'Azure/azure-sdk-for-net' `
+  -PrDiffFile "$(Build.ArtifactStagingDirectory)/CodeownersPrDiff/diff.json" `
+  -TargetCommittish 'origin/main'
+#>
+[CmdletBinding()]
+param(
+    [string] $AzsdkPath,
+    [string] $PackageInfoDirectory,
+    [array] $SdkTypes,
+    [string] $Repo,
+    [string] $PrDiffFile,
+    [string] $TargetCommittish = ("origin/${env:SYSTEM_PULLREQUEST_TARGETBRANCH}" -replace "refs/heads/")
+)
+
+. "$PSScriptRoot/common.ps1"
+
+Set-StrictMode -Version 3
+$ErrorActionPreference = 'Stop'
+
+function getNormalizedRelativePath([string] $Path) {
+    if (!$Path) {
+        return ""
+    }
+
+    $normalized = $Path.Replace("\", "/")
+    while ($normalized.StartsWith("./")) {
+        $normalized = $normalized.Substring(2)
+    }
+
+    return $normalized.TrimStart('/').TrimEnd('/')
+}
+
+function getChangedFilesForDirectory([PSCustomObject] $PrDiff, [string] $DirectoryPath) {
+    $normalizedDirectoryPath = getNormalizedRelativePath $DirectoryPath
+    $changedPaths = @($PrDiff.ChangedFiles) + @($PrDiff.DeletedFiles)
+    $matchingFiles = @()
+
+    foreach ($changedPath in $changedPaths) {
+        if (!$changedPath) {
+            continue
+        }
+
+        $normalizedChangedPath = getNormalizedRelativePath $changedPath
+        if ($normalizedChangedPath -eq $normalizedDirectoryPath -or $normalizedChangedPath.StartsWith("$normalizedDirectoryPath/")) {
+            $matchingFiles += $normalizedChangedPath
+        }
+    }
+
+    return ,@($matchingFiles)
+}
+
+function getExistingFiles([string] $DirectoryPath, [string] $TargetCommittish) {
+    if (!$targetCommittish -or $targetCommittish -eq "origin/") {
+        LogError "TargetCommittish must be set for PR-aware CODEOWNERS verification."
+        exit 1
+    }
+
+    $normalizedDirectoryPath = getNormalizedRelativePath $DirectoryPath
+    $targetFiles = Invoke-LoggedCommand "git ls-tree -r --name-only `"$targetCommittish`" -- `"$normalizedDirectoryPath`"" -DoNotExitOnFailedExitCode
+    if ($LASTEXITCODE) {
+        LogError "Failed to inspect target branch contents for directory '$normalizedDirectoryPath' at '$targetCommittish'."
+        exit 1
+    }
+
+    return ,@($targetFiles | Where-Object { $_ })
+}
+
+function shouldSkipCodeownersInPrContext([PSCustomObject] $PackageProperties, [PSCustomObject] $PrDiff, [string] $TargetCommittish) {
+    $directoryPath = getNormalizedRelativePath $PackageProperties.DirectoryPath
+    if (!$directoryPath) {
+        LogError "Package '$($PackageProperties.Name)' is missing a DirectoryPath property."
+        exit 1
+    }
+
+    $changedFiles = getChangedFilesForDirectory -PrDiff $PrDiff -DirectoryPath $directoryPath
+    if (@($changedFiles).Count -eq 0) {
+        Write-Host "  PR context: skipping CODEOWNERS for '$directoryPath' because the PR does not directly change files under that package directory."
+        return $true
+    }
+
+    $targetFiles = getExistingFiles -DirectoryPath $directoryPath -TargetCommittish $TargetCommittish
+    if (@($targetFiles).Count -gt 0) {
+        Write-Host "  PR context: not skipping CODEOWNERS for '$directoryPath' because the target branch already contains files under that directory."
+        return $false
+    }
+
+    Write-Host "  PR context: skipping CODEOWNERS for '$directoryPath' because the PR only introduces files in a brand-new directory."
+    foreach ($changedFile in $changedFiles) {
+        Write-Host "    $changedFile"
+    }
+    return $true
+}
+
+function getCheckPackageOutputText([array] $OutputLines) {
+    if (!$OutputLines) {
+        return ""
+    }
+
+    return ((@($OutputLines) | ForEach-Object { "$_" }) -join [Environment]::NewLine).Trim()
+}
+
+function getCheckPackageResponse([string] $OutputText) {
+    if (!$OutputText) {
+        return $null
+    }
+
+    try {
+        return $OutputText | ConvertFrom-Json -ErrorAction Stop
+    }
+    catch {
+        return $null
+    }
+}
+
+function getCheckPackageIssues([object] $CheckPackageResponse) {
+    if (!$CheckPackageResponse -or !$CheckPackageResponse.PSObject.Properties['issues']) {
+        return ,@()
+    }
+
+    $issues = @()
+    foreach ($issue in @($CheckPackageResponse.issues)) {
+        if (!$issue) {
+            continue
+        }
+
+        $issues += [PSCustomObject]@{
+            Message = $issue.message
+            Prompt = $issue.next_step
+        }
+    }
+
+    return ,@($issues)
+}
+
+$failedPackages = @()
+$prDiff = $null
+$isPrCheck = $false
+
+if ($PrDiffFile) {
+    if (!(Test-Path $PrDiffFile)) {
+        LogError "PR diff file '$PrDiffFile' does not exist."
+        exit 1
+    }
+
+    Write-Host "Loading PR diff from '$PrDiffFile'"
+    $prDiff = Get-Content -Raw -Path $PrDiffFile | ConvertFrom-Json
+    $isPrCheck = $true
+}
+
+Write-Host "SDK types to validate: $($SdkTypes -join ', ')"
+
+LogGroupStart "Validating CODEOWNERS for Artifacts"
+
+foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter '*.json' -File) {
+    $pkgProperties = Get-Content -Raw -Path $pkgPropertiesFile | ConvertFrom-Json
+    $artifactDetails = $pkgProperties.ArtifactDetails
+
+    if ($artifactDetails -and $artifactDetails.PSObject.Properties['skipCodeownersVerification'] -and $artifactDetails.skipCodeownersVerification) {
+        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because package info marks it to skip CODEOWNERS verification."
+        continue
+    }
+    if ($SdkTypes -notcontains $pkgProperties.SdkType) {
+        Write-Host "Skipping package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath) because its SdkType '$($pkgProperties.SdkType)' is not in the list of SdkTypes to validate."
+        continue
+    }
+
+    Write-Host "Validating codeowners for package: $($pkgProperties.Name) $($pkgProperties.DirectoryPath)"
+
+    $hasReleaseStatus = $pkgProperties.PSObject.Properties['ReleaseStatus'] -and
+        ![string]::IsNullOrWhiteSpace([string]$pkgProperties.ReleaseStatus)
+
+    if (!$isPrCheck -and !$hasReleaseStatus) {
+        $responseError = "Package $($pkgProperties.Name) at $($pkgProperties.DirectoryPath) is missing a ReleaseStatus property."
+        LogError $responseError
+        $failedPackages += [PSCustomObject]@{
+            Name = $pkgProperties.Name
+            DirectoryPath = $pkgProperties.DirectoryPath
+            ResponseError = $responseError
+            Issues = @()
+            HasParsedResponse = $false
+        }
+        continue
+    }
+
+    if ($prDiff -and (shouldSkipCodeownersInPrContext -PackageProperties $pkgProperties -PrDiff $prDiff -TargetCommittish $TargetCommittish)) {
+        continue
+    }
+
+    if ($isPrCheck -or $pkgProperties.ReleaseStatus -ne "Unreleased") {
+        $output = & $AzsdkPath config codeowners check-package `
+            --directory-path $pkgProperties.DirectoryPath `
+            --repo $Repo `
+            --output json 2>&1
+        $checkPackageExitCode = $LASTEXITCODE
+        $outputText = getCheckPackageOutputText -OutputLines $output
+
+        Write-Host "  check-package output:"
+        if ($outputText) {
+            Write-Host $outputText
+        } else {
+            Write-Host "  (no output)"
+        }
+
+        if ($checkPackageExitCode) {
+            Write-Host "Codeowners validation failed for package: $($pkgProperties.DirectoryPath)"
+            $checkPackageResponse = getCheckPackageResponse -OutputText $outputText
+            $failedPackages += [PSCustomObject]@{
+                Name = $pkgProperties.Name
+                DirectoryPath = $pkgProperties.DirectoryPath
+                ResponseError = if ($checkPackageResponse) { $checkPackageResponse.response_error } else { $null }
+                Issues = getCheckPackageIssues -CheckPackageResponse $checkPackageResponse
+                HasParsedResponse = $null -ne $checkPackageResponse
+            }
+        } else {
+            Write-Host "  Codeowners validation succeeded for package: $($pkgProperties.DirectoryPath)"
+        }
+    } else {
+        Write-Host "  Skipping CODEOWNERS validation, package is not intended to release."
+    }
+}
+
+LogGroupEnd
+
+if ($failedPackages.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Codeowners validation failed for one or more packages. See https://aka.ms/azsdk/codeowners for instructions to fix the issue."
+    Write-Host "Failed Packages:"
+    foreach ($failedPackage in $failedPackages) {
+        Write-Host "  - $($failedPackage.DirectoryPath) does not have sufficient code owners coverage"
+        if ($failedPackage.HasParsedResponse -and @($failedPackage.Issues).Count -gt 0) {
+            Write-Host "    Issue details:"
+            foreach ($issue in $failedPackage.Issues) {
+                if ($issue.Message) {
+                    Write-Host "      Error: $($issue.Message)"
+                }
+
+                if ($issue.Prompt) {
+                    Write-Host "        Use this prompt template to fix: $($issue.Prompt)"
+                }
+            }
+        } elseif ($failedPackage.ResponseError) {
+            Write-Host "    $($failedPackage.ResponseError)"
+        } elseif (!$failedPackage.HasParsedResponse) {
+            Write-Host "    Unable to parse check-package output; see grouped output above."
+        }
+    }
+    exit 1
+}
+exit 0

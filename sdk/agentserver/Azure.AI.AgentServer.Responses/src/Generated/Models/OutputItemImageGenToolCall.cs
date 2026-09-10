@@ -18,7 +18,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public OutputItemImageGenToolCall(string id, OutputItemImageGenToolCallStatus status, string result) : base(OutputItemType.ImageGenerationCall)
+        public OutputItemImageGenToolCall(string id, ItemImageGenToolCallStatus status, string result) : base(OutputItemType.ImageGenerationCall)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -36,7 +36,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <param name="id"> The unique ID of the image generation call. </param>
         /// <param name="status"> The status of the image generation call. </param>
         /// <param name="result"></param>
-        internal OutputItemImageGenToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, OutputItemImageGenToolCallStatus status, string result) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
+        internal OutputItemImageGenToolCall(OutputItemType @type, BinaryData createdBy, AgentReference agentReference, string responseId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, ItemImageGenToolCallStatus status, string result) : base(@type, createdBy, agentReference, responseId, additionalBinaryDataProperties)
         {
             Id = id;
             Status = status;
@@ -47,7 +47,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string Id { get; set; }
 
         /// <summary> The status of the image generation call. </summary>
-        public OutputItemImageGenToolCallStatus Status { get; set; }
+        public ItemImageGenToolCallStatus Status { get; set; }
 
         /// <summary> Gets or sets the Result. </summary>
         public string Result { get; set; }

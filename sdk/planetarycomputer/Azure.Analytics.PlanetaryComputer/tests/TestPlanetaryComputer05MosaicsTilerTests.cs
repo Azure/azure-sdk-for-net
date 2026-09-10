@@ -27,43 +27,47 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         }
 
         /// <summary>
-        /// Creates a CQL2-JSON filter for temporal range matching the Python implementation.
+        /// Creates a mosaic search request with a CQL2-JSON temporal range filter matching the Python implementation.
         /// </summary>
-        private static Dictionary<string, BinaryData> CreateTemporalFilter(string collectionId)
+        private static RegisterMosaic CreateTemporalSearch(string collectionId)
         {
-            return new Dictionary<string, BinaryData>
+            return new RegisterMosaic
             {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
+                FilterLanguage = FilterLanguage.Cql2Json,
+                Filter =
                 {
-                    new Dictionary<string, object>
+                    ["op"] = BinaryData.FromString("\"and\""),
+                    ["args"] = BinaryData.FromObjectAsJson(new object[]
                     {
-                        ["op"] = "=",
-                        ["args"] = new object[]
+                        new Dictionary<string, object>
                         {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = ">=",
-                        ["args"] = new object[]
+                            ["op"] = "=",
+                            ["args"] = new object[]
+                            {
+                                new Dictionary<string, string> { ["property"] = "collection" },
+                                collectionId
+                            }
+                        },
+                        new Dictionary<string, object>
                         {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            "2021-01-01T00:00:00Z"
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "<=",
-                        ["args"] = new object[]
+                            ["op"] = ">=",
+                            ["args"] = new object[]
+                            {
+                                new Dictionary<string, string> { ["property"] = "datetime" },
+                                "2021-01-01T00:00:00Z"
+                            }
+                        },
+                        new Dictionary<string, object>
                         {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            "2022-12-31T23:59:59Z"
+                            ["op"] = "<=",
+                            ["args"] = new object[]
+                            {
+                                new Dictionary<string, string> { ["property"] = "datetime" },
+                                "2022-12-31T23:59:59Z"
+                            }
                         }
-                    }
-                })
+                    })
+                }
             };
         }
 
@@ -82,26 +86,18 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             TestContext.WriteLine($"Input - collection_id: {collectionId}");
 
-            // Create CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
-
-            var sortBy = new[]
-            {
-                new StacSortExtension("datetime", StacSearchSortingDirection.Desc)
-            };
+            // Create CQL2-JSON search request (matching Python implementation)
+            var searchRequest = CreateTemporalSearch(collectionId);
+            searchRequest.SortBy.Add(new StacSortExtension("datetime", StacSearchSortingDirection.Desc));
 
             TestContext.WriteLine($"Filter Language: CQL2-JSON");
 
             // Act
-            Response<TilerMosaicSearchRegistrationResult> response = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json,
-                sortBy: sortBy
-            );
+            Response<TilerMosaicSearchRegistrationResult> response = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             // Assert
-            Assert.IsNotNull(response);
-            Assert.IsNotNull(response.Value);
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
 
             TilerMosaicSearchRegistrationResult result = response.Value;
             ValidateNotNullOrEmpty(result.SearchId, "Search ID");
@@ -133,12 +129,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             string collectionId = TestEnvironment.CollectionId;
 
             // Create CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             ValidateResponse(registerResponse);
             string searchId = registerResponse.Value.SearchId;
@@ -146,13 +139,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Registered Search ID: {searchId}");
 
             // Act - Get search info for the registered search
-            Response<TilerStacSearchRegistration> response = await dataClient.GetMosaicsSearchInfoAsync(searchId);
+            Response<TilerStacSearchRegistration> response = await dataClient.GetSearchInfoAsync(searchId);
 
             // Assert
-            ValidateResponse(response, "GetMosaicsSearchInfo");
+            ValidateResponse(response, "GetSearchInfo");
 
             TilerStacSearchRegistration searchInfo = response.Value;
-            Assert.IsNotNull(searchInfo, "Search info should not be null");
+            Assert.That(searchInfo, Is.Not.Null, "Search info should not be null");
 
             TestContext.WriteLine($"Search registration retrieved successfully");
             TestContext.WriteLine($"Search info retrieved for search ID: {searchId}");
@@ -172,36 +165,32 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             string collectionId = TestEnvironment.CollectionId;
 
             // Register search first with CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             string searchId = registerResponse.Value.SearchId;
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile JSON metadata
-            Response<TileJsonMetadata> response = await dataClient.GetMosaicsTileJsonAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                tileScale: 1,
-                minZoom: 9,
-                tileFormat: TilerImageFormat.Png,
-                collection: collectionId
-            );
+            Response<TileJsonMetadata> response = await dataClient.GetSearchTileJsonByTmsAsync(new GetSearchTileJsonByTmsOptions(searchId, "WebMercatorQuad")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                TileScale = 1,
+                MinZoom = 9,
+                TileFormat = TilerImageFormat.Png,
+                Collection = collectionId
+            });
 
             // Assert
-            ValidateResponse(response, "GetMosaicsTileJson");
+            ValidateResponse(response, "GetSearchTileJsonByTms");
 
             TileJsonMetadata tileJson = response.Value;
-            Assert.IsNotNull(tileJson, "TileJSON should not be null");
-            Assert.IsNotNull(tileJson.TileJson, "TileJSON version should not be null");
-            Assert.IsNotNull(tileJson.Tiles, "Tiles array should not be null");
-            Assert.Greater(tileJson.Tiles.Count, 0, "Should have at least one tile URL pattern");
+            Assert.That(tileJson, Is.Not.Null, "TileJSON should not be null");
+            Assert.That(tileJson.TileJson, Is.Not.Null, "TileJSON version should not be null");
+            Assert.That(tileJson.Tiles, Is.Not.Null, "Tiles array should not be null");
+            Assert.That(tileJson.Tiles.Count, Is.GreaterThan(0), "Should have at least one tile URL pattern");
 
             TestContext.WriteLine($"TileJSON version: {tileJson.TileJson}");
             TestContext.WriteLine($"Number of tile URL patterns: {tileJson.Tiles.Count}");
@@ -227,34 +216,25 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Using tile coordinates: z=13, x=2174, y=3282");
 
             // Register search first with CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             string searchId = registerResponse.Value.SearchId;
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get tile image
-            Response<BinaryData> response = await dataClient.GetMosaicsTileAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                z: 13,
-                x: 2174,
-                y: 3282,
-                scale: 1,
-                format: "png",
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3",
-                collection: collectionId
-            );
+            Response response = await dataClient.GetSearchTileByScaleAndFormatAsync(new GetSearchTileByScaleAndFormatOptions(searchId, "WebMercatorQuad", 13, 2174, 3282, 1, "png")
+            {
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" },
+                Collection = collectionId
+            });
 
             // Assert
-            ValidateResponse(response, "GetMosaicsTile");
+            ValidateResponse(response, "GetSearchTileByScaleAndFormat");
 
-            BinaryData imageData = response.Value;
+            BinaryData imageData = response.Content;
             byte[] imageBytes = imageData.ToArray();
 
             TestContext.WriteLine($"Image size: {imageBytes.Length} bytes");
@@ -262,12 +242,12 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
             // Verify PNG magic bytes
             byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-            Assert.Greater(imageBytes.Length, 0, "Image bytes should not be empty");
-            Assert.Greater(imageBytes.Length, 100, $"Image should be substantial, got only {imageBytes.Length} bytes");
+            Assert.That(imageBytes.Length, Is.GreaterThan(0), "Image bytes should not be empty");
+            Assert.That(imageBytes.Length, Is.GreaterThan(100), $"Image should be substantial, got only {imageBytes.Length} bytes");
 
             for (int i = 0; i < pngMagic.Length; i++)
             {
-                Assert.AreEqual(pngMagic[i], imageBytes[i], $"PNG magic byte {i} mismatch");
+                Assert.That(imageBytes[i], Is.EqualTo(pngMagic[i]), $"PNG magic byte {i} mismatch");
             }
 
             TestContext.WriteLine("PNG magic bytes verified successfully");
@@ -287,32 +267,28 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             string collectionId = TestEnvironment.CollectionId;
 
             // Register search first with CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             string searchId = registerResponse.Value.SearchId;
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get WMTS capabilities
-            Response<BinaryData> response = await dataClient.GetMosaicsWmtsCapabilitiesAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                tileFormat: TilerImageFormat.Png,
-                tileScale: 1,
-                minZoom: 7,
-                maxZoom: 13,
-                assets: new[] { "image" },
-                assetBandIndices: "image|1,2,3"
-            );
+            Response response = await dataClient.GetSearchWmtsCapabilitiesByTmsAsync(new GetSearchWmtsCapabilitiesByTmsOptions(searchId, "WebMercatorQuad")
+            {
+                TileFormat = TilerImageFormat.Png,
+                TileScale = 1,
+                MinZoom = 7,
+                MaxZoom = 13,
+                Assets = { "image" },
+                AssetBandIndices = { "image|1,2,3" }
+            });
 
             // Assert
-            ValidateResponse(response, "GetMosaicsWmtsCapabilities");
+            ValidateResponse(response, "GetSearchWmtsCapabilitiesByTms");
 
-            BinaryData xmlData = response.Value;
+            BinaryData xmlData = response.Content;
             byte[] xmlBytes = xmlData.ToArray();
             string xmlString = Encoding.UTF8.GetString(xmlBytes);
 
@@ -320,7 +296,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"XML first 200 chars: {xmlString.Substring(0, Math.Min(200, xmlString.Length))}");
 
             // Validate XML structure
-            Assert.Greater(xmlBytes.Length, 0, "XML bytes should not be empty");
+            Assert.That(xmlBytes.Length, Is.GreaterThan(0), "XML bytes should not be empty");
             Assert.That(xmlString, Does.Contain("Capabilities"), "Response should contain Capabilities element");
             Assert.That(xmlString.ToLower(), Does.Contain("wmts"), "Response should reference WMTS");
             Assert.That(xmlString, Does.Contain("TileMatrix"), "Response should contain TileMatrix information");
@@ -347,34 +323,29 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Input - point: longitude={longitude}, latitude={latitude}");
 
             // Register search first with CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             string searchId = registerResponse.Value.SearchId;
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for point
-            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetMosaicsAssetsForPointAsync(
-                searchId: searchId,
-                longitude: longitude,
-                latitude: latitude,
-                coordinateReferenceSystem: "EPSG:4326",
-                itemsLimit: 100,
-                exitWhenFull: true,
-                scanLimit: 100,
-                skipCovered: true,
-                timeLimit: 30
-            );
+            Response<IReadOnlyList<StacItemPointAsset>> response = await dataClient.GetSearchPointWithAssetsAsync(new GetSearchPointWithAssetsOptions(searchId, longitude, latitude)
+            {
+                CoordinateReferenceSystem = "EPSG:4326",
+                ItemsLimit = 100,
+                ExitWhenFull = true,
+                ScanLimit = 100,
+                SkipCovered = true,
+                TimeLimit = 30
+            });
 
             // Assert
-            ValidateResponse(response, "GetMosaicsAssetsForPoint");
+            ValidateResponse(response, "GetSearchPointWithAssets");
 
             IReadOnlyList<StacItemPointAsset> assets = response.Value;
-            Assert.IsNotNull(assets, "Assets list should not be null");
+            Assert.That(assets, Is.Not.Null, "Assets list should not be null");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
 
@@ -382,9 +353,9 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             if (assets.Count > 0)
             {
                 StacItemPointAsset firstAsset = assets[0];
-                Assert.IsNotNull(firstAsset, "First asset should not be null");
-                Assert.IsNotNull(firstAsset.Id, "Asset ID should not be null");
-                Assert.IsNotEmpty(firstAsset.Id, "Asset ID should not be empty");
+                Assert.That(firstAsset, Is.Not.Null, "First asset should not be null");
+                Assert.That(firstAsset.Id, Is.Not.Null, "Asset ID should not be null");
+                Assert.That(firstAsset.Id, Is.Not.Empty, "Asset ID should not be empty");
 
                 TestContext.WriteLine($"First asset ID: {firstAsset.Id}");
             }
@@ -410,244 +381,24 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine("Using tile coordinates: z=13, x=2174, y=3282");
 
             // Register search first with CQL2-JSON filter (matching Python implementation)
-            var filter = CreateTemporalFilter(collectionId);
+            var searchRequest = CreateTemporalSearch(collectionId);
 
-            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(
-                filter: filter,
-                filterLanguage: FilterLanguage.Cql2Json
-            );
+            Response<TilerMosaicSearchRegistrationResult> registerResponse = await dataClient.RegisterMosaicsSearchAsync(searchRequest);
 
             string searchId = registerResponse.Value.SearchId;
             TestContext.WriteLine($"Using search ID: {searchId}");
 
             // Act - Get assets for tile
-            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetMosaicsAssetsForTileAsync(
-                searchId: searchId,
-                tileMatrixSetId: "WebMercatorQuad",
-                z: 13,
-                x: 2174,
-                y: 3282,
-                collectionId: collectionId
-            );
+            Response<IReadOnlyList<TilerAssetGeoJson>> response = await dataClient.GetSearchAssetsForTileAsync(new GetSearchAssetsForTileOptions(searchId, "WebMercatorQuad", collectionId, 13, 2174, 3282));
 
             // Assert
-            ValidateResponse(response, "GetMosaicsAssetsForTile");
+            ValidateResponse(response, "GetSearchAssetsForTile");
 
             IReadOnlyList<TilerAssetGeoJson> assets = response.Value;
-            Assert.IsNotNull(assets, "Assets list should not be null");
+            Assert.That(assets, Is.Not.Null, "Assets list should not be null");
 
             TestContext.WriteLine($"Number of assets: {assets.Count}");
             TestContext.WriteLine("Assets for tile retrieved successfully");
-        }
-
-        /// <summary>
-        /// Tests creating a static image from a mosaic search.
-        /// Maps to Python test: test_08_create_static_image
-        /// </summary>
-        [Test]
-        [Category("StaticImage")]
-#if NET462
-        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
-#endif
-        public async Task Test05_08_CreateStaticImage()
-        {
-            // Arrange
-            var client = GetTestClient();
-            var dataClient = client.GetDataClient();
-            string collectionId = TestEnvironment.CollectionId;
-
-            // Define geometry for the static image - coordinates as [[[lon, lat], ...]]
-            // Using values that match .NET Framework serialization precision
-            var coordinates = new List<IList<IList<float>>>
-            {
-                new List<IList<float>>
-                {
-                    new List<float> { -84.4537811f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6567307f }
-                }
-            };
-            var geometry = new PolygonGeometry(coordinates);
-
-            TestContext.WriteLine($"Geometry defined with coordinates");
-
-            // Create CQL2-JSON filter (matching Python implementation)
-            var cqlFilter = new Dictionary<string, BinaryData>
-            {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "=",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "anyinteracts",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            new Dictionary<string, object>
-                            {
-                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
-                            }
-                        }
-                    }
-                })
-            };
-
-            // Create image request - all required parameters in constructor
-            var imageRequest = new ImageParameters(
-                cql: cqlFilter,
-                renderParameters: $"assets=image&asset_bidx=image|1,2,3&collection={collectionId}",
-                columns: 1080,
-                rows: 1080
-            );
-
-            imageRequest.Zoom = 13;
-            imageRequest.Geometry = geometry;
-            imageRequest.ImageSize = "1080x1080";
-            imageRequest.ShowBranding = false;
-
-            TestContext.WriteLine($"Image request: columns={imageRequest.Columns}, rows={imageRequest.Rows}, zoom={imageRequest.Zoom}");
-
-            // Act - Create static image
-            Response<ImageResponse> response = await dataClient.CreateStaticImageAsync(
-                collectionId: collectionId,
-                body: imageRequest
-            );
-
-            // Assert
-            ValidateResponse(response, "CreateStaticImage");
-
-            ImageResponse imageResponse = response.Value;
-            Assert.IsNotNull(imageResponse, "Image response should not be null");
-            Assert.IsNotNull(imageResponse.Url, "Image URL should not be null");
-
-            TestContext.WriteLine($"Static image created successfully");
-            TestContext.WriteLine($"Image URL: {imageResponse.Url}");
-        }
-
-        /// <summary>
-        /// Tests retrieving a static image by ID.
-        /// Maps to Python test: test_09_get_static_image
-        /// </summary>
-        [Test]
-        [Category("StaticImage")]
-#if NET462
-        [LiveOnly(Reason = "Difference between request and record entry due to float values")]
-#endif
-        public async Task Test05_09_GetStaticImage()
-        {
-            // Arrange
-            var client = GetTestClient();
-            var dataClient = client.GetDataClient();
-            string collectionId = TestEnvironment.CollectionId;
-
-            // First create a static image to get an ID
-            // Using simpler float values that serialize consistently across .NET Framework and .NET Core
-            var coordinates = new List<IList<IList<float>>>
-            {
-                new List<IList<float>>
-                {
-                    new List<float> { -84.4537811f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6567307f },
-                    new List<float> { -84.398056f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6194572f },
-                    new List<float> { -84.4537811f, 33.6567307f }
-                }
-            };
-            var geometry = new PolygonGeometry(coordinates);
-
-            // Create CQL2-JSON filter (matching Python implementation)
-            var cqlFilter = new Dictionary<string, BinaryData>
-            {
-                ["op"] = BinaryData.FromString("\"and\""),
-                ["args"] = BinaryData.FromObjectAsJson(new object[]
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "=",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "collection" },
-                            collectionId
-                        }
-                    },
-                    new Dictionary<string, object>
-                    {
-                        ["op"] = "anyinteracts",
-                        ["args"] = new object[]
-                        {
-                            new Dictionary<string, string> { ["property"] = "datetime" },
-                            new Dictionary<string, object>
-                            {
-                                ["interval"] = new[] { "2023-01-01T00:00:00Z", "2023-12-31T00:00:00Z" }
-                            }
-                        }
-                    }
-                })
-            };
-
-            var imageRequest = new ImageParameters(
-                cql: cqlFilter,
-                renderParameters: $"assets=image&asset_bidx=image|1,2,3&collection={collectionId}",
-                columns: 1080,
-                rows: 1080
-            );
-            imageRequest.Zoom = 13;
-            imageRequest.Geometry = geometry;
-            imageRequest.ImageSize = "1080x1080";
-            imageRequest.ShowBranding = false;
-
-            Response<ImageResponse> createResponse = await dataClient.CreateStaticImageAsync(
-                collectionId: collectionId,
-                body: imageRequest
-            );
-
-            Uri url = createResponse.Value.Url;
-
-            // Extract image ID from URL - split by '?' to remove query params, then get last path segment
-            string imageId = url.ToString().Split('?')[0].Split('/').Last();
-
-            TestContext.WriteLine($"Created image with ID: {imageId}");
-            TestContext.WriteLine($"Image URL: {url}");
-
-            Assert.IsNotNull(imageId, "Image ID should not be null");
-            Assert.IsNotEmpty(imageId, "Image ID should not be empty");
-
-            // Act - Get the static image
-            Response<BinaryData> response = await dataClient.GetStaticImageAsync(
-                collectionId: collectionId,
-                id: imageId
-            );
-
-            // Assert
-            ValidateResponse(response, "GetStaticImage");
-
-            BinaryData imageData = response.Value;
-            byte[] imageBytes = imageData.ToArray();
-
-            TestContext.WriteLine($"Image size: {imageBytes.Length} bytes");
-            TestContext.WriteLine($"First 16 bytes (hex): {BitConverter.ToString(imageBytes.Take(16).ToArray()).Replace("-", "")}");
-
-            // Verify PNG magic bytes
-            byte[] pngMagic = new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A };
-            Assert.Greater(imageBytes.Length, 0, "Image bytes should not be empty");
-
-            for (int i = 0; i < Math.Min(pngMagic.Length, imageBytes.Length); i++)
-            {
-                Assert.AreEqual(pngMagic[i], imageBytes[i], $"PNG magic byte {i} mismatch");
-            }
-
-            TestContext.WriteLine("PNG magic bytes verified successfully");
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string sapVirtualInstanceApiVersion);
             _sapVirtualInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _sapVirtualInstancesRestClient = new SAPVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Endpoint, sapVirtualInstanceApiVersion ?? "2024-05-01");
+            _sapVirtualInstancesRestClient = new SAPVirtualInstances(_sapVirtualInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapVirtualInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _sapVirtualInstancesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, SAPVirtualInstanceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SAPVirtualInstanceResource> operation = new TestsArmOperation<SAPVirtualInstanceResource>(
-                    new SAPVirtualInstanceOperationSource(Client),
+                    new SAPVirtualInstanceResourceOperationSource(Client),
                     _sapVirtualInstancesClientDiagnostics,
                     Pipeline,
                     message.Request,

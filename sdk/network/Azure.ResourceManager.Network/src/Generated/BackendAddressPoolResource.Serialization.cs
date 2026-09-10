@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class BackendAddressPoolResource : IJsonModel<BackendAddressPoolData>
     {
-        private static BackendAddressPoolData s_dataDeserializationInstance;
-        private static BackendAddressPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<BackendAddressPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<BackendAddressPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new BackendAddressPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BackendAddressPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)Data).Write(writer, options);
 
-        BackendAddressPoolData IJsonModel<BackendAddressPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BackendAddressPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BackendAddressPoolData IJsonModel<BackendAddressPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<BackendAddressPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BackendAddressPoolData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         BackendAddressPoolData IPersistableModel<BackendAddressPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BackendAddressPoolData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<BackendAddressPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BackendAddressPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BackendAddressPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

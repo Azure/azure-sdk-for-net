@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure;
-using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -15,19 +13,52 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Azure.Generator.Extensions;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
 {
     /// <summary>
     /// Visitor that adds distributed tracing support to generated client code.
+    /// Uses constructor injection to support both Azure.Core and System.ClientModel types.
     /// </summary>
     internal class DistributedTracingVisitor : ScmLibraryVisitor
     {
         private const string ClientDiagnosticsPropertyName = "ClientDiagnostics";
         private const string ClientDiagnosticsPropertyDescription = "The ClientDiagnostics is used to provide tracing support for the client library.";
-        private const string RequestContentParamterName = "content";
+
+        /// <summary>
+        /// Creates a new instance of <see cref="DistributedTracingVisitor"/> with the specified types.
+        /// </summary>
+        /// <param name="clientDiagnosticsType">The CSharpType for ClientDiagnostics (e.g., Azure.Core.Pipeline.ClientDiagnostics or System.ClientModel.Primitives.ClientDiagnostics).</param>
+        /// <param name="diagnosticScopeType">The CSharpType for DiagnosticScope (e.g., Azure.Core.Pipeline.DiagnosticScope or System.ClientModel.Primitives.DiagnosticScope).</param>
+        public DistributedTracingVisitor(
+            CSharpType clientDiagnosticsType,
+            CSharpType diagnosticScopeType)
+        {
+            ClientDiagnosticsType = clientDiagnosticsType;
+            DiagnosticScopeType = diagnosticScopeType;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="CSharpType"/> for the ClientDiagnostics class.
+        /// </summary>
+        protected CSharpType ClientDiagnosticsType { get; }
+
+        /// <summary>
+        /// Gets the <see cref="CSharpType"/> for the DiagnosticScope struct.
+        /// </summary>
+        protected CSharpType DiagnosticScopeType { get; }
+
+        /// <summary>
+        /// Determines whether the specified method is a paging method whose scope name should be
+        /// passed to the pageable collection result constructor (e.g., AzureCollectionResultDefinition).
+        /// </summary>
+        /// <param name="method">The method to check.</param>
+        /// <returns>True if the scope name should be passed to the pageable constructor; otherwise, false.</returns>
+        protected virtual bool ShouldPassScopeToPageableConstructor(ScmMethodProvider method)
+        {
+            return false;
+        }
 
         protected override ClientProvider? Visit(InputClient client, ClientProvider? clientProvider)
         {
@@ -36,8 +67,7 @@ namespace Azure.Generator.Visitors
                 return base.Visit(client, clientProvider);
             }
 
-            bool hasExistingProperty = clientProvider.CanonicalView.Properties
-                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+            bool hasExistingProperty = clientProvider.CanonicalView.Properties.Any(IsClientDiagnosticsProperty);
             if (hasExistingProperty)
             {
                 return base.Visit(client, clientProvider);
@@ -56,7 +86,7 @@ namespace Azure.Generator.Visitors
             }
 
             PropertyProvider clientDiagnosticsProperty = constructor.EnclosingType.CanonicalView.Properties
-                .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                .First(IsClientDiagnosticsProperty);
             ParameterProvider? endpoint = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "endpoint");
             ParameterProvider? options = constructor.Signature.Parameters.FirstOrDefault(p => p.Name == "options");
             bool hasNoInitializer = constructor.Signature.Initializer == null;
@@ -101,6 +131,19 @@ namespace Azure.Generator.Visitors
             return constructor;
         }
 
+        protected override MethodProvider? VisitMethod(MethodProvider method)
+        {
+            if (method.EnclosingType is CollectionResultDefinition collectionResult
+                && collectionResult.GetType() == typeof(CollectionResultDefinition)
+                && method.Signature.Name is "GetNextResponse" or "GetNextResponseAsync")
+            {
+                WrapCollectionResultMethodWithTracing(method, collectionResult);
+                return method;
+            }
+
+            return base.VisitMethod(method);
+        }
+
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
             if (ShouldSkipType(method.EnclosingType))
@@ -108,8 +151,10 @@ namespace Azure.Generator.Visitors
                 return base.VisitMethod(method);
             }
 
-            if (IsPagingMethod(method))
+            if (ShouldPassScopeToPageableConstructor(method))
             {
+                // For Azure paging methods, tracing is handled inside AzureCollectionResultDefinition.GetNextResponse,
+                // so we skip standard try/catch wrapping and instead pass the scope name to the pageable constructor.
                 UpdatePagingMethodWithScope(method);
             }
             else if (method.Kind == ScmMethodKind.Protocol)
@@ -124,7 +169,7 @@ namespace Azure.Generator.Visitors
             return method;
         }
 
-        private static void UpdateDistributedTracingRefInSubClientFactoryMethod(
+        private void UpdateDistributedTracingRefInSubClientFactoryMethod(
             ScmMethodProvider method)
         {
             if (method.BodyStatements == null && method.BodyExpression == null)
@@ -133,7 +178,7 @@ namespace Azure.Generator.Visitors
             }
 
             PropertyProvider clientDiagnosticsProperty = method.EnclosingType.CanonicalView.Properties
-                    .First(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                    .First(IsClientDiagnosticsProperty);
             List<MethodBodyStatement> updatedFactoryMethodStatements = [];
 
             var statementsToVisit = method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!);
@@ -155,30 +200,31 @@ namespace Azure.Generator.Visitors
             method.Update(bodyStatements: updatedFactoryMethodStatements);
         }
 
-        private static void UpdateProtocolMethodsWithDistributedTracing(ScmMethodProvider method)
+        private void UpdateProtocolMethodsWithDistributedTracing(ScmMethodProvider method)
         {
             if (method.BodyStatements == null && method.BodyExpression == null)
             {
                 return;
             }
 
-            string scopeName = method.GetScopeName();
+            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
             const string asyncSuffix = "Async";
             if (scopeName.EndsWith(asyncSuffix))
             {
                 scopeName = scopeName[..^asyncSuffix.Length];
             }
 
-            PropertyProvider clientDiagnosticsProperty = method.GetClient().GetClientDiagnosticProperty();
+            PropertyProvider clientDiagnosticsProperty = ((ClientProvider)method.EnclosingType).CanonicalView.Properties
+                .First(IsClientDiagnosticsProperty);
 
             // declare scope
             var scopeDeclaration = UsingDeclare(
                 "scope",
-                typeof(DiagnosticScope),
-                clientDiagnosticsProperty.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal(scopeName)], false, false),
+                DiagnosticScopeType,
+                clientDiagnosticsProperty.Invoke("CreateScope", [Literal(scopeName)], false, false),
                 out var scope);
             // start scope
-            var scopeStart = scope.Invoke(nameof(DiagnosticScope.Start)).Terminate();
+            var scopeStart = scope.Invoke("Start").Terminate();
             // wrap existing statements in try / catch
             var tryStatement = new TryExpression
             (
@@ -187,7 +233,7 @@ namespace Azure.Generator.Visitors
 
             var catchBlock = new CatchExpression(
                 Declare("e", typeof(Exception), out var exception),
-                scope.Invoke(nameof(DiagnosticScope.Failed), [exception]).Terminate(),
+                scope.Invoke("Failed", [exception]).Terminate(),
                 Throw());
             var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
             List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
@@ -195,7 +241,46 @@ namespace Azure.Generator.Visitors
             method.Update(bodyStatements: updatedBodyStatements);
         }
 
-        private static void AddDistributedTracingProperty(ClientProvider client)
+        private void WrapCollectionResultMethodWithTracing(MethodProvider method, CollectionResultDefinition collectionResult)
+        {
+            if (method.BodyStatements == null && method.BodyExpression == null)
+            {
+                return;
+            }
+
+            var clientField = collectionResult.Fields.FirstOrDefault(f => f.Name == "_client");
+            if (clientField == null)
+            {
+                return;
+            }
+
+            var scopeName = collectionResult.ScopeName;
+
+            // declare scope
+            var scopeDeclaration = UsingDeclare(
+                "scope",
+                DiagnosticScopeType,
+                ((MemberExpression)clientField).Property(ClientDiagnosticsPropertyName).Invoke("CreateScope", [Literal(scopeName)]),
+                out var scope);
+            // start scope
+            var scopeStart = scope.Invoke("Start").Terminate();
+            // wrap existing statements in try / catch
+            var tryStatement = new TryExpression
+            (
+                method.BodyStatements ?? new ExpressionStatement(method.BodyExpression!)
+            );
+
+            var catchBlock = new CatchExpression(
+                Declare("e", typeof(Exception), out var exception),
+                scope.Invoke("Failed", [exception]).Terminate(),
+                Throw());
+            var tryCatchRequestBlock = new TryCatchFinallyStatement(tryStatement, catchBlock);
+            List<MethodBodyStatement> updatedBodyStatements = [scopeDeclaration, scopeStart, tryCatchRequestBlock];
+
+            method.Update(bodyStatements: updatedBodyStatements);
+        }
+
+        private void AddDistributedTracingProperty(ClientProvider client)
         {
             var existingCount = client.Properties.Count;
             List<PropertyProvider> updatedProperties = new(existingCount + 1);
@@ -204,7 +289,7 @@ namespace Azure.Generator.Visitors
             PropertyProvider clientDiagnosticsProperty = new(
                 $"{ClientDiagnosticsPropertyDescription}",
                 MethodSignatureModifiers.Internal,
-                new CSharpType(typeof(ClientDiagnostics)),
+                ClientDiagnosticsType,
                 ClientDiagnosticsPropertyName,
                 new AutoPropertyBody(false),
                 client);
@@ -286,16 +371,19 @@ namespace Azure.Generator.Visitors
             return true;
         }
 
-        private static bool ShouldSkipType(TypeProvider typeProvider)
+        private bool IsClientDiagnosticsProperty(PropertyProvider property)
+            => property.Type.Equals(ClientDiagnosticsType);
+
+        private bool ShouldSkipType(TypeProvider typeProvider)
         {
             return typeProvider is not ClientProvider ||
                 !typeProvider.CanonicalView.Properties
-                    .Any(p => p.Name == ClientDiagnosticsPropertyName || p.OriginalName?.Equals(ClientDiagnosticsPropertyName) == true);
+                    .Any(IsClientDiagnosticsProperty);
         }
 
         private static void UpdatePagingMethodWithScope(ScmMethodProvider method)
         {
-            string scopeName = method.GetScopeName();
+            string scopeName = $"{method.EnclosingType.Name}.{method.Signature.Name}";
             const string asyncSuffix = "Async";
             if (scopeName.EndsWith(asyncSuffix))
             {
@@ -345,19 +433,6 @@ namespace Azure.Generator.Visitors
 
             return methodReturnType != null &&
                 clientProvider.SubClients.Any(subClient => methodReturnType.Equals(subClient.Type));
-        }
-
-        private static bool IsPagingMethod(ScmMethodProvider method)
-        {
-            var returnType = method.Signature.ReturnType;
-            if (returnType == null || !returnType.IsFrameworkType)
-            {
-                return false;
-            }
-
-            // Check if the return type is Pageable<T> or AsyncPageable<T>
-            return returnType.FrameworkType == typeof(Pageable<>) ||
-                   returnType.FrameworkType == typeof(AsyncPageable<>);
         }
     }
 }

@@ -71,7 +71,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             get
             {
-                return AllocatedToSubscriptions.Value;
+                return AllocatedToSubscriptions is null ? default : AllocatedToSubscriptions.Value;
             }
         }
     }

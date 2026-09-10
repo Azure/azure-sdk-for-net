@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary>
-    /// A class representing the ApiIssueComment data model.
-    /// Issue Comment Contract details.
-    /// </summary>
+    /// <summary> Issue Comment Contract details. </summary>
     public partial class ApiIssueCommentData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiIssueCommentData"/>. </summary>
         public ApiIssueCommentData()
@@ -56,30 +25,74 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiIssueCommentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="text"> Comment text. </param>
-        /// <param name="createdOn"> Date and time when the comment was created. </param>
-        /// <param name="userId"> A resource identifier for the user who left the comment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string text, DateTimeOffset? createdOn, ResourceIdentifier userId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the Issue Comment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApiIssueCommentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IssueCommentContractProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            Text = text;
-            CreatedOn = createdOn;
-            UserId = userId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Properties of the Issue Comment. </summary>
+        [WirePath("properties")]
+        internal IssueCommentContractProperties Properties { get; set; }
 
         /// <summary> Comment text. </summary>
         [WirePath("properties.text")]
-        public string Text { get; set; }
+        public string Text
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Text;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueCommentContractProperties();
+                }
+                Properties.Text = value;
+            }
+        }
+
         /// <summary> Date and time when the comment was created. </summary>
         [WirePath("properties.createdDate")]
-        public DateTimeOffset? CreatedOn { get; set; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueCommentContractProperties();
+                }
+                Properties.CreatedOn = value;
+            }
+        }
+
         /// <summary> A resource identifier for the user who left the comment. </summary>
         [WirePath("properties.userId")]
-        public ResourceIdentifier UserId { get; set; }
+        public ResourceIdentifier UserId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.UserId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new IssueCommentContractProperties();
+                }
+                Properties.UserId = value;
+            }
+        }
     }
 }

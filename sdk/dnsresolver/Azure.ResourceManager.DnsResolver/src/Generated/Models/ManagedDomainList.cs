@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public readonly partial struct ManagedDomainList : IEquatable<ManagedDomainList>
     {
         private readonly string _value;
+        /// <summary> Domain list managed by Azure DNS Threat Intelligence. </summary>
+        private const string AzureDnsThreatIntelValue = "AzureDnsThreatIntel";
 
         /// <summary> Initializes a new instance of <see cref="ManagedDomainList"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedDomainList(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AzureDnsThreatIntelValue = "AzureDnsThreatIntel";
+            _value = value;
+        }
 
         /// <summary> Domain list managed by Azure DNS Threat Intelligence. </summary>
         public static ManagedDomainList AzureDnsThreatIntel { get; } = new ManagedDomainList(AzureDnsThreatIntelValue);
+
         /// <summary> Determines if two <see cref="ManagedDomainList"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedDomainList left, ManagedDomainList right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedDomainList"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedDomainList left, ManagedDomainList right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedDomainList"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedDomainList"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedDomainList(string value) => new ManagedDomainList(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedDomainList"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedDomainList?(string value) => value == null ? null : new ManagedDomainList(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedDomainList other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedDomainList other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

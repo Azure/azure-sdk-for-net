@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                 throw new FormatException($"The model {nameof(SapOSConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("osType"u8);
-            writer.WriteStringValue(OsType.ToString());
+            writer.WriteStringValue(OSType.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

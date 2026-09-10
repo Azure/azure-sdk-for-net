@@ -26,15 +26,15 @@ namespace Azure.Compute.Batch
         /// <param name="caching"> Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
-        /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
+        /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? writeAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchOsDisk(BatchDiffDiskSettings ephemeralOSDiskSettings, CachingType? caching, int? diskSizeGB, ManagedDisk managedDisk, bool? isWriteAcceleratorEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
             Caching = caching;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
-            WriteAcceleratorEnabled = writeAcceleratorEnabled;
+            IsWriteAcceleratorEnabled = isWriteAcceleratorEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.Compute.Batch
         public ManagedDisk ManagedDisk { get; set; }
 
         /// <summary> Specifies whether writeAccelerator should be enabled or disabled on the disk. </summary>
-        public bool? WriteAcceleratorEnabled { get; set; }
+        public bool? IsWriteAcceleratorEnabled { get; set; }
     }
 }

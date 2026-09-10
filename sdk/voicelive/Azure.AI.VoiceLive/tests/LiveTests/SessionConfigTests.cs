@@ -118,7 +118,7 @@ namespace Azure.AI.VoiceLive.Tests
 
             var sessionUpdated = await GetNextUpdate<SessionUpdateSessionUpdated>(updatesEnum).ConfigureAwait(false);
 
-            var content = new InputTextContentPart("Tell me a joke");
+            var content = new InputTextContentPart("What is 13 plus 29?");
 
             await session.AddItemAsync(new UserMessageItem(new[] { content }), null, TimeoutToken).ConfigureAwait(false);
 
@@ -333,7 +333,7 @@ namespace Azure.AI.VoiceLive.Tests
             var options = new VoiceLiveSessionOptions()
             {
                 Model = "gpt-4o",
-                Modalities = { InteractionModality.Text },
+                Modalities = { InteractionModality.Audio },
                 InputAudioEchoCancellation = new AudioEchoCancellation(),
                 InputAudioNoiseReduction = new AudioNoiseReduction()
                 {

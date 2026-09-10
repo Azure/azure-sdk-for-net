@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,19 +15,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningSasDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
-        public MachineLearningSasDatastoreSecrets()
+        public MachineLearningSasDatastoreSecrets() : base(SecretsType.Sas)
         {
-            SecretsType = SecretsType.Sas;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSasDatastoreSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sasToken"> Storage container SAS token. </param>
-        internal MachineLearningSasDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sasToken) : base(secretsType, serializedAdditionalRawData)
+        internal MachineLearningSasDatastoreSecrets(SecretsType secretsType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sasToken) : base(secretsType, additionalBinaryDataProperties)
         {
             SasToken = sasToken;
-            SecretsType = secretsType;
         }
 
         /// <summary> Storage container SAS token. </summary>

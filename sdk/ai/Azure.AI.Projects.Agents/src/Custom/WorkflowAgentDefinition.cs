@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.Projects.Agents;
 
 [CodeGenType("WorkflowAgentDefinition")]
-[Experimental("AAIP001")]
 public partial class WorkflowAgentDefinition
 {
     /// <summary> Initializes a new instance of <see cref="WorkflowAgentDefinition"/>. </summary>
@@ -16,6 +15,10 @@ public partial class WorkflowAgentDefinition
     {
     }
 
+    /// <summary>
+    /// Creates a new <see cref="WorkflowAgentDefinition"/> from a workflow YAML document.
+    /// </summary>
+    /// <param name="workflowYamlDocument">The workflow defined as a YAML document.</param>
     public static WorkflowAgentDefinition FromYaml(string workflowYamlDocument)
     {
         return new()

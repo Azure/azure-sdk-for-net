@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
+                    systemData = ModelReaderWriter.Read<ResourceManager.Models.SystemData>(BinaryData.FromString(property.Value.GetRawText()), ModelSerializationExtensions.WireOptions, AzureResourceManagerChaosContext.Default);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

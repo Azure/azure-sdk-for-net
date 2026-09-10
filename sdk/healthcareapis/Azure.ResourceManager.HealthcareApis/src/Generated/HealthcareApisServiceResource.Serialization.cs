@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
+    /// <summary></summary>
     public partial class HealthcareApisServiceResource : IJsonModel<HealthcareApisServiceData>
     {
-        private static HealthcareApisServiceData s_dataDeserializationInstance;
-        private static HealthcareApisServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthcareApisServiceData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthcareApisServiceData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthcareApisServiceData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthcareApisServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)Data).Write(writer, options);
 
-        HealthcareApisServiceData IJsonModel<HealthcareApisServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthcareApisServiceData IJsonModel<HealthcareApisServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthcareApisServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisServiceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthcareApisServiceData IPersistableModel<HealthcareApisServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisServiceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
 
-        string IPersistableModel<HealthcareApisServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthcareApisServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

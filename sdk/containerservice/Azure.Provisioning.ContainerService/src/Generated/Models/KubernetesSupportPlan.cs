@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum KubernetesSupportPlan
     {
         /// <summary> Support for the version is the same as for the open source Kubernetes offering. Official Kubernetes open source community support versions for 1 year after release. </summary>
-        KubernetesOfficial,
+        KubernetesOfficial = 0,
         /// <summary> Support for the version extended past the KubernetesOfficial support of 1 year. AKS continues to patch CVEs for another 1 year, for a total of 2 years of support. </summary>
-        AKSLongTermSupport
+        AKSLongTermSupport = 1
     }
 }

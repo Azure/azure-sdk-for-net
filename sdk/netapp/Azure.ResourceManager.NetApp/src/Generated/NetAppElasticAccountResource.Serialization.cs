@@ -5,25 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticAccountResource : IJsonModel<NetAppElasticAccountData>
+    /// <summary></summary>
+    public partial class NetAppElasticAccountResource : ArmResource, IJsonModel<NetAppElasticAccountData>
     {
-        private static NetAppElasticAccountData s_dataDeserializationInstance;
-        private static NetAppElasticAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NetAppElasticAccountData> s_dataDeserializationInstance;
 
-        void IJsonModel<NetAppElasticAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticAccountData>)Data).Write(writer, options);
-
-        NetAppElasticAccountData IJsonModel<NetAppElasticAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticAccountData>)DataDeserializationInstance).Create(ref reader, options);
-
-        BinaryData IPersistableModel<NetAppElasticAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticAccountData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        NetAppElasticAccountData IPersistableModel<NetAppElasticAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticAccountData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        string IPersistableModel<NetAppElasticAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppElasticAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        private static IJsonModel<NetAppElasticAccountData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticAccountData();
     }
 }

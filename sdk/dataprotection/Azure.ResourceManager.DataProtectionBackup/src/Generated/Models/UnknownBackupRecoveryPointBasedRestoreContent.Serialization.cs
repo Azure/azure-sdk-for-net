@@ -56,7 +56,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupRecoveryPointBasedRestoreContent IPersistableModel<BackupRecoveryPointBasedRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options) => (UnknownBackupRecoveryPointBasedRestoreContent)PersistableModelCreateCore(data, options);
+        BackupRecoveryPointBasedRestoreContent IPersistableModel<BackupRecoveryPointBasedRestoreContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (BackupRecoveryPointBasedRestoreContent)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BackupRecoveryPointBasedRestoreContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -84,7 +87,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BackupRecoveryPointBasedRestoreContent IJsonModel<BackupRecoveryPointBasedRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UnknownBackupRecoveryPointBasedRestoreContent)JsonModelCreateCore(ref reader, options);
+        BackupRecoveryPointBasedRestoreContent IJsonModel<BackupRecoveryPointBasedRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (BackupRecoveryPointBasedRestoreContent)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

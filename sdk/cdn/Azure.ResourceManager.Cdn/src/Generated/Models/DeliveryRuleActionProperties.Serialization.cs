@@ -7,18 +7,60 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Cdn;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
+    /// <summary>
+    /// Defines the parameters for delivery rule actions
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriRedirectActionProperties"/>, <see cref="UriSigningActionProperties"/>, <see cref="OriginGroupOverrideActionProperties"/>, <see cref="DeliveryRuleEdgeActionProperties"/>, <see cref="UriRewriteActionProperties"/>, <see cref="HeaderActionProperties"/>, <see cref="CacheExpirationActionProperties"/>, <see cref="CacheKeyQueryStringActionProperties"/>, and <see cref="RouteConfigurationOverrideActionProperties"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownDeliveryRuleActionParameters))]
-    public partial class DeliveryRuleActionProperties : IUtf8JsonSerializable, IJsonModel<DeliveryRuleActionProperties>
+    public abstract partial class DeliveryRuleActionProperties : IJsonModel<DeliveryRuleActionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryRuleActionProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeliveryRuleActionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDeliveryRuleActionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DeliveryRuleActionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeliveryRuleActionProperties IPersistableModel<DeliveryRuleActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeliveryRuleActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeliveryRuleActionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,23 +72,22 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(TypeName.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,101 +96,56 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        DeliveryRuleActionProperties IJsonModel<DeliveryRuleActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeliveryRuleActionProperties IJsonModel<DeliveryRuleActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DeliveryRuleActionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDeliveryRuleActionProperties(document.RootElement, options);
         }
 
-        internal static DeliveryRuleActionProperties DeserializeDeliveryRuleActionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DeliveryRuleActionProperties DeserializeDeliveryRuleActionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("typeName", out JsonElement discriminator))
+            if (element.TryGetProperty("typeName"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "DeliveryRuleCacheExpirationActionParameters": return CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(element, options);
-                    case "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters": return CacheKeyQueryStringActionProperties.DeserializeCacheKeyQueryStringActionProperties(element, options);
-                    case "DeliveryRuleHeaderActionParameters": return HeaderActionProperties.DeserializeHeaderActionProperties(element, options);
-                    case "DeliveryRuleOriginGroupOverrideActionParameters": return OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(element, options);
-                    case "DeliveryRuleRouteConfigurationOverrideActionParameters": return RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(element, options);
-                    case "DeliveryRuleUrlRedirectActionParameters": return UriRedirectActionProperties.DeserializeUriRedirectActionProperties(element, options);
-                    case "DeliveryRuleUrlRewriteActionParameters": return UriRewriteActionProperties.DeserializeUriRewriteActionProperties(element, options);
-                    case "DeliveryRuleUrlSigningActionParameters": return UriSigningActionProperties.DeserializeUriSigningActionProperties(element, options);
+                    case "DeliveryRuleUrlRedirectActionParameters":
+                        return UriRedirectActionProperties.DeserializeUriRedirectActionProperties(element, options);
+                    case "DeliveryRuleUrlSigningActionParameters":
+                        return UriSigningActionProperties.DeserializeUriSigningActionProperties(element, options);
+                    case "DeliveryRuleOriginGroupOverrideActionParameters":
+                        return OriginGroupOverrideActionProperties.DeserializeOriginGroupOverrideActionProperties(element, options);
+                    case "DeliveryRuleEdgeActionParameters":
+                        return DeliveryRuleEdgeActionProperties.DeserializeDeliveryRuleEdgeActionProperties(element, options);
+                    case "DeliveryRuleUrlRewriteActionParameters":
+                        return UriRewriteActionProperties.DeserializeUriRewriteActionProperties(element, options);
+                    case "DeliveryRuleHeaderActionParameters":
+                        return HeaderActionProperties.DeserializeHeaderActionProperties(element, options);
+                    case "DeliveryRuleCacheExpirationActionParameters":
+                        return CacheExpirationActionProperties.DeserializeCacheExpirationActionProperties(element, options);
+                    case "DeliveryRuleCacheKeyQueryStringBehaviorActionParameters":
+                        return CacheKeyQueryStringActionProperties.DeserializeCacheKeyQueryStringActionProperties(element, options);
+                    case "DeliveryRuleRouteConfigurationOverrideActionParameters":
+                        return RouteConfigurationOverrideActionProperties.DeserializeRouteConfigurationOverrideActionProperties(element, options);
                 }
             }
             return UnknownDeliveryRuleActionParameters.DeserializeUnknownDeliveryRuleActionParameters(element, options);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                builder.Append("  typeName: ");
-                builder.AppendLine($"'{TypeName.ToString()}'");
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<DeliveryRuleActionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DeliveryRuleActionProperties IPersistableModel<DeliveryRuleActionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleActionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeliveryRuleActionProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleActionProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DeliveryRuleActionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

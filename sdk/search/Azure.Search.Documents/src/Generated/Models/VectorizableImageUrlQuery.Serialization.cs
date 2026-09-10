@@ -78,7 +78,7 @@ namespace Azure.Search.Documents.Models
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url);
+                writer.WriteStringValue(Url.AbsoluteUri);
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Search.Documents.Models
             int? perDocumentVectorLimit = default;
             VectorQueryKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string url = default;
+            Uri url = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("k"u8))
@@ -191,7 +191,11 @@ namespace Azure.Search.Documents.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (options.Format != "W")

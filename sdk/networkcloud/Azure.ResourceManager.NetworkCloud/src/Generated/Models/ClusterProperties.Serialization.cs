@@ -220,15 +220,35 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
                 ((IJsonModel<Resources.Models.ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(LastSuccessfulVersionUpdateOn))
+            {
+                writer.WritePropertyName("lastSuccessfulVersionUpdateTime"u8);
+                writer.WriteStringValue(LastSuccessfulVersionUpdateOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedCredentials))
+            {
+                writer.WritePropertyName("managedCredentials"u8);
+                writer.WriteStartArray();
+                foreach (string item in ManagedCredentials)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
                 writer.WritePropertyName("manualActionCount"u8);
                 writer.WriteNumberValue(ManualActionCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(SupportExpiresOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
-                writer.WriteStringValue(SupportExpireOn.Value, "O");
+                writer.WriteStringValue(SupportExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
@@ -319,8 +339,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ClusterDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
             Resources.Models.ExtendedLocation hybridAksExtendedLocation = default;
+            DateTimeOffset? lastSuccessfulVersionUpdateOn = default;
+            IReadOnlyList<string> managedCredentials = default;
             long? manualActionCount = default;
-            DateTimeOffset? supportExpireOn = default;
+            DateTimeOffset? supportExpiresOn = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             ClusterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -560,6 +582,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     hybridAksExtendedLocation = ModelReaderWriter.Read<Resources.Models.ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkCloudContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("lastSuccessfulVersionUpdateTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastSuccessfulVersionUpdateOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("managedCredentials"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    managedCredentials = array;
+                    continue;
+                }
                 if (prop.NameEquals("manualActionCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -575,7 +627,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    supportExpireOn = prop.Value.GetDateTimeOffset("O");
+                    supportExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("workloadResourceIds"u8))
@@ -641,8 +693,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 detailedStatus,
                 detailedStatusMessage,
                 hybridAksExtendedLocation,
+                lastSuccessfulVersionUpdateOn,
+                managedCredentials ?? new ChangeTrackingList<string>(),
                 manualActionCount,
-                supportExpireOn,
+                supportExpiresOn,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 provisioningState,
                 additionalBinaryDataProperties);

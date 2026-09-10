@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dell.Storage;
 using Azure.ResourceManager.Models;
@@ -38,11 +36,11 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties: null,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity);
+                identity,
+                default);
         }
 
         /// <param name="capacity"> Capacity for Dell Filesystem, Will be received as part of Job Status. </param>
@@ -65,13 +63,24 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 provisioningState,
                 delegatedSubnetId,
                 delegatedSubnetCidr,
-                userEmail is null ? default : new DellFileSystemUserDetails(userEmail, null),
+                userEmail is null ? default : new DellFileSystemUserDetails(userEmail, default),
                 fileSystemId,
                 smartConnectFqdn,
                 oneFsUri,
                 dellReferenceNumber,
                 encryption,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> Capacity for a Resource. </summary>
+        /// <param name="min"> Minimum Capacity. </param>
+        /// <param name="max"> Maximum Capacity. </param>
+        /// <param name="incremental"> Units to be increased. </param>
+        /// <param name="current"> Current Capacity of the resource. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemCapacity"/> instance for mocking. </returns>
+        public static DellFileSystemCapacity DellFileSystemCapacity(string min = default, string max = default, string incremental = default, string current = default)
+        {
+            return new DellFileSystemCapacity(min, max, incremental, current, default);
         }
 
         /// <summary> MarketplaceDetails of Dell FileSystem resource. </summary>
@@ -97,7 +106,34 @@ namespace Azure.ResourceManager.Dell.Storage.Models
                 marketplaceSubscriptionStatus,
                 endDate,
                 termUnit,
-                additionalBinaryDataProperties: null);
+                default);
+        }
+
+        /// <summary> User Details of Dell FileSystem resource. </summary>
+        /// <param name="email"> User Email. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemUserDetails"/> instance for mocking. </returns>
+        public static DellFileSystemUserDetails DellFileSystemUserDetails(string email = default)
+        {
+            return new DellFileSystemUserDetails(email, default);
+        }
+
+        /// <summary> EncryptionProperties of Dell FileSystem resource. </summary>
+        /// <param name="encryptionType"> Encryption Type - MMK/CMK. </param>
+        /// <param name="keyUri"> Versioned Encryption Key Url - Only when user opts for CMK and hence optional. </param>
+        /// <param name="encryptionIdentityProperties"> Identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault - Only when user opts for CMK and hence optional. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemEncryptionProperties"/> instance for mocking. </returns>
+        public static DellFileSystemEncryptionProperties DellFileSystemEncryptionProperties(DellFileSystemEncryptionType encryptionType = default, string keyUri = default, DellFileSystemEncryptionIdentityProperties encryptionIdentityProperties = default)
+        {
+            return new DellFileSystemEncryptionProperties(encryptionType, keyUri, encryptionIdentityProperties, default);
+        }
+
+        /// <summary> EncryptionIdentityProperties of Dell FileSystem resource. </summary>
+        /// <param name="identityType"> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </param>
+        /// <param name="identityResourceId"> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemEncryptionIdentityProperties"/> instance for mocking. </returns>
+        public static DellFileSystemEncryptionIdentityProperties DellFileSystemEncryptionIdentityProperties(DellFileSystemEncryptionIdentityType? identityType = default, ResourceIdentifier identityResourceId = default)
+        {
+            return new DellFileSystemEncryptionIdentityProperties(identityType, identityResourceId, default);
         }
 
         /// <summary> The type used for update operations of the FileSystemResource. </summary>
@@ -109,7 +145,36 @@ namespace Azure.ResourceManager.Dell.Storage.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DellFileSystemPatch(identity, tags, properties, additionalBinaryDataProperties: null);
+            return new DellFileSystemPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the FileSystemResource. </summary>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="capacity"> Capacity for Dell Filesystem. </param>
+        /// <param name="encryption"> Encryption Details of the resource. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemPatchProperties"/> instance for mocking. </returns>
+        public static DellFileSystemPatchProperties DellFileSystemPatchProperties(ResourceIdentifier delegatedSubnetId = default, DellFileSystemCapacity capacity = default, DellFileSystemEncryptionPatchProperties encryption = default)
+        {
+            return new DellFileSystemPatchProperties(delegatedSubnetId, capacity, encryption, default);
+        }
+
+        /// <summary> EncryptionUpdateProperties of Dell FileSystem resource. </summary>
+        /// <param name="encryptionType"> Encryption Type - MMK/CMK. </param>
+        /// <param name="keyUri"> Versioned Encryption Key Url - Only when user opts for CMK and hence optional. </param>
+        /// <param name="encryptionIdentityProperties"> Identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault - Only when user opts for CMK and hence optional. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemEncryptionPatchProperties"/> instance for mocking. </returns>
+        public static DellFileSystemEncryptionPatchProperties DellFileSystemEncryptionPatchProperties(DellFileSystemEncryptionType? encryptionType = default, string keyUri = default, DellFileSystemEncryptionIdentityPatchProperties encryptionIdentityProperties = default)
+        {
+            return new DellFileSystemEncryptionPatchProperties(encryptionType, keyUri, encryptionIdentityProperties, default);
+        }
+
+        /// <summary> EncryptionIdentityUpdateProperties of Dell FileSystem resource. </summary>
+        /// <param name="identityType"> Identity type - SystemAssigned/UserAssigned - Only UserAssigned is supported now. </param>
+        /// <param name="identityResourceId"> User-assigned identity resource id - Only when user opts for UserAssigned identity and hence optional. </param>
+        /// <returns> A new <see cref="Models.DellFileSystemEncryptionIdentityPatchProperties"/> instance for mocking. </returns>
+        public static DellFileSystemEncryptionIdentityPatchProperties DellFileSystemEncryptionIdentityPatchProperties(DellFileSystemEncryptionIdentityType? identityType = default, ResourceIdentifier identityResourceId = default)
+        {
+            return new DellFileSystemEncryptionIdentityPatchProperties(identityType, identityResourceId, default);
         }
     }
 }

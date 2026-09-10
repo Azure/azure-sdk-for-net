@@ -9,6 +9,9 @@ namespace Azure.AI.Projects.Evaluation;
 [CodeGenType("CodeBasedEvaluatorDefinition")]
 public partial class CodeBasedEvaluatorDefinition
 {
+    /// <summary> Initializes a new instance of <see cref="CodeBasedEvaluatorDefinition"/>. </summary>
+    /// <param name="codeText"> Inline code text for the evaluator. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="codeText"/> is null. </exception>
     public CodeBasedEvaluatorDefinition(string codeText) : this()
     {
         Argument.AssertNotNull(codeText, nameof(codeText));

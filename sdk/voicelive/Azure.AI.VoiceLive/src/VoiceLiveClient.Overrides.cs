@@ -28,7 +28,7 @@ namespace Azure.AI.VoiceLive
             _endpoint = endpoint;
             _keyCredential = credential;
             Options = options;
-            ClientDiagnostics = new ClientDiagnostics(options.InternalOptions, true);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of VoiceLiveClient. </summary>
@@ -46,7 +46,7 @@ namespace Azure.AI.VoiceLive
             _endpoint = endpoint;
             _tokenCredential = credential;
             Options = options;
-            ClientDiagnostics = new ClientDiagnostics(options.InternalOptions, true);
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 #pragma warning restore AZC0007 // A websocket based client cannot use the pipeline provided by the typical options class, and showing it will cause confusion.
     }

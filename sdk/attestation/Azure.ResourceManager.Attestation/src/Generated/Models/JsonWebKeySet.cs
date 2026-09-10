@@ -45,6 +45,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IList<AttestationJsonWebKey> Keys { get; }
+        public IList<AttestationJsonWebKey> Keys { get; } = new ChangeTrackingList<AttestationJsonWebKey>();
     }
 }

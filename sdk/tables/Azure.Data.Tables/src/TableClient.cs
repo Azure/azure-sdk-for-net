@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -702,7 +703,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retrieve all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if an unexpected error occurs.</exception>
@@ -719,7 +720,7 @@ namespace Azure.Data.Tables
         /// <typeparam name="T">A custom model type that implements <see cref="ITableEntity" /> or an instance of <see cref="TableEntity"/>.</typeparam>
         /// <param name="partitionKey">The partitionKey that identifies the table entity.</param>
         /// <param name="rowKey">The rowKey that identifies the table entity.</param>
-        /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retreive all properties.</param>
+        /// <param name="select">Selects which set of entity properties to return in the result set. Pass <c>null</c> to retrieve all properties.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns> The <see cref="NullableResponse{T}"/> whose <c>HasValue</c> property will return <c>true</c> if the entity existed, otherwise <c>false</c>.</returns>
         /// <exception cref="RequestFailedException">Exception thrown if an unexpected error occurs.</exception>
@@ -792,12 +793,22 @@ namespace Azure.Data.Tables
                 {
                     return new NoValueResponse<T>(response);
                 }
-                else
+
+                Dictionary<string, object> dictionary;
+                try
                 {
-                    var dictionary = SerializationHelpers.ResponseToDictionary(response);
-                    var result = dictionary.ToTableEntity<T>();
-                    return Response.FromValue(result, response);
+                    dictionary = SerializationHelpers.ResponseToDictionary(response);
                 }
+                catch (Exception ex) when (ex is ArgumentNullException or JsonException)
+                {
+                    throw new RequestFailedException(
+                        response.Status,
+                        $"The response body was unexpectedly missing or malformed, so the entity could not be read from the response. HTTP {response.Status} ({response.ReasonPhrase}).",
+                        ex);
+                }
+
+                var result = dictionary.ToTableEntity<T>();
+                return Response.FromValue(result, response);
             }
             catch (Exception ex)
             {

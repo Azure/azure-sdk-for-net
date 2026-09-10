@@ -60,7 +60,7 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ItemCodeInterpreterToolCallStatus.InProgress));
         Assert.That(item.Code, Is.EqualTo(""));
     }
 
@@ -159,7 +159,7 @@ public class OutputItemCodeInterpreterCallBuilderTests
         var evt = builder.EmitDone();
         var item = XAssert.IsType<OutputItemCodeInterpreterToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(OutputItemCodeInterpreterToolCallStatus.Completed));
+        Assert.That(item.Status, Is.EqualTo(ItemCodeInterpreterToolCallStatus.Completed));
         Assert.That(item.Code, Is.EqualTo("print('hi')"));
     }
 
