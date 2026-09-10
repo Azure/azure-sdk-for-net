@@ -200,6 +200,107 @@ namespace Azure.Storage.Blobs.Test
         [LiveOnly]
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task DownloadToAsync_LayoutAwareRouting_SingleShot_NoLayoutFetchOrRouting()
+        {
+            // Layout-aware routing is Enabled, but the initial transfer size covers
+            // the entire blob, so PartitionedDownloader takes the one-shot path and
+            // returns before ever constructing the layout cache. No Get Blob Layout
+            // call and no layout-routed chunk requests should be issued.
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(oauthService);
+
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 20 * Constants.MB;
+            var data = GetRandomBuffer(size);
+            int blockSize = 4 * Constants.MB;
+            var blockIds = new List<string>();
+            for (int offset = 0; offset < data.Length; offset += blockSize)
+            {
+                int count = Math.Min(blockSize, data.Length - offset);
+                string blockId = Convert.ToBase64String(
+                    Encoding.UTF8.GetBytes(blockIds.Count.ToString("d6")));
+                blockIds.Add(blockId);
+                using var blockStream = new MemoryStream(data, offset, count);
+                await blob.StageBlockAsync(blockId, blockStream);
+            }
+            await blob.CommitBlockListAsync(blockIds);
+
+            DataLocalityTrackingPolicy trackingPolicy = new DataLocalityTrackingPolicy();
+            BlobClientOptions options = GetOptions();
+            options.AddPolicy(trackingPolicy, HttpPipelinePosition.PerCall);
+
+            // Sessions disabled so no session negotiation traffic participates.
+            options.SessionOptions = new SessionOptions { SessionMode = SessionMode.Disabled };
+
+            BlobUriBuilder uriBuilder = new BlobUriBuilder(new Uri(Tenants.TestConfigOAuth.BlobServiceEndpoint))
+            {
+                BlobContainerName = blob.BlobContainerName,
+                BlobName = blob.Name
+            };
+            BlockBlobClient downloadBlob = InstrumentClient(new BlockBlobClient(
+                uriBuilder.ToUri(),
+                TestEnvironment.Credential,
+                options));
+
+            string originalHost = downloadBlob.Uri.Host;
+
+            // Act
+            using (var resultStream = new MemoryStream())
+            {
+                BlobDownloadToOptions downloadOptions = new()
+                {
+                    LayoutAwareRouting = LayoutAwareRouting.Enabled,
+                    TransferOptions = new StorageTransferOptions
+                    {
+                        MaximumConcurrency = 10,
+                        // Initial transfer size exceeds the blob length, so the
+                        // first request returns the whole blob in one shot.
+                        InitialTransferSize = 32 * Constants.MB,
+                        MaximumTransferSize = 5 * Constants.MB
+                    },
+                };
+                await downloadBlob.DownloadToAsync(resultStream, downloadOptions);
+                Assert.AreEqual(data.Length, resultStream.Length);
+                TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+            }
+
+            // Assert - the blob was fetched in exactly one request.
+            Assert.AreEqual(1, trackingPolicy.TrackedRequests.Count,
+                "Expected a single Get Blob request when the initial transfer size covers the entire blob. " +
+                $"Observed ranges: [{string.Join(", ", trackingPolicy.TrackedRequests.Select(r => r.RangeHeaderValue ?? "<none>"))}]");
+
+            // Assert - the service actually offered layout on the initial response.
+            Assert.IsNotEmpty(trackingPolicy.ResponseDownloadHints,
+                "Expected the service to return an 'x-ms-download-hint' header on the download response.");
+            Assert.IsTrue(
+                trackingPolicy.ResponseDownloadHints.Any(h => (DownloadHint)h == DownloadHint.Layout),
+                $"Expected a download hint of '{DownloadHint.Layout}', but saw: " +
+                $"[{string.Join(", ", trackingPolicy.ResponseDownloadHints)}]. " +
+                "Layout must be available for this test to be meaningful.");
+
+            // Assert - no Get Blob Layout call was ever issued, despite the hint.
+            Assert.IsEmpty(
+                trackingPolicy.TrackedRequests.Where(r => r.IsGetLayout).ToList(),
+                "Expected no Get Blob Layout request when the initial transfer size covers the entire blob.");
+
+            // Assert - DataLocalityPolicy never rewrote a request to a layout
+            // endpoint (a rewrite is indicated by the presence of a Host header).
+            List<DataLocalityTrackingPolicy.RequestInfo> rewrittenRequests =
+                trackingPolicy.TrackedRequests.Where(r => r.HasHostHeader).ToList();
+            Assert.IsEmpty(rewrittenRequests,
+                "Expected no layout-aware routing when the blob is downloaded in a single chunk.");
+
+            // Every request should have stayed on the original endpoint.
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in trackingPolicy.TrackedRequests)
+            {
+                Assert.AreEqual(originalHost, req.RequestHost,
+                    $"Request URI host should remain the original host '{originalHost}'.");
+            }
+        }
+
+        [LiveOnly]
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task DownloadToAsync_LayoutAwareRouting_WithRequestAsserts_Sas()
         {
             // Same end-to-end shape as the shared-key variant, but the download
@@ -1913,6 +2014,25 @@ namespace Azure.Storage.Blobs.Test
         {
             public List<RequestInfo> TrackedRequests { get; } = new();
 
+            /// <summary>
+            /// Raw "x-ms-download-hint" values observed on responses. Absent
+            /// headers are not recorded.
+            /// </summary>
+            public List<string> ResponseDownloadHints { get; } = new();
+
+            public override void OnReceivedResponse(HttpMessage message)
+            {
+                if (message.Response != null
+                    && message.Response.Headers.TryGetValue("x-ms-download-hint", out string hint)
+                    && !string.IsNullOrEmpty(hint))
+                {
+                    lock (ResponseDownloadHints)
+                    {
+                        ResponseDownloadHints.Add(hint);
+                    }
+                }
+            }
+
             public override void OnSendingRequest(HttpMessage message)
             {
                 bool hasHostHeader = message.Request.Headers.TryGetValue("Host", out string hostValue);
@@ -1929,6 +2049,7 @@ namespace Azure.Storage.Blobs.Test
                     {
                         RequestHost = message.Request.Uri.Host,
                         RequestPort = message.Request.Uri.Port,
+                        RequestQuery = message.Request.Uri.Query ?? string.Empty,
                         HasHostHeader = hasHostHeader,
                         HostHeaderValue = hostValue ?? string.Empty,
                         RangeHeaderValue = rangeValue,
@@ -1940,9 +2061,18 @@ namespace Azure.Storage.Blobs.Test
             {
                 public string RequestHost { get; set; }
                 public int RequestPort { get; set; }
+                public string RequestQuery { get; set; }
                 public bool HasHostHeader { get; set; }
                 public string HostHeaderValue { get; set; }
                 public string RangeHeaderValue { get; set; }
+
+                /// <summary>
+                /// True when this request is a Get Blob Layout call, identified by
+                /// the "comp=layout" query parameter.
+                /// </summary>
+                public bool IsGetLayout =>
+                    !string.IsNullOrEmpty(RequestQuery)
+                    && RequestQuery.IndexOf("comp=layout", StringComparison.OrdinalIgnoreCase) >= 0;
 
                 /// <summary>
                 /// Parses the range header value (e.g. "bytes=8388608-13631487" or
