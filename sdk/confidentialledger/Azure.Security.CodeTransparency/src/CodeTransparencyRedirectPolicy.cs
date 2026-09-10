@@ -39,6 +39,7 @@ namespace Azure.Security.CodeTransparency
     {
         private const int MaxRedirects = 5;
         private const int SeeOtherStatusCode = 303;
+        internal const string SuppressSeeOtherRedirectProperty = "CodeTransparency.SuppressSeeOtherRedirect";
 
         /// <summary>
         /// Status a Code Transparency node returns for a read of a not-yet-committed entry (its
@@ -138,7 +139,7 @@ namespace Azure.Security.CodeTransparency
 
             int redirectCount = 0;
 
-            while (IsRedirectResponse(message.Response.Status))
+            while (ShouldFollowRedirect(message))
             {
                 if (++redirectCount > MaxRedirects)
                 {
@@ -295,6 +296,14 @@ namespace Azure.Security.CodeTransparency
         private static bool IsRedirectResponse(int statusCode)
         {
             return statusCode == SeeOtherStatusCode || statusCode == 307 || statusCode == 308;
+        }
+
+        private static bool ShouldFollowRedirect(HttpMessage message)
+        {
+            return !(message.Response.Status == SeeOtherStatusCode &&
+                message.TryGetProperty(SuppressSeeOtherRedirectProperty, out object suppressRedirect) &&
+                suppressRedirect is true) &&
+                IsRedirectResponse(message.Response.Status);
         }
 
         private static Uri BuildRedirectUri(Uri requestUri, string location)

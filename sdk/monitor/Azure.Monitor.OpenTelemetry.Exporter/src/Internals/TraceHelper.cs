@@ -24,7 +24,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorTrace(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, string instrumentationKey, float sampleRate)
         {
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            // One item per Activity plus the optional resource envelope. Activity events add more, so
+            // this is a floor rather than an exact size, but it removes the seven intermediate arrays
+            // a default-capacity list discards on the way to holding a full batch.
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>(capacity: (int)batchActivity.Count + 1);
             TelemetryItem telemetryItem;
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
 
