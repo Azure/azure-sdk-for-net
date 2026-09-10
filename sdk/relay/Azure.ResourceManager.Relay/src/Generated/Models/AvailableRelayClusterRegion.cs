@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Relay.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> Initializes a new instance of <see cref="AvailableRelayClusterRegion"/>. </summary>
         /// <param name="location"> The Azure region location. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableRelayClusterRegion(string location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableRelayClusterRegion(AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure region location. </summary>
-        public string Location { get; }
+        public AzureLocation? Location { get; }
     }
 }

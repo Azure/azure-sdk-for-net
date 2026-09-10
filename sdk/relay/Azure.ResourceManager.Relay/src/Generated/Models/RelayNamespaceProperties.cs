@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, TlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayNamespaceProperties(string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, IList<RelayPrivateEndpointConnectionData> privateEndpointConnections, RelayPublicNetworkAccess? publicNetworkAccess, RelayTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -83,6 +83,6 @@ namespace Azure.ResourceManager.Relay.Models
         /// The service defaults to 1.2 when the property is omitted.
         /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
         /// </summary>
-        public TlsVersion? MinimumTlsVersion { get; set; }
+        public RelayTlsVersion? MinimumTlsVersion { get; set; }
     }
 }

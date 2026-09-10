@@ -209,16 +209,16 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="metricId"> The metric ID of the Relay cluster. </param>
         /// <param name="status"> The status of the Relay cluster. </param>
         /// <param name="supportsScaling"> Indicates whether the Relay cluster supports capacity scaling. </param>
-        /// <param name="zoneRedundant"> Indicates whether the Relay cluster was created as zone redundant. </param>
+        /// <param name="isZoneRedundant"> Indicates whether the Relay cluster was created as zone redundant. </param>
         /// <returns> A new <see cref="Models.RelayClusterProperties"/> instance for mocking. </returns>
-        public static RelayClusterProperties RelayClusterProperties(RelayClusterProvisioningState? provisioningState = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? zoneRedundant = default)
+        public static RelayClusterProperties RelayClusterProperties(RelayClusterProvisioningState? provisioningState = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? isZoneRedundant = default)
         {
             return new RelayClusterProperties(
                 provisioningState,
                 metricId,
                 status,
                 supportsScaling,
-                zoneRedundant,
+                isZoneRedundant,
                 default);
         }
 
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="sku"> The Relay cluster SKU. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayClusterPatch"/> instance for mocking. </returns>
-        public static RelayClusterPatch RelayClusterPatch(RelayClusterSkuUpdate sku = default, IDictionary<string, string> tags = default)
+        public static RelayClusterPatch RelayClusterPatch(RelayClusterSkuPatch sku = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="name"> Name of the Relay cluster SKU. </param>
         /// <param name="tier"> Tier of the Relay cluster SKU. </param>
         /// <param name="capacity"> The number of capacity units assigned to the Relay cluster. </param>
-        /// <returns> A new <see cref="Models.RelayClusterSkuUpdate"/> instance for mocking. </returns>
-        public static RelayClusterSkuUpdate RelayClusterSkuUpdate(RelayClusterSkuName? name = default, RelayClusterSkuTier? tier = default, int? capacity = default)
+        /// <returns> A new <see cref="Models.RelayClusterSkuPatch"/> instance for mocking. </returns>
+        public static RelayClusterSkuPatch RelayClusterSkuPatch(RelayClusterSkuName? name = default, RelayClusterSkuTier? tier = default, int? capacity = default)
         {
-            return new RelayClusterSkuUpdate(name, tier, capacity, default);
+            return new RelayClusterSkuPatch(name, tier, capacity, default);
         }
 
         /// <summary> The response from listing Relay namespace references in a cluster. </summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> A region with available Relay cluster capacity. </summary>
         /// <param name="location"> The Azure region location. </param>
         /// <returns> A new <see cref="Models.AvailableRelayClusterRegion"/> instance for mocking. </returns>
-        public static AvailableRelayClusterRegion AvailableRelayClusterRegion(string location = default)
+        public static AvailableRelayClusterRegion AvailableRelayClusterRegion(AzureLocation? location = default)
         {
             return new AvailableRelayClusterRegion(location, default);
         }
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, TlsVersion? minimumTlsVersion = default, RelaySku sku = default)
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelayTlsVersion? minimumTlsVersion = default, RelaySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, TlsVersion? minimumTlsVersion = default, IDictionary<string, string> tags = default)
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelayTlsVersion? minimumTlsVersion = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Relay;
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> TLS versions supported by Relay namespaces. </summary>
-    public readonly partial struct TlsVersion : IEquatable<TlsVersion>
+    public readonly partial struct RelayTlsVersion : IEquatable<RelayTlsVersion>
     {
         private readonly string _value;
         /// <summary> TLS version 1.2. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// <summary> TLS version 1.3. </summary>
         private const string _13Value = "1.3";
 
-        /// <summary> Initializes a new instance of <see cref="TlsVersion"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public TlsVersion(string value)
+        public RelayTlsVersion(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.Relay.Models
         }
 
         /// <summary> TLS version 1.2. </summary>
-        public static TlsVersion _12 { get; } = new TlsVersion(_12Value);
+        public static RelayTlsVersion _12 { get; } = new RelayTlsVersion(_12Value);
 
         /// <summary> TLS version 1.3. </summary>
-        public static TlsVersion _13 { get; } = new TlsVersion(_13Value);
+        public static RelayTlsVersion _13 { get; } = new RelayTlsVersion(_13Value);
 
-        /// <summary> Determines if two <see cref="TlsVersion"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="RelayTlsVersion"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(TlsVersion left, TlsVersion right) => left.Equals(right);
+        public static bool operator ==(RelayTlsVersion left, RelayTlsVersion right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="TlsVersion"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="RelayTlsVersion"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(TlsVersion left, TlsVersion right) => !left.Equals(right);
+        public static bool operator !=(RelayTlsVersion left, RelayTlsVersion right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="TlsVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RelayTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TlsVersion(string value) => new TlsVersion(value);
+        public static implicit operator RelayTlsVersion(string value) => new RelayTlsVersion(value);
 
-        /// <summary> Converts a string to a <see cref="TlsVersion"/>. </summary>
+        /// <summary> Converts a string to a <see cref="RelayTlsVersion"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator TlsVersion?(string value) => value == null ? null : new TlsVersion(value);
+        public static implicit operator RelayTlsVersion?(string value) => value == null ? null : new RelayTlsVersion(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is TlsVersion other && Equals(other);
+        public override bool Equals(object obj) => obj is RelayTlsVersion other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(TlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(RelayTlsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

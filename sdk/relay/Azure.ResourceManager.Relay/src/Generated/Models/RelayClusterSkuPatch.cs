@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> Mutable Relay cluster SKU parameters. </summary>
-    public partial class RelayClusterSkuUpdate
+    public partial class RelayClusterSkuPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RelayClusterSkuUpdate"/>. </summary>
-        public RelayClusterSkuUpdate()
+        /// <summary> Initializes a new instance of <see cref="RelayClusterSkuPatch"/>. </summary>
+        public RelayClusterSkuPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RelayClusterSkuUpdate"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RelayClusterSkuPatch"/>. </summary>
         /// <param name="name"> Name of the Relay cluster SKU. </param>
         /// <param name="tier"> Tier of the Relay cluster SKU. </param>
         /// <param name="capacity"> The number of capacity units assigned to the Relay cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayClusterSkuUpdate(RelayClusterSkuName? name, RelayClusterSkuTier? tier, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayClusterSkuPatch(RelayClusterSkuName? name, RelayClusterSkuTier? tier, int? capacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;

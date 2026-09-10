@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WritePropertyName("supportsScaling"u8);
                 writer.WriteBooleanValue(SupportsScaling.Value);
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Relay.Models
             string metricId = default;
             string status = default;
             bool? supportsScaling = default;
-            bool? zoneRedundant = default;
+            bool? isZoneRedundant = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    zoneRedundant = prop.Value.GetBoolean();
+                    isZoneRedundant = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Relay.Models
                 metricId,
                 status,
                 supportsScaling,
-                zoneRedundant,
+                isZoneRedundant,
                 additionalBinaryDataProperties);
         }
     }

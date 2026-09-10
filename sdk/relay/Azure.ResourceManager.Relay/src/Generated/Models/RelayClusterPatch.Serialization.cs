@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Relay.Models
             {
                 return null;
             }
-            RelayClusterSkuUpdate sku = default;
+            RelayClusterSkuPatch sku = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Relay.Models
                     {
                         continue;
                     }
-                    sku = RelayClusterSkuUpdate.DeserializeRelayClusterSkuUpdate(prop.Value, options);
+                    sku = RelayClusterSkuPatch.DeserializeRelayClusterSkuPatch(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

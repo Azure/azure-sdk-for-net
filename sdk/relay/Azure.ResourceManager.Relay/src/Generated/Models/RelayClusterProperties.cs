@@ -26,15 +26,15 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="metricId"> The metric ID of the Relay cluster. </param>
         /// <param name="status"> The status of the Relay cluster. </param>
         /// <param name="supportsScaling"> Indicates whether the Relay cluster supports capacity scaling. </param>
-        /// <param name="zoneRedundant"> Indicates whether the Relay cluster was created as zone redundant. </param>
+        /// <param name="isZoneRedundant"> Indicates whether the Relay cluster was created as zone redundant. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayClusterProperties(RelayClusterProvisioningState? provisioningState, string metricId, string status, bool? supportsScaling, bool? zoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayClusterProperties(RelayClusterProvisioningState? provisioningState, string metricId, string status, bool? supportsScaling, bool? isZoneRedundant, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             MetricId = metricId;
             Status = status;
             SupportsScaling = supportsScaling;
-            ZoneRedundant = zoneRedundant;
+            IsZoneRedundant = isZoneRedundant;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Relay.Models
         public bool? SupportsScaling { get; }
 
         /// <summary> Indicates whether the Relay cluster was created as zone redundant. </summary>
-        public bool? ZoneRedundant { get; set; }
+        public bool? IsZoneRedundant { get; set; }
     }
 }

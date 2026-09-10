@@ -14,51 +14,51 @@ using Azure.ResourceManager.Relay;
 namespace Azure.ResourceManager.Relay.Models
 {
     /// <summary> Mutable Relay cluster SKU parameters. </summary>
-    public partial class RelayClusterSkuUpdate : IJsonModel<RelayClusterSkuUpdate>
+    public partial class RelayClusterSkuPatch : IJsonModel<RelayClusterSkuPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelayClusterSkuUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RelayClusterSkuPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRelayClusterSkuUpdate(document.RootElement, options);
+                        return DeserializeRelayClusterSkuPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayClusterSkuUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayClusterSkuPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RelayClusterSkuUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayClusterSkuPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RelayClusterSkuUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RelayClusterSkuPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayClusterSkuUpdate IPersistableModel<RelayClusterSkuUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RelayClusterSkuPatch IPersistableModel<RelayClusterSkuPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RelayClusterSkuUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RelayClusterSkuPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RelayClusterSkuUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RelayClusterSkuPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayClusterSkuUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayClusterSkuPatch)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Name))
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RelayClusterSkuUpdate IJsonModel<RelayClusterSkuUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RelayClusterSkuPatch IJsonModel<RelayClusterSkuPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RelayClusterSkuUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RelayClusterSkuPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RelayClusterSkuPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayClusterSkuUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayClusterSkuPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRelayClusterSkuUpdate(document.RootElement, options);
+            return DeserializeRelayClusterSkuPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RelayClusterSkuUpdate DeserializeRelayClusterSkuUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static RelayClusterSkuPatch DeserializeRelayClusterSkuPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Relay.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RelayClusterSkuUpdate(name, tier, capacity, additionalBinaryDataProperties);
+            return new RelayClusterSkuPatch(name, tier, capacity, additionalBinaryDataProperties);
         }
     }
 }

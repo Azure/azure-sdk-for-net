@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="sku"> The Relay cluster SKU. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RelayClusterPatch(RelayClusterSkuUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RelayClusterPatch(RelayClusterSkuPatch sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Tags = tags;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Relay.Models
         }
 
         /// <summary> The Relay cluster SKU. </summary>
-        public RelayClusterSkuUpdate Sku { get; set; }
+        public RelayClusterSkuPatch Sku { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

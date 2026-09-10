@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Relay
     [ModelReaderWriterBuildable(typeof(RelayClusterSkuDetails))]
     [ModelReaderWriterBuildable(typeof(RelayClusterSkuInfo))]
     [ModelReaderWriterBuildable(typeof(RelayClusterSkuListResult))]
-    [ModelReaderWriterBuildable(typeof(RelayClusterSkuUpdate))]
+    [ModelReaderWriterBuildable(typeof(RelayClusterSkuPatch))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionAuthorizationRuleResource))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionData))]
     [ModelReaderWriterBuildable(typeof(RelayHybridConnectionResource))]
