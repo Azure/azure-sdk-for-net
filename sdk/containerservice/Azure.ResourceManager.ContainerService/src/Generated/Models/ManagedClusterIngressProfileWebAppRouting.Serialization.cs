@@ -110,11 +110,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("identity"u8);
                 writer.WriteObjectValue(Identity, options);
             }
-            if (Optional.IsDefined(DefaultDomain))
-            {
-                writer.WritePropertyName("defaultDomain"u8);
-                writer.WriteObjectValue(DefaultDomain, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,7 +157,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<ResourceIdentifier> dnsZoneResourceIds = default;
             ManagedClusterIngressProfileNginx nginx = default;
             ContainerServiceUserAssignedIdentity identity = default;
-            ManagedClusterIngressDefaultDomainProfile defaultDomain = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -223,15 +217,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                     identity = ContainerServiceUserAssignedIdentity.DeserializeContainerServiceUserAssignedIdentity(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("defaultDomain"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    defaultDomain = ManagedClusterIngressDefaultDomainProfile.DeserializeManagedClusterIngressDefaultDomainProfile(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -243,7 +228,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 dnsZoneResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 nginx,
                 identity,
-                defaultDomain,
                 additionalBinaryDataProperties);
         }
     }

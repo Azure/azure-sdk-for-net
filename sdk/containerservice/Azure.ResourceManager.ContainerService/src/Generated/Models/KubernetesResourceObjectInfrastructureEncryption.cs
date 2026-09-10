@@ -17,8 +17,6 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly string _value;
         /// <summary> Encryption at rest of Kubernetes resource objects using service-managed keys is enabled. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
         private const string EnabledValue = "Enabled";
-        /// <summary> Encryption at rest of Kubernetes resource objects using service-managed keys is disabled. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
-        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="KubernetesResourceObjectInfrastructureEncryption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,9 +30,6 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Encryption at rest of Kubernetes resource objects using service-managed keys is enabled. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
         public static KubernetesResourceObjectInfrastructureEncryption Enabled { get; } = new KubernetesResourceObjectInfrastructureEncryption(EnabledValue);
-
-        /// <summary> Encryption at rest of Kubernetes resource objects using service-managed keys is disabled. More information on this can be found under https://aka.ms/aks/kubernetesResourceObjectEncryption. </summary>
-        public static KubernetesResourceObjectInfrastructureEncryption Disabled { get; } = new KubernetesResourceObjectInfrastructureEncryption(DisabledValue);
 
         /// <summary> Determines if two <see cref="KubernetesResourceObjectInfrastructureEncryption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
