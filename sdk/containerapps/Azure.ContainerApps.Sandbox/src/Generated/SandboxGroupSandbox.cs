@@ -23,7 +23,7 @@ namespace Azure.ContainerApps.Sandbox
         private readonly string _resourceGroupName;
         private readonly string _sandboxGroupName;
         private readonly string _id;
-        private SandboxGroupSandboxFiles _cachedSandboxGroupSandboxFiles;
+        private SandboxFiles _cachedSandboxFiles;
         private SandboxGroupSandboxNetworking _cachedSandboxGroupSandboxNetworking;
         private SandboxGroupSandboxStreams _cachedSandboxGroupSandboxStreams;
 
@@ -1259,10 +1259,10 @@ namespace Azure.ContainerApps.Sandbox
             return Response.FromValue((SandboxSnapshot)result, result);
         }
 
-        /// <summary> Initializes a new instance of SandboxGroupSandboxFiles. </summary>
-        public virtual SandboxGroupSandboxFiles GetSandboxGroupSandboxFilesClient()
+        /// <summary> Initializes a new instance of SandboxFiles. </summary>
+        public virtual SandboxFiles GetSandboxFilesClient()
         {
-            return Volatile.Read(ref _cachedSandboxGroupSandboxFiles) ?? Interlocked.CompareExchange(ref _cachedSandboxGroupSandboxFiles, new SandboxGroupSandboxFiles(
+            return Volatile.Read(ref _cachedSandboxFiles) ?? Interlocked.CompareExchange(ref _cachedSandboxFiles, new SandboxFiles(
                 ClientDiagnostics,
                 Pipeline,
                 _endpoint,
@@ -1270,7 +1270,7 @@ namespace Azure.ContainerApps.Sandbox
                 _subscriptionId,
                 _resourceGroupName,
                 _sandboxGroupName,
-                _id), null) ?? _cachedSandboxGroupSandboxFiles;
+                _id), null) ?? _cachedSandboxFiles;
         }
 
         /// <summary> Initializes a new instance of SandboxGroupSandboxNetworking. </summary>

@@ -14,8 +14,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ContainerApps.Sandbox
 {
-    /// <summary> The SandboxGroupSandboxFiles sub-client. </summary>
-    public partial class SandboxGroupSandboxFiles
+    /// <summary> The SandboxFiles sub-client. </summary>
+    public partial class SandboxFiles
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
@@ -24,12 +24,12 @@ namespace Azure.ContainerApps.Sandbox
         private readonly string _sandboxGroupName;
         private readonly string _id;
 
-        /// <summary> Initializes a new instance of SandboxGroupSandboxFiles for mocking. </summary>
-        protected SandboxGroupSandboxFiles()
+        /// <summary> Initializes a new instance of SandboxFiles for mocking. </summary>
+        protected SandboxFiles()
         {
         }
 
-        /// <summary> Initializes a new instance of SandboxGroupSandboxFiles. </summary>
+        /// <summary> Initializes a new instance of SandboxFiles. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -38,7 +38,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <param name="resourceGroupName"></param>
         /// <param name="sandboxGroupName"></param>
         /// <param name="id"></param>
-        internal SandboxGroupSandboxFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string subscriptionId, string resourceGroupName, string sandboxGroupName, string id)
+        internal SandboxFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion, string subscriptionId, string resourceGroupName, string sandboxGroupName, string id)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -72,7 +72,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteSandboxFile(string path, bool? recursive, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DeleteSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.DeleteSandboxFile");
             scope.Start();
             try
             {
@@ -102,7 +102,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteSandboxFileAsync(string path, bool? recursive, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.DeleteSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.DeleteSandboxFile");
             scope.Start();
             try
             {
@@ -157,7 +157,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxFile(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFile");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxFileAsync(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFile");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxFilesList(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFilesList");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFilesList");
             scope.Start();
             try
             {
@@ -286,7 +286,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxFilesListAsync(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFilesList");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFilesList");
             scope.Start();
             try
             {
@@ -349,7 +349,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSandboxFileStat(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFileStat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFileStat");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSandboxFileStatAsync(string path, string containerName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.GetSandboxFileStat");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.GetSandboxFileStat");
             scope.Start();
             try
             {
@@ -444,7 +444,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response PostSandboxFileMkdir(RequestContent content, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.PostSandboxFileMkdir");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PostSandboxFileMkdir");
             scope.Start();
             try
             {
@@ -476,7 +476,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PostSandboxFileMkdirAsync(RequestContent content, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.PostSandboxFileMkdir");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PostSandboxFileMkdir");
             scope.Start();
             try
             {
@@ -540,7 +540,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual Response PutSandboxFile(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.PutSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PutSandboxFile");
             scope.Start();
             try
             {
@@ -577,7 +577,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> PutSandboxFileAsync(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupSandboxFiles.PutSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PutSandboxFile");
             scope.Start();
             try
             {

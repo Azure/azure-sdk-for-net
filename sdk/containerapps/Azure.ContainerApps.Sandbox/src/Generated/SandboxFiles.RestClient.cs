@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class SandboxGroupSandboxFiles
+    public partial class SandboxFiles
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
