@@ -21,6 +21,8 @@ on:
 if: |
   github.event_name == 'workflow_dispatch'
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
+imports:
+  - shared/copilot-cli-version-probe-guard.md
 checkout:
   sparse-checkout: |
     .github
@@ -211,7 +213,10 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: mgmt-review-${{ github.event.inputs.pr_number }}
+concurrency:
+  group: mgmt-review-${{ github.event.inputs.pr_number }}
+  queue: max
+  job-discriminator: ${{ github.event.inputs.pr_number || github.run_id }}
 ---
 
 # Azure .NET Management SDK PR Review

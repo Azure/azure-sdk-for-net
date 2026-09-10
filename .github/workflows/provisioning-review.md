@@ -21,6 +21,8 @@ on:
 if: |
   github.event_name == 'workflow_dispatch'
 description: "Review Azure SDK for .NET provisioning library PRs using checked-in provisioning review guidance"
+imports:
+  - shared/copilot-cli-version-probe-guard.md
 checkout:
   sparse-checkout: |
     .github
@@ -221,7 +223,10 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: provisioning-review-${{ github.event.inputs.pr_number }}
+concurrency:
+  group: provisioning-review-${{ github.event.inputs.pr_number }}
+  queue: max
+  job-discriminator: ${{ github.event.inputs.pr_number || github.run_id }}
 ---
 
 # Azure .NET Provisioning SDK PR Review
