@@ -83,7 +83,7 @@ public partial class MemorySearchOptions : IJsonModel<MemorySearchOptions>
                 {
                     continue;
                 }
-                resultOptions = ModelReaderWriter.Read<MemorySearchResultOptions>(BinaryData.FromString(prop.Value.GetRawText()), options, AzureAIProjectsContext.Default);
+                resultOptions = ModelReaderWriter.Read<MemorySearchResultOptions>(BinaryData.FromString(prop.Value.GetRawText()), options, AzureAIExtensionsOpenAIContext.Default);
 
                 continue;
             }
