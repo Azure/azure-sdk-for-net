@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "Colors",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Encode.Array.Colors",
       "valueType": {
         "$id": "2",
@@ -69,6 +70,7 @@
       "$id": "6",
       "kind": "enum",
       "name": "ColorsExtensibleEnum",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Encode.Array.ColorsExtensibleEnum",
       "valueType": {
         "$id": "7",
@@ -544,6 +546,7 @@
       "$id": "59",
       "kind": "model",
       "name": "CommaDelimitedArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedArrayProperty",
       "usage": "Input,Output,Json",
@@ -559,6 +562,7 @@
           "$id": "60",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "61",
@@ -595,6 +599,7 @@
       "$id": "63",
       "kind": "model",
       "name": "SpaceDelimitedArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedArrayProperty",
       "usage": "Input,Output,Json",
@@ -610,6 +615,7 @@
           "$id": "64",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "61"
@@ -635,6 +641,7 @@
       "$id": "65",
       "kind": "model",
       "name": "PipeDelimitedArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedArrayProperty",
       "usage": "Input,Output,Json",
@@ -650,6 +657,7 @@
           "$id": "66",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "61"
@@ -675,6 +683,7 @@
       "$id": "67",
       "kind": "model",
       "name": "NewlineDelimitedArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedArrayProperty",
       "usage": "Input,Output,Json",
@@ -690,6 +699,7 @@
           "$id": "68",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "61"
@@ -715,6 +725,7 @@
       "$id": "69",
       "kind": "model",
       "name": "CommaDelimitedEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -730,6 +741,7 @@
           "$id": "70",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "71",
@@ -762,6 +774,7 @@
       "$id": "72",
       "kind": "model",
       "name": "SpaceDelimitedEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -777,6 +790,7 @@
           "$id": "73",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "71"
@@ -802,6 +816,7 @@
       "$id": "74",
       "kind": "model",
       "name": "PipeDelimitedEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -817,6 +832,7 @@
           "$id": "75",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "71"
@@ -842,6 +858,7 @@
       "$id": "76",
       "kind": "model",
       "name": "NewlineDelimitedEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -857,6 +874,7 @@
           "$id": "77",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "71"
@@ -882,6 +900,7 @@
       "$id": "78",
       "kind": "model",
       "name": "CommaDelimitedExtensibleEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.CommaDelimitedExtensibleEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -897,6 +916,7 @@
           "$id": "79",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "80",
@@ -929,6 +949,7 @@
       "$id": "81",
       "kind": "model",
       "name": "SpaceDelimitedExtensibleEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.SpaceDelimitedExtensibleEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -944,6 +965,7 @@
           "$id": "82",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "80"
@@ -969,6 +991,7 @@
       "$id": "83",
       "kind": "model",
       "name": "PipeDelimitedExtensibleEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.PipeDelimitedExtensibleEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -984,6 +1007,7 @@
           "$id": "84",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "80"
@@ -1009,6 +1033,7 @@
       "$id": "85",
       "kind": "model",
       "name": "NewlineDelimitedExtensibleEnumArrayProperty",
+      "apiVersions": [],
       "namespace": "Encode.Array",
       "crossLanguageDefinitionId": "Encode.Array.NewlineDelimitedExtensibleEnumArrayProperty",
       "usage": "Input,Output,Json",
@@ -1024,6 +1049,7 @@
           "$id": "86",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$ref": "80"

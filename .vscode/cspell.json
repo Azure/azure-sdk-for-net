@@ -245,12 +245,6 @@
       ]
     },
     {
-      "filename": "**/sdk/astronomer/**/*.cs",
-      "words": [
-        "astro"
-      ]
-    },
-    {
       "filename": "**/sdk/automanage/**/*.cs",
       "words": [
         "hcrp"
@@ -772,13 +766,6 @@
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
       ]
     },
     {

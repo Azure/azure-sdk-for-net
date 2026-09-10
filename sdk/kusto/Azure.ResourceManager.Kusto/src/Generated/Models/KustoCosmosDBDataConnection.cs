@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="kind"> Kind of the endpoint for the data connection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties of the CosmosDb data connection. </param>
-        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDbDataConnectionProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
+        internal KustoCosmosDBDataConnection(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, DataConnectionKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CosmosDBDataConnectionProperties properties) : base(id, name, resourceType, systemData, location, kind, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> The properties of the CosmosDb data connection. </summary>
         [WirePath("properties")]
-        internal CosmosDbDataConnectionProperties Properties { get; set; }
+        internal CosmosDBDataConnectionProperties Properties { get; set; }
 
         /// <summary> The case-sensitive name of the existing target table in your cluster. Retrieved data is ingested into this table. </summary>
         [WirePath("properties.tableName")]
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.TableName = value;
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.MappingRuleName = value;
             }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.ManagedIdentityResourceId = value;
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBAccountResourceId = value;
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBDatabase = value;
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBContainer = value;
             }
@@ -163,15 +163,15 @@ namespace Azure.ResourceManager.Kusto.Models
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

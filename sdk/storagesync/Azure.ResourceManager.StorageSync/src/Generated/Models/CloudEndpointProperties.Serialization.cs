@@ -125,6 +125,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("changeEnumerationStatus"u8);
                 writer.WriteObjectValue(ChangeEnumerationStatus, options);
             }
+            if (Optional.IsDefined(ChangeEnumerationIntervalDays))
+            {
+                writer.WritePropertyName("changeEnumerationIntervalDays"u8);
+                writer.WriteNumberValue(ChangeEnumerationIntervalDays.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             string lastWorkflowId = default;
             string lastOperationName = default;
             CloudEndpointChangeEnumerationStatus changeEnumerationStatus = default;
+            int? changeEnumerationIntervalDays = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -242,6 +248,15 @@ namespace Azure.ResourceManager.StorageSync.Models
                     changeEnumerationStatus = CloudEndpointChangeEnumerationStatus.DeserializeCloudEndpointChangeEnumerationStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("changeEnumerationIntervalDays"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    changeEnumerationIntervalDays = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -258,6 +273,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 lastWorkflowId,
                 lastOperationName,
                 changeEnumerationStatus,
+                changeEnumerationIntervalDays,
                 additionalBinaryDataProperties);
         }
     }

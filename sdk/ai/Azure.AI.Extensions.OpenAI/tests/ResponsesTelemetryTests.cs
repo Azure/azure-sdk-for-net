@@ -13,6 +13,7 @@ using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Conversations;
 using OpenAI.Responses;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
@@ -198,8 +199,8 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         AIProjectClient projectClient = GetTestProjectClient();
         var conversationsClient = projectClient.ProjectOpenAIClient.GetProjectConversationsClient();
 
-        ClientResult<ProjectConversation> result = await conversationsClient.CreateProjectConversationAsync();
-        ProjectConversation conversation = result.Value;
+        ClientResult<ConversationResource> result = await conversationsClient.CreateProjectConversationAsync();
+        ConversationResource conversation = result.Value;
 
         Assert.That(conversation, Is.Not.Null);
         Assert.That(conversation.Id, Is.Not.Null.And.Not.Empty);

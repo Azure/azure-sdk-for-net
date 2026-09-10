@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiresOn"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(Owner))
             {
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangeOn))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangedOn))
             {
                 writer.WritePropertyName("lastComplianceStateChangeAt"u8);
-                writer.WriteStringValue(LastComplianceStateChangeOn.Value, "O");
+                writer.WriteStringValue(LastComplianceStateChangedOn.Value, "O");
             }
             if (Optional.IsDefined(AssessOn))
             {
@@ -189,12 +189,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             ResourceIdentifier policyAssignmentId = default;
             string policyDefinitionReferenceId = default;
             PolicyComplianceState? complianceState = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string owner = default;
             string comments = default;
             IList<AttestationEvidence> evidence = default;
             string provisioningState = default;
-            DateTimeOffset? lastComplianceStateChangeOn = default;
+            DateTimeOffset? lastComplianceStateChangedOn = default;
             DateTimeOffset? assessOn = default;
             BinaryData metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("owner"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastComplianceStateChangeOn = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceStateChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("assessmentDate"u8))
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 policyAssignmentId,
                 policyDefinitionReferenceId,
                 complianceState,
-                expireOn,
+                expiresOn,
                 owner,
                 comments,
                 evidence ?? new ChangeTrackingList<AttestationEvidence>(),
                 provisioningState,
-                lastComplianceStateChangeOn,
+                lastComplianceStateChangedOn,
                 assessOn,
                 metadata,
                 additionalBinaryDataProperties);

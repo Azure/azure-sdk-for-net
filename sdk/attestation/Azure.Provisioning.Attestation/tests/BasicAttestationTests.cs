@@ -44,12 +44,12 @@ public class BasicAttestationTests
 
             resource provider 'Microsoft.Attestation/attestationProviders@2021-06-01' = {
               name: take('provider-${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
               properties: {
                 publicNetworkAccess: 'Enabled'
+              }
+              tags: {
+                environment: 'test'
               }
             }
             """);

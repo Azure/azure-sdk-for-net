@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dns.Models
             if (Optional.IsDefined(TargetResource))
             {
                 writer.WritePropertyName("targetResource"u8);
-                ((IJsonModel<WritableSubResource>)TargetResource).Write(writer, options);
+                writer.WriteObjectValue(TargetResource, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Dns.Models
                 return null;
             }
             IReadOnlyList<WritableSubResource> dnsResources = default;
-            WritableSubResource targetResource = default;
+            DnsSubResourceInfo targetResource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    targetResource = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default);
+                    targetResource = DnsSubResourceInfo.DeserializeDnsSubResourceInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

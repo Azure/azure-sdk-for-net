@@ -153,7 +153,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<BackupGenericProtectedItem>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
-            _parent = DefineResource<BackupProtectionContainer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BackupProtectionContainer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

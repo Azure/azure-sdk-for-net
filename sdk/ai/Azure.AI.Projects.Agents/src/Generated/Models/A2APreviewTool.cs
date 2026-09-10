@@ -43,6 +43,13 @@ namespace Azure.AI.Projects.Agents
             SendCredentialsForAgentCard = sendCredentialsForAgentCard;
         }
 
+        /// <summary> Initializes a new instance of <see cref="A2APreviewTool"/>. </summary>
+        /// <param name="baseUri"> Base URL of the agent. </param>
+        public A2APreviewTool(Uri baseUri) : this()
+        {
+            BaseUri = baseUri;
+        }
+
         /// <summary>
         /// The connection ID in the project for the A2A server.
         /// The connection stores authentication and other connection details needed to connect to the A2A server.

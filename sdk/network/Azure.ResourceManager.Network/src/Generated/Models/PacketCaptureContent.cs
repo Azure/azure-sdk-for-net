@@ -141,14 +141,5 @@ namespace Azure.ResourceManager.Network.Models
                 return Properties.CaptureSettings;
             }
         }
-
-        /// <summary> Gets or sets the IsContinuousCapture. </summary>
-        public bool? IsContinuousCapture
-        {
-            get
-            {
-                return Properties.IsContinuousCapture;
-            }
-        }
     }
 }

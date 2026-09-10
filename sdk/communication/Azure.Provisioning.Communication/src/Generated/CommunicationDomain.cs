@@ -240,7 +240,7 @@ namespace Azure.Provisioning.Communication
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DomainProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<EmailService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EmailService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

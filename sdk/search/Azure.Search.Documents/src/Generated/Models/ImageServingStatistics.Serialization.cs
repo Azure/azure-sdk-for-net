@@ -94,6 +94,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("verbalizationUsed"u8);
                 writer.WriteBooleanValue(VerbalizationUsed.Value);
             }
+            if (Optional.IsCollectionDefined(ServedImages))
+            {
+                writer.WritePropertyName("servedImages"u8);
+                writer.WriteStartArray();
+                foreach (ServedImage item in ServedImages)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +150,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             int? imagesSentToModel = default;
             long? totalImageSizeBytes = default;
             bool? verbalizationUsed = default;
+            IList<ServedImage> servedImages = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +190,32 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     verbalizationUsed = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("servedImages"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ServedImage> array = new List<ServedImage>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ServedImage.DeserializeServedImage(item, options));
+                    }
+                    servedImages = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ImageServingStatistics(imagesRetrieved, imagesSentToModel, totalImageSizeBytes, verbalizationUsed, additionalBinaryDataProperties);
+            return new ImageServingStatistics(
+                imagesRetrieved,
+                imagesSentToModel,
+                totalImageSizeBytes,
+                verbalizationUsed,
+                servedImages ?? new ChangeTrackingList<ServedImage>(),
+                additionalBinaryDataProperties);
         }
     }
 }

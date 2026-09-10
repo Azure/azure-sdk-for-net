@@ -175,6 +175,21 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(SourceKubeSelectorGroups))
+            {
+                writer.WritePropertyName("sourceKubeSelectorGroups"u8);
+                writer.WriteStartArray();
+                foreach (string item in SourceKubeSelectorGroups)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(TerminateTLS))
             {
                 writer.WritePropertyName("terminateTLS"u8);
@@ -243,6 +258,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<string> targetUrls = default;
             IList<string> fqdnTags = default;
             IList<string> sourceIPGroups = default;
+            IList<string> sourceKubeSelectorGroups = default;
             bool? terminateTLS = default;
             IList<string> webCategories = default;
             IList<FirewallPolicyHttpHeaderToInsert> httpHeadersToInsert = default;
@@ -403,6 +419,27 @@ namespace Azure.ResourceManager.Network.Models
                     sourceIPGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("sourceKubeSelectorGroups"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    sourceKubeSelectorGroups = array;
+                    continue;
+                }
                 if (prop.NameEquals("terminateTLS"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -464,6 +501,7 @@ namespace Azure.ResourceManager.Network.Models
                 targetUrls ?? new ChangeTrackingList<string>(),
                 fqdnTags ?? new ChangeTrackingList<string>(),
                 sourceIPGroups ?? new ChangeTrackingList<string>(),
+                sourceKubeSelectorGroups ?? new ChangeTrackingList<string>(),
                 terminateTLS,
                 webCategories ?? new ChangeTrackingList<string>(),
                 httpHeadersToInsert ?? new ChangeTrackingList<FirewallPolicyHttpHeaderToInsert>());

@@ -211,7 +211,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         BrowserAutomation,
         ReminderPreview,
         WorkIQ,
-        FabricIQ
+        FabricIQ,
+        WebIQ
     }
 
     private AzureAISearchToolIndex GetAISearchIndex()
@@ -264,7 +265,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                             fileIds: []
                     ))
             },
-            ToolType.FileSearch =>new FileSearchToolboxTool()
+            ToolType.FileSearch => new FileSearchToolboxTool()
             {
                 Name = "file-search",
                 Description = "Test file search",
@@ -332,6 +333,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "reminder-preview",
                 Description = "Test reminder preview"
             },
+            ToolType.WebIQ => new WebIQPreviewToolboxTool(TestEnvironment.WEBIQ_CONNECTION_ID)
+            {
+                Name = "web-iq",
+                Description = "Test Web IQ",
+                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+            },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return tool;
@@ -369,7 +376,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         {
             agentsClient.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-        List<string> hostedAgents = [..agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
+        List<string> hostedAgents = [.. agentsClient.GetAgents().Select(x => x.Name).Where(x => x.StartsWith(HOSTED_AGENT))];
         foreach (string agentName in hostedAgents)
         {
             await agentsClient.DeleteAgentAsync(agentName, force: true);

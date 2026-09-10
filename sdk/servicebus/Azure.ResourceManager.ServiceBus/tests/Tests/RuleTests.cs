@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
@@ -120,12 +121,29 @@ namespace Azure.ResourceManager.ServiceBus.Tests
                 FilterType = ServiceBusFilterType.CorrelationFilter,
                 CorrelationFilter = new ServiceBusCorrelationFilter()
             };
-            input.CorrelationFilter.ApplicationProperties.Add("stringKey", "stringVal");
-            input.CorrelationFilter.ApplicationProperties.Add("intKey", 5);
-            input.CorrelationFilter.ApplicationProperties.Add("dateTimeKey", Recording.Now.UtcDateTime);
+            string dateTimeValue = Recording.Now.UtcDateTime.ToString("O", CultureInfo.InvariantCulture);
+            input.CorrelationFilter.Properties.Add("stringKey", "stringVal");
+            input.CorrelationFilter.Properties.Add("intKey", "5");
+            input.CorrelationFilter.Properties.Add("dateTimeKey", dateTimeValue);
             ServiceBusRuleResource rule = (await ruleCollection.CreateOrUpdateAsync(WaitUntil.Completed, ruleName, input)).Value;
             Assert.NotNull(rule);
             Assert.AreEqual(rule.Id.Name, ruleName);
+
+            // Assert the values survive the create round-trip. Without this the test
+            // passes even if the service drops the properties or changes their type.
+            // dateTimeKey is compared as a parsed instant on purpose, because the
+            // recorded response can carry fewer fractional digits than were sent.
+            IDictionary<string, string> properties = rule.Data.CorrelationFilter.Properties;
+            foreach (string key in new[] { "stringKey", "intKey", "dateTimeKey" })
+            {
+                Assert.IsTrue(properties.ContainsKey(key), $"correlation filter property '{key}' is missing");
+                Assert.IsNotNull(properties[key], $"correlation filter property '{key}' is null");
+            }
+            Assert.AreEqual("stringVal", properties["stringKey"]);
+            Assert.AreEqual("5", properties["intKey"]);
+            Assert.AreEqual(
+                DateTimeOffset.Parse(dateTimeValue, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind),
+                DateTimeOffset.Parse(properties["dateTimeKey"], CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind));
         }
     }
 }

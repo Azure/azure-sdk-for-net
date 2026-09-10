@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 throw new FormatException($"The model {nameof(HorizonDBFirewallRuleProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIpAddress);
+            writer.WriteStringValue(StartIPAddress);
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIpAddress);
+            writer.WriteStringValue(EndIPAddress);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            string startIpAddress = default;
-            string endIpAddress = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             string description = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 if (prop.NameEquals("startIpAddress"u8))
                 {
-                    startIpAddress = prop.Value.GetString();
+                    startIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endIpAddress"u8))
                 {
-                    endIpAddress = prop.Value.GetString();
+                    endIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBFirewallRuleProperties(startIpAddress, endIpAddress, description, provisioningState, additionalBinaryDataProperties);
+            return new HorizonDBFirewallRuleProperties(startIPAddress, endIPAddress, description, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -137,15 +137,15 @@ namespace Azure.Security.KeyVault.Secrets.Models
                 writer.WritePropertyName("recoveryId"u8);
                 writer.WriteStringValue(RecoveryId);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeDate))
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
                 writer.WritePropertyName("scheduledPurgeDate"u8);
-                writer.WriteNumberValue(ScheduledPurgeDate.Value, "U");
+                writer.WriteNumberValue(ScheduledPurgeOn.Value, "U");
             }
-            if (options.Format != "W" && Optional.IsDefined(DeletedDate))
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
             {
                 writer.WritePropertyName("deletedDate"u8);
-                writer.WriteNumberValue(DeletedDate.Value, "U");
+                writer.WriteNumberValue(DeletedOn.Value, "U");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -198,8 +198,8 @@ namespace Azure.Security.KeyVault.Secrets.Models
             bool? @managed = default;
             string previousVersion = default;
             string recoveryId = default;
-            DateTimeOffset? scheduledPurgeDate = default;
-            DateTimeOffset? deletedDate = default;
+            DateTimeOffset? scheduledPurgeOn = default;
+            DateTimeOffset? deletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -278,7 +278,7 @@ namespace Azure.Security.KeyVault.Secrets.Models
                     {
                         continue;
                     }
-                    scheduledPurgeDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    scheduledPurgeOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("deletedDate"u8))
@@ -287,7 +287,7 @@ namespace Azure.Security.KeyVault.Secrets.Models
                     {
                         continue;
                     }
-                    deletedDate = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    deletedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -305,8 +305,8 @@ namespace Azure.Security.KeyVault.Secrets.Models
                 @managed,
                 previousVersion,
                 recoveryId,
-                scheduledPurgeDate,
-                deletedDate,
+                scheduledPurgeOn,
+                deletedOn,
                 additionalBinaryDataProperties);
         }
     }

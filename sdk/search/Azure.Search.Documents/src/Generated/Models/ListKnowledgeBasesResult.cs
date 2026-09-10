@@ -26,14 +26,19 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="ListKnowledgeBasesResult"/>. </summary>
         /// <param name="value"> The knowledge bases in the service. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListKnowledgeBasesResult(IList<KnowledgeBase> value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListKnowledgeBasesResult(IList<KnowledgeBase> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The knowledge bases in the service. </summary>
         public IList<KnowledgeBase> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }
