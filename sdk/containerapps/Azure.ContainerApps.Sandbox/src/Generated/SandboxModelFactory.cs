@@ -1297,215 +1297,22 @@ namespace Azure.ContainerApps.Sandbox
             return new TelemetryAppSecretRef("AppSecret", secretRef, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Customer-facing connection resource returned by the service. </summary>
-        /// <param name="id"> Connection identifier assigned by the service. </param>
-        /// <param name="name"> Connection name. </param>
-        /// <param name="type"> Connection type. </param>
-        /// <param name="state"> Current connection state. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
-        /// <param name="deletable"> Whether the connection can currently be deleted. </param>
-        /// <param name="usedBySandboxIds"> Sandboxes currently using this connection. </param>
-        /// <param name="policyRules"> Runtime policy rules. </param>
-        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxConnection"/> instance for mocking. </returns>
-        public static SandboxConnection SandboxConnection(string id = default, string name = default, string @type = default, string state = default, IDictionary<string, string> labels = default, DateTimeOffset? createdOn = default, bool? deletable = default, IEnumerable<string> usedBySandboxIds = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            usedBySandboxIds ??= new ChangeTrackingList<string>();
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new SandboxConnection(
-                id,
-                name,
-                @type,
-                state,
-                labels,
-                createdOn,
-                deletable,
-                usedBySandboxIds.ToList(),
-                policyRules.ToList(),
-                enabledToolGroups.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> A runtime policy rule that activates a declared PolicyHookBinding. Supplied per-sandbox at creation time (e.g., "block mail to ceo. </summary>
-        /// <param name="hookId"> References string PolicyHookBinding.Id on a tool. Must match a declared hook. </param>
-        /// <param name="patterns"> Glob patterns to match against extracted field values. For PolicyHookType.FieldValueDenyList: if ANY value matches ANY pattern, the call is blocked. For PolicyHookType.FieldValueAllowList: if ANY value matches NO pattern, the call is blocked. </param>
-        /// <returns> A new <see cref="Sandbox.McpPolicyRule"/> instance for mocking. </returns>
-        public static McpPolicyRule McpPolicyRule(string hookId = default, IEnumerable<string> patterns = default)
-        {
-            patterns ??= new ChangeTrackingList<string>();
-
-            return new McpPolicyRule(hookId, patterns.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating a connection. </summary>
-        /// <param name="name"> Connection name. </param>
-        /// <param name="type"> Connection type. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="parameterValueSetName"> Parameter value set selected when creating the connection. </param>
-        /// <param name="parameterValueSetValues"> Sensitive parameter values supplied when creating the connection. </param>
-        /// <param name="policyRules"> Runtime policy rules. </param>
-        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
-        /// <returns> A new <see cref="Sandbox.CreateConnectionContent"/> instance for mocking. </returns>
-        public static CreateConnectionContent CreateConnectionContent(string name = default, string @type = default, IDictionary<string, string> labels = default, string parameterValueSetName = default, IDictionary<string, string> parameterValueSetValues = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            parameterValueSetValues ??= new ChangeTrackingDictionary<string, string>();
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new CreateConnectionContent(
-                name,
-                @type,
-                labels,
-                parameterValueSetName,
-                parameterValueSetValues,
-                policyRules.ToList(),
-                enabledToolGroups.ToList(),
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> AuthorizeConnectionContent wire model. </summary>
-        /// <param name="parameterValues"> parameterValues value. </param>
-        /// <returns> A new <see cref="Sandbox.AuthorizeConnectionContent"/> instance for mocking. </returns>
-        public static AuthorizeConnectionContent AuthorizeConnectionContent(IDictionary<string, string> parameterValues = default)
-        {
-            parameterValues ??= new ChangeTrackingDictionary<string, string>();
-
-            return new AuthorizeConnectionContent(parameterValues, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> GenerateConsentLinkContent wire model. </summary>
-        /// <param name="redirectUri"> redirectUrl value. </param>
-        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkContent"/> instance for mocking. </returns>
-        public static GenerateConsentLinkContent GenerateConsentLinkContent(string redirectUri = default)
-        {
-            return new GenerateConsentLinkContent(redirectUri, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Consent-link response body. </summary>
-        /// <param name="consentLink"> consentLink value. </param>
-        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkResult"/> instance for mocking. </returns>
-        public static GenerateConsentLinkResult GenerateConsentLinkResult(string consentLink = default)
-        {
-            return new GenerateConsentLinkResult(consentLink, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> UpdatePolicyRulesContent wire model. </summary>
-        /// <param name="policyRules"> policyRules value. </param>
-        /// <param name="enabledToolGroups"> enabledToolGroups value. </param>
-        /// <returns> A new <see cref="Sandbox.UpdatePolicyRulesContent"/> instance for mocking. </returns>
-        public static UpdatePolicyRulesContent UpdatePolicyRulesContent(IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
-        {
-            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
-            enabledToolGroups ??= new ChangeTrackingList<string>();
-
-            return new UpdatePolicyRulesContent(policyRules.ToList(), enabledToolGroups.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Content-package list response body. </summary>
-        /// <param name="value"> value value. </param>
-        /// <returns> A new <see cref="Sandbox.ContentPackageListResult"/> instance for mocking. </returns>
-        public static ContentPackageListResult ContentPackageListResult(IEnumerable<ContentPackage> value = default)
-        {
-            value ??= new ChangeTrackingList<ContentPackage>();
-
-            return new ContentPackageListResult(value.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> ContentPackage wire model. </summary>
-        /// <param name="id"> id value. </param>
-        /// <param name="size"> size value. </param>
+        /// <summary> CommitSandboxContent wire model. </summary>
         /// <param name="labels"> labels value. </param>
-        /// <param name="contentType"> contentType value. </param>
-        /// <param name="createdOn"> createdOn value. </param>
-        /// <returns> A new <see cref="Sandbox.ContentPackage"/> instance for mocking. </returns>
-        public static ContentPackage ContentPackage(string id = default, BinaryData size = default, IDictionary<string, string> labels = default, string contentType = default, DateTimeOffset? createdOn = default)
+        /// <returns> A new <see cref="Sandbox.CommitSandboxContent"/> instance for mocking. </returns>
+        public static CommitSandboxContent CommitSandboxContent(IDictionary<string, string> labels = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ContentPackage(
-                id,
-                size,
-                labels,
-                contentType,
-                createdOn,
-                additionalBinaryDataProperties: null);
+            return new CommitSandboxContent(labels, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
-        /// <param name="name"> Credential name assigned by the service. </param>
-        /// <param name="displayName"> displayName value. </param>
-        /// <param name="provider"> provider value. </param>
-        /// <param name="state"> Current credential state. </param>
-        /// <param name="source"> source value. </param>
-        /// <param name="origin"> Origin of the credential. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredential"/> instance for mocking. </returns>
-        public static SandboxGroupCredential SandboxGroupCredential(string name = default, string displayName = default, SandboxGroupCredentialProvider provider = default, ConnectionState state = default, SandboxGroupCredentialSource source = default, SandboxGroupCredentialOrigin origin = default)
+        /// <summary> Commit-sandbox response body. </summary>
+        /// <param name="diskImage"> diskImage value. </param>
+        /// <returns> A new <see cref="Sandbox.CommitSandboxResult"/> instance for mocking. </returns>
+        public static CommitSandboxResult CommitSandboxResult(DiskImage diskImage = default)
         {
-            return new SandboxGroupCredential(
-                name,
-                displayName,
-                provider,
-                state,
-                source,
-                origin,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Stored source metadata for a sandbox group credential. </summary>
-        /// <param name="kind"> kind value. </param>
-        /// <param name="connectionResourceId"> connectionResourceId value. </param>
-        /// <param name="connectionRefDetails"> connectionRefDetails value. </param>
-        /// <param name="parameterValues"> parameterValues value. </param>
-        /// <param name="connectionId"> connectionId value. </param>
-        /// <param name="connectionType"> connectionType value. </param>
-        /// <param name="connectionName"> connectionName value. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialSource"/> instance for mocking. </returns>
-        public static SandboxGroupCredentialSource SandboxGroupCredentialSource(SandboxGroupCredentialSourceKind kind = default, string connectionResourceId = default, SandboxGroupCredentialConnectionRefDetails connectionRefDetails = default, IDictionary<string, string> parameterValues = default, string connectionId = default, string connectionType = default, string connectionName = default)
-        {
-            parameterValues ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SandboxGroupCredentialSource(
-                kind,
-                connectionResourceId,
-                connectionRefDetails,
-                parameterValues,
-                connectionId,
-                connectionType,
-                connectionName,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
-        /// <param name="authentication"> authentication value. </param>
-        /// <param name="tokenExchangeEndpoint"> tokenExchangeEndpoint value. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialConnectionRefDetails"/> instance for mocking. </returns>
-        public static SandboxGroupCredentialConnectionRefDetails SandboxGroupCredentialConnectionRefDetails(GatewayConnectionAuthRecord authentication = default, string tokenExchangeEndpoint = default)
-        {
-            return new SandboxGroupCredentialConnectionRefDetails(authentication, tokenExchangeEndpoint, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Authentication configuration for a gateway connection (CosmosDB storage). </summary>
-        /// <param name="type"> type value. </param>
-        /// <param name="identityResourceId"> identityResourceId value. </param>
-        /// <returns> A new <see cref="Sandbox.GatewayConnectionAuthRecord"/> instance for mocking. </returns>
-        public static GatewayConnectionAuthRecord GatewayConnectionAuthRecord(GatewayConnectionAuthType @type = default, string identityResourceId = default)
-        {
-            return new GatewayConnectionAuthRecord(@type, identityResourceId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating or updating a sandbox-group credential. </summary>
-        /// <param name="displayName"> displayName value. </param>
-        /// <param name="provider"> provider value. </param>
-        /// <param name="source"> source value. </param>
-        /// <returns> A new <see cref="Sandbox.CreateSandboxGroupCredentialContent"/> instance for mocking. </returns>
-        public static CreateSandboxGroupCredentialContent CreateSandboxGroupCredentialContent(string displayName = default, SandboxGroupCredentialProvider provider = default, SandboxGroupCredentialSource source = default)
-        {
-            return new CreateSandboxGroupCredentialContent(displayName, provider, source, additionalBinaryDataProperties: null);
+            return new CommitSandboxResult(diskImage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Customer-facing disk image resource returned by the service. </summary>
@@ -1552,409 +1359,6 @@ namespace Azure.ContainerApps.Sandbox
         public static DiskImageStatus DiskImageStatus(string state = default, string errorMessage = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
         {
             return new DiskImageStatus(state, errorMessage, createdOn, updatedOn, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> PublicDiskImage wire model. </summary>
-        /// <param name="name"> name value. </param>
-        /// <param name="status"> status value. </param>
-        /// <returns> A new <see cref="Sandbox.PublicDiskImage"/> instance for mocking. </returns>
-        public static PublicDiskImage PublicDiskImage(string name = default, DiskImageStatus status = default)
-        {
-            return new PublicDiskImage(name, status, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Request body for creating a disk image. </summary>
-        /// <param name="source"> Source used to create the disk image. </param>
-        /// <param name="name"> Disk image name. </param>
-        /// <param name="labels"> Customer-defined labels. </param>
-        /// <param name="vnetConnectionName"> VNet connection used while creating the disk image. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageContent"/> instance for mocking. </returns>
-        public static CreateDiskImageContent CreateDiskImageContent(CreateDiskImageSource source = default, string name = default, IDictionary<string, string> labels = default, string vnetConnectionName = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CreateDiskImageContent(source, name, labels, vnetConnectionName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// CreateDiskImageSource wire model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> and <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/>.
-        /// </summary>
-        /// <param name="kind"> The disk image source type. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSource"/> instance for mocking. </returns>
-        public static CreateDiskImageSource CreateDiskImageSource(string kind = default)
-        {
-            return new UnknownCreateDiskImageSource(new CreateDiskImageSourceKind(kind), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> CreateDiskImageSourceBlobSource wire model. </summary>
-        /// <param name="blobSourceUri"> blobSourceUri value. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> instance for mocking. </returns>
-        public static CreateDiskImageSourceBlobSource CreateDiskImageSourceBlobSource(string blobSourceUri = default)
-        {
-            return new CreateDiskImageSourceBlobSource(CreateDiskImageSourceKind.Blob, additionalBinaryDataProperties: null, blobSourceUri);
-        }
-
-        /// <summary> CreateDiskImageSourceRegistrySource wire model. </summary>
-        /// <param name="imageReference"> imageUrl value. </param>
-        /// <param name="authentication"> Authentication used to access the registry. </param>
-        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/> instance for mocking. </returns>
-        public static CreateDiskImageSourceRegistrySource CreateDiskImageSourceRegistrySource(string imageReference = default, RegistryAuthentication authentication = default)
-        {
-            return new CreateDiskImageSourceRegistrySource(CreateDiskImageSourceKind.Registry, additionalBinaryDataProperties: null, imageReference, authentication);
-        }
-
-        /// <summary> Registry authentication options. Exactly one option must be supplied. </summary>
-        /// <param name="registryCredentials"> Username and token authentication. </param>
-        /// <param name="identity"> Managed identity authentication. </param>
-        /// <returns> A new <see cref="Sandbox.RegistryAuthentication"/> instance for mocking. </returns>
-        public static RegistryAuthentication RegistryAuthentication(RegistryCredentials registryCredentials = default, ManagedIdentityAuthentication identity = default)
-        {
-            return new RegistryAuthentication(registryCredentials, identity, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> RegistryCredentials wire model. </summary>
-        /// <param name="username"> username value. </param>
-        /// <param name="token"> token value. </param>
-        /// <returns> A new <see cref="Sandbox.RegistryCredentials"/> instance for mocking. </returns>
-        public static RegistryCredentials RegistryCredentials(string username = default, string token = default)
-        {
-            return new RegistryCredentials(username, token, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Named egress policy list response body. </summary>
-        /// <param name="egressPolicies"> egressPolicies value. </param>
-        /// <returns> A new <see cref="Sandbox.NamedEgressPolicyListResult"/> instance for mocking. </returns>
-        public static NamedEgressPolicyListResult NamedEgressPolicyListResult(IEnumerable<NamedEgressPolicy> egressPolicies = default)
-        {
-            egressPolicies ??= new ChangeTrackingList<NamedEgressPolicy>();
-
-            return new NamedEgressPolicyListResult(egressPolicies.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Customer-facing named egress policy resource. </summary>
-        /// <param name="id"> Policy identifier assigned by the service. </param>
-        /// <param name="name"> name value. </param>
-        /// <param name="description"> description value. </param>
-        /// <param name="defaultAction"> defaultAction value. </param>
-        /// <param name="enforcementMode"> enforcementMode value. </param>
-        /// <param name="rules"> rules value. </param>
-        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
-        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
-        /// <returns> A new <see cref="Sandbox.NamedEgressPolicy"/> instance for mocking. </returns>
-        public static NamedEgressPolicy NamedEgressPolicy(string id = default, string name = default, string description = default, EgressPolicyAction defaultAction = default, EgressPolicyEnforcementMode? enforcementMode = default, IEnumerable<EgressPolicyRule> rules = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
-        {
-            rules ??= new ChangeTrackingList<EgressPolicyRule>();
-
-            return new NamedEgressPolicy(
-                id,
-                name,
-                description,
-                defaultAction,
-                enforcementMode,
-                rules.ToList(),
-                createdOn,
-                updatedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> File-operation response body. </summary>
-        /// <param name="success"> success value. </param>
-        /// <param name="error"> error value. </param>
-        /// <param name="message"> message value. </param>
-        /// <returns> A new <see cref="Sandbox.FileOpStatusResult"/> instance for mocking. </returns>
-        public static FileOpStatusResult FileOpStatusResult(bool success = default, string error = default, string message = default)
-        {
-            return new FileOpStatusResult(success, error, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> FileStreamResult wire model. </summary>
-        /// <param name="fileStream"> fileStream value. </param>
-        /// <param name="contentType"> contentType value. </param>
-        /// <param name="fileDownloadName"> fileDownloadName value. </param>
-        /// <param name="lastModified"> lastModified value. </param>
-        /// <param name="entityTag"> entityTag value. </param>
-        /// <param name="enableRangeProcessing"> enableRangeProcessing value. </param>
-        /// <returns> A new <see cref="Sandbox.FileStreamResult"/> instance for mocking. </returns>
-        public static FileStreamResult FileStreamResult(BinaryData fileStream = default, string contentType = default, string fileDownloadName = default, DateTimeOffset? lastModified = default, EntityTagHeaderValue entityTag = default, bool? enableRangeProcessing = default)
-        {
-            return new FileStreamResult(
-                fileStream,
-                contentType,
-                fileDownloadName,
-                lastModified,
-                entityTag,
-                enableRangeProcessing,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> EntityTagHeaderValue wire model. </summary>
-        /// <param name="tag"> tag value. </param>
-        /// <param name="isWeak"> isWeak value. </param>
-        /// <returns> A new <see cref="Sandbox.EntityTagHeaderValue"/> instance for mocking. </returns>
-        public static EntityTagHeaderValue EntityTagHeaderValue(StringSegment tag = default, bool? isWeak = default)
-        {
-            return new EntityTagHeaderValue(tag, isWeak, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> StringSegment wire model. </summary>
-        /// <param name="buffer"> buffer value. </param>
-        /// <param name="offset"> offset value. </param>
-        /// <param name="length"> length value. </param>
-        /// <param name="value"> value value. </param>
-        /// <param name="hasValue"> hasValue value. </param>
-        /// <returns> A new <see cref="Sandbox.StringSegment"/> instance for mocking. </returns>
-        public static StringSegment StringSegment(string buffer = default, int? offset = default, int? length = default, string value = default, bool? hasValue = default)
-        {
-            return new StringSegment(
-                buffer,
-                offset,
-                length,
-                value,
-                hasValue,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Directory-listing response body. </summary>
-        /// <param name="path"> path value. </param>
-        /// <param name="entries"> entries value. </param>
-        /// <returns> A new <see cref="Sandbox.DirListingResult"/> instance for mocking. </returns>
-        public static DirListingResult DirListingResult(string path = default, IEnumerable<FileInfo> entries = default)
-        {
-            entries ??= new ChangeTrackingList<FileInfo>();
-
-            return new DirListingResult(path, entries.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> FileInfo wire model. </summary>
-        /// <param name="name"> name value. </param>
-        /// <param name="path"> path value. </param>
-        /// <param name="size"> size value. </param>
-        /// <param name="mode"> mode value. </param>
-        /// <param name="isDir"> isDir value. </param>
-        /// <param name="isSymlink"> isSymlink value. </param>
-        /// <param name="symlinkTarget"> symlinkTarget value. </param>
-        /// <param name="modifiedTime"> modifiedTime value. </param>
-        /// <returns> A new <see cref="Sandbox.FileInfo"/> instance for mocking. </returns>
-        public static FileInfo FileInfo(string name = default, string path = default, long size = default, int mode = default, bool isDir = default, bool isSymlink = default, string symlinkTarget = default, long modifiedTime = default)
-        {
-            return new FileInfo(
-                name,
-                path,
-                size,
-                mode,
-                isDir,
-                isSymlink,
-                symlinkTarget,
-                modifiedTime,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> MkDirContent wire model. </summary>
-        /// <param name="path"> path value. </param>
-        /// <param name="createParents"> createParents value. </param>
-        /// <param name="mode"> mode value. </param>
-        /// <returns> A new <see cref="Sandbox.MkDirContent"/> instance for mocking. </returns>
-        public static MkDirContent MkDirContent(string path = default, bool? createParents = default, int? mode = default)
-        {
-            return new MkDirContent(path, createParents, mode, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Write-file response body. </summary>
-        /// <param name="success"> success value. </param>
-        /// <param name="error"> error value. </param>
-        /// <param name="bytesWritten"> bytesWritten value. </param>
-        /// <returns> A new <see cref="Sandbox.WriteFileResult"/> instance for mocking. </returns>
-        public static WriteFileResult WriteFileResult(bool success = default, string error = default, long? bytesWritten = default)
-        {
-            return new WriteFileResult(success, error, bytesWritten, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Egress-decisions response body. </summary>
-        /// <param name="http"> HTTP egress decisions. </param>
-        /// <param name="statefulTcp"> statefulTcp value. </param>
-        /// <param name="lastUpdated"> lastUpdated value. </param>
-        /// <returns> A new <see cref="Sandbox.EgressDecisionsResult"/> instance for mocking. </returns>
-        public static EgressDecisionsResult EgressDecisionsResult(NetworkEgressDecisions http = default, StatefulTcpEgress statefulTcp = default, DateTimeOffset lastUpdated = default)
-        {
-            return new EgressDecisionsResult(http, statefulTcp, lastUpdated, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Network egress decisions (allowed and denied). </summary>
-        /// <param name="allowed"> Last 50 allowed egress requests (most recent first). </param>
-        /// <param name="denied"> Last 50 denied egress requests (most recent first). </param>
-        /// <returns> A new <see cref="Sandbox.NetworkEgressDecisions"/> instance for mocking. </returns>
-        public static NetworkEgressDecisions NetworkEgressDecisions(IEnumerable<EgressDecisionEntry> allowed = default, IEnumerable<EgressDecisionEntry> denied = default)
-        {
-            allowed ??= new ChangeTrackingList<EgressDecisionEntry>();
-            denied ??= new ChangeTrackingList<EgressDecisionEntry>();
-
-            return new NetworkEgressDecisions(allowed.ToList(), denied.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Single egress decision entry. </summary>
-        /// <param name="timestamp"> Timestamp of the request. </param>
-        /// <param name="host"> Host header of the request. </param>
-        /// <param name="method"> HTTP method (GET, POST, etc.). </param>
-        /// <param name="path"> Request path. </param>
-        /// <param name="scheme"> Scheme (http, https). </param>
-        /// <param name="connectionId"> connectionId value. </param>
-        /// <param name="connectionName"> Connection display name if this is an API Hub connector call. </param>
-        /// <param name="matchedRule"> Name of the egress policy rule that matched this request. </param>
-        /// <returns> A new <see cref="Sandbox.EgressDecisionEntry"/> instance for mocking. </returns>
-        public static EgressDecisionEntry EgressDecisionEntry(DateTimeOffset timestamp = default, string host = default, string @method = default, string path = default, string scheme = default, string connectionId = default, string connectionName = default, string matchedRule = default)
-        {
-            return new EgressDecisionEntry(
-                timestamp,
-                host,
-                @method,
-                path,
-                scheme,
-                connectionId,
-                connectionName,
-                matchedRule,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Stateful-TCP (TDS) egress connection audit entries. A single recent-connections list carries both lifecycle phases (Established, Closed); consumers pair them by string? DataPlaneStatefulTcpEntry.CorrelationId. </summary>
-        /// <param name="connections"> Last 50 stateful-TCP connection audit entries (most recent first). </param>
-        /// <returns> A new <see cref="Sandbox.StatefulTcpEgress"/> instance for mocking. </returns>
-        public static StatefulTcpEgress StatefulTcpEgress(IEnumerable<StatefulTcpEntry> connections = default)
-        {
-            connections ??= new ChangeTrackingList<StatefulTcpEntry>();
-
-            return new StatefulTcpEgress(connections.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Single stateful-TCP (TDS) connection audit entry (one lifecycle phase of a connection). </summary>
-        /// <param name="timestamp"> When this phase event was emitted. </param>
-        /// <param name="phase"> Lifecycle phase: "Established" or "Closed". </param>
-        /// <param name="outcome"> Connection outcome (Connected, PolicyDenied, LoginFailed, ...). </param>
-        /// <param name="connectorType"> Connector type (e.g. "AzureSql"). </param>
-        /// <param name="server"> Target backend hostname. </param>
-        /// <param name="port"> Target backend port. </param>
-        /// <param name="database"> Target database (informational). </param>
-        /// <param name="proxyLoginName"> SQL login used after proxy injection, masked to a prefix before it reaches this customer-facing view (never the connector's full username). </param>
-        /// <param name="sourceIP"> Live client source IP of the sandbox connection. </param>
-        /// <param name="correlationId"> Short per-connection correlation id; identical across a connection's two phase entries. </param>
-        /// <param name="bytesIn"> Bytes received from the sandbox (final only on the Closed phase). </param>
-        /// <param name="bytesOut"> Bytes sent to the backend (final only on the Closed phase). </param>
-        /// <param name="durationMs"> Elapsed time from accept to this phase, in milliseconds. </param>
-        /// <param name="failureReason"> Optional failure detail when the outcome is not Connected. </param>
-        /// <param name="startedOn"> When the connection was accepted (identical across both phases). </param>
-        /// <returns> A new <see cref="Sandbox.StatefulTcpEntry"/> instance for mocking. </returns>
-        public static StatefulTcpEntry StatefulTcpEntry(DateTimeOffset timestamp = default, string phase = default, string outcome = default, string connectorType = default, string server = default, int? port = default, string database = default, string proxyLoginName = default, string sourceIP = default, string correlationId = default, long? bytesIn = default, long? bytesOut = default, long? durationMs = default, string failureReason = default, DateTimeOffset? startedOn = default)
-        {
-            return new StatefulTcpEntry(
-                timestamp,
-                phase,
-                outcome,
-                connectorType,
-                server,
-                port,
-                database,
-                proxyLoginName,
-                sourceIP,
-                correlationId,
-                bytesIn,
-                bytesOut,
-                durationMs,
-                failureReason,
-                startedOn,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Port-list response body. </summary>
-        /// <param name="ports"> ports value. </param>
-        /// <returns> A new <see cref="Sandbox.PortsListResult"/> instance for mocking. </returns>
-        public static PortsListResult PortsListResult(IEnumerable<SandboxPort> ports = default)
-        {
-            ports ??= new ChangeTrackingList<SandboxPort>();
-
-            return new PortsListResult(ports.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> AddConnectionContent wire model. </summary>
-        /// <param name="connectionId"> connectionId value. </param>
-        /// <returns> A new <see cref="Sandbox.AddConnectionContent"/> instance for mocking. </returns>
-        public static AddConnectionContent AddConnectionContent(string connectionId = default)
-        {
-            return new AddConnectionContent(connectionId, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Connection-list response body. </summary>
-        /// <param name="connectionIds"> connectionIds value. </param>
-        /// <returns> A new <see cref="Sandbox.ConnectionsListResult"/> instance for mocking. </returns>
-        public static ConnectionsListResult ConnectionsListResult(IEnumerable<string> connectionIds = default)
-        {
-            connectionIds ??= new ChangeTrackingList<string>();
-
-            return new ConnectionsListResult(connectionIds.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> RemovePortContent wire model. </summary>
-        /// <param name="name"> name value. </param>
-        /// <param name="port"> port value. </param>
-        /// <returns> A new <see cref="Sandbox.RemovePortContent"/> instance for mocking. </returns>
-        public static RemovePortContent RemovePortContent(string name = default, int? port = default)
-        {
-            return new RemovePortContent(name, port, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> UpdatePortsContent wire model. </summary>
-        /// <param name="ports"> ports value. </param>
-        /// <returns> A new <see cref="Sandbox.UpdatePortsContent"/> instance for mocking. </returns>
-        public static UpdatePortsContent UpdatePortsContent(IEnumerable<SandboxPortUpdate> ports = default)
-        {
-            ports ??= new ChangeTrackingList<SandboxPortUpdate>();
-
-            return new UpdatePortsContent(ports.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Complete port representation accepted by the replace-all ports operation.
-        /// The current service contract requires the URL even though it is normally
-        /// assigned by the service.
-        /// </summary>
-        /// <param name="name"> Optional port name. </param>
-        /// <param name="port"> Port number. </param>
-        /// <param name="url"> Current port URL required by the replace-all operation. </param>
-        /// <param name="auth"> Authentication configuration. </param>
-        /// <param name="activationMode"> Activation mode. </param>
-        /// <param name="protocol"> HTTP protocol. </param>
-        /// <param name="ipAccessControl"> IP access-control configuration. </param>
-        /// <param name="cors"> CORS configuration. </param>
-        /// <returns> A new <see cref="Sandbox.SandboxPortUpdate"/> instance for mocking. </returns>
-        public static SandboxPortUpdate SandboxPortUpdate(string name = default, int port = default, Uri url = default, PortAuthConfig auth = default, PortActivationMode? activationMode = default, PortProtocol? protocol = default, IPAccessControl ipAccessControl = default, PortCorsConfig cors = default)
-        {
-            return new SandboxPortUpdate(
-                name,
-                port,
-                url,
-                auth,
-                activationMode,
-                protocol,
-                ipAccessControl,
-                cors,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> CommitSandboxContent wire model. </summary>
-        /// <param name="labels"> labels value. </param>
-        /// <returns> A new <see cref="Sandbox.CommitSandboxContent"/> instance for mocking. </returns>
-        public static CommitSandboxContent CommitSandboxContent(IDictionary<string, string> labels = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommitSandboxContent(labels, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Commit-sandbox response body. </summary>
-        /// <param name="diskImage"> diskImage value. </param>
-        /// <returns> A new <see cref="Sandbox.CommitSandboxResult"/> instance for mocking. </returns>
-        public static CommitSandboxResult CommitSandboxResult(DiskImage diskImage = default)
-        {
-            return new CommitSandboxResult(diskImage, additionalBinaryDataProperties: null);
         }
 
         /// <summary> DownloadContentPackageToSandboxContent wire model. </summary>
@@ -2219,6 +1623,321 @@ namespace Azure.ContainerApps.Sandbox
         public static SandboxExecuteShellCommandResult SandboxExecuteShellCommandResult(int exitCode = default, string stdout = default, string stderr = default, long executionTimeMs = default)
         {
             return new SandboxExecuteShellCommandResult(exitCode, stdout, stderr, executionTimeMs, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing connection resource returned by the service. </summary>
+        /// <param name="id"> Connection identifier assigned by the service. </param>
+        /// <param name="name"> Connection name. </param>
+        /// <param name="type"> Connection type. </param>
+        /// <param name="state"> Current connection state. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
+        /// <param name="deletable"> Whether the connection can currently be deleted. </param>
+        /// <param name="usedBySandboxIds"> Sandboxes currently using this connection. </param>
+        /// <param name="policyRules"> Runtime policy rules. </param>
+        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
+        /// <returns> A new <see cref="Sandbox.SandboxConnection"/> instance for mocking. </returns>
+        public static SandboxConnection SandboxConnection(string id = default, string name = default, string @type = default, string state = default, IDictionary<string, string> labels = default, DateTimeOffset? createdOn = default, bool? deletable = default, IEnumerable<string> usedBySandboxIds = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+            usedBySandboxIds ??= new ChangeTrackingList<string>();
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new SandboxConnection(
+                id,
+                name,
+                @type,
+                state,
+                labels,
+                createdOn,
+                deletable,
+                usedBySandboxIds.ToList(),
+                policyRules.ToList(),
+                enabledToolGroups.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A runtime policy rule that activates a declared PolicyHookBinding. Supplied per-sandbox at creation time (e.g., "block mail to ceo. </summary>
+        /// <param name="hookId"> References string PolicyHookBinding.Id on a tool. Must match a declared hook. </param>
+        /// <param name="patterns"> Glob patterns to match against extracted field values. For PolicyHookType.FieldValueDenyList: if ANY value matches ANY pattern, the call is blocked. For PolicyHookType.FieldValueAllowList: if ANY value matches NO pattern, the call is blocked. </param>
+        /// <returns> A new <see cref="Sandbox.McpPolicyRule"/> instance for mocking. </returns>
+        public static McpPolicyRule McpPolicyRule(string hookId = default, IEnumerable<string> patterns = default)
+        {
+            patterns ??= new ChangeTrackingList<string>();
+
+            return new McpPolicyRule(hookId, patterns.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating a connection. </summary>
+        /// <param name="name"> Connection name. </param>
+        /// <param name="type"> Connection type. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="parameterValueSetName"> Parameter value set selected when creating the connection. </param>
+        /// <param name="parameterValueSetValues"> Sensitive parameter values supplied when creating the connection. </param>
+        /// <param name="policyRules"> Runtime policy rules. </param>
+        /// <param name="enabledToolGroups"> Enabled tool groups. </param>
+        /// <returns> A new <see cref="Sandbox.CreateConnectionContent"/> instance for mocking. </returns>
+        public static CreateConnectionContent CreateConnectionContent(string name = default, string @type = default, IDictionary<string, string> labels = default, string parameterValueSetName = default, IDictionary<string, string> parameterValueSetValues = default, IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+            parameterValueSetValues ??= new ChangeTrackingDictionary<string, string>();
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new CreateConnectionContent(
+                name,
+                @type,
+                labels,
+                parameterValueSetName,
+                parameterValueSetValues,
+                policyRules.ToList(),
+                enabledToolGroups.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> AuthorizeConnectionContent wire model. </summary>
+        /// <param name="parameterValues"> parameterValues value. </param>
+        /// <returns> A new <see cref="Sandbox.AuthorizeConnectionContent"/> instance for mocking. </returns>
+        public static AuthorizeConnectionContent AuthorizeConnectionContent(IDictionary<string, string> parameterValues = default)
+        {
+            parameterValues ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AuthorizeConnectionContent(parameterValues, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> GenerateConsentLinkContent wire model. </summary>
+        /// <param name="redirectUri"> redirectUrl value. </param>
+        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkContent"/> instance for mocking. </returns>
+        public static GenerateConsentLinkContent GenerateConsentLinkContent(string redirectUri = default)
+        {
+            return new GenerateConsentLinkContent(redirectUri, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Consent-link response body. </summary>
+        /// <param name="consentLink"> consentLink value. </param>
+        /// <returns> A new <see cref="Sandbox.GenerateConsentLinkResult"/> instance for mocking. </returns>
+        public static GenerateConsentLinkResult GenerateConsentLinkResult(string consentLink = default)
+        {
+            return new GenerateConsentLinkResult(consentLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> UpdatePolicyRulesContent wire model. </summary>
+        /// <param name="policyRules"> policyRules value. </param>
+        /// <param name="enabledToolGroups"> enabledToolGroups value. </param>
+        /// <returns> A new <see cref="Sandbox.UpdatePolicyRulesContent"/> instance for mocking. </returns>
+        public static UpdatePolicyRulesContent UpdatePolicyRulesContent(IEnumerable<McpPolicyRule> policyRules = default, IEnumerable<string> enabledToolGroups = default)
+        {
+            policyRules ??= new ChangeTrackingList<McpPolicyRule>();
+            enabledToolGroups ??= new ChangeTrackingList<string>();
+
+            return new UpdatePolicyRulesContent(policyRules.ToList(), enabledToolGroups.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Content-package list response body. </summary>
+        /// <param name="value"> value value. </param>
+        /// <returns> A new <see cref="Sandbox.ContentPackageListResult"/> instance for mocking. </returns>
+        public static ContentPackageListResult ContentPackageListResult(IEnumerable<ContentPackage> value = default)
+        {
+            value ??= new ChangeTrackingList<ContentPackage>();
+
+            return new ContentPackageListResult(value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ContentPackage wire model. </summary>
+        /// <param name="id"> id value. </param>
+        /// <param name="size"> size value. </param>
+        /// <param name="labels"> labels value. </param>
+        /// <param name="contentType"> contentType value. </param>
+        /// <param name="createdOn"> createdOn value. </param>
+        /// <returns> A new <see cref="Sandbox.ContentPackage"/> instance for mocking. </returns>
+        public static ContentPackage ContentPackage(string id = default, BinaryData size = default, IDictionary<string, string> labels = default, string contentType = default, DateTimeOffset? createdOn = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContentPackage(
+                id,
+                size,
+                labels,
+                contentType,
+                createdOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing sandbox-group credential resource returned by the service. </summary>
+        /// <param name="name"> Credential name assigned by the service. </param>
+        /// <param name="displayName"> displayName value. </param>
+        /// <param name="provider"> provider value. </param>
+        /// <param name="state"> Current credential state. </param>
+        /// <param name="source"> source value. </param>
+        /// <param name="origin"> Origin of the credential. </param>
+        /// <returns> A new <see cref="Sandbox.SandboxGroupCredential"/> instance for mocking. </returns>
+        public static SandboxGroupCredential SandboxGroupCredential(string name = default, string displayName = default, SandboxGroupCredentialProvider provider = default, ConnectionState state = default, SandboxGroupCredentialSource source = default, SandboxGroupCredentialOrigin origin = default)
+        {
+            return new SandboxGroupCredential(
+                name,
+                displayName,
+                provider,
+                state,
+                source,
+                origin,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Stored source metadata for a sandbox group credential. </summary>
+        /// <param name="kind"> kind value. </param>
+        /// <param name="connectionResourceId"> connectionResourceId value. </param>
+        /// <param name="connectionRefDetails"> connectionRefDetails value. </param>
+        /// <param name="parameterValues"> parameterValues value. </param>
+        /// <param name="connectionId"> connectionId value. </param>
+        /// <param name="connectionType"> connectionType value. </param>
+        /// <param name="connectionName"> connectionName value. </param>
+        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialSource"/> instance for mocking. </returns>
+        public static SandboxGroupCredentialSource SandboxGroupCredentialSource(SandboxGroupCredentialSourceKind kind = default, string connectionResourceId = default, SandboxGroupCredentialConnectionRefDetails connectionRefDetails = default, IDictionary<string, string> parameterValues = default, string connectionId = default, string connectionType = default, string connectionName = default)
+        {
+            parameterValues ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SandboxGroupCredentialSource(
+                kind,
+                connectionResourceId,
+                connectionRefDetails,
+                parameterValues,
+                connectionId,
+                connectionType,
+                connectionName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Connector Namespace reference details required by egress HookRef resolution. </summary>
+        /// <param name="authentication"> authentication value. </param>
+        /// <param name="tokenExchangeEndpoint"> tokenExchangeEndpoint value. </param>
+        /// <returns> A new <see cref="Sandbox.SandboxGroupCredentialConnectionRefDetails"/> instance for mocking. </returns>
+        public static SandboxGroupCredentialConnectionRefDetails SandboxGroupCredentialConnectionRefDetails(GatewayConnectionAuthRecord authentication = default, string tokenExchangeEndpoint = default)
+        {
+            return new SandboxGroupCredentialConnectionRefDetails(authentication, tokenExchangeEndpoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Authentication configuration for a gateway connection (CosmosDB storage). </summary>
+        /// <param name="type"> type value. </param>
+        /// <param name="identityResourceId"> identityResourceId value. </param>
+        /// <returns> A new <see cref="Sandbox.GatewayConnectionAuthRecord"/> instance for mocking. </returns>
+        public static GatewayConnectionAuthRecord GatewayConnectionAuthRecord(GatewayConnectionAuthType @type = default, string identityResourceId = default)
+        {
+            return new GatewayConnectionAuthRecord(@type, identityResourceId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating or updating a sandbox-group credential. </summary>
+        /// <param name="displayName"> displayName value. </param>
+        /// <param name="provider"> provider value. </param>
+        /// <param name="source"> source value. </param>
+        /// <returns> A new <see cref="Sandbox.CreateSandboxGroupCredentialContent"/> instance for mocking. </returns>
+        public static CreateSandboxGroupCredentialContent CreateSandboxGroupCredentialContent(string displayName = default, SandboxGroupCredentialProvider provider = default, SandboxGroupCredentialSource source = default)
+        {
+            return new CreateSandboxGroupCredentialContent(displayName, provider, source, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> PublicDiskImage wire model. </summary>
+        /// <param name="name"> name value. </param>
+        /// <param name="status"> status value. </param>
+        /// <returns> A new <see cref="Sandbox.PublicDiskImage"/> instance for mocking. </returns>
+        public static PublicDiskImage PublicDiskImage(string name = default, DiskImageStatus status = default)
+        {
+            return new PublicDiskImage(name, status, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Request body for creating a disk image. </summary>
+        /// <param name="source"> Source used to create the disk image. </param>
+        /// <param name="name"> Disk image name. </param>
+        /// <param name="labels"> Customer-defined labels. </param>
+        /// <param name="vnetConnectionName"> VNet connection used while creating the disk image. </param>
+        /// <returns> A new <see cref="Sandbox.CreateDiskImageContent"/> instance for mocking. </returns>
+        public static CreateDiskImageContent CreateDiskImageContent(CreateDiskImageSource source = default, string name = default, IDictionary<string, string> labels = default, string vnetConnectionName = default)
+        {
+            labels ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CreateDiskImageContent(source, name, labels, vnetConnectionName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// CreateDiskImageSource wire model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> and <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/>.
+        /// </summary>
+        /// <param name="kind"> The disk image source type. </param>
+        /// <returns> A new <see cref="Sandbox.CreateDiskImageSource"/> instance for mocking. </returns>
+        public static CreateDiskImageSource CreateDiskImageSource(string kind = default)
+        {
+            return new UnknownCreateDiskImageSource(new CreateDiskImageSourceKind(kind), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> CreateDiskImageSourceBlobSource wire model. </summary>
+        /// <param name="blobSourceUri"> blobSourceUri value. </param>
+        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceBlobSource"/> instance for mocking. </returns>
+        public static CreateDiskImageSourceBlobSource CreateDiskImageSourceBlobSource(string blobSourceUri = default)
+        {
+            return new CreateDiskImageSourceBlobSource(CreateDiskImageSourceKind.Blob, additionalBinaryDataProperties: null, blobSourceUri);
+        }
+
+        /// <summary> CreateDiskImageSourceRegistrySource wire model. </summary>
+        /// <param name="imageReference"> imageUrl value. </param>
+        /// <param name="authentication"> Authentication used to access the registry. </param>
+        /// <returns> A new <see cref="Sandbox.CreateDiskImageSourceRegistrySource"/> instance for mocking. </returns>
+        public static CreateDiskImageSourceRegistrySource CreateDiskImageSourceRegistrySource(string imageReference = default, RegistryAuthentication authentication = default)
+        {
+            return new CreateDiskImageSourceRegistrySource(CreateDiskImageSourceKind.Registry, additionalBinaryDataProperties: null, imageReference, authentication);
+        }
+
+        /// <summary> Registry authentication options. Exactly one option must be supplied. </summary>
+        /// <param name="registryCredentials"> Username and token authentication. </param>
+        /// <param name="identity"> Managed identity authentication. </param>
+        /// <returns> A new <see cref="Sandbox.RegistryAuthentication"/> instance for mocking. </returns>
+        public static RegistryAuthentication RegistryAuthentication(RegistryCredentials registryCredentials = default, ManagedIdentityAuthentication identity = default)
+        {
+            return new RegistryAuthentication(registryCredentials, identity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> RegistryCredentials wire model. </summary>
+        /// <param name="username"> username value. </param>
+        /// <param name="token"> token value. </param>
+        /// <returns> A new <see cref="Sandbox.RegistryCredentials"/> instance for mocking. </returns>
+        public static RegistryCredentials RegistryCredentials(string username = default, string token = default)
+        {
+            return new RegistryCredentials(username, token, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Named egress policy list response body. </summary>
+        /// <param name="egressPolicies"> egressPolicies value. </param>
+        /// <returns> A new <see cref="Sandbox.NamedEgressPolicyListResult"/> instance for mocking. </returns>
+        public static NamedEgressPolicyListResult NamedEgressPolicyListResult(IEnumerable<NamedEgressPolicy> egressPolicies = default)
+        {
+            egressPolicies ??= new ChangeTrackingList<NamedEgressPolicy>();
+
+            return new NamedEgressPolicyListResult(egressPolicies.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Customer-facing named egress policy resource. </summary>
+        /// <param name="id"> Policy identifier assigned by the service. </param>
+        /// <param name="name"> name value. </param>
+        /// <param name="description"> description value. </param>
+        /// <param name="defaultAction"> defaultAction value. </param>
+        /// <param name="enforcementMode"> enforcementMode value. </param>
+        /// <param name="rules"> rules value. </param>
+        /// <param name="createdOn"> Creation timestamp assigned by the service. </param>
+        /// <param name="updatedOn"> Last-update timestamp assigned by the service. </param>
+        /// <returns> A new <see cref="Sandbox.NamedEgressPolicy"/> instance for mocking. </returns>
+        public static NamedEgressPolicy NamedEgressPolicy(string id = default, string name = default, string description = default, EgressPolicyAction defaultAction = default, EgressPolicyEnforcementMode? enforcementMode = default, IEnumerable<EgressPolicyRule> rules = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        {
+            rules ??= new ChangeTrackingList<EgressPolicyRule>();
+
+            return new NamedEgressPolicy(
+                id,
+                name,
+                description,
+                defaultAction,
+                enforcementMode,
+                rules.ToList(),
+                createdOn,
+                updatedOn,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Secret list response body. </summary>
@@ -2505,6 +2224,53 @@ namespace Azure.ContainerApps.Sandbox
                 additionalBinaryDataProperties: null);
         }
 
+        /// <summary> FileStreamResult wire model. </summary>
+        /// <param name="fileStream"> fileStream value. </param>
+        /// <param name="contentType"> contentType value. </param>
+        /// <param name="fileDownloadName"> fileDownloadName value. </param>
+        /// <param name="lastModified"> lastModified value. </param>
+        /// <param name="entityTag"> entityTag value. </param>
+        /// <param name="enableRangeProcessing"> enableRangeProcessing value. </param>
+        /// <returns> A new <see cref="Sandbox.FileStreamResult"/> instance for mocking. </returns>
+        public static FileStreamResult FileStreamResult(BinaryData fileStream = default, string contentType = default, string fileDownloadName = default, DateTimeOffset? lastModified = default, EntityTagHeaderValue entityTag = default, bool? enableRangeProcessing = default)
+        {
+            return new FileStreamResult(
+                fileStream,
+                contentType,
+                fileDownloadName,
+                lastModified,
+                entityTag,
+                enableRangeProcessing,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EntityTagHeaderValue wire model. </summary>
+        /// <param name="tag"> tag value. </param>
+        /// <param name="isWeak"> isWeak value. </param>
+        /// <returns> A new <see cref="Sandbox.EntityTagHeaderValue"/> instance for mocking. </returns>
+        public static EntityTagHeaderValue EntityTagHeaderValue(StringSegment tag = default, bool? isWeak = default)
+        {
+            return new EntityTagHeaderValue(tag, isWeak, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> StringSegment wire model. </summary>
+        /// <param name="buffer"> buffer value. </param>
+        /// <param name="offset"> offset value. </param>
+        /// <param name="length"> length value. </param>
+        /// <param name="value"> value value. </param>
+        /// <param name="hasValue"> hasValue value. </param>
+        /// <returns> A new <see cref="Sandbox.StringSegment"/> instance for mocking. </returns>
+        public static StringSegment StringSegment(string buffer = default, int? offset = default, int? length = default, string value = default, bool? hasValue = default)
+        {
+            return new StringSegment(
+                buffer,
+                offset,
+                length,
+                value,
+                hasValue,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> ForkDataDiskVolumeContent wire model. </summary>
         /// <param name="destinationVolumeName"> destinationVolumeName value. </param>
         /// <param name="labels"> labels value. </param>
@@ -2514,6 +2280,240 @@ namespace Azure.ContainerApps.Sandbox
             labels ??= new ChangeTrackingDictionary<string, string>();
 
             return new ForkDataDiskVolumeContent(destinationVolumeName, labels, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> File-operation response body. </summary>
+        /// <param name="success"> success value. </param>
+        /// <param name="error"> error value. </param>
+        /// <param name="message"> message value. </param>
+        /// <returns> A new <see cref="Sandbox.FileOpStatusResult"/> instance for mocking. </returns>
+        public static FileOpStatusResult FileOpStatusResult(bool success = default, string error = default, string message = default)
+        {
+            return new FileOpStatusResult(success, error, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Directory-listing response body. </summary>
+        /// <param name="path"> path value. </param>
+        /// <param name="entries"> entries value. </param>
+        /// <returns> A new <see cref="Sandbox.DirListingResult"/> instance for mocking. </returns>
+        public static DirListingResult DirListingResult(string path = default, IEnumerable<FileInfo> entries = default)
+        {
+            entries ??= new ChangeTrackingList<FileInfo>();
+
+            return new DirListingResult(path, entries.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> FileInfo wire model. </summary>
+        /// <param name="name"> name value. </param>
+        /// <param name="path"> path value. </param>
+        /// <param name="size"> size value. </param>
+        /// <param name="mode"> mode value. </param>
+        /// <param name="isDir"> isDir value. </param>
+        /// <param name="isSymlink"> isSymlink value. </param>
+        /// <param name="symlinkTarget"> symlinkTarget value. </param>
+        /// <param name="modifiedTime"> modifiedTime value. </param>
+        /// <returns> A new <see cref="Sandbox.FileInfo"/> instance for mocking. </returns>
+        public static FileInfo FileInfo(string name = default, string path = default, long size = default, int mode = default, bool isDir = default, bool isSymlink = default, string symlinkTarget = default, long modifiedTime = default)
+        {
+            return new FileInfo(
+                name,
+                path,
+                size,
+                mode,
+                isDir,
+                isSymlink,
+                symlinkTarget,
+                modifiedTime,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> MkDirContent wire model. </summary>
+        /// <param name="path"> path value. </param>
+        /// <param name="createParents"> createParents value. </param>
+        /// <param name="mode"> mode value. </param>
+        /// <returns> A new <see cref="Sandbox.MkDirContent"/> instance for mocking. </returns>
+        public static MkDirContent MkDirContent(string path = default, bool? createParents = default, int? mode = default)
+        {
+            return new MkDirContent(path, createParents, mode, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Write-file response body. </summary>
+        /// <param name="success"> success value. </param>
+        /// <param name="error"> error value. </param>
+        /// <param name="bytesWritten"> bytesWritten value. </param>
+        /// <returns> A new <see cref="Sandbox.WriteFileResult"/> instance for mocking. </returns>
+        public static WriteFileResult WriteFileResult(bool success = default, string error = default, long? bytesWritten = default)
+        {
+            return new WriteFileResult(success, error, bytesWritten, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Egress-decisions response body. </summary>
+        /// <param name="http"> HTTP egress decisions. </param>
+        /// <param name="statefulTcp"> statefulTcp value. </param>
+        /// <param name="lastUpdated"> lastUpdated value. </param>
+        /// <returns> A new <see cref="Sandbox.EgressDecisionsResult"/> instance for mocking. </returns>
+        public static EgressDecisionsResult EgressDecisionsResult(NetworkEgressDecisions http = default, StatefulTcpEgress statefulTcp = default, DateTimeOffset lastUpdated = default)
+        {
+            return new EgressDecisionsResult(http, statefulTcp, lastUpdated, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Network egress decisions (allowed and denied). </summary>
+        /// <param name="allowed"> Last 50 allowed egress requests (most recent first). </param>
+        /// <param name="denied"> Last 50 denied egress requests (most recent first). </param>
+        /// <returns> A new <see cref="Sandbox.NetworkEgressDecisions"/> instance for mocking. </returns>
+        public static NetworkEgressDecisions NetworkEgressDecisions(IEnumerable<EgressDecisionEntry> allowed = default, IEnumerable<EgressDecisionEntry> denied = default)
+        {
+            allowed ??= new ChangeTrackingList<EgressDecisionEntry>();
+            denied ??= new ChangeTrackingList<EgressDecisionEntry>();
+
+            return new NetworkEgressDecisions(allowed.ToList(), denied.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Single egress decision entry. </summary>
+        /// <param name="timestamp"> Timestamp of the request. </param>
+        /// <param name="host"> Host header of the request. </param>
+        /// <param name="method"> HTTP method (GET, POST, etc.). </param>
+        /// <param name="path"> Request path. </param>
+        /// <param name="scheme"> Scheme (http, https). </param>
+        /// <param name="connectionId"> connectionId value. </param>
+        /// <param name="connectionName"> Connection display name if this is an API Hub connector call. </param>
+        /// <param name="matchedRule"> Name of the egress policy rule that matched this request. </param>
+        /// <returns> A new <see cref="Sandbox.EgressDecisionEntry"/> instance for mocking. </returns>
+        public static EgressDecisionEntry EgressDecisionEntry(DateTimeOffset timestamp = default, string host = default, string @method = default, string path = default, string scheme = default, string connectionId = default, string connectionName = default, string matchedRule = default)
+        {
+            return new EgressDecisionEntry(
+                timestamp,
+                host,
+                @method,
+                path,
+                scheme,
+                connectionId,
+                connectionName,
+                matchedRule,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Stateful-TCP (TDS) egress connection audit entries. A single recent-connections list carries both lifecycle phases (Established, Closed); consumers pair them by string? DataPlaneStatefulTcpEntry.CorrelationId. </summary>
+        /// <param name="connections"> Last 50 stateful-TCP connection audit entries (most recent first). </param>
+        /// <returns> A new <see cref="Sandbox.StatefulTcpEgress"/> instance for mocking. </returns>
+        public static StatefulTcpEgress StatefulTcpEgress(IEnumerable<StatefulTcpEntry> connections = default)
+        {
+            connections ??= new ChangeTrackingList<StatefulTcpEntry>();
+
+            return new StatefulTcpEgress(connections.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Single stateful-TCP (TDS) connection audit entry (one lifecycle phase of a connection). </summary>
+        /// <param name="timestamp"> When this phase event was emitted. </param>
+        /// <param name="phase"> Lifecycle phase: "Established" or "Closed". </param>
+        /// <param name="outcome"> Connection outcome (Connected, PolicyDenied, LoginFailed, ...). </param>
+        /// <param name="connectorType"> Connector type (e.g. "AzureSql"). </param>
+        /// <param name="server"> Target backend hostname. </param>
+        /// <param name="port"> Target backend port. </param>
+        /// <param name="database"> Target database (informational). </param>
+        /// <param name="proxyLoginName"> SQL login used after proxy injection, masked to a prefix before it reaches this customer-facing view (never the connector's full username). </param>
+        /// <param name="sourceIP"> Live client source IP of the sandbox connection. </param>
+        /// <param name="correlationId"> Short per-connection correlation id; identical across a connection's two phase entries. </param>
+        /// <param name="bytesIn"> Bytes received from the sandbox (final only on the Closed phase). </param>
+        /// <param name="bytesOut"> Bytes sent to the backend (final only on the Closed phase). </param>
+        /// <param name="durationMs"> Elapsed time from accept to this phase, in milliseconds. </param>
+        /// <param name="failureReason"> Optional failure detail when the outcome is not Connected. </param>
+        /// <param name="startedOn"> When the connection was accepted (identical across both phases). </param>
+        /// <returns> A new <see cref="Sandbox.StatefulTcpEntry"/> instance for mocking. </returns>
+        public static StatefulTcpEntry StatefulTcpEntry(DateTimeOffset timestamp = default, string phase = default, string outcome = default, string connectorType = default, string server = default, int? port = default, string database = default, string proxyLoginName = default, string sourceIP = default, string correlationId = default, long? bytesIn = default, long? bytesOut = default, long? durationMs = default, string failureReason = default, DateTimeOffset? startedOn = default)
+        {
+            return new StatefulTcpEntry(
+                timestamp,
+                phase,
+                outcome,
+                connectorType,
+                server,
+                port,
+                database,
+                proxyLoginName,
+                sourceIP,
+                correlationId,
+                bytesIn,
+                bytesOut,
+                durationMs,
+                failureReason,
+                startedOn,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Port-list response body. </summary>
+        /// <param name="ports"> ports value. </param>
+        /// <returns> A new <see cref="Sandbox.PortsListResult"/> instance for mocking. </returns>
+        public static PortsListResult PortsListResult(IEnumerable<SandboxPort> ports = default)
+        {
+            ports ??= new ChangeTrackingList<SandboxPort>();
+
+            return new PortsListResult(ports.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> AddConnectionContent wire model. </summary>
+        /// <param name="connectionId"> connectionId value. </param>
+        /// <returns> A new <see cref="Sandbox.AddConnectionContent"/> instance for mocking. </returns>
+        public static AddConnectionContent AddConnectionContent(string connectionId = default)
+        {
+            return new AddConnectionContent(connectionId, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Connection-list response body. </summary>
+        /// <param name="connectionIds"> connectionIds value. </param>
+        /// <returns> A new <see cref="Sandbox.ConnectionsListResult"/> instance for mocking. </returns>
+        public static ConnectionsListResult ConnectionsListResult(IEnumerable<string> connectionIds = default)
+        {
+            connectionIds ??= new ChangeTrackingList<string>();
+
+            return new ConnectionsListResult(connectionIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> RemovePortContent wire model. </summary>
+        /// <param name="name"> name value. </param>
+        /// <param name="port"> port value. </param>
+        /// <returns> A new <see cref="Sandbox.RemovePortContent"/> instance for mocking. </returns>
+        public static RemovePortContent RemovePortContent(string name = default, int? port = default)
+        {
+            return new RemovePortContent(name, port, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> UpdatePortsContent wire model. </summary>
+        /// <param name="ports"> ports value. </param>
+        /// <returns> A new <see cref="Sandbox.UpdatePortsContent"/> instance for mocking. </returns>
+        public static UpdatePortsContent UpdatePortsContent(IEnumerable<SandboxPortUpdate> ports = default)
+        {
+            ports ??= new ChangeTrackingList<SandboxPortUpdate>();
+
+            return new UpdatePortsContent(ports.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Complete port representation accepted by the replace-all ports operation.
+        /// The current service contract requires the URL even though it is normally
+        /// assigned by the service.
+        /// </summary>
+        /// <param name="name"> Optional port name. </param>
+        /// <param name="port"> Port number. </param>
+        /// <param name="url"> Current port URL required by the replace-all operation. </param>
+        /// <param name="auth"> Authentication configuration. </param>
+        /// <param name="activationMode"> Activation mode. </param>
+        /// <param name="protocol"> HTTP protocol. </param>
+        /// <param name="ipAccessControl"> IP access-control configuration. </param>
+        /// <param name="cors"> CORS configuration. </param>
+        /// <returns> A new <see cref="Sandbox.SandboxPortUpdate"/> instance for mocking. </returns>
+        public static SandboxPortUpdate SandboxPortUpdate(string name = default, int port = default, Uri url = default, PortAuthConfig auth = default, PortActivationMode? activationMode = default, PortProtocol? protocol = default, IPAccessControl ipAccessControl = default, PortCorsConfig cors = default)
+        {
+            return new SandboxPortUpdate(
+                name,
+                port,
+                url,
+                auth,
+                activationMode,
+                protocol,
+                ipAccessControl,
+                cors,
+                additionalBinaryDataProperties: null);
         }
     }
 }

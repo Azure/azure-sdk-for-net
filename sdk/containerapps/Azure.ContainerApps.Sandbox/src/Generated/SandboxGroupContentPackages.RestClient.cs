@@ -11,30 +11,30 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class SecretsOperations
+    public partial class SandboxGroupContentPackages
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier200201;
+        private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateDeleteSecretRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, RequestContext context)
+        internal HttpMessage CreateDeleteContentPackageRequest(string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/secrets/", false);
-            uri.AppendPath(secretId, true);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/contentpackages/", false);
+            uri.AppendPath(id, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -46,17 +46,53 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetSecretsRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
+        internal HttpMessage CreateGetContentPackagesRequest(int? page, int? pageSize, string labels, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/secrets", false);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/contentpackages", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (page != null)
+            {
+                uri.AppendQuery("Page", TypeFormatters.ConvertToString(page), true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("PageSize", TypeFormatters.ConvertToString(pageSize), true);
+            }
+            if (labels != null)
+            {
+                uri.AppendQuery("labels", labels, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetContentPackageRequest(string id, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/sandboxGroups/", false);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/contentpackages/", false);
+            uri.AppendPath(id, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -69,77 +105,33 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetSecretKeysRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, RequestContext context)
+        internal HttpMessage CreatePostContentPackageUploadRequest(RequestContent content, string contentType, string labels, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/secrets/", false);
-            uri.AppendPath(secretId, true);
-            uri.AppendPath("/keys", false);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/contentpackages/upload", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostSecretPeekRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/secrets/", false);
-            uri.AppendPath(secretId, true);
-            uri.AppendPath("/peek", false);
-            if (_apiVersion != null)
+            if (labels != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                uri.AppendQuery("labels", labels, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreatePutSecretRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/secrets/", false);
-            uri.AppendPath(secretId, true);
-            if (_apiVersion != null)
+            if (contentType != null)
             {
-                uri.AppendQuery("api-version", _apiVersion, true);
+                request.Headers.SetValue("Content-Type", contentType);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Put;
-            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;

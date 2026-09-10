@@ -11,48 +11,25 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class SandboxLifecycleOperations
+    public partial class SandboxGroupSandboxNetworking
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetSandboxesCountRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
+        internal HttpMessage CreateGetSandboxEgressDecisions2Request(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/sandboxes/count", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "text/plain");
-            return message;
-        }
-
-        internal HttpMessage CreateGetSandboxStatsRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/stats", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/egressDecisions", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -65,19 +42,19 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePostSandboxDisableRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreateGetSandboxPortsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/disable", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/ports", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -85,24 +62,24 @@ namespace Azure.ContainerApps.Sandbox
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreatePostSandboxEnableRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreatePatchSandboxPortRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/enable", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/ports", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -110,86 +87,26 @@ namespace Azure.ContainerApps.Sandbox
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostSandboxExecuteCommandRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContent content, string containerName, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/executeCommand", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (containerName != null)
-            {
-                uri.AppendQuery("containerName", containerName, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Patch;
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreatePostSandboxExecuteShellCommandRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContent content, string containerName, RequestContext context)
+        internal HttpMessage CreatePostSandboxConnectionAddRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/executeShellCommand", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            if (containerName != null)
-            {
-                uri.AppendQuery("containerName", containerName, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
-            request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreatePostSandboxLifecycleRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContent content, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/lifecycle", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/connections/add", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -204,19 +121,19 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePostSandboxResumeRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreatePostSandboxEgressPolicyRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/resume", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/egresspolicy", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -225,23 +142,25 @@ namespace Azure.ContainerApps.Sandbox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreatePostSandboxStopRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreatePostSandboxPortAddRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/stop", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/ports/add", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -250,7 +169,63 @@ namespace Azure.ContainerApps.Sandbox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePostSandboxPortRemoveRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/sandboxGroups/", false);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/sandboxes/", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/ports/remove", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreatePutSandboxPortsRequest(RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(_subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(_resourceGroupName, true);
+            uri.AppendPath("/sandboxGroups/", false);
+            uri.AppendPath(_sandboxGroupName, true);
+            uri.AppendPath("/sandboxes/", false);
+            uri.AppendPath(_id, true);
+            uri.AppendPath("/ports", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

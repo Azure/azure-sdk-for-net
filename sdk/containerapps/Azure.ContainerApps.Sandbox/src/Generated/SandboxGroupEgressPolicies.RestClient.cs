@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class EgressPoliciesOperations
+    public partial class SandboxGroupEgressPolicies
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier200201;
@@ -23,16 +23,16 @@ namespace Azure.ContainerApps.Sandbox
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateDeleteEgressPolicyRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string policyId, RequestContext context)
+        internal HttpMessage CreateDeleteEgressPolicyRequest(string policyId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/egressPolicies/", false);
             uri.AppendPath(policyId, true);
             if (_apiVersion != null)
@@ -46,16 +46,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetEgressPoliciesRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
+        internal HttpMessage CreateGetEgressPoliciesRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/egressPolicies", false);
             if (_apiVersion != null)
             {
@@ -69,16 +69,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetEgressPolicyRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string policyId, RequestContext context)
+        internal HttpMessage CreateGetEgressPolicyRequest(string policyId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/egressPolicies/", false);
             uri.AppendPath(policyId, true);
             if (_apiVersion != null)
@@ -93,16 +93,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePutEgressPolicyRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string policyId, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePutEgressPolicyRequest(string policyId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/egressPolicies/", false);
             uri.AppendPath(policyId, true);
             if (_apiVersion != null)

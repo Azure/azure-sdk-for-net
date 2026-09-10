@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class VolumesOperations
+    public partial class SandboxGroupVolumes
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier201;
@@ -23,16 +23,16 @@ namespace Azure.ContainerApps.Sandbox
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateDeleteVolumeRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, RequestContext context)
+        internal HttpMessage CreateDeleteVolumeRequest(string volumeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             if (_apiVersion != null)
@@ -46,16 +46,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateDeleteVolumeFileRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path, bool? recursive, RequestContext context)
+        internal HttpMessage CreateDeleteVolumeFileRequest(string volumeName, string path, bool? recursive, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/files", false);
@@ -78,16 +78,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetVolumesRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page, int? pageSize, string labels, RequestContext context)
+        internal HttpMessage CreateGetVolumesRequest(int? page, int? pageSize, string labels, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes", false);
             if (_apiVersion != null)
             {
@@ -113,16 +113,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetVolumesCountRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
+        internal HttpMessage CreateGetVolumesCountRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/count", false);
             if (_apiVersion != null)
             {
@@ -136,16 +136,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetVolumeRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, RequestContext context)
+        internal HttpMessage CreateGetVolumeRequest(string volumeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             if (_apiVersion != null)
@@ -160,16 +160,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetVolumeFilesRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path, RequestContext context)
+        internal HttpMessage CreateGetVolumeFilesRequest(string volumeName, string path, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/files", false);
@@ -189,16 +189,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetVolumeFileDownloadRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path, RequestContext context)
+        internal HttpMessage CreateGetVolumeFileDownloadRequest(string volumeName, string path, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/files/download", false);
@@ -218,16 +218,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePostVolumeFileMkdirRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path, RequestContext context)
+        internal HttpMessage CreatePostVolumeFileMkdirRequest(string volumeName, string path, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/files/mkdir", false);
@@ -247,16 +247,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePostVolumeForkRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePostVolumeForkRequest(string volumeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/fork", false);
@@ -274,16 +274,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePutVolumeRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreatePutVolumeRequest(string volumeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             if (_apiVersion != null)
@@ -300,16 +300,16 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePutVolumeFileUploadRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, RequestContent content, string path, bool? overwrite, RequestContext context)
+        internal HttpMessage CreatePutVolumeFileUploadRequest(string volumeName, RequestContent content, string path, bool? overwrite, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
             uri.AppendPath("/files/upload", false);

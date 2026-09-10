@@ -11,24 +11,24 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class SandboxStreamsOperations
+    public partial class SandboxGroupSandboxStreams
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetSandboxExecStreamRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string containerName, string user, RequestContext context)
+        internal HttpMessage CreateGetSandboxExecStreamRequest(string containerName, string user, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(_id, true);
             uri.AppendPath("/exec/stream", false);
             if (_apiVersion != null)
             {
@@ -49,18 +49,18 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetSandboxLogStreamRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
+        internal HttpMessage CreateGetSandboxLogStreamRequest(int? tailLines, int? logFormat, bool? follow, string containerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(_id, true);
             uri.AppendPath("/logstream", false);
             if (_apiVersion != null)
             {
@@ -89,18 +89,18 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetSandboxProcessesStreamRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string containerName, RequestContext context)
+        internal HttpMessage CreateGetSandboxProcessesStreamRequest(string containerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(_subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(_resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(_id, true);
             uri.AppendPath("/processes/stream", false);
             if (_apiVersion != null)
             {

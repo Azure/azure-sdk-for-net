@@ -7,7 +7,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,20 +18,6 @@ namespace Azure.ContainerApps.Sandbox
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azuredevcompute.io/.default" };
         private readonly string _apiVersion;
-        private SandboxesClient _cachedSandboxesClient;
-        private ConnectionsOperations _cachedConnectionsOperations;
-        private ContentPackagesOperations _cachedContentPackagesOperations;
-        private CredentialsOperations _cachedCredentialsOperations;
-        private DiskImagesOperations _cachedDiskImagesOperations;
-        private EgressPoliciesOperations _cachedEgressPoliciesOperations;
-        private SandboxFilesOperations _cachedSandboxFilesOperations;
-        private SandboxStreamsOperations _cachedSandboxStreamsOperations;
-        private SandboxNetworkingOperations _cachedSandboxNetworkingOperations;
-        private SandboxStorageOperations _cachedSandboxStorageOperations;
-        private SandboxLifecycleOperations _cachedSandboxLifecycleOperations;
-        private SecretsOperations _cachedSecretsOperations;
-        private SnapshotsOperations _cachedSnapshotsOperations;
-        private VolumesOperations _cachedVolumesOperations;
 
         /// <summary> Initializes a new instance of ContainerAppsSandboxClient for mocking. </summary>
         protected ContainerAppsSandboxClient()
@@ -92,88 +77,25 @@ namespace Azure.ContainerApps.Sandbox
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of SandboxesClient. </summary>
-        public virtual SandboxesClient GetSandboxesClient()
+        /// <summary> Initializes a new instance of SandboxGroup. </summary>
+        /// <param name="subscriptionId"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="sandboxGroupName"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
+        public virtual SandboxGroup GetSandboxGroupClient(string subscriptionId, string resourceGroupName, string sandboxGroupName)
         {
-            return Volatile.Read(ref _cachedSandboxesClient) ?? Interlocked.CompareExchange(ref _cachedSandboxesClient, new SandboxesClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxesClient;
-        }
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNull(sandboxGroupName, nameof(sandboxGroupName));
 
-        /// <summary> Initializes a new instance of ConnectionsOperations. </summary>
-        public virtual ConnectionsOperations GetConnectionsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedConnectionsOperations) ?? Interlocked.CompareExchange(ref _cachedConnectionsOperations, new ConnectionsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedConnectionsOperations;
-        }
-
-        /// <summary> Initializes a new instance of ContentPackagesOperations. </summary>
-        public virtual ContentPackagesOperations GetContentPackagesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedContentPackagesOperations) ?? Interlocked.CompareExchange(ref _cachedContentPackagesOperations, new ContentPackagesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedContentPackagesOperations;
-        }
-
-        /// <summary> Initializes a new instance of CredentialsOperations. </summary>
-        public virtual CredentialsOperations GetCredentialsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedCredentialsOperations) ?? Interlocked.CompareExchange(ref _cachedCredentialsOperations, new CredentialsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedCredentialsOperations;
-        }
-
-        /// <summary> Initializes a new instance of DiskImagesOperations. </summary>
-        public virtual DiskImagesOperations GetDiskImagesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedDiskImagesOperations) ?? Interlocked.CompareExchange(ref _cachedDiskImagesOperations, new DiskImagesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedDiskImagesOperations;
-        }
-
-        /// <summary> Initializes a new instance of EgressPoliciesOperations. </summary>
-        public virtual EgressPoliciesOperations GetEgressPoliciesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedEgressPoliciesOperations) ?? Interlocked.CompareExchange(ref _cachedEgressPoliciesOperations, new EgressPoliciesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedEgressPoliciesOperations;
-        }
-
-        /// <summary> Initializes a new instance of SandboxFilesOperations. </summary>
-        public virtual SandboxFilesOperations GetSandboxFilesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSandboxFilesOperations) ?? Interlocked.CompareExchange(ref _cachedSandboxFilesOperations, new SandboxFilesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxFilesOperations;
-        }
-
-        /// <summary> Initializes a new instance of SandboxStreamsOperations. </summary>
-        public virtual SandboxStreamsOperations GetSandboxStreamsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSandboxStreamsOperations) ?? Interlocked.CompareExchange(ref _cachedSandboxStreamsOperations, new SandboxStreamsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxStreamsOperations;
-        }
-
-        /// <summary> Initializes a new instance of SandboxNetworkingOperations. </summary>
-        public virtual SandboxNetworkingOperations GetSandboxNetworkingOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSandboxNetworkingOperations) ?? Interlocked.CompareExchange(ref _cachedSandboxNetworkingOperations, new SandboxNetworkingOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxNetworkingOperations;
-        }
-
-        /// <summary> Initializes a new instance of SandboxStorageOperations. </summary>
-        public virtual SandboxStorageOperations GetSandboxStorageOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSandboxStorageOperations) ?? Interlocked.CompareExchange(ref _cachedSandboxStorageOperations, new SandboxStorageOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxStorageOperations;
-        }
-
-        /// <summary> Initializes a new instance of SandboxLifecycleOperations. </summary>
-        public virtual SandboxLifecycleOperations GetSandboxLifecycleOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSandboxLifecycleOperations) ?? Interlocked.CompareExchange(ref _cachedSandboxLifecycleOperations, new SandboxLifecycleOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxLifecycleOperations;
-        }
-
-        /// <summary> Initializes a new instance of SecretsOperations. </summary>
-        public virtual SecretsOperations GetSecretsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSecretsOperations) ?? Interlocked.CompareExchange(ref _cachedSecretsOperations, new SecretsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSecretsOperations;
-        }
-
-        /// <summary> Initializes a new instance of SnapshotsOperations. </summary>
-        public virtual SnapshotsOperations GetSnapshotsOperationsClient()
-        {
-            return Volatile.Read(ref _cachedSnapshotsOperations) ?? Interlocked.CompareExchange(ref _cachedSnapshotsOperations, new SnapshotsOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSnapshotsOperations;
-        }
-
-        /// <summary> Initializes a new instance of VolumesOperations. </summary>
-        public virtual VolumesOperations GetVolumesOperationsClient()
-        {
-            return Volatile.Read(ref _cachedVolumesOperations) ?? Interlocked.CompareExchange(ref _cachedVolumesOperations, new VolumesOperations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedVolumesOperations;
+            return new SandboxGroup(
+                ClientDiagnostics,
+                Pipeline,
+                _endpoint,
+                _apiVersion,
+                subscriptionId,
+                resourceGroupName,
+                sandboxGroupName);
         }
     }
 }
