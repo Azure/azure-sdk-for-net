@@ -190,8 +190,6 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public async Task CreateEntryAsync_sendsBytes_receives_bytes()
         {
-            // With waitForCommit the service returns the committed entry; the entry id comes
-            // from the Location header and the returned operation is already completed.
             var mockedResponse = new MockResponse(201);
             mockedResponse.AddHeader("Content-Type", "application/cose");
             mockedResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
@@ -205,52 +203,12 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Completed, content);
+            NullableResponse<BinaryData> response = await client.CreateEntryAsync(content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[0].Uri.ToString());
-            Assert.IsTrue(response.HasCompleted);
-            Assert.AreEqual("12.345", response.Id);
-        }
-
-        [Test]
-        public async Task CreateEntryAsync_request_accepted()
-        {
-            // WaitUntil.Started returns after the service accepts the entry. The operation polls
-            // the entry resource until it is committed.
-            var acceptedResponse = new MockResponse(303);
-            acceptedResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
-            var pendingResponse = new MockResponse(302);
-            pendingResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
-            var completedResponse = new MockResponse(200);
-            completedResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
-            var mockTransport = new MockTransport(acceptedResponse, pendingResponse, completedResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
-            };
-
-            CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            BinaryData content = BinaryData.FromString("Hello World!");
-            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Started, content);
-
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=false", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(1, mockTransport.Requests.Count);
-            Assert.IsFalse(response.HasCompleted);
-            Assert.AreEqual("12.345", response.Id);
-            Assert.AreEqual(303, response.GetRawResponse().Status);
-            Assert.IsTrue(response.GetRawResponse().Headers.TryGetValue("Location", out string initialLocation));
-            Assert.AreEqual("https://foo.bar.com/entries/12.345", initialLocation);
-
-            await response.UpdateStatusAsync();
-            Assert.IsFalse(response.HasCompleted);
-            await response.UpdateStatusAsync();
-            Assert.IsTrue(response.HasCompleted);
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.IsTrue(response.HasValue);
-            Assert.AreEqual(
-                "12.345",
-                CodeTransparencyCbor.GetStringValueFromCborMapByKey(response.Value.ToArray(), "EntryId"));
-            Assert.AreEqual("https://foo.bar.com/entries/12.345?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
+            Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
+            Assert.AreEqual("12.345", CodeTransparencyClient.GetEntryIdFromLocation(response.GetRawResponse()));
         }
 
         [Test]
@@ -267,91 +225,11 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Completed, content);
+            NullableResponse<BinaryData> response = await client.CreateEntryAsync(content, waitForCommit: true);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[1].Uri.ToString());
-            Assert.AreEqual("12.345", response.Id);
-        }
-
-        [Test]
-        public async Task CreateEntryAsync_waits_for_operation_success()
-        {
-            // With waitForCommit the create call returns an already-completed operation whose
-            // value is a CBOR map containing the committed entry id (taken from the Location header).
-            var createResponse = new MockResponse(201);
-            createResponse.AddHeader("Location", "https://foo.bar.com/entries/123.23");
-
-            var mockTransport = new MockTransport(createResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
-            };
-            CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
-            CreateEntryOperation result = await client.CreateEntryAsync(WaitUntil.Completed, BinaryData.FromString("Hello World!"));
-
-            Assert.NotNull(result);
-            Assert.IsTrue(result.HasCompleted);
-            Assert.IsTrue(result.HasValue);
-            Assert.AreEqual("123.23", result.Id);
-
-            Response<BinaryData> response = await result.WaitForCompletionAsync();
-            string entryId = CodeTransparencyCbor.GetStringValueFromCborMapByKey(response.Value.ToArray(), "EntryId");
-            Assert.AreEqual("123.23", entryId);
-
-            Assert.AreEqual(1, mockTransport.Requests.Count);
-        }
-
-        [Test]
-        public void CreateEntry_ShouldReturnResponse()
-        {
-            var mockedResponse = new MockResponse(303);
-            mockedResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
-
-            var mockTransport = new MockTransport(mockedResponse);
-            var options = new CodeTransparencyClientOptions
-            {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://some.identity.com"
-            };
-            CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
-            CreateEntryOperation result = client.CreateEntry(WaitUntil.Started, BinaryData.FromString("test-body"));
-
-            Assert.AreEqual(1, mockTransport.Requests.Count);
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=false", mockTransport.Requests[0].Uri.ToString());
-            Assert.IsFalse(result.HasCompleted);
-            Assert.AreEqual("12.345", result.Id);
-            Assert.AreEqual(303, result.GetRawResponse().Status);
-            Assert.IsTrue(result.GetRawResponse().Headers.TryGetValue("Location", out string initialLocation));
-            Assert.AreEqual("https://foo.bar.com/entries/12.345", initialLocation);
-        }
-
-        [Test]
-        public async Task CreateEntryStarted_FailedPollingDoesNotExposeValue()
-        {
-            var acceptedResponse = new MockResponse(303);
-            acceptedResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
-            var failedResponse = new MockResponse(400);
-            failedResponse.SetContent("invalid entry");
-            var mockTransport = new MockTransport(acceptedResponse, failedResponse);
-            CodeTransparencyClient client = CreatePipelineClient(mockTransport);
-
-            CreateEntryOperation operation = await client.CreateEntryAsync(
-                WaitUntil.Started,
-                BinaryData.FromString("test-body"));
-
-            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
-                async () => await operation.UpdateStatusAsync());
-
-            Assert.AreEqual(400, exception.Status);
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(400, operation.GetRawResponse().Status);
-            RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = operation.Value);
-            Assert.AreEqual(400, valueException.Status);
+            Assert.AreEqual("12.345", CodeTransparencyClient.GetEntryIdFromLocation(response.GetRawResponse()));
         }
 
         private static CodeTransparencyClient CreatePipelineClient(
