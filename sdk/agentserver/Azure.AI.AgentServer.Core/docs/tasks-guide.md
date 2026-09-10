@@ -18,9 +18,9 @@ you never need to know how state is stored, leased, or transported to use it wel
 
 There is **one primitive in two flavours**:
 
-- **`AddTask` — one-shot.** A single resilient run of a handler. Returns its output,
+- **`AddResilientTask` — one-shot.** A single resilient run of a handler. Returns its output,
   then the record is gone. Use for "do this one thing resiliently".
-- **`AddMultiTurnTask` — chain.** A series of turns sharing a conversation identity (a
+- **`AddResilientMultiTurnTask` — chain.** A series of turns sharing a conversation identity (a
   `TaskId`). Each `return` is one turn; the chain stays alive between turns and can
   accept more inputs. Use for chat sessions, agents that work across multiple user
   messages, and resilient orchestrations.
@@ -37,14 +37,15 @@ What this primitive solves:
   crash must be written to `FoundryStateStore` (or your own store) before the crash; the
   handler's return value itself is **not** persisted — it only resolves the awaiting
   caller.
-- **Identity.** A `TaskId` is the resilient name of the work. Two callers naming the
-  same `TaskId` don't double-execute — they converge on the same single run.
+- **Identity.** A `TaskId` identifies a one-shot run or a multi-turn chain.
+  Concurrent one-shot starts converge; concurrent multi-turn inputs are queued
+  when steering is enabled, or rejected otherwise.
 - **Typed inputs and outputs.** Generic in `TInput` and `TOutput`; the framework
   persists the input and surfaces the output through a typed handle.
 - **Cooperative cancellation.** The caller can ask the handler to stop; the handler
   decides how to wind down.
-- **Lightweight, small surface.** Typed registration methods, a few types, and a handful of
-  exceptions.
+- **Lightweight, small surface.** Registration extensions, typed task definitions, and
+  a handful of exceptions.
 
 What this primitive deliberately does **not** do:
 
@@ -73,7 +74,7 @@ A resilient task is a **named handler** registered at startup; registration retu
 ┌─────────────────────────────────────────────────────────────────┐
 │                            Your code                              │
 │                                                                   │
-│  AddTask("summarize", …)          AddMultiTurnTask("chat", …)     │
+│  AddResilientTask(…)          AddResilientMultiTurnTask(…)         │
 │  async (ctx, ct) =>               async (ctx, ct) =>              │
 │      Work(ctx.Input)                  Reply(ctx.Input)            │
 │                                                                   │
@@ -111,13 +112,13 @@ There are two shapes:
 
 ### One-shot vs multi-turn — at a glance
 
-| | `AddTask` (one-shot) | `AddMultiTurnTask` (chain) |
+| | `AddResilientTask` (one-shot) | `AddResilientMultiTurnTask` (chain) |
 |---|---|---|
 | Lifetime | one run | multiple turns; chain stays alive between turns |
 | `TaskId` on start | optional (auto-generated opaque id) | mandatory |
 | `InputId` | defaults to `TaskId` (1:1) | auto-generated uniquely per turn unless you supply `RunOptions.InputId` — pass the protocol's own per-turn identifier (an invocation id, or the Responses `response.id`) |
-| Terminal status | `completed` / `failed` / `cancelled` → record deleted | parked between turns; deleted only via `DeleteAsync(taskId)` |
-| `DeleteAsync(taskId)` | not available (auto-cleans on terminal) | available — chain-level delete |
+| End of execution | completion, terminal failure, or cancellation ends the run; its record is cleaned up | parked between turns; deleted via `DeleteAsync(taskId)` |
+| `DeleteAsync(taskId)` | available for explicit cleanup/cancellation; terminal runs clean up automatically | available — chain-level delete |
 | Handler `return` | finishes the run; the awaited `TaskRun<TOutput>` resolves | finishes the **turn**; chain parks; caller receives the value |
 | Steering queue | n/a | `steerable: true` opt-in |
 | Concurrent start on same `TaskId` while in-flight | converges on the in-flight run | if `steerable: true`: queued; else a `ResilientTaskException` (`Conflict`) |
@@ -766,12 +767,31 @@ services.AddResilientTask<Job, Result>("batch", async (ctx, ct) =>
 
 ### 6.5 Late-join an in-flight run
 
-```csharp
-// Another caller already started "echo" with this taskId; attach to it.
-TaskRun<string>? existing = await echo.GetActiveRunAsync(taskId);
+For a **one-shot task**, look up the active run by its task id:
+
+```C# Snippet:Core_TasksGuide_LateJoinOneShot
+TaskRun<string>? existing = await echo.GetActiveRunAsync(taskId, cancellationToken);
 if (existing is not null)
-    string result = await existing.Completion;
+{
+    string result = await existing.Completion.WaitAsync(cancellationToken);
+}
 ```
+
+For a **multi-turn task**, also supply the input id of the turn you want:
+
+```C# Snippet:Core_TasksGuide_LateJoinMultiTurn
+TaskRun<string>? existing = await chat.GetActiveRunAsync(taskId, inputId, cancellationToken);
+if (existing is not null)
+{
+    string result = await existing.Completion.WaitAsync(cancellationToken);
+}
+```
+
+The one-shot overload throws when used on a multi-turn definition. A different
+multi-turn input id returns `null`. These methods find active or inline-reclaimable
+runs, not queued inputs or a history of completed results. Keep the `TaskRun` returned
+by `StartAsync` if you need to await or cancel a queued input. Cancelling the wait
+with `WaitAsync` does not cancel the durable task.
 
 ### 6.6 Optimistic concurrency on the input queue
 
@@ -842,7 +862,10 @@ side effects, and does not need to survive a restart.
 **How do I do "fire and forget"?** Call `StartAsync(...)` instead of `RunAsync(...)`.
 It returns a `TaskRun<TOutput>` handle as soon as the run is registered; you can drop
 the handle and the task keeps running resiliently. A later caller can attach via
-`GetActiveRunAsync(taskId)` on the task's handle if it cares about the outcome.
+`GetActiveRunAsync(taskId)` for a one-shot run, or
+`GetActiveRunAsync(taskId, inputId)` for an active multi-turn input. A queued input
+requires its original `TaskRun` handle. These are not completed-result lookup APIs:
+Core does not persist task output.
 
 **Can two callers run the same `taskId` concurrently?** No — `taskId` is the identity.
 The second caller either attaches to the first's in-flight run (one-shot convergence),

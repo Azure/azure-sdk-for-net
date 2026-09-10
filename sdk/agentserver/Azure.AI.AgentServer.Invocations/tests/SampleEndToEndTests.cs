@@ -37,7 +37,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests;
 /// request, and asserts on the response content.
 /// </summary>
 [TestFixture]
-public class SampleEndToEndTests
+public partial class SampleEndToEndTests
 {
     // ═══════════════════════════════════════════════════════════════════
     //  Sample 1: Echo Handler — basic POST /invocations
@@ -1707,15 +1707,23 @@ public class SampleEndToEndTests
         configureServices?.Invoke(builder.Services);
 
         var app = builder.Build();
-        configurePostBuild?.Invoke(app);
-        if (configureServerSide)
+        try
         {
-            app.UseWebSockets();
-        }
-        app.MapInvocationsServer();
-        await app.StartAsync();
+            configurePostBuild?.Invoke(app);
+            if (configureServerSide)
+            {
+                app.UseWebSockets();
+            }
+            app.MapInvocationsServer();
+            await app.StartAsync();
 
-        return new TestEnv(app);
+            return new TestEnv(app);
+        }
+        catch
+        {
+            await app.DisposeAsync();
+            throw;
+        }
     }
 
     /// <summary>
@@ -1740,8 +1748,14 @@ public class SampleEndToEndTests
         public async ValueTask DisposeAsync()
         {
             Client.Dispose();
-            await _app.StopAsync();
-            await _app.DisposeAsync();
+            try
+            {
+                await _app.StopAsync();
+            }
+            finally
+            {
+                await _app.DisposeAsync();
+            }
         }
     }
 }

@@ -121,6 +121,35 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             _ = (a1, a2);
         }
 
+        public static async Task LateJoinOneShot(
+            TaskDefinition<string, string> echo,
+            string taskId,
+            CancellationToken cancellationToken = default)
+        {
+            #region Snippet:Core_TasksGuide_LateJoinOneShot
+            TaskRun<string>? existing = await echo.GetActiveRunAsync(taskId, cancellationToken);
+            if (existing is not null)
+            {
+                string result = await existing.Completion.WaitAsync(cancellationToken);
+            }
+            #endregion
+        }
+
+        public static async Task LateJoinMultiTurn(
+            TaskDefinition<string, string> chat,
+            string taskId,
+            string inputId,
+            CancellationToken cancellationToken = default)
+        {
+            #region Snippet:Core_TasksGuide_LateJoinMultiTurn
+            TaskRun<string>? existing = await chat.GetActiveRunAsync(taskId, inputId, cancellationToken);
+            if (existing is not null)
+            {
+                string result = await existing.Completion.WaitAsync(cancellationToken);
+            }
+            #endregion
+        }
+
         // §4.2 Entry mode.
         public static bool InspectEntryMode(TaskContext<string> ctx)
         {
