@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     provisioningState,
                     createdOn,
                     version,
-                    new PurviewConfiguration(purviewResourceId, default),
+                    purviewResourceId is null ? default : new PurviewConfiguration(purviewResourceId, default),
                     repoConfiguration,
                     globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                     encryption,
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 state,
-                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
+                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, customerVirtualNetworkSubnetId is null ? default : new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
                 managedVirtualNetwork);
         }
 
@@ -6972,8 +6972,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     concurrency,
                     (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                     runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                    new PipelineFolder(folderName, default),
-                    new PipelinePolicy(new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, default), default),
+                    folderName is null ? default : new PipelineFolder(folderName, default),
+                    elapsedTimeMetricDuration is null ? default : new PipelinePolicy(elapsedTimeMetricDuration is null ? default : new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, default), default),
                     default),
                 eTag,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
@@ -14477,7 +14477,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 folderName is null && description is null && sourceConnectionsInfo is null && targetConnectionsInfo is null && policy is null && allowVnetOverride is null && status is null ? default : new ChangeDataCapture(
-                    new ChangeDataCaptureFolder(folderName, default),
+                    folderName is null ? default : new ChangeDataCaptureFolder(folderName, default),
                     description,
                     (sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>()).ToList(),
                     (targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>()).ToList(),
@@ -14671,7 +14671,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     provisioningState,
                     createdOn,
                     version,
-                    new PurviewConfiguration(purviewResourceId, default),
+                    purviewResourceId is null ? default : new PurviewConfiguration(purviewResourceId, default),
                     repoConfiguration,
                     globalParameters ?? new ChangeTrackingDictionary<string, DataFactoryGlobalParameterProperties>(),
                     encryption,
@@ -14706,7 +14706,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 resourceType,
                 systemData,
                 folderName is null && description is null && sourceConnectionsInfo is null && targetConnectionsInfo is null && policy is null && allowVnetOverride is null && status is null ? default : new ChangeDataCapture(
-                    new ChangeDataCaptureFolder(folderName, default),
+                    folderName is null ? default : new ChangeDataCaptureFolder(folderName, default),
                     description,
                     (sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>()).ToList(),
                     (targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>()).ToList(),
@@ -14736,7 +14736,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 state,
-                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
+                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, customerVirtualNetworkSubnetId is null ? default : new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
                 managedVirtualNetwork);
         }
 
@@ -14781,7 +14781,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 state,
-                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), default, default),
+                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, customerVirtualNetworkSubnetId is null ? default : new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), default, default),
                 managedVirtualNetwork);
         }
     }
