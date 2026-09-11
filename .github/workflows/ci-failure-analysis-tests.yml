@@ -26,11 +26,13 @@ jobs:
           persist-credentials: false
           sparse-checkout: .github
 
-      - name: Setup Node.js
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '24'
-          package-manager-cache: false
-
       - name: Run CI workflow guard and cutover tests
-        run: node --test --test-reporter=spec .github/workflows/ci-failure-analysis/guard.test.cjs .github/workflows/ci-failure-analysis/cutover.test.cjs
+        shell: pwsh
+        run: |
+          Import-Module Pester -MinimumVersion 5.3.3 -ErrorAction Stop
+          $result = Invoke-Pester -Path .github/workflows/ci-failure-analysis -Output Detailed -PassThru
+          if ($result.TotalCount -eq 0 -or $result.Result -ne 'Passed') {
+            throw 'CI workflow guard and cutover tests did not pass.'
+          }
+          # GitHub's wrapper otherwise propagates the last native test command's exit code.
+          exit 0

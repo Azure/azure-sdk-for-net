@@ -25,16 +25,11 @@ on:
         sparse-checkout: .github/workflows/ci-failure-analysis
     - name: Validate the claimed analysis before starting the agent
       id: start
-      uses: actions/github-script@v9.0.0
+      shell: pwsh
       env:
+        GITHUB_TOKEN: ${{ github.token }}
         ANALYSIS_CONTEXT: ${{ inputs.analysis_context }}
-      with:
-        script: |
-          const { beginAnalysis } = require('./.github/workflows/ci-failure-analysis/guard.cjs');
-          await beginAnalysis({
-            github, context, core,
-            prepared: JSON.parse(process.env.ANALYSIS_CONTEXT)
-          });
+      run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action BeginAnalysis
 if: >
   github.event_name == 'check_run' && github.event.action == 'completed' &&
   github.event.check_run.name == 'net - pullrequest' &&
@@ -78,20 +73,12 @@ safe-outputs:
         persist-credentials: false
         sparse-checkout: .github/workflows/ci-failure-analysis
     - name: Revalidate CI identity before publishing
-      uses: actions/github-script@v9.0.0
+      shell: pwsh
       env:
+        GITHUB_TOKEN: ${{ github.token }}
         ANALYSIS_CONTEXT: ${{ inputs.analysis_context }}
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
-      with:
-        script: |
-          const fs = require('node:fs');
-          const { guardOutput } = require('./.github/workflows/ci-failure-analysis/guard.cjs');
-          const result = await guardOutput({
-            github, context, core,
-            prepared: JSON.parse(process.env.ANALYSIS_CONTEXT),
-            agentOutput: JSON.parse(fs.readFileSync(process.env.AGENT_OUTPUT, 'utf8'))
-          });
-          fs.writeFileSync(process.env.AGENT_OUTPUT, JSON.stringify(result.agentOutput));
+      run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action GuardOutput
   messages:
     footer: "> Analyzed by {workflow_name}: {run_url}"
     run-failure: "{workflow_name} {status}: {run_url}"
@@ -112,6 +99,7 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
+runs-on-slim: ubuntu-latest
 ---
 
 # Azure .NET CI Failure Analysis
@@ -148,4 +136,14 @@ The analysis check reports success only after a bot report for this exact comple
 
 ## Local validation
 
-Run `node --test .github/workflows/ci-failure-analysis/*.test.cjs` and `gh aw compile ci-failure-analysis provisioning-review`. Tests use mocked GitHub APIs and execute the provisioning dispatcher's real shell with a mocked `gh`; they never dispatch a workflow or post to GitHub.
+The guard requires PowerShell 7.5 or newer to preserve CI-completion timestamps exactly during JSON parsing. Generated framework jobs use the standard Ubuntu hosted image so the startup and publication guards have that runtime.
+
+From PowerShell 7.5 or newer with Pester 5.3.3 or newer installed, run:
+
+```powershell
+Import-Module Pester -MinimumVersion 5.3.3
+Invoke-Pester -Path .github/workflows/ci-failure-analysis -Output Detailed
+gh aw compile ci-failure-analysis provisioning-review
+```
+
+The PowerShell tests use mocked GitHub APIs and execute the provisioning dispatcher's real shell with a mocked `gh`; they never dispatch a workflow or post to GitHub. The focused PR test workflow runs the same suite and fails if no tests are discovered or any test fails.

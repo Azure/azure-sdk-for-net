@@ -33,11 +33,10 @@ jobs:
           sparse-checkout: .github/workflows/ci-failure-analysis
       - name: Claim the completed CI failure
         id: prepare
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
-        with:
-          script: |
-            const { prepare } = require('./.github/workflows/ci-failure-analysis/guard.cjs');
-            await prepare({ github, context, core });
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action Prepare
 
   analyze:
     needs: prepare
@@ -69,15 +68,9 @@ jobs:
           persist-credentials: false
           sparse-checkout: .github/workflows/ci-failure-analysis
       - name: Complete the CI analysis check
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        shell: pwsh
         env:
+          GITHUB_TOKEN: ${{ github.token }}
           ANALYSIS_CONTEXT: ${{ needs.prepare.outputs.analysis_context }}
           ANALYSIS_RESULT: ${{ needs.analyze.result }}
-        with:
-          script: |
-            const { finalize } = require('./.github/workflows/ci-failure-analysis/guard.cjs');
-            await finalize({
-              github, context, core,
-              prepared: JSON.parse(process.env.ANALYSIS_CONTEXT),
-              jobResults: { analysis: process.env.ANALYSIS_RESULT }
-            });
+        run: ./.github/workflows/ci-failure-analysis/Invoke-CiFailureAnalysis.ps1 -Action Finalize
