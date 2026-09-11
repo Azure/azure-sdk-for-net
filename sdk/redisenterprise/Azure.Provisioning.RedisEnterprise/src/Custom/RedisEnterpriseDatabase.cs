@@ -7,6 +7,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
+    // DatabaseCreateProperties redeclares accessKeysAuthentication to provide a create-time default.
+    // Suppress the duplicate flattened member and preserve the released API with the forwarding property below.
     [CodeGenSuppress("AccessKeysAuthentication")]
     public partial class RedisEnterpriseDatabase
     {
