@@ -141,8 +141,8 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             /// <summary> API version "2024-05-01". </summary>
             public static readonly string V2024_05_01 = "2024-05-01";
-            /// <summary> API version "2024-04-01". </summary>
-            public static readonly string V2024_04_01 = "2024-04-01";
+            /// <summary> API version "2024-01-01". </summary>
+            public static readonly string V2024_01_01 = "2024-01-01";
         }
     }
 }

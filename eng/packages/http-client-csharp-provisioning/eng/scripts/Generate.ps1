@@ -16,24 +16,37 @@ if (-not $LaunchOnly) {
     Refresh-Provisioning-Build
 }
 
-if ($null -eq $filter -or $filter -eq "Provisioning-TypeSpec") {
-    Write-Host "Generating ProvisioningTypeSpec" -ForegroundColor Cyan
-    $testProjectsLocalDir = Join-Path $provisioningPackageRoot 'generator' 'TestProjects' 'Local'
+$testProjectsLocalDir = Join-Path $provisioningPackageRoot 'generator' 'TestProjects' 'Local'
+$provisioningTypespecSpec = Join-Path $testProjectsLocalDir "Provisioning-TypeSpec" "main.tsp"
+$provisioningTypespecProjects = @(
+    @{
+        Name = "Provisioning-TypeSpec"
+        ApiVersion = "2024-05-01"
+        OutputDirectory = Join-Path $testProjectsLocalDir "Provisioning-TypeSpec"
+    },
+    @{
+        Name = "Provisioning-TypeSpec-Preview"
+        ApiVersion = "2024-03-01-preview"
+        OutputDirectory = Join-Path $testProjectsLocalDir "Provisioning-TypeSpec-Preview"
+    }
+)
 
-    $provisioningTypespecTestProject = Join-Path $testProjectsLocalDir "Provisioning-TypeSpec"
+foreach ($project in $provisioningTypespecProjects) {
+    if ($null -ne $filter -and $filter -ne $project.Name) {
+        continue
+    }
 
-    Invoke (Get-Provisioning-TspCommand "$provisioningTypespecTestProject/main.tsp" $provisioningTypespecTestProject -debug:$Debug -newProject:$false)
+    Write-Host "Generating $($project.Name)" -ForegroundColor Cyan
+    Invoke (Get-Provisioning-TspCommand $provisioningTypespecSpec $project.OutputDirectory -apiVersion $project.ApiVersion -debug:$Debug -newProject:$false)
 
-    # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
 
-    Write-Host "Building ProvisioningTypeSpec" -ForegroundColor Cyan
-    $testCsproj = Get-ChildItem "$provisioningPackageRoot/generator/TestProjects/Local/Provisioning-TypeSpec/src" -Filter "*.csproj" | Select-Object -First 1
-    Invoke "dotnet build $($testCsproj.FullName)"
+    Write-Host "Building $($project.Name)" -ForegroundColor Cyan
+    $testSolution = Get-ChildItem $project.OutputDirectory -Filter "*.slnx" | Select-Object -First 1
+    Invoke "dotnet build $($testSolution.FullName)"
 
-    # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
@@ -41,15 +54,16 @@ if ($null -eq $filter -or $filter -eq "Provisioning-TypeSpec") {
 
 # only write new launch settings if no filter was passed in
 if ($null -eq $filter) {
-    $provisioningSpec = "TestProjects/Local/Provisioning-TypeSpec"
-
-    # Write the launch settings for Provisioning
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
-    $launchSettings["profiles"].Add("Provisioning-TypeSpec", @{})
-    $launchSettings["profiles"]["Provisioning-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$provisioningSpec -g ProvisioningGenerator")
-    $launchSettings["profiles"]["Provisioning-TypeSpec"].Add("commandName", "Executable")
-    $launchSettings["profiles"]["Provisioning-TypeSpec"].Add("executablePath", "dotnet")
+
+    foreach ($project in $provisioningTypespecProjects) {
+        $provisioningSpec = "TestProjects/Local/$($project.Name)"
+        $launchSettings["profiles"].Add($project.Name, @{})
+        $launchSettings["profiles"][$project.Name].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$provisioningSpec -g ProvisioningGenerator")
+        $launchSettings["profiles"][$project.Name].Add("commandName", "Executable")
+        $launchSettings["profiles"][$project.Name].Add("executablePath", "dotnet")
+    }
 
     $sortedLaunchSettings = @{}
     $sortedLaunchSettings.Add("profiles", [ordered]@{})
