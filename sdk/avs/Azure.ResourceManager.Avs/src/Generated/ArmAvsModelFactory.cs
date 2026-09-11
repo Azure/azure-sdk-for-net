@@ -201,9 +201,9 @@ namespace Azure.ResourceManager.Avs.Models
                 systemData,
                 provisioningState is null && netAppVolumeId is null && diskPoolVolume is null && elasticSanVolumeTargetId is null && pureStorageVolume is null && status is null ? default : new DatastoreProperties(
                     provisioningState,
-                    new NetAppVolume(netAppVolumeId, default),
+                    netAppVolumeId is null ? default : new NetAppVolume(netAppVolumeId, default),
                     diskPoolVolume,
-                    new ElasticSanVolume(elasticSanVolumeTargetId, default),
+                    elasticSanVolumeTargetId is null ? default : new ElasticSanVolume(elasticSanVolumeTargetId, default),
                     pureStorageVolume,
                     status,
                     default),
@@ -1937,9 +1937,9 @@ namespace Azure.ResourceManager.Avs.Models
                 systemData,
                 provisioningState is null && netAppVolumeId is null && diskPoolVolume is null && elasticSanVolumeTargetId is null && pureStorageVolume is null && status is null ? default : new DatastoreProperties(
                     provisioningState,
-                    new NetAppVolume(netAppVolumeId, default),
+                    netAppVolumeId is null ? default : new NetAppVolume(netAppVolumeId, default),
                     diskPoolVolume,
-                    new ElasticSanVolume(elasticSanVolumeTargetId, default),
+                    elasticSanVolumeTargetId is null ? default : new ElasticSanVolume(elasticSanVolumeTargetId, default),
                     pureStorageVolume,
                     status,
                     default),

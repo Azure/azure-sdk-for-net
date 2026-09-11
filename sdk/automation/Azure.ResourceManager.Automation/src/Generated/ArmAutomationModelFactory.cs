@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                language is null && version is null && defaultPackages is null && description is null ? default : new AutomationRuntimeEnvironmentProperties(new RuntimeProperties(language, version, default), defaultPackages ?? new ChangeTrackingDictionary<string, string>(), description, default),
+                language is null && version is null && defaultPackages is null && description is null ? default : new AutomationRuntimeEnvironmentProperties(language is null && version is null ? default : new RuntimeProperties(language, version, default), defaultPackages ?? new ChangeTrackingDictionary<string, string>(), description, default),
                 default);
         }
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Automation.Models
                 resourceType,
                 systemData,
                 runbookName is null && jobId is null && startedBy is null && createdOn is null && status is null && startOn is null && endOn is null && lastModifiedOn is null && provisioningState is null && runtimeEnvironmentName is null && runOn is null ? default : new JobCollectionItemProperties(
-                    new RunbookAssociationProperty(runbookName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     jobId,
                     startedBy,
                     createdOn,
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Automation.Models
                     endOn,
                     lastModifiedOn,
                     provisioningState,
-                    new JobRuntimeEnvironment(runtimeEnvironmentName, default),
+                    runtimeEnvironmentName is null ? default : new JobRuntimeEnvironment(runtimeEnvironmentName, default),
                     runOn,
                     default),
                 default);
@@ -796,7 +796,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.AutomationJobCreateOrUpdateContent"/> instance for mocking. </returns>
         public static AutomationJobCreateOrUpdateContent AutomationJobCreateOrUpdateContent(IDictionary<string, string> parameters = default, string runOn = default, string runbookName = default)
         {
-            return new AutomationJobCreateOrUpdateContent(runbookName is null && parameters is null && runOn is null ? default : new JobCreateProperties(new RunbookAssociationProperty(runbookName, default), parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, default), default);
+            return new AutomationJobCreateOrUpdateContent(runbookName is null && parameters is null && runOn is null ? default : new JobCreateProperties(runbookName is null ? default : new RunbookAssociationProperty(runbookName, default), parameters ?? new ChangeTrackingDictionary<string, string>(), runOn, default), default);
         }
 
         /// <summary> Definition of the linked workspace. </summary>
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Automation.Models
             return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && startOn is null && endOn is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
                 targetComputerType,
-                new UpdateConfigurationNavigation(softwareUpdateName, default),
+                softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 osType,
                 correlationId,
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Automation.Models
                 startOn,
                 endOn,
                 configuredDuration,
-                new JobNavigation(jobId, default),
+                jobId is null ? default : new JobNavigation(jobId, default),
                 createdOn,
                 createdBy,
                 lastModifiedOn,
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default, string softwareUpdateName = default)
         {
             return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && startOn is null && endOn is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
-                new UpdateConfigurationNavigation(softwareUpdateName, default),
+                softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 configuredDuration,
                 osType,
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Automation.Models
                     expireOn,
                     lastInvokedOn,
                     parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    new RunbookAssociationProperty(runbookName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     runOn,
                     createdOn,
                     lastModifiedOn,
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.Automation.Models
                     registrationOn,
                     ip,
                     accountId,
-                    new DscNodeConfigurationAssociationProperty(namePropertiesNodeConfigurationName, default),
+                    namePropertiesNodeConfigurationName is null ? default : new DscNodeConfigurationAssociationProperty(namePropertiesNodeConfigurationName, default),
                     status,
                     nodeId,
                     etag,
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.DscNodePatch"/> instance for mocking. </returns>
         public static DscNodePatch DscNodePatch(string nodeId = default, string namePropertiesNodeConfigurationName = default)
         {
-            return new DscNodePatch(nodeId, namePropertiesNodeConfigurationName is null ? default : new DscNodeUpdateParametersProperties(new DscNodeConfigurationAssociationProperty(namePropertiesNodeConfigurationName, default), default), default);
+            return new DscNodePatch(nodeId, namePropertiesNodeConfigurationName is null ? default : new DscNodeUpdateParametersProperties(namePropertiesNodeConfigurationName is null ? default : new DscNodeConfigurationAssociationProperty(namePropertiesNodeConfigurationName, default), default), default);
         }
 
         /// <summary> Definition of the dsc node report type. </summary>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.Automation.Models
                 resourceType,
                 systemData,
                 connectionTypeName is null && fieldDefinitionValues is null && createdOn is null && lastModifiedOn is null && description is null ? default : new ConnectionProperties(
-                    new ConnectionTypeAssociationProperty(connectionTypeName, default),
+                    connectionTypeName is null ? default : new ConnectionTypeAssociationProperty(connectionTypeName, default),
                     fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(),
                     createdOn,
                     lastModifiedOn,
@@ -1465,7 +1465,7 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn is null && createdOn is null && configurationName is null && source is null && nodeCount is null && isIncrementNodeConfigurationBuildRequired is null ? default : new DscNodeConfigurationProperties(
                     lastModifiedOn,
                     createdOn,
-                    new DscConfigurationAssociationProperty(configurationName, default),
+                    configurationName is null ? default : new DscConfigurationAssociationProperty(configurationName, default),
                     source,
                     nodeCount,
                     isIncrementNodeConfigurationBuildRequired,
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                groupType is null && credentialName is null ? default : new HybridRunbookWorkerGroupProperties(groupType, new RunAsCredentialAssociationProperty(credentialName, default), default),
+                groupType is null && credentialName is null ? default : new HybridRunbookWorkerGroupProperties(groupType, credentialName is null ? default : new RunAsCredentialAssociationProperty(credentialName, default), default),
                 default);
         }
 
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.HybridRunbookWorkerGroupCreateOrUpdateContent"/> instance for mocking. </returns>
         public static HybridRunbookWorkerGroupCreateOrUpdateContent HybridRunbookWorkerGroupCreateOrUpdateContent(string credentialName = default, string name = default)
         {
-            return new HybridRunbookWorkerGroupCreateOrUpdateContent(credentialName is null ? default : new HybridRunbookWorkerGroupCreateOrUpdateProperties(new RunAsCredentialAssociationProperty(credentialName, default), default), name, default);
+            return new HybridRunbookWorkerGroupCreateOrUpdateContent(credentialName is null ? default : new HybridRunbookWorkerGroupCreateOrUpdateProperties(credentialName is null ? default : new RunAsCredentialAssociationProperty(credentialName, default), default), name, default);
         }
 
         /// <param name="id"> Gets or sets the id of the resource. </param>
@@ -1559,8 +1559,8 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 jobScheduleId is null && scheduleName is null && runbookName is null && runOn is null && parameters is null ? default : new JobScheduleProperties(
                     jobScheduleId,
-                    new ScheduleAssociationProperty(scheduleName, default),
-                    new RunbookAssociationProperty(runbookName, default),
+                    scheduleName is null ? default : new ScheduleAssociationProperty(scheduleName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     runOn,
                     parameters ?? new ChangeTrackingDictionary<string, string>(),
                     default),
@@ -2325,7 +2325,7 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
@@ -2399,7 +2399,7 @@ namespace Azure.ResourceManager.Automation.Models
                 lastModifiedOn is null && createdOn is null && configurationName is null && source is null && nodeCount is null && isIncrementNodeConfigurationBuildRequired is null ? default : new DscNodeConfigurationProperties(
                     lastModifiedOn,
                     createdOn,
-                    new DscConfigurationAssociationProperty(configurationName, default),
+                    configurationName is null ? default : new DscConfigurationAssociationProperty(configurationName, default),
                     source,
                     nodeCount,
                     isIncrementNodeConfigurationBuildRequired,
@@ -2520,7 +2520,7 @@ namespace Azure.ResourceManager.Automation.Models
                 resourceType,
                 systemData,
                 connectionTypeName is null && fieldDefinitionValues is null && createdOn is null && lastModifiedOn is null && description is null ? default : new ConnectionProperties(
-                    new ConnectionTypeAssociationProperty(connectionTypeName, default),
+                    connectionTypeName is null ? default : new ConnectionTypeAssociationProperty(connectionTypeName, default),
                     fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(),
                     createdOn,
                     lastModifiedOn,
@@ -2562,8 +2562,8 @@ namespace Azure.ResourceManager.Automation.Models
                 systemData,
                 jobScheduleId is null && scheduleName is null && runbookName is null && runOn is null && parameters is null ? default : new JobScheduleProperties(
                     jobScheduleId,
-                    new ScheduleAssociationProperty(scheduleName, default),
-                    new RunbookAssociationProperty(runbookName, default),
+                    scheduleName is null ? default : new ScheduleAssociationProperty(scheduleName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     runOn,
                     new ChangeTrackingDictionary<string, string>(parameters ?? new ChangeTrackingDictionary<string, string>()),
                     default),
@@ -2733,7 +2733,7 @@ namespace Azure.ResourceManager.Automation.Models
                 resourceType,
                 systemData,
                 runbookName is null && startedBy is null && runOn is null && jobId is null && createdOn is null && status is null && statusDetails is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null && provisioningState is null ? default : new JobProperties(
-                    new RunbookAssociationProperty(runbookName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     startedBy,
                     runOn,
                     default,
@@ -2776,7 +2776,7 @@ namespace Azure.ResourceManager.Automation.Models
                 resourceType,
                 systemData,
                 runbookName is null && jobId is null && createdOn is null && status is null && lastModifiedOn is null && provisioningState is null && runOn is null ? default : new JobCollectionItemProperties(
-                    new RunbookAssociationProperty(runbookName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     jobId,
                     default,
                     createdOn,
@@ -2812,7 +2812,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string softwareUpdateName = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default)
         {
             return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
-                new UpdateConfigurationNavigation(softwareUpdateName, default),
+                softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 configuredDuration,
                 osType,
@@ -2854,7 +2854,7 @@ namespace Azure.ResourceManager.Automation.Models
             return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
                 targetComputerType,
-                new UpdateConfigurationNavigation(softwareUpdateName, default),
+                softwareUpdateName is null ? default : new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 osType,
                 correlationId,
@@ -2862,7 +2862,7 @@ namespace Azure.ResourceManager.Automation.Models
                 default,
                 default,
                 configuredDuration,
-                new JobNavigation(jobId, default),
+                jobId is null ? default : new JobNavigation(jobId, default),
                 createdOn,
                 createdBy,
                 lastModifiedOn,
@@ -2985,7 +2985,7 @@ namespace Azure.ResourceManager.Automation.Models
                     default,
                     lastInvokedOn,
                     parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    new RunbookAssociationProperty(runbookName, default),
+                    runbookName is null ? default : new RunbookAssociationProperty(runbookName, default),
                     runOn,
                     createdOn,
                     lastModifiedOn,
