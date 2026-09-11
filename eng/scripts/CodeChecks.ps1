@@ -16,6 +16,9 @@ param (
 
     [Parameter()]
     [switch] $SkipDiffValidation
+
+    [Parameter()]
+    [string] $ProjectListOverrideFile
 )
 
 Write-Host "Service Directory $ServiceDirectory"
