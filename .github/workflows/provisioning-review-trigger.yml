@@ -21,7 +21,7 @@ jobs:
     if: >
       github.event_name != 'check_run' ||
       (github.event.check_run.name == 'net - pullrequest' &&
-      (github.event.check_run.conclusion == 'success' || github.event.check_run.conclusion == 'failure'))
+      github.event.check_run.conclusion == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: Dispatch provisioning review when in scope
@@ -89,6 +89,11 @@ jobs:
             local check_run_conclusion="$2"
             local check_run_head_sha="$3"
             local check_run_url="$4"
+
+            if [ "$check_run_conclusion" != "success" ]; then
+              echo "Skipping provisioning review; failed CI is handled by the standalone CI failure-analysis workflow."
+              return 0
+            fi
 
             if [ -z "$pr_number" ]; then
               echo "No pull request associated with this check run."

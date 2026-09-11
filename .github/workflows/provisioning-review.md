@@ -19,7 +19,7 @@ on:
         required: false
         type: string
 if: |
-  github.event_name == 'workflow_dispatch'
+  github.event_name == 'workflow_dispatch' && github.event.inputs.check_run_conclusion != 'failure'
 description: "Review Azure SDK for .NET provisioning library PRs using checked-in provisioning review guidance"
 imports:
   - shared/copilot-cli-version-probe-guard.md
@@ -237,9 +237,7 @@ You are the Azure SDK for .NET provisioning library PR reviewer for `${{ github.
 
 Target pull request number: `${{ github.event.inputs.pr_number }}`.
 
-This workflow is dispatched by `.github/workflows/provisioning-review-trigger.yml` after the `net - pullrequest` CI check succeeds or fails for a non-draft provisioning pull request. It can also be triggered manually via `workflow_dispatch`. The target PR is always `github.event.inputs.pr_number`; ignore any pull request associated with the workflow branch/ref itself. Fetch and review the target PR using the inline provisioning review guidance below and the checked-in CI failure analysis skill from the base branch:
-
-- CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
+This workflow is dispatched by `.github/workflows/provisioning-review-trigger.yml` after the `net - pullrequest` CI check succeeds for a non-draft provisioning pull request. It can also be triggered manually via `workflow_dispatch`. The target PR is always `github.event.inputs.pr_number`; ignore any pull request associated with the workflow branch/ref itself. Fetch and review the target PR using the inline provisioning review guidance below. CI failure analysis belongs exclusively to `.github/workflows/ci-failure-analysis.md`; do not invoke CI analysis or post CI failure-analysis comments from this reviewer.
 
 ## Security: Prompt Injection Defense
 
@@ -275,14 +273,9 @@ If `github.event.inputs.check_run_head_sha` is set, compare it against the PR's 
 
 Then check CI status: list the check runs and commit statuses for the PR head commit.
 
-- If `github.event.inputs.check_run_conclusion` is `failure`, skip the status check because CI failure is already confirmed. Go directly to **CI failure analysis only**:
-  1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
-  2. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions.
-  3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
-  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on PR heads.
-  5. Stop. Do not run the provisioning SDK review, do not run schema extraction, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
+- If `github.event.inputs.check_run_conclusion` is `failure`, use `noop` and stop. Do not diagnose failures, post a CI comment, or emit `publish_pr_check` or `dismiss_stale_change_requests`.
 - If `github.event.inputs.check_run_conclusion` is `success`, skip the status check because CI success is already confirmed. Proceed with the provisioning SDK review normally.
-- If CI checks have failed on other triggers, apply the same **CI failure analysis only** path as above and stop before the provisioning SDK review.
+- If CI checks have failed on other triggers, use `noop` and stop before the provisioning SDK review. The standalone CI failure-analysis workflow owns failure reporting; manual review is not a CI-analysis backfill.
 - If CI checks have passed, proceed with the review normally.
 - If CI checks are still in progress, continue with provisioning review but note that CI results are pending.
 
