@@ -1336,7 +1336,9 @@ namespace BasicTypeSpec
         public virtual Response<DaysOfWeekExtensibleEnum> GetUnknownValue(CancellationToken cancellationToken = default)
         {
             Response result = GetUnknownValue(cancellationToken.ToRequestContext());
-            return Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
+            string content = result.Content.ToString().TrimStart('﻿');
+            DaysOfWeekExtensibleEnum value = new DaysOfWeekExtensibleEnum(content);
+            return Response.FromValue(value, result);
         }
 
         /// <summary> get extensible enum. </summary>
@@ -1345,7 +1347,9 @@ namespace BasicTypeSpec
         public virtual async Task<Response<DaysOfWeekExtensibleEnum>> GetUnknownValueAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetUnknownValueAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(new DaysOfWeekExtensibleEnum(result.Content.ToObjectFromJson<string>()), result);
+            string content = result.Content.ToString().TrimStart('﻿');
+            DaysOfWeekExtensibleEnum value = new DaysOfWeekExtensibleEnum(content);
+            return Response.FromValue(value, result);
         }
 
         /// <summary>
