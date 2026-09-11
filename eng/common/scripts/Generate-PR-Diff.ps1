@@ -10,6 +10,10 @@ The folder in which the result will be written.
 
 .PARAMETER TargetPath
 The path under which changes will be detected.
+
+.PARAMETER ExcludePaths
+Case-insensitive, literal repository-relative paths to exclude during package detection. Entries ending in '/'
+match directory descendants; other entries match only the exact path. Glob syntax is not supported.
 #>
 [CmdletBinding()]
 Param (
