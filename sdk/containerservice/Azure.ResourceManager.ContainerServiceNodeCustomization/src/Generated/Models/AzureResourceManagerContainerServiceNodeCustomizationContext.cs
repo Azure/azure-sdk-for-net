@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.ContainerServiceNodeCustomization.Models;
 using Azure.ResourceManager.Models;
 
@@ -25,7 +24,6 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization
     [ModelReaderWriterBuildable(typeof(NodeCustomizationVersionData))]
     [ModelReaderWriterBuildable(typeof(NodeCustomizationVersionListResult))]
     [ModelReaderWriterBuildable(typeof(NodeCustomizationVersionResource))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerContainerServiceNodeCustomizationContext : ModelReaderWriterContext

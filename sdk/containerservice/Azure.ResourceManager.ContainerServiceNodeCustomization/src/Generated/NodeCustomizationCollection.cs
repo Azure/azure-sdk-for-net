@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization
         {
             TryGetApiVersion(NodeCustomizationResource.ResourceType, out string nodeCustomizationApiVersion);
             _nodeCustomizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceNodeCustomization", NodeCustomizationResource.ResourceType.Namespace, Diagnostics);
-            _nodeCustomizationsRestClient = new NodeCustomizations(_nodeCustomizationsClientDiagnostics, Pipeline, Endpoint, nodeCustomizationApiVersion ?? "2025-09-02-preview");
+            _nodeCustomizationsRestClient = new NodeCustomizations(_nodeCustomizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nodeCustomizationApiVersion ?? "2025-09-02-preview");
             ValidateResourceId(id);
         }
 

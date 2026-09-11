@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Mocking
 
         private ClientDiagnostics NodeCustomizationsClientDiagnostics => _nodeCustomizationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceNodeCustomization.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NodeCustomizations NodeCustomizationsRestClient => _nodeCustomizationsRestClient ??= new NodeCustomizations(NodeCustomizationsClientDiagnostics, Pipeline, Endpoint, "2025-09-02-preview");
+        private NodeCustomizations NodeCustomizationsRestClient => _nodeCustomizationsRestClient ??= new NodeCustomizations(NodeCustomizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-02-preview");
 
         /// <summary>
         /// Deprecated: List the node customizations in a subscription at the latest version. Use Prepared Image Specification APIs instead.
