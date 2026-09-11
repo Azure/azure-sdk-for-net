@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <returns> A new <see cref="Models.VirtualNetworkDnsForwardingRuleset"/> instance for mocking. </returns>
         public static VirtualNetworkDnsForwardingRuleset VirtualNetworkDnsForwardingRuleset(ResourceIdentifier id = default, ResourceIdentifier virtualNetworkLinkId = default)
         {
-            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId is null ? default : new VirtualNetworkLinkSubResourceProperties(new SubResource(virtualNetworkLinkId, default), default), default);
+            return new VirtualNetworkDnsForwardingRuleset(id, virtualNetworkLinkId is null ? default : new VirtualNetworkLinkSubResourceProperties(virtualNetworkLinkId is null ? default : new SubResource(virtualNetworkLinkId, default), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DnsSecurityRulePatch(actionType is null && dnsResolverDomainLists is null && managedDomainLists is null && dnsSecurityRuleState is null && priority is null ? default : new DnsSecurityRulePatchProperties(
-                new DnsSecurityRuleAction(actionType, default),
+                actionType is null ? default : new DnsSecurityRuleAction(actionType, default),
                 (dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                 (managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>()).ToList(),
                 dnsSecurityRuleState,

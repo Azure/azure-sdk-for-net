@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
                 enabledState,
                 routeConfiguration,
-                new FrontDoorSubResource(rulesEngineId, default),
-                new RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                rulesEngineId is null ? default : new FrontDoorSubResource(rulesEngineId, default),
+                webApplicationFirewallPolicyLinkId is null ? default : new RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                 default,
                 resourceState));
         }
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <returns> A new <see cref="Models.FrontDoorBackendPool"/> instance for mocking. </returns>
         public static FrontDoorBackendPool FrontDoorBackendPool(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, IEnumerable<FrontDoorBackend> backends = default, ResourceIdentifier loadBalancingSettingsId = default, ResourceIdentifier healthProbeSettingsId = default, FrontDoorResourceState? resourceState = default)
         {
-            return new FrontDoorBackendPool(id, name, resourceType, default, backends is null && loadBalancingSettingsId is null && healthProbeSettingsId is null && resourceState is null ? default : new BackendPoolProperties((backends ?? new ChangeTrackingList<FrontDoorBackend>()).ToList(), new FrontDoorSubResource(loadBalancingSettingsId, default), new FrontDoorSubResource(healthProbeSettingsId, default), default, resourceState));
+            return new FrontDoorBackendPool(id, name, resourceType, default, backends is null && loadBalancingSettingsId is null && healthProbeSettingsId is null && resourceState is null ? default : new BackendPoolProperties((backends ?? new ChangeTrackingList<FrontDoorBackend>()).ToList(), loadBalancingSettingsId is null ? default : new FrontDoorSubResource(loadBalancingSettingsId, default), healthProbeSettingsId is null ? default : new FrontDoorSubResource(healthProbeSettingsId, default), default, resourceState));
         }
 
         /// <summary> Backend address of a frontDoor load balancer. </summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 hostName,
                 sessionAffinityEnabledState,
                 sessionAffinityTtlInSeconds,
-                new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                webApplicationFirewallPolicyLinkId is null ? default : new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                 default,
                 resourceState,
                 customHttpsProvisioningState,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 certificateSource,
                 protocolType,
                 minimumTlsVersion,
-                vaultId is null && secretName is null && secretVersion is null ? default : new KeyVaultCertificateSourceParameters(new KeyVaultCertificateSourceParametersVault(vaultId, default), secretName, secretVersion, default),
+                vaultId is null && secretName is null && secretVersion is null ? default : new KeyVaultCertificateSourceParameters(vaultId is null ? default : new KeyVaultCertificateSourceParametersVault(vaultId, default), secretName, secretVersion, default),
                 certificateType is null ? default : new FrontDoorCertificateSourceParameters(certificateType, default),
                 default);
         }
@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             return new FrontDoorWebApplicationFirewallPolicyData(policySettings is null && rules is null && managedRuleSets is null && exceptions is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                 policySettings,
-                new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
-                new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), default), default),
+                rules is null ? default : new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                managedRuleSets is null && exceptions is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), exceptions is null ? default : new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), default), default),
                 (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
@@ -977,8 +977,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             return new FrontDoorWebApplicationFirewallPolicyData(policySettings is null && rules is null && managedRuleSets is null && exceptions is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                 policySettings,
-                new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
-                new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), default), default),
+                rules is null ? default : new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                managedRuleSets is null && exceptions is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), exceptions is null ? default : new ManagedRuleSetExceptionList((exceptions ?? new ChangeTrackingList<FrontDoorManagedRuleSetException>()).ToList(), default), default),
                 (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
@@ -1132,8 +1132,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             return new FrontDoorWebApplicationFirewallPolicyData(policySettings is null && rules is null && managedRuleSets is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                 policySettings,
-                new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
-                new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), default, default),
+                rules is null ? default : new CustomRuleList((rules ?? new ChangeTrackingList<WebApplicationCustomRule>()).ToList(), default),
+                managedRuleSets is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSet>()).ToList(), default, default),
                 (frontendEndpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (routingRuleLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                 (securityPolicyLinks ?? new ChangeTrackingList<SubResource>()).ToList(),

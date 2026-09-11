@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maps.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Maps.Models
                     disableLocalAuth,
                     provisioningState,
                     (linkedResources ?? new ChangeTrackingList<MapsLinkedResource>()).ToList(),
-                    new MapsCorsRules((corsRules ?? new ChangeTrackingList<MapsCorsRule>()).ToList(), default),
+                    corsRules is null ? default : new MapsCorsRules((corsRules ?? new ChangeTrackingList<MapsCorsRule>()).ToList(), default),
                     encryption,
                     (locations ?? new ChangeTrackingList<MapsLocationItem>()).ToList(),
                     (privateEndpointConnections ?? new ChangeTrackingList<MapsPrivateEndpointConnectionData>()).ToList(),

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 eTag,
                 default);
         }
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), new ResourceReference(virtualHubId, default), provisioningState, default),
+                collectorPolicies is null && virtualHubId is null && provisioningState is null ? default : new AzureTrafficCollectorPropertiesFormat((collectorPolicies ?? new ChangeTrackingList<SubResource>()).ToList(), virtualHubId is null ? default : new ResourceReference(virtualHubId, default), provisioningState, default),
                 etag,
                 default);
         }

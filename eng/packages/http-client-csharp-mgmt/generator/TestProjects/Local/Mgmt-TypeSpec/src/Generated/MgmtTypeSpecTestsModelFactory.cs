@@ -171,11 +171,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     (prop1 ?? new ChangeTrackingList<string>()).ToList(),
                     (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, default),
-                    new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
+                    flattenedProperty is null ? default : new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
                     default,
                     eTag,
                     writableSubResourceProp,
-                    new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
+                    computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                     default),
                 extendedLocation,
                 identity,
@@ -215,7 +215,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default,
                 eTag,
                 writableSubResourceProp,
-                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
+                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                 default);
         }
 
@@ -640,7 +640,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new IssueTestResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), displayName is null && innerValue is null && innerFlag is null && status is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue), default);
+            return new IssueTestResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), displayName is null && innerValue is null && innerFlag is null && status is null && updateOnlyValue is null ? default : new IssueTestUpdateProperties(displayName, innerValue is null && innerFlag is null ? default : new IssueTestNestedConfig(innerValue, innerFlag, default), status, default, updateOnlyValue), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1278,8 +1278,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>()).ToList(), default),
                     hostName,
                     provisioningState,
                     redundancyMode,

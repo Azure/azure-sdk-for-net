@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && migratedEndpoint is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                    new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
                     hostName,
                     provisioningState,
                     redundancyMode,
@@ -405,8 +405,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && maintenanceWindows is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && migratedEndpoint is null && publicNetworkAccess is null ? default : new ClusterUpdateProperties(
                 highAvailability,
                 minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
-                new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
+                customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                maintenanceWindows is null ? default : new MaintenanceConfiguration((maintenanceWindows ?? new ChangeTrackingList<RedisEnterpriseMaintenanceWindow>()).ToList(), default),
                 hostName,
                 provisioningState,
                 redundancyMode,
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                     default,
                     hostName,
                     provisioningState,
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new ClusterUpdateProperties(
                 highAvailability,
                 minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                 default,
                 hostName,
                 provisioningState,
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterCreateProperties(
                     highAvailability,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                     default,
                     hostName,
                     provisioningState,
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterPatch(sku, highAvailability is null && minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && redundancyMode is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterUpdateProperties(
                 highAvailability,
                 minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                 default,
                 hostName,
                 provisioningState,
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterCreateProperties(
                     default,
                     minimumTlsVersion,
-                    new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                    customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                     default,
                     hostName,
                     provisioningState,
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseClusterPatch(sku, minimumTlsVersion is null && customerManagedKeyEncryption is null && hostName is null && provisioningState is null && resourceState is null && redisVersion is null && privateEndpointConnections is null ? default : new ClusterUpdateProperties(
                 default,
                 minimumTlsVersion,
-                new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
+                customerManagedKeyEncryption is null ? default : new ClusterPropertiesEncryption(customerManagedKeyEncryption, default),
                 default,
                 hostName,
                 provisioningState,

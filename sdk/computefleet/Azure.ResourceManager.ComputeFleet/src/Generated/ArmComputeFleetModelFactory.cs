@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 licenseType,
                 scheduledEventsProfile,
                 userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new SubResource(capacityReservationGroupId, default), default),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(capacityReservationGroupId is null ? default : new SubResource(capacityReservationGroupId, default), default),
                 galleryApplications is null ? default : new ComputeFleetApplicationProfile((galleryApplications ?? new ChangeTrackingList<ComputeFleetVmGalleryApplication>()).ToList(), default),
                 hardwareVmSizeProperties is null ? default : new ComputeFleetVmssHardwareProfile(hardwareVmSizeProperties, default),
                 serviceArtifactReferenceId is null ? default : new ServiceArtifactReference(serviceArtifactReferenceId, default),

@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     utilization,
                     renewSource,
                     renewDestination,
-                    new RenewProperties(renewPurchaseProperties, default),
+                    renewPurchaseProperties is null ? default : new RenewProperties(renewPurchaseProperties, default),
                     default),
                 skuName is null ? default : new ResourceSku(skuName, default),
                 default);
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isRenewed,
                     reservedResourceType,
                     reviewOn,
-                    new ReservationOrderAliasResponsePropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
+                    reservedResourceInstanceFlexibility is null ? default : new ReservationOrderAliasResponsePropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
                     default),
                 skuName is null ? default : new ResourceSku(skuName, default),
                 location,
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     isRenewed,
                     reservedResourceType,
                     reviewOn,
-                    new ReservationOrderAliasRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
+                    reservedResourceInstanceFlexibility is null ? default : new ReservationOrderAliasRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
                     default),
                 default);
         }
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location.GetValueOrDefault(),
-                new CreditProperties(
+                status is null && productCode is null && reason is null && credit is null && startsOn is null && endsOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null ? default : new CreditProperties(
                     status,
                     productCode,
                     reason,

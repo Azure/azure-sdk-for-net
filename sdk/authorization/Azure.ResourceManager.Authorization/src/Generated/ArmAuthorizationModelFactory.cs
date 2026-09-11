@@ -70,9 +70,9 @@ namespace Azure.ResourceManager.Authorization.Models
                     (decisions ?? new ChangeTrackingList<AccessReviewResult>()).ToList(),
                     status,
                     createdOn,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
                     (scopes ?? new ChangeTrackingList<AccessReviewScope>()).ToList(),
-                    new AccessReviewHistoryScheduleSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewHistoryScheduleSettings(pattern, range, default),
                     (instances ?? new ChangeTrackingList<AccessReviewHistoryInstance>()).ToList(),
                     default),
                 default);
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     status,
                     descriptionForAdmins,
                     descriptionForReviewers,
-                    new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
-                    new AccessReviewScheduleSettings(
+                    principalId is null && principalType is null && principalName is null && userPrincipalName is null ? default : new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default),
+                    isMailNotificationsEnabled is null && isReminderNotificationsEnabled is null && isDefaultDecisionEnabled is null && isJustificationRequiredOnApproval is null && defaultDecision is null && isAutoApplyDecisionsEnabled is null && isRecommendationsEnabled is null && recommendationLookBackDuration is null && instanceDurationInDays is null && pattern is null && range is null ? default : new AccessReviewScheduleSettings(
                         isMailNotificationsEnabled,
                         isReminderNotificationsEnabled,
                         isDefaultDecisionEnabled,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         isRecommendationsEnabled,
                         recommendationLookBackDuration,
                         instanceDurationInDays,
-                        new AccessReviewRecurrenceSettings(pattern, range, default),
+                        pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                         default),
                     scope,
                     (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 scope,
                 (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     isRecommendationsEnabled,
                     recommendationLookBackDuration,
                     instanceDurationInDays,
-                    new AccessReviewRecurrenceSettings(pattern, range, default),
+                    pattern is null && range is null ? default : new AccessReviewRecurrenceSettings(pattern, range, default),
                     default),
                 default);
         }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    startOn is null && expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expirationType is null && endOn is null && duration is null ? default : new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     appliedOn,
                     appliedBy,
                     (insights ?? new ChangeTrackingList<AccessReviewDecisionInsight>()).ToList(),
-                    new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
+                    membershipTypes is null ? default : new AccessReviewDecisionPrincipalResourceMembership((membershipTypes ?? new ChangeTrackingList<AccessReviewDecisionPrincipalResourceMembershipType>()).ToList(), default),
                     default),
                 default);
         }

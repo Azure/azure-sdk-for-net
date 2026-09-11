@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     (multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>()).ToList(),
                     createDefaultAvailabilityGroupIfNotExist,
                     port,
-                    new AvailabilityGroupConfiguration((availabilityGroupReplicas ?? new ChangeTrackingList<AvailabilityGroupReplica>()).ToList(), default),
+                    availabilityGroupReplicas is null ? default : new AvailabilityGroupConfiguration((availabilityGroupReplicas ?? new ChangeTrackingList<AvailabilityGroupReplica>()).ToList(), default),
                     default),
                 default);
         }
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 startTimeUtc,
                 endTimeUtc,
                 troubleshootingScenario,
-                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, default), default),
+                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, default), default),
                 default);
         }
 
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 startTimeUtc,
                 endTimeUtc,
                 troubleshootingScenario,
-                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, default), default),
+                troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new TroubleshootingAdditionalProperties(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName is null ? default : new UnhealthyReplicaInfo(troubleshootingAdditionalUnhealthyReplicaInfoAvailabilityGroupName, default), default),
                 virtualMachineResourceId,
                 default);
         }

@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     sapProduct.GetValueOrDefault(),
                     managedResourcesNetworkAccessType,
                     configuration,
-                    new ManagedRGConfiguration(managedResourceGroupName, default),
+                    managedResourceGroupName is null ? default : new ManagedRGConfiguration(managedResourceGroupName, default),
                     status,
                     health,
                     state,
                     provisioningState,
-                    new SapVirtualInstanceError(errorsProperties, default),
+                    errorsProperties is null ? default : new SapVirtualInstanceError(errorsProperties, default),
                     default),
                 identity,
                 default);
@@ -843,12 +843,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     enqueueReplicationServerProperties,
                     kernelVersion,
                     kernelPatch,
-                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    loadBalancerDetailsId is null ? default : new LoadBalancerDetails(loadBalancerDetailsId, default),
                     (vmDetails ?? new ChangeTrackingList<CentralServerVmDetails>()).ToList(),
                     status,
                     health,
                     provisioningState,
-                    new SapVirtualInstanceError(errorsProperties, default),
+                    errorsProperties is null ? default : new SapVirtualInstanceError(errorsProperties, default),
                     default),
                 default);
         }
@@ -971,11 +971,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     databaseSid,
                     databaseType,
                     ipAddress,
-                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    loadBalancerDetailsId is null ? default : new LoadBalancerDetails(loadBalancerDetailsId, default),
                     (vmDetails ?? new ChangeTrackingList<DatabaseVmDetails>()).ToList(),
                     status,
                     provisioningState,
-                    new SapVirtualInstanceError(errorsProperties, default),
+                    errorsProperties is null ? default : new SapVirtualInstanceError(errorsProperties, default),
                     default),
                 default);
         }
@@ -1047,12 +1047,12 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     icmHttpPort,
                     icmHttpsPort,
                     dispatcherStatus,
-                    new LoadBalancerDetails(loadBalancerDetailsId, default),
+                    loadBalancerDetailsId is null ? default : new LoadBalancerDetails(loadBalancerDetailsId, default),
                     (vmDetails ?? new ChangeTrackingList<ApplicationServerVmDetails>()).ToList(),
                     status,
                     health,
                     provisioningState,
-                    new SapVirtualInstanceError(errorsProperties, default),
+                    errorsProperties is null ? default : new SapVirtualInstanceError(errorsProperties, default),
                     default),
                 default);
         }

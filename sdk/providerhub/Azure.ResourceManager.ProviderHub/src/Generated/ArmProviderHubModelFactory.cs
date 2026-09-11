@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,
-                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(new OpenApiValidation(isNoncompliantCollectionResponseAllowed, default), default),
+                isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiConfiguration(isNoncompliantCollectionResponseAllowed is null ? default : new OpenApiValidation(isNoncompliantCollectionResponseAllowed, default), default),
                 onBehalfOfTokens,
                 category,
                 resourceValidation,

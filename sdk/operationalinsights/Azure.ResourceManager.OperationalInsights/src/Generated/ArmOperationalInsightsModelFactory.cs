@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 dataExportId is null && tableNames is null && resourceId is null && destinationType is null && eventHubName is null && isEnabled is null && createdOn is null && lastModifiedOn is null ? default : new DataExportProperties(
                     dataExportId,
                     (tableNames ?? new ChangeTrackingList<string>()).ToList(),
-                    new Destination(resourceId, destinationType, new DestinationMetaData(eventHubName, default), default),
+                    resourceId is null && destinationType is null && eventHubName is null ? default : new Destination(resourceId, destinationType, eventHubName is null ? default : new DestinationMetaData(eventHubName, default), default),
                     isEnabled,
                     createdOn,
                     lastModifiedOn,
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     createdOn,
                     (associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>()).ToList(),
                     capacityReservationProperties,
-                    new OperationalInsightsClusterReplicationProperties(
+                    isAvailabilityZonesEnabled is null && createdOn is null && lastModifiedOn is null ? default : new OperationalInsightsClusterReplicationProperties(
                         default,
                         default,
                         isAvailabilityZonesEnabled,
@@ -1572,7 +1572,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
                     defaultDataCollectionRuleResourceId,
-                    new OperationalInsightsWorkspaceReplicationProperties(
+                    createdOn is null ? default : new OperationalInsightsWorkspaceReplicationProperties(
                         default,
                         default,
                         default,
@@ -1630,7 +1630,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     (privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>()).ToList(),
                     features,
                     defaultDataCollectionRuleResourceId,
-                    new OperationalInsightsWorkspaceReplicationProperties(
+                    createdOn is null ? default : new OperationalInsightsWorkspaceReplicationProperties(
                         default,
                         default,
                         default,

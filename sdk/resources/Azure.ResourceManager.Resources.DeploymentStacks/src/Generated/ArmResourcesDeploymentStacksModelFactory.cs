@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
                     externalInputs ?? new ChangeTrackingDictionary<string, DeploymentExternalInput>(),
                     externalInputDefinitions ?? new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>(),
                     actionOnUnmanage,
-                    new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
+                    debugSettingDetailLevel is null ? default : new DeploymentStacksDebugSetting(debugSettingDetailLevel, default),
                     deploymentScope,
                     description,
                     denySettings,

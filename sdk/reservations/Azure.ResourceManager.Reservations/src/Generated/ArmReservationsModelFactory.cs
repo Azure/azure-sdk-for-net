@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 (appliedScopes ?? new ChangeTrackingList<string>()).ToList(),
                 appliedScopeProperties,
                 isRenewEnabled,
-                new PurchaseRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
+                reservedResourceInstanceFlexibility is null ? default : new PurchaseRequestPropertiesReservedResourceProperties(reservedResourceInstanceFlexibility, default),
                 reviewOn,
                 default), default);
         }
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 instanceFlexibility,
                 name,
                 isRenewEnabled,
-                new PatchPropertiesRenewProperties(renewPurchaseProperties, default),
+                renewPurchaseProperties is null ? default : new PatchPropertiesRenewProperties(renewPurchaseProperties, default),
                 reviewOn,
                 default), default);
         }

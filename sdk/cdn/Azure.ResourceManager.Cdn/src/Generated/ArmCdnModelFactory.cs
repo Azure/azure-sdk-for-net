@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <returns> A new <see cref="Models.MigrateResult"/> instance for mocking. </returns>
         public static MigrateResult MigrateResult(ResourceIdentifier resourceId = default, string migrateResultType = default, ResourceIdentifier migratedProfileResourceIdId = default)
         {
-            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(new CdnResourceReference(migratedProfileResourceIdId, default), default), default);
+            return new MigrateResult(resourceId, migrateResultType, migratedProfileResourceIdId is null ? default : new MigrateResultProperties(migratedProfileResourceIdId is null ? default : new CdnResourceReference(migratedProfileResourceIdId, default), default), default);
         }
 
         /// <summary> Reference to another resource. </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 systemData,
                 originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && originCapacityResource is null && enabledState is null && enforceCertificateNameCheck is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginProperties(
                     originGroupName,
-                    new CdnResourceReference(originId, default),
+                    originId is null ? default : new CdnResourceReference(originId, default),
                     hostName,
                     httpPort,
                     httpsPort,
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             return new FrontDoorOriginPatch(originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && originCapacityResource is null && enabledState is null && enforceCertificateNameCheck is null ? default : new FrontDoorOriginUpdatePropertiesParameters(
                 originGroupName,
-                new CdnResourceReference(originId, default),
+                originId is null ? default : new CdnResourceReference(originId, default),
                 hostName,
                 httpPort,
                 httpsPort,
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
                     endpointName,
                     (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                    new CdnResourceReference(originGroupId, default),
+                    originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
                     originPath,
                     (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null ? default : new RouteUpdatePropertiesParameters(
                 endpointName,
                 (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                new CdnResourceReference(originGroupId, default),
+                originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
                 originPath,
                 (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                 (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
@@ -1770,8 +1770,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 systemData,
                 policySettings is null && customRules is null && managedRuleSets is null && frontendEndpointLinks is null && routingRuleLinks is null && securityPolicyLinks is null && provisioningState is null && resourceState is null ? default : new WebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new CustomRuleListFrontDoor((customRules ?? new ChangeTrackingList<CustomRuleFrontDoor>()).ToList(), default),
-                    new ManagedRuleSetListFrontDoor((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetFrontDoor>()).ToList(), default),
+                    customRules is null ? default : new CustomRuleListFrontDoor((customRules ?? new ChangeTrackingList<CustomRuleFrontDoor>()).ToList(), default),
+                    managedRuleSets is null ? default : new ManagedRuleSetListFrontDoor((managedRuleSets ?? new ChangeTrackingList<ManagedRuleSetFrontDoor>()).ToList(), default),
                     (frontendEndpointLinks ?? new ChangeTrackingList<FrontendEndpointLink>()).ToList(),
                     (routingRuleLinks ?? new ChangeTrackingList<CdnRoutingRuleLink>()).ToList(),
                     (securityPolicyLinks ?? new ChangeTrackingList<CdnSecurityPolicyLink>()).ToList(),
@@ -2365,10 +2365,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     optimizationType,
                     probePath,
                     (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                    new CdnResourceReference(defaultOriginGroupId, default),
+                    defaultOriginGroupId is null ? default : new CdnResourceReference(defaultOriginGroupId, default),
                     (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
                     deliveryPolicy,
-                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                    webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                     default,
                     hostName,
                     (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
@@ -2549,10 +2549,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 optimizationType,
                 probePath,
                 (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                new CdnResourceReference(defaultOriginGroupId, default),
+                defaultOriginGroupId is null ? default : new CdnResourceReference(defaultOriginGroupId, default),
                 (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
                 deliveryPolicy,
-                new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                 default), default);
         }
 
@@ -2947,8 +2947,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     profileName,
                     tlsSettings,
                     mtlsSettings,
-                    new CdnResourceReference(dnsZoneId, default),
-                    new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                    dnsZoneId is null ? default : new CdnResourceReference(dnsZoneId, default),
+                    preValidatedCustomDomainResourceId is null ? default : new CdnResourceReference(preValidatedCustomDomainResourceId, default),
                     provisioningState,
                     deploymentStatus,
                     domainValidationState,
@@ -3060,8 +3060,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 tlsSettings,
                 mtlsSettings,
-                new CdnResourceReference(dnsZoneId, default),
-                new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                dnsZoneId is null ? default : new CdnResourceReference(dnsZoneId, default),
+                preValidatedCustomDomainResourceId is null ? default : new CdnResourceReference(preValidatedCustomDomainResourceId, default),
                 default), default);
         }
 
@@ -3385,9 +3385,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 location,
                 policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
-                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
-                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    rateLimitRules is null ? default : new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    customRules is null ? default : new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    managedRuleSets is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
                     (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                     extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     provisioningState,
@@ -3658,10 +3658,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     optimizationType,
                     probePath,
                     (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                    new CdnResourceReference(defaultOriginGroupId, default),
+                    defaultOriginGroupId is null ? default : new CdnResourceReference(defaultOriginGroupId, default),
                     (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
                     deliveryPolicy,
-                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                    webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                     default,
                     hostName,
                     (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
@@ -3741,8 +3741,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     profileName,
                     tlsSettings,
                     default,
-                    new CdnResourceReference(dnsZoneId, default),
-                    new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                    dnsZoneId is null ? default : new CdnResourceReference(dnsZoneId, default),
+                    preValidatedCustomDomainResourceId is null ? default : new CdnResourceReference(preValidatedCustomDomainResourceId, default),
                     provisioningState,
                     deploymentStatus,
                     domainValidationState,
@@ -3766,8 +3766,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 profileName,
                 tlsSettings,
                 default,
-                new CdnResourceReference(dnsZoneId, default),
-                new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                dnsZoneId is null ? default : new CdnResourceReference(dnsZoneId, default),
+                preValidatedCustomDomainResourceId is null ? default : new CdnResourceReference(preValidatedCustomDomainResourceId, default),
                 default), default);
         }
 
@@ -3847,7 +3847,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 systemData,
                 originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && enabledState is null && enforceCertificateNameCheck is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginProperties(
                     originGroupName,
-                    new CdnResourceReference(originId, default),
+                    originId is null ? default : new CdnResourceReference(originId, default),
                     hostName,
                     httpPort,
                     httpsPort,
@@ -3882,7 +3882,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             return new FrontDoorOriginPatch(originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && enabledState is null && enforceCertificateNameCheck is null ? default : new FrontDoorOriginUpdatePropertiesParameters(
                 originGroupName,
-                new CdnResourceReference(originId, default),
+                originId is null ? default : new CdnResourceReference(originId, default),
                 hostName,
                 httpPort,
                 httpsPort,
@@ -3927,7 +3927,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
                     endpointName,
                     (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                    new CdnResourceReference(originGroupId, default),
+                    originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
                     originPath,
                     (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
@@ -3964,7 +3964,7 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorRoutePatch(endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null ? default : new RouteUpdatePropertiesParameters(
                 endpointName,
                 (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                new CdnResourceReference(originGroupId, default),
+                originGroupId is null ? default : new CdnResourceReference(originGroupId, default),
                 originPath,
                 (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                 (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
@@ -4040,10 +4040,10 @@ namespace Azure.ResourceManager.Cdn.Models
                     optimizationType,
                     probePath,
                     (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                    new CdnResourceReference(defaultOriginGroupId, default),
+                    defaultOriginGroupId is null ? default : new CdnResourceReference(defaultOriginGroupId, default),
                     (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
                     deliveryPolicy,
-                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                    webApplicationFirewallPolicyLinkId is null ? default : new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
                     default,
                     hostName,
                     (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
@@ -4084,9 +4084,9 @@ namespace Azure.ResourceManager.Cdn.Models
                 location,
                 policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
                     policySettings,
-                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
-                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
-                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    rateLimitRules is null ? default : new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    customRules is null ? default : new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    managedRuleSets is null ? default : new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
                     (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
                     extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                     provisioningState,
@@ -4202,8 +4202,8 @@ namespace Azure.ResourceManager.Cdn.Models
                     profileName,
                     tlsSettings,
                     default,
-                    new CdnResourceReference(dnsZoneId, default),
-                    new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                    dnsZoneId is null ? default : new CdnResourceReference(dnsZoneId, default),
+                    preValidatedCustomDomainResourceId is null ? default : new CdnResourceReference(preValidatedCustomDomainResourceId, default),
                     provisioningState,
                     deploymentStatus,
                     domainValidationState,

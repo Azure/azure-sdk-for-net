@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
                 default);
         }
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIPRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
+            return new EventGridNamespacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, sku, topicSpacesConfiguration is null && topicsCustomDomains is null && publicNetworkAccess is null && inboundIPRules is null ? default : new NamespaceUpdateParameterProperties(topicSpacesConfiguration, topicsCustomDomains is null ? default : new UpdateTopicsConfigurationInfo((topicsCustomDomains ?? new ChangeTrackingList<CustomDomainConfiguration>()).ToList(), default), publicNetworkAccess, (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(), default), default);
         }
 
         /// <summary> Properties of the topic spaces configuration info of a namespace. </summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <returns> A new <see cref="Models.PartnerNamespaceChannelPatch"/> instance for mocking. </returns>
         public static PartnerNamespaceChannelPatch PartnerNamespaceChannelPatch(DateTimeOffset? expireOnIfNotActivated = default, PartnerUpdateDestinationInfo partnerDestinationInfo = default, PartnerTopicEventTypeInfo eventTypeInfo = default)
         {
-            return new PartnerNamespaceChannelPatch(expireOnIfNotActivated is null && partnerDestinationInfo is null && eventTypeInfo is null ? default : new ChannelUpdateParametersProperties(expireOnIfNotActivated, partnerDestinationInfo, new PartnerUpdateTopicInfo(eventTypeInfo, default), default), default);
+            return new PartnerNamespaceChannelPatch(expireOnIfNotActivated is null && partnerDestinationInfo is null && eventTypeInfo is null ? default : new ChannelUpdateParametersProperties(expireOnIfNotActivated, partnerDestinationInfo, eventTypeInfo is null ? default : new PartnerUpdateTopicInfo(eventTypeInfo, default), default), default);
         }
 
         /// <summary>
@@ -890,9 +890,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EventGridJsonInputSchemaMapping EventGridJsonInputSchemaMapping(JsonFieldWithDefault eventType = default, JsonFieldWithDefault subject = default, JsonFieldWithDefault dataVersion = default, string idSourceField = default, string topicSourceField = default, string eventTimeSourceField = default)
         {
             return new EventGridJsonInputSchemaMapping(default, default, idSourceField is null && topicSourceField is null && eventTimeSourceField is null && eventType is null && subject is null && dataVersion is null ? default : new JsonInputSchemaMappingProperties(
-                new JsonField(idSourceField, default),
-                new JsonField(topicSourceField, default),
-                new JsonField(eventTimeSourceField, default),
+                idSourceField is null ? default : new JsonField(idSourceField, default),
+                topicSourceField is null ? default : new JsonField(topicSourceField, default),
+                eventTimeSourceField is null ? default : new JsonField(eventTimeSourceField, default),
                 eventType,
                 subject,
                 dataVersion,
@@ -1927,8 +1927,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                     source,
                     topicType,
                     metricResourceId,
-                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
+                    customerManagedKeyEncryption is null ? default : new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
                     default),
                 identity,
                 default);
@@ -2043,8 +2043,8 @@ namespace Azure.ResourceManager.EventGrid.Models
                     (inboundIPRules ?? new ChangeTrackingList<EventGridInboundIPRule>()).ToList(),
                     isLocalAuthDisabled,
                     dataResidencyBoundary,
-                    new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
+                    customerManagedKeyEncryption is null ? default : new KeyEncryption((customerManagedKeyEncryption ?? new ChangeTrackingList<EventGridCustomerManagedKeyEncryption>()).ToList(), default),
+                    platformCapabilitiesConfidentialComputeMode is null ? default : new PlatformCapabilities(platformCapabilitiesConfidentialComputeMode is null ? default : new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode.GetValueOrDefault(), default), default),
                     default),
                 skuName is null ? default : new ResourceSku(skuName, default),
                 identity,
@@ -2685,7 +2685,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
                 default);
         }
 

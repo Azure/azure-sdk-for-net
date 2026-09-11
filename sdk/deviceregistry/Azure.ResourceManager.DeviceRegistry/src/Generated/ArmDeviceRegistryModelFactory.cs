@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeviceRegistryNamespacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(new Messaging(namespaceUpdateMessagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), default), default);
+            return new DeviceRegistryNamespacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(namespaceUpdateMessagingEndpoints is null ? default : new Messaging(namespaceUpdateMessagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), default), default);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>

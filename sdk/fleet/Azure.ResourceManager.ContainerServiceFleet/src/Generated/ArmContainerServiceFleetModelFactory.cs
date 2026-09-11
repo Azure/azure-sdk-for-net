@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <returns> A new <see cref="Models.ContainerServiceFleetPropagationPolicy"/> instance for mocking. </returns>
         public static ContainerServiceFleetPropagationPolicy ContainerServiceFleetPropagationPolicy(ContainerServiceFleetPropagationType @type = default, ContainerServiceFleetPlacementPolicy defaultClusterResourcePlacementPolicy = default)
         {
-            return new ContainerServiceFleetPropagationPolicy(@type, defaultClusterResourcePlacementPolicy is null ? default : new ContainerServiceFleetPlacementProfile(new ClusterResourcePlacementSpec(defaultClusterResourcePlacementPolicy, default), default), default);
+            return new ContainerServiceFleetPropagationPolicy(@type, defaultClusterResourcePlacementPolicy is null ? default : new ContainerServiceFleetPlacementProfile(defaultClusterResourcePlacementPolicy is null ? default : new ClusterResourcePlacementSpec(defaultClusterResourcePlacementPolicy, default), default), default);
         }
 
         /// <param name="placementType"> Type of placement. Can be "PickAll", "PickN" or "PickFixed". Default is PickAll. </param>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             clusterNames ??= new ChangeTrackingList<string>();
             tolerations ??= new ChangeTrackingList<ContainerServiceFleetToleration>();
 
-            return new ContainerServiceFleetPlacementPolicy(placementType, (clusterNames ?? new ChangeTrackingList<string>()).ToList(), affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new Affinity(new ContainerServiceFleetClusterAffinity(new ClusterSelector((affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms ?? new ChangeTrackingList<ContainerServiceFleetClusterSelectorTerm>()).ToList(), default), default), default), (tolerations ?? new ChangeTrackingList<ContainerServiceFleetToleration>()).ToList(), default);
+            return new ContainerServiceFleetPlacementPolicy(placementType, (clusterNames ?? new ChangeTrackingList<string>()).ToList(), affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new Affinity(affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new ContainerServiceFleetClusterAffinity(affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new ClusterSelector((affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms ?? new ChangeTrackingList<ContainerServiceFleetClusterSelectorTerm>()).ToList(), default), default), default), (tolerations ?? new ChangeTrackingList<ContainerServiceFleetToleration>()).ToList(), default);
         }
 
         /// <param name="labelSelector"> LabelSelector is a label query over all the joined member clusters. Clusters matching the query are selected. If you specify both label and property selectors in the same term, the results are AND'd. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null && autoUpgradeProfileId is null ? default : new UpdateRunProperties(
                     provisioningState,
                     updateStrategyId,
-                    new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
+                    strategyStages is null ? default : new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
                     managedClusterUpdate,
                     status,
                     autoUpgradeProfileId,
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null && autoUpgradeProfileId is null ? default : new UpdateRunProperties(
                     provisioningState,
                     updateStrategyId,
-                    new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
+                    strategyStages is null ? default : new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
                     managedClusterUpdate,
                     status,
                     autoUpgradeProfileId,
@@ -970,7 +970,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState is null && updateStrategyId is null && strategyStages is null && managedClusterUpdate is null && status is null ? default : new UpdateRunProperties(
                     provisioningState,
                     updateStrategyId,
-                    new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
+                    strategyStages is null ? default : new ContainerServiceFleetUpdateRunStrategy((strategyStages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStage>()).ToList(), default),
                     managedClusterUpdate,
                     status,
                     default,

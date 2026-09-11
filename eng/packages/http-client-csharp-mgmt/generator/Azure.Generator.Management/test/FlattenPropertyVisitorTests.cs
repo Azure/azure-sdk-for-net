@@ -767,6 +767,117 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestBackwardCompatNewInstanceGuardsOptionalRecursiveNestedModel()
+        {
+            var deploymentModeProperty = InputFactory.Property("deploymentMode", InputPrimitiveType.Int32, isRequired: true, serializedName: "deploymentMode");
+            var deploymentPolicyModel = InputFactory.Model(
+                "TestDeploymentPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [deploymentModeProperty]);
+            var lockLevelProperty = InputFactory.Property("lockLevel", InputPrimitiveType.Int32, isRequired: true, serializedName: "lockLevel");
+            var deploymentPolicyProperty = InputFactory.Property("deploymentPolicy", deploymentPolicyModel, serializedName: "deploymentPolicy");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [lockLevelProperty, deploymentPolicyProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, deploymentPolicyModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(deploymentPolicyModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldLockLevelParam = new ParameterProvider("lockLevel", $"", typeof(int));
+            var oldDeploymentModeParam = new ParameterProvider("deploymentMode", $"", new CSharpType(typeof(int)).WithNullable(true));
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldLockLevelParam, oldDeploymentModeParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var constructorArguments = parentProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory)]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(lockLevel,"));
+            Assert.That(rendered, Does.Contain("(deploymentMode is null) ? default : new global::Samples.Models.TestDeploymentPolicy(deploymentMode.GetValueOrDefault(),"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceGuardsRecursiveNestedModelFromUnrelatedParentParameters()
+        {
+            var objectIdProperty = InputFactory.Property("objectId", InputPrimitiveType.String, serializedName: "objectId");
+            var principalTypeProperty = InputFactory.Property("principalType", InputPrimitiveType.Int32, isRequired: true, serializedName: "principalType");
+            var tenantIdProperty = InputFactory.Property("tenantId", InputPrimitiveType.String, serializedName: "tenantId");
+            var externalIdentityModel = InputFactory.Model(
+                "TestExternalIdentity",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [objectIdProperty, principalTypeProperty, tenantIdProperty]);
+            var roleTypeProperty = InputFactory.Property("roleType", InputPrimitiveType.String, serializedName: "roleType");
+            var externalIdentityProperty = InputFactory.Property("externalIdentity", externalIdentityModel, serializedName: "externalIdentity");
+            var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [roleTypeProperty, externalIdentityProperty, provisioningStateProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, externalIdentityModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(externalIdentityModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var oldRoleTypeParam = new ParameterProvider("roleType", $"", typeof(string), Default);
+            var oldObjectIdParam = new ParameterProvider("objectId", $"", typeof(string), Default);
+            var oldPrincipalTypeParam = new ParameterProvider("principalType", $"", new CSharpType(typeof(int)).WithNullable(true), Default);
+            var oldTenantIdParam = new ParameterProvider("tenantId", $"", typeof(string), Default);
+            var oldProvisioningStateParam = new ParameterProvider("provisioningState", $"", typeof(string), Default);
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldRoleTypeParam, oldObjectIdParam, oldPrincipalTypeParam, oldTenantIdParam, oldProvisioningStateParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var constructorArguments = parentProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory)]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            var parentGuard = rendered[..rendered.IndexOf("? default : new global::Samples.Models.TestProperties", StringComparison.Ordinal)];
+            Assert.That(parentGuard, Does.Contain("roleType is null"));
+            Assert.That(parentGuard, Does.Contain("objectId is null"));
+            Assert.That(parentGuard, Does.Contain("principalType is null"));
+            Assert.That(parentGuard, Does.Contain("tenantId is null"));
+            Assert.That(parentGuard, Does.Contain("provisioningState is null"));
+            Assert.That(rendered, Does.Contain("(((objectId is null) && (principalType is null)) && (tenantId is null)) ? default : new global::Samples.Models.TestExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId,"));
+        }
+
+        [Test]
         public void TestBackwardCompatNewInstanceSkipsNamedConstructorMismatch()
         {
             var provisioningStateProperty = InputFactory.Property("provisioningState", InputPrimitiveType.String, serializedName: "provisioningState");

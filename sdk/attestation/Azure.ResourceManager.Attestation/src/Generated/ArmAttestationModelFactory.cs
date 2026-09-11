@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
