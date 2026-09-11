@@ -15,7 +15,7 @@ param (
     [switch] $SpellCheckPublicApiSurface,
 
     [Parameter()]
-    [switch] $SkipDiffValidation
+    [switch] $SkipDiffValidation,
 
     [Parameter()]
     [string] $ProjectListOverrideFile
@@ -143,9 +143,22 @@ try {
             $logsFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
             $diagnosticArguments = ($debugLogging -and $logsFolder) ? "/binarylogger:$logsFolder/generatecode.binlog" : ""
 
+            $projectListOverrideArgument = ""
+            if ($ProjectListOverrideFile -and $ProjectListOverrideFile -notlike '$(*') {
+                $projectListOverrideArgument = "/p:ProjectListOverrideFile=`"$ProjectListOverrideFile`""
+            }
+
             Write-Host "Re-generating clients"
+            Write-Host "Project list override: [$ProjectListOverrideFile]"
+
             Invoke-Block {
-                & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory $diagnosticArguments /p:ProjectListOverrideFile=""
+                & dotnet msbuild $PSScriptRoot\..\service.proj `
+                    /restore `
+                    /t:GenerateCode `
+                    /p:SDKType=$SDKType `
+                    /p:ServiceDirectory=$ServiceDirectory `
+                    $projectListOverrideArgument `
+                    $diagnosticArguments
             }
         }
     }
@@ -158,7 +171,11 @@ try {
 
         Write-Host "Re-generating listings"
         Invoke-Block {
-            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
+            & $PSScriptRoot/Export-API.ps1 `
+                -ServiceDirectory $ServiceDirectory `
+                -SDKType $SDKType `
+                -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface `
+                -ProjectListOverrideFile $ProjectListOverrideFile
         }
     }
     elseif ($ServiceDirectory -eq "tools") {
