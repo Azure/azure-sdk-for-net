@@ -17,6 +17,10 @@
     <PackageReference Include="Microsoft.OpenTelemetry" />
     <PackageReference Include="System.Net.ServerSentEvents" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- The model-only TypeSpec projection does not use generated URI helpers. -->
+    <Compile Remove="Generated\Internal\RawRequestUriBuilderExtensions.cs" />
+  </ItemGroup>
   <!-- Ship a global using so consumers can write AgentHost.Run<T>() with zero usings. -->
   <ItemGroup>
     <None Include="build\Azure.AI.AgentServer.Core.props" Pack="true" PackagePath="build\" />
