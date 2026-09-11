@@ -349,7 +349,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = TeamsUserRestClient.ExchangeTeamsUserAccessToken(new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId), cancellationToken);
+                Response<CommunicationIdentityAccessToken> response = TeamsUserRestClient.ExchangeTeamsUserAccessToken(BuildTeamsUserExchangeTokenRequest(options), cancellationToken);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -368,7 +368,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationIdentityAccessToken> response = await TeamsUserRestClient.ExchangeTeamsUserAccessTokenAsync(new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId), cancellationToken).ConfigureAwait(false);
+                Response<CommunicationIdentityAccessToken> response = await TeamsUserRestClient.ExchangeTeamsUserAccessTokenAsync(BuildTeamsUserExchangeTokenRequest(options), cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new AccessToken(response.Value.Token, response.Value.ExpiresOn), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -399,11 +399,42 @@ namespace Azure.Communication.Identity
             return request;
         }
 
+        // AutoRest emitted null guards on operation parameters; the DPG emitter does not.
+        // Validate here so a null argument still fails fast with ArgumentNullException instead
+        // of reaching the service and coming back as a 400. The parameter names match the ones
+        // the AutoRest client reported, so callers catching these see no change.
         private static CommunicationIdentityAccessTokenRequest BuildAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
-            => new CommunicationIdentityAccessTokenRequest(scopes ?? Enumerable.Empty<CommunicationTokenScope>())
+        {
+            if (scopes == null)
+            {
+                throw new ArgumentNullException(nameof(scopes));
+            }
+
+            return new CommunicationIdentityAccessTokenRequest(scopes)
             {
                 ExpiresInMinutes = expiresInMinutes
             };
+        }
+
+        private static TeamsUserExchangeTokenRequest BuildTeamsUserExchangeTokenRequest(GetTokenForTeamsUserOptions options)
+        {
+            if (options.TeamsUserAadToken == null)
+            {
+                throw new ArgumentNullException("token");
+            }
+
+            if (options.ClientId == null)
+            {
+                throw new ArgumentNullException("appId");
+            }
+
+            if (options.UserObjectId == null)
+            {
+                throw new ArgumentNullException("userId");
+            }
+
+            return new TeamsUserExchangeTokenRequest(options.TeamsUserAadToken, options.ClientId, options.UserObjectId);
+        }
 
         private static int? GetTokenExpirationInMinutes(TimeSpan tokenExpiresIn, string paramName)
         {
