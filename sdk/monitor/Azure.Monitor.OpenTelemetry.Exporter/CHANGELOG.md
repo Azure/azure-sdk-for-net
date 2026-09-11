@@ -1,29 +1,62 @@
 # Release History
 
-## 1.9.0-beta.1 (Unreleased)
+## 1.10.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added multi-tenant support for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on, and sampling defaults to fixed-rate rather than rate-limited because a per-process rate limit would be shared across every tenant the process carries. The switch cannot be combined with Microsoft Entra ID authentication, because the credential is scoped to the exporter's own audience and would be sent to endpoints supplied by telemetry.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
+
+- Extended multi-tenant export to logs, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch used for traces. When enabled, a `LogRecord` carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; log records without both attributes are dropped. The two routing attributes are consumed for routing and are not emitted as custom properties. Routing reads only `LogRecord.Attributes`, not logging scopes. Live Metrics disablement and the Microsoft Entra ID restriction that apply to multi-tenant traces apply to logs as well, since both are enforced on the shared transmitter.
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.9.0 (2026-09-04)
 
 ### Features Added
 - Add support for project id attributes propagation
   ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
 
-- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
+- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; the telemetry is now durable before exit, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
-### Breaking Changes
+- How long shutdown waits for that background drain can now be set through the `Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds` AppContext data value, using either `AppContext.SetData` or a `runtimeconfig.json` configProperty. `Dispose()` passes a finite timeout, so by default part of that window is spent delivering telemetry and process exit tracks ingestion latency. Short-lived applications should set this to `0`, which makes exit cost only the file write: measured at 2.7 ms regardless of ingestion latency, against 2011 ms with a two second ingestion delay. The default is unchanged, so long-running services keep delivering their final batch within the window `Dispose()` allows. A single-run CI job, where no later run exists to drain storage, should not raise this value but set the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` switch with a bounded `Retry.NetworkTimeout`: raising the budget cannot guarantee delivery, because `Shutdown()` waits on the drain for no time at all and `Dispose()` is capped by the five second grace period OpenTelemetry allows it.
+  ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
 
 ### Bugs Fixed
 
+- The ingestion redirect cache is now keyed by the endpoint it was issued for. A redirect returned by one ingestion endpoint could previously be applied to a request bound for another.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
+
 - Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
 - Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.
-
-- Stored telemetry is now coalesced into a single request per batch and drained oldest-first, instead of one request per blob newest-first. Previously a backlog could grow faster than it drained, and the oldest telemetry expired before it was ever sent.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
 
 - Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
+  ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))
+
+- Statsbeat no longer holds up process exit. It exports once more as its meter provider is disposed, which put an ingestion round trip on the exit path; that final export now runs in the background, and its network timeout is bounded at five seconds rather than the pipeline default of 100 seconds. The customer SDK stats meter provider is instead left to live for the process lifetime, so it never exports on the exit path at all; its stats are delivered by its own periodic reader.
+  ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
 
 - Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
 - Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
+  ([#62081](https://github.com/Azure/azure-sdk-for-net/pull/62081))
 
 ### Other Changes
+
+- Updated OpenTelemetry dependencies to 1.18.0 and `OpenTelemetry.PersistentStorage.FileSystem` to 1.1.1.
+  ([#62698](https://github.com/Azure/azure-sdk-for-net/pull/62698))
+
+- Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion rents fewer pooled buffers. Standard metrics no longer collect the tags they never read.
+  ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
+  - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.
+  - Fixed the buffer rent size being process-wide mutable state written without synchronization.
+  - Fixed an activity tag with a null key dropping the remaining tags from custom properties.
+  - Removed two attribute lookups that could never match. `http.server_name` and `server.socket.address` are still exported as custom properties, unchanged.
 
 ## 1.8.3 (2026-07-24)
 

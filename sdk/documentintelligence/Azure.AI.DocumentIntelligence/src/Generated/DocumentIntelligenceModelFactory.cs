@@ -454,7 +454,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string documentType = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default, float confidence = default)
+        public static AnalyzedDocument AnalyzedDocument(string documentType, IEnumerable<BoundingRegion> boundingRegions, IEnumerable<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence)
         {
             boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
             spans ??= new ChangeTrackingList<DocumentSpan>();
@@ -491,7 +491,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType fieldType = default, string valueString = default, DateTimeOffset? valueDate = default, TimeSpan? valueTime = default, string valuePhoneNumber = default, double? valueDouble = default, long? valueInt64 = default, DocumentSelectionMarkState? valueSelectionMark = default, DocumentSignatureType? valueSignature = default, string valueCountryRegion = default, IEnumerable<DocumentField> valueList = default, IReadOnlyDictionary<string, DocumentField> valueObject = default, CurrencyValue valueCurrency = default, AddressValue valueAddress = default, bool? valueBoolean = default, IEnumerable<string> valueSelectionGroup = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, float? confidence = default)
+        public static DocumentField DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IEnumerable<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IEnumerable<string> valueSelectionGroup, string content, IEnumerable<BoundingRegion> boundingRegions, IEnumerable<DocumentSpan> spans, float? confidence)
         {
             valueList ??= new ChangeTrackingList<DocumentField>();
             valueObject ??= new ChangeTrackingDictionary<string, DocumentField>();

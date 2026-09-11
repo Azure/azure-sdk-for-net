@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -32,12 +33,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="stateSource"> The source of the agent's operational state. When the agent is disabled, indicates where the disabled state originates from. Empty when not derived from a specific source. </param>
         /// <param name="versions"> The latest version of the agent. </param>
         /// <param name="agentEndpoint"> The endpoint configuration for the agent. </param>
+        /// <param name="digitalWorkerType"> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </param>
         /// <param name="instanceIdentity"> The instance identity of the agent. </param>
         /// <param name="blueprint"> The blueprint for the agent. </param>
         /// <param name="blueprintReference"> The blueprint for the agent. </param>
         /// <param name="agentCard"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsAgentRecord(string @object, string id, string name, AgentState state, AgentStateSource? stateSource, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsAgentRecord(string @object, string id, string name, AgentState state, AgentStateSource? stateSource, AgentObjectVersions versions, AgentEndpointConfiguration agentEndpoint, DigitalWorkerType? digitalWorkerType, AgentIdentity instanceIdentity, AgentIdentity blueprint, AgentBlueprintReference blueprintReference, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Object = @object;
             Id = id;
@@ -46,6 +48,7 @@ namespace Azure.AI.Projects.Agents
             StateSource = stateSource;
             Versions = versions;
             AgentEndpoint = agentEndpoint;
+            DigitalWorkerType = digitalWorkerType;
             InstanceIdentity = instanceIdentity;
             Blueprint = blueprint;
             BlueprintReference = blueprintReference;
@@ -67,6 +70,10 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The endpoint configuration for the agent. </summary>
         public AgentEndpointConfiguration AgentEndpoint { get; }
+
+        /// <summary> (Preview) The type of digital worker (previously known as `autopilot`). If omitted, it is not a digital worker. </summary>
+        [Experimental("AAIP001")]
+        public DigitalWorkerType? DigitalWorkerType { get; }
 
         /// <summary> The instance identity of the agent. </summary>
         public AgentIdentity InstanceIdentity { get; }

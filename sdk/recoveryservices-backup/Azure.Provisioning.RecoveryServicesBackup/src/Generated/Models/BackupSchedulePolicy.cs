@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// </summary>
     public partial class BackupSchedulePolicy : ProvisionableConstruct
     {
+        private BicepValue<string> _schedulePolicyType;
+
         /// <summary> Creates a new BackupSchedulePolicy. </summary>
         public BackupSchedulePolicy()
         {
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> SchedulePolicyType
+        {
+            get
+            {
+                Initialize();
+                return _schedulePolicyType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BackupSchedulePolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _schedulePolicyType = DefineProperty<string>(nameof(SchedulePolicyType), new string[] { "schedulePolicyType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

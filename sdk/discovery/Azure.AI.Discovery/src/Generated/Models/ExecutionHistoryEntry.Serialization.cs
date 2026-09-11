@@ -90,7 +90,7 @@ namespace Azure.AI.Discovery
                 throw new FormatException($"The model {nameof(ExecutionHistoryEntry)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("createdAt"u8);
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action);
             writer.WritePropertyName("createdBy"u8);
@@ -177,7 +177,7 @@ namespace Azure.AI.Discovery
             {
                 return null;
             }
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             string action = default;
             string createdBy = default;
             DiscoveryActorType createdByType = default;
@@ -190,7 +190,7 @@ namespace Azure.AI.Discovery
             {
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
@@ -250,7 +250,7 @@ namespace Azure.AI.Discovery
                 }
             }
             return new ExecutionHistoryEntry(
-                createdAt,
+                createdOn,
                 action,
                 createdBy,
                 createdByType,

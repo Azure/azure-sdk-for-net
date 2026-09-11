@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             FluxBucketPatch bucket = default;
             AzureBlobPatch azureBlob = default;
             OciRepositoryPatch ociRepository = default;
-            IDictionary<string, KustomizationPatch> kustomizations = default;
+            IDictionary<string, FluxConfigurationsKustomizationPatch> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    Dictionary<string, KustomizationPatch> dictionary = new Dictionary<string, KustomizationPatch>();
+                    Dictionary<string, FluxConfigurationsKustomizationPatch> dictionary = new Dictionary<string, FluxConfigurationsKustomizationPatch>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, KustomizationPatch.DeserializeKustomizationPatch(prop0.Value, options));
+                        dictionary.Add(prop0.Name, FluxConfigurationsKustomizationPatch.DeserializeFluxConfigurationsKustomizationPatch(prop0.Value, options));
                     }
                     kustomizations = dictionary;
                     continue;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationPatch>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomizationPatch>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }

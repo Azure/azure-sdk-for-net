@@ -108,39 +108,39 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets the MaintenanceStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceStartOn
+        /// <summary> Gets the MaintenanceStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceStartsOn
         {
             get
             {
-                return Properties.MaintenanceStartOn;
+                return Properties.MaintenanceStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceEndOn
+        /// <summary> Gets the MaintenanceEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceEndsOn
         {
             get
             {
-                return Properties.MaintenanceEndOn;
+                return Properties.MaintenanceEndsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionStartOn
+        /// <summary> Gets the MaintenanceExecutionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionStartsOn
         {
             get
             {
-                return Properties.MaintenanceExecutionStartOn;
+                return Properties.MaintenanceExecutionStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionEndOn
+        /// <summary> Gets the MaintenanceExecutionEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionEndsOn
         {
             get
             {
-                return Properties.MaintenanceExecutionEndOn;
+                return Properties.MaintenanceExecutionEndsOn;
             }
         }
 

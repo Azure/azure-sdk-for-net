@@ -135,6 +135,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Dranet))
+            {
+                writer.WritePropertyName("dranet"u8);
+                writer.WriteObjectValue(Dranet, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -182,6 +187,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             IList<AgentPoolNetworkPortRange> allowedHostPorts = default;
             IList<ResourceIdentifier> applicationSecurityGroups = default;
             IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces = default;
+            DRANETProfile dranet = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -269,6 +275,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     secondaryNetworkInterfaces = array;
                     continue;
                 }
+                if (prop.NameEquals("dranet"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dranet = DRANETProfile.DeserializeDRANETProfile(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -280,6 +295,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(),
                 applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(),
                 secondaryNetworkInterfaces ?? new ChangeTrackingList<AgentPoolNetworkInterface>(),
+                dranet,
                 additionalBinaryDataProperties);
         }
     }

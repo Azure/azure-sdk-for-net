@@ -78,7 +78,7 @@ namespace Azure.Provisioning.ServiceFabric
         {
             get
             {
-                return Properties.VmSize;
+                return Properties is null ? default : Properties.VmSize;
             }
         }
 

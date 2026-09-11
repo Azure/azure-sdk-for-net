@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.29 (Unreleased)
+## 1.0.0-beta.30 (Unreleased)
 
 ### Features Added
 
@@ -43,6 +43,12 @@
   its existing persisted turn stream without creating a stream that was never used.
 
 ### Other Changes
+
+## 1.0.0-beta.29 (2026-09-08)
+
+### Other Changes
+
+- Released to provide the public `Azure.AI.AgentServer.Core` dependency required by `Azure.AI.AgentServer.Invocations` 1.0.0-beta.7.
 
 ## 1.0.0-beta.28 (2026-08-12)
 

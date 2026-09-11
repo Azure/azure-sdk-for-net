@@ -50,19 +50,19 @@ public class BasicDurableTaskTests
 
             resource scheduler 'Microsoft.DurableTask/schedulers@2026-02-01' = {
               name: take('scheduler-${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
               properties: {
                 ipAllowlist: [
                   '0.0.0.0/0'
                 ]
-                sku: {
-                  name: 'Dedicated'
-                  capacity: 1
-                }
                 publicNetworkAccess: 'Enabled'
+                sku: {
+                  capacity: 1
+                  name: 'Dedicated'
+                }
+              }
+              tags: {
+                environment: 'test'
               }
             }
             """);

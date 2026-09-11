@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
+            if (Optional.IsDefined(ChangeEnumerationIntervalDays))
+            {
+                writer.WritePropertyName("changeEnumerationIntervalDays"u8);
+                writer.WriteNumberValue(ChangeEnumerationIntervalDays.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,6 +146,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             string azureFileShareName = default;
             Guid? storageAccountTenantId = default;
             string friendlyName = default;
+            int? changeEnumerationIntervalDays = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,12 +178,27 @@ namespace Azure.ResourceManager.StorageSync.Models
                     friendlyName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("changeEnumerationIntervalDays"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    changeEnumerationIntervalDays = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CloudEndpointCreateParametersProperties(storageAccountResourceId, azureFileShareName, storageAccountTenantId, friendlyName, additionalBinaryDataProperties);
+            return new CloudEndpointCreateParametersProperties(
+                storageAccountResourceId,
+                azureFileShareName,
+                storageAccountTenantId,
+                friendlyName,
+                changeEnumerationIntervalDays,
+                additionalBinaryDataProperties);
         }
     }
 }

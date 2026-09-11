@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesRoleBasedBuiltInAuthorizationPolicy. </summary>
         public CognitiveServicesRoleBasedBuiltInAuthorizationPolicy()
         {
+            Type.Assign(BuiltInAuthorizationScheme.Default);
         }
 
         /// <summary> Define all the provisionable properties for CognitiveServicesRoleBasedBuiltInAuthorizationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "Default");
             DefineAdditionalProperties();
         }
 

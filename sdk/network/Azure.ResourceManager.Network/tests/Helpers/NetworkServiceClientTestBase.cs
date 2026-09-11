@@ -9,7 +9,8 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
                 Template = BinaryData.FromString(templateString)
             };
             var deploymentModel = new ArmDeploymentContent(deploymentProperties);
-            var deploymentWait = await resourceGroup.GetArmDeployments().CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
+            var deploymentWait = await ResourcesDeploymentsExtensions.GetArmDeployments(resourceGroup).CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deploymentModel);
             await deploymentWait.WaitForCompletionAsync();
         }
 

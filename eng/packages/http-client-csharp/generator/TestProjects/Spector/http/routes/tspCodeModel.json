@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "model",
       "name": "ExpandParameters",
+      "apiVersions": [],
       "namespace": "Routes",
       "crossLanguageDefinitionId": "Routes.ExpandParameters",
       "usage": "Input",
@@ -20,6 +21,7 @@
           "$id": "2",
           "kind": "property",
           "name": "field",
+          "apiVersions": [],
           "type": {
             "$id": "3",
             "kind": "string",
@@ -41,6 +43,7 @@
           "$id": "4",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "type": {
             "$id": "5",
             "kind": "string",
