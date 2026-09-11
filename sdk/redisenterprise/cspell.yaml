@@ -1,0 +1,6 @@
+import:
+  - ../../.vscode/cspell.json
+overrides:
+  - filename: '**/sdk/redisenterprise/Azure.Provisioning.RedisEnterprise/*.cs'
+    words:
+      - AZPROVISION
