@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Peering.Models
                 kind,
                 direct is null && exchangePeeringFacilities is null && peeringLocationValue is null && country is null && azureRegion is null ? default : new PeeringLocationProperties(
                     direct,
-                    new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
+                    exchangePeeringFacilities is null ? default : new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
                     peeringLocationValue,
                     country,
                     azureRegion,
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Peering.Models
                 kind,
                 direct is null && exchangePeeringFacilities is null && peeringLocationValue is null && country is null && azureRegion is null ? default : new PeeringLocationProperties(
                     direct,
-                    new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
+                    exchangePeeringFacilities is null ? default : new PeeringLocationPropertiesExchange((exchangePeeringFacilities ?? new ChangeTrackingList<ExchangePeeringFacility>()).ToList(), default),
                     peeringLocationValue,
                     country,
                     azureRegion,
