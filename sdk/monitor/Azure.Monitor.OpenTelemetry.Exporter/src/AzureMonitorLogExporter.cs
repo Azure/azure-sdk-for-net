@@ -102,6 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             // A concurrent Export takes a fresh batch rather than sharing the cached one.
             var routeBatch = Interlocked.Exchange(ref _routeBatch, null) ?? new EndpointRouteBatch();
+            routeBatch.BeginExport();
 
             try
             {

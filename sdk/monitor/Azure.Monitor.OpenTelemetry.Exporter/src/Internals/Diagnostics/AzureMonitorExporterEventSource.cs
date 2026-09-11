@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
@@ -584,5 +585,64 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
+
+        [NonEvent]
+        public void RoutedTelemetryCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, Activity activity)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedTelemetryCollected(exportSequence, ingestionEndpoint, instrumentationKey, activity.TraceId.ToHexString(), activity.SpanId.ToHexString());
+            }
+        }
+
+        [Event(67, Message = "Export {0}: collected telemetry for ingestion endpoint '{1}'. Instrumentation Key: {2}. Trace Id: {3}. Span Id: {4}", Level = EventLevel.Verbose)]
+        public void RoutedTelemetryCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string traceId, string spanId) => WriteEvent(67, exportSequence, ingestionEndpoint, instrumentationKey, traceId, spanId);
+
+        [NonEvent]
+        public void RoutedTelemetryRejected(long exportSequence, MultiTenant.RoutingRejectionReason reason, Activity activity)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedTelemetryRejected(exportSequence, reason.ToString(), activity.TraceId.ToHexString(), activity.SpanId.ToHexString());
+            }
+        }
+
+        [Event(68, Message = "Export {0}: dropped telemetry that could not be routed. Reason: {1}. Trace Id: {2}. Span Id: {3}. The Activity must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint.", Level = EventLevel.Verbose)]
+        public void RoutedTelemetryRejected(long exportSequence, string reason, string traceId, string spanId) => WriteEvent(68, exportSequence, reason, traceId, spanId);
+
+        [Event(69, Message = "No storage partition for ingestion endpoint '{0}': the limit of {1} partitions is already in use. Telemetry for this endpoint is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
+        public void MultiTenantPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
+
+        [NonEvent]
+        public void RoutedTelemetryEvicted(string evictedOwner, long evictedBytes, string requestingEndpoint)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                RoutedTelemetryEvicted(evictedOwner, evictedBytes.ToString(System.Globalization.CultureInfo.InvariantCulture), requestingEndpoint);
+            }
+        }
+
+        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The owner is an ingestion endpoint, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
+        public void RoutedTelemetryEvicted(string evictedOwner, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedOwner, evictedBytes, requestingEndpoint);
+
+        // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
+        // call allocates an argument array whether or not anything is listening.
+        [Event(71, Message = "Export {0}: collected {1} Activities for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
+        public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(71, exportSequence, collected, endpointCount, rejected);
+            }
+        }
+
+        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
+        public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
+            }
+        }
     }
 }

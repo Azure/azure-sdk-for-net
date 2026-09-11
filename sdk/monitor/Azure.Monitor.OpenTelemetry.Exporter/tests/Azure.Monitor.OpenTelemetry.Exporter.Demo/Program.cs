@@ -121,6 +121,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     Console.WriteLine($"  {pair.Key,-12} {pair.Value}");
                 }
 
+                Console.WriteLine("Unroutable, expected to be dropped and reported:");
+
+                foreach (var pair in demo.UnroutablePerReason)
+                {
+                    Console.WriteLine($"  {pair.Key,-28} {pair.Value}");
+                }
+
                 if (!faultEndpoints)
                 {
                     // Give the storage drain a chance to run before the provider is torn down.

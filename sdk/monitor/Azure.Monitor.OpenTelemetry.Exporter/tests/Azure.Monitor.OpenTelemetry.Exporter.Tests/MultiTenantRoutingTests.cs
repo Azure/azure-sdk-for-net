@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -32,6 +33,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private const string ActivitySourceName = nameof(MultiTenantRoutingTests);
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
+
+        /// <summary>Past the 200 character bound the key is rejected rather than truncated.</summary>
+        private const string TooLongInstrumentationKey = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+            + "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+
+        /// <summary>Past the 2048 character bound the endpoint is rejected before it is parsed.</summary>
+        private const string TooLongEndpoint = "https://eastus-1.in.applicationinsights.azure.com/"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/";
 
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
         private static readonly ActivityListener s_listener = CreateListener();
@@ -689,9 +717,121 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Theory]
+        [InlineData(null, EastUs, "MissingInstrumentationKey")]
+        [InlineData("", EastUs, "MissingInstrumentationKey")]
+        [InlineData("   ", EastUs, "MissingInstrumentationKey")]
+        [InlineData("ikey-a", null, "MissingIngestionEndpoint")]
+        [InlineData("ikey-a", "", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "not-a-uri", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "http://eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointNotHttps")]
+        [InlineData("ikey-a", "https://user:pass@eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointHasCredentials")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/?a=b", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/#frag", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://xn--\u00fc.in.applicationinsights.azure.com/", "IngestionEndpointHostInvalid")]
+        [InlineData(TooLongInstrumentationKey, EastUs, "InstrumentationKeyTooLong")]
+        [InlineData("ikey-a", TooLongEndpoint, "IngestionEndpointTooLong")]
+        public void ADroppedActivityReportsWhyItCouldNotBeRouted(string? instrumentationKey, string? ingestionEndpoint, string expectedReason)
+        {
+            var activity = CreateActivity(instrumentationKey, ingestionEndpoint);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(0, Convert(activity).Count);
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.Equal(expectedReason, rejected.Payload![1]);
+            Assert.Equal(activity.TraceId.ToHexString(), rejected.Payload[2]);
+            Assert.Equal(activity.SpanId.ToHexString(), rejected.Payload[3]);
+        }
+
+        /// <summary>
+        /// The endpoint that caused a rejection may carry credentials, so the reason has to stand on
+        /// its own without it.
+        /// </summary>
+        [Fact]
+        public void ARejectionNeverRepeatsTheEndpointThatCausedIt()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", "https://user:sekret@eastus-1.in.applicationinsights.azure.com/"));
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.DoesNotContain("sekret", string.Join("|", rejected.Payload!), StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void CollectedTelemetryIsReportedWithItsDestinationAndIdentity()
+        {
+            var activity = CreateActivity("ikey-a", EastUs);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(1, Convert(activity).Count);
+
+            var collected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Equal(EastUs, collected.Payload![1]);
+            Assert.Equal("ikey-a", collected.Payload[2]);
+            Assert.Equal(activity.TraceId.ToHexString(), collected.Payload[3]);
+            Assert.Equal(activity.SpanId.ToHexString(), collected.Payload[4]);
+        }
+
+        /// <summary>Per-item records are the Verbose tier; nothing below it should pay for them.</summary>
+        [Fact]
+        public void PerItemRecordsAreNotWrittenBelowVerbose()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity(null, EastUs));
+
+            Assert.Empty(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected" || e.EventName == "RoutedTelemetryRejected"));
+        }
+
+        /// <summary>
+        /// The per-item records are only useful if they can be tied to the export that produced them
+        /// and to its totals.
+        /// </summary>
+        [Fact]
+        public void OneExportReportsItsTotalsUnderASingleSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity("ikey-b", WestUs), CreateActivity(null, EastUs));
+
+            var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
+            Assert.Equal(2, summary.Payload![1]);
+            Assert.Equal(2, summary.Payload[2]);
+            Assert.Equal(1, summary.Payload[3]);
+
+            Assert.Equal(2, listener.Messages.Count(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
+        }
+
+        /// <summary>A shared sequence would tie unrelated exports together.</summary>
+        [Fact]
+        public void EachExportGetsItsOwnSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs));
+            Convert(CreateActivity("ikey-a", EastUs));
+
+            var summaries = listener.Messages.Where(e => e.EventName == "RoutedExportSummary").ToArray();
+            Assert.Equal(2, summaries.Length);
+            Assert.NotEqual(summaries[0].Payload![0], summaries[1].Payload![0]);
+        }
+
         private static EndpointRouteBatch Convert(params Activity[] activities)
         {
             var routeBatch = new EndpointRouteBatch();
+            routeBatch.BeginExport();
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(CreateBatch(activities), null, sampleRate: 100, routeBatch);
             return routeBatch;
         }

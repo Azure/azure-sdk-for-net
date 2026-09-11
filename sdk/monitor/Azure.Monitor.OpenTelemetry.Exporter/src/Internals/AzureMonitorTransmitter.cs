@@ -389,7 +389,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // regions. A failing region does not stop the rest.
             for (int i = 0; i < routeBatch.Count; i++)
             {
-                if (SendGroupAsync(routeBatch[i], origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
+                if (SendGroupAsync(routeBatch[i], routeBatch.Sequence, origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
                 {
                     result = ExportResult.Failure;
                 }
@@ -402,17 +402,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// A group that cannot be sent is written to its endpoint's own storage partition, so one
         /// region's backlog and back-off never affect another's.
         /// </remarks>
-        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
+            var itemCount = group.TelemetryItems.Count;
             var storage = _multiTenantStorage?.TryGet(group.IngestionEndpoint);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
-                return SaveGroupForLaterTransmission(group, storage);
+                var deferred = SaveGroupForLaterTransmission(group, storage);
+                ReportDelivery(exportSequence, group, itemCount, deferred == ExportResult.Success ? "persisted" : "dropped");
+
+                return deferred;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            var statusCode = 0;
 
             try
             {
@@ -425,6 +430,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     : _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).Result;
 
                 stopwatch?.Stop();
+
+                statusCode = httpMessage.HasResponse ? httpMessage.Response.Status : 0;
 
                 var result = HttpPipelineHelper.IsSuccess(httpMessage);
 
@@ -457,13 +464,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
+                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, statusCode);
 
                     return result;
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                return HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
+                var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
+                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
+
+                return transmission.ExportResult;
             }
             catch (Exception ex)
             {
@@ -472,9 +484,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
 
-                return storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
+                var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+
+                // Reading the response can throw after ingestion answered, so acceptance is unknown.
+                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped", accepted: -1, statusCode);
+
+                return thrown;
             }
         }
+
+        private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = -1, int statusCode = 0)
+            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, outcome, accepted, statusCode);
+
+        /// <summary>
+        /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
+        /// rest were persisted for retry and which were rejected is not knowable from the result.
+        /// </summary>
+        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount, int statusCode)
+        {
+            if (statusCode == ResponseStatusCodes.PartialSuccess)
+            {
+                return "partially accepted";
+            }
+
+            if (accepted >= itemCount)
+            {
+                return "transmitted";
+            }
+
+            return result == ExportResult.Success ? "persisted" : "dropped";
+        }
+
+        /// <summary>Returns -1 when ingestion reported no count, or one the batch cannot support.</summary>
+        private static int AcceptedCount(int? reported, int itemCount)
+            => reported is int value && value >= 0 && value <= itemCount ? value : -1;
 
         private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiTenantStorage.EndpointStorage storage)
         {
