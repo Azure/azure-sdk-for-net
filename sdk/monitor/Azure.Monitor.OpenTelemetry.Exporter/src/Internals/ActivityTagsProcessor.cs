@@ -10,7 +10,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal struct ActivityTagsProcessor
     {
         private readonly bool _includeUnmappedTags;
-        private readonly bool _recognizeRoutingTags;
+        private readonly bool _consumeMultiEndpointAttributes;
 
         public AzMonList MappedTags;
         public AzMonList UnMappedTags;
@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public ActivityTagsProcessor()
         {
             _includeUnmappedTags = true;
-            _recognizeRoutingTags = false;
+            _consumeMultiEndpointAttributes = false;
             MappedTags = AzMonList.InitializeForMappedTags();
             UnMappedTags = AzMonList.Initialize();
         }
@@ -48,15 +48,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// tags, which avoids a pooled buffer and the string conversion of array-valued tags.
         /// </summary>
         /// <param name="includeUnmappedTags">Whether to collect tags that match no semantic slot.</param>
-        /// <param name="recognizeRoutingTags">
+        /// <param name="consumeMultiEndpointAttributes">
         /// Only the multi-tenant conversion consumes the routing slots. Claiming them anywhere else
         /// would take those attributes out of custom dimensions with nothing to emit them instead,
         /// silently dropping them from telemetry the feature is not even involved in.
         /// </param>
-        public ActivityTagsProcessor(bool includeUnmappedTags, bool recognizeRoutingTags = false)
+        public ActivityTagsProcessor(bool includeUnmappedTags, bool consumeMultiEndpointAttributes = false)
         {
             _includeUnmappedTags = includeUnmappedTags;
-            _recognizeRoutingTags = recognizeRoutingTags;
+            _consumeMultiEndpointAttributes = consumeMultiEndpointAttributes;
             MappedTags = AzMonList.InitializeForMappedTags();
             UnMappedTags = includeUnmappedTags ? AzMonList.Initialize() : default;
         }
@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (SemanticSlotMap.TryGetSlot(tag.Key, out var slot) && (_recognizeRoutingTags || !IsRoutingSlot(slot)))
+                if (SemanticSlotMap.TryGetSlot(tag.Key, out var slot) && (_consumeMultiEndpointAttributes || !IsRoutingSlot(slot)))
                 {
                     switch (slot)
                     {
@@ -149,6 +149,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         private static bool IsRoutingSlot(SemanticSlot slot)
-            => slot == SemanticSlot.MicrosoftInstrumentationKey || slot == SemanticSlot.MicrosoftIngestionEndpoint;
+            => slot == SemanticSlot.MicrosoftInstrumentationKey
+                || slot == SemanticSlot.MicrosoftIngestionEndpoint
+                || slot == SemanticSlot.MicrosoftMultiEndpointCloudRole;
     }
 }

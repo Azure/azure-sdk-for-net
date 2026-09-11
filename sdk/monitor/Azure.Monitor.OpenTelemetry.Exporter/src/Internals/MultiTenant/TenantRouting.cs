@@ -24,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         private const int MaxEndpointLength = 2048;
 
+        private const string UnknownService = "unknown_service";
+
         /// <summary>
         /// Bounds the cache so a caller stamping many distinct endpoints cannot grow it without
         /// limit. The check is not atomic with the insert, so concurrent misses can overshoot by the
@@ -87,6 +89,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             return true;
         }
+
+        internal static string GetTenantCloudRole(ref AzMonList mappedTags)
+        {
+            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftMultiEndpointCloudRole] as string);
+        }
+
+        internal static string GetTenantCloudRole(string? cloudRole)
+            => string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
 
         /// <summary>
         /// Validates an application-supplied endpoint and reduces it to the canonical form used as a

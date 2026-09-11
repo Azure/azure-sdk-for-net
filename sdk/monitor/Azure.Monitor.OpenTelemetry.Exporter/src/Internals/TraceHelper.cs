@@ -107,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var activityTagsProcessor = EnumerateActivityTags(activity, includeUnmappedTags: true, recognizeRoutingTags: true);
+                    var activityTagsProcessor = EnumerateActivityTags(activity, includeUnmappedTags: true, consumeMultiEndpointAttributes: true);
 
                     try
                     {
@@ -120,10 +120,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
-                        // process and would be filed as the tenant's own application. Note the
-                        // envelope below still carries the host's ai.cloud.role and roleInstance;
-                        // deciding what those should say for a routed tenant is still open.
+                        // process and would be filed as the tenant's own application.
+                        var tenantCloudRole = TenantRouting.GetTenantCloudRole(ref activityTagsProcessor.MappedTags);
                         var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        telemetryItem.SetTenantCloudRole(tenantCloudRole);
 
                         if (activity.Events.Any())
                         {
@@ -271,9 +271,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true, bool recognizeRoutingTags = false)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true, bool consumeMultiEndpointAttributes = false)
         {
-            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags, recognizeRoutingTags);
+            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags, consumeMultiEndpointAttributes);
 
             try
             {

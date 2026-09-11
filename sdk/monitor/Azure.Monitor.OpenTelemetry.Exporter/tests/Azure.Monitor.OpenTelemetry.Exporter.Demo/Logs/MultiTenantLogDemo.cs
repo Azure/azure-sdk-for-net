@@ -170,6 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
         {
             private const string InstrumentationKeyAttributeName = "microsoft.instrumentation_key";
             private const string IngestionEndpointAttributeName = "microsoft.ingestion_endpoint";
+            private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
             private readonly IReadOnlyList<MultiTenantTraceDemo.TenantRoute> _routes;
             private readonly string _runId;
@@ -209,6 +210,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
 
                 attributes.Add(new KeyValuePair<string, object?>(InstrumentationKeyAttributeName, route.InstrumentationKey));
                 attributes.Add(new KeyValuePair<string, object?>(IngestionEndpointAttributeName, route.IngestionEndpoint));
+                attributes.Add(new KeyValuePair<string, object?>(TenantCloudRoleAttributeName, route.Name));
 
                 // Survives into customDimensions, so a query can count what actually arrived.
                 attributes.Add(new KeyValuePair<string, object?>("demo.run_id", _runId));
