@@ -4,7 +4,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -33,7 +36,8 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </param>
-        internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, ProjectWebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal WebSearchToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebSearchToolFilters filters, WebSearchToolApproximateLocation userLocation, WebSearchToolSearchContextSize? searchContextSize, WebSearchConfiguration customSearchConfiguration) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             Filters = filters;
             UserLocation = userLocation;
@@ -42,10 +46,12 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Gets or sets the Filters. </summary>
+        [Experimental("AAIP002")]
         public WebSearchToolFilters Filters { get; set; }
 
         /// <summary> Gets or sets the UserLocation. </summary>
-        public WebSearchApproximateLocation UserLocation { get; set; }
+        [Experimental("AAIP002")]
+        public WebSearchToolApproximateLocation UserLocation { get; set; }
 
         /// <summary> High level guidance for the amount of context window space to use for the search. One of `low`, `medium`, or `high`. `medium` is the default. </summary>
         public WebSearchToolSearchContextSize? SearchContextSize { get; set; }
@@ -54,6 +60,6 @@ namespace Azure.AI.Projects.Agents
         /// The project connections attached to this tool. There can be a maximum of 1 connection
         /// resource attached to the tool.
         /// </summary>
-        public ProjectWebSearchConfiguration CustomSearchConfiguration { get; set; }
+        public WebSearchConfiguration CustomSearchConfiguration { get; set; }
     }
 }
