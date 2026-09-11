@@ -74,7 +74,7 @@ public class BasicApiManagementTests
             param location string = resourceGroup().location
 
             resource apiService 'Microsoft.ApiManagement/service@2024-05-01' = {
-              name: take('apiservice${uniqueString(resourceGroup().id)}', 24)
+              name: take('apiService-${uniqueString(resourceGroup().id)}', 50)
               location: location
               identity: {
                 type: 'SystemAssigned'
@@ -347,7 +347,7 @@ public class BasicApiManagementTests
             param location string = resourceGroup().location
 
             resource apiService 'Microsoft.ApiManagement/service@2024-05-01' = {
-              name: take('apiservice${uniqueString(resourceGroup().id)}', 24)
+              name: take('apiService-${uniqueString(resourceGroup().id)}', 50)
               location: location
               properties: {
                 publisherEmail: publisherEmail
@@ -368,7 +368,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleApi 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
-              name: take('exampleapi${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleApi-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example API'
@@ -381,7 +381,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleOperationDelete 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
-              name: take('exampleoperationdelete${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleOperationDelete-${uniqueString(resourceGroup().id)}', 80)
               parent: exampleApi
               properties: {
                 description: 'A demonstration of a DELETE call'
@@ -392,7 +392,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleOperationGet 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
-              name: take('exampleoperationget${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleOperationGet-${uniqueString(resourceGroup().id)}', 80)
               parent: exampleApi
               properties: {
                 description: 'A demonstration of a GET call'
@@ -411,7 +411,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleApiWithPolicy 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
-              name: take('exampleapiwithpolicy${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleApiWithPolicy-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example API with policy'
@@ -432,7 +432,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleProduct 'Microsoft.ApiManagement/service/products@2024-05-01' = {
-              name: take('exampleproduct${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleProduct-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 approvalRequired: false
@@ -453,7 +453,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleUser1 'Microsoft.ApiManagement/service/users@2024-05-01' = {
-              name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleUser1-${uniqueString(resourceGroup().id)}', 80)
               parent: apiService
               properties: {
                 email: 'examplefirst1@example.com'
@@ -465,7 +465,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleUser2 'Microsoft.ApiManagement/service/users@2024-05-01' = {
-              name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleUser2-${uniqueString(resourceGroup().id)}', 80)
               parent: apiService
               properties: {
                 email: 'examplefirst2@example.com'
@@ -477,7 +477,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleNamedValue 'Microsoft.ApiManagement/service/namedValues@2024-05-01' = {
-              name: take('examplenamedvalue${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleNamedValue-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 displayName: 'propertyExampleName'
@@ -489,7 +489,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleGroup 'Microsoft.ApiManagement/service/groups@2024-05-01' = {
-              name: take('examplegroup${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleGroup-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Example group description'
@@ -498,7 +498,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleOpenIdConnectProvider 'Microsoft.ApiManagement/service/openidConnectProviders@2024-05-01' = {
-              name: take('exampleopenidconnectprovider${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleOpenIdConnectProvider-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 clientId: 'exampleClientId'
@@ -509,7 +509,7 @@ public class BasicApiManagementTests
             }
 
             resource exampleLogger 'Microsoft.ApiManagement/service/loggers@2024-05-01' = {
-              name: take('examplelogger${uniqueString(resourceGroup().id)}', 24)
+              name: take('exampleLogger-${uniqueString(resourceGroup().id)}', 256)
               parent: apiService
               properties: {
                 description: 'Description for example logger'
@@ -521,5 +521,124 @@ public class BasicApiManagementTests
 
             output resourceId string = apiService.id
             """);
+    }
+
+    [Test]
+    public async Task SchemaDocumentShapeMatchesApiVersion()
+    {
+        await using Trycep test = new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+                ApiManagementService service = new("service", ApiManagementService.ResourceVersions.V2024_05_01)
+                {
+                    PublisherEmail = "publisher@example.com",
+                    PublisherName = "Publisher",
+                    Sku = new ApiManagementServiceSkuProperties
+                    {
+                        Name = ApiManagementServiceSkuType.Developer,
+                        Capacity = 1
+                    }
+                };
+                infra.Add(service);
+
+                ApiManagementApi api = new("api", ApiManagementApi.ResourceVersions.V2024_05_01)
+                {
+                    Parent = service,
+                    DisplayName = "API",
+                    Path = "api"
+                };
+                infra.Add(api);
+
+                infra.Add(new ApiSchema("stableSchema", ApiSchema.ResourceVersions.V2024_05_01)
+                {
+                    Parent = api,
+                    ContentType = "application/json",
+                    Value = "stable"
+                });
+                infra.Add(new ApiSchema("previewSchema", ApiSchema.ResourceVersions.V2025_09_01_PREVIEW)
+                {
+                    Parent = api,
+                    ContentType = "application/json",
+                    Value = "preview"
+                });
+
+                ApiSchema updatedSchema = new("updatedSchema")
+                {
+                    Parent = api,
+                    ContentType = "application/json",
+                    Value = "stable-after-assignment"
+                };
+                updatedSchema.ResourceVersion = ApiSchema.ResourceVersions.V2024_05_01;
+                infra.Add(updatedSchema);
+
+                WorkspaceContract workspace = new("workspace", WorkspaceContract.ResourceVersions.V2024_05_01)
+                {
+                    Parent = service,
+                    DisplayName = "Workspace"
+                };
+                infra.Add(workspace);
+
+                ServiceWorkspaceApi workspaceApi = new("workspaceApi", ServiceWorkspaceApi.ResourceVersions.V2024_05_01)
+                {
+                    Parent = workspace,
+                    DisplayName = "Workspace API",
+                    Path = "workspace-api"
+                };
+                infra.Add(workspaceApi);
+
+                ServiceWorkspaceApiSchema updatedWorkspaceSchema = new("updatedWorkspaceSchema")
+                {
+                    Parent = workspaceApi,
+                    ContentType = "application/json",
+                    Value = "workspace-stable-after-assignment"
+                };
+                updatedWorkspaceSchema.ResourceVersion = ServiceWorkspaceApiSchema.ResourceVersions.V2024_05_01;
+                infra.Add(updatedWorkspaceSchema);
+
+                return infra;
+            });
+
+        string bicep = test.Plan!.Compile()["main.bicep"].Replace("\r\n", "\n");
+        Assert.That(
+            bicep,
+            Does.Contain(
+                """
+                  properties: {
+                    contentType: 'application/json'
+                    value: 'stable'
+                  }
+                """));
+        Assert.That(
+            bicep,
+            Does.Contain(
+                """
+                  properties: {
+                    contentType: 'application/json'
+                    document: {
+                      value: 'preview'
+                    }
+                  }
+                """));
+        Assert.That(
+            bicep,
+            Does.Contain(
+                """
+                  properties: {
+                    contentType: 'application/json'
+                    value: 'stable-after-assignment'
+                  }
+                """));
+        Assert.That(
+            bicep,
+            Does.Contain(
+                """
+                  properties: {
+                    contentType: 'application/json'
+                    value: 'workspace-stable-after-assignment'
+                  }
+                """));
+        Assert.That(bicep, Does.Not.Contain("document: {\n      value: 'stable-after-assignment'"));
+        Assert.That(bicep, Does.Not.Contain("document: {\n      value: 'workspace-stable-after-assignment'"));
     }
 }

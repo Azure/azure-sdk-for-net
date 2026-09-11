@@ -39,31 +39,35 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiDiagnostic : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiDiagnostic(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiDiagnostic(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.AlwaysLog> AlwaysLog { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.HttpCorrelationProtocol> HttpCorrelationProtocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLogClientIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMDiagnosticSettings LargeLanguageModel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LoggerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Metrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.OperationNameFormat> OperationNameFormat { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.SamplingSettings Sampling { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.TraceVerbosityLevel> Verbosity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiDiagnostic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiDiagnostic FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiGateway : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiGateway(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiGateway(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> BackendSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ConfigurationApiHostname { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedAtUtc { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
@@ -79,29 +83,33 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> TargetProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.VirtualNetworkType> VirtualNetworkType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiGateway FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiGateway FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiGatewayConfigConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiGatewayConfigConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiGatewayConfigConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DefaultHostname { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Hostnames { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiGateway? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiGateway Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiGatewayConfigConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiGatewayConfigConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiGatewaySkuType
@@ -112,56 +120,62 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiIssue : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiIssue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiIssue(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.IssueState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiIssue FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiIssue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiIssueAttachment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiIssueAttachment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiIssueAttachment(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Content { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContentFormat { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiIssue? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiIssue Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiIssueAttachment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiIssueAttachment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiIssueComment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiIssueComment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiIssueComment(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiIssue? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiIssue Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Text { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiIssueComment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiIssueComment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiLicenseInformation : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -173,7 +187,7 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementApi : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementApi(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementApi(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiRevision { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiRevisionDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiType> ApiType { get { throw null; } set { } }
@@ -191,8 +205,9 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<bool> IsOnline { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiLicenseInformation License { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.McpProperties McpProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
@@ -206,10 +221,12 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementApi FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementApi FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementAuthorizationError : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -221,7 +238,7 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementAuthorizationServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementAuthorizationServer(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementAuthorizationServer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AuthorizationEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.AuthorizationMethod> AuthorizationMethods { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.BearerTokenSendingMethod> BearerTokenSendingMethods { get { throw null; } set { } }
@@ -236,7 +253,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.GrantType> GrantTypes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ResourceOwnerPassword { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ResourceOwnerUsername { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -245,10 +262,12 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<bool> UseInApiDocumentation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseInTestConsole { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementAuthorizationServer FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementAuthorizationServer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementAuthorizationType
@@ -257,159 +276,237 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementBackend : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementBackend(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementBackend(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AzureRegion { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendServiceFabricClusterProperties BackendServiceFabricCluster { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.CircuitBreakerRule> CircuitBreakerRules { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendCredentialsContract Credentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> FailureResponseStatusCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.BackendPoolItem> PoolServices { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.BackendProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendProxyContract Proxy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.BackendSessionId SessionId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendTlsProperties Tls { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.BackendType> TypePropertiesType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementBackend FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementBackend FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementCache : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementCache(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementCache(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ConnectionString { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> UseFromLocation { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementCache FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementCache FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementCertificate : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementCertificate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementCertificate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Data { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.ApiManagement.KeyVaultContractCreateProperties KeyVaultDetails { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementContentItem : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApiManagementContentItem(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementContentType Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<System.BinaryData> Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementContentItem FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementContentType : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApiManagementContentType(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> ContentTypeIdentifier { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ContentTypeName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.BinaryData> Schema { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Version { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementContentType FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementDeletedService : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ApiManagementDeletedService() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduledPurgeOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ServiceId { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementDeletedService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementDiagnostic : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementDiagnostic(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementDiagnostic(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.AlwaysLog> AlwaysLog { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.HttpCorrelationProtocol> HttpCorrelationProtocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLogClientIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMDiagnosticSettings LargeLanguageModel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LoggerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Metrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.OperationNameFormat> OperationNameFormat { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.SamplingSettings Sampling { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.TraceVerbosityLevel> Verbosity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementDiagnostic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementDiagnostic FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementEmailTemplate : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementEmailTemplate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementEmailTemplate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Body { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsDefault { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.EmailTemplateParametersContractProperties> Parameters { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementEmailTemplate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementEmailTemplate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementGateway : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementGateway(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementGateway(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ResourceLocationDataContract LocationData { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementGateway FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementGateway FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public Azure.Provisioning.ApiManagement.GatewayKeysContract GetKeys() { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementGatewayCertificateAuthority : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementGatewayCertificateAuthority(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementGatewayCertificateAuthority(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsTrusted { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementGateway? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementGateway Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementGatewayCertificateAuthority FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementGatewayCertificateAuthority FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementGatewayHostnameConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementGatewayHostnameConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementGatewayHostnameConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> CertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Hostname { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Http2Enabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsClientCertificateRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementGateway? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementGateway Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> Tls10Enabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Tls11Enabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementGatewayHostnameConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementGatewayHostnameConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementGatewaySkuProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -421,41 +518,45 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementGlobalSchema : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementGlobalSchema(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementGlobalSchema(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Document { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiSchemaType> SchemaType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementGlobalSchema FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementGlobalSchema FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementGroup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> ApiManagementGroupType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExternalId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> GroupType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> GroupType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsBuiltIn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementGroupType
@@ -469,16 +570,17 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementIdentityProvider : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementIdentityProvider(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementIdentityProvider(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AllowedTenants { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Authority { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CertificateId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientLibrary { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.IdentityProviderType> IdentityProviderType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PasswordResetPolicyName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProfileEditingPolicyName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SignInPolicyName { get { throw null; } set { } }
@@ -486,50 +588,76 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> SignUpPolicyName { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementIdentityProvider FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementIdentityProvider FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementIssue : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApiManagementIssue(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.IssueState> State { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> UserId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementIssue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementLogger : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementLogger(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementLogger(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepDictionary<string> Credentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsBuffered { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LoggerType> LoggerType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementLogger FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementLogger FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementNamedValue : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementNamedValue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementNamedValue(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.KeyVaultContractProperties KeyVaultDetails { get { throw null; } }
+        public Azure.Provisioning.ApiManagement.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementNamedValue FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementNamedValue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementNatGatewayState
@@ -539,24 +667,25 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementNotification : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementNotification(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public ApiManagementNotification(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.RecipientsContractProperties Recipients { get { throw null; } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.RecipientsContractProperties Recipients { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementNotification FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementNotification FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementOpenIdConnectProvider : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementOpenIdConnectProvider(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementOpenIdConnectProvider(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientSecret { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
@@ -564,119 +693,130 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MetadataEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> UseInApiDocumentation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseInTestConsole { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementOpenIdConnectProvider FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementOpenIdConnectProvider FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPortalDelegationSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPortalDelegationSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPortalDelegationSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSubscriptionDelegationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsUserRegistrationDelegationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SubscriptionsIsSubscriptionDelegationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationKey { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPortalDelegationSetting FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPortalDelegationSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPortalRevision : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPortalRevision(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPortalRevision(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsCurrent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PortalRevisionStatus> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> StatusDetails { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPortalRevision FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPortalRevision FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPortalSignInSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPortalSignInSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPortalSignInSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsRedirectEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPortalSignInSetting FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPortalSignInSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPortalSignUpSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPortalSignUpSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPortalSignUpSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSignUpDeveloperPortalEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.ApiManagement.TermsOfServiceProperties TermsOfService { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPortalSignUpSetting FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPortalSignUpSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.ApiManagement.ApiManagementPrivateLinkServiceConnectionState ConnectionState { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.ApiManagement.ApiManagementPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementPrivateEndpointConnectionProvisioningState
@@ -692,6 +832,23 @@ namespace Azure.Provisioning.ApiManagement
         Approved = 1,
         Rejected = 2,
     }
+    public partial class ApiManagementPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ApiManagementPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
     public partial class ApiManagementPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ApiManagementPrivateLinkServiceConnectionState() { }
@@ -702,39 +859,44 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementProduct : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementProduct(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementProduct(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.ApiManagement.ProductApplicationContractEntra ApplicationEntra { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ProductAuthType> AuthenticationType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsApprovalRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementProductState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SubscriptionsLimit { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Terms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementProduct FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementProduct FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementProductPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementProductPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementProductPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementProductPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementProductPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementProductState
@@ -746,22 +908,24 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiManagementProductTag : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementProductTag(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
+        public ApiManagementProductTag(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementProductTag FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementProductTag FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementService : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementService(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.AdditionalLocation> AdditionalLocations { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.CertificateConfiguration> Certificates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedAtUtc { get { throw null; } }
@@ -776,6 +940,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.HostnameConfiguration> HostnameConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsZoneRedundant { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LegacyApiState> LegacyApi { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LegacyPortalStatus> LegacyPortalStatus { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -795,6 +960,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PublisherEmail { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PublisherName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ReleaseChannel> ReleaseChannel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Restore { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ScmUri { get { throw null; } }
         public Azure.Provisioning.ApiManagement.ApiManagementServiceSkuProperties Sku { get { throw null; } set { } }
@@ -805,10 +971,12 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.VirtualNetworkType> VirtualNetworkType { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementService FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementServiceSkuProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -828,52 +996,75 @@ namespace Azure.Provisioning.ApiManagement
         Isolated = 5,
         BasicV2 = 6,
         StandardV2 = 7,
+        PremiumV2 = 8,
     }
     public partial class ApiManagementSubscription : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementSubscription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementSubscription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> AllowTracing { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotifiesOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotifiesOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OwnerId { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.SubscriptionState> State { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StateComment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> StateComment { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementSubscription FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementSubscription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementTag : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementTag(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementTag(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementTag FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementTag FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementTenantSetting : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ApiManagementTenantSetting() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Settings { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementTenantSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiManagementUser : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiManagementUser(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiManagementUser(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.AppType> AppType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ConfirmationEmailType> Confirmation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Email { get { throw null; } set { } }
@@ -884,16 +1075,18 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> LastName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Note { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RegistriesOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> RegistriesOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementUserState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiManagementUser FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiManagementUser FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiManagementUserState
@@ -907,15 +1100,61 @@ namespace Azure.Provisioning.ApiManagement
         [System.Runtime.Serialization.DataMemberAttribute(Name="deleted")]
         Deleted = 3,
     }
+    public partial class ApiManagementUserSubscription : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ApiManagementUserSubscription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> AllowTracing { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotifiesOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> OwnerId { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementUser Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.SubscriptionState> State { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> StateComment { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementUserSubscription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ApiManagementWorkspaceLinks : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal ApiManagementWorkspaceLinks() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> Gateways { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WorkspaceId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ApiManagementWorkspaceLinks FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
     public partial class ApiOperation : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiOperation(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiOperation(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Method { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Policies { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.RequestContract Request { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ResponseContract> Responses { get { throw null; } set { } }
@@ -923,10 +1162,12 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ParameterContract> TemplateParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UriTemplate { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiOperation FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiOperation FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiOperationInvokableProtocol
@@ -942,86 +1183,95 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiOperationPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiOperationPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiOperationPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiOperation? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiOperation Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiOperationPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiOperationPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiOperationTag : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiOperationTag(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
+        public ApiOperationTag(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiOperation? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiOperation Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiOperationTag FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiOperationTag FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiRelease : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiRelease(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiRelease(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiRelease FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiRelease FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiSchema : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiSchema(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiSchema(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.BinaryData> Components { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Definitions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiSchema FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiSchema FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        protected override void Resolve(Azure.Provisioning.ProvisioningBuildOptions options) { }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiSchemaType
@@ -1033,36 +1283,40 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ApiTag : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiTag(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
+        public ApiTag(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiTag FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiTag FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiTagDescription : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiTagDescription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiTagDescription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExternalDocsDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ExternalDocsUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> TagId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TagId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiTagDescription FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiTagDescription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum ApiType
@@ -1079,24 +1333,28 @@ namespace Azure.Provisioning.ApiManagement
         Odata = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="grpc")]
         Grpc = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="mcp")]
+        Mcp = 6,
     }
     public partial class ApiVersionSet : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ApiVersionSet(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ApiVersionSet(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> VersionHeaderName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.VersioningScheme> VersioningScheme { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VersionQueryName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ApiVersionSet FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ApiVersionSet FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ApiVersionSetContractDetails : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1128,38 +1386,42 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class AuthorizationAccessPolicyContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AuthorizationAccessPolicyContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AuthorizationAccessPolicyContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> AppIds { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ObjectId { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.AuthorizationContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.AuthorizationContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.AuthorizationAccessPolicyContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.AuthorizationAccessPolicyContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class AuthorizationContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AuthorizationContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AuthorizationContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementAuthorizationType> AuthorizationType { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiManagementAuthorizationError Error { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.OAuth2GrantType> OAuth2GrantType { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Parameters { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.AuthorizationProviderContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.AuthorizationProviderContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.AuthorizationContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.AuthorizationContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum AuthorizationMethod
@@ -1183,32 +1445,67 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class AuthorizationProviderContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public AuthorizationProviderContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public AuthorizationProviderContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> IdentityProvider { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.AuthorizationProviderOAuth2Settings Oauth2 { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.AuthorizationProviderContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.AuthorizationProviderContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
+    }
+    public partial class AuthorizationProviderFederatedIdentityCredentialsProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AuthorizationProviderFederatedIdentityCredentialsProperties() { }
+        public Azure.Provisioning.BicepValue<string> Audience { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Issuer { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AuthorizationProviderKeyVaultContract : Azure.Provisioning.ApiManagement.AuthorizationProviderKeyVaultCreateProperties
+    {
+        public AuthorizationProviderKeyVaultContract() { }
+        public Azure.Provisioning.ApiManagement.KeyVaultLastAccessStatusContractProperties LastStatus { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Updated { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AuthorizationProviderKeyVaultCreateProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AuthorizationProviderKeyVaultCreateProperties() { }
+        public Azure.Provisioning.BicepValue<string> SecretIdentifier { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType() { }
+        public Azure.Provisioning.BicepValue<string> ClientAssertionType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class AuthorizationProviderOAuth2GrantTypes : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AuthorizationProviderOAuth2GrantTypes() { }
         public Azure.Provisioning.BicepDictionary<string> AuthorizationCode { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.AuthorizationProviderOAuth2FederatedIdentityCredentialsGrantType AuthorizationCodeWithFederatedIdentityCredentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ClientCredentials { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AuthorizationProviderOAuth2Settings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AuthorizationProviderOAuth2Settings() { }
+        public Azure.Provisioning.ApiManagement.AuthorizationProviderFederatedIdentityCredentialsProperties FederatedIdentityCredentialsProperties { get { throw null; } }
         public Azure.Provisioning.ApiManagement.AuthorizationProviderOAuth2GrantTypes GrantTypes { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.AuthorizationProviderKeyVaultContract KeyVault { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> RedirectUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1233,6 +1530,7 @@ namespace Azure.Provisioning.ApiManagement
     {
         public BackendPoolItem() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.CarbonEmissionCategory> PreferredCarbonEmission { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1263,9 +1561,23 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.X509CertificateName> ServerX509Names { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class BackendSessionId : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public BackendSessionId() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.BackendSessionIdSource> Source { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum BackendSessionIdSource
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="cookie")]
+        Cookie = 0,
+    }
     public partial class BackendTlsProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackendTlsProperties() { }
+        public Azure.Provisioning.BicepList<string> ServerCertificateThumbprints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.X509CertificateName> ServerX509Names { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ShouldValidateCertificateChain { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> ShouldValidateCertificateName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1281,6 +1593,14 @@ namespace Azure.Provisioning.ApiManagement
         AuthorizationHeader = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="query")]
         Query = 1,
+    }
+    public enum CarbonEmissionCategory
+    {
+        VeryLow = 0,
+        Low = 1,
+        Medium = 2,
+        High = 3,
+        VeryHigh = 4,
     }
     public partial class CertificateConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1332,9 +1652,58 @@ namespace Azure.Provisioning.ApiManagement
         public CircuitBreakerRule() { }
         public Azure.Provisioning.BicepValue<bool> AcceptRetryAfter { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.CircuitBreakerFailureCondition FailureCondition { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> FailureResponseStatusCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> TripDuration { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ClientApplicationContract : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ClientApplicationContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EntraApplicationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EntraTenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> OwnerId { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ClientApplicationState> State { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ClientApplicationContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class ClientApplicationProductLinkContract : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ClientApplicationProductLinkContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ClientApplicationContract Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProductId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ClientApplicationProductLinkContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public enum ClientApplicationState
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="pending")]
+        Pending = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="active")]
+        Active = 1,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="rejected")]
+        Rejected = 2,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="approved")]
+        Approved = 3,
     }
     public enum ClientAuthenticationMethod
     {
@@ -1407,18 +1776,20 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class DocumentationContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public DocumentationContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public DocumentationContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Content { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.DocumentationContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.DocumentationContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class EmailTemplateParametersContractProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1434,6 +1805,50 @@ namespace Azure.Provisioning.ApiManagement
         public FailureStatusCodeRange() { }
         public Azure.Provisioning.BicepValue<int> Max { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Min { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GatewayHostnameBinding : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public GatewayHostnameBinding(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.ApiManagement.GatewayHostnameBindingCertificate Certificate { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Hostname { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.ApiManagement.GatewayHostnameBindingKeyVault KeyVault { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiGateway Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.GatewayHostnameBinding FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
+    }
+    public partial class GatewayHostnameBindingCertificate : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GatewayHostnameBindingCertificate() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> Expiry { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GatewayHostnameBindingKeyVault : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GatewayHostnameBindingKeyVault() { }
+        public Azure.Provisioning.BicepValue<string> IdentityClientId { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.GatewayHostnameBindingKeyVaultLastStatus LastStatus { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecretId { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GatewayHostnameBindingKeyVaultLastStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GatewayHostnameBindingKeyVaultLastStatus() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.KeyVaultFetchCode> Code { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastSuccessTimeStampUtc { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeStampUtc { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class GatewayKeysContract : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1457,10 +1872,10 @@ namespace Azure.Provisioning.ApiManagement
     public partial class GroupContractProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public GroupContractProperties() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> ApiManagementGroupType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> ExternalId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> ApiManagementGroupType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ExternalId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsBuiltIn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1544,6 +1959,11 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.ApiManagement.KeyVaultLastAccessStatusContractProperties LastStatus { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public enum KeyVaultFetchCode
+    {
+        Success = 0,
+        Failed = 1,
+    }
     public partial class KeyVaultLastAccessStatusContractProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public KeyVaultLastAccessStatusContractProperties() { }
@@ -1562,6 +1982,33 @@ namespace Azure.Provisioning.ApiManagement
         Enabled = 0,
         Disabled = 1,
     }
+    public enum LlmDiagnosticLogState
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="enabled")]
+        Enabled = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="disabled")]
+        Disabled = 1,
+    }
+    public partial class LLMDiagnosticSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LLMDiagnosticSettings() { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LlmDiagnosticLogState> Logs { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMMessageDiagnosticSettings Requests { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMMessageDiagnosticSettings Responses { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class LLMMessageDiagnosticSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LLMMessageDiagnosticSettings() { }
+        public Azure.Provisioning.BicepValue<int> MaxSizeInBytes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LlmMessageLogTypes> Messages { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum LlmMessageLogTypes
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="all")]
+        All = 0,
+    }
     public enum LoggerType
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="azureEventHub")]
@@ -1570,6 +2017,27 @@ namespace Azure.Provisioning.ApiManagement
         ApplicationInsights = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="azureMonitor")]
         AzureMonitor = 2,
+    }
+    public partial class McpEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public McpEndpoint() { }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> UriTemplate { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class McpProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public McpProperties() { }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.McpEndpoint> Endpoints { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.McpTransportType> TransportType { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum McpTransportType
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="sse")]
+        Sse = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="streamable")]
+        Streamable = 1,
     }
     public partial class OAuth2AuthenticationSettingsContract : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1659,36 +2127,40 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class PolicyFragmentContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PolicyFragmentContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PolicyFragmentContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyFragmentContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.PolicyFragmentContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.PolicyFragmentContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class PolicyRestrictionContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PolicyRestrictionContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PolicyRestrictionContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyRestrictionRequireBase> RequireBase { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.PolicyRestrictionContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.PolicyRestrictionContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum PolicyRestrictionRequireBase
@@ -1700,22 +2172,25 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class PortalConfigContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PortalConfigContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PortalConfigContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> CorsAllowedOrigins { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PortalConfigCspProperties Csp { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PortalConfigDelegationProperties Delegation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableBasicAuth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Require { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> SigninRequire { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PortalConfigTermsOfServiceProperties SignupTermsOfService { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.PortalConfigContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.PortalConfigContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class PortalConfigCspProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1762,6 +2237,20 @@ namespace Azure.Provisioning.ApiManagement
         [System.Runtime.Serialization.DataMemberAttribute(Name="reportOnly")]
         ReportOnly = 2,
     }
+    public partial class ProductApplicationContractEntra : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ProductApplicationContractEntra() { }
+        public Azure.Provisioning.BicepValue<string> ApplicationId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Audience { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public enum ProductAuthType
+    {
+        [System.Runtime.Serialization.DataMemberAttribute(Name="subscription-key")]
+        SubscriptionKey = 0,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="application-token")]
+        ApplicationToken = 1,
+    }
     public enum PublicNetworkAccess
     {
         Enabled = 0,
@@ -1773,6 +2262,12 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<string> Emails { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Users { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum ReleaseChannel
+    {
+        Preview = 0,
+        Default = 1,
+        Stable = 2,
     }
     public partial class RemotePrivateEndpointConnectionWrapper : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -1807,19 +2302,21 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ResolverContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ResolverContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ResolverContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ResolverContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ResolverContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ResourceLocationDataContract : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1854,128 +2351,141 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class ServiceApiResolverPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceApiResolverPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceApiResolverPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ResolverContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ResolverContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceApiResolverPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceApiResolverPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceApiWiki : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceApiWiki(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceApiWiki(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.WikiDocumentationContract> Documents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceApiWiki FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceApiWiki FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceProductApiLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceProductApiLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceProductApiLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceProductApiLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceProductApiLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceProductGroupLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceProductGroupLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceProductGroupLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceProductGroupLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceProductGroupLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceProductWiki : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceProductWiki(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceProductWiki(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.WikiDocumentationContract> Documents { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceProductWiki FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceProductWiki FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceTagApiLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceTagApiLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceTagApiLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceTagApiLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceTagApiLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceTagOperationLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceTagOperationLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceTagOperationLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OperationId { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceTagOperationLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceTagOperationLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceTagProductLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceTagProductLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceTagProductLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProductId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceTagProductLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceTagProductLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApi : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApi(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApi(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiRevision { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiRevisionDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiType> ApiType { get { throw null; } set { } }
@@ -1993,8 +2503,9 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<bool> IsOnline { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiLicenseInformation License { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.McpProperties McpProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Path { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ApiOperationInvokableProtocol> Protocols { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
@@ -2008,45 +2519,50 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApi FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApi FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiDiagnostic : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiDiagnostic(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiDiagnostic(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.AlwaysLog> AlwaysLog { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.HttpCorrelationProtocol> HttpCorrelationProtocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLogClientIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMDiagnosticSettings LargeLanguageModel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LoggerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Metrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.OperationNameFormat> OperationNameFormat { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.SamplingSettings Sampling { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.TraceVerbosityLevel> Verbosity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiDiagnostic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiDiagnostic FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiOperation : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiOperation(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiOperation(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Method { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Policies { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.RequestContract Request { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ResponseContract> Responses { get { throw null; } set { } }
@@ -2054,452 +2570,508 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ParameterContract> TemplateParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> UriTemplate { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperation FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperation FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiOperationPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiOperationPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiOperationPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperation? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperation Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperationPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiOperationPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiRelease : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiRelease(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiRelease(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Notes { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpdatedOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiRelease FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiRelease FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiSchema : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiSchema(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiSchema(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.BinaryData> Components { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ContentType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Definitions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceApi Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiSchema FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiSchema FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        protected override void Resolve(Azure.Provisioning.ProvisioningBuildOptions options) { }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceApiVersionSet : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceApiVersionSet(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceApiVersionSet(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> VersionHeaderName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.VersioningScheme> VersioningScheme { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VersionQueryName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiVersionSet FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceApiVersionSet FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceBackend : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceBackend(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceBackend(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AzureRegion { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendServiceFabricClusterProperties BackendServiceFabricCluster { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.CircuitBreakerRule> CircuitBreakerRules { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendCredentialsContract Credentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> FailureResponseStatusCode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.BackendPoolItem> PoolServices { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.BackendProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendProxyContract Proxy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> ResourceUri { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.BackendSessionId SessionId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.BackendTlsProperties Tls { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.BackendType> TypePropertiesType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceBackend FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceBackend FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceCertificate : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceCertificate(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceCertificate(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Data { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.ApiManagement.KeyVaultContractCreateProperties KeyVaultDetails { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Subject { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Thumbprint { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceCertificate FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceCertificate FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceDiagnostic : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceDiagnostic(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceDiagnostic(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.AlwaysLog> AlwaysLog { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Backend { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.PipelineDiagnosticSettings Frontend { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.HttpCorrelationProtocol> HttpCorrelationProtocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsLogClientIPEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.LLMDiagnosticSettings LargeLanguageModel { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> LoggerId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> Metrics { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.OperationNameFormat> OperationNameFormat { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.SamplingSettings Sampling { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.TraceVerbosityLevel> Verbosity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceDiagnostic FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceDiagnostic FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceGroup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceGroup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> ApiManagementGroupType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ExternalId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> GroupType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementGroupType> GroupType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsBuiltIn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceLogger : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceLogger(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceLogger(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepDictionary<string> Credentials { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsBuffered { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.LoggerType> LoggerType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceLogger FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceLogger FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceNamedValue : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceNamedValue(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceNamedValue(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsSecret { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.KeyVaultContractCreateProperties KeyVault { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.KeyVaultContractProperties KeyVaultDetails { get { throw null; } }
+        public Azure.Provisioning.ApiManagement.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceNamedValue FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceNamedValue FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceNotification : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceNotification(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
+        public ServiceWorkspaceNotification(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.RecipientsContractProperties Recipients { get { throw null; } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.RecipientsContractProperties Recipients { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Title { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceNotification FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceNotification FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspacePolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspacePolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspacePolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspacePolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspacePolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspacePolicyFragment : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspacePolicyFragment(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspacePolicyFragment(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyFragmentContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspacePolicyFragment FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspacePolicyFragment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceProduct : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceProduct(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceProduct(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.ApiManagement.ProductApplicationContractEntra ApplicationEntra { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.ApiManagement.ProductAuthType> AuthenticationType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsApprovalRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSubscriptionRequired { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementProductState> State { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> SubscriptionsLimit { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Terms { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceProductApiLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceProductApiLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceProductApiLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductApiLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductApiLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceProductGroupLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceProductGroupLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceProductGroupLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductGroupLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductGroupLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceProductPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceProductPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceProductPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PolicyContentFormat> Format { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceProduct Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceProductPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceSchema : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceSchema(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceSchema(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Document { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiSchemaType> SchemaType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.BinaryData> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceSchema FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceSchema FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceSubscription : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceSubscription(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceSubscription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<bool> AllowTracing { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotifiesOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> NotifiesOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OwnerId { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Scope { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.SubscriptionState> State { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StateComment { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> StateComment { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceSubscription FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceSubscription FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceTag : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceTag(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceTag(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.WorkspaceContract? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.WorkspaceContract Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTag FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTag FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceTagApiLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceTagApiLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceTagApiLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> ApiId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagApiLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagApiLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceTagOperationLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceTagOperationLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceTagOperationLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> OperationId { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagOperationLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagOperationLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class ServiceWorkspaceTagProductLink : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServiceWorkspaceTagProductLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServiceWorkspaceTagProductLink(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ServiceWorkspaceTag Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProductId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagProductLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.ServiceWorkspaceTagProductLink FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public enum SoapApiType
@@ -2516,6 +3088,8 @@ namespace Azure.Provisioning.ApiManagement
         OData = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="grpc")]
         Grpc = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="mcp")]
+        Mcp = 6,
     }
     public partial class SubscriptionKeyParameterNamesContract : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -2541,21 +3115,22 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class TenantAccessInfo : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public TenantAccessInfo(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<string> AccessInfoType { get { throw null; } }
+        public TenantAccessInfo(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AccessInfoType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsDirectAccessEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrimaryKey { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SecondaryKey { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.TenantAccessInfo FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.TenantAccessInfo FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class TermsOfServiceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2572,6 +3147,24 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class ToolContract : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public ToolContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> OperationId { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementApi Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.ApiManagement.ToolContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_09_01_PREVIEW;
+        }
     }
     public enum TraceVerbosityLevel
     {
@@ -2624,18 +3217,20 @@ namespace Azure.Provisioning.ApiManagement
     }
     public partial class WorkspaceContract : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public WorkspaceContract(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public WorkspaceContract(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.ApiManagement.ApiManagementService? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.ApiManagement.ApiManagementService Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.ApiManagement.WorkspaceContract FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.ApiManagement.WorkspaceContract FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2024_05_01;
+            public static readonly string V2025_09_01_PREVIEW;
         }
     }
     public partial class X509CertificateName : Azure.Provisioning.Primitives.ProvisionableConstruct
