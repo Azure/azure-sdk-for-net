@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     appLocation,
                     routingPreference,
                     zoneRedundancyPreference,
-                    new ManagedResourceGroupConfiguration(managedResourceGroupName, default),
+                    managedResourceGroupName is null ? default : new ManagedResourceGroupConfiguration(managedResourceGroupName, default),
                     logAnalyticsWorkspaceArmId,
                     monitorSubnetId,
                     appServicePlanConfiguration,

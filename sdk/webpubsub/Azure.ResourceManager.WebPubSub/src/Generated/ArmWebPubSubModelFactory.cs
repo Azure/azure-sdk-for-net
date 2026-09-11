@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     version,
                     (privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>()).ToList(),
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>()).ToList(),
-                    new WebPubSubTlsSettings(isClientCertEnabled, default),
+                    isClientCertEnabled is null ? default : new WebPubSubTlsSettings(isClientCertEnabled, default),
                     hostNamePrefix,
                     liveTraceConfiguration,
-                    new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
+                    resourceLogCategories is null ? default : new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
                     networkAcls,
                     applicationFirewall,
                     publicNetworkAccess,
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     isAadAuthDisabled,
                     isRegionEndpointEnabled,
                     resourceStopped,
-                    new WebPubSubSocketIOSettings(socketIOServiceMode, default),
+                    socketIOServiceMode is null ? default : new WebPubSubSocketIOSettings(socketIOServiceMode, default),
                     default),
                 sku,
                 kind,
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
@@ -800,10 +800,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     version,
                     (privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>()).ToList(),
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>()).ToList(),
-                    new WebPubSubTlsSettings(isClientCertEnabled, default),
+                    isClientCertEnabled is null ? default : new WebPubSubTlsSettings(isClientCertEnabled, default),
                     hostNamePrefix,
                     liveTraceConfiguration,
-                    new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
+                    resourceLogCategories is null ? default : new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
                     networkAcls,
                     default,
                     publicNetworkAccess,
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
+                provisioningState is null && privateEndpointId is null && groupIds is null && connectionState is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, default),
                 default);
         }
 
