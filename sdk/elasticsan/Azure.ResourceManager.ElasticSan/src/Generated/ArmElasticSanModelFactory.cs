@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null ? default : new ElasticSanUpdateProperties(baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, new AutoScaleProperties(scaleUpProperties, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ElasticSanPatch(baseSizeTiB is null && extendedCapacitySizeTiB is null && publicNetworkAccess is null && scaleUpProperties is null ? default : new ElasticSanUpdateProperties(baseSizeTiB, extendedCapacitySizeTiB, publicNetworkAccess, scaleUpProperties is null ? default : new AutoScaleProperties(scaleUpProperties, default), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     creationData,
                     sizeGiB,
                     storageTarget,
-                    new ManagedByInfo(managedByResourceId, default),
+                    managedByResourceId is null ? default : new ManagedByInfo(managedByResourceId, default),
                     provisioningState,
                     default),
                 default);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <returns> A new <see cref="Models.ElasticSanVolumePatch"/> instance for mocking. </returns>
         public static ElasticSanVolumePatch ElasticSanVolumePatch(long? sizeGiB = default, ResourceIdentifier managedByResourceId = default)
         {
-            return new ElasticSanVolumePatch(sizeGiB is null && managedByResourceId is null ? default : new VolumeUpdateProperties(sizeGiB, new ManagedByInfo(managedByResourceId, default), default), default);
+            return new ElasticSanVolumePatch(sizeGiB is null && managedByResourceId is null ? default : new VolumeUpdateProperties(sizeGiB, managedByResourceId is null ? default : new ManagedByInfo(managedByResourceId, default), default), default);
         }
 
         /// <summary> object to hold array of volume names. </summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     protocolType,
                     encryption,
                     encryptionProperties,
-                    new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                    virtualNetworkRules is null ? default : new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
                     (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
                     enforceDataIntegrityCheckForIscsi,
                     default),
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 protocolType,
                 encryption,
                 encryptionProperties,
-                new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                virtualNetworkRules is null ? default : new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
                 enforceDataIntegrityCheckForIscsi,
                 default), default);
         }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && connectionState is null && groupIds is null ? default : new PrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     protocolType,
                     encryption,
                     encryptionProperties,
-                    new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
+                    virtualNetworkRules is null ? default : new ElasticSanNetworkRuleSet((virtualNetworkRules ?? new ChangeTrackingList<ElasticSanVirtualNetworkRule>()).ToList(), default),
                     (privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>()).ToList(),
                     enforceDataIntegrityCheckForIscsi,
                     default),
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     creationData,
                     sizeGiB,
                     storageTarget,
-                    new ManagedByInfo(managedByResourceId, default),
+                    managedByResourceId is null ? default : new ManagedByInfo(managedByResourceId, default),
                     provisioningState,
                     default),
                 default);
