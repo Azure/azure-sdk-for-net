@@ -14,7 +14,7 @@ tags:
 defaults:
   runs: 1
   timeout: "90s"
-  model: claude-opus-4.6
+  model: gpt-6-astra
   executor: copilot-sdk
 
 scoring:

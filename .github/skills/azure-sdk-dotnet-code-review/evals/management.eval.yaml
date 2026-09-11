@@ -14,6 +14,7 @@ tags:
 defaults:
   runs: 1
   timeout: "90s"
+  model: gpt-6-astra
   executor: copilot-sdk
 
 scoring:
