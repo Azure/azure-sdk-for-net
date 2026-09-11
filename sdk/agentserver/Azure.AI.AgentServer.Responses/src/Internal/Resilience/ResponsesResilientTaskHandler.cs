@@ -4,7 +4,6 @@
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
@@ -26,8 +25,32 @@ namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 /// bespoke Responses recovery/steering machinery.
 /// </para>
 /// </summary>
-internal static class ResponsesResilientTaskHandler
+internal sealed class ResponsesResilientTaskHandler
+    : IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>
 {
+    private readonly ResponseOrchestrator _orchestrator;
+    private readonly ResponsesProvider _provider;
+    private readonly ResponsesCancellationSignalProvider _cancellationProvider;
+    private readonly ResponseExecutionTracker _tracker;
+    private readonly IOptions<ResponsesServerOptions> _options;
+    private readonly ILogger<ResponseOrchestrator> _logger;
+
+    public ResponsesResilientTaskHandler(
+        ResponseOrchestrator orchestrator,
+        ResponsesProvider provider,
+        ResponsesCancellationSignalProvider cancellationProvider,
+        ResponseExecutionTracker tracker,
+        IOptions<ResponsesServerOptions> options,
+        ILogger<ResponseOrchestrator> logger)
+    {
+        _orchestrator = orchestrator;
+        _provider = provider;
+        _cancellationProvider = cancellationProvider;
+        _tracker = tracker;
+        _options = options;
+        _logger = logger;
+    }
+
     /// <summary>The Core task name for one-shot (non-conversation) resilient response invocations.</summary>
     public const string OneShotTaskName = "responses_resilient_one_shot";
 
@@ -35,16 +58,15 @@ internal static class ResponsesResilientTaskHandler
     public const string MultiTurnTaskName = "responses_resilient_multi_turn";
 
     /// <summary>
-    /// Runs the response orchestration for one task turn. Resolves a request scope, reconstructs the
-    /// <see cref="ResponseContextImpl"/> from the persisted task input and the live Core
+    /// Runs the response orchestration for one task turn. The Core task engine creates this handler
+    /// in a fresh request scope for each attempt. It reconstructs the <see cref="ResponseContextImpl"/>
+    /// from the persisted task input and the live Core
     /// <see cref="TaskContext{TInput}"/>, and drives <see cref="ResponseOrchestrator.CreateAsync"/>.
     /// </summary>
-    public static async Task<ResponseTaskOutput> RunTurnAsync(
-        IServiceProvider rootProvider,
+    public async Task<ResponseTaskOutput> RunAsync(
         TaskContext<ResponseTaskInput> ctx,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
-        Argument.AssertNotNull(rootProvider, nameof(rootProvider));
         Argument.AssertNotNull(ctx, nameof(ctx));
 
         ResponseRecoveryPayload payload = ctx.Input.Payload;
@@ -55,16 +77,6 @@ internal static class ResponsesResilientTaskHandler
         bool isStreaming = request.Stream == true;
         bool store = request.Store != false;
         bool isRecovery = ctx.EntryMode == EntryMode.Recovered;
-
-        using IServiceScope scope = rootProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
-        IServiceProvider sp = scope.ServiceProvider;
-
-        var orchestrator = sp.GetRequiredService<ResponseOrchestrator>();
-        var provider = sp.GetRequiredService<ResponsesProvider>();
-        var cancellationProvider = sp.GetRequiredService<ResponsesCancellationSignalProvider>();
-        var tracker = sp.GetRequiredService<ResponseExecutionTracker>();
-        var options = sp.GetRequiredService<IOptions<ResponsesServerOptions>>();
-        var logger = sp.GetRequiredService<ILogger<ResponseOrchestrator>>();
 
         var platformContext = new PlatformContext(payload.UserIdKey, payload.CallId);
 
@@ -77,18 +89,18 @@ internal static class ResponsesResilientTaskHandler
         {
             try
             {
-                persisted = await provider.GetResponseAsync(responseId, platformContext, cancellationToken)
+                persisted = await _provider.GetResponseAsync(responseId, platformContext, cancellationToken)
                     .ConfigureAwait(false);
             }
             catch (ResourceNotFoundException)
             {
-                logger.LogInformation(
+                _logger.LogInformation(
                     "Recovery for {ResponseId} dropped: durable record definitively absent.", responseId);
                 return ResponseTaskOutput.Dropped(responseId);
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex,
+                _logger.LogWarning(ex,
                     "Recovery for {ResponseId} could not read the durable record; retaining task for a later recovery.",
                     responseId);
                 await ExitCoreTaskForRecoveryAsync(ctx, new ResponseContext(responseId), cancellationToken)
@@ -98,7 +110,7 @@ internal static class ResponsesResilientTaskHandler
 
             if (persisted is not null && ResponseOrchestrator.IsTerminalStatus(persisted.Status))
             {
-                logger.LogInformation(
+                _logger.LogInformation(
                     "Recovery for {ResponseId} dropped: durable record already terminal ({Status}).",
                     responseId, persisted.Status);
                 return ResponseTaskOutput.Completed(responseId, persisted.Status);
@@ -106,7 +118,7 @@ internal static class ResponsesResilientTaskHandler
 
             if (string.Equals(payload.Disposition, ResponseRecoveryPayload.DispositionMarkFailed, StringComparison.Ordinal))
             {
-                logger.LogInformation(
+                _logger.LogInformation(
                     "Recovery for {ResponseId} marking failed: disposition=mark-failed.", responseId);
 
                 // Overlay the failed terminal onto the durable snapshot: set status + attach the
@@ -120,7 +132,7 @@ internal static class ResponsesResilientTaskHandler
                     ResponseErrorCode.ServerError,
                     "The response was interrupted and is not eligible for recovery.",
                     shutdownReason: "crash_recovery");
-                await provider.UpdateResponseAsync(persisted!, platformContext, cancellationToken)
+                await _provider.UpdateResponseAsync(persisted!, platformContext, cancellationToken)
                     .ConfigureAwait(false);
                 return ResponseTaskOutput.Dropped(responseId);
             }
@@ -132,9 +144,9 @@ internal static class ResponsesResilientTaskHandler
         // left Context unset (the multi-turn / steering dispatch path).
         ResponseContextImpl BuildContext() => new(
             responseId,
-            provider,
+            _provider,
             request,
-            options,
+            _options,
             rawBody: null,
             clientHeaders: payload.ClientHeaders,
             queryParameters: ToStringValues(payload.QueryParameters),
@@ -145,18 +157,17 @@ internal static class ResponsesResilientTaskHandler
             pendingInputCountProvider: () => ctx.PendingInputCount);
 
         if (!isRecovery
-            && tracker.TryGet(responseId, out ResponseExecution? existing)
+            && _tracker.TryGet(responseId, out ResponseExecution? existing)
             && existing is not null)
         {
             // The endpoint pre-created this execution to bridge response.created back to the caller.
             // Reuse its Context when present (one-shot); otherwise build the steering-aware context
             // now (multi-turn dispatch leaves Context unset so Core's ctx drives steering state).
             ResponseContext reuseContext = existing.Context ?? BuildContext();
-            existing.Context = reuseContext;
+            AttachContext(existing, reuseContext);
 
+            existing.TaskStreamWriter = ctx.Stream;
             await RunWithExecutionAsync(
-                orchestrator,
-                cancellationProvider,
                 request,
                 existing,
                 reuseContext,
@@ -166,7 +177,8 @@ internal static class ResponsesResilientTaskHandler
             return ResponseTaskOutput.Completed(responseId, existing.Response?.Status);
         }
 
-        var execution = tracker.Create(responseId, isBackground, isStreaming, store);
+        var execution = _tracker.Create(responseId, isBackground, isStreaming, store);
+        execution.TaskStreamWriter = ctx.Stream;
         execution.AgentSessionId = payload.AgentSessionId;
         execution.UserIdKey = payload.UserIdKey;
         if (persisted is not null)
@@ -175,13 +187,11 @@ internal static class ResponsesResilientTaskHandler
         }
 
         ResponseContextImpl context = BuildContext();
-        execution.Context = context;
+        AttachContext(execution, context);
 
         try
         {
             await RunWithExecutionAsync(
-                orchestrator,
-                cancellationProvider,
                 request,
                 execution,
                 context,
@@ -190,15 +200,29 @@ internal static class ResponsesResilientTaskHandler
         }
         finally
         {
-            tracker.TryEvict(responseId);
+            _tracker.TryEvict(responseId);
         }
 
         return ResponseTaskOutput.Completed(responseId, execution.Response?.Status);
     }
 
-    private static async Task RunWithExecutionAsync(
-        ResponseOrchestrator orchestrator,
-        ResponsesCancellationSignalProvider cancellationProvider,
+    private static void AttachContext(
+        ResponseExecution execution,
+        ResponseContext context)
+    {
+        execution.Context = context;
+        if (execution.CancelRequested)
+        {
+            context.SignalClientCancellation();
+        }
+
+        if (execution.ShutdownRequested)
+        {
+            context.SignalShutdown();
+        }
+    }
+
+    private async Task RunWithExecutionAsync(
         CreateResponse request,
         ResponseExecution execution,
         ResponseContext context,
@@ -208,11 +232,11 @@ internal static class ResponsesResilientTaskHandler
         using CancellationTokenRegistration shutdownRegistration = ctx.Shutdown.Register(() =>
         {
             execution.ShutdownRequested = true;
-            context.IsShutdownRequested = true;
+            context.SignalShutdown();
         });
 
         CancellationToken providerCt =
-            await cancellationProvider.GetResponseCancellationTokenAsync(execution.ResponseId)
+            await _cancellationProvider.GetResponseCancellationTokenAsync(execution.ResponseId)
                 .ConfigureAwait(false);
 
         using var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(
@@ -220,7 +244,7 @@ internal static class ResponsesResilientTaskHandler
             execution.CancellationTokenSource.Token,
             providerCt);
 
-        OrchestratorResult result = await orchestrator.CreateAsync(
+        OrchestratorResult result = await _orchestrator.CreateAsync(
             request, execution, context, linkedCts.Token).ConfigureAwait(false);
 
         if (result.Events is not null)
@@ -254,7 +278,7 @@ internal static class ResponsesResilientTaskHandler
             }
         }
 
-        context.IsShutdownRequested = true;
+        context.SignalShutdown();
         await ctx.ExitForRecoveryAsync(cancellationToken).ConfigureAwait(false);
     }
 
