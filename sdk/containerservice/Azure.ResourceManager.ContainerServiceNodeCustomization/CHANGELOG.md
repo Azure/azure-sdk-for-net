@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Initial release of the Azure Container Service Node Customization management-plane client library.
+
 ### Breaking Changes
 
 ### Bugs Fixed
