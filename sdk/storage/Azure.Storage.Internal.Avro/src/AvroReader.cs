@@ -104,10 +104,18 @@ namespace Azure.Storage.Internal.Avro
             if (dataStream.CanSeek)
             {
                 _dataStream = dataStream;
+
+                // A seekable stream (e.g. blob OpenRead opened at a non-zero position) reports an
+                // absolute Position that already includes the resume offset, so the offset must not
+                // be added again when the block offset is recomputed at a block boundary.
+                _initialBlockOffset = 0;
             }
             else
             {
+                // A non-seekable stream is wrapped so Position is counted from 0; the resume offset
+                // must be added back to translate that relative position into an absolute one.
                 _dataStream = new StreamWithPosition(dataStream);
+                _initialBlockOffset = currentBlockOffset;
             }
 
             if (headerStream.CanSeek)
@@ -121,7 +129,6 @@ namespace Azure.Storage.Internal.Avro
 
             _metadata = new Dictionary<string, string>();
             _initalized = false;
-            _initialBlockOffset = currentBlockOffset;
             BlockOffset = currentBlockOffset;
             ObjectIndex = indexWithinCurrentBlock;
             _initalized = false;
