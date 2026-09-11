@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(LinkedResourceType))
             {
                 writer.WritePropertyName("linkedResourceType"u8);
-                writer.WriteStringValue(LinkedResourceType);
+                writer.WriteStringValue(LinkedResourceType.Value);
             }
             if (Optional.IsDefined(Link))
             {
@@ -99,13 +99,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
-                foreach (string item in Locations)
+                foreach (AzureLocation item in Locations)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -152,17 +147,21 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            string linkedResourceType = default;
+            ResourceType? linkedResourceType = default;
             ResourceIdentifier link = default;
             NetworkProvisioningState? provisioningState = default;
             bool? allowDelete = default;
-            IList<string> locations = default;
+            IList<AzureLocation> locations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("linkedResourceType"u8))
                 {
-                    linkedResourceType = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkedResourceType = new ResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("link"u8))
@@ -198,17 +197,10 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -223,7 +215,7 @@ namespace Azure.ResourceManager.Network.Models
                 link,
                 provisioningState,
                 allowDelete,
-                locations ?? new ChangeTrackingList<string>(),
+                locations ?? new ChangeTrackingList<AzureLocation>(),
                 additionalBinaryDataProperties);
         }
     }

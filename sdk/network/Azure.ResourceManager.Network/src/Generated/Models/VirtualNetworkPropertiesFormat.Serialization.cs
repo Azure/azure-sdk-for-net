@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -148,9 +150,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("ipAllocations"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in IPAllocations)
+                foreach (WritableSubResource item in IPAllocations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -233,7 +240,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource ddosProtectionPlan = default;
             VirtualNetworkBgpCommunities bgpCommunities = default;
             VirtualNetworkEncryption encryption = default;
-            IList<NetworkSubResource> ipAllocations = default;
+            IList<WritableSubResource> ipAllocations = default;
             IReadOnlyList<FlowLogData> flowLogs = default;
             PrivateEndpointVnetPolicy? privateEndpointVNetPolicies = default;
             NetworkSubResource defaultPublicNatGateway = default;
@@ -365,10 +372,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     ipAllocations = array;
                     continue;
@@ -432,7 +446,7 @@ namespace Azure.ResourceManager.Network.Models
                 ddosProtectionPlan,
                 bgpCommunities,
                 encryption,
-                ipAllocations ?? new ChangeTrackingList<NetworkSubResource>(),
+                ipAllocations ?? new ChangeTrackingList<WritableSubResource>(),
                 flowLogs ?? new ChangeTrackingList<FlowLogData>(),
                 privateEndpointVNetPolicies,
                 defaultPublicNatGateway,

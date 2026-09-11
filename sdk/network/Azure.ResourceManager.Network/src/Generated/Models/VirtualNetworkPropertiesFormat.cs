@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             Subnets = new ChangeTrackingList<SubnetData>();
             VirtualNetworkPeerings = new ChangeTrackingList<VirtualNetworkPeeringData>();
-            IPAllocations = new ChangeTrackingList<NetworkSubResource>();
+            IPAllocations = new ChangeTrackingList<WritableSubResource>();
             FlowLogs = new ChangeTrackingList<FlowLogData>();
         }
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultPublicNatGateway"> A reference to the default public nat gateway being used by this virtual network resource. </param>
         /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<NetworkSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkPropertiesFormat(VirtualNetworkAddressSpace addressSpace, DhcpOptions dhcpOptions, int? flowTimeoutInMinutes, IList<SubnetData> subnets, IList<VirtualNetworkPeeringData> virtualNetworkPeerings, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? enableDdosProtection, bool? enableVmProtection, NetworkSubResource ddosProtectionPlan, VirtualNetworkBgpCommunities bgpCommunities, VirtualNetworkEncryption encryption, IList<WritableSubResource> ipAllocations, IReadOnlyList<FlowLogData> flowLogs, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies, NetworkSubResource defaultPublicNatGateway, VirtualNetworkAddressSpace summarizedGatewayPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DhcpOptions = dhcpOptions;
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of IpAllocation which reference this VNET. </summary>
         [WirePath("ipAllocations")]
-        public IList<NetworkSubResource> IPAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> IPAllocations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> A collection of references to flow log resources. </summary>
         [WirePath("flowLogs")]
