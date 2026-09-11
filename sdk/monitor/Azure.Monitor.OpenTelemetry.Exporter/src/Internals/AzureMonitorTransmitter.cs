@@ -423,6 +423,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            var reported = false;
 
             try
             {
@@ -467,6 +468,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
+                    reported = true;
                     AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, "transmitted", itemCount, httpMessage.Response.Status);
 
                     return result;
@@ -475,15 +477,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
                 var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
-
-                // A 206 accepts part of the batch and persists only the rest, so the whole group
-                // must not be reported as delivered or as lost.
-                var accepted = transmission.ItemsAccepted ?? 0;
+                var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
+                reported = true;
                 AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
                     exportSequence,
                     itemCount,
                     group.IngestionEndpoint,
-                    transmission.ExportResult != ExportResult.Success ? "dropped" : accepted > 0 ? "partially transmitted, remainder persisted" : "persisted",
+                    DescribeDelivery(transmission.ExportResult, accepted, itemCount),
                     accepted,
                     httpMessage.HasResponse ? httpMessage.Response.Status : 0);
 
@@ -498,17 +498,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
                 var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
-                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
-                    exportSequence,
-                    itemCount,
-                    group.IngestionEndpoint,
-                    thrown == ExportResult.Success ? "persisted" : "dropped",
-                    itemsAccepted: 0,
-                    statusCode: 0);
+
+                // Disposing the message can throw after delivery was already settled and reported.
+                if (!reported)
+                {
+                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
+                        exportSequence,
+                        itemCount,
+                        group.IngestionEndpoint,
+                        thrown == ExportResult.Success ? "persisted" : "dropped",
+                        itemsAccepted: 0,
+                        statusCode: 0);
+                }
 
                 return thrown;
             }
         }
+
+        /// <summary>
+        /// Only the accepted count is asserted. Which of the remaining items were persisted for
+        /// retry and which were rejected outright is not knowable from the export result alone.
+        /// </summary>
+        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount)
+        {
+            if (accepted >= itemCount)
+            {
+                return "transmitted";
+            }
+
+            if (accepted > 0)
+            {
+                return "partially transmitted";
+            }
+
+            return result == ExportResult.Success ? "persisted" : "dropped";
+        }
+
+        /// <summary>Returns -1 when ingestion reported no count, or one the batch cannot support.</summary>
+        private static int AcceptedCount(int? reported, int itemCount)
+            => reported is int value && value >= 0 && value <= itemCount ? value : -1;
 
         private ExportResult SaveGroupForLaterTransmission(EndpointRouteBatch.Group group, MultiTenantStorage.EndpointStorage storage)
         {

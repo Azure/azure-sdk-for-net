@@ -142,6 +142,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("transmitted", west.Payload![3]);
         }
 
+        /// <summary>
+        /// A 206 accepts some items, retries some and rejects others outright. Only the accepted
+        /// count is knowable here, so the outcome must not claim what became of the rest.
+        /// </summary>
+        [Fact]
+        public void APartiallyAcceptedBatchClaimsOnlyWhatIngestionAccepted()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetResponse(
+                EastUs,
+                206,
+                "{\"itemsReceived\":3,\"itemsAccepted\":1,\"errors\":[{\"index\":1,\"statusCode\":503,\"message\":\"retry\"},{\"index\":2,\"statusCode\":400,\"message\":\"rejected\"}]}");
+
+            using var exporter = CreateExporter(ingestion, out _);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            exporter.Export(CreateBatch(
+                CreateActivity("ikey-a", EastUs),
+                CreateActivity("ikey-b", EastUs),
+                CreateActivity("ikey-c", EastUs)));
+
+            var outcome = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome"));
+            Assert.Equal(3, outcome.Payload![1]);
+            Assert.Equal("partially transmitted", outcome.Payload[3]);
+            Assert.Equal(1, outcome.Payload[4]);
+            Assert.Equal(206, outcome.Payload[5]);
+        }
+
+        /// <summary>A count the batch cannot support says more about ingestion than about delivery.</summary>
+        [Fact]
+        public void AnUnusableAcceptedCountIsReportedAsUnknown()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetResponse(EastUs, 206, "{\"itemsReceived\":1,\"itemsAccepted\":99,\"errors\":[]}");
+
+            using var exporter = CreateExporter(ingestion, out _);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-a", EastUs)));
+
+            var outcome = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome"));
+            Assert.Equal(-1, outcome.Payload![4]);
+        }
+
         [Fact]
         public void ManyTenantsInOneRegionShareOneRequest()
         {
@@ -466,6 +514,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             private const string TrackPath = "v2.1/track";
 
             private readonly Dictionary<string, int> _statusByEndpoint = new(StringComparer.Ordinal);
+            private readonly Dictionary<string, string> _bodyByEndpoint = new(StringComparer.Ordinal);
             private readonly Dictionary<string, string> _pendingRedirects = new(StringComparer.Ordinal);
             private readonly HashSet<string> _unreachable = new(StringComparer.Ordinal);
 
@@ -479,6 +528,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             internal List<CapturedRequest> Requests { get; } = new();
 
             internal void SetStatus(string ingestionEndpoint, int statusCode) => _statusByEndpoint[ingestionEndpoint] = statusCode;
+
+            /// <summary>A response with a body, so partial-success accounting can be exercised.</summary>
+            internal void SetResponse(string ingestionEndpoint, int statusCode, string body)
+            {
+                _statusByEndpoint[ingestionEndpoint] = statusCode;
+                _bodyByEndpoint[ingestionEndpoint] = body;
+            }
 
             /// <summary>A stamp that answers nothing at all, so the send throws instead of returning.</summary>
             internal void SetUnreachable(string ingestionEndpoint) => _unreachable.Add(ingestionEndpoint);
@@ -509,7 +565,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     return new MockResponse(307).AddHeader("Location", location);
                 }
 
-                return new MockResponse(_statusByEndpoint.TryGetValue(endpoint, out var status) ? status : 200);
+                var response = new MockResponse(_statusByEndpoint.TryGetValue(endpoint, out var status) ? status : 200);
+
+                if (_bodyByEndpoint.TryGetValue(endpoint, out var body))
+                {
+                    response.SetContent(body);
+                }
+
+                return response;
             }
 
             /// <summary>The endpoint a request was addressed to, which is its URI minus the API path.</summary>

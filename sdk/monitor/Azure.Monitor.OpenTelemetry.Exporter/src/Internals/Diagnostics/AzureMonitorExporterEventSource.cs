@@ -636,7 +636,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}. Status code: {5}", Level = EventLevel.Informational)]
+        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}, where -1 means ingestion reported no usable count. Status code: {5}", Level = EventLevel.Informational)]
         public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
         {
             if (IsEnabled(EventLevel.Informational))
