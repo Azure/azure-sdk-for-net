@@ -15,12 +15,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public readonly partial struct BulkActionDeadlineKind : IEquatable<BulkActionDeadlineKind>
     {
         private readonly string _value;
-        /// <summary> Default value of Unknown. </summary>
-        private const string UnknownValue = "Unknown";
         /// <summary> Initiate the operation at the given deadline. </summary>
         private const string InitiateAtValue = "InitiateAt";
         /// <summary> Complete the operation by the given deadline. </summary>
         private const string CompleteByValue = "CompleteBy";
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="BulkActionDeadlineKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,14 +31,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Default value of Unknown. </summary>
-        public static BulkActionDeadlineKind Unknown { get; } = new BulkActionDeadlineKind(UnknownValue);
-
         /// <summary> Initiate the operation at the given deadline. </summary>
         public static BulkActionDeadlineKind InitiateAt { get; } = new BulkActionDeadlineKind(InitiateAtValue);
 
         /// <summary> Complete the operation by the given deadline. </summary>
         public static BulkActionDeadlineKind CompleteBy { get; } = new BulkActionDeadlineKind(CompleteByValue);
+
+        /// <summary> Gets the Unknown. </summary>
+        public static BulkActionDeadlineKind Unknown { get; } = new BulkActionDeadlineKind(UnknownValue);
 
         /// <summary> Determines if two <see cref="BulkActionDeadlineKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

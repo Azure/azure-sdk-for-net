@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ResourceType, out string scheduledActionOccurrenceApiVersion);
             _occurrencesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ResourceType.Namespace, Diagnostics);
-            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-08-06-preview");
+            _occurrencesRestClient = new Occurrences(_occurrencesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionOccurrenceApiVersion ?? "2026-09-06-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Get a Occurrence
+        /// Gets the specified occurrence.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Get a Occurrence
+        /// Gets the specified occurrence.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Cancel the occurrence so its pending operations do not run.
+        /// Cancels the specified occurrence for the specified resource IDs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="content"> The resources to cancel in the occurrence. If no resource IDs are provided, the occurrence is canceled for all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceOperationResponseResult>> CancelAsync(WaitUntil waitUntil, CancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Cancel the occurrence so its pending operations do not run.
+        /// Cancels the specified occurrence for the specified resource IDs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="content"> The resources to cancel in the occurrence. If no resource IDs are provided, the occurrence is canceled for all resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ResourceOperationResponseResult> Cancel(WaitUntil waitUntil, CancelOccurrenceRequestContent content, CancellationToken cancellationToken = default)
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Delay the occurrence to a later time.
+        /// Delays the specified occurrence for the specified resource IDs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="content"> The new scheduled time and resources to delay in the occurrence. If no resource IDs are provided, all resources are delayed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<ResourceOperationResponseResult>> DelayAsync(WaitUntil waitUntil, DelayRequestContent content, CancellationToken cancellationToken = default)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Delay the occurrence to a later time.
+        /// Delays the specified occurrence for the specified resource IDs.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The content of the action request. </param>
+        /// <param name="content"> The new scheduled time and resources to delay in the occurrence. If no resource IDs are provided, all resources are delayed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<ResourceOperationResponseResult> Delay(WaitUntil waitUntil, DelayRequestContent content, CancellationToken cancellationToken = default)
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// List resources attached to Scheduled Actions for the given occurrence
+        /// Lists resources for the specified occurrence.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// List resources attached to Scheduled Actions for the given occurrence
+        /// Lists resources for the specified occurrence.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The information about notifications to be send to about upcoming operations. </summary>
+    /// <summary> Settings for notifications about upcoming scheduled action operations. </summary>
     public partial class NotificationProperties : IJsonModel<NotificationProperties>
     {
         /// <summary> Initializes a new instance of <see cref="NotificationProperties"/> for deserialization. </summary>

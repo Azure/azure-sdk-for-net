@@ -11,25 +11,25 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Representation of the possible selection of days in a week in a gregorian calendar. </summary>
+    /// <summary> A day of the week on which the scheduled action can run. </summary>
     public readonly partial struct WeekDay : IEquatable<WeekDay>
     {
         private readonly string _value;
-        /// <summary> Monday weekday. </summary>
+        /// <summary> The scheduled action can run on Monday. </summary>
         private const string MondayValue = "Monday";
-        /// <summary> Tuesday weekday. </summary>
+        /// <summary> The scheduled action can run on Tuesday. </summary>
         private const string TuesdayValue = "Tuesday";
-        /// <summary> Wednesday weekday. </summary>
+        /// <summary> The scheduled action can run on Wednesday. </summary>
         private const string WednesdayValue = "Wednesday";
-        /// <summary> Thursday weekday. </summary>
+        /// <summary> The scheduled action can run on Thursday. </summary>
         private const string ThursdayValue = "Thursday";
-        /// <summary> Friday weekday. </summary>
+        /// <summary> The scheduled action can run on Friday. </summary>
         private const string FridayValue = "Friday";
-        /// <summary> Saturday weekday. </summary>
+        /// <summary> The scheduled action can run on Saturday. </summary>
         private const string SaturdayValue = "Saturday";
-        /// <summary> Sunday weekday. </summary>
+        /// <summary> The scheduled action can run on Sunday. </summary>
         private const string SundayValue = "Sunday";
-        /// <summary> All week days. </summary>
+        /// <summary> Every day of the week. </summary>
         private const string AllValue = "All";
 
         /// <summary> Initializes a new instance of <see cref="WeekDay"/>. </summary>
@@ -42,28 +42,28 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Monday weekday. </summary>
+        /// <summary> The scheduled action can run on Monday. </summary>
         public static WeekDay Monday { get; } = new WeekDay(MondayValue);
 
-        /// <summary> Tuesday weekday. </summary>
+        /// <summary> The scheduled action can run on Tuesday. </summary>
         public static WeekDay Tuesday { get; } = new WeekDay(TuesdayValue);
 
-        /// <summary> Wednesday weekday. </summary>
+        /// <summary> The scheduled action can run on Wednesday. </summary>
         public static WeekDay Wednesday { get; } = new WeekDay(WednesdayValue);
 
-        /// <summary> Thursday weekday. </summary>
+        /// <summary> The scheduled action can run on Thursday. </summary>
         public static WeekDay Thursday { get; } = new WeekDay(ThursdayValue);
 
-        /// <summary> Friday weekday. </summary>
+        /// <summary> The scheduled action can run on Friday. </summary>
         public static WeekDay Friday { get; } = new WeekDay(FridayValue);
 
-        /// <summary> Saturday weekday. </summary>
+        /// <summary> The scheduled action can run on Saturday. </summary>
         public static WeekDay Saturday { get; } = new WeekDay(SaturdayValue);
 
-        /// <summary> Sunday weekday. </summary>
+        /// <summary> The scheduled action can run on Sunday. </summary>
         public static WeekDay Sunday { get; } = new WeekDay(SundayValue);
 
-        /// <summary> All week days. </summary>
+        /// <summary> Every day of the week. </summary>
         public static WeekDay All { get; } = new WeekDay(AllValue);
 
         /// <summary> Determines if two <see cref="WeekDay"/> values are the same. </summary>

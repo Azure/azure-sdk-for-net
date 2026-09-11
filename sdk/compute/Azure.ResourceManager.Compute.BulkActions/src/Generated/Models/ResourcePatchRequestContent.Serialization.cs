@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model perform a resource operation in a list of resources. </summary>
+    /// <summary> Resource-specific settings to update in a scheduled action. </summary>
     public partial class ResourcePatchRequestContent : IJsonModel<ResourcePatchRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourcePatchRequestContent"/> for deserialization. </summary>

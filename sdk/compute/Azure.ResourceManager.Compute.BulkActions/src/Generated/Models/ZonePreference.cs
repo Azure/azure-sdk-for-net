@@ -32,11 +32,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ZonePreference"/>. </summary>
         /// <param name="zone"> The zone identifier. </param>
         /// <param name="rank"> The rank of this zone in the priority order. </param>
+        /// <param name="targetMaxCapacity"> The maximum capacity to place in this zone. The sum across capped zones must not exceed the requested capacity, and when every zone preference is capped the sum must equal the requested capacity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZonePreference(string zone, int rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZonePreference(string zone, int rank, int? targetMaxCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Zone = zone;
             Rank = rank;
+            TargetMaxCapacity = targetMaxCapacity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,5 +47,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> The rank of this zone in the priority order. </summary>
         public int Rank { get; set; }
+
+        /// <summary> The maximum capacity to place in this zone. The sum across capped zones must not exceed the requested capacity, and when every zone preference is capped the sum must equal the requested capacity. </summary>
+        public int? TargetMaxCapacity { get; set; }
     }
 }

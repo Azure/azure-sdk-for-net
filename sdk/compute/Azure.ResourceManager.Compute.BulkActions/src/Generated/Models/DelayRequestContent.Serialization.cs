@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (PST) 2025-05-30T06:35:00-07:00. </summary>
+    /// <summary> Request body for delaying a scheduled action occurrence. </summary>
     public partial class DelayRequestContent : IJsonModel<DelayRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="DelayRequestContent"/> for deserialization. </summary>

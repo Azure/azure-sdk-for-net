@@ -13,18 +13,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The properties of the occurrence extension. </summary>
+    /// <summary> An occurrence associated with a specific compute resource. </summary>
     public partial class OccurrenceExtensionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
-        /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
+        /// <param name="scheduledActionId"> The Azure resource ID of the scheduled action that owns the occurrence. </param>
         internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, ResourceIdentifier scheduledActionId)
         {
             ResourceId = resourceId;
@@ -33,15 +30,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/>. </summary>
-        /// <param name="resourceId">
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </param>
-        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
-        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. Specified in UTC. </param>
-        /// <param name="provisioningState"> The current state of the resource. </param>
-        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
-        /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
+        /// <param name="resourceId"> The Azure resource ID of the targeted virtual machine. </param>
+        /// <param name="notificationSettings"> Notification settings that apply only to this resource. </param>
+        /// <param name="scheduledOn"> Read-only. The UTC date and time when the operation is scheduled for this resource. </param>
+        /// <param name="provisioningState"> Read-only. The current state of the operation for this resource. </param>
+        /// <param name="errorDetails"> Read-only. Error details when the operation fails for this resource. </param>
+        /// <param name="scheduledActionId"> The Azure resource ID of the scheduled action that owns the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OccurrenceExtensionProperties(ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, ResourceIdentifier scheduledActionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -54,25 +48,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The ARM Id of the resource.
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
-        /// </summary>
+        /// <summary> The Azure resource ID of the targeted virtual machine. </summary>
         public ResourceIdentifier ResourceId { get; }
 
-        /// <summary> The desired notification settings for the specified resource. </summary>
+        /// <summary> Notification settings that apply only to this resource. </summary>
         public IList<NotificationProperties> NotificationSettings { get; }
 
-        /// <summary> The time the occurrence is scheduled for the resource. Specified in UTC. </summary>
+        /// <summary> Read-only. The UTC date and time when the operation is scheduled for this resource. </summary>
         public DateTimeOffset ScheduledOn { get; }
 
-        /// <summary> The current state of the resource. </summary>
+        /// <summary> Read-only. The current state of the operation for this resource. </summary>
         public OccurrenceResourceProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Error details for the resource. Only populated if resource is in failed state. </summary>
+        /// <summary> Read-only. Error details when the operation fails for this resource. </summary>
         public ResponseError ErrorDetails { get; }
 
-        /// <summary> The arm identifier of the scheduled action the occurrence belongs to. </summary>
+        /// <summary> The Azure resource ID of the scheduled action that owns the occurrence. </summary>
         public ResourceIdentifier ScheduledActionId { get; }
     }
 }

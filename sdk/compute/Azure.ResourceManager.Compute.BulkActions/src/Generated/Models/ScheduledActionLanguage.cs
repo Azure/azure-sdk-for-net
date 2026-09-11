@@ -11,11 +11,11 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The notification languages currently supported. </summary>
+    /// <summary> The language used for scheduled action notifications. </summary>
     public readonly partial struct ScheduledActionLanguage : IEquatable<ScheduledActionLanguage>
     {
         private readonly string _value;
-        /// <summary> American english language. </summary>
+        /// <summary> English (United States). </summary>
         private const string EnUsValue = "en-us";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionLanguage"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> American english language. </summary>
+        /// <summary> English (United States). </summary>
         public static ScheduledActionLanguage EnUs { get; } = new ScheduledActionLanguage(EnUsValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionLanguage"/> values are the same. </summary>
