@@ -132,9 +132,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("requiredCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "requiredCollection"u8);
                 for (int i = 0; i < RequiredCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredCollection[{i}]")))
                     {
                         continue;
                     }
@@ -190,9 +191,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("intExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "intExtensibleEnumCollection"u8);
                 for (int i = 0; i < IntExtensibleEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intExtensibleEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intExtensibleEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -223,9 +225,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("floatExtensibleEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "floatExtensibleEnumCollection"u8);
                 for (int i = 0; i < FloatExtensibleEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatExtensibleEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatExtensibleEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -256,9 +259,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("floatFixedEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "floatFixedEnumCollection"u8);
                 for (int i = 0; i < FloatFixedEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatFixedEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.floatFixedEnumCollection[{i}]")))
                     {
                         continue;
                     }
@@ -284,9 +288,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("intFixedEnumCollection"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "intFixedEnumCollection"u8);
                 for (int i = 0; i < IntFixedEnumCollection.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intFixedEnumCollection[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.intFixedEnumCollection[{i}]")))
                     {
                         continue;
                     }

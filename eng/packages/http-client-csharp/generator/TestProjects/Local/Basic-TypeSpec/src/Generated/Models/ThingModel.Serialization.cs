@@ -182,9 +182,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("optionalNullableList"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "optionalNullableList"u8);
                 for (int i = 0; i < OptionalNullableList.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.optionalNullableList[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.optionalNullableList[{i}]")))
                     {
                         continue;
                     }
@@ -205,9 +206,10 @@ namespace BasicTypeSpec
             {
                 writer.WritePropertyName("requiredNullableList"u8);
                 writer.WriteStartArray();
+                bool hasPatch = Patch.Contains("$"u8, "requiredNullableList"u8);
                 for (int i = 0; i < RequiredNullableList.Count; i++)
                 {
-                    if (Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredNullableList[{i}]")))
+                    if (hasPatch && Patch.IsRemoved(Encoding.UTF8.GetBytes($"$.requiredNullableList[{i}]")))
                     {
                         continue;
                     }
