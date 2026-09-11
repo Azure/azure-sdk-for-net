@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.ModelReaderWriterTests;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {

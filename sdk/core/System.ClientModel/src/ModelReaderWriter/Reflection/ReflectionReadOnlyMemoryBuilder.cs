@@ -24,7 +24,7 @@ internal class ReflectionReadOnlyMemoryBuilder<T> : ModelReaderWriterTypeBuilder
     protected override Type ItemType => typeof(T);
 
     protected override void AddItem(object collection, object? item)
-        => BuilderType.GetMethod("Add", [ItemType!])!.Invoke(collection, [ item ]);
+        => BuilderType.GetMethod("Add", [ItemType!])!.Invoke(collection, [item]);
 
     protected override object ConvertCollectionBuilder(object builder)
     {
