@@ -417,6 +417,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
+            var statusCode = 0;
 
             try
             {
@@ -429,6 +430,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     : _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).Result;
 
                 stopwatch?.Stop();
+
+                statusCode = httpMessage.HasResponse ? httpMessage.Response.Status : 0;
 
                 var result = HttpPipelineHelper.IsSuccess(httpMessage);
 
@@ -461,7 +464,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
-                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, httpMessage.Response.Status);
+                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, statusCode);
 
                     return result;
                 }
@@ -470,7 +473,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
-                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount), accepted, httpMessage.HasResponse ? httpMessage.Response.Status : 0);
+                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
 
                 return transmission.ExportResult;
             }
@@ -483,7 +486,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
                 var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
-                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped");
+
+                // Reading the response can throw after ingestion answered, so acceptance is unknown.
+                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped", accepted: -1, statusCode);
 
                 return thrown;
             }
@@ -493,19 +498,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, outcome, accepted, statusCode);
 
         /// <summary>
-        /// Only the accepted count is asserted. Which of the remaining items were persisted for
-        /// retry and which were rejected outright is not knowable from the export result alone.
+        /// Only the accepted count is asserted. A 206 settles each item separately, and which of the
+        /// rest were persisted for retry and which were rejected is not knowable from the result.
         /// </summary>
-        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount)
+        private static string DescribeDelivery(ExportResult result, int accepted, int itemCount, int statusCode)
         {
+            if (statusCode == ResponseStatusCodes.PartialSuccess)
+            {
+                return "partially accepted";
+            }
+
             if (accepted >= itemCount)
             {
                 return "transmitted";
-            }
-
-            if (accepted > 0)
-            {
-                return "partially transmitted";
             }
 
             return result == ExportResult.Success ? "persisted" : "dropped";

@@ -135,7 +135,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var east = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == EastUs));
             Assert.Equal(1, east.Payload![1]);
             Assert.Equal("dropped", east.Payload[3]);
-            Assert.Equal(0, east.Payload[4]);
+
+            // Nothing answered, so acceptance is unknown rather than zero.
+            Assert.Equal(-1, east.Payload[4]);
             Assert.Equal(0, east.Payload[5]);
 
             var west = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == WestUs));
@@ -167,8 +169,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var outcome = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome"));
             Assert.Equal(3, outcome.Payload![1]);
-            Assert.Equal("partially transmitted", outcome.Payload[3]);
+            Assert.Equal("partially accepted", outcome.Payload[3]);
             Assert.Equal(1, outcome.Payload[4]);
+            Assert.Equal(206, outcome.Payload[5]);
+        }
+
+        /// <summary>
+        /// A 206 that accepted nothing still settled each item separately, so the group must not be
+        /// described as persisted when only the retryable subset was kept.
+        /// </summary>
+        [Fact]
+        public void APartialResponseThatAcceptedNothingIsNotCalledPersisted()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetResponse(
+                EastUs,
+                206,
+                "{\"itemsReceived\":2,\"itemsAccepted\":0,\"errors\":[{\"index\":0,\"statusCode\":503,\"message\":\"retry\"},{\"index\":1,\"statusCode\":400,\"message\":\"rejected\"}]}");
+
+            using var exporter = CreateExporter(ingestion, out _);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-a", EastUs), CreateActivity("ikey-b", EastUs)));
+
+            var outcome = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome"));
+            Assert.Equal("partially accepted", outcome.Payload![3]);
+            Assert.Equal(0, outcome.Payload[4]);
             Assert.Equal(206, outcome.Payload[5]);
         }
 
