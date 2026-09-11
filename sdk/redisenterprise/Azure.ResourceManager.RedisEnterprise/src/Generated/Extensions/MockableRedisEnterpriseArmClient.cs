@@ -44,6 +44,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
             return new RedisEnterprisePrivateEndpointConnectionResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="RedisEnterpriseMigrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
+        public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
+        {
+            RedisEnterpriseMigrationResource.ValidateResourceId(id);
+            return new RedisEnterpriseMigrationResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="RedisEnterpriseClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="RedisEnterpriseClusterResource"/> object. </returns>
@@ -60,15 +69,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         {
             AccessPolicyAssignmentResource.ValidateResourceId(id);
             return new AccessPolicyAssignmentResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="RedisEnterpriseMigrationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
-        public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
-        {
-            RedisEnterpriseMigrationResource.ValidateResourceId(id);
-            return new RedisEnterpriseMigrationResource(Client, id);
         }
     }
 }
