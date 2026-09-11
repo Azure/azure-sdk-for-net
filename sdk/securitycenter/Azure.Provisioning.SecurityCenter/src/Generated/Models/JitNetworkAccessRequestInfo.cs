@@ -15,7 +15,7 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class JitNetworkAccessRequestInfo : ProvisionableConstruct
     {
         private BicepList<JitNetworkAccessRequestVirtualMachine> _virtualMachines;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<string> _requestor;
         private BicepValue<string> _justification;
 
@@ -39,18 +39,18 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _virtualMachines = DefineListProperty<JitNetworkAccessRequestVirtualMachine>(nameof(VirtualMachines), new string[] { "virtualMachines" }, isRequired: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTimeUtc" }, isRequired: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTimeUtc" }, isRequired: true, format: "O");
             _requestor = DefineProperty<string>(nameof(Requestor), new string[] { "requestor" }, isRequired: true);
             _justification = DefineProperty<string>(nameof(Justification), new string[] { "justification" });
             DefineAdditionalProperties();

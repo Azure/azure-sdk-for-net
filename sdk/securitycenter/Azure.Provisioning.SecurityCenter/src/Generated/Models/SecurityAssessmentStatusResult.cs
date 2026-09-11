@@ -14,7 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class SecurityAssessmentStatusResult : SecurityAssessmentStatus
     {
         private BicepValue<DateTimeOffset> _firstEvaluatedOn;
-        private BicepValue<DateTimeOffset> _statusChangeOn;
+        private BicepValue<DateTimeOffset> _statusChangedOn;
 
         /// <summary> Creates a new SecurityAssessmentStatusResult. </summary>
         public SecurityAssessmentStatusResult()
@@ -31,13 +31,13 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets the StatusChangeOn. </summary>
-        public BicepValue<DateTimeOffset> StatusChangeOn
+        /// <summary> Gets the StatusChangedOn. </summary>
+        public BicepValue<DateTimeOffset> StatusChangedOn
         {
             get
             {
                 Initialize();
-                return _statusChangeOn;
+                return _statusChangedOn;
             }
         }
 
@@ -46,7 +46,7 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _firstEvaluatedOn = DefineProperty<DateTimeOffset>(nameof(FirstEvaluatedOn), new string[] { "firstEvaluationDate" }, isOutput: true, format: "O");
-            _statusChangeOn = DefineProperty<DateTimeOffset>(nameof(StatusChangeOn), new string[] { "statusChangeDate" }, isOutput: true, format: "O");
+            _statusChangedOn = DefineProperty<DateTimeOffset>(nameof(StatusChangedOn), new string[] { "statusChangeDate" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

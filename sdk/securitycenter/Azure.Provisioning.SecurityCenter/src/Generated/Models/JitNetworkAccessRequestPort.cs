@@ -17,7 +17,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<int> _number;
         private BicepValue<string> _allowedSourceAddressPrefix;
         private BicepList<string> _allowedSourceAddressPrefixes;
-        private BicepValue<DateTimeOffset> _endOn;
+        private BicepValue<DateTimeOffset> _endsOn;
         private BicepValue<JitNetworkAccessPortStatus> _status;
         private BicepValue<JitNetworkAccessPortStatusReason> _statusReason;
         private BicepValue<int> _mappedPort;
@@ -72,18 +72,18 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets or sets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
                 Initialize();
-                return _endOn;
+                return _endsOn;
             }
             set
             {
                 Initialize();
-                _endOn.Assign(value);
+                _endsOn.Assign(value);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.SecurityCenter
             _number = DefineProperty<int>(nameof(Number), new string[] { "number" }, isRequired: true);
             _allowedSourceAddressPrefix = DefineProperty<string>(nameof(AllowedSourceAddressPrefix), new string[] { "allowedSourceAddressPrefix" });
             _allowedSourceAddressPrefixes = DefineListProperty<string>(nameof(AllowedSourceAddressPrefixes), new string[] { "allowedSourceAddressPrefixes" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTimeUtc" }, isRequired: true, format: "O");
+            _endsOn = DefineProperty<DateTimeOffset>(nameof(EndsOn), new string[] { "endTimeUtc" }, isRequired: true, format: "O");
             _status = DefineProperty<JitNetworkAccessPortStatus>(nameof(Status), new string[] { "status" }, isRequired: true);
             _statusReason = DefineProperty<JitNetworkAccessPortStatusReason>(nameof(StatusReason), new string[] { "statusReason" }, isRequired: true);
             _mappedPort = DefineProperty<int>(nameof(MappedPort), new string[] { "mappedPort" });

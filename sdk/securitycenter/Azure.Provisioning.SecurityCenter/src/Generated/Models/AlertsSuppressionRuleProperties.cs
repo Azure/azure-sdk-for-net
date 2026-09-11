@@ -16,7 +16,7 @@ namespace Azure.Provisioning.SecurityCenter
     {
         private BicepValue<string> _alertType;
         private BicepValue<DateTimeOffset> _lastModifiedOn;
-        private BicepValue<DateTimeOffset> _expiresOn;
+        private BicepValue<DateTimeOffset> _expireOn;
         private BicepValue<string> _reason;
         private BicepValue<SecurityAlertsSuppressionRuleState> _state;
         private BicepValue<string> _comment;
@@ -52,18 +52,18 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the ExpiresOn. </summary>
-        public BicepValue<DateTimeOffset> ExpiresOn
+        /// <summary> Gets or sets the ExpireOn. </summary>
+        public BicepValue<DateTimeOffset> ExpireOn
         {
             get
             {
                 Initialize();
-                return _expiresOn;
+                return _expireOn;
             }
             set
             {
                 Initialize();
-                _expiresOn.Assign(value);
+                _expireOn.Assign(value);
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.SecurityCenter
             base.DefineProvisionableProperties();
             _alertType = DefineProperty<string>(nameof(AlertType), new string[] { "alertType" }, isRequired: true);
             _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedUtc" }, isOutput: true, format: "O");
-            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDateUtc" }, format: "O");
+            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationDateUtc" }, format: "O");
             _reason = DefineProperty<string>(nameof(Reason), new string[] { "reason" }, isRequired: true);
             _state = DefineProperty<SecurityAlertsSuppressionRuleState>(nameof(State), new string[] { "state" }, isRequired: true);
             _comment = DefineProperty<string>(nameof(Comment), new string[] { "comment" });
