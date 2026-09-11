@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                startIPAddress is null && endIPAddress is null ? default : new FirewallRuleProperties(startIPAddress, endIPAddress, default),
                 default);
         }
 
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                maintenanceType is null && maintenanceState is null && maintenanceStartOn is null && maintenanceEndOn is null && maintenanceExecutionStartOn is null && maintenanceExecutionEndOn is null && maintenanceAvailableScheduleMinOn is null && maintenanceAvailableScheduleMaxOn is null && maintenanceTitle is null && maintenanceDescription is null ? default : new MaintenanceProperties(
+                maintenanceType is null && maintenanceState is null && maintenanceStartOn is null && maintenanceEndOn is null && maintenanceExecutionStartOn is null && maintenanceExecutionEndOn is null && maintenanceAvailableScheduleMinOn is null && maintenanceAvailableScheduleMaxOn is null && maintenanceTitle is null && maintenanceDescription is null && provisioningState is null ? default : new MaintenanceProperties(
                     maintenanceType,
                     maintenanceState,
                     maintenanceStartOn,
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     maintenanceAvailableScheduleMaxOn,
                     maintenanceTitle,
                     maintenanceDescription,
-                    default,
+                    provisioningState,
                     default),
                 default);
         }
