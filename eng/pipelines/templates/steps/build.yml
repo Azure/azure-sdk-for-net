@@ -65,7 +65,7 @@ steps:
       PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
       Artifacts: ${{ parameters.Artifacts }}
       ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
-        SetOverrideFile: false
+        SetOverrideFile: true
 
   - pwsh: |
       # Reset SkipDevBuildNumber as empty
@@ -121,6 +121,7 @@ steps:
         /p:ValidateRunApiCompat=true
         /p:SDKType=${{ parameters.SDKType }}
         /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+        /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
         /p:IncludeTests=false
         /p:PublicSign=false $(VersioningProperties)
         /p:Configuration=Release
