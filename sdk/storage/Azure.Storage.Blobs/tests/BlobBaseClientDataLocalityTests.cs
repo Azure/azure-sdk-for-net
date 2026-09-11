@@ -1307,6 +1307,156 @@ namespace Azure.Storage.Blobs.Test
             CollectionAssert.AreEqual(payload, sink.ToArray());
         }
 
+        #region DownloadTo Data Locality
+
+        // Shared by the two transport-level "no layout available" tests below, which script a
+        // real HTTP 204 for Get Blob Layout so the fallback is observed on the wire.
+        private static readonly ETag s_transportETag = new ETag("0xNOLAYOUT");
+        private static readonly Uri s_transportBlobUri = new Uri("https://account.blob.core.windows.net/container/blob");
+
+        [Test]
+        public async Task DownloadTo_DataLocality_NoLayoutAvailable_FallsBackToStandardGetBlob()
+        {
+            // Arrange
+            //   1. Get Blob [0-19]  -> 206 carrying x-ms-download-hint: layout, which is
+            //                          what opens the layout gate in PartitionedDownloader.
+            //   2. Get Blob Layout  -> 204, i.e. no layout information is available.
+            //   3-6. Get Blob for the four remaining chunks.
+            const int blobLength = 100;
+            const int chunkSize = 20;
+
+            byte[] data = new byte[blobLength];
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = (byte)i;
+            }
+
+            List<MockResponse> responses = new()
+            {
+                CreateGetBlobResponse(data, offset: 0, count: chunkSize, totalLength: blobLength, downloadHint: true),
+                CreateNoLayoutResponse(blobLength),
+            };
+            for (long offset = chunkSize; offset < blobLength; offset += chunkSize)
+            {
+                responses.Add(CreateGetBlobResponse(data, offset, chunkSize, blobLength, downloadHint: false));
+            }
+
+            MockTransport transport = new MockTransport(responses.ToArray());
+            DataLocalityTrackingPolicy tracking = new DataLocalityTrackingPolicy();
+
+            // BlobClientOptions registers DataLocalityPolicy.Shared as PerCall in its ctor;
+            BlobClientOptions options = new BlobClientOptions { Transport = transport };
+            options.AddPolicy(tracking, HttpPipelinePosition.PerCall);
+
+            Uri originalUri = s_transportBlobUri;
+            BlobBaseClient client = new BlobBaseClient(originalUri, options);
+
+            // Act
+            MemoryStream destination = new MemoryStream();
+            await InvokeDownloadToAsync(client, destination, chunkSize, LayoutAwareRouting.Enabled);
+
+            // Assert - content is intact end-to-end
+            AssertOpenReadContent(blobLength, destination);
+
+            // Assert - Get Blob Layout was issued exactly once by the production code (the
+            // layout cache de-dups it across all four subsequent chunks).
+            List<DataLocalityTrackingPolicy.RequestInfo> layoutRequests =
+                tracking.TrackedRequests.Where(r => r.IsGetLayout).ToList();
+            Assert.AreEqual(1, layoutRequests.Count,
+                "Get Blob Layout should be fetched once and reused for every chunk");
+
+            // Assert - 1 initial + 4 subsequent Get Blob requests, and nothing else on the
+            // wire: the total must be fully accounted for by the layout call plus the chunk
+            // downloads, so an unexpected operation (a Get Blob Properties fallback, a retry)
+            // can't hide inside the counts.
+            List<DataLocalityTrackingPolicy.RequestInfo> getBlobRequests =
+                tracking.TrackedRequests.Where(r => r.IsGetBlob).ToList();
+            Assert.AreEqual(5, getBlobRequests.Count,
+                "Expected 1 initial + 4 subsequent range downloads (100 bytes / 20-byte chunks)");
+            Assert.AreEqual(
+                layoutRequests.Count + getBlobRequests.Count,
+                tracking.TrackedRequests.Count,
+                "No requests other than Get Blob Layout and Get Blob should be issued");
+
+            // Assert - when no layout is available, DataLocalityPolicy
+            // must never fire. A rewritten request is identifiable by the Host header the
+            // policy adds to preserve the original authority, so its absence proves the
+            // request went to the original endpoint untouched.
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in tracking.TrackedRequests)
+            {
+                Assert.AreEqual(originalUri.Host, req.RequestHost,
+                    "No request should be routed to a layout endpoint when the blob has no layout");
+                Assert.IsFalse(req.HasHostHeader,
+                    "DataLocalityPolicy must not rewrite the authority, so no Host header should be added");
+            }
+
+            // Assert - every chunk was still requested, in order, over the original endpoint.
+            CollectionAssert.AreEqual(
+                new long?[] { 0, chunkSize, 2 * chunkSize, 3 * chunkSize, 4 * chunkSize },
+                getBlobRequests.Select(r => r.RangeStartOffset).ToList());
+        }
+
+        private static MockResponse CreateGetBlobResponse(
+            byte[] data,
+            long offset,
+            int count,
+            int totalLength,
+            bool downloadHint)
+        {
+            MockResponse response = new MockResponse(206);
+            response.AddHeader("ETag", s_transportETag.ToString());
+            response.AddHeader("Content-Length", count.ToString());
+            response.AddHeader("Content-Range", $"bytes {offset}-{offset + count - 1}/{totalLength}");
+            response.AddHeader("x-ms-blob-type", "BlockBlob");
+            if (downloadHint)
+            {
+                // "layout" is DownloadHint.Layout; this is what makes PartitionedDownloader
+                // build a layout cache in the first place.
+                response.AddHeader("x-ms-download-hint", "layout");
+            }
+            response.ContentStream = new MemoryStream(data, (int)offset, count);
+            return response;
+        }
+
+        private static MockResponse CreateNoLayoutResponse(long blobContentLength)
+        {
+            MockResponse response = new MockResponse(204);
+            response.AddHeader("ETag", s_transportETag.ToString());
+            response.AddHeader("x-ms-blob-content-length", blobContentLength.ToString());
+            response.AddHeader("x-ms-blob-type", "BlockBlob");
+            response.AddHeader("Content-Length", "0");
+            return response;
+        }
+
+        private async Task InvokeDownloadToAsync(
+            BlobBaseClient client,
+            Stream destination,
+            int chunkSize,
+            LayoutAwareRouting layoutAwareRouting)
+        {
+            // Internal overload exposes the LayoutAwareRouting + async + cancellationToken
+            // parameters directly, skipping the public options plumbing.
+            await client.StagedDownloadAsync(
+                destination: destination,
+                conditions: default,
+                progressHandler: default,
+                transferOptions: new StorageTransferOptions
+                {
+                    MaximumConcurrency = 1,
+                    InitialTransferSize = chunkSize,
+                    MaximumTransferSize = chunkSize,
+                },
+                transferValidationOverride: new DownloadTransferValidationOptions
+                {
+                    ChecksumAlgorithm = StorageChecksumAlgorithm.None,
+                },
+                layoutAwareRouting: layoutAwareRouting,
+                async: IsAsync,
+                cancellationToken: CancellationToken.None).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #region OpenRead Data Locality
 
         private static readonly CancellationToken s_openReadCancellationToken = new CancellationTokenSource().Token;
@@ -1538,6 +1688,83 @@ namespace Azure.Storage.Blobs.Test
             // once (this is the only branch in OpenRead that issues GetProperties when
             // LayoutAwareRouting is Enabled).
             VerifyGetPropertiesCalledOnce(blockClient);
+        }
+
+        [Test]
+        public async Task OpenRead_DataLocality_NoLayoutAvailable_SkipsGetPropertiesAndDoesNotRoute()
+        {
+            // Arrange
+            //   1. Get Blob Layout -> 204, i.e. no layout information is available. It still
+            //      carries the Get Blob Properties-equivalent headers, which is what lets
+            //      OpenRead bootstrap without a separate GetProperties call.
+            //   2-6. Get Blob for each of the five buffer fills.
+            const int blobLength = 100;
+            const int bufferSize = 20;
+
+            byte[] data = new byte[blobLength];
+            for (int i = 0; i < data.Length; i++)
+            {
+                data[i] = (byte)i;
+            }
+
+            List<MockResponse> responses = new() { CreateNoLayoutResponse(blobLength) };
+            for (long offset = 0; offset < blobLength; offset += bufferSize)
+            {
+                responses.Add(CreateGetBlobResponse(data, offset, bufferSize, blobLength, downloadHint: false));
+            }
+
+            MockTransport transport = new MockTransport(responses.ToArray());
+            DataLocalityTrackingPolicy tracking = new DataLocalityTrackingPolicy();
+
+            BlobClientOptions options = new BlobClientOptions { Transport = transport };
+            options.AddPolicy(tracking, HttpPipelinePosition.PerCall);
+
+            BlobBaseClient client = new BlobBaseClient(s_transportBlobUri, options);
+
+            // Act
+            Stream readStream = await InvokeOpenReadAsync(client, bufferSize, layoutAwareRouting: LayoutAwareRouting.Enabled);
+            MemoryStream destination = new MemoryStream();
+            await CopyAsync(readStream, destination);
+
+            // Assert - content is intact end-to-end.
+            AssertOpenReadContent(blobLength, destination);
+
+            // Assert - NO Get Blob Properties request was issued. The single 204 layout
+            // response supplied ETag/BlobContentLength/Metadata
+            Assert.IsEmpty(
+                tracking.TrackedRequests.Where(r => r.IsGetProperties).ToList(),
+                "OpenRead must bootstrap from the layout response, not from Get Blob Properties");
+
+            // Assert - Get Blob Layout was fetched exactly once for the whole stream.
+            Assert.AreEqual(1, tracking.TrackedRequests.Count(r => r.IsGetLayout),
+                "The layout cache should de-dup Get Blob Layout across every buffer fill");
+
+            // Assert - one Get Blob per buffer fill, and nothing else on the wire: the total
+            // must be fully accounted for by the single layout call plus the buffer fills.
+            List<DataLocalityTrackingPolicy.RequestInfo> getBlobRequests =
+                tracking.TrackedRequests.Where(r => r.IsGetBlob).ToList();
+            Assert.AreEqual(5, getBlobRequests.Count, "Expected 5 buffer-fill downloads (100 bytes / 20-byte buffer)");
+            Assert.AreEqual(
+                1 + getBlobRequests.Count,
+                tracking.TrackedRequests.Count,
+                "No requests other than Get Blob Layout and Get Blob should be issued");
+
+            // Assert - With no layout available, DataLocalityPolicy must never fire.
+            // A rewritten request is identifiable by the Host header the policy adds to
+            // preserve the original authority, so its absence proves the request went
+            // to the original endpoint untouched.
+            foreach (DataLocalityTrackingPolicy.RequestInfo req in tracking.TrackedRequests)
+            {
+                Assert.AreEqual(s_transportBlobUri.Host, req.RequestHost,
+                    "No request should be routed to a layout endpoint when the blob has no layout");
+                Assert.IsFalse(req.HasHostHeader,
+                    "DataLocalityPolicy must not rewrite the authority, so no Host header should be added");
+            }
+
+            // Assert - every buffer fill was still requested, in order.
+            CollectionAssert.AreEqual(
+                new long?[] { 0, bufferSize, 2 * bufferSize, 3 * bufferSize, 4 * bufferSize },
+                getBlobRequests.Select(r => r.RangeStartOffset).ToList());
         }
 
         [TestCase(401)] // Unauthorized
@@ -2050,6 +2277,7 @@ namespace Azure.Storage.Blobs.Test
                         RequestHost = message.Request.Uri.Host,
                         RequestPort = message.Request.Uri.Port,
                         RequestQuery = message.Request.Uri.Query ?? string.Empty,
+                        RequestMethod = message.Request.Method.Method,
                         HasHostHeader = hasHostHeader,
                         HostHeaderValue = hostValue ?? string.Empty,
                         RangeHeaderValue = rangeValue,
@@ -2062,9 +2290,28 @@ namespace Azure.Storage.Blobs.Test
                 public string RequestHost { get; set; }
                 public int RequestPort { get; set; }
                 public string RequestQuery { get; set; }
+                public string RequestMethod { get; set; }
                 public bool HasHostHeader { get; set; }
                 public string HostHeaderValue { get; set; }
                 public string RangeHeaderValue { get; set; }
+
+                /// <summary>
+                /// True when this request is a Get Blob Properties call. The operation is
+                /// issued as an HTTP HEAD, which nothing else in the download path uses.
+                /// </summary>
+                public bool IsGetProperties =>
+                    string.Equals(RequestMethod, "HEAD", StringComparison.OrdinalIgnoreCase);
+
+                /// <summary>
+                /// True when this request is a Get Blob call: an HTTP GET with no "comp"
+                /// query parameter. Identifying it positively (rather than as "not Get Blob
+                /// Layout") keeps an unexpected operation from being miscounted as a chunk
+                /// download.
+                /// </summary>
+                public bool IsGetBlob =>
+                    string.Equals(RequestMethod, "GET", StringComparison.OrdinalIgnoreCase)
+                    && (string.IsNullOrEmpty(RequestQuery)
+                        || RequestQuery.IndexOf("comp=", StringComparison.OrdinalIgnoreCase) < 0);
 
                 /// <summary>
                 /// True when this request is a Get Blob Layout call, identified by
