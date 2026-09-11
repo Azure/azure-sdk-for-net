@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             TestContext.Out.WriteLine();
         }
 
-        private static void ValidateProperties(string description, string jsonString, List<KeyValuePair<string, string>> expectedProperties)
+        internal static void ValidateProperties(string description, string jsonString, List<KeyValuePair<string, string>> expectedProperties)
         {
 #if NET
             var jsonNode = JsonNode.Parse(jsonString);
@@ -66,6 +66,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 var actualValue = jsonValue!.ToString();
 
                 TestContext.Out.WriteLine($"Properties.'{expectedProperty.Key}' ExpectedValue: '{expectedProperty.Value}' ActualValue: '{actualValue}'");
+
+                if (expectedProperty.Key == "_MS.ResourceAttributeId" && expectedProperty.Value == "*")
+                {
+                    Assert.IsFalse(string.IsNullOrWhiteSpace(actualValue), $"({description}) Expected a non-empty resource attribute ID.");
+                    continue;
+                }
 
                 Assert.AreEqual(
                     expected: expectedProperty.Value,
