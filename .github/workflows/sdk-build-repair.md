@@ -94,6 +94,8 @@ network:
     - defaults
     - dotnet
     - github
+    # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
+    - api.githubcopilot.com
 
 # Toolchain: the SDK build + the azsdk engine both require the .NET 10 SDK.
 runtimes:
