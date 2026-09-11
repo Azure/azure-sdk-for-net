@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-                writer.WriteBase64StringValue(Body.ToArray(), "D");
+                writer.WriteBase64StringValue(Body, "D");
             }
             if (Optional.IsCollectionDefined(StatusCodes))
             {

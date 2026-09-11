@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData"u8);
-                writer.WriteBase64StringValue(PublicCertData.ToArray(), "D");
+                writer.WriteBase64StringValue(PublicCertData, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
