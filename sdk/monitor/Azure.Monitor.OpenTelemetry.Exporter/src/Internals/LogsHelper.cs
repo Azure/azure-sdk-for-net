@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
         private const string InstrumentationKeyAttributeName = SemanticConventions.AttributeMicrosoftInstrumentationKey;
         private const string IngestionEndpointAttributeName = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
-        private const string TenantCloudRoleAttributeName = SemanticConventions.AttributeMicrosoftTenantCloudRole;
+        private const string TenantCloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
@@ -86,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, recognizeRoutingTags: false, tenantCloudRole: null));
+                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, tenantCloudRole: null));
                 }
                 catch (Exception ex)
                 {
@@ -121,7 +121,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     // No schema counter on the routed path: IMultiTenantTransmitter.Track carries none,
                     // matching the trace multi-tenant conversion.
-                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, recognizeRoutingTags: true, tenantCloudRole: tenantCloudRole));
+                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, tenantCloudRole: tenantCloudRole));
                 }
                 catch (Exception ex)
                 {
@@ -175,10 +175,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return TenantRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
         }
 
-        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool recognizeRoutingTags, string? tenantCloudRole)
+        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? tenantCloudRole)
         {
             var properties = new ChangeTrackingDictionary<string, string>();
-            ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, recognizeRoutingTags);
+            ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, consumeMultiEndpointAttributes);
 
             TelemetryItem telemetryItem;
 
@@ -260,7 +260,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return telemetryItem;
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, bool recognizeRoutingTags = false)
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, bool consumeMultiEndpointAttributes = false)
         {
             eventName = null;
             availabilityInfo = null;
@@ -274,12 +274,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     // On the multi-tenant path these attributes are consumed for routing and role
                     // attribution, so drop them here rather than leak them into custom dimensions.
-                    // On the single-tenant path (recognizeRoutingTags false) they fall through to
+                    // On the single-tenant path (consumeMultiEndpointAttributes false) they fall through to
                     // default and become ordinary properties exactly as before.
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
                     case TenantCloudRoleAttributeName:
-                        if (!recognizeRoutingTags)
+                        if (!consumeMultiEndpointAttributes)
                         {
                             goto default;
                         }
@@ -374,7 +374,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // If we detected availability data, do a second pass to extract all availability attributes
             if (hasAvailabilityData)
             {
-                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext, recognizeRoutingTags);
+                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext, consumeMultiEndpointAttributes);
             }
 
             logRecord.ForEachScope(s_processScope, properties);
@@ -402,7 +402,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext, bool recognizeRoutingTags = false)
+        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext, bool consumeMultiEndpointAttributes = false)
         {
             string? availabilityId = null;
             string? availabilityName = null;
@@ -422,7 +422,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
                     case TenantCloudRoleAttributeName:
-                        if (!recognizeRoutingTags)
+                        if (!consumeMultiEndpointAttributes)
                         {
                             goto default;
                         }

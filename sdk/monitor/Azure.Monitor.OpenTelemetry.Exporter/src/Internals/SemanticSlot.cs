@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         MicrosoftInstrumentationKey,
         MicrosoftIngestionEndpoint,
-        MicrosoftTenantCloudRole,
+        MicrosoftMultiEndpointCloudRole,
 
         /// <summary>Not a slot. Sizes the backing index.</summary>
         Count,

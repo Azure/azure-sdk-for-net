@@ -92,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         internal static string GetTenantCloudRole(ref AzMonList mappedTags)
         {
-            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftTenantCloudRole] as string);
+            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftMultiEndpointCloudRole] as string);
         }
 
         internal static string GetTenantCloudRole(string? cloudRole)

@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((MessageData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
-            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftTenantCloudRole, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
         [Theory]
@@ -304,7 +304,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((AvailabilityData)telemetryItem.Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
-            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftTenantCloudRole, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((MessageData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
-            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftTenantCloudRole]);
+            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
         /// <summary>
@@ -677,7 +677,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             => new(SemanticConventions.AttributeMicrosoftIngestionEndpoint, value);
 
         private static KeyValuePair<string, object?> CloudRole(object? value)
-            => new(SemanticConventions.AttributeMicrosoftTenantCloudRole, value);
+            => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);
 
         private static AzureMonitorResource CreateResource()
             => ResourceBuilder.CreateDefault()

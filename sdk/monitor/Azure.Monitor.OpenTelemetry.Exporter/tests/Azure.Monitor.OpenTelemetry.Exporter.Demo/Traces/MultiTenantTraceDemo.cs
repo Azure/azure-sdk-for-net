@@ -228,7 +228,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         /// </summary>
         private sealed class TenantRoutingProcessor : BaseProcessor<Activity>
         {
-            private const string TenantCloudRoleAttributeName = "microsoft.tenant_cloud_role";
+            private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
             private readonly IReadOnlyList<TenantRoute> _routes;
             private readonly string _runId;

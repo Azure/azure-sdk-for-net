@@ -170,7 +170,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
         {
             private const string InstrumentationKeyAttributeName = "microsoft.instrumentation_key";
             private const string IngestionEndpointAttributeName = "microsoft.ingestion_endpoint";
-            private const string TenantCloudRoleAttributeName = "microsoft.tenant_cloud_role";
+            private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
             private readonly IReadOnlyList<MultiTenantTraceDemo.TenantRoute> _routes;
             private readonly string _runId;

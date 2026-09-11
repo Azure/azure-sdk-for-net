@@ -106,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
-            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftTenantCloudRole, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
         [Theory]
@@ -311,7 +311,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var activity = s_activitySource.StartActivity("Test", ActivityKind.Server)!;
             activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, "ikey-a");
             activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, EastUs);
-            activity.SetTag(SemanticConventions.AttributeMicrosoftTenantCloudRole, "tenant-role");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, "tenant-role");
             activity.AddEvent(new ActivityEvent("tenant-event"));
             activity.AddEvent(new ActivityEvent(
                 SemanticConventions.AttributeExceptionEventName,
@@ -376,7 +376,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((RequestData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
-            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftTenantCloudRole]);
+            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             if (tenantCloudRole != null)
             {
-                activity.SetTag(SemanticConventions.AttributeMicrosoftTenantCloudRole, tenantCloudRole);
+                activity.SetTag(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, tenantCloudRole);
             }
 
             activity.Stop();
