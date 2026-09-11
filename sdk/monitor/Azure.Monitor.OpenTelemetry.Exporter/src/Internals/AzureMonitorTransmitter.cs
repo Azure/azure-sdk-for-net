@@ -410,20 +410,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
                 var deferred = SaveGroupForLaterTransmission(group, storage);
-                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
-                    exportSequence,
-                    itemCount,
-                    group.IngestionEndpoint,
-                    deferred == ExportResult.Success ? "persisted" : "dropped",
-                    itemsAccepted: 0,
-                    statusCode: 0);
+                ReportDelivery(exportSequence, group, itemCount, deferred == ExportResult.Success ? "persisted" : "dropped");
 
                 return deferred;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
             Uri? trackUri = null;
-            var reported = false;
 
             try
             {
@@ -468,8 +461,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
-                    reported = true;
-                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, "transmitted", itemCount, httpMessage.Response.Status);
+                    ReportDelivery(exportSequence, group, itemCount, "transmitted", itemCount, httpMessage.Response.Status);
 
                     return result;
                 }
@@ -478,14 +470,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
-                reported = true;
-                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
-                    exportSequence,
-                    itemCount,
-                    group.IngestionEndpoint,
-                    DescribeDelivery(transmission.ExportResult, accepted, itemCount),
-                    accepted,
-                    httpMessage.HasResponse ? httpMessage.Response.Status : 0);
+                ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount), accepted, httpMessage.HasResponse ? httpMessage.Response.Status : 0);
 
                 return transmission.ExportResult;
             }
@@ -498,22 +483,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
                 var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
-
-                // Disposing the message can throw after delivery was already settled and reported.
-                if (!reported)
-                {
-                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
-                        exportSequence,
-                        itemCount,
-                        group.IngestionEndpoint,
-                        thrown == ExportResult.Success ? "persisted" : "dropped",
-                        itemsAccepted: 0,
-                        statusCode: 0);
-                }
+                ReportDelivery(exportSequence, group, itemCount, thrown == ExportResult.Success ? "persisted" : "dropped");
 
                 return thrown;
             }
         }
+
+        private static void ReportDelivery(long exportSequence, EndpointRouteBatch.Group group, int itemCount, string outcome, int accepted = 0, int statusCode = 0)
+            => AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, outcome, accepted, statusCode);
 
         /// <summary>
         /// Only the accepted count is asserted. Which of the remaining items were persisted for
