@@ -14,10 +14,19 @@ param enableMultiTenantExport bool = false
 param multiTenantPrimaryLocation string = 'westus2'
 param multiTenantSecondaryLocation string = 'eastus2'
 
-module multiTenantExport './Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/test-resources.bicep' = if (enableMultiTenantExport) {
+@description('Use User for local Azure PowerShell provisioning, or ServicePrincipal for CI.')
+@allowed([
+  'User'
+  'ServicePrincipal'
+  'Group'
+])
+param multiTenantPrincipalType string = 'ServicePrincipal'
+
+module multiTenantExport './Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/multi-tenant-resources.bicep' = if (enableMultiTenantExport) {
   name: 'multi-tenant-export'
   params: {
     testApplicationOid: testApplicationOid
+    principalType: multiTenantPrincipalType
     baseName: baseName
     primaryLocation: multiTenantPrimaryLocation
     secondaryLocation: multiTenantSecondaryLocation

@@ -28,6 +28,8 @@ To run these tests locally you must first create your test resources.
     On Windows, it normally writes encrypted settings to `sdk/monitor/test-resources.bicep.env`.
     This generated environment file is not checked in and represents your unique test environment.
 
+    To include the dedicated multi-tenant topology, append `-AdditionalParameters @{ enableMultiTenantExport = $true; multiTenantPrincipalType = 'User'; multiTenantPrimaryLocation = 'westus2'; multiTenantSecondaryLocation = 'eastus2' }` to the command above. This adds four Application Insights resources and two workspaces. See the [multi-tenant resource setup](../Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/README.md#standard-monitor-provisioner) for update and identity options.
+
 3. You should log into your Azure subscription and confirm that a new resource group was created with an Application Insights resource.
 When running the tests locally, this is the Application Insights resource that telemetry will be published to.
 

@@ -18,7 +18,33 @@ Only the failure is simulated; successful ingestion and all queries in the Live 
 
 Use dedicated test resources. Telemetry ingestion and Log Analytics queries can incur charges. Do not route these tests to production resources.
 
-The standalone [test-resources.bicep](test-resources.bicep) creates four Application Insights components and two workspaces. The first component is the host/control resource; it must receive none of the marked telemetry. The other three are routed tenants. The template grants Log Analytics Reader on both workspaces to the specified identity. Deployment requires permission to create resources and role assignments.
+### Standard Monitor Provisioner
+
+Use the same resource provisioner as the existing Live tests. From the repository root, authenticate and enable the dedicated topology:
+
+```powershell
+Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
+eng\common\TestResources\New-TestResources.ps1 `
+  -ServiceDirectory monitor `
+  -SubscriptionId 'YOUR SUBSCRIPTION ID' `
+  -ResourceGroupName 'YOUR RESOURCE GROUP NAME' `
+  -AdditionalParameters @{
+    enableMultiTenantExport = $true
+    multiTenantPrincipalType = 'User'
+    multiTenantPrimaryLocation = 'westus2'
+    multiTenantSecondaryLocation = 'eastus2'
+  }
+```
+
+This deploys the existing Monitor resources plus four dedicated Application Insights components and two dedicated Log Analytics workspaces. The host, tenant-a, and tenant-b use `westus2`; tenant-c uses `eastus2`. The host/control resource must receive none of the marked telemetry. The template grants Log Analytics Reader on both dedicated workspaces to the signed-in user. Deployment requires permission to create resources and role assignments; the standard provisioner also attempts to grant the test identity Owner on the resource group and sets a `DeleteAfter` tag.
+
+When updating an existing group, pass its original `-BaseName` and resource-group `-Location` to retain baseline resource names and locations. The dedicated regions above are independent of the baseline location. Use `multiTenantPrincipalType = 'ServicePrincipal'` for service-principal authentication; this remains the CI default. The topology is opt-in so other Live jobs do not create these additional resources.
+
+On Windows, the provisioner normally writes encrypted settings, including `MONITOR_MULTI_TENANT_RESOURCES`, to `sdk/monitor/test-resources.bicep.env`. The SDK test framework loads this file when the runner starts the tests; there is no need to copy its contents into an environment variable or chat. Keep the generated file out of source control. Provisioning authentication is separate from test query authentication; the latter must use a credential supported by the test framework.
+
+### Standalone Alternative
+
+The [multi-tenant-resources.bicep](multi-tenant-resources.bicep) module can also deploy only the dedicated resources. Its name deliberately avoids `test-resources.bicep` so the standard provisioner does not discover and deploy it separately from the opt-in Monitor module.
 
 From this directory, using Azure PowerShell:
 
@@ -29,7 +55,7 @@ New-AzResourceGroup -Name $resourceGroup -Location westus2
 $deployment = New-AzResourceGroupDeployment `
     -Name multi-tenant-export-tests `
     -ResourceGroupName $resourceGroup `
-    -TemplateFile ./test-resources.bicep `
+    -TemplateFile ./multi-tenant-resources.bicep `
     -testApplicationOid '<query-identity-object-id>' `
     -principalType User `
     -primaryLocation westus2 `
@@ -40,7 +66,7 @@ $env:MONITOR_LOGS_ENDPOINT = $deployment.Outputs.LOGS_ENDPOINT.Value
 
 Use `ServicePrincipal` for a CI identity. The regions must produce different ingestion endpoints; the test validates this and also requires at least two routed tenants to share an endpoint. For sovereign clouds, choose supported regions and set the appropriate `logsEndpoint` and Azure authentication authority. The automated matrix currently targets Azure Public cloud only.
 
-The general Monitor template includes this topology as an optional module, disabled by default. From the repository root, the standard resource provisioner can enable it with `-AdditionalParameters @{ enableMultiTenantExport = $true }`. This also deploys the existing Monitor resources. Use an approved subscription and identity; the resulting `MONITOR_MULTI_TENANT_RESOURCES` output is a JSON string, whereas the standalone template above returns an array.
+Use an approved subscription and identity. The standard Monitor template's `MULTI_TENANT_RESOURCES` output is a JSON string, whereas the standalone template above returns an array.
 
 Alternatively, set `MONITOR_MULTI_TENANT_RESOURCES` to a JSON array describing existing resources, or pass an external JSON file to the runner. Keep resource configuration out of source control:
 
@@ -89,7 +115,7 @@ Or use an existing resource configuration file outside the repository:
 ./Run-LiveTests.ps1 -ResourcesFile '<path-to-resources.json>' -Framework net8.0
 ```
 
-The runner sets `AZURE_TEST_MODE=Live` and `MONITOR_MULTI_TENANT_REQUIRED=true`, runs only the Live fixtures, writes TRX results to a new temporary directory, checks both required scenarios passed, and restores the caller's environment. Use `-ResultsDirectory` to select a new directory explicitly. Existing directories are rejected to prevent stale results from satisfying the gate. Without configuration it fails before starting tests. An ordinary test run skips these fixtures outside Live mode, or when optional resource configuration is absent. Missing resources in required CI mode fail; malformed configuration always fails.
+The runner sets `AZURE_TEST_MODE=Live` and `MONITOR_MULTI_TENANT_REQUIRED=true`, runs only the Live fixtures, writes TRX results to a new temporary directory, checks both required scenarios passed, and restores the caller's environment. Use `-ResultsDirectory` to select a new directory explicitly. Existing directories are rejected to prevent stale results from satisfying the gate. Configuration can come from the SDK test framework's generated environment file, process environment, or `-ResourcesFile`. Without configuration the required fixtures fail during setup instead of skipping. An ordinary test run skips these fixtures outside Live mode, or when optional resource configuration is absent. Missing resources in required CI mode fail; malformed configuration always fails.
 
 For local validation without Azure:
 

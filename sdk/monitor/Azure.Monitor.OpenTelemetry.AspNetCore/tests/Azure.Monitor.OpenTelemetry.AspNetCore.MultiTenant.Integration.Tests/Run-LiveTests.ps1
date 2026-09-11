@@ -20,9 +20,6 @@ try {
         $resources = Get-Content -LiteralPath $ResourcesFile -Raw | ConvertFrom-Json
         $env:MONITOR_MULTI_TENANT_RESOURCES = ConvertTo-Json -InputObject @($resources) -Depth 5 -Compress
     }
-    if ([string]::IsNullOrWhiteSpace($env:MONITOR_MULTI_TENANT_RESOURCES)) {
-        throw 'Set MONITOR_MULTI_TENANT_RESOURCES or pass -ResourcesFile. See README.md for deployment and resource configuration.'
-    }
     if ([string]::IsNullOrWhiteSpace($env:MONITOR_LOGS_ENDPOINT)) {
         $env:MONITOR_LOGS_ENDPOINT = 'https://api.loganalytics.io'
     }
