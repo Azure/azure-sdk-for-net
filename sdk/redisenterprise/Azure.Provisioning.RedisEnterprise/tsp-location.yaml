@@ -1,4 +1,4 @@
 directory: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise
-commit: c8578e3b00204c27091d1bab78f6bb7c76285132
+commit: 671defd6e0e56ca97c07c7b9fb5fff579ffc7d4f
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
