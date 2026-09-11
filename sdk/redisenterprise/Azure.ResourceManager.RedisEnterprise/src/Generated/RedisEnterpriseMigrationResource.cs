@@ -26,8 +26,6 @@ namespace Azure.ResourceManager.RedisEnterprise
     {
         private readonly ClientDiagnostics _migrationClientDiagnostics;
         private readonly Migration _migrationRestClient;
-        private readonly ClientDiagnostics _migrationsClientDiagnostics;
-        private readonly Migrations _migrationsRestClient;
         private readonly RedisEnterpriseMigrationData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cache/redisEnterprise/migrations";
@@ -54,8 +52,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             TryGetApiVersion(ResourceType, out string redisEnterpriseMigrationApiVersion);
             _migrationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
             _migrationRestClient = new Migration(_migrationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
-            _migrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RedisEnterprise", ResourceType.Namespace, Diagnostics);
-            _migrationsRestClient = new Migrations(_migrationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisEnterpriseMigrationApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +100,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Start. </description>
+        /// <description> Migration_Start. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -163,7 +159,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Start. </description>
+        /// <description> Migration_Start. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -222,7 +218,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Get. </description>
+        /// <description> Migration_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -270,7 +266,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Get. </description>
+        /// <description> Migration_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -318,7 +314,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Cancel. </description>
+        /// <description> Migration_Cancel. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -367,7 +363,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Cancel. </description>
+        /// <description> Migration_Cancel. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -416,7 +412,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Validate. </description>
+        /// <description> Migration_Validate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -435,7 +431,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
             scope.Start();
             try
             {
@@ -443,7 +439,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _migrationRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<RedisEnterpriseMigrationValidationResponseResult> response = Response.FromValue(RedisEnterpriseMigrationValidationResponseResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -468,7 +464,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Migrations_Validate. </description>
+        /// <description> Migration_Validate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -487,7 +483,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _migrationsClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
+            using DiagnosticScope scope = _migrationClientDiagnostics.CreateScope("RedisEnterpriseMigrationResource.Validate");
             scope.Start();
             try
             {
@@ -495,7 +491,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _migrationsRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _migrationRestClient.CreateValidateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, RedisEnterpriseMigrationValidationRequestContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RedisEnterpriseMigrationValidationResponseResult> response = Response.FromValue(RedisEnterpriseMigrationValidationResponseResult.FromResponse(result), result);
                 if (response.Value == null)
