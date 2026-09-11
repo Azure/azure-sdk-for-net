@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Redis.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && redisPrivateLinkServiceConnectionState is null && redisProvisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), redisPrivateLinkServiceConnectionState, redisProvisioningState, default),
+                groupIds is null && privateEndpointId is null && redisPrivateLinkServiceConnectionState is null && redisProvisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), redisPrivateLinkServiceConnectionState, redisProvisioningState, default),
                 default);
         }
 
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Redis.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && redisPrivateLinkServiceConnectionState is null && redisProvisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), redisPrivateLinkServiceConnectionState, redisProvisioningState, default),
+                privateEndpointId is null && redisPrivateLinkServiceConnectionState is null && redisProvisioningState is null ? default : new PrivateEndpointConnectionProperties(default, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), redisPrivateLinkServiceConnectionState, redisProvisioningState, default),
                 default);
         }
 
