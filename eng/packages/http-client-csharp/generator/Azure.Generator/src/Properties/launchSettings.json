@@ -355,6 +355,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-response-body-or-no-content": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/response/body-or-no-content -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-routes": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/routes -g AzureStubGenerator",
       "commandName": "Executable",
