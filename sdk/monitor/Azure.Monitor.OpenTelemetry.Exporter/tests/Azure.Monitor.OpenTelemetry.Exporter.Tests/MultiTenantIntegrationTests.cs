@@ -102,13 +102,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var east = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == EastUs));
             Assert.Equal(2, east.Payload![1]);
+            Assert.Equal(2, east.Payload[4]);
 
             var west = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == WestUs));
             Assert.Equal(1, west.Payload![1]);
+            Assert.Equal(1, west.Payload[4]);
 
             // The summary and both deliveries describe one export.
             var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
             Assert.All(outcomes, outcome => Assert.Equal(summary.Payload![0], outcome.Payload![0]));
+        }
+
+        /// <summary>
+        /// An unreachable endpoint throws before any response exists, which is the case the whole
+        /// diagnostic exists for, so it must still say what became of the batch.
+        /// </summary>
+        [Fact]
+        public void AStampThatCannotBeReachedStillReportsAnOutcome()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetUnreachable(EastUs);
+            using var exporter = CreateExporter(ingestion, out _);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs), CreateActivity("ikey-west", WestUs)));
+
+            var outcomes = listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome").ToArray();
+
+            // The reachable stamp is still reported, so one failure does not hide the rest.
+            var east = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == EastUs));
+            Assert.Equal(1, east.Payload![1]);
+            Assert.Equal("dropped", east.Payload[3]);
+            Assert.Equal(0, east.Payload[4]);
+            Assert.Equal(0, east.Payload[5]);
+
+            var west = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == WestUs));
+            Assert.Equal("transmitted", west.Payload![3]);
         }
 
         [Fact]
@@ -436,6 +467,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             private readonly Dictionary<string, int> _statusByEndpoint = new(StringComparer.Ordinal);
             private readonly Dictionary<string, string> _pendingRedirects = new(StringComparer.Ordinal);
+            private readonly HashSet<string> _unreachable = new(StringComparer.Ordinal);
 
             internal MockIngestion()
             {
@@ -447,6 +479,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             internal List<CapturedRequest> Requests { get; } = new();
 
             internal void SetStatus(string ingestionEndpoint, int statusCode) => _statusByEndpoint[ingestionEndpoint] = statusCode;
+
+            /// <summary>A stamp that answers nothing at all, so the send throws instead of returning.</summary>
+            internal void SetUnreachable(string ingestionEndpoint) => _unreachable.Add(ingestionEndpoint);
 
             /// <summary>One 307 for this endpoint, then normal responses, mirroring a stamp move.</summary>
             internal void SetRedirectOnce(string ingestionEndpoint, string location) => _pendingRedirects[ingestionEndpoint] = location;
@@ -461,6 +496,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 if (!TryGetEndpoint(request, out var endpoint))
                 {
                     return new MockResponse(404);
+                }
+
+                if (_unreachable.Contains(endpoint))
+                {
+                    throw new InvalidOperationException($"'{endpoint}' cannot be reached.");
                 }
 
                 if (_pendingRedirects.TryGetValue(endpoint, out var location))

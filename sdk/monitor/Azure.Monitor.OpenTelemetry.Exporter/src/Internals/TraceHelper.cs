@@ -172,8 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 }
             }
 
-            // A batch carrying no routing tags at all is the steady state for a process where most
-            // tenants have not enabled observability, so it is not worth reporting.
+            // Nothing to say about a batch that held no Activities.
             if (collected != 0 || rejected != 0)
             {
                 AzureMonitorExporterEventSource.Log.RoutedExportSummary(routeBatch.Sequence, collected, routeBatch.Count, rejected);

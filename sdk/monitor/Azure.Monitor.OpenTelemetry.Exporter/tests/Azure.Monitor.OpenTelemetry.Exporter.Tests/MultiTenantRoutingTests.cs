@@ -704,6 +704,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
         }
 
+        /// <summary>A shared sequence would tie unrelated exports together.</summary>
+        [Fact]
+        public void EachExportGetsItsOwnSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs));
+            Convert(CreateActivity("ikey-a", EastUs));
+
+            var summaries = listener.Messages.Where(e => e.EventName == "RoutedExportSummary").ToArray();
+            Assert.Equal(2, summaries.Length);
+            Assert.NotEqual(summaries[0].Payload![0], summaries[1].Payload![0]);
+        }
+
         private static EndpointRouteBatch Convert(params Activity[] activities)
         {
             var routeBatch = new EndpointRouteBatch();

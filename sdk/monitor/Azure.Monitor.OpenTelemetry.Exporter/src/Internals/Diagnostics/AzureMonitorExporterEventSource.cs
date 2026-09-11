@@ -625,10 +625,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(70, Message = "Evicted stored telemetry '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
         public void RoutedTelemetryEvicted(string evictedPath, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedPath, evictedBytes, requestingEndpoint);
 
+        // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
+        // call allocates an argument array whether or not anything is listening.
         [Event(71, Message = "Export {0}: collected {1} Activities for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
-        public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected) => WriteEvent(71, exportSequence, collected, endpointCount, rejected);
+        public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(71, exportSequence, collected, endpointCount, rejected);
+            }
+        }
 
-        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Status code: {4}", Level = EventLevel.Informational)]
-        public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int statusCode) => WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, statusCode);
+        [Event(72, Message = "Export {0}: {1} telemetry items for ingestion endpoint '{2}' were {3}. Accepted by ingestion: {4}. Status code: {5}", Level = EventLevel.Informational)]
+        public void RoutedGroupOutcome(long exportSequence, int itemCount, string ingestionEndpoint, string outcome, int itemsAccepted, int statusCode)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
+            }
+        }
     }
 }

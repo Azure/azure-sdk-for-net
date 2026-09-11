@@ -414,8 +414,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     exportSequence,
                     itemCount,
                     group.IngestionEndpoint,
-                    deferred == ExportResult.Success ? "written to offline storage" : "dropped, offline storage refused them",
-                    0);
+                    deferred == ExportResult.Success ? "persisted" : "dropped",
+                    itemsAccepted: 0,
+                    statusCode: 0);
 
                 return deferred;
             }
@@ -466,22 +467,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
-                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, "transmitted", httpMessage.HasResponse ? httpMessage.Response.Status : 0);
+                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, "transmitted", itemCount, httpMessage.Response.Status);
 
                     return result;
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                var failed = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
+
+                // A 206 accepts part of the batch and persists only the rest, so the whole group
+                // must not be reported as delivered or as lost.
+                var accepted = transmission.ItemsAccepted ?? 0;
                 AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
                     exportSequence,
                     itemCount,
                     group.IngestionEndpoint,
-                    failed == ExportResult.Success ? "not transmitted, written to offline storage" : "dropped",
+                    transmission.ExportResult != ExportResult.Success ? "dropped" : accepted > 0 ? "partially transmitted, remainder persisted" : "persisted",
+                    accepted,
                     httpMessage.HasResponse ? httpMessage.Response.Status : 0);
 
-                return failed;
+                return transmission.ExportResult;
             }
             catch (Exception ex)
             {
@@ -490,7 +496,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 networkSdkStats?.TrackException(trackUri?.Host, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.TransmitterFailed(origin, _isAadEnabled, _connectionVars.InstrumentationKey, ex);
 
-                return storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                // An unreachable endpoint arrives here, so this is the outcome most worth reporting.
+                var thrown = storage == null ? ExportResult.Failure : SaveGroupForLaterTransmission(group, storage);
+                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
+                    exportSequence,
+                    itemCount,
+                    group.IngestionEndpoint,
+                    thrown == ExportResult.Success ? "persisted" : "dropped",
+                    itemsAccepted: 0,
+                    statusCode: 0);
+
+                return thrown;
             }
         }
 
