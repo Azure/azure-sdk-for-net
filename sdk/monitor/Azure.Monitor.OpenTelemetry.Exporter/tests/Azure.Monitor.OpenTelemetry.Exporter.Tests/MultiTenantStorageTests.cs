@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
@@ -98,6 +100,55 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // An endpoint already holding a partition keeps working past the bound.
             Assert.NotNull(storage.TryGet("https://region-0.in.applicationinsights.azure.com/"));
+        }
+
+        /// <summary>
+        /// Past the bound telemetry is still transmitted but has no storage to fall back on, which is
+        /// invisible to the caller unless it is reported.
+        /// </summary>
+        [Fact]
+        public void RefusingAPartitionAtTheBoundIsReported()
+        {
+            using var storage = CreateStorage();
+
+            for (int i = 0; i < MultiTenantStorage.MaxEndpointPartitions; i++)
+            {
+                Assert.NotNull(storage.TryGet($"https://region-{i}.in.applicationinsights.azure.com/"));
+            }
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            Assert.Null(storage.TryGet("https://one-too-many.in.applicationinsights.azure.com/"));
+
+            var refused = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiTenantPartitionCapReached"));
+            Assert.Equal("https://one-too-many.in.applicationinsights.azure.com/", refused.Payload![0]);
+            Assert.Equal(MultiTenantStorage.MaxEndpointPartitions, refused.Payload[1]);
+        }
+
+        /// <summary>
+        /// Eviction is the one place telemetry is lost to make room for a different endpoint, so the
+        /// report has to name both sides.
+        /// </summary>
+        [Fact]
+        public void EvictingAnotherEndpointsTelemetryIsReported()
+        {
+            using var storage = CreateStorage(8192);
+            var eastUs = storage.TryGet(EastUs)!;
+            var westUs = storage.TryGet(WestUs)!;
+            var payload = new byte[4096];
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+
+            var evicted = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryEvicted"));
+            Assert.Equal(EastUs, evicted.Payload![0]);
+            Assert.Equal("4096", evicted.Payload[1]);
+            Assert.Equal(WestUs, evicted.Payload[2]);
         }
 
         [Fact]

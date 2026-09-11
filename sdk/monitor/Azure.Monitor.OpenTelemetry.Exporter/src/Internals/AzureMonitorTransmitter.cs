@@ -389,7 +389,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // regions. A failing region does not stop the rest.
             for (int i = 0; i < routeBatch.Count; i++)
             {
-                if (SendGroupAsync(routeBatch[i], origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
+                if (SendGroupAsync(routeBatch[i], routeBatch.Sequence, origin, async: false, cancellationToken).EnsureCompleted() != ExportResult.Success)
                 {
                     result = ExportResult.Failure;
                 }
@@ -402,13 +402,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// A group that cannot be sent is written to its endpoint's own storage partition, so one
         /// region's backlog and back-off never affect another's.
         /// </remarks>
-        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
+        private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
+            var itemCount = group.TelemetryItems.Count;
             var storage = _multiTenantStorage?.TryGet(group.IngestionEndpoint);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
-                return SaveGroupForLaterTransmission(group, storage);
+                var deferred = SaveGroupForLaterTransmission(group, storage);
+                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
+                    exportSequence,
+                    itemCount,
+                    group.IngestionEndpoint,
+                    deferred == ExportResult.Success ? "written to offline storage" : "dropped, offline storage refused them",
+                    0);
+
+                return deferred;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
@@ -457,13 +466,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     storage?.TransmissionStateManager.ResetConsecutiveErrors();
                     storage?.TransmissionStateManager.CloseTransmission();
+                    AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(exportSequence, itemCount, group.IngestionEndpoint, "transmitted", httpMessage.HasResponse ? httpMessage.Response.Status : 0);
 
                     return result;
                 }
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                return HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                var failed = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats).ExportResult;
+                AzureMonitorExporterEventSource.Log.RoutedGroupOutcome(
+                    exportSequence,
+                    itemCount,
+                    group.IngestionEndpoint,
+                    failed == ExportResult.Success ? "not transmitted, written to offline storage" : "dropped",
+                    httpMessage.HasResponse ? httpMessage.Response.Status : 0);
+
+                return failed;
             }
             catch (Exception ex)
             {

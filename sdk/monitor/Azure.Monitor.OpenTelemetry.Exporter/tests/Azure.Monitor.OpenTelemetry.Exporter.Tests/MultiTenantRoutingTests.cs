@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -608,9 +609,105 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Theory]
+        [InlineData(null, EastUs, "MissingInstrumentationKey")]
+        [InlineData("", EastUs, "MissingInstrumentationKey")]
+        [InlineData("   ", EastUs, "MissingInstrumentationKey")]
+        [InlineData("ikey-a", null, "MissingIngestionEndpoint")]
+        [InlineData("ikey-a", "", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "not-a-uri", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "/relative/path", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "http://eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointNotHttps")]
+        [InlineData("ikey-a", "https://user:pass@eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointHasCredentials")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/?a=b", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/#frag", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://xn--\u00fc.in.applicationinsights.azure.com/", "IngestionEndpointHostInvalid")]
+        public void ADroppedActivityReportsWhyItCouldNotBeRouted(string? instrumentationKey, string? ingestionEndpoint, string expectedReason)
+        {
+            var activity = CreateActivity(instrumentationKey, ingestionEndpoint);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(0, Convert(activity).Count);
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.Equal(expectedReason, rejected.Payload![1]);
+            Assert.Equal(activity.TraceId.ToHexString(), rejected.Payload[2]);
+            Assert.Equal(activity.SpanId.ToHexString(), rejected.Payload[3]);
+        }
+
+        /// <summary>
+        /// The endpoint that caused a rejection may carry credentials, so the reason has to stand on
+        /// its own without it.
+        /// </summary>
+        [Fact]
+        public void ARejectionNeverRepeatsTheEndpointThatCausedIt()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", "https://user:sekret@eastus-1.in.applicationinsights.azure.com/"));
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.DoesNotContain("sekret", string.Join("|", rejected.Payload!), StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void CollectedTelemetryIsReportedWithItsDestinationAndIdentity()
+        {
+            var activity = CreateActivity("ikey-a", EastUs);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(1, Convert(activity).Count);
+
+            var collected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Equal(EastUs, collected.Payload![1]);
+            Assert.Equal("ikey-a", collected.Payload[2]);
+            Assert.Equal(activity.TraceId.ToHexString(), collected.Payload[3]);
+            Assert.Equal(activity.SpanId.ToHexString(), collected.Payload[4]);
+        }
+
+        /// <summary>Per-item records are the Verbose tier; nothing below it should pay for them.</summary>
+        [Fact]
+        public void PerItemRecordsAreNotWrittenBelowVerbose()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity(null, EastUs));
+
+            Assert.Empty(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected" || e.EventName == "RoutedTelemetryRejected"));
+        }
+
+        /// <summary>
+        /// The per-item records are only useful if they can be tied to the export that produced them
+        /// and to its totals.
+        /// </summary>
+        [Fact]
+        public void OneExportReportsItsTotalsUnderASingleSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity("ikey-b", WestUs), CreateActivity(null, EastUs));
+
+            var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
+            Assert.Equal(2, summary.Payload![1]);
+            Assert.Equal(2, summary.Payload[2]);
+            Assert.Equal(1, summary.Payload[3]);
+
+            Assert.Equal(2, listener.Messages.Count(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
+        }
+
         private static EndpointRouteBatch Convert(params Activity[] activities)
         {
             var routeBatch = new EndpointRouteBatch();
+            routeBatch.BeginExport();
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(CreateBatch(activities), null, sampleRate: 100, routeBatch);
             return routeBatch;
         }

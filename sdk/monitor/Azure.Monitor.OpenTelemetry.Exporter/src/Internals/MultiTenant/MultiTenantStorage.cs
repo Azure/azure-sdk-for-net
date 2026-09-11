@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// eviction cannot help with - a removed directory, a full disk, a denied ACL - and deleting
         /// the backlog for those destroys other tenants' telemetry without saving this batch.
         /// </remarks>
-        internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
+        internal bool TryCreateBlobWithinBudget(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, string requestingEndpoint, out PersistentBlob? blob)
         {
             blob = null;
 
@@ -176,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
                     if (!reserved)
                     {
-                        TryEvict(candidates[i]);
+                        TryEvict(candidates[i], requestingEndpoint);
                         reserved = TryReserve(buffer.Length);
                     }
                 }
@@ -396,7 +396,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             }
         }
 
-        private bool TryEvict(EvictionCandidate candidate)
+        private bool TryEvict(EvictionCandidate candidate, string requestingEndpoint)
         {
             // Measured before deletion because the length is unreadable afterwards.
             var length = FileLength(candidate.Path);
@@ -423,7 +423,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             Interlocked.Add(ref _currentSizeBytes, -length);
 
+            AzureMonitorExporterEventSource.Log.RoutedTelemetryEvicted(DescribeOwner(candidate.Path), length, requestingEndpoint);
+
             return true;
+        }
+
+        /// <summary>
+        /// Names the endpoint that owned an evicted blob. The directory is a one-way hash, so an
+        /// unopened partition can only be reported by its directory.
+        /// </summary>
+        private string DescribeOwner(string path)
+        {
+            var directory = Path.GetDirectoryName(path);
+
+            foreach (var partition in _partitions)
+            {
+                if (string.Equals(partition.Value.Directory, directory, StringComparison.Ordinal))
+                {
+                    return partition.Key;
+                }
+            }
+
+            return directory ?? path;
         }
 
         private readonly struct EvictionCandidate
@@ -472,6 +493,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
                 if (_disposed || _partitions.Count >= MaxEndpointPartitions)
                 {
+                    if (!_disposed)
+                    {
+                        AzureMonitorExporterEventSource.Log.MultiTenantPartitionCapReached(ingestionEndpoint, MaxEndpointPartitions);
+                    }
+
                     return null;
                 }
 

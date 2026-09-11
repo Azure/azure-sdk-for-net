@@ -100,6 +100,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal static void OtelToAzureMonitorTraceMultiTenant(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
         {
+            var collected = 0;
+            var rejected = 0;
+
             foreach (var activity in batchActivity)
             {
                 try
@@ -108,10 +111,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     try
                     {
-                        if (!TenantRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint))
+                        if (!TenantRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
                         {
+                            rejected++;
+                            AzureMonitorExporterEventSource.Log.RoutedTelemetryRejected(routeBatch.Sequence, rejection, activity);
                             continue;
                         }
+
+                        collected++;
+                        AzureMonitorExporterEventSource.Log.RoutedTelemetryCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, activity);
 
                         var group = routeBatch.GetOrAdd(ingestionEndpoint);
                         var telemetryItems = group.TelemetryItems;
@@ -162,6 +170,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     AzureMonitorExporterEventSource.Log.FailedToConvertActivity(activity.Source.Name, activity.DisplayName, ex);
                 }
+            }
+
+            // A batch carrying no routing tags at all is the steady state for a process where most
+            // tenants have not enabled observability, so it is not worth reporting.
+            if (collected != 0 || rejected != 0)
+            {
+                AzureMonitorExporterEventSource.Log.RoutedExportSummary(routeBatch.Sequence, collected, routeBatch.Count, rejected);
             }
         }
 

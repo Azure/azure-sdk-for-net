@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,10 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+
+using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
 
 using OpenTelemetry;
 
@@ -72,6 +76,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-north", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
             Assert.DoesNotContain("ikey-east", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
             Assert.DoesNotContain("ikey-west", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// Delivery is reported per endpoint, so a stamp that took nothing is distinguishable from
+        /// one that was never addressed.
+        /// </summary>
+        [Fact]
+        public void EachStampsDeliveryIsReported()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out _);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Assert.Equal(ExportResult.Success, exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("ikey-east-2", EastUs),
+                CreateActivity("ikey-west", WestUs))));
+
+            var outcomes = listener.Messages.Where(e => e.EventName == "RoutedGroupOutcome").ToArray();
+            Assert.Equal(2, outcomes.Length);
+            Assert.All(outcomes, outcome => Assert.Equal("transmitted", outcome.Payload![3]));
+
+            var east = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == EastUs));
+            Assert.Equal(2, east.Payload![1]);
+
+            var west = Assert.Single(outcomes.Where(o => (string)o.Payload![2]! == WestUs));
+            Assert.Equal(1, west.Payload![1]);
+
+            // The summary and both deliveries describe one export.
+            var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
+            Assert.All(outcomes, outcome => Assert.Equal(summary.Payload![0], outcome.Payload![0]));
         }
 
         [Fact]
