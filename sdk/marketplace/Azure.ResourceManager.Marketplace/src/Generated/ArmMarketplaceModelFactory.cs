@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     isGov,
                     (collectionIds ?? new ChangeTrackingList<Guid>()).ToList(),
                     branding ?? new ChangeTrackingDictionary<string, string>(),
-                    new NotificationsSettingsProperties((recipients ?? new ChangeTrackingList<NotificationRecipient>()).ToList(), sendToAllMarketplaceAdmins, default),
+                    recipients is null && sendToAllMarketplaceAdmins is null ? default : new NotificationsSettingsProperties((recipients ?? new ChangeTrackingList<NotificationRecipient>()).ToList(), sendToAllMarketplaceAdmins, default),
                     default),
                 default);
         }
