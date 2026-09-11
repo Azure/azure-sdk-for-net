@@ -8,6 +8,24 @@ param testApplicationOid string
 @description('The base resource name.')
 param baseName string = resourceGroup().name
 
+@description('Deploy the dedicated multi-tenant export topology only for its live-test job.')
+param enableMultiTenantExport bool = false
+
+param multiTenantPrimaryLocation string = 'westus2'
+param multiTenantSecondaryLocation string = 'eastus2'
+
+module multiTenantExport './Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/test-resources.bicep' = if (enableMultiTenantExport) {
+  name: 'multi-tenant-export'
+  params: {
+    testApplicationOid: testApplicationOid
+    baseName: baseName
+    primaryLocation: multiTenantPrimaryLocation
+    secondaryLocation: multiTenantSecondaryLocation
+  }
+}
+
+output MULTI_TENANT_RESOURCES string = enableMultiTenantExport ? string(multiTenantExport!.outputs.MULTI_TENANT_RESOURCES) : ''
+
 // VARIABLES
 var streamName = 'Custom-MyTableRawData'
 var tableName = 'MyTable_CL'

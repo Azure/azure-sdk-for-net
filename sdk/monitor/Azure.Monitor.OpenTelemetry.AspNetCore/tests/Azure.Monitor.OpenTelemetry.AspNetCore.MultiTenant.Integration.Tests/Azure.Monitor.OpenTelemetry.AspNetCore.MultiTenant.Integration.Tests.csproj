@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.EnableMultiTenantExport" Value="true" />
+    <RuntimeHostConfigurationOption Include="Azure.Monitor.OpenTelemetry.Exporter.ShutdownDrainBudgetMilliseconds" Value="60000" />
+    <PackageReference Include="Azure.Monitor.Query.Logs" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+    <Compile Include="..\Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests\AzureMonitorTestEnvironment.cs" Link="AzureMonitorTestEnvironment.cs" />
+  </ItemGroup>
+
+</Project>

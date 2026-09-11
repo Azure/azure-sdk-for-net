@@ -1,7 +1,78 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/**
+      - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/**
+      - sdk/monitor/test-resources.bicep
+      - eng/centralpackagemanagement/**
+
+pr: none
+
+parameters:
+  - name: publicTestServiceConnection
+    type: string
+    default: azure-sdk-tests-public
 
 extends:
     template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
     parameters:
       ServiceDirectory: monitor
       Project: Azure.Monitor.OpenTelemetry.AspNetCore
+      TimeoutInMinutes: 100
+      CloudConfig:
+        Public:
+          ServiceConnection: ${{ parameters.publicTestServiceConnection }}
+      AdditionalMatrixConfigs:
+        - Name: MultiTenantExport
+          Path: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/multi-tenant-matrix.json
+          Selection: all
+          GenerateVMJobs: true
+      EnvVars:
+        MONITOR_MULTI_TENANT_RESOURCES: $(MONITOR_MULTI_TENANT_RESOURCES)
+        MONITOR_LOGS_ENDPOINT: $(MONITOR_LOGS_ENDPOINT)
+      TestSetupSteps:
+        - pwsh: |
+            if ($env:MULTITENANTE2E -eq 'true') {
+              & ./sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/Test-LiveTestInfrastructure.ps1
+              Write-Host '##vso[task.setvariable variable=ArmTemplateParameters]@{enableMultiTenantExport=$true}'
+              Write-Host '##vso[task.setvariable variable=TestMode]Live'
+              Write-Host '##vso[task.setvariable variable=MONITOR_MULTI_TENANT_REQUIRED]true'
+              Write-Host '##vso[task.setvariable variable=AdditionalTestFilters]FullyQualifiedName~MultiTenantExportLiveTests'
+              Write-Host "##vso[task.setvariable variable=AdditionalTestArguments]$($env:ADDITIONALTESTARGUMENTS) --results-directory `"$($env:MULTI_TENANT_RESULTS_DIRECTORY)`""
+            }
+            else {
+              $filter = 'FullyQualifiedName!~MultiTenantExportLiveTests'
+              if ($env:ADDITIONALTESTFILTERS) {
+                $filter = "($($env:ADDITIONALTESTFILTERS)) & ($filter)"
+              }
+              Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$filter"
+            }
+          displayName: Configure multi-tenant live coverage
+          env:
+            MULTI_TENANT_RESULTS_DIRECTORY: $(Build.SourcesDirectory)/artifacts/multi-tenant-results/$(Build.BuildId)-$(System.JobAttempt)
+      PostSteps:
+        - task: AzurePowerShell@5
+          displayName: Verify multi-tenant resource cleanup was requested
+          condition: and(always(), eq(variables['MultiTenantE2E'], 'true'), eq(variables['CI_HAS_DEPLOYED_RESOURCES'], 'true'))
+          inputs:
+            azureSubscription: ${{ parameters.publicTestServiceConnection }}
+            azurePowerShellVersion: LatestVersion
+            pwsh: true
+            ScriptType: InlineScript
+            Inline: |
+              if ([string]::IsNullOrWhiteSpace($env:MONITOR_RESOURCE_GROUP)) {
+                throw 'Cannot verify cleanup without the deployed resource group name.'
+              }
+              $groups = @(Get-AzResourceGroup -ErrorAction Stop | Where-Object ResourceGroupName -eq $env:MONITOR_RESOURCE_GROUP)
+              if ($groups.Count -gt 0 -and $groups[0].ProvisioningState -ne 'Deleting') {
+                throw 'Test resource cleanup did not start. Check the standard removal step and DeleteAfter cleanup policy.'
+              }
+              if ($groups.Count -eq 0) { Write-Host 'Test resource group has been deleted.' }
+              else { Write-Host 'Azure accepted resource group deletion; completion is asynchronous.' }
+        - pwsh: |
+            & ./sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/Assert-LiveTestResults.ps1 -ResultsDirectory '$(Build.SourcesDirectory)/artifacts/multi-tenant-results/$(Build.BuildId)-$(System.JobAttempt)'
+          displayName: Require both multi-tenant live scenarios to pass
+          condition: and(always(), eq(variables['MultiTenantE2E'], 'true'))
