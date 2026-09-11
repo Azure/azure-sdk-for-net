@@ -76,7 +76,7 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(PromotionInfo)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("promoted_at"u8);
-            writer.WriteNumberValue(PromotedOn, "U");
+            writer.WriteNumberValue(PromotedAt, "U");
             writer.WritePropertyName("agent_name"u8);
             writer.WriteStringValue(AgentName);
             writer.WritePropertyName("agent_version"u8);
@@ -123,7 +123,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            DateTimeOffset promotedOn = default;
+            DateTimeOffset promotedAt = default;
             string agentName = default;
             string agentVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -131,7 +131,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("promoted_at"u8))
                 {
-                    promotedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    promotedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("agent_name"u8))
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PromotionInfo(promotedOn, agentName, agentVersion, additionalBinaryDataProperties);
+            return new PromotionInfo(promotedAt, agentName, agentVersion, additionalBinaryDataProperties);
         }
     }
 }

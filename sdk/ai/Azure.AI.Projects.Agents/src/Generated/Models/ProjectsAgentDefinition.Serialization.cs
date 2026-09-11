@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ProjectsAgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, and <see cref="ExternalAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HostedAgentDefinition"/>, <see cref="DeclarativeAgentDefinition"/>, <see cref="WorkflowAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, and <see cref="VoiceAgentDefinition"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentDefinition))]
     public abstract partial class ProjectsAgentDefinition : IJsonModel<ProjectsAgentDefinition>
@@ -121,6 +121,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal static ProjectsAgentDefinition DeserializeProjectsAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -139,9 +140,12 @@ namespace Azure.AI.Projects.Agents
                         return WorkflowAgentDefinition.DeserializeWorkflowAgentDefinition(element, options);
                     case "external":
                         return ExternalAgentDefinition.DeserializeExternalAgentDefinition(element, options);
+                    case "voice":
+                        return VoiceAgentDefinition.DeserializeVoiceAgentDefinition(element, options);
                 }
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
     }
 }

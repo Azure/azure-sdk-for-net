@@ -21,7 +21,6 @@ namespace Azure.AI.Projects.Agents
 
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
-            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MCPToolboxTool"/>. </summary>
@@ -58,11 +57,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="serverDescription"> Optional description of the MCP server, used to provide more context. </param>
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
-        /// <param name="allowedCallers"></param>
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, IList<CallableToolAllowedCaller> allowedCallers, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal MCPToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, string serverLabel, Uri serverUri, MCPToolboxToolConnectorId? connectorId, string tunnelId, string authorization, string serverDescription, IDictionary<string, string> headers, BinaryData allowedTools, BinaryData requireApprovalInternal, bool? deferLoading, string projectConnectionId) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;
@@ -72,7 +70,6 @@ namespace Azure.AI.Projects.Agents
             ServerDescription = serverDescription;
             Headers = headers;
             AllowedTools = allowedTools;
-            AllowedCallers = allowedCallers;
             RequireApprovalInternal = requireApprovalInternal;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
@@ -149,9 +146,6 @@ namespace Azure.AI.Projects.Agents
         /// </para>
         /// </summary>
         public BinaryData AllowedTools { get; set; }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Whether this MCP tool is deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }

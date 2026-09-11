@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> MCP tool. </summary>
-    internal partial class ToolChoiceMCP : InternalToolChoiceParam, IJsonModel<ToolChoiceMCP>
+    public partial class ToolChoiceMCP : VoiceAgentToolChoice, IJsonModel<ToolChoiceMCP>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/> for deserialization. </summary>
         internal ToolChoiceMCP()
@@ -20,7 +20,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentToolChoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceMCP>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -92,7 +92,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentToolChoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceMCP>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

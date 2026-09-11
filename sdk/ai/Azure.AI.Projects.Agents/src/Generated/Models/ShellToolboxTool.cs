@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -18,7 +17,6 @@ namespace Azure.AI.Projects.Agents
         {
             Argument.AssertNotNull(environment, nameof(environment));
 
-            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
             Environment = environment;
         }
 
@@ -32,16 +30,11 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="allowedCallers"></param>
         /// <param name="environment"> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </param>
-        internal ShellToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CallableToolAllowedCaller> allowedCallers, ToolboxShellEnvironment environment) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal ShellToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, ToolboxShellEnvironment environment) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
-            AllowedCallers = allowedCallers;
             Environment = environment;
         }
-
-        /// <summary> Gets or sets the AllowedCallers. </summary>
-        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> The environment in which shell commands are executed. Specify an automatically provisioned container or an existing container. </summary>
         public ToolboxShellEnvironment Environment { get; set; }

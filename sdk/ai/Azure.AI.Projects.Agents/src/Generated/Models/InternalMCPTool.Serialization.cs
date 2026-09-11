@@ -131,16 +131,6 @@ namespace OpenAI
                 }
 #endif
             }
-            if (Optional.IsCollectionDefined(AllowedCallers))
-            {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
@@ -211,7 +201,6 @@ namespace OpenAI
             string serverDescription = default;
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
-            IList<CallableToolAllowedCaller> allowedCallers = default;
             BinaryData requireApproval = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
@@ -292,20 +281,6 @@ namespace OpenAI
                     allowedTools = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
-                if (prop.NameEquals("allowed_callers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
-                    }
-                    allowedCallers = array;
-                    continue;
-                }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -360,7 +335,6 @@ namespace OpenAI
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 requireApproval,
                 deferLoading,
                 projectConnectionId,

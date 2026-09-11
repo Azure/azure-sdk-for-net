@@ -11,7 +11,7 @@ using Azure.AI.Projects.Agents;
 namespace OpenAI
 {
     /// <summary> Function tool. </summary>
-    internal partial class ToolChoiceFunction : InternalToolChoiceParam, IJsonModel<ToolChoiceFunction>
+    public partial class ToolChoiceFunction : VoiceAgentToolChoice, IJsonModel<ToolChoiceFunction>
     {
         /// <summary> Initializes a new instance of <see cref="ToolChoiceFunction"/> for deserialization. </summary>
         internal ToolChoiceFunction()
@@ -20,7 +20,7 @@ namespace OpenAI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalToolChoiceParam PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override VoiceAgentToolChoice PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -87,7 +87,7 @@ namespace OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalToolChoiceParam JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override VoiceAgentToolChoice JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

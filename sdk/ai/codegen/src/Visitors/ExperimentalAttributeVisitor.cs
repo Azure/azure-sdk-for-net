@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.ClientModel;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -28,6 +29,7 @@ namespace Extensions.Plugin.Visitors
     public class ExperimentalAttributeVisitor : ScmLibraryVisitor
     {
         private const string DiagnosticId = "AAIP001";
+        private const string VoiceAgentConversationsClientName = "AgentEndpointConversations";
 
         private readonly HashSet<string> _experimentalClasses = new(StringComparer.Ordinal);
         private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
@@ -138,6 +140,18 @@ namespace Extensions.Plugin.Visitors
             return base.PreVisitProperty(property, propertyProvider);
         }
 
+        protected override ClientProvider Visit(InputClient inputClient, ClientProvider type)
+        {
+            if (string.Equals(inputClient.Name, VoiceAgentConversationsClientName, StringComparison.Ordinal)
+                && inputClient.Methods.Count > 0 && inputClient.Methods.All(method =>
+                method.Operation is not null && HasExperimentalDecorator(method.Operation.Decorators)))
+            {
+                _experimentalClasses.Add(type.Type.FullyQualifiedName);
+            }
+
+            return base.Visit(inputClient, type);
+        }
+
         public bool IsListed(string type)
         {
             if (type is null)
@@ -220,7 +234,8 @@ namespace Extensions.Plugin.Visitors
             // If there is at least one constructor without experimental argument, just update experimental constructors.
             foreach (ConstructorProvider constructor in type.Constructors)
             {
-                if (constructor.Signature.Parameters.Any(x => IsExperimental(x.Type)))
+                if (constructor.Signature.Parameters.Any(x => IsExperimental(x.Type))
+                    && !constructor.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))))
                 {
                     constructor.Signature.Update(
                         attributes: [.. constructor.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -233,7 +248,8 @@ namespace Extensions.Plugin.Visitors
             List<MethodProvider> methods = [];
             foreach (MethodProvider method in type.Methods)
             {
-                if (method.Signature.Parameters.Any(x => IsExperimental(x.Type)) || IsExperimental(method.Signature.ReturnType))
+                if ((method.Signature.Parameters.Any(x => IsExperimental(x.Type)) || IsExperimental(method.Signature.ReturnType))
+                    && !method.Signature.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))))
                 {
                     method.Signature.Update(
                         attributes: [.. method.Signature.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -246,7 +262,8 @@ namespace Extensions.Plugin.Visitors
             List<FieldProvider> fields = [];
             foreach (FieldProvider field in type.Fields)
             {
-                if (IsExperimental(field.Type) || IsPropertyListed($"{type.Type.FullyQualifiedName}.{field.Name}"))
+                if ((IsExperimental(field.Type) || IsPropertyListed($"{type.Type.FullyQualifiedName}.{field.Name}"))
+                    && !field.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))))
                 {
                     field.Update(
                         attributes: [.. field.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]
@@ -271,7 +288,8 @@ namespace Extensions.Plugin.Visitors
                 //        $"Is of experimental type {IsExperimental(property.Type)}\n" +
                 //        $"================================================\n");
                 //}
-                if (IsExperimental(property.Type) || IsPropertyListed($"{type.Type.FullyQualifiedName}.{property.Name}"))
+                if ((IsExperimental(property.Type) || IsPropertyListed($"{type.Type.FullyQualifiedName}.{property.Name}"))
+                    && !property.Attributes.Any(attr => attr.Type.Equals(typeof(ExperimentalAttribute))))
                 {
                     property.Update(
                         attributes: [.. property.Attributes, new(typeof(ExperimentalAttribute), Snippet.Literal(DiagnosticId))]

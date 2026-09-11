@@ -116,7 +116,7 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("created_at"u8);
-            writer.WriteNumberValue(CreatedOn, "U");
+            writer.WriteNumberValue(CreatedAt, "U");
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
             foreach (ToolboxTool item in Tools)
@@ -186,7 +186,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             string version = default;
             string description = default;
-            DateTimeOffset createdOn = default;
+            DateTimeOffset createdAt = default;
             IList<ToolboxTool> tools = default;
             IList<ToolboxSkill> skills = default;
             ToolboxPolicies policies = default;
@@ -237,7 +237,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("created_at"u8))
                 {
-                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("tools"u8))
@@ -284,7 +284,7 @@ namespace Azure.AI.Projects.Agents
                 name,
                 version,
                 description,
-                createdOn,
+                createdAt,
                 tools,
                 skills ?? new ChangeTrackingList<ToolboxSkill>(),
                 policies,

@@ -54,8 +54,8 @@ private readonly AgentOptimizationDatasetCriterion _criterion = new(
     instruction: """
     You are a Groundedness Evaluator.
 
-    Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-    Groundedness means the response’s statements are factually supported by the ground truth.  
+    Your task is to evaluate how well the given response is grounded in the provided ground truth.
+    Groundedness means the response’s statements are factually supported by the ground truth.
     Evaluate factual alignment only — ignore grammar, fluency, or completeness.
 
     ---
@@ -73,10 +73,10 @@ private readonly AgentOptimizationDatasetCriterion _criterion = new(
     ---
 
     ### Scoring Scale (1–5):
-    5 → Fully grounded. All claims supported by ground truth.  
-    4 → Mostly grounded. Minor unsupported details.  
-    3 → Partially grounded. About half the claims supported.  
-    2 → Mostly ungrounded. Only a few details supported.  
+    5 → Fully grounded. All claims supported by ground truth.
+    4 → Mostly grounded. Minor unsupported details.
+    3 → Partially grounded. About half the claims supported.
+    2 → Mostly ungrounded. Only a few details supported.
     1 → Not grounded. Almost all information unsupported.
 
     ---

@@ -71,16 +71,6 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalCodeInterpreterTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(AllowedCallers))
-            {
-                writer.WritePropertyName("allowed_callers"u8);
-                writer.WriteStartArray();
-                foreach (CallableToolAllowedCaller item in AllowedCallers)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -143,7 +133,6 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<CallableToolAllowedCaller> allowedCallers = default;
             string name = default;
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
@@ -153,20 +142,6 @@ namespace OpenAI
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new ToolType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("allowed_callers"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString().ToCallableToolAllowedCaller());
-                    }
-                    allowedCallers = array;
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -210,7 +185,6 @@ namespace OpenAI
             return new InternalCodeInterpreterTool(
                 @type,
                 additionalBinaryDataProperties,
-                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 name,
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),

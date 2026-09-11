@@ -88,6 +88,10 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Id);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            writer.WritePropertyName("updated_at"u8);
+            writer.WriteNumberValue(UpdatedAt, "U");
+            writer.WritePropertyName("versions"u8);
+            writer.WriteObjectValue(Versions, options);
             writer.WritePropertyName("default_version"u8);
             writer.WriteStringValue(DefaultVersion);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -134,6 +138,8 @@ namespace Azure.AI.Projects.Agents
             }
             string id = default;
             string name = default;
+            DateTimeOffset updatedAt = default;
+            ToolboxVersions versions = default;
             string defaultVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,6 +154,16 @@ namespace Azure.AI.Projects.Agents
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("updated_at"u8))
+                {
+                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("versions"u8))
+                {
+                    versions = ToolboxVersions.DeserializeToolboxVersions(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("default_version"u8))
                 {
                     defaultVersion = prop.Value.GetString();
@@ -158,7 +174,13 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties);
+            return new ToolboxRecord(
+                id,
+                name,
+                updatedAt,
+                versions,
+                defaultVersion,
+                additionalBinaryDataProperties);
         }
     }
 }

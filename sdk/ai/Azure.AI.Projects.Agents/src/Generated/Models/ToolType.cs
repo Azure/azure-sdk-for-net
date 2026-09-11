@@ -19,7 +19,6 @@ namespace OpenAI
         private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
         private const string CodeInterpreterValue = "code_interpreter";
-        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ImageGenerationValue = "image_generation";
         private const string LocalShellValue = "local_shell";
         private const string ShellValue = "shell";
@@ -38,10 +37,12 @@ namespace OpenAI
         private const string FabricIqPreviewValue = "fabric_iq_preview";
         private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
         private const string WebIqPreviewValue = "web_iq_preview";
+        private const string GithubCopilotToolsetPreviewValue = "github_copilot_toolset_preview";
         private const string A2aValue = "a2a";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
+        private const string BrowserAutomationValue = "browser_automation";
         private const string CaptureStructuredOutputsValue = "capture_structured_outputs";
         private const string OpenapiValue = "openapi";
 
@@ -75,9 +76,6 @@ namespace OpenAI
 
         /// <summary> Gets the CodeInterpreter. </summary>
         public static ToolType CodeInterpreter { get; } = new ToolType(CodeInterpreterValue);
-
-        /// <summary> Gets the ProgrammaticToolCalling. </summary>
-        public static ToolType ProgrammaticToolCalling { get; } = new ToolType(ProgrammaticToolCallingValue);
 
         /// <summary> Gets the ImageGeneration. </summary>
         public static ToolType ImageGeneration { get; } = new ToolType(ImageGenerationValue);
@@ -133,6 +131,9 @@ namespace OpenAI
         /// <summary> Gets the WebIqPreview. </summary>
         public static ToolType WebIqPreview { get; } = new ToolType(WebIqPreviewValue);
 
+        /// <summary> Gets the GithubCopilotToolsetPreview. </summary>
+        public static ToolType GithubCopilotToolsetPreview { get; } = new ToolType(GithubCopilotToolsetPreviewValue);
+
         /// <summary> Gets the A2a. </summary>
         public static ToolType A2a { get; } = new ToolType(A2aValue);
 
@@ -144,6 +145,9 @@ namespace OpenAI
 
         /// <summary> Gets the BingGrounding. </summary>
         public static ToolType BingGrounding { get; } = new ToolType(BingGroundingValue);
+
+        /// <summary> Gets the BrowserAutomation. </summary>
+        public static ToolType BrowserAutomation { get; } = new ToolType(BrowserAutomationValue);
 
         /// <summary> Gets the CaptureStructuredOutputs. </summary>
         public static ToolType CaptureStructuredOutputs { get; } = new ToolType(CaptureStructuredOutputsValue);

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -21,31 +21,31 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         instruction: """
         You are a Groundedness Evaluator.
 
-        Your task is to evaluate how well the given response is grounded in the provided ground truth.  
-        Groundedness means the response’s statements are factually supported by the ground truth.  
+        Your task is to evaluate how well the given response is grounded in the provided ground truth.
+        Groundedness means the response’s statements are factually supported by the ground truth.
         Evaluate factual alignment only — ignore grammar, fluency, or completeness.
-        
+
         ---
-        
+
         ### Input:
         Query:
         {{query}}
-        
+
         Response:
         {{response}}
-        
+
         Ground Truth:
         {{ground_truth}}
-        
+
         ---
-        
+
         ### Scoring Scale (1–5):
-        5 → Fully grounded. All claims supported by ground truth.  
-        4 → Mostly grounded. Minor unsupported details.  
-        3 → Partially grounded. About half the claims supported.  
-        2 → Mostly ungrounded. Only a few details supported.  
+        5 → Fully grounded. All claims supported by ground truth.
+        4 → Mostly grounded. Minor unsupported details.
+        3 → Partially grounded. About half the claims supported.
+        2 → Mostly ungrounded. Only a few details supported.
         1 → Not grounded. Almost all information unsupported.
-        
+
         ---
 
         ### Output Format (JSON):

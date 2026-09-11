@@ -16,23 +16,31 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="updatedAt"> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </param>
+        /// <param name="versions"> The versions associated with the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
-        internal ToolboxRecord(string id, string name, string defaultVersion)
+        internal ToolboxRecord(string id, string name, DateTimeOffset updatedAt, ToolboxVersions versions, string defaultVersion)
         {
             Id = id;
             Name = name;
+            UpdatedAt = updatedAt;
+            Versions = versions;
             DefaultVersion = defaultVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="ToolboxRecord"/>. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="updatedAt"> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </param>
+        /// <param name="versions"> The versions associated with the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ToolboxRecord(string id, string name, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ToolboxRecord(string id, string name, DateTimeOffset updatedAt, ToolboxVersions versions, string defaultVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
+            UpdatedAt = updatedAt;
+            Versions = versions;
             DefaultVersion = defaultVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,6 +50,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The name of the toolbox. </summary>
         public string Name { get; }
+
+        /// <summary> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </summary>
+        public DateTimeOffset UpdatedAt { get; }
+
+        /// <summary> The versions associated with the toolbox. </summary>
+        public ToolboxVersions Versions { get; }
 
         /// <summary> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </summary>
         public string DefaultVersion { get; }

@@ -4,10 +4,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
-    internal partial class UnknownInternalToolChoiceParam : InternalToolChoiceParam
+    internal partial class UnknownInternalToolChoiceParam : VoiceAgentToolChoice
     {
         /// <summary> Initializes a new instance of <see cref="UnknownInternalToolChoiceParam"/>. </summary>
         /// <param name="type"></param>
