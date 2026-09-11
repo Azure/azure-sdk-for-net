@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ImageBuilder.Models
                     (additionalDataDisks ?? new ChangeTrackingList<ImageBuilderDataDisk>()).ToList(),
                     stagingResourceGroup,
                     exactStagingResourceGroup,
-                    new ImageTemplateAutoRun(autoRunState, default),
+                    autoRunState is null ? default : new ImageTemplateAutoRun(autoRunState, default),
                     managedResourceTags ?? new ChangeTrackingDictionary<string, string>(),
                     default),
                 identity,

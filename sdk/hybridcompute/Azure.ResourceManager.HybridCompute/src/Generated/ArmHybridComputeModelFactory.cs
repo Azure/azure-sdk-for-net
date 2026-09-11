@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeLicensePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, licenseType is null && state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdateProperties(licenseType, new LicenseUpdatePropertiesLicenseDetails(
+            return new HybridComputeLicensePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, licenseType is null && state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdateProperties(licenseType, state is null && target is null && edition is null && @type is null && processors is null ? default : new LicenseUpdatePropertiesLicenseDetails(
                 state,
                 target,
                 edition,
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     agentConfiguration,
                     serviceStatuses,
                     hardwareProfile,
-                    new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
+                    storageDisks is null ? default : new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
                     firmwareProfile,
-                    new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                    cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
                     agentUpgrade,
                     osProfile,
                     licenseProfile,
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     hardwareResourceId,
                     msSqlDiscovered,
                     detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
+                    networkInterfaces is null ? default : new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
                     default),
                 (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
                 identity,
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeMachinePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, identity, kind, locationData is null && osProfile is null && cloudMetadataProvider is null && agentUpgrade is null && parentClusterResourceId is null && privateLinkScopeResourceId is null && identityKeyStore is null && tpmEkCertificate is null ? default : new MachineUpdateProperties(
                 locationData,
                 osProfile,
-                new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
                 agentUpgrade,
                 parentClusterResourceId,
                 privateLinkScopeResourceId,
@@ -836,14 +836,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(softwareAssuranceCustomer is null ? default : new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null ? default : new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
                     serverType,
                     esuEligibility,
                     esuKeyState,
-                    assignedLicense), new LicenseProfileArmProductProfileProperties(
+                    assignedLicense), subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new EsuProfileUpdateProperties(assignedLicense, default), new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
+            return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(softwareAssuranceCustomer is null ? default : new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicense is null ? default : new EsuProfileUpdateProperties(assignedLicense, default), subscriptionStatus is null && productType is null && productFeatures is null ? default : new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
         }
 
         /// <summary> Product Feature. </summary>
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 name,
                 resourceType,
                 systemData,
-                tenantId is null && gatewayResourceId is null ? default : new SettingsProperties(tenantId, new SettingsGatewayProperties(gatewayResourceId, default), default),
+                tenantId is null && gatewayResourceId is null ? default : new SettingsProperties(tenantId, gatewayResourceId is null ? default : new SettingsGatewayProperties(gatewayResourceId, default), default),
                 default);
         }
 
@@ -1510,14 +1510,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(softwareAssuranceCustomer is null ? default : new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null ? default : new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
                     serverType,
                     esuEligibility,
                     esuKeyState,
-                    assignedLicense), new LicenseProfileArmProductProfileProperties(
+                    assignedLicense), subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
