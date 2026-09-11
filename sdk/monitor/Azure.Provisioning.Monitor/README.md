@@ -55,7 +55,7 @@ ProvisioningParameter emailName =
 infra.Add(emailName);
 
 ActionGroup emailActionGroup =
-    new(nameof(emailActionGroup), ActionGroup.ResourceVersions.V2023_01_01)
+    new(nameof(emailActionGroup), ActionGroup.ResourceVersions.V2024_10_01_PREVIEW)
     {
         Location = new AzureLocation("global"),
         GroupShortName = "string",
@@ -73,7 +73,7 @@ ActionGroup emailActionGroup =
 infra.Add(emailActionGroup);
 
 ActivityLogAlert alert =
-    new(nameof(alert), ActivityLogAlert.ResourceVersions.V2020_10_01)
+    new(nameof(alert), ActivityLogAlert.ResourceVersions.V2023_01_01_PREVIEW)
     {
         Name = alertName,
         Location = new AzureLocation("global"),

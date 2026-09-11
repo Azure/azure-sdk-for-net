@@ -4,7 +4,10 @@
 
 ### Features Added
 
-### Breaking Changes
+- Added multi-tenant support for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on, and sampling defaults to fixed-rate rather than rate-limited because a per-process rate limit would be shared across every tenant the process carries. The switch cannot be combined with Microsoft Entra ID authentication, because the credential is scoped to the exporter's own audience and would be sent to endpoints supplied by telemetry.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
+
+- Extended multi-tenant export to logs, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch used for traces. When enabled, a `LogRecord` carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; log records without both attributes are dropped. The two routing attributes are consumed for routing and are not emitted as custom properties. Routing reads only `LogRecord.Attributes`, not logging scopes. Live Metrics disablement and the Microsoft Entra ID restriction that apply to multi-tenant traces apply to logs as well, since both are enforced on the shared transmitter.
 
 ### Bugs Fixed
 
@@ -23,6 +26,9 @@
   ([#62340](https://github.com/Azure/azure-sdk-for-net/pull/62340))
 
 ### Bugs Fixed
+
+- The ingestion redirect cache is now keyed by the endpoint it was issued for. A redirect returned by one ingestion endpoint could previously be applied to a request bound for another.
+  ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))
 
 - Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
   ([#61818](https://github.com/Azure/azure-sdk-for-net/pull/61818))

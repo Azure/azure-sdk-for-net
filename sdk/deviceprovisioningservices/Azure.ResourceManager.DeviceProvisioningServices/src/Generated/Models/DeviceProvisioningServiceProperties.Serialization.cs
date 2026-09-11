@@ -119,11 +119,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeviceRegistryNamespace))
-            {
-                writer.WritePropertyName("deviceRegistryNamespace"u8);
-                writer.WriteObjectValue(DeviceRegistryNamespace, options);
-            }
             if (Optional.IsDefined(AllocationPolicy))
             {
                 writer.WritePropertyName("allocationPolicy"u8);
@@ -163,6 +158,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 writer.WritePropertyName("portalOperationsHostName"u8);
                 writer.WriteStringValue(PortalOperationsHostName);
+            }
+            if (Optional.IsDefined(DisableLocalAuth))
+            {
+                writer.WritePropertyName("disableLocalAuth"u8);
+                writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -212,7 +212,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default;
             string provisioningState = default;
             IList<IotHubDefinitionDescription> iotHubs = default;
-            DeviceRegistryNamespaceDescription deviceRegistryNamespace = default;
             DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default;
             string serviceOperationsHostName = default;
             string deviceProvisioningHostName = default;
@@ -220,6 +219,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default;
             bool? isDataResidencyEnabled = default;
             string portalOperationsHostName = default;
+            bool? disableLocalAuth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -288,15 +288,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     iotHubs = array;
                     continue;
                 }
-                if (prop.NameEquals("deviceRegistryNamespace"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    deviceRegistryNamespace = DeviceRegistryNamespaceDescription.DeserializeDeviceRegistryNamespaceDescription(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allocationPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -349,6 +340,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     portalOperationsHostName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("disableLocalAuth"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disableLocalAuth = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -361,7 +361,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>(),
                 provisioningState,
                 iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>(),
-                deviceRegistryNamespace,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
@@ -369,6 +368,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(),
                 isDataResidencyEnabled,
                 portalOperationsHostName,
+                disableLocalAuth,
                 additionalBinaryDataProperties);
         }
     }
