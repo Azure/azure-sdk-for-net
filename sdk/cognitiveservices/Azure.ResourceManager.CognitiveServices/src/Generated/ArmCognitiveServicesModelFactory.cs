@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 eTag,
                 location,
                 default);
@@ -4073,7 +4073,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
+                privateEndpointId is null && connectionState is null && provisioningState is null && groupIds is null ? default : new CognitiveServicesPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, (groupIds ?? new ChangeTrackingList<string>()).ToList(), default),
                 etag,
                 location,
                 default);
