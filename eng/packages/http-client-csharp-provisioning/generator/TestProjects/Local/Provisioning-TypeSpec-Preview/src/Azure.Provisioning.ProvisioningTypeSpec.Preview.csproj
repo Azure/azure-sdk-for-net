@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the preview projection of the Azure.Provisioning.ProvisioningTypeSpec generator test library.</Description>
+    <AssemblyTitle>SDK Code Generation Azure.Provisioning.ProvisioningTypeSpec.Preview</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Provisioning.ProvisioningTypeSpec.Preview</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+</Project>
