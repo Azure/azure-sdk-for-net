@@ -1,6 +1,7 @@
 # Helper functions for retrieving useful information from azure-sdk-for-* repo
 . "${PSScriptRoot}\logging.ps1"
 . "${PSScriptRoot}\Helpers\Package-Helpers.ps1"
+. "${PSScriptRoot}\Helpers\Path-Helpers.ps1"
 class PackageProps {
     [string]$Name
     [string]$Version
@@ -352,14 +353,7 @@ function Update-TargetedFilesForTriggerPaths([string[]]$TargetedFiles, [string[]
 function Update-TargetedFilesForExclude([string[]]$TargetedFiles, [string[]]$ExcludePaths) {
     $files = @()
     foreach ($file in $TargetedFiles) {
-        $shouldExclude = $false
-        foreach ($exclude in $ExcludePaths) {
-            if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
-                $shouldExclude = $true
-                break
-            }
-        }
-        if (!$shouldExclude) {
+        if (-not (Test-PathExcluded -Path $file -ExcludePaths $ExcludePaths)) {
             $files += $file
         }
     }
