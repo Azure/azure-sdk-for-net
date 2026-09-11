@@ -7524,7 +7524,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.RemoveProtectionContainerMappingContent"/> instance for mocking. </returns>
         public static RemoveProtectionContainerMappingContent RemoveProtectionContainerMappingContent(string providerSpecificContentInstanceType = default)
         {
-            return new RemoveProtectionContainerMappingContent(providerSpecificContentInstanceType is null ? default : new RemoveProtectionContainerMappingContentProperties(new ReplicationProviderContainerUnmappingInput(providerSpecificContentInstanceType, default), default), default);
+            return new RemoveProtectionContainerMappingContent(providerSpecificContentInstanceType is null ? default : new RemoveProtectionContainerMappingContentProperties(providerSpecificContentInstanceType is null ? default : new ReplicationProviderContainerUnmappingInput(providerSpecificContentInstanceType, default), default), default);
         }
 
         /// <summary> Provider details. </summary>
