@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     ssoUri,
                     offerDetail,
                     userDetail,
-                    new LinkOrganization(linkOrganizationToken, default),
+                    linkOrganizationToken is null ? default : new LinkOrganization(linkOrganizationToken, default),
                     default),
                 default);
         }
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 resourceType,
                 systemData,
                 kind,
-                streamGovernanceConfigPackage is null && metadata is null ? default : new EnvironmentProperties(new StreamGovernanceConfig(streamGovernanceConfigPackage, default), metadata, default),
+                streamGovernanceConfigPackage is null && metadata is null ? default : new EnvironmentProperties(streamGovernanceConfigPackage is null ? default : new StreamGovernanceConfig(streamGovernanceConfigPackage, default), metadata, default),
                 default);
         }
 
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <returns> A new <see cref="Models.SchemaRegistryClusterRecord"/> instance for mocking. </returns>
         public static SchemaRegistryClusterRecord SchemaRegistryClusterRecord(string kind = default, string id = default, SCMetadataEntity metadata = default, SchemaRegistryClusterSpecEntity spec = default, string statusPhase = default)
         {
-            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
+            return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, statusPhase is null ? default : new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
         }
 
         /// <summary> Details of schema registry cluster spec. </summary>
@@ -1081,10 +1081,10 @@ namespace Azure.ResourceManager.Confluent.Models
                     kind,
                     topicId,
                     metadata,
-                    new TopicsRelatedLink(partitionsRelated, default),
-                    new TopicsRelatedLink(configsRelated, default),
+                    partitionsRelated is null ? default : new TopicsRelatedLink(partitionsRelated, default),
+                    configsRelated is null ? default : new TopicsRelatedLink(configsRelated, default),
                     (inputConfigs ?? new ChangeTrackingList<TopicsInputConfig>()).ToList(),
-                    new TopicsRelatedLink(partitionsReassignmentsRelated, default),
+                    partitionsReassignmentsRelated is null ? default : new TopicsRelatedLink(partitionsReassignmentsRelated, default),
                     partitionsCount,
                     replicationFactor,
                     default),
