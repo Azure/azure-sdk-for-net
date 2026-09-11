@@ -29,6 +29,7 @@ namespace Azure.SdkAnalyzers
         private const string ClientResultTypeName = "ClientResult";
         private const string CollectionResultTypeName = "CollectionResult";
         private const string AsyncCollectionResultTypeName = "AsyncCollectionResult";
+        private const string AsyncStreamingResultTypeName = "AsyncStreamingResult";
         private const string AsyncStreamingClientResultTypeName = "AsyncStreamingClientResult";
         private const string SseItemTypeName = "SseItem";
         private const string PageableOperationTypeName = "PageableOperation";
@@ -183,6 +184,7 @@ namespace Azure.SdkAnalyzers
                 IsOrImplements(unwrappedType, AsyncPageableTypeName, AzureNamespace) ||
                 IsOrImplements(unwrappedType, CollectionResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, AsyncCollectionResultTypeName, SystemClientModelNamespace) ||
+                IsOrImplements(unwrappedType, AsyncStreamingResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, AsyncStreamingClientResultTypeName, SystemClientModelNamespace) ||
                 IsOrImplements(unwrappedType, PageableOperationTypeName, AzureNamespace))
             {
