@@ -35,6 +35,88 @@ function Assert([bool]$condition, [string]$message) {
     }
 }
 
+function Get-WorkflowContent([string]$path) {
+    $content = Get-Content -Raw $path
+    $match = [regex]::Match(
+        $content,
+        '(?s)\A---\r?\n(?<frontmatter>.*?)\r?\n---(?:\r?\n|\z)(?<body>.*)\z')
+
+    if (-not $match.Success) {
+        throw "Could not isolate workflow frontmatter and body from '$path'."
+    }
+
+    return @{
+        Frontmatter = $match.Groups['frontmatter'].Value
+        Body = $match.Groups['body'].Value
+    }
+}
+
+function Get-ImportedWorkflowBodies(
+    [string]$frontmatter,
+    [string]$baseDirectory,
+    [System.Collections.Generic.HashSet[string]]$visited
+) {
+    $bodies = [System.Collections.Generic.List[string]]::new()
+    $importsMatch = [regex]::Match(
+        $frontmatter,
+        '(?m)^imports:[^\r\n]*\r?\n(?<items>(?:^[ \t]+[^\r\n]*(?:\r?\n|\z))*)')
+
+    foreach ($importMatch in [regex]::Matches(
+        $importsMatch.Groups['items'].Value,
+        '(?m)^\s*-\s*(?:uses:\s*|path:\s*)?["'']?(?<path>[^"''\s#]+)')) {
+        $importPath = Join-Path $baseDirectory $importMatch.Groups['path'].Value
+        $resolvedImportPath = (Resolve-Path $importPath).Path
+
+        if (-not $visited.Add($resolvedImportPath)) {
+            continue
+        }
+
+        $importedContent = Get-WorkflowContent $resolvedImportPath
+        $bodies.Add($importedContent.Body)
+
+        $nestedBodies = Get-ImportedWorkflowBodies `
+            $importedContent.Frontmatter `
+            (Split-Path -Parent $resolvedImportPath) `
+            $visited
+        foreach ($nestedBody in $nestedBodies) {
+            $bodies.Add($nestedBody)
+        }
+    }
+
+    return $bodies
+}
+
+function Get-Sha256Hash([string]$value) {
+    $sha256 = [System.Security.Cryptography.SHA256]::Create()
+    try {
+        return ([System.BitConverter]::ToString(
+            $sha256.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($value))
+        ) -replace '-', '').ToLowerInvariant()
+    }
+    finally {
+        $sha256.Dispose()
+    }
+}
+
+function Get-WorkflowBodyHash([string]$path) {
+    $resolvedPath = (Resolve-Path $path).Path
+    $content = Get-WorkflowContent $resolvedPath
+    $normalizedBody = (($content.Body -replace "`r`n", "`n").Trim())
+    $importedBodies = Get-ImportedWorkflowBodies `
+        $content.Frontmatter `
+        (Split-Path -Parent $resolvedPath) `
+        ([System.Collections.Generic.HashSet[string]]::new(
+            [System.StringComparer]::Ordinal))
+    [string[]]$normalizedImportedBodies = @(
+        $importedBodies |
+            ForEach-Object { (($_ -replace "`r`n", "`n").Trim()) }
+    )
+    [System.Array]::Sort($normalizedImportedBodies, [System.StringComparer]::Ordinal)
+    $combinedBody = (@($normalizedBody) + $normalizedImportedBodies) -join "`n---`n"
+
+    return Get-Sha256Hash $combinedBody
+}
+
 Write-Host 'Source workflow'
 Assert ($workflow -match '(?ms)^\s+push-to-pull-request-branch:\r?\n\s+target: "triggering"') `
     'green repairs retain the PR-branch push safe output'
@@ -67,21 +149,14 @@ Assert ($contract -notmatch '(?i)commit progress made so far|commit progress and
     'old commit-on-failure instructions are absent'
 
 Write-Host 'Compiled workflow metadata'
-$bodyMatch = [regex]::Match($workflow, '(?s)\A---\r?\n.*?\r?\n---\r?\n(?<body>.*)\z')
-Assert $bodyMatch.Success 'source workflow body can be isolated'
-$normalizedBody = (($bodyMatch.Groups['body'].Value -replace "`r`n", "`n").Trim())
-$sha256 = [System.Security.Cryptography.SHA256]::Create()
-try {
-    $bodyHash = ([System.BitConverter]::ToString(
-        $sha256.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($normalizedBody))
-    ) -replace '-', '').ToLowerInvariant()
-}
-finally {
-    $sha256.Dispose()
-}
+$bodyHash = Get-WorkflowBodyHash $WorkflowPath
+$workflowContent = Get-WorkflowContent (Resolve-Path $WorkflowPath).Path
+$mainBodyHash = Get-Sha256Hash (($workflowContent.Body -replace "`r`n", "`n").Trim())
 $metadataMatch = [regex]::Match($lock, '"body_hash":"(?<hash>[0-9a-f]{64})"')
+Assert ($bodyHash -ne $mainBodyHash) `
+    'imported workflow bodies participate in the compiled metadata hash'
 Assert ($metadataMatch.Success -and $metadataMatch.Groups['hash'].Value -eq $bodyHash) `
-    'compiled metadata hash matches the source body containing the push gate'
+    'compiled metadata hash matches the source and imported workflow bodies'
 Assert ($lock -notmatch '(?i)commit progress made so far|commit progress and report|Partial progress committed') `
     'compiled workflow contains no stale commit-on-failure instruction'
 Assert ($lock -match 'GH_AW_ACTION_FAILURE_ISSUE_EXPIRES_HOURS: "0"') `

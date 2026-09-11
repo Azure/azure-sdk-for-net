@@ -6776,7 +6776,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.TroubleshootingContent"/> instance for mocking. </returns>
         public static TroubleshootingContent TroubleshootingContent(ResourceIdentifier targetResourceId = default, ResourceIdentifier storageId = default, string storagePath = default)
         {
-            return new TroubleshootingContent(targetResourceId, default, (IDictionary<string, BinaryData>)default);
+            return new TroubleshootingContent(targetResourceId, storageId is null && storagePath is null ? default : new TroubleshootingProperties(storageId, storagePath, default), default);
         }
 
         /// <summary> Troubleshooting information gained from specified resource. </summary>
@@ -6844,7 +6844,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.FlowLogInformation"/> instance for mocking. </returns>
         public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = default, ResourceIdentifier storageId = default, string enabledFilteringCriteria = default, string recordTypes = default, bool enabled = default, RetentionPolicyParameters retentionPolicy = default, FlowLogFormatParameters format = default, TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default, ManagedServiceIdentity identity = default)
         {
-            return new FlowLogInformation(targetResourceId, default, networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default), identity, default);
+            return new FlowLogInformation(targetResourceId, new FlowLogProperties(
+                storageId,
+                enabledFilteringCriteria,
+                recordTypes,
+                enabled,
+                retentionPolicy,
+                format,
+                default), networkWatcherFlowAnalyticsConfiguration is null ? default : new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, default), identity, default);
         }
 
         /// <summary> Parameters that define the configuration of flow log. </summary>
@@ -7995,11 +8002,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                autoScaleBounds is null && gatewayType is null && vpnGatewayGeneration is null && enableBgp is null && enablePrivateIpAddress is null && virtualNetworkGatewayMigrationStatus is null && activeActive is null && enableHighBandwidthVpnGateway is null && disableIPSecReplayProtection is null && gatewayDefaultSiteId is null && virtualNetworkGatewayPolicyGroups is null && enableDnsForwarding is null && enableBgpRouteTranslationForNat is null && allowVirtualWanTraffic is null && allowRemoteVnetTraffic is null ? default : new VirtualNetworkGatewayPropertiesFormat(
+                autoScaleBounds is null && ipConfigurations is null && gatewayType is null && vpnType is null && vpnGatewayGeneration is null && enableBgp is null && enablePrivateIpAddress is null && virtualNetworkGatewayMigrationStatus is null && activeActive is null && enableHighBandwidthVpnGateway is null && disableIPSecReplayProtection is null && gatewayDefaultSiteId is null && sku is null && vpnClientConfiguration is null && virtualNetworkGatewayPolicyGroups is null && bgpSettings is null && customRoutes is null && resourceGuid is null && provisioningState is null && enableDnsForwarding is null && inboundDnsForwardingEndpoint is null && vNetExtendedLocationResourceId is null && natRules is null && enableBgpRouteTranslationForNat is null && allowVirtualWanTraffic is null && allowRemoteVnetTraffic is null && adminState is null && resiliencyModel is null ? default : new VirtualNetworkGatewayPropertiesFormat(
                     new VirtualNetworkGatewayAutoScaleConfiguration(autoScaleBounds, default),
-                    default,
+                    (ipConfigurations ?? new ChangeTrackingList<VirtualNetworkGatewayIPConfiguration>()).ToList(),
                     gatewayType,
-                    default,
+                    vpnType,
                     vpnGatewayGeneration,
                     enableBgp,
                     enablePrivateIpAddress,
@@ -8008,22 +8015,22 @@ namespace Azure.ResourceManager.Network.Models
                     enableHighBandwidthVpnGateway,
                     disableIPSecReplayProtection,
                     new NetworkSubResource(gatewayDefaultSiteId, default),
-                    default,
-                    default,
+                    sku,
+                    vpnClientConfiguration,
                     (virtualNetworkGatewayPolicyGroups ?? new ChangeTrackingList<VirtualNetworkGatewayPolicyGroup>()).ToList(),
-                    default,
-                    default,
-                    default,
-                    default,
+                    bgpSettings,
+                    customRoutes,
+                    resourceGuid,
+                    provisioningState,
                     enableDnsForwarding,
-                    default,
-                    default,
-                    default,
+                    inboundDnsForwardingEndpoint,
+                    vNetExtendedLocationResourceId,
+                    (natRules ?? new ChangeTrackingList<VirtualNetworkGatewayNatRuleData>()).ToList(),
                     enableBgpRouteTranslationForNat,
                     allowVirtualWanTraffic,
                     allowRemoteVnetTraffic,
-                    default,
-                    default,
+                    adminState,
+                    resiliencyModel,
                     default),
                 extendedLocation,
                 eTag,
@@ -8141,7 +8148,7 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 name,
                 @type,
-                default,
+                publicCertData is null && provisioningState is null ? default : new VpnClientRootCertificatePropertiesFormat(publicCertData, provisioningState, default),
                 eTag);
         }
 
@@ -8362,31 +8369,31 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                virtualNetworkGateway1Id is null && virtualNetworkGateway2Id is null && localNetworkGateway2Id is null && connectionProtocol is null && connectionMode is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && enableBgp is null && gatewayCustomBgpIpAddresses is null && usePolicyBasedTrafficSelectors is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
-                    default,
+                new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
+                    authorizationKey,
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway1Id, default),
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway2Id, default),
                     new VirtualNetworkConnectionGatewayReference(localNetworkGateway2Id, default),
                     connectionType,
                     connectionProtocol,
-                    default,
+                    routingWeight,
                     connectionMode,
-                    default,
+                    sharedKey,
                     connectionStatus,
                     (tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>()).ToList(),
-                    default,
-                    default,
+                    egressBytesTransferred,
+                    ingressBytesTransferred,
                     new NetworkSubResource(peerId, default),
                     enableBgp,
                     (gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>()).ToList(),
                     usePolicyBasedTrafficSelectors,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>()).ToList(),
+                    (trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
                     expressRouteGatewayBypass,
                     enablePrivateLinkFastPath,
-                    default,
+                    routingConfiguration,
                     default),
                 eTag);
         }
@@ -8925,38 +8932,38 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && connectionProtocol is null && connectionMode is null && tunnelProperties is null && connectionStatus is null && tunnelConnectionStatus is null && peerId is null && enableBgp is null && gatewayCustomBgpIpAddresses is null && useLocalAzureIpAddress is null && usePolicyBasedTrafficSelectors is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
-                    default,
+                new VirtualNetworkGatewayConnectionPropertiesFormat(
+                    authorizationKey,
                     virtualNetworkGateway1,
                     virtualNetworkGateway2,
                     localNetworkGateway2,
-                    default,
-                    default,
+                    (ingressNatRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (egressNatRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
                     connectionType,
                     connectionProtocol,
-                    default,
-                    default,
+                    routingWeight,
+                    dpdTimeoutSeconds,
                     connectionMode,
                     (tunnelProperties ?? new ChangeTrackingList<VirtualNetworkGatewayConnectionTunnelProperties>()).ToList(),
-                    default,
+                    sharedKey,
                     connectionStatus,
                     (tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>()).ToList(),
-                    default,
-                    default,
+                    egressBytesTransferred,
+                    ingressBytesTransferred,
                     new NetworkSubResource(peerId, default),
                     enableBgp,
                     (gatewayCustomBgpIpAddresses ?? new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>()).ToList(),
                     useLocalAzureIpAddress,
                     usePolicyBasedTrafficSelectors,
-                    default,
-                    default,
-                    default,
-                    default,
+                    (ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>()).ToList(),
+                    (trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
                     expressRouteGatewayBypass,
                     enablePrivateLinkFastPath,
-                    default,
-                    default,
-                    default,
+                    authenticationType,
+                    certificateAuthentication,
+                    routingConfiguration,
                     default),
                 eTag);
         }
@@ -8985,13 +8992,13 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                localNetworkAddressSpace is null && gatewayIpAddress is null ? default : new LocalNetworkGatewayPropertiesFormat(
+                localNetworkAddressSpace is null && gatewayIpAddress is null && fqdn is null && bgpSettings is null && resourceGuid is null && provisioningState is null ? default : new LocalNetworkGatewayPropertiesFormat(
                     localNetworkAddressSpace,
                     gatewayIpAddress,
-                    default,
-                    default,
-                    default,
-                    default,
+                    fqdn,
+                    bgpSettings,
+                    resourceGuid,
+                    provisioningState,
                     default),
                 eTag);
         }
@@ -11470,15 +11477,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.PacketCaptureContent"/> instance for mocking. </returns>
         public static PacketCaptureContent PacketCaptureContent(string target = default, PacketCaptureMachineScope scope = default, PacketCaptureTargetType? targetType = default, long? bytesToCapturePerPacket = default, long? totalBytesPerSession = default, int? timeLimitInSeconds = default, PacketCaptureStorageLocation storageLocation = default, IEnumerable<PacketCaptureFilter> filters = default, bool? continuousCapture = default, PacketCaptureSettings captureSettings = default)
         {
-            return new PacketCaptureContent(bytesToCapturePerPacket is null && continuousCapture is null && captureSettings is null ? default : new PacketCaptureCreateOrUpdateContent(
-                default,
-                default,
-                default,
+            return new PacketCaptureContent(target is null && scope is null && targetType is null && bytesToCapturePerPacket is null && totalBytesPerSession is null && timeLimitInSeconds is null && storageLocation is null && filters is null && continuousCapture is null && captureSettings is null ? default : new PacketCaptureCreateOrUpdateContent(
+                target,
+                scope,
+                targetType,
                 bytesToCapturePerPacket,
-                default,
-                default,
-                default,
-                default,
+                totalBytesPerSession,
+                timeLimitInSeconds,
+                storageLocation,
+                (filters ?? new ChangeTrackingList<PacketCaptureFilter>()).ToList(),
                 continuousCapture,
                 captureSettings,
                 default), default);
@@ -11943,16 +11950,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Models.ConnectionMonitorContent"/> instance for mocking. </returns>
         public static ConnectionMonitorContent ConnectionMonitorContent(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default)
         {
-            return new ConnectionMonitorContent(autoStart is null ? default : new ConnectionMonitorCreateOrUpdateContent(
-                default,
-                default,
+            return new ConnectionMonitorContent(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null ? default : new ConnectionMonitorCreateOrUpdateContent(
+                source,
+                destination,
                 autoStart,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                monitoringIntervalInSeconds,
+                (endpoints ?? new ChangeTrackingList<ConnectionMonitorEndpoint>()).ToList(),
+                (testConfigurations ?? new ChangeTrackingList<ConnectionMonitorTestConfiguration>()).ToList(),
+                (testGroups ?? new ChangeTrackingList<ConnectionMonitorTestGroup>()).ToList(),
+                (outputs ?? new ChangeTrackingList<ConnectionMonitorOutput>()).ToList(),
+                notes,
                 default), default);
         }
 
@@ -12581,7 +12588,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FlowLogInformation FlowLogInformation(ResourceIdentifier targetResourceId = default, ResourceIdentifier storageId = default, string enabledFilteringCriteria = default, string recordTypes = default, bool enabled = false, RetentionPolicyParameters retentionPolicy = default, FlowLogFormatParameters format = default, FlowLogFormatType? formatType = default, int? version = default, TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default, ManagedServiceIdentity identity = default)
         {
-            return new FlowLogInformation(targetResourceId, storageId is null && enabledFilteringCriteria is null && recordTypes is null && retentionPolicy is null && format is null ? default : new FlowLogProperties(
+            return new FlowLogInformation(targetResourceId, new FlowLogProperties(
                 storageId,
                 enabledFilteringCriteria,
                 recordTypes,
@@ -19264,7 +19271,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                authorizationKey is null && virtualNetworkGateway1Id is null && virtualNetworkGateway2Id is null && localNetworkGateway2Id is null && connectionProtocol is null && routingWeight is null && connectionMode is null && sharedKey is null && connectionStatus is null && tunnelConnectionStatus is null && egressBytesTransferred is null && ingressBytesTransferred is null && peerId is null && enableBgp is null && gatewayCustomBgpIPAddresses is null && usePolicyBasedTrafficSelectors is null && ipsecPolicies is null && trafficSelectorPolicies is null && resourceGuid is null && provisioningState is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
+                new VirtualNetworkGatewayConnectionListEntityPropertiesFormat(
                     authorizationKey,
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway1Id, default),
                     new VirtualNetworkConnectionGatewayReference(virtualNetworkGateway2Id, default),
@@ -19380,7 +19387,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                authorizationKey is null && virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && ingressNatRules is null && egressNatRules is null && connectionProtocol is null && routingWeight is null && dpdTimeoutSeconds is null && connectionMode is null && tunnelProperties is null && sharedKey is null && connectionStatus is null && tunnelConnectionStatus is null && egressBytesTransferred is null && ingressBytesTransferred is null && peerId is null && enableBgp is null && gatewayCustomBgpIPAddresses is null && useLocalAzureIPAddress is null && usePolicyBasedTrafficSelectors is null && ipsecPolicies is null && trafficSelectorPolicies is null && resourceGuid is null && provisioningState is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null && authenticationType is null && certificateAuthentication is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
+                new VirtualNetworkGatewayConnectionPropertiesFormat(
                     authorizationKey,
                     virtualNetworkGateway1,
                     virtualNetworkGateway2,
@@ -21013,7 +21020,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                authorizationKey is null && virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && ingressNatRules is null && egressNatRules is null && connectionProtocol is null && routingWeight is null && dpdTimeoutSeconds is null && connectionMode is null && tunnelProperties is null && sharedKey is null && connectionStatus is null && tunnelConnectionStatus is null && egressBytesTransferred is null && ingressBytesTransferred is null && peerId is null && enableBgp is null && gatewayCustomBgpIPAddresses is null && useLocalAzureIPAddress is null && usePolicyBasedTrafficSelectors is null && ipsecPolicies is null && trafficSelectorPolicies is null && resourceGuid is null && provisioningState is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
+                new VirtualNetworkGatewayConnectionPropertiesFormat(
                     authorizationKey,
                     virtualNetworkGateway1,
                     virtualNetworkGateway2,
@@ -22012,7 +22019,7 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                authorizationKey is null && virtualNetworkGateway1 is null && virtualNetworkGateway2 is null && localNetworkGateway2 is null && ingressNatRules is null && egressNatRules is null && connectionProtocol is null && routingWeight is null && dpdTimeoutSeconds is null && connectionMode is null && sharedKey is null && connectionStatus is null && tunnelConnectionStatus is null && egressBytesTransferred is null && ingressBytesTransferred is null && peerId is null && enableBgp is null && gatewayCustomBgpIPAddresses is null && useLocalAzureIPAddress is null && usePolicyBasedTrafficSelectors is null && ipsecPolicies is null && trafficSelectorPolicies is null && resourceGuid is null && provisioningState is null && expressRouteGatewayBypass is null && enablePrivateLinkFastPath is null ? default : new VirtualNetworkGatewayConnectionPropertiesFormat(
+                new VirtualNetworkGatewayConnectionPropertiesFormat(
                     authorizationKey,
                     virtualNetworkGateway1,
                     virtualNetworkGateway2,
