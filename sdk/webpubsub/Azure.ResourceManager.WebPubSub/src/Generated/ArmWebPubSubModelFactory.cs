@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="kind"> The kind of the service. </param>
         /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
-        public static WebPubSubData WebPubSubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebPubSubProvisioningState? provisioningState = default, string externalIP = default, string hostName = default, int? publicPort = default, int? serverPort = default, string version = default, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources = default, string hostNamePrefix = default, LiveTraceConfiguration liveTraceConfiguration = default, WebPubSubNetworkAcls networkAcls = default, WebPubSubApplicationFirewallSettings applicationFirewall = default, string publicNetworkAccess = default, bool? isLocalAuthDisabled = default, bool? isAadAuthDisabled = default, string isRegionEndpointEnabled = default, string resourceStopped = default, bool? isClientCertEnabled = default, IEnumerable<ResourceLogCategory> resourceLogCategories = default, string socketIOServiceMode = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        public static WebPubSubData WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, WebPubSubNetworkAcls networkAcls, WebPubSubApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, bool? isClientCertEnabled, IEnumerable<ResourceLogCategory> resourceLogCategories, string socketIOServiceMode = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Full qualified Id of the private endpoint. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static WebPubSubPrivateEndpointConnectionData WebPubSubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebPubSubProvisioningState? provisioningState = default, IEnumerable<string> groupIds = default, WebPubSubPrivateLinkServiceConnectionState connectionState = default, ResourceIdentifier privateEndpointId = default)
+        public static WebPubSubPrivateEndpointConnectionData WebPubSubPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebPubSubProvisioningState? provisioningState, IEnumerable<string> groupIds, WebPubSubPrivateLinkServiceConnectionState connectionState, ResourceIdentifier privateEndpointId)
         {
             return new WebPubSubPrivateEndpointConnectionData(
                 id,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="fqdns"> A list of FQDNs for third party private link service. </param>
         /// <param name="status"> Status of the shared private link resource. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/> instance for mocking. </returns>
-        public static WebPubSubSharedPrivateLinkData WebPubSubSharedPrivateLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, ResourceIdentifier privateLinkResourceId = default, WebPubSubProvisioningState? provisioningState = default, string requestMessage = default, IEnumerable<string> fqdns = default, WebPubSubSharedPrivateLinkStatus? status = default)
+        public static WebPubSubSharedPrivateLinkData WebPubSubSharedPrivateLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string groupId, ResourceIdentifier privateLinkResourceId, WebPubSubProvisioningState? provisioningState, string requestMessage, IEnumerable<string> fqdns, WebPubSubSharedPrivateLinkStatus? status)
         {
             return new WebPubSubSharedPrivateLinkData(
                 id,
