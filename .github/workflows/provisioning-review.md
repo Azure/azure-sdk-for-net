@@ -1,4 +1,5 @@
 ---
+run-name: "Review PR #${{ github.event.inputs.pr_number }} at ${{ github.event.inputs.check_run_head_sha || 'current head' }}"
 on:
   workflow_dispatch:
     inputs:
