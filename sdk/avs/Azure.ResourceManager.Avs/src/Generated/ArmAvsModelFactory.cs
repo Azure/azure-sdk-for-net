@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="netAppVolumeId"> Azure resource ID of the NetApp volume. </param>
         /// <param name="elasticSanVolumeTargetId"> Azure resource ID of the Elastic SAN Volume. </param>
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
-        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AvsPrivateCloudDatastoreProvisioningState? provisioningState = default, DiskPoolVolume diskPoolVolume = default, AvsPureStorageVolume pureStorageVolume = default, DatastoreStatus? status = default, ResourceIdentifier netAppVolumeId = default, ResourceIdentifier elasticSanVolumeTargetId = default)
+        public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AvsPrivateCloudDatastoreProvisioningState? provisioningState, DiskPoolVolume diskPoolVolume, AvsPureStorageVolume pureStorageVolume, DatastoreStatus? status, ResourceIdentifier netAppVolumeId, ResourceIdentifier elasticSanVolumeTargetId)
         {
             return new AvsPrivateCloudDatastoreData(
                 id,
