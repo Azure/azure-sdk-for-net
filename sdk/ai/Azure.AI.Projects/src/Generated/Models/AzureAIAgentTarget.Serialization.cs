@@ -176,23 +176,7 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResponseTool> array = new List<ResponseTool>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default));
-                        }
-                    }
-                    tools = array;
+                    DeserializeToolsValue(prop, ref tools);
                     continue;
                 }
                 if (options.Format != "W")
