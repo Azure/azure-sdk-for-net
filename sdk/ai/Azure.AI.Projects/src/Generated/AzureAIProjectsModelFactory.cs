@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
@@ -1027,6 +1029,27 @@ namespace Azure.AI.Projects
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Represents a target specifying an Azure AI agent. </summary>
+        /// <param name="name"> The unique identifier of the Azure AI agent. </param>
+        /// <param name="version"> The version of the Azure AI agent. </param>
+        /// <param name="toolDescriptions"> The parameters used to control the sampling behavior of the agent during text generation. </param>
+        /// <param name="tools"></param>
+        /// <returns> A new <see cref="Evaluation.AzureAIAgentTarget"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static AzureAIAgentTarget AzureAIAgentTarget(string name, string version, IEnumerable<ToolDescription> toolDescriptions, IEnumerable<ResponseTool> tools)
+        {
+            toolDescriptions ??= new ChangeTrackingList<ToolDescription>();
+            tools ??= new ChangeTrackingList<ResponseTool>();
+
+            return new AzureAIAgentTarget(
+                "azure_ai_agent",
+                additionalBinaryDataProperties: null,
+                name,
+                version,
+                toolDescriptions.ToList(),
+                tools.ToList());
+        }
+
         /// <summary> Description of a tool that can be used by an agent. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="description"> A brief description of the tool's purpose. </param>
@@ -1034,15 +1057,6 @@ namespace Azure.AI.Projects
         public static ToolDescription ToolDescription(string name = default, string description = default)
         {
             return new ToolDescription(name, description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Memory search options. </summary>
-        /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="Memory.MemorySearchResultOptions"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
-        {
-            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Taxonomy category definition. </summary>
@@ -2044,41 +2058,18 @@ namespace Azure.AI.Projects
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <param name="promptCacheBreakpoint"></param>
-        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
+        /// <summary> The MemorySearchOptions. </summary>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="items"> Items for which to search for relevant memories. </param>
+        /// <param name="previousSearchId"> The unique ID of the previous search request, enabling incremental memory search from where the last operation left off. </param>
+        /// <param name="resultOptions"> Memory search options. </param>
+        /// <returns> A new <see cref="Memory.MemorySearchOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static MemorySearchOptions MemorySearchOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousSearchId = default, MemorySearchResultOptions resultOptions = default)
         {
-            return new InputTextContentParam("input_text", text, promptCacheBreakpoint, additionalBinaryDataProperties: null);
-        }
+            items ??= new ChangeTrackingList<ResponseItem>();
 
-        /// <summary> Prompt cache breakpoint. </summary>
-        /// <returns> A new <see cref="Projects.PromptCacheBreakpointParam"/> instance for mocking. </returns>
-        public static PromptCacheBreakpointParam PromptCacheBreakpointParam()
-        {
-            return new PromptCacheBreakpointParam("explicit", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUri"></param>
-        /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
-        /// <param name="promptCacheBreakpoint"></param>
-        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default, FileInputDetail? detail = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
-        {
-            return new InputFileContentParam(
-                "input_file",
-                fileId,
-                filename,
-                fileData,
-                fileUri,
-                detail,
-                promptCacheBreakpoint,
-                additionalBinaryDataProperties: null);
+            return new MemorySearchOptions(scope, items.ToList(), previousSearchId, resultOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory search response. </summary>
@@ -2132,9 +2123,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.UserProfileMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new UserProfileMemoryItem(
+            return new Memory.UserProfileMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -2150,9 +2141,9 @@ namespace Azure.AI.Projects
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="Memory.ChatSummaryMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static Memory.ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
         {
-            return new ChatSummaryMemoryItem(
+            return new Memory.ChatSummaryMemoryItem(
                 memoryId,
                 updatedAt,
                 scope,
@@ -2188,7 +2179,7 @@ namespace Azure.AI.Projects
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreOperationUsage"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
+        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseInputTokenUsageDetails inputTokensDetails = default, long outputTokens = default, ResponseOutputTokenUsageDetails outputTokensDetails = default, long totalTokens = default)
         {
             return new MemoryStoreOperationUsage(
                 embeddingTokens,
@@ -2200,21 +2191,23 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The ResponseUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens"></param>
-        /// <param name="cacheWriteTokens"></param>
-        /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default, long cacheWriteTokens = default)
+        /// <summary> The MemoryUpdateOptions. </summary>
+        /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
+        /// <param name="items"> Conversation items to be stored in memory. </param>
+        /// <param name="previousUpdateId"> The unique ID of the previous update request, enabling incremental memory updates from where the last operation left off. </param>
+        /// <param name="updateDelay">
+        /// Timeout period before processing the memory update in seconds.
+        /// If a new update request is received during this period, it will cancel the current request and reset the timeout.
+        /// Set to 0 to immediately trigger the update without delay.
+        /// Defaults to 300 (5 minutes).
+        /// </param>
+        /// <returns> A new <see cref="Memory.MemoryUpdateOptions"/> instance for mocking. </returns>
+        [Experimental("AAIP002")]
+        public static MemoryUpdateOptions MemoryUpdateOptions(string scope = default, IEnumerable<ResponseItem> items = default, string previousUpdateId = default, int? updateDelay = default)
         {
-            return new ResponseUsageInputTokensDetails(cachedTokens, cacheWriteTokens, additionalBinaryDataProperties: null);
-        }
+            items ??= new ChangeTrackingList<ResponseItem>();
 
-        /// <summary> The ResponseUsageOutputTokensDetails. </summary>
-        /// <param name="reasoningTokens"></param>
-        /// <returns> A new <see cref="Projects.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
-        {
-            return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
+            return new MemoryUpdateOptions(scope, items.ToList(), previousUpdateId, updateDelay, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Memory update result. </summary>
@@ -2814,36 +2807,6 @@ namespace Azure.AI.Projects
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
         {
             return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, isProceduralMemoryEnabled: default, defaultTtlSeconds: default);
-        }
-
-        /// <summary> Input text. </summary>
-        /// <param name="text"> The text input to the model. </param>
-        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InputTextContentParam InputTextContentParam(string text)
-        {
-            return InputTextContentParam(text: text, promptCacheBreakpoint: default);
-        }
-
-        /// <summary> Input file. </summary>
-        /// <param name="fileId"></param>
-        /// <param name="filename"></param>
-        /// <param name="fileData"></param>
-        /// <param name="fileUri"></param>
-        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, Uri fileUri)
-        {
-            return InputFileContentParam(fileId: fileId, filename: filename, fileData: fileData, fileUri: fileUri, detail: default, promptCacheBreakpoint: default);
-        }
-
-        /// <summary> The ResponseUsageInputTokensDetails. </summary>
-        /// <param name="cachedTokens"></param>
-        /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens)
-        {
-            return ResponseUsageInputTokensDetails(cachedTokens: cachedTokens, cacheWriteTokens: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

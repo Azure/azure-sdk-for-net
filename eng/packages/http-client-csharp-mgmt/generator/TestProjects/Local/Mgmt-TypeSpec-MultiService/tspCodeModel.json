@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "ResourceProvisioningState",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
       "valueType": {
         "$id": "2",
@@ -73,6 +74,12 @@
       "$id": "6",
       "kind": "enum",
       "name": "createdByType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
       "valueType": {
         "$id": "7",
@@ -155,6 +162,12 @@
       "$id": "12",
       "kind": "enum",
       "name": "Origin",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
       "valueType": {
         "$id": "13",
@@ -222,6 +235,12 @@
       "$id": "17",
       "kind": "enum",
       "name": "ActionType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
       "valueType": {
         "$id": "18",
@@ -259,6 +278,9 @@
       "$id": "20",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2024-01-01"
+      ],
       "crossLanguageDefinitionId": "ServiceOne.Versions",
       "valueType": {
         "$id": "21",
@@ -571,6 +593,9 @@
       "$id": "55",
       "kind": "model",
       "name": "CheckAvailabilityRequest",
+      "apiVersions": [
+        "2024-01-01"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "ServiceOne.CheckAvailabilityRequest",
       "usage": "Input,Json",
@@ -586,6 +611,9 @@
           "$id": "56",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2024-01-01"
+          ],
           "serializedName": "name",
           "doc": "The name to check availability for.",
           "type": {
@@ -615,6 +643,9 @@
       "$id": "58",
       "kind": "model",
       "name": "CheckAvailabilityResponse",
+      "apiVersions": [
+        "2024-01-01"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "ServiceOne.CheckAvailabilityResponse",
       "usage": "Output,Json",
@@ -630,6 +661,9 @@
           "$id": "59",
           "kind": "property",
           "name": "isAvailable",
+          "apiVersions": [
+            "2024-01-01"
+          ],
           "serializedName": "isAvailable",
           "doc": "Whether the name is available.",
           "type": {
@@ -657,6 +691,9 @@
           "$id": "61",
           "kind": "property",
           "name": "reason",
+          "apiVersions": [
+            "2024-01-01"
+          ],
           "serializedName": "reason",
           "doc": "Reason the name is not available.",
           "type": {
@@ -686,6 +723,12 @@
       "$id": "63",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
@@ -703,12 +746,24 @@
           "$id": "64",
           "kind": "property",
           "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "65",
             "kind": "model",
             "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Json,Exception,LroPolling",
@@ -725,6 +780,12 @@
                 "$id": "66",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
@@ -752,6 +813,12 @@
                 "$id": "68",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
@@ -779,6 +846,12 @@
                 "$id": "70",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
@@ -806,6 +879,12 @@
                 "$id": "72",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
@@ -836,6 +915,12 @@
                 "$id": "74",
                 "kind": "property",
                 "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
@@ -846,6 +931,12 @@
                     "$id": "76",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Json,Exception,LroPolling",
@@ -862,6 +953,12 @@
                         "$id": "77",
                         "kind": "property",
                         "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
@@ -889,6 +986,12 @@
                         "$id": "79",
                         "kind": "property",
                         "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
@@ -959,6 +1062,9 @@
       "$id": "81",
       "kind": "model",
       "name": "Foo",
+      "apiVersions": [
+        "2024-01-01"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "ServiceOne.Foo",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -979,6 +1085,12 @@
         "$id": "82",
         "kind": "model",
         "name": "TrackedResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
         "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -995,6 +1107,12 @@
           "$id": "83",
           "kind": "model",
           "name": "Resource",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
           "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
           "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1012,6 +1130,12 @@
               "$id": "84",
               "kind": "property",
               "name": "id",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
@@ -1046,6 +1170,12 @@
               "$id": "87",
               "kind": "property",
               "name": "name",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
@@ -1073,6 +1203,12 @@
               "$id": "89",
               "kind": "property",
               "name": "type",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
@@ -1107,12 +1243,24 @@
               "$id": "92",
               "kind": "property",
               "name": "systemData",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
                 "$id": "93",
                 "kind": "model",
                 "name": "SystemData",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
                 "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -1129,6 +1277,12 @@
                     "$id": "94",
                     "kind": "property",
                     "name": "createdBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
@@ -1156,6 +1310,12 @@
                     "$id": "96",
                     "kind": "property",
                     "name": "createdByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdByType",
                     "doc": "The type of identity that created the resource.",
                     "type": {
@@ -1179,6 +1339,12 @@
                     "$id": "97",
                     "kind": "property",
                     "name": "createdAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
@@ -1214,6 +1380,12 @@
                     "$id": "100",
                     "kind": "property",
                     "name": "lastModifiedBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
@@ -1241,6 +1413,12 @@
                     "$id": "102",
                     "kind": "property",
                     "name": "lastModifiedByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedByType",
                     "doc": "The type of identity that last modified the resource.",
                     "type": {
@@ -1264,6 +1442,12 @@
                     "$id": "103",
                     "kind": "property",
                     "name": "lastModifiedAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
@@ -1318,6 +1502,12 @@
             "$id": "106",
             "kind": "property",
             "name": "tags",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
@@ -1357,6 +1547,12 @@
             "$id": "110",
             "kind": "property",
             "name": "location",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
@@ -1394,12 +1590,16 @@
           "$id": "113",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "114",
             "kind": "model",
             "name": "FooProperties",
+            "apiVersions": [
+              "2024-01-01"
+            ],
             "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
             "crossLanguageDefinitionId": "ServiceOne.FooProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1415,6 +1615,9 @@
                 "$id": "115",
                 "kind": "property",
                 "name": "displayName",
+                "apiVersions": [
+                  "2024-01-01"
+                ],
                 "serializedName": "displayName",
                 "type": {
                   "$id": "116",
@@ -1441,6 +1644,9 @@
                 "$id": "117",
                 "kind": "property",
                 "name": "provisioningState",
+                "apiVersions": [
+                  "2024-01-01"
+                ],
                 "serializedName": "provisioningState",
                 "type": {
                   "$ref": "1"
@@ -1479,6 +1685,7 @@
           "$id": "118",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the Foo",
           "type": {
@@ -1527,6 +1734,7 @@
       "$id": "120",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
+      "apiVersions": [],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
@@ -1543,6 +1751,7 @@
           "$id": "121",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The operation status",
           "type": {
@@ -1566,6 +1775,7 @@
           "$id": "122",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
@@ -1593,6 +1803,7 @@
           "$id": "124",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the operationStatus resource",
           "type": {
@@ -1620,6 +1831,7 @@
           "$id": "126",
           "kind": "property",
           "name": "startTime",
+          "apiVersions": [],
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
@@ -1655,6 +1867,7 @@
           "$id": "129",
           "kind": "property",
           "name": "endTime",
+          "apiVersions": [],
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
@@ -1690,6 +1903,7 @@
           "$id": "132",
           "kind": "property",
           "name": "percentComplete",
+          "apiVersions": [],
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
@@ -1717,6 +1931,7 @@
           "$id": "134",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
           "type": {
@@ -1742,6 +1957,7 @@
       "$id": "135",
       "kind": "model",
       "name": "FooListResult",
+      "apiVersions": [],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
@@ -1758,6 +1974,7 @@
           "$id": "136",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The Foo items on this page",
           "type": {
@@ -1788,6 +2005,7 @@
           "$id": "138",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
@@ -1824,6 +2042,12 @@
       "$id": "141",
       "kind": "model",
       "name": "OperationListResult",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
       "usage": "Output,Json",
@@ -1840,6 +2064,7 @@
           "$id": "142",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The Operation items on this page",
           "type": {
@@ -1850,6 +2075,12 @@
               "$id": "144",
               "kind": "model",
               "name": "Operation",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
               "usage": "Output,Json",
@@ -1867,6 +2098,12 @@
                   "$id": "145",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [
+                    "v3",
+                    "v4",
+                    "v5",
+                    "v6"
+                  ],
                   "serializedName": "name",
                   "doc": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
                   "type": {
@@ -1894,6 +2131,12 @@
                   "$id": "147",
                   "kind": "property",
                   "name": "isDataAction",
+                  "apiVersions": [
+                    "v3",
+                    "v4",
+                    "v5",
+                    "v6"
+                  ],
                   "serializedName": "isDataAction",
                   "doc": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
                   "type": {
@@ -1921,12 +2164,24 @@
                   "$id": "149",
                   "kind": "property",
                   "name": "display",
+                  "apiVersions": [
+                    "v3",
+                    "v4",
+                    "v5",
+                    "v6"
+                  ],
                   "serializedName": "display",
                   "doc": "Localized display information for this particular operation.",
                   "type": {
                     "$id": "150",
                     "kind": "model",
                     "name": "OperationDisplay",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                     "usage": "Output,Json",
@@ -1943,6 +2198,12 @@
                         "$id": "151",
                         "kind": "property",
                         "name": "provider",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "provider",
                         "doc": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
                         "type": {
@@ -1970,6 +2231,12 @@
                         "$id": "153",
                         "kind": "property",
                         "name": "resource",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "resource",
                         "doc": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
                         "type": {
@@ -1997,6 +2264,12 @@
                         "$id": "155",
                         "kind": "property",
                         "name": "operation",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "operation",
                         "doc": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
                         "type": {
@@ -2024,6 +2297,12 @@
                         "$id": "157",
                         "kind": "property",
                         "name": "description",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "description",
                         "doc": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
                         "type": {
@@ -2067,6 +2346,12 @@
                   "$id": "159",
                   "kind": "property",
                   "name": "origin",
+                  "apiVersions": [
+                    "v3",
+                    "v4",
+                    "v5",
+                    "v6"
+                  ],
                   "serializedName": "origin",
                   "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
                   "type": {
@@ -2090,6 +2375,12 @@
                   "$id": "160",
                   "kind": "property",
                   "name": "actionType",
+                  "apiVersions": [
+                    "v3",
+                    "v4",
+                    "v5",
+                    "v6"
+                  ],
                   "serializedName": "actionType",
                   "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
                   "type": {
@@ -2132,6 +2423,7 @@
           "$id": "161",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
@@ -2174,6 +2466,9 @@
       "$id": "164",
       "kind": "model",
       "name": "Bar",
+      "apiVersions": [
+        "2024-06-01"
+      ],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "ServiceTwo.Bar",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2198,12 +2493,16 @@
           "$id": "165",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "166",
             "kind": "model",
             "name": "BarProperties",
+            "apiVersions": [
+              "2024-06-01"
+            ],
             "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
             "crossLanguageDefinitionId": "ServiceTwo.BarProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2219,6 +2518,9 @@
                 "$id": "167",
                 "kind": "property",
                 "name": "description",
+                "apiVersions": [
+                  "2024-06-01"
+                ],
                 "serializedName": "description",
                 "type": {
                   "$id": "168",
@@ -2245,6 +2547,9 @@
                 "$id": "169",
                 "kind": "property",
                 "name": "provisioningState",
+                "apiVersions": [
+                  "2024-06-01"
+                ],
                 "serializedName": "provisioningState",
                 "type": {
                   "$ref": "1"
@@ -2283,6 +2588,7 @@
           "$id": "170",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the Bar",
           "type": {
@@ -2322,6 +2628,7 @@
       "$id": "172",
       "kind": "model",
       "name": "BarListResult",
+      "apiVersions": [],
       "namespace": "Azure.Generator.MgmtTypeSpec.MultiService.Tests",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
@@ -2338,6 +2645,7 @@
           "$id": "173",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The Bar items on this page",
           "type": {
@@ -2368,6 +2676,7 @@
           "$id": "175",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {

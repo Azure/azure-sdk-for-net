@@ -3,8 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.AI.AgentServer.Core.Tasks;
+using Azure.Core;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;

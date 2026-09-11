@@ -387,15 +387,14 @@ private static AzureAIAgentTarget GetAgentTarget(ProjectsAgentVersion agentVersi
         foreach (ResponseTool agentTool in agentDefinition.Tools)
         {
             ToolDescription tool = new();
-            ProjectsAgentTool projectTool = agentTool.AsAgentTool();
-            if (projectTool is OpenAPITool openAPITool)
+            if (agentTool is OpenApiTool openAPITool)
             {
                 tool.Name = openAPITool.FunctionDefinition.Name;
                 tool.Description = string.IsNullOrEmpty(openAPITool.FunctionDefinition.Description) ? "No description provided" : openAPITool.FunctionDefinition.Description;
             }
             else
             {
-                tool.Name = $"Tool of type {projectTool.GetType()}";
+                tool.Name = $"Tool of type {agentTool.GetType()}";
                 tool.Description = "No description provided";
             }
             target.ToolDescriptions.Add(tool);

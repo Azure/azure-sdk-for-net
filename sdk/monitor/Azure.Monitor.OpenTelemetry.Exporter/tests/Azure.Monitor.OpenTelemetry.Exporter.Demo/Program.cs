@@ -36,6 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             if (args.Length > 0 && string.Equals(args[0], "multitenant", StringComparison.OrdinalIgnoreCase))
             {
                 var faultEndpoints = Array.Exists(args, a => string.Equals(a, "down", StringComparison.OrdinalIgnoreCase));
+                var logs = Array.Exists(args, a => string.Equals(a, "logs", StringComparison.OrdinalIgnoreCase));
                 var count = 1000;
 
                 foreach (var arg in args)
@@ -47,7 +48,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     }
                 }
 
-                RunMultiTenantDemo(count, faultEndpoints);
+                if (logs)
+                {
+                    RunMultiTenantLogDemo(count, faultEndpoints);
+                }
+                else
+                {
+                    RunMultiTenantDemo(count, faultEndpoints);
+                }
+
                 return;
             }
 
@@ -127,9 +136,68 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
         }
 
+        private static void RunMultiTenantLogDemo(int logCount, bool faultEndpoints)
+        {
+            var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
+            var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
+
+            if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
+            {
+                Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
+                Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
+                Console.WriteLine("string per tenant, using components in different regions.");
+                return;
+            }
+
+            // Before any exporter type is touched: the gate is read once into a static.
+            MultiTenantTraceDemo.EnableMultiTenantExport();
+
+            using var listener = new ExporterEventListener();
+
+            var runId = Guid.NewGuid().ToString("N");
+
+            var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
+
+            Console.WriteLine($"Run id     : {runId}");
+            Console.WriteLine($"Logs       : {logCount} log records");
+            Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
+            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
+            Console.WriteLine($"Endpoints  : {(faultEndpoints ? "FAULTED (503 injected)" : "live")}");
+            Console.WriteLine();
+
+            ReportStoredBlobs("stored before");
+
+            var stopwatch = Stopwatch.StartNew();
+
+            using (var demo = new MultiTenantLogDemo(hostConnectionString, routes, runId, faultEndpoints))
+            {
+                demo.GenerateLogs(logCount);
+
+                Console.WriteLine("Generated, flushing...");
+
+                foreach (var pair in demo.GeneratedPerTenant)
+                {
+                    Console.WriteLine($"  {pair.Key,-12} {pair.Value}");
+                }
+
+                if (!faultEndpoints)
+                {
+                    // Give the storage drain a chance to run before the provider is torn down.
+                    Thread.Sleep(TimeSpan.FromSeconds(15));
+                }
+            }
+
+            stopwatch.Stop();
+
+            ReportStoredBlobs("stored after");
+
+            Console.WriteLine();
+            Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
+        }
+
         /// <summary>
-        /// Turns connection strings into routes, naming each after its ingestion host so the console
-        /// output and the <c>demo.tenant</c> dimension are readable.
+        /// Turns connection strings into routes, assigning each tenant a stable name based on its
+        /// position in the configured list.
         /// </summary>
         private static List<MultiTenantTraceDemo.TenantRoute> ParseRoutes(string? connectionStrings)
         {
@@ -171,16 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     continue;
                 }
 
-                // Tenants in the same region share an ingestion endpoint, so the host alone is not a
-                // unique name. Keeping it unique is what lets the counts and the demo.tenant
-                // dimension tell two same-endpoint tenants apart.
-                var host = new Uri(ingestionEndpoint).Host.Split('.')[0];
-                var name = host;
-
-                for (int n = 2; routes.Exists(route => route.Name == name); n++)
-                {
-                    name = $"{host}#{n}";
-                }
+                var name = $"tenant{routes.Count + 1}";
 
                 routes.Add(new MultiTenantTraceDemo.TenantRoute(name, instrumentationKey, ingestionEndpoint));
             }
