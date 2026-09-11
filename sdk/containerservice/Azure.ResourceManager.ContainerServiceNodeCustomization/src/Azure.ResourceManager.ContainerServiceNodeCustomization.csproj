@@ -1,9 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.ResourceManager.ContainerServiceNodeCustomization client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.ResourceManager.ContainerServiceNodeCustomization</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.ContainerServiceNodeCustomization</PackageTags>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>Azure.ResourceManager.ContainerServiceNodeCustomization</PackageId>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.ContainerService Node Customization.</Description>
+    <PackageTags>azure;management;arm;resource manager;containerservice;nodecustomization</PackageTags>
   </PropertyGroup>
 </Project>
