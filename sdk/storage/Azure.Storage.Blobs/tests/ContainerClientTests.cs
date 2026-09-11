@@ -1000,6 +1000,42 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task CreateSessionAsync()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service);
+
+            // Act
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
+            Response<CreateSessionResponse> response = await test.Container.CreateSessionAsync(config: config);
+
+            // Assert
+            Assert.IsNotNull(response.Value.Id);
+            Assert.IsTrue(response.Value.Expiration > Recording.UtcNow);
+            Assert.AreEqual(authType, response.Value.AuthenticationType);
+            Assert.IsNotNull(response.Value.Credentials.SessionToken);
+            Assert.IsNotNull(response.Value.Credentials.SessionKey);
+        }
+
+        [RecordedTest]
+        public async Task CreateSessionAsync_Error()
+        {
+            // Arrange
+            BlobServiceClient service = GetServiceClient_OAuth();
+            BlobContainerClient container = InstrumentClient(service.GetBlobContainerClient(GetNewContainerName()));
+
+            AuthenticationType authType = AuthenticationType.Hmac;
+            CreateSessionConfiguration config = new CreateSessionConfiguration(authType);
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                container.CreateSessionAsync(config: config),
+                e => Assert.AreEqual("ContainerNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange

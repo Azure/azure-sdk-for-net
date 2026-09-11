@@ -68,6 +68,9 @@
             "Request100ContinueOptions": {
               "type": "object"
             },
+            "SessionOptions": {
+              "type": "object"
+            },
             "EnableTenantDiscovery": {
               "type": "boolean"
             },

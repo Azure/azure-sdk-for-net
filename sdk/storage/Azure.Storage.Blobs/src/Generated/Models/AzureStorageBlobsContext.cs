@@ -23,6 +23,11 @@ namespace Azure.Storage.Blobs
     [ModelReaderWriterBuildable(typeof(BlobGeoReplication))]
     [ModelReaderWriterBuildable(typeof(BlobHierarchyList))]
     [ModelReaderWriterBuildable(typeof(BlobItemInternal))]
+    [ModelReaderWriterBuildable(typeof(BlobLayout))]
+    [ModelReaderWriterBuildable(typeof(BlobLayoutEndpoint))]
+    [ModelReaderWriterBuildable(typeof(BlobLayoutEndpoints))]
+    [ModelReaderWriterBuildable(typeof(BlobLayoutRange))]
+    [ModelReaderWriterBuildable(typeof(BlobLayoutRanges))]
     [ModelReaderWriterBuildable(typeof(BlobMetrics))]
     [ModelReaderWriterBuildable(typeof(BlobName))]
     [ModelReaderWriterBuildable(typeof(BlobPrefix))]
@@ -40,6 +45,8 @@ namespace Azure.Storage.Blobs
     [ModelReaderWriterBuildable(typeof(ClearRange))]
     [ModelReaderWriterBuildable(typeof(ContainerItemInternal))]
     [ModelReaderWriterBuildable(typeof(ContainerPropertiesInternal))]
+    [ModelReaderWriterBuildable(typeof(CreateSessionConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CreateSessionResponse))]
     [ModelReaderWriterBuildable(typeof(DelimitedTextConfigurationInternal))]
     [ModelReaderWriterBuildable(typeof(FilterBlobItem))]
     [ModelReaderWriterBuildable(typeof(FilterBlobSegment))]
@@ -54,6 +61,7 @@ namespace Azure.Storage.Blobs
     [ModelReaderWriterBuildable(typeof(QueryFormat))]
     [ModelReaderWriterBuildable(typeof(QueryRequest))]
     [ModelReaderWriterBuildable(typeof(QuerySerialization))]
+    [ModelReaderWriterBuildable(typeof(SessionCredentials))]
     [ModelReaderWriterBuildable(typeof(UserDelegationKey))]
     public partial class AzureStorageBlobsContext : ModelReaderWriterContext
     {

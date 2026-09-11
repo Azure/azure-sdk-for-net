@@ -1106,6 +1106,146 @@ namespace Azure.Storage.Files.DataLake.Models
             };
         #endregion GetPathTagResult
 
+        #region DataLakeFileLayoutEndpoint
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoint"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(
+            int index,
+            string value)
+            => new DataLakeFileLayoutEndpoint()
+            {
+                Index = index,
+                Value = value
+            };
+        #endregion DataLakeFileLayoutEndpoint
+
+        #region DataLakeFileLayoutEndpoints
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutEndpoints"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutEndpoints DataLakeFileLayoutEndpoints(
+            IEnumerable<DataLakeFileLayoutEndpoint> endpoint)
+            => new DataLakeFileLayoutEndpoints()
+            {
+                Endpoint = endpoint == null ? null : new List<DataLakeFileLayoutEndpoint>(endpoint)
+            };
+        #endregion DataLakeFileLayoutEndpoints
+
+        #region DataLakeFileLayoutRange
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRange"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRange DataLakeFileLayoutRange(
+            long start,
+            long end,
+            int endpointIndex)
+            => new DataLakeFileLayoutRange()
+            {
+                Start = start,
+                End = end,
+                EndpointIndex = endpointIndex
+            };
+        #endregion DataLakeFileLayoutRange
+
+        #region DataLakeFileLayoutRanges
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutRanges"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutRanges DataLakeFileLayoutRanges(
+            IEnumerable<DataLakeFileLayoutRange> range)
+            => new DataLakeFileLayoutRanges()
+            {
+                Range = range == null ? null : new List<DataLakeFileLayoutRange>(range)
+            };
+        #endregion DataLakeFileLayoutRanges
+
+        #region DataLakeFileLayoutInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.DataLakeFileLayoutInfo"/> instance for mocking.
+        /// </summary>
+        public static DataLakeFileLayoutInfo DataLakeFileLayoutInfo(
+            DataLakeFileLayoutRanges ranges,
+            DataLakeFileLayoutEndpoints endpoints,
+            DateTimeOffset lastModified,
+            DateTimeOffset createdOn,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus? fileCopyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            string accessTier,
+            bool accessTierInferred,
+            string smartAccessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangedOn,
+            DateTimeOffset expiresOn,
+            long fileContentLength,
+            string fileContentType,
+            string fileContentEncoding,
+            byte[] fileContentMD5,
+            DateTimeOffset fileCreatedOn)
+            => new DataLakeFileLayoutInfo()
+            {
+                Ranges = ranges,
+                Endpoints = endpoints,
+                LastModified = lastModified,
+                CreatedOn = createdOn,
+                Metadata = metadata,
+                CopyCompletedOn = copyCompletedOn,
+                CopyStatusDescription = copyStatusDescription,
+                CopyId = copyId,
+                CopyProgress = copyProgress,
+                CopySource = copySource,
+                CopyStatus = fileCopyStatus,
+                IsIncrementalCopy = isIncrementalCopy,
+                LeaseDuration = leaseDuration,
+                LeaseState = leaseState,
+                LeaseStatus = leaseStatus,
+                ContentLength = contentLength,
+                ContentType = contentType,
+                ETag = eTag,
+                ContentHash = contentHash,
+                ContentEncoding = contentEncoding,
+                ContentDisposition = contentDisposition,
+                ContentLanguage = contentLanguage,
+                CacheControl = cacheControl,
+                AcceptRanges = acceptRanges,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                AccessTier = accessTier,
+                AccessTierInferred = accessTierInferred,
+                SmartAccessTier = smartAccessTier,
+                ArchiveStatus = archiveStatus,
+                AccessTierChangedOn = accessTierChangedOn,
+                ExpiresOn = expiresOn,
+                FileContentLength = fileContentLength,
+                FileContentType = fileContentType,
+                FileContentEncoding = fileContentEncoding,
+                FileContentMD5 = fileContentMD5,
+                FileCreatedOn = fileCreatedOn
+            };
+        #endregion DataLakeFileLayoutInfo
+
         #region FileSystemAccessPolicy
         /// <summary>
         /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.

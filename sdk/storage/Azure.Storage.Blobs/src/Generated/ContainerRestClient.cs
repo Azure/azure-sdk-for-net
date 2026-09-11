@@ -778,6 +778,86 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
+        /// [Protocol Method] The Create Session operation enables users to create a session scoped to a container.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CreateSession(RequestContent content, int? timeout = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSessionRequest(content, timeout, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] The Create Session operation enables users to create a session scoped to a container.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CreateSessionAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.CreateSession");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateSessionRequest(content, timeout, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
+        /// <param name="createSessionConfiguration"> The configuration used to create the session. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<CreateSessionResponse> CreateSession(CreateSessionConfiguration createSessionConfiguration, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            Response result = CreateSession(createSessionConfiguration, timeout, cancellationToken.ToRequestContext());
+            return Response.FromValue((CreateSessionResponse)result, result);
+        }
+
+        /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
+        /// <param name="createSessionConfiguration"> The configuration used to create the session. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionConfiguration createSessionConfiguration, int? timeout = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await CreateSessionAsync(createSessionConfiguration, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((CreateSessionResponse)result, result);
+        }
+
+        /// <summary>
         /// [Protocol Method] Allows multiple API calls to be embedded into a single HTTP request.
         /// <list type="bullet">
         /// <item>
