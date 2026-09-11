@@ -150,11 +150,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         /// <summary> The last time the mover was synchronized. </summary>
-        public DateTimeOffset? MoverSyncedOn
+        public DateTimeOffset? MoverSyncedUntil
         {
             get
             {
-                return Properties is null ? default : Properties.MoverSyncedOn;
+                return Properties is null ? default : Properties.MoverSyncedUntil;
             }
             set
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     Properties = new JobDefinitionUpdateProperties();
                 }
-                Properties.MoverSyncedOn = value;
+                Properties.MoverSyncedUntil = value;
             }
         }
     }

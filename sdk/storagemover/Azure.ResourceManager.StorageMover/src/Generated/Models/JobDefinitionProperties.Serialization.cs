@@ -201,10 +201,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode);
             }
-            if (Optional.IsDefined(MoverSyncedOn))
+            if (Optional.IsDefined(MoverSyncedUntil))
             {
                 writer.WritePropertyName("moverSyncedUntil"u8);
-                writer.WriteStringValue(MoverSyncedOn.Value, "O");
+                writer.WriteStringValue(MoverSyncedUntil.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             string crossTenantEndpointTenantId = default;
             ResourceIdentifier crossTenantEndpointResourceId = default;
             string syncMode = default;
-            DateTimeOffset? moverSyncedOn = default;
+            DateTimeOffset? moverSyncedUntil = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    moverSyncedOn = prop.Value.GetDateTimeOffset("O");
+                    moverSyncedUntil = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 crossTenantEndpointTenantId,
                 crossTenantEndpointResourceId,
                 syncMode,
-                moverSyncedOn,
+                moverSyncedUntil,
                 additionalBinaryDataProperties);
         }
     }

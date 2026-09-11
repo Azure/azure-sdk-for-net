@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="dataIntegrityValidation"> Data Integrity Validation mode. </param>
         /// <param name="schedule"> Schedule information for the Job Definition. </param>
         /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
-        /// <param name="moverSyncedOn"> The last time the mover was synchronized. </param>
+        /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionUpdateProperties(string description, StorageMoverCopyMode? copyMode, string agentName, IList<ResourceIdentifier> connections, StorageMoverDataIntegrityValidation? dataIntegrityValidation, StorageMoverScheduleInfo schedule, string syncMode, DateTimeOffset? moverSyncedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionUpdateProperties(string description, StorageMoverCopyMode? copyMode, string agentName, IList<ResourceIdentifier> connections, StorageMoverDataIntegrityValidation? dataIntegrityValidation, StorageMoverScheduleInfo schedule, string syncMode, DateTimeOffset? moverSyncedUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             CopyMode = copyMode;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             DataIntegrityValidation = dataIntegrityValidation;
             Schedule = schedule;
             SyncMode = syncMode;
-            MoverSyncedOn = moverSyncedOn;
+            MoverSyncedUntil = moverSyncedUntil;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string SyncMode { get; set; }
 
         /// <summary> The last time the mover was synchronized. </summary>
-        public DateTimeOffset? MoverSyncedOn { get; set; }
+        public DateTimeOffset? MoverSyncedUntil { get; set; }
     }
 }

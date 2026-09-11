@@ -577,10 +577,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// target-tenant copy this is the SOURCE endpoint.
         /// </param>
         /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
-        /// <param name="moverSyncedOn"> The last time the mover was synchronized. </param>
+        /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <param name="sourceTargetMapValue"> Gets the Value. </param>
         /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
-        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, JobType? jobType = default, StorageMoverCopyMode copyMode = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, string sourceSubpath = default, string targetName = default, ResourceIdentifier targetResourceId = default, string targetSubpath = default, string latestJobRunName = default, ResourceIdentifier latestJobRunResourceId = default, JobRunStatus? latestJobRunStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverScheduleInfo schedule = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, bool? isPermissionsPreserved = default, bool? isCrossTenantJob = default, string crossTenantEndpointTenantId = default, ResourceIdentifier crossTenantEndpointResourceId = default, string syncMode = default, DateTimeOffset? moverSyncedOn = default, IEnumerable<SourceTargetMap> sourceTargetMapValue = default)
+        public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, JobType? jobType = default, StorageMoverCopyMode copyMode = default, string sourceName = default, ResourceIdentifier sourceResourceId = default, string sourceSubpath = default, string targetName = default, ResourceIdentifier targetResourceId = default, string targetSubpath = default, string latestJobRunName = default, ResourceIdentifier latestJobRunResourceId = default, JobRunStatus? latestJobRunStatus = default, string agentName = default, ResourceIdentifier agentResourceId = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverScheduleInfo schedule = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, bool? isPermissionsPreserved = default, bool? isCrossTenantJob = default, string crossTenantEndpointTenantId = default, ResourceIdentifier crossTenantEndpointResourceId = default, string syncMode = default, DateTimeOffset? moverSyncedUntil = default, IEnumerable<SourceTargetMap> sourceTargetMapValue = default)
         {
             return new JobDefinitionData(
                 id,
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="dataIntegrityValidation"> Data Integrity Validation mode. </param>
         /// <param name="schedule"> Schedule information for the Job Definition. </param>
         /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
-        /// <param name="moverSyncedOn"> The last time the mover was synchronized. </param>
+        /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <returns> A new <see cref="Models.JobDefinitionPatch"/> instance for mocking. </returns>
-        public static JobDefinitionPatch JobDefinitionPatch(string description = default, StorageMoverCopyMode? copyMode = default, string agentName = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, StorageMoverScheduleInfo schedule = default, string syncMode = default, DateTimeOffset? moverSyncedOn = default)
+        public static JobDefinitionPatch JobDefinitionPatch(string description = default, StorageMoverCopyMode? copyMode = default, string agentName = default, IEnumerable<ResourceIdentifier> connections = default, StorageMoverDataIntegrityValidation? dataIntegrityValidation = default, StorageMoverScheduleInfo schedule = default, string syncMode = default, DateTimeOffset? moverSyncedUntil = default)
         {
-            return new JobDefinitionPatch(description is null && copyMode is null && agentName is null && connections is null && dataIntegrityValidation is null && schedule is null && syncMode is null && moverSyncedOn is null ? default : new JobDefinitionUpdateProperties(
+            return new JobDefinitionPatch(description is null && copyMode is null && agentName is null && connections is null && dataIntegrityValidation is null && schedule is null && syncMode is null && moverSyncedUntil is null ? default : new JobDefinitionUpdateProperties(
                 description,
                 copyMode,
                 agentName,
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 dataIntegrityValidation,
                 schedule,
                 syncMode,
-                moverSyncedOn,
+                moverSyncedUntil,
                 default), default);
         }
 
