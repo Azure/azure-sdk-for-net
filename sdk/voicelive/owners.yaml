@@ -1,0 +1,12 @@
+# Ownership for the voicelive service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.VoiceLive/
+    owners: [amber-yujueWang, emilyjiji, pankopon, rhurey, xitzhang]
+    pr-labels: [Voice Live]
+
+label-owners:
+  - labels: [Voice Live]
+    service-owners: [rhurey, xitzhang, yulin-li]

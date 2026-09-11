@@ -1,0 +1,51 @@
+# Ownership for the storage service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Blobs.Batch/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Blobs.ChangeFeed/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Blobs/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Common/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.DataMovement.Blobs/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.DataMovement.Files.Shares/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.DataMovement/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Files.DataLake/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Files.Shares/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Azure.Storage.Queues/
+    owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    pr-labels: [Storage]
+  - path: Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/
+    owners: [amnguye, fabiocav, jalauzon-msft, jaschrep-msft, mathewc, nickliu-msft, seanmcc-msft, tg-msft]
+    pr-labels: [Storage]
+  - path: Microsoft.Azure.WebJobs.Extensions.Storage.Queues/
+    owners: [amnguye, fabiocav, jalauzon-msft, jaschrep-msft, mathewc, nickliu-msft, seanmcc-msft, tg-msft]
+    pr-labels: [Storage]
+  - path: Microsoft.Azure.WebJobs.Extensions.Storage/
+    owners: [amnguye, fabiocav, jalauzon-msft, jaschrep-msft, mathewc, nickliu-msft, seanmcc-msft, tg-msft]
+    pr-labels: [Storage]
+
+label-owners:
+  - labels: [Storage]
+    service-owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]

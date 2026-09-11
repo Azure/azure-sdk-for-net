@@ -1,0 +1,15 @@
+# Ownership for the webpubsub service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [JialinXin, vicancy]
+    pr-labels: [WebPubSub]
+  - path: Microsoft.Azure.WebJobs.Extensions.WebPubSub/
+    owners: [JialinXin, vicancy, Y-Sindo]
+    pr-labels: [WebPubSub]
+
+label-owners:
+  - labels: [WebPubSub]
+    service-owners: [JialinXin, vicancy]

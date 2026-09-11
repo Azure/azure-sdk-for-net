@@ -1,0 +1,16 @@
+# Ownership for the template service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [danieljurek]
+    pr-labels: [EngSys]
+  - path: Azure.Template/
+    owners: [danieljurek, lmazuel]
+    pr-labels: [EngSys]
+
+label-owners:
+  - labels: [EngSys]
+    service-owners: [danieljurek, lmazuel]
+    azure-sdk-owners: [danieljurek]

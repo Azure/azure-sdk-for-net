@@ -1,0 +1,12 @@
+# Ownership for the keyvault service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Azure/azure-sdk-write-keyvault]
+    pr-labels: [KeyVault]
+
+label-owners:
+  - labels: [KeyVault]
+    service-owners: [Azure/azure-sdk-write-keyvault]

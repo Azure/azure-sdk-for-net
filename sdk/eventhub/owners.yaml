@@ -1,0 +1,19 @@
+# Ownership for the eventhub service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [axisc, hmlam, j7nw4r, jsquire, sagar0207, sjkwak, SwayGom]
+    pr-labels: [Event Hubs]
+  - path: Microsoft.Azure.WebJobs.Extensions.EventHubs/
+    owners: [axisc, hmlam, j7nw4r, jsquire, sagar0207, sjkwak, SwayGom]
+    pr-labels: [Event Hubs, Functions]
+
+label-owners:
+  - labels: [Event Hubs]
+    service-owners: [axisc, hmlam, j7nw4r, sagar0207, sjkwak, SwayGom]
+    azure-sdk-owners: [jsquire]
+  - labels: [Functions]
+    service-owners: [fabiocav, mathewc, alrod]
+    azure-sdk-owners: [jsquire]

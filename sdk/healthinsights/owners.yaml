@@ -1,0 +1,12 @@
+# Ownership for the healthinsights service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [asaflevi-ms, koen-mertens, tomsft]
+    pr-labels: [Cognitive - Health Insights]
+
+label-owners:
+  - labels: [Cognitive - Health Insights]
+    service-owners: [asaflevi-ms]

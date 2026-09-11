@@ -1,0 +1,12 @@
+# Ownership for the compute service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [haagha, melina5656, TravisCragg-MSFT]
+    pr-labels: [Compute]
+
+label-owners:
+  - labels: [Compute]
+    service-owners: [Drewm3, hilaryw29, sandeepraichura, TravisCragg-MSFT, ushnaarshadkhan]

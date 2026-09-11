@@ -1,0 +1,12 @@
+# Ownership for the attestation service directory.
+
+version: 1
+
+paths:
+  - path: Azure.Security.Attestation/
+    owners: [Azure/azure-sdk-write-attestation, gkostal]
+    pr-labels: [Attestation]
+
+label-owners:
+  - labels: [Attestation]
+    service-owners: [Azure/azure-sdk-write-attestation]

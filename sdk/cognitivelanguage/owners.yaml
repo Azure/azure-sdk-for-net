@@ -1,0 +1,18 @@
+# Ownership for the cognitivelanguage service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [ahmedaashour, bidisha-c, mikaelsitruk, quentinRobinson, sarkar-rajarshi]
+    pr-labels: [Cognitive - Language]
+  - path: Azure.AI.Language.QuestionAnswering.Authoring/
+    owners: [ahmedaashour, Amichelangelo, bidisha-c, mikaelsitruk, quentinRobinson, sarkar-rajarshi]
+    pr-labels: [Cognitive - Language]
+  - path: Azure.AI.Language.QuestionAnswering.Inference/
+    owners: [ahmedaashour, Amichelangelo, bidisha-c, mikaelsitruk, quentinRobinson, sarkar-rajarshi]
+    pr-labels: [Cognitive - Language]
+
+label-owners:
+  - labels: [Cognitive - Language]
+    service-owners: [quentinRobinson, sarkar-rajarshi]

@@ -1,0 +1,12 @@
+# Ownership for the schemaregistry service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [axisc, hmlam, sjkwak]
+    pr-labels: [Schema Registry]
+
+label-owners:
+  - labels: [Schema Registry]
+    service-owners: [axisc, hmlam, sjkwak]

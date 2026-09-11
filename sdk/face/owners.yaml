@@ -1,0 +1,12 @@
+# Ownership for the face service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Han-msft, leareai, longli0, ShaoAnLin]
+    pr-labels: [Cognitive - Face]
+
+label-owners:
+  - labels: [Cognitive - Face]
+    service-owners: [Han-msft, leareai, longli0, ShaoAnLin]

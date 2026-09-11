@@ -1,0 +1,12 @@
+# Ownership for the postgresql service directory.
+
+version: 1
+
+paths:
+  - path: Microsoft.Azure.PostgreSQL.Auth/
+    owners: [alxhghs, carlovi81, mattboentoro, nasc17, nehrao1, rmendiza]
+    pr-labels: [PostgreSQL Auth]
+
+label-owners:
+  - labels: [PostgreSQL Auth]
+    service-owners: [alxhghs, carlovi81, mattboentoro, nasc17, nehrao1, rmendiza]

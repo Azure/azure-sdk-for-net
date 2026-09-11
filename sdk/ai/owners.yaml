@@ -1,0 +1,26 @@
+# Ownership for the ai service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.Extensions.OpenAI/
+    owners: [rhurey]
+    pr-labels: [AI Projects]
+  - path: Azure.AI.Projects.Agents/
+    owners: [rhurey]
+    pr-labels: [AI Projects]
+  - path: "."
+    owners: [dargilco, glharper, nick863, trangevi, trrwilson]
+    pr-labels: [AI Model Inference, AI Projects]
+  - path: Azure.AI.Inference/
+    owners: [dargilco, glharper, trangevi]
+    pr-labels: [AI Model Inference]
+  - path: Azure.AI.Projects/
+    owners: [dargilco, nick863, rhurey, trangevi, trrwilson]
+    pr-labels: [AI Projects]
+
+label-owners:
+  - labels: [AI Model Inference]
+    service-owners: [dargilco, glharper, trangevi]
+  - labels: [AI Projects]
+    service-owners: [dargilco, nick863, trangevi]

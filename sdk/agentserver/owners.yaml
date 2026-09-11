@@ -1,0 +1,21 @@
+# Ownership for the agentserver service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.AgentServer.Core/
+    owners: [Shivakishore14]
+    pr-labels: [AI Agents]
+  - path: Azure.AI.AgentServer.Invocations/
+    owners: [Shivakishore14]
+    pr-labels: [AI Agents]
+  - path: Azure.AI.AgentServer.Responses/
+    owners: [Shivakishore14]
+    pr-labels: [AI Agents]
+  - path: "."
+    owners: [ankitbko, RaviPidaparthi, Shivakishore14, vangarp]
+    pr-labels: [AI Agents]
+
+label-owners:
+  - labels: [AI Agents]
+    service-owners: [ankitbko, RaviPidaparthi, Shivakishore14, vangarp]

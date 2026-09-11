@@ -1,0 +1,34 @@
+# Ownership for the monitor service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Azure/azure-sdk-write-monitor-data-plane]
+    pr-labels: [Monitor]
+  - path: Azure.Monitor.Ingestion/
+    owners: [Azure/azure-sdk-write-monitor-data-plane]
+    pr-labels: [Monitor]
+  - path: Azure.Monitor.OpenTelemetry.AspNetCore/
+    owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+    pr-labels: [Monitor - Distro]
+  - path: Azure.Monitor.OpenTelemetry.sln
+    owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+    pr-labels: [Monitor - Distro]
+  - path: Azure.Monitor.OpenTelemetry.Exporter/
+    owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+    pr-labels: [Monitor - Exporter]
+  - path: Azure.Monitor.Query.Logs/
+    owners: [Azure/azure-sdk-write-monitor-query-logs]
+    pr-labels: [Monitor - Query]
+  - path: Azure.Monitor.Query.Metrics/
+    owners: [Azure/azure-sdk-write-monitor-query-metrics]
+    pr-labels: [Monitor - Query]
+
+label-owners:
+  - labels: [Monitor - Distro]
+    service-owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+  - labels: [Monitor - Exporter]
+    service-owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+  - labels: [Monitor - Query]
+    service-owners: [ToddKingMSFT]

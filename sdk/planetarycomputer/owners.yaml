@@ -1,0 +1,12 @@
+# Ownership for the planetarycomputer service directory.
+
+version: 1
+
+paths:
+  - path: Azure.Analytics.PlanetaryComputer/
+    owners: [chahibi, karthick-rn, mandarinamdar]
+    pr-labels: [Planetary Computer]
+
+label-owners:
+  - labels: [Planetary Computer]
+    service-owners: [chahibi, karthick-rn, mandarinamdar]

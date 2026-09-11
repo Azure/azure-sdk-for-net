@@ -1,0 +1,12 @@
+# Ownership for the storagesync service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [ankushbindlish2, anpint]
+    pr-labels: [Storage]
+
+label-owners:
+  - labels: [Storage]
+    service-owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]

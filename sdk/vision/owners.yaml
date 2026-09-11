@@ -1,0 +1,12 @@
+# Ownership for the vision service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.Vision.ImageAnalysis/
+    owners: [dargilco, rhurey]
+    pr-labels: [Image Analysis]
+
+label-owners:
+  - labels: [Image Analysis]
+    service-owners: [dargilco, rhurey]

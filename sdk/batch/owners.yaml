@@ -1,0 +1,12 @@
+# Ownership for the batch service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [cRui861, dpwatrous, iwang2, lilinvictorms, skapur12, wanghoppe, wiboris, xingwu1]
+    pr-labels: [Batch]
+
+label-owners:
+  - labels: [Batch]
+    service-owners: [dpwatrous, iwang2, lilinvictorms, wiboris, xingwu1]

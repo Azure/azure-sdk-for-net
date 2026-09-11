@@ -1,0 +1,18 @@
+# Ownership for the translation service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [jrjrguo]
+    pr-labels: [Cognitive - Translator]
+  - path: Azure.AI.Translation.Document/
+    owners: [jrjrguo, quentinRobinson]
+    pr-labels: [Cognitive - Translator]
+  - path: Azure.AI.Translation.Text/
+    owners: [jrjrguo, quentinRobinson]
+    pr-labels: [Cognitive - Translator]
+
+label-owners:
+  - labels: [Cognitive - Translator]
+    service-owners: [jrjrguo, quentinRobinson]
