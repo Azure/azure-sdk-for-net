@@ -314,6 +314,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// Nothing in this process maps a previous run's directory back to an endpoint, so the report
+        /// names the directory rather than inventing an endpoint for it.
+        /// </summary>
+        [Fact]
+        public void EvictingAPreviousRunsTelemetryReportsTheDirectoryItCameFrom()
+        {
+            const long Budget = 8192;
+
+            var abandoned = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash("https://gone-away.in.applicationinsights.azure.com/"));
+            WriteBlobFile(abandoned, DateTime.UtcNow.AddHours(-1), 4096);
+
+            using var storage = CreateStorage(Budget);
+            var eastUs = storage.TryGet(EastUs)!;
+            var payload = new byte[4096];
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+
+            var evicted = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryEvicted"));
+            Assert.Equal(Path.GetFileName(abandoned), evicted.Payload![0]);
+            Assert.Equal(EastUs, evicted.Payload[2]);
+        }
+
+        /// <summary>
         /// Eviction used to run a fixed number of rounds and then write regardless, so a root full of
         /// blobs smaller than the incoming batch lost that many blobs and either overshot the budget
         /// or dropped the payload anyway.

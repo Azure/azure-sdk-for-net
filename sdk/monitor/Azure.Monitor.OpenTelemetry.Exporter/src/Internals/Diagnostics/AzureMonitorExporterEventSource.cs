@@ -614,16 +614,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void MultiTenantPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
 
         [NonEvent]
-        public void RoutedTelemetryEvicted(string evictedPath, long evictedBytes, string requestingEndpoint)
+        public void RoutedTelemetryEvicted(string evictedOwner, long evictedBytes, string requestingEndpoint)
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                RoutedTelemetryEvicted(evictedPath, evictedBytes.ToString(System.Globalization.CultureInfo.InvariantCulture), requestingEndpoint);
+                RoutedTelemetryEvicted(evictedOwner, evictedBytes.ToString(System.Globalization.CultureInfo.InvariantCulture), requestingEndpoint);
             }
         }
 
-        [Event(70, Message = "Evicted stored telemetry '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
-        public void RoutedTelemetryEvicted(string evictedPath, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedPath, evictedBytes, requestingEndpoint);
+        [Event(70, Message = "Evicted stored telemetry owned by '{0}' ({1} bytes) to make room for a write from ingestion endpoint '{2}'. The owner is an ingestion endpoint, or a storage directory name when the partition was left by an earlier run. The evicted telemetry was never transmitted and is lost.", Level = EventLevel.Warning)]
+        public void RoutedTelemetryEvicted(string evictedOwner, string evictedBytes, string requestingEndpoint) => WriteEvent(70, evictedOwner, evictedBytes, requestingEndpoint);
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.

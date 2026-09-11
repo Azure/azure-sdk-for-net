@@ -434,8 +434,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         }
 
         /// <summary>
-        /// Names the endpoint that owned an evicted blob. The directory is a one-way hash, so an
-        /// unopened partition can only be reported by its directory.
+        /// Names the endpoint that owned an evicted blob. The directory is a one-way hash, so a
+        /// partition left by an earlier run can only be reported by its directory name.
         /// </summary>
         private string DescribeOwner(string path)
         {
@@ -449,7 +449,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 }
             }
 
-            return directory ?? path;
+            return Path.GetFileName(directory) ?? path;
         }
 
         private readonly struct EvictionCandidate
