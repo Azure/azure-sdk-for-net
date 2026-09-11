@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceNodeCustomization;
 using Azure.ResourceManager.Models;
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Models
     public static partial class ArmContainerServiceNodeCustomizationModelFactory
     {
 
+        /// <summary> The Node Customization resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Models
                 default);
         }
 
+        /// <summary> The properties of the Node Customization resource. </summary>
         /// <param name="containerImages"> The list of container images to cache on nodes. See https://kubernetes.io/docs/concepts/containers/images/#image-names. </param>
         /// <param name="identityProfile">
         /// The identity used to execute node customization tasks during image build time and provisioning time. 
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Models
                 default);
         }
 
+        /// <summary> Node customization script. </summary>
         /// <param name="name">
         /// The name for the customization script. 
         /// Must be unique within the node customization resource.
@@ -92,6 +94,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the NodeCustomization. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NodeCustomizationPatch"/> instance for mocking. </returns>
         public static NodeCustomizationPatch NodeCustomizationPatch(IDictionary<string, string> tags = default)
@@ -101,6 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceNodeCustomization.Models
             return new NodeCustomizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> A version of the Node Customization resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
