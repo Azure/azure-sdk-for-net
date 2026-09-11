@@ -41,24 +41,6 @@ namespace Azure.ResourceManager.Sql.Models
         [WirePath("properties")]
         internal SensitivityLabelUpdateProperties Properties { get; set; }
 
-        /// <summary> The sensitivity label information to apply on a column. </summary>
-        [WirePath("properties.sensitivityLabel")]
-        public SensitivityLabelData SensitivityLabel
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SensitivityLabel;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelUpdateProperties();
-                }
-                Properties.SensitivityLabel = value;
-            }
-        }
-
         /// <summary> Gets or sets the Op. </summary>
         [WirePath("properties.op")]
         public SensitivityLabelUpdateKind? Op
@@ -131,6 +113,24 @@ namespace Azure.ResourceManager.Sql.Models
                     Properties = new SensitivityLabelUpdateProperties();
                 }
                 Properties.Column = value;
+            }
+        }
+
+        /// <summary> The sensitivity label information to apply on a column. </summary>
+        [WirePath("properties.sensitivityLabel")]
+        public SensitivityLabelData SensitivityLabel
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SensitivityLabel;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SensitivityLabelUpdateProperties();
+                }
+                Properties.SensitivityLabel = value;
             }
         }
     }

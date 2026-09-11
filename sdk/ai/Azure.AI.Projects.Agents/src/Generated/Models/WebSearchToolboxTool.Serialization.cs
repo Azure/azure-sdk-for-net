@@ -6,7 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 using OpenAI;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -125,9 +127,9 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             WebSearchToolFilters filters = default;
-            WebSearchApproximateLocation userLocation = default;
+            WebSearchToolApproximateLocation userLocation = default;
             WebSearchToolSearchContextSize? searchContextSize = default;
-            ProjectWebSearchConfiguration customSearchConfiguration = default;
+            WebSearchConfiguration customSearchConfiguration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -154,7 +156,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -166,7 +175,7 @@ namespace Azure.AI.Projects.Agents
                         filters = null;
                         continue;
                     }
-                    filters = WebSearchToolFilters.DeserializeWebSearchToolFilters(prop.Value, options);
+                    filters = ModelReaderWriter.Read<WebSearchToolFilters>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("user_location"u8))
@@ -176,7 +185,7 @@ namespace Azure.AI.Projects.Agents
                         userLocation = null;
                         continue;
                     }
-                    userLocation = WebSearchApproximateLocation.DeserializeWebSearchApproximateLocation(prop.Value, options);
+                    userLocation = ModelReaderWriter.Read<WebSearchToolApproximateLocation>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("search_context_size"u8))
@@ -194,7 +203,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    customSearchConfiguration = ProjectWebSearchConfiguration.DeserializeProjectWebSearchConfiguration(prop.Value, options);
+                    customSearchConfiguration = ModelReaderWriter.Read<WebSearchConfiguration>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

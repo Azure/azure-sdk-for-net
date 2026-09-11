@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Billing
         private readonly string _billingAccountName;
         private readonly string _billingProfileName;
         private readonly string _customerName;
-        private readonly DateTimeOffset _periodStartDate;
-        private readonly DateTimeOffset _periodEndDate;
+        private readonly DateTimeOffset _periodStartsOn;
+        private readonly DateTimeOffset _periodEndsOn;
         private readonly string _type;
         private readonly string _filter;
         private readonly string _orderBy;
@@ -38,8 +38,8 @@ namespace Azure.ResourceManager.Billing
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
         /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
         /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
-        /// <param name="periodStartDate"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date to fetch the transactions. The date should be specified in MM-DD-YYYY format. </param>
         /// <param name="type"> The type of transaction. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public TransactionsGetByCustomerAsyncCollectionResultOfT(Transactions client, string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartDate, DateTimeOffset periodEndDate, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public TransactionsGetByCustomerAsyncCollectionResultOfT(Transactions client, string billingAccountName, string billingProfileName, string customerName, DateTimeOffset periodStartsOn, DateTimeOffset periodEndsOn, string @type, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
             _billingProfileName = billingProfileName;
             _customerName = customerName;
-            _periodStartDate = periodStartDate;
-            _periodEndDate = periodEndDate;
+            _periodStartsOn = periodStartsOn;
+            _periodEndsOn = periodEndsOn;
             _type = @type;
             _filter = filter;
             _orderBy = orderBy;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByCustomerRequest(nextLink, _billingAccountName, _billingProfileName, _customerName, _periodStartDate, _periodEndDate, _type, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByCustomerRequest(_billingAccountName, _billingProfileName, _customerName, _periodStartDate, _periodEndDate, _type, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByCustomerRequest(nextLink, _billingAccountName, _billingProfileName, _customerName, _periodStartsOn, _periodEndsOn, _type, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByCustomerRequest(_billingAccountName, _billingProfileName, _customerName, _periodStartsOn, _periodEndsOn, _type, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

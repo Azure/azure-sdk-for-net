@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Support.Models
             }
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
-            if (Optional.IsDefined(ProblemStartOn))
+            if (Optional.IsDefined(ProblemStartsOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
-                writer.WriteStringValue(ProblemStartOn.Value, "O");
+                writer.WriteStringValue(ProblemStartsOn.Value, "O");
             }
             writer.WritePropertyName("serviceId"u8);
             writer.WriteStringValue(ServiceId);
@@ -208,6 +208,16 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("communityForumPost"u8);
                 writer.WriteStringValue(CommunityForumPost);
             }
+            if (options.Format != "W" && Optional.IsDefined(SupportChannel))
+            {
+                writer.WritePropertyName("supportChannel"u8);
+                writer.WriteStringValue(SupportChannel.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChatConversationStatus))
+            {
+                writer.WritePropertyName("chatConversationStatus"u8);
+                writer.WriteStringValue(ChatConversationStatus.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -266,7 +276,7 @@ namespace Azure.ResourceManager.Support.Models
             string supportPlanType = default;
             string supportPlanDisplayName = default;
             string title = default;
-            DateTimeOffset? problemStartOn = default;
+            DateTimeOffset? problemStartsOn = default;
             string serviceId = default;
             string serviceDisplayName = default;
             string status = default;
@@ -279,6 +289,8 @@ namespace Azure.ResourceManager.Support.Models
             IList<SecondaryConsent> secondaryConsent = default;
             SupportDirectConnectEscalation directConnectEscalation = default;
             string communityForumPost = default;
+            SupportChannel? supportChannel = default;
+            ChatConversationStatus? chatConversationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -380,7 +392,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    problemStartOn = prop.Value.GetDateTimeOffset("O");
+                    problemStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("serviceId"u8))
@@ -476,6 +488,24 @@ namespace Azure.ResourceManager.Support.Models
                     communityForumPost = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("supportChannel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportChannel = new SupportChannel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("chatConversationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    chatConversationStatus = new ChatConversationStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -498,7 +528,7 @@ namespace Azure.ResourceManager.Support.Models
                 supportPlanType,
                 supportPlanDisplayName,
                 title,
-                problemStartOn,
+                problemStartsOn,
                 serviceId,
                 serviceDisplayName,
                 status,
@@ -511,6 +541,8 @@ namespace Azure.ResourceManager.Support.Models
                 secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>(),
                 directConnectEscalation,
                 communityForumPost,
+                supportChannel,
+                chatConversationStatus,
                 additionalBinaryDataProperties);
         }
     }

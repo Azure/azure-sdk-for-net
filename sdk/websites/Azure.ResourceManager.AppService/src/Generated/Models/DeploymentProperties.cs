@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="author"> Who authored the deployment. </param>
         /// <param name="deployer"> Who performed the deployment. </param>
         /// <param name="authorEmail"> Author email. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
+        /// <param name="startsOn"> Start time. </param>
+        /// <param name="endsOn"> End time. </param>
         /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
         /// <param name="details"> Details on deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentProperties(int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isActive, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentProperties(int? status, string message, string author, string deployer, string authorEmail, DateTimeOffset? startsOn, DateTimeOffset? endsOn, bool? isActive, string details, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Message = message;
             Author = author;
             Deployer = deployer;
             AuthorEmail = authorEmail;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             IsActive = isActive;
             Details = details;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time. </summary>
         [WirePath("start_time")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time. </summary>
         [WirePath("end_time")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> True if deployment is currently active, false if completed and null if not started. </summary>
         [WirePath("active")]

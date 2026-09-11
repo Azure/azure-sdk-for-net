@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Extensions.OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -83,13 +84,13 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(RequireApproval))
+            if (Optional.IsDefined(RequireApprovalInternal))
             {
                 writer.WritePropertyName("require_approval"u8);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApproval);
+                writer.WriteRawValue(RequireApprovalInternal);
 #else
-                using (JsonDocument document = JsonDocument.Parse(RequireApproval))
+                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -129,7 +130,7 @@ namespace Azure.AI.Projects.Agents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
             string serverLabel = default;
-            BinaryData requireApproval = default;
+            BinaryData requireApprovalInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -156,7 +157,14 @@ namespace Azure.AI.Projects.Agents
                     Dictionary<string, ToolConfig> dictionary = new Dictionary<string, ToolConfig>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ToolConfig.DeserializeToolConfig(prop0.Value, options));
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, ModelReaderWriter.Read<ToolConfig>(prop0.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default));
+                        }
                     }
                     toolConfigs = dictionary;
                     continue;
@@ -175,10 +183,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApproval = null;
+                        requireApprovalInternal = null;
                         continue;
                     }
-                    requireApproval = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")
@@ -194,7 +202,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties,
                 projectConnectionId,
                 serverLabel,
-                requireApproval);
+                requireApprovalInternal);
         }
     }
 }

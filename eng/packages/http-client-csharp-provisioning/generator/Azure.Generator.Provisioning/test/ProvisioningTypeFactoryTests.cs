@@ -483,7 +483,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void CustomBasePropertyDoesNotReplaceDiscriminator()
+        public void CustomBasePropertyDoesNotReplaceDerivedDiscriminator()
         {
             var discriminator = CreateProperty("kind", InputPrimitiveType.String, isDiscriminator: true);
             var baseModel = new InputModelType(
@@ -507,7 +507,7 @@ namespace Azure.Generator.Provisioning.Tests
                 false);
             var derivedModel = CreateDerivedModel("DerivedModel", "derived", baseModel);
             ((IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes).Add("derived", derivedModel);
-            var factory = ProvisioningMockHelpers.LoadMockPlugin(
+            var generator = ProvisioningMockHelpers.LoadMockPlugin(
                 inputModels: () => [baseModel, derivedModel],
                 armProviderSchema: () => new ArmProviderSchema([], []),
                 customizationSources:
@@ -525,20 +525,20 @@ namespace Azure.Generator.Provisioning.Tests
                         }
                     }
                     """
-                ])
-                .Object.TypeFactory;
+                ]);
+            var factory = generator.Object.TypeFactory;
 
             var provider = factory.CreateModel(baseModel)!;
-            var property = provider.Properties.Single();
             var derivedProvider = factory.CreateModel(derivedModel)!;
+            var property = derivedProvider.Properties.Single();
             var constructorBody = derivedProvider.Constructors.Single().BodyStatements!.ToDisplayString();
 
             Assert.That(provider.BaseType?.Name, Is.EqualTo("CustomBase"));
+            Assert.That(provider.Properties, Is.Empty);
             Assert.That(property.Name, Is.EqualTo("@Kind"));
             Assert.That(property.IsDiscriminator, Is.True);
             Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
             Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.New), Is.True);
-            Assert.That(derivedProvider.Properties, Is.Empty);
             Assert.That(constructorBody, Does.Contain("@Kind.Assign(\"derived\");"));
         }
 
