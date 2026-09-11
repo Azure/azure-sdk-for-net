@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of <see cref="SubscriptionUpdateParameterProperties"/>. </summary>
         /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
-        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expiresOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="displayName"> Subscription name. </param>
         /// <param name="primaryKey"> Primary subscription key. </param>
         /// <param name="secondaryKey"> Secondary subscription key. </param>
@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionUpdateParameterProperties(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionUpdateParameterProperties(string ownerId, string scope, DateTimeOffset? expiresOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OwnerId = ownerId;
             Scope = scope;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             DisplayName = displayName;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Subscription name. </summary>
         [WirePath("displayName")]

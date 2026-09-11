@@ -61,50 +61,6 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        internal static void FixConstructorCalls(IReadOnlyList<MethodProvider> methods)
-        {
-            foreach (var method in methods)
-            {
-                if (method.BodyStatements is null || !method.Signature.Name.StartsWith("Deserialize", StringComparison.Ordinal))
-                {
-                    continue;
-                }
-
-                var updatedBodyStatements = new List<MethodBodyStatement>();
-                var bodyUpdated = false;
-                var unusedLocalVariables = new HashSet<VariableExpression>();
-                foreach (var statement in method.BodyStatements)
-                {
-                    if (statement is ExpressionStatement { Expression: KeywordExpression { Expression: NewInstanceExpression newInstanceExpression } }
-                        && TryRebuildNewInstanceFromNamedArguments(newInstanceExpression, out var updatedArguments, out var unusedArguments))
-                    {
-                        foreach (var unusedArgument in unusedArguments)
-                        {
-                            if (unusedArgument is VariableExpression unusedVariable)
-                            {
-                                unusedLocalVariables.Add(unusedVariable);
-                            }
-                        }
-                        updatedBodyStatements.Add(Return(New.Instance(newInstanceExpression.Type!, updatedArguments)));
-                        bodyUpdated = true;
-                    }
-                    else
-                    {
-                        updatedBodyStatements.Add(statement);
-                    }
-                }
-
-                if (bodyUpdated)
-                {
-                    if (unusedLocalVariables.Count > 0)
-                    {
-                        updatedBodyStatements.RemoveAll(statement => IsUnusedLocalDeclaration(statement, unusedLocalVariables));
-                    }
-                    method.Update(bodyStatements: updatedBodyStatements);
-                }
-            }
-        }
-
         /// <summary>
         /// Updates hidden compatibility overload bodies so old parameters still flow into the current flattened model shape.
         /// Input is the complete model factory method list; output is in-place method body updates for repairable overloads.
@@ -197,9 +153,17 @@ namespace Azure.Generator.Management.Visitors
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
-            foreach (var constructorParameter in constructorParameters)
+            for (var constructorParameterIndex = 0; constructorParameterIndex < constructorParameters.Count; constructorParameterIndex++)
             {
+                var constructorParameter = constructorParameters[constructorParameterIndex];
+                // Parameters referenced by this constructor slot belong to that slot and remain available while it is
+                // rebuilt. Only references from sibling slots make a same-named nested parameter ambiguous. This keeps
+                // the repair idempotent when it runs once during visitation and again after constructors are finalized.
+                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                    method,
+                    constructorParameters,
+                    newInstanceExpression.Parameters,
+                    excludedArgumentIndex: FindOriginalArgumentIndex(method, constructorParameter, newInstanceExpression.Parameters));
                 if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
@@ -483,16 +447,102 @@ namespace Azure.Generator.Management.Visitors
         /// Returns true when a matched old parameter is still used by an original non-default constructor argument.
         /// Used to preserve existing null-coalescing assignments needed by unrepaired direct arguments.
         /// </summary>
-        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IReadOnlyList<ValueExpression> originalArguments)
+        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IEnumerable<ValueExpression> originalArguments)
         {
             return originalArguments.Any(argument =>
                 !IsDefaultExpression(argument)
                 && ReferencesParameter(argument, parameter));
         }
 
-        private static HashSet<string> GetUnavailableDirectParameterNames(MethodProvider method, IReadOnlyList<ParameterProvider> constructorParameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static int? FindOriginalArgumentIndex(
+            MethodProvider method,
+            ParameterProvider constructorParameter,
+            IReadOnlyList<ValueExpression> originalArguments)
         {
-            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, originalArguments);
+            for (var index = 0; index < originalArguments.Count; index++)
+            {
+                var argument = originalArguments[index];
+                if (argument is PositionalParameterReferenceExpression { ParameterName: var parameterName }
+                    && string.Equals(parameterName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return index;
+                }
+
+                if (argument is VariableExpression variable
+                    && string.Equals(variable.Declaration.RequestedName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && AreCompatibleParameterTypes(variable.Type, constructorParameter.Type))
+                {
+                    return index;
+                }
+            }
+
+            var typeMatches = originalArguments
+                .Select((argument, index) => (Argument: argument, Index: index))
+                .Where(item => ConstructsType(item.Argument, constructorParameter.Type))
+                .ToArray();
+            if (typeMatches.Length == 1)
+            {
+                return typeMatches[0].Index;
+            }
+
+            if (typeMatches.Length > 1 && TryGetModelProvider(constructorParameter.Type, out var nestedModel))
+            {
+                var contextualParameters = new HashSet<ParameterProvider>();
+                foreach (var nestedParameter in nestedModel.FullConstructor.Signature.Parameters)
+                {
+                    if (constructorParameter.Property is not null && nestedParameter.Property is not null)
+                    {
+                        var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, constructorParameter.Property).ToVariableName();
+                        foreach (var parameter in method.Signature.Parameters.Where(parameter =>
+                            string.Equals(parameter.Name, combinedName, StringComparison.OrdinalIgnoreCase)
+                            && AreCompatibleParameterTypes(parameter.Type, nestedParameter.Type)))
+                        {
+                            contextualParameters.Add(parameter);
+                        }
+                    }
+
+                    foreach (var parameter in method.Signature.Parameters.Where(parameter =>
+                        parameter.Name.Contains(constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                        && parameter.Name.EndsWith(nestedParameter.Name, StringComparison.OrdinalIgnoreCase)
+                        && AreCompatibleParameterTypes(parameter.Type, nestedParameter.Type)))
+                    {
+                        contextualParameters.Add(parameter);
+                    }
+                }
+
+                var contextualMatches = typeMatches
+                    .Where(item => contextualParameters.Any(parameter => ReferencesParameter(item.Argument, parameter)))
+                    .ToArray();
+                if (contextualMatches.Length == 1)
+                {
+                    return contextualMatches[0].Index;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool ConstructsType(ValueExpression expression, CSharpType expectedType)
+            => expression switch
+            {
+                NewInstanceExpression { Type: not null } instance => instance.Type.AreNamesEqual(expectedType),
+                TernaryConditionalExpression ternary => ConstructsType(ternary.Consequent, expectedType)
+                    || ConstructsType(ternary.Alternative, expectedType),
+                KeywordExpression { Expression: not null } keyword => ConstructsType(keyword.Expression!, expectedType),
+                PositionalParameterReferenceExpression positional => ConstructsType(positional.ParameterValue, expectedType),
+                _ => false
+            };
+
+        private static HashSet<string> GetUnavailableDirectParameterNames(
+            MethodProvider method,
+            IReadOnlyList<ParameterProvider> constructorParameters,
+            IReadOnlyList<ValueExpression> originalArguments,
+            int? excludedArgumentIndex = null)
+        {
+            var argumentsToInspect = excludedArgumentIndex is int index && index < originalArguments.Count
+                ? originalArguments.Where((_, argumentIndex) => argumentIndex != index)
+                : originalArguments;
+            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, argumentsToInspect);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
@@ -504,7 +554,7 @@ namespace Azure.Generator.Management.Visitors
             return result;
         }
 
-        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IEnumerable<ValueExpression> originalArguments)
             => parameters
                 .Where(parameter => IsParameterUsedByOriginalArgument(parameter, originalArguments))
                 .Select(parameter => parameter.Name)
@@ -539,111 +589,6 @@ namespace Azure.Generator.Management.Visitors
                 ExpressionStatement { Expression: var expression } => ReferencesParameter(expression, parameter),
                 _ => false
             };
-
-        private static bool IsUnusedLocalDeclaration(MethodBodyStatement statement, IReadOnlySet<VariableExpression> unusedLocalVariables)
-            => statement is ExpressionStatement { Expression: AssignmentExpression { Variable: DeclarationExpression declaration } }
-                && unusedLocalVariables.Contains(declaration.Variable);
-
-        private static bool TryRebuildNewInstanceFromNamedArguments(
-            NewInstanceExpression newInstanceExpression,
-            [NotNullWhen(true)] out IReadOnlyList<ValueExpression>? updatedArguments,
-            out IReadOnlyList<ValueExpression> unusedArguments)
-        {
-            updatedArguments = null;
-            unusedArguments = [];
-            if (newInstanceExpression.Type is null || !TryGetModelProvider(newInstanceExpression.Type, out var modelProvider))
-            {
-                return false;
-            }
-
-            var constructorParameters = modelProvider.FullConstructor.Signature.Parameters;
-            var argumentsByName = new Dictionary<string, ValueExpression>(StringComparer.Ordinal);
-            foreach (var argument in newInstanceExpression.Parameters)
-            {
-                if (!TryGetArgumentName(argument, out var argumentName))
-                {
-                    return false;
-                }
-
-                // Serialization bodies can be built before inherited duplicate properties are removed from the final
-                // constructor. Keep the first matching local for the current constructor slot and let stale duplicates drop.
-                argumentsByName.TryAdd(argumentName, argument);
-            }
-
-            var arguments = new List<ValueExpression>(constructorParameters.Count);
-            var usedArguments = new HashSet<ValueExpression>();
-            var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            foreach (var constructorParameter in constructorParameters)
-            {
-                if (TryGetArgumentByName(argumentsByName, constructorParameter.Name, out var argument))
-                {
-                    arguments.Add(argument);
-                    usedArguments.Add(argument);
-                    var index = arguments.Count - 1;
-                    if (!changed && !ReferenceEquals(argument, newInstanceExpression.Parameters[index]))
-                    {
-                        changed = true;
-                    }
-                }
-                else
-                {
-                    arguments.Add(GetDefaultArgument(constructorParameter));
-                    changed = true;
-                }
-            }
-
-            unusedArguments = newInstanceExpression.Parameters.Where(argument => !usedArguments.Contains(argument)).ToArray();
-            updatedArguments = changed ? arguments : null;
-            return changed;
-        }
-
-        private static bool TryGetArgumentByName(
-            IReadOnlyDictionary<string, ValueExpression> argumentsByName,
-            string parameterName,
-            [NotNullWhen(true)] out ValueExpression? argument)
-        {
-            if (argumentsByName.TryGetValue(parameterName, out argument))
-            {
-                return true;
-            }
-
-            argument = null;
-            foreach (var candidate in argumentsByName)
-            {
-                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase))
-                {
-                    continue;
-                }
-
-                if (argument is not null)
-                {
-                    argument = null;
-                    return false;
-                }
-
-                argument = candidate.Value;
-            }
-
-            return argument is not null;
-        }
-
-        private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
-        {
-            switch (argument)
-            {
-                case VariableExpression variable:
-                    name = variable.Declaration.RequestedName;
-                    return true;
-                case PositionalParameterReferenceExpression positional:
-                    name = positional.ParameterName;
-                    return true;
-                case BinaryOperatorExpression binary:
-                    return TryGetArgumentName(binary.Left, out name);
-                default:
-                    name = null;
-                    return false;
-            }
-        }
 
         private static ValueExpression GetDefaultArgument(ParameterProvider parameter)
             // Emit typed defaults when a parameter has no explicit default. Bare `default` can become ambiguous
@@ -826,6 +771,12 @@ namespace Azure.Generator.Management.Visitors
                 // the writer disambiguates them. Prefer the parameter from the same source property when available.
                 matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
             }
+            else if (matches.Length == 0 && expectedProperty is not null && ManagementClientGenerator.Instance.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(expectedProperty))
+            {
+                matches = method.Signature.Parameters.Where(p =>
+                    ManagementClientGenerator.Instance.DateTimePropertyMatcher.HasSameSourceProperty(expectedProperty, p.Property)
+                    && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
+            }
 
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
@@ -906,14 +857,18 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
         {
-            ScopedApi<bool>? result = null;
-            foreach (var parameter in parameters)
+            var parameterList = parameters.ToArray();
+            // A non-nullable value-type factory parameter is always present, so the nested model must always be
+            // constructed. Building a guard from only its nullable siblings would discard that value whenever
+            // all of those siblings are null.
+            if (parameterList.Any(parameter => parameter.Type.IsValueType && !parameter.Type.IsNullable))
             {
-                if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
-                {
-                    continue;
-                }
+                return null;
+            }
 
+            ScopedApi<bool>? result = null;
+            foreach (var parameter in parameterList)
+            {
                 result = result is null
                     ? parameter.Is(Null)
                     : result.And(parameter.Is(Null));

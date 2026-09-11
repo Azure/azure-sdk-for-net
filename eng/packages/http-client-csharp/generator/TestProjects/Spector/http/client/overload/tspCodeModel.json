@@ -43,6 +43,7 @@
       "$id": "5",
       "kind": "model",
       "name": "Resource",
+      "apiVersions": [],
       "namespace": "Client.Overload",
       "crossLanguageDefinitionId": "Client.Overload.Resource",
       "usage": "Output,Json",
@@ -58,6 +59,7 @@
           "$id": "6",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "type": {
             "$id": "7",
@@ -84,6 +86,7 @@
           "$id": "8",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "9",
@@ -110,6 +113,7 @@
           "$id": "10",
           "kind": "property",
           "name": "scope",
+          "apiVersions": [],
           "serializedName": "scope",
           "type": {
             "$id": "11",

@@ -77,6 +77,8 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("cached_tokens"u8);
             writer.WriteNumberValue(CachedTokens);
+            writer.WritePropertyName("cache_write_tokens"u8);
+            writer.WriteNumberValue(CacheWriteTokens);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -120,6 +122,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             long cachedTokens = default;
+            long cacheWriteTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,12 +131,17 @@ namespace Azure.AI.Projects
                     cachedTokens = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("cache_write_tokens"u8))
+                {
+                    cacheWriteTokens = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties);
+            return new ResponseUsageInputTokensDetails(cachedTokens, cacheWriteTokens, additionalBinaryDataProperties);
         }
     }
 }

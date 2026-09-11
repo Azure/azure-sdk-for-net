@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
     public static partial class ArmMonitorWorkspacesModelFactory
     {
 
+        /// <summary> An Azure Monitor Workspace definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Properties of an Azure Monitor Workspace. </summary>
         /// <param name="accountId"> The immutable Id of the Azure Monitor Workspace. This property is read-only. </param>
         /// <param name="metrics"> Properties related to the metrics container in the Azure Monitor Workspace. </param>
         /// <param name="provisioningState"> The provisioning state of the Azure Monitor Workspace. Set to Succeeded if everything is healthy. </param>
@@ -67,6 +69,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Properties related to the metrics container in the Azure Monitor Workspace. </summary>
         /// <param name="prometheusQueryEndpoint"> The Prometheus query endpoint for the Azure Monitor Workspace. </param>
         /// <param name="internalId"> An internal identifier for the metrics container. Only to be used by the system. </param>
         /// <param name="enableAccessUsingResourcePermissions"> Flag that indicates whether to enable access using resource permissions. </param>
@@ -86,6 +89,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorWorkspaceDefaultIngestionSettings(dataCollectionRuleResourceId, dataCollectionEndpointResourceId, dataCollectionRuleImmutableId, ingestionEndpointsMetrics is null ? default : new IngestionEndpoints(ingestionEndpointsMetrics, default), default);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -115,6 +119,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorWorkspacePrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorWorkspacePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> The type used for updating an Azure Monitor Workspace. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> Resource properties. </param>
@@ -135,6 +141,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, default);
         }
 
+        /// <summary> The Issue resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -152,6 +159,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> The issue properties. </summary>
         /// <param name="title"> The issue title. </param>
         /// <param name="status"> The issue status. </param>
         /// <param name="severity"> The issue severity. </param>
@@ -179,6 +187,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Properties of the current investigation. </summary>
         /// <param name="id"> The unique identifier of the investigation. </param>
         /// <param name="createdOn"> The creation time of the investigation (in UTC). </param>
         /// <returns> A new <see cref="Models.IssueInvestigationMetadata"/> instance for mocking. </returns>
@@ -187,6 +196,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueInvestigationMetadata(id, createdOn, default);
         }
 
+        /// <summary> The issue background information. </summary>
         /// <param name="type"> The background type. </param>
         /// <param name="text"> The background text. </param>
         /// <param name="details"> The background details. </param>
@@ -198,6 +208,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorIssueBackground(@type, text, (details ?? new ChangeTrackingList<MonitorIssueBackgroundDetails>()).ToList(), default);
         }
 
+        /// <summary> A background details element. </summary>
         /// <param name="name"> The background details name. </param>
         /// <param name="value"> The background details value. </param>
         /// <returns> A new <see cref="Models.MonitorIssueBackgroundDetails"/> instance for mocking. </returns>
@@ -206,6 +217,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorIssueBackgroundDetails(name, value, default);
         }
 
+        /// <summary> Issue notification settings. </summary>
         /// <param name="updateTypes"> The types of updates that trigger notifications. </param>
         /// <param name="actionGroupIds"> The action group IDs to notify. </param>
         /// <param name="shouldExcludeDefaultActionGroups"> Whether to exclude default action groups from notifications. </param>
@@ -218,6 +230,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueNotifications((updateTypes ?? new ChangeTrackingList<IssueNotificationType>()).ToList(), (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), shouldExcludeDefaultActionGroups, default);
         }
 
+        /// <summary>
+        /// Base properties for an issue notification type
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.IssueCreationNotificationType"/>, <see cref="Models.OnChangeNotificationType"/>, and <see cref="Models.TimeBasedUpdatesNotificationType"/>.
+        /// </summary>
         /// <param name="updateType"> The type of update that triggers the notification. </param>
         /// <returns> A new <see cref="Models.IssueNotificationType"/> instance for mocking. </returns>
         public static IssueNotificationType IssueNotificationType(string updateType = default)
@@ -225,18 +241,21 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new UnknownIssueNotificationType(default, default);
         }
 
+        /// <summary> Notification type for issue creation events. </summary>
         /// <returns> A new <see cref="Models.IssueCreationNotificationType"/> instance for mocking. </returns>
         public static IssueCreationNotificationType IssueCreationNotificationType()
         {
             return new IssueCreationNotificationType(default, default);
         }
 
+        /// <summary> Notification type for on-change events. </summary>
         /// <returns> A new <see cref="Models.OnChangeNotificationType"/> instance for mocking. </returns>
         public static OnChangeNotificationType OnChangeNotificationType()
         {
             return new OnChangeNotificationType(default, default);
         }
 
+        /// <summary> Notification type for time-based updates. </summary>
         /// <param name="updateInterval"> The interval between time-based updates. </param>
         /// <returns> A new <see cref="Models.TimeBasedUpdatesNotificationType"/> instance for mocking. </returns>
         public static TimeBasedUpdatesNotificationType TimeBasedUpdatesNotificationType(string updateInterval = default)
@@ -244,6 +263,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new TimeBasedUpdatesNotificationType(default, default, updateInterval);
         }
 
+        /// <summary> The Issue resource update. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.MonitorIssuePatch"/> instance for mocking. </returns>
         public static MonitorIssuePatch MonitorIssuePatch(MonitorIssuePatchProperties properties = default)
@@ -251,6 +271,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorIssuePatch(properties, default);
         }
 
+        /// <summary> The issue properties for update. </summary>
         /// <param name="title"> The issue title. </param>
         /// <param name="status"> The issue status. </param>
         /// <param name="severity"> The issue severity. </param>
@@ -270,6 +291,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Details about the investigation result. </summary>
         /// <param name="id"> The identifier of the investigation. </param>
         /// <param name="origin"> The origin of the investigation. </param>
         /// <param name="createdOn"> The creation time of the investigation (in UTC). </param>
@@ -287,6 +309,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Details about the origin of the entity - the source that added it to the issue. </summary>
         /// <param name="addedBy"> The ID of the origin - for example, in case of 'Manual', the user ID/app ID, and in case of 'Automatic', the name of the automatic system. </param>
         /// <param name="addedByType"> The source of the origin - Manual or Automatic. </param>
         /// <returns> A new <see cref="Models.MonitorEntityOrigin"/> instance for mocking. </returns>
@@ -295,6 +318,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorEntityOrigin(addedBy, addedByType, default);
         }
 
+        /// <summary> Parameters provided to get the investigation result. </summary>
         /// <param name="investigationId"> The unique identifier of the investigation. </param>
         /// <returns> A new <see cref="Models.FetchInvestigationResultContent"/> instance for mocking. </returns>
         public static FetchInvestigationResultContent FetchInvestigationResultContent(Guid investigationId = default)
@@ -302,6 +326,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new FetchInvestigationResultContent(investigationId, default);
         }
 
+        /// <summary> Parameters for listing related entities. </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, to filter by relevance, use "$filter=relevance eq 'Relevant'". Note: this property is currently a placeholder and is not in use. </param>
         /// <returns> A new <see cref="Models.IssueListContent"/> instance for mocking. </returns>
         public static IssueListContent IssueListContent(string filter = default)
@@ -309,6 +334,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueListContent(filter, default);
         }
 
+        /// <summary> Properties of an alert which is related to the issue. </summary>
         /// <param name="id"> The alert ID. </param>
         /// <param name="relevance"> The alerts's relevance status. </param>
         /// <param name="origin"> The source that related the alert to the issue. </param>
@@ -326,6 +352,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> A list of related alerts. </summary>
         /// <param name="value"> A list of related alerts. </param>
         /// <returns> A new <see cref="Models.IssueRelatedAlertInfoList"/> instance for mocking. </returns>
         public static IssueRelatedAlertInfoList IssueRelatedAlertInfoList(IEnumerable<IssueRelatedAlertInfo> value = default)
@@ -335,6 +362,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueRelatedAlertInfoList((value ?? new ChangeTrackingList<IssueRelatedAlertInfo>()).ToList(), default);
         }
 
+        /// <summary> Properties of a resource which is related to the issue. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="relevance"> The resource's relevance status. </param>
         /// <param name="origin"> The source that related the resource to the issue. </param>
@@ -352,6 +380,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> A list of related resources. </summary>
         /// <param name="value"> A list of related resources. </param>
         /// <returns> A new <see cref="Models.IssueRelatedResourceInfoList"/> instance for mocking. </returns>
         public static IssueRelatedResourceInfoList IssueRelatedResourceInfoList(IEnumerable<IssueRelatedResourceInfo> value = default)
@@ -361,6 +390,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new IssueRelatedResourceInfoList((value ?? new ChangeTrackingList<IssueRelatedResourceInfo>()).ToList(), default);
         }
 
+        /// <summary> The issue background visualization. </summary>
         /// <param name="visualization"> The background visualization content, in Adaptive Card format. </param>
         /// <param name="origin"> The background visualization origin. </param>
         /// <returns> A new <see cref="Models.MonitorIssueBackgroundVisualization"/> instance for mocking. </returns>
@@ -369,6 +399,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
             return new MonitorIssueBackgroundVisualization(visualization, origin, default);
         }
 
+        /// <summary> Metrics container resource for an Azure Monitor Workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -386,6 +417,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Models
                 default);
         }
 
+        /// <summary> Properties of a metrics container. </summary>
         /// <param name="provisioningState"> The provisioning state of the metrics container. </param>
         /// <param name="version"> The version of Metrics Query Service that this AMW will use for all metric queries. </param>
         /// <returns> A new <see cref="Models.MonitorMetricsContainerProperties"/> instance for mocking. </returns>

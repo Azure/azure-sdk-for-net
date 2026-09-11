@@ -71,6 +71,16 @@ namespace OpenAI
                 throw new FormatException($"The model {nameof(InternalApplyPatchToolParam)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -100,6 +110,7 @@ namespace OpenAI
             }
             ToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -107,12 +118,26 @@ namespace OpenAI
                     @type = new ToolType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalApplyPatchToolParam(@type, additionalBinaryDataProperties);
+            return new InternalApplyPatchToolParam(@type, additionalBinaryDataProperties, allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>());
         }
     }
 }

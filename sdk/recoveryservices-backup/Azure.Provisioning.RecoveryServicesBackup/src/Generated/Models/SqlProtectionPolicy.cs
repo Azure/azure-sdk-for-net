@@ -15,6 +15,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SqlProtectionPolicy. </summary>
         public SqlProtectionPolicy()
         {
+            BackupManagementType.Assign("AzureSql");
         }
 
         /// <summary> Gets or sets the RetentionPolicy. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("backupManagementType", new string[] { "backupManagementType" }, defaultValue: "AzureSql");
             _retentionPolicy = DefineModelProperty<BackupRetentionPolicy>(nameof(RetentionPolicy), new string[] { "retentionPolicy" });
             DefineAdditionalProperties();
         }

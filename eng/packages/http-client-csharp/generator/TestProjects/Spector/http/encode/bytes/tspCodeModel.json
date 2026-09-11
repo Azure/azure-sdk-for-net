@@ -451,6 +451,7 @@
       "$id": "53",
       "kind": "model",
       "name": "DefaultBytesProperty",
+      "apiVersions": [],
       "namespace": "Encode.Bytes",
       "crossLanguageDefinitionId": "Encode.Bytes.DefaultBytesProperty",
       "usage": "Input,Output,Json",
@@ -466,6 +467,7 @@
           "$id": "54",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "55",
@@ -495,6 +497,7 @@
       "$id": "56",
       "kind": "model",
       "name": "Base64BytesProperty",
+      "apiVersions": [],
       "namespace": "Encode.Bytes",
       "crossLanguageDefinitionId": "Encode.Bytes.Base64BytesProperty",
       "usage": "Input,Output,Json",
@@ -510,6 +513,7 @@
           "$id": "57",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "58",
@@ -539,6 +543,7 @@
       "$id": "59",
       "kind": "model",
       "name": "Base64urlBytesProperty",
+      "apiVersions": [],
       "namespace": "Encode.Bytes",
       "crossLanguageDefinitionId": "Encode.Bytes.Base64urlBytesProperty",
       "usage": "Input,Output,Json",
@@ -554,6 +559,7 @@
           "$id": "60",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "61",
@@ -583,6 +589,7 @@
       "$id": "62",
       "kind": "model",
       "name": "Base64urlArrayBytesProperty",
+      "apiVersions": [],
       "namespace": "Encode.Bytes",
       "crossLanguageDefinitionId": "Encode.Bytes.Base64urlArrayBytesProperty",
       "usage": "Input,Output,Json",
@@ -598,6 +605,7 @@
           "$id": "63",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "64",
