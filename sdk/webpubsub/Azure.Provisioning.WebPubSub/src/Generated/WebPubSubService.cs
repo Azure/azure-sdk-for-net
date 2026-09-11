@@ -19,6 +19,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A class represent a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

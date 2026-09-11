@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Verified partner information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VerifiedPartner : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

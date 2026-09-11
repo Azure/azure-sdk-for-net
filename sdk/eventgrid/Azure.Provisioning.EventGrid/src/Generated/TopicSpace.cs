@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Topic space resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TopicSpace : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

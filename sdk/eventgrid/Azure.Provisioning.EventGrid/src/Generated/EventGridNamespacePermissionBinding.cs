@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Permission binding resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridNamespacePermissionBinding : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

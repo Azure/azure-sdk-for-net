@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Information about the SourceToCloud builder resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BuilderResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

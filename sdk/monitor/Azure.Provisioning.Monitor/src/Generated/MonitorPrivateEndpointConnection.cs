@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

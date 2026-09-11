@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The description of the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubDescription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

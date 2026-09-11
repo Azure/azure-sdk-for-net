@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A private endpoint connection to an azure resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

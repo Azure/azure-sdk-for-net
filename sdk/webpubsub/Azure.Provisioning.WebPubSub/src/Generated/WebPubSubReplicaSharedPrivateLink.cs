@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> Describes a Shared Private Link Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubReplicaSharedPrivateLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

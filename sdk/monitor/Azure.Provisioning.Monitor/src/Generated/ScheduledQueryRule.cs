@@ -17,6 +17,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The scheduled query rule resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScheduledQueryRule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Billing account policies information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BillingAccountPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

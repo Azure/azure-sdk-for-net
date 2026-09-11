@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Information pertaining to an individual build. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BuildResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

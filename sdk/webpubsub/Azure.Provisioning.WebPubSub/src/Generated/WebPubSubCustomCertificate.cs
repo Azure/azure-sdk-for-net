@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A custom certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubCustomCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridTopicPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

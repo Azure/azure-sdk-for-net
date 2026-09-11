@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Diagnostics data for a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDetector : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

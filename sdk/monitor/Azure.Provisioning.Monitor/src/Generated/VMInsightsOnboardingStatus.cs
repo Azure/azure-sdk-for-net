@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> VM Insights onboarding status for a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VMInsightsOnboardingStatus : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

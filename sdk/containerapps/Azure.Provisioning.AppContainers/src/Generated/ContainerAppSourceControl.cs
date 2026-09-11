@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App SourceControl. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppSourceControl : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of the EventHubConsumerGroupInfo object. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventHubConsumerGroupInfo : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

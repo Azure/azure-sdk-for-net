@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Activity Log Alert rule resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActivityLogAlert : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

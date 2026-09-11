@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A custom domain. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRCustomDomain : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

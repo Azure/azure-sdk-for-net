@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The cluster resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricCluster : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

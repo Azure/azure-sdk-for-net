@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Maps
 {
     /// <summary> An Azure resource which represents Maps Creator product and provides ability to manage private location data. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsCreator : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

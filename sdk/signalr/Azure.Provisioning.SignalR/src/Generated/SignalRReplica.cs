@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A class represent a replica resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRReplica : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

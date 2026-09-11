@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ApplicationInsights
 {
     /// <summary> An Application Insights component linked storage accounts. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ComponentLinkedStorageAccounts : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

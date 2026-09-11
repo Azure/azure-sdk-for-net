@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Maps
 {
     /// <summary> An Azure resource which represents access to a suite of Maps REST APIs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsAccount : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

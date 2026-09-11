@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The agentpool that has the ARM resource and properties.
     /// The agentpool will have all information to create an agent pool.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryAgentPool : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

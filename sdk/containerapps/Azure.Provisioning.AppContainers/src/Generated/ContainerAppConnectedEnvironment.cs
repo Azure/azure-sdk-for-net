@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> An environment for Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppConnectedEnvironment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

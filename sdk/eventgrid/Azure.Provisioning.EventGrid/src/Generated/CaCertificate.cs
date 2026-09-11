@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The CA Certificate resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CaCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

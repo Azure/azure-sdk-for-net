@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Information about the Maintenance Configuration resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppMaintenanceConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

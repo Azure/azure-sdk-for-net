@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> EnclaveEndpoint Model Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveEndpoint : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

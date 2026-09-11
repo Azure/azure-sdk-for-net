@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic settings category resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticSettingsCategoryResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
