@@ -4,11 +4,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using Microsoft.Extensions.Logging;
@@ -21,6 +23,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     internal static class LogsHelper
     {
         private const string CustomEventAttributeName = "microsoft.custom_event.name";
+        private const string InstrumentationKeyAttributeName = SemanticConventions.AttributeMicrosoftInstrumentationKey;
+        private const string IngestionEndpointAttributeName = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
+        private const string TenantCloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
@@ -76,74 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             List<TelemetryItem> telemetryItems = new List<TelemetryItem>(capacity: (int)batchLogRecord.Count);
             var telemetrySchemaTypeCounter = new TelemetrySchemaTypeCounter();
-            TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    var properties = new ChangeTrackingDictionary<string, string>();
-                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo);
-
-                    if (logRecord.Exception is not null)
-                    {
-                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, logContext)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "ExceptionData",
-                                BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._exceptionCount++;
-                    }
-                    else if (eventName is not null)
-                    {
-                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, logContext)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "EventData",
-                                BaseData = new TelemetryEventData(Version, eventName, properties, message, logRecord),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._eventCount++;
-                    }
-                    else if (availabilityInfo is not null)
-                    {
-                        DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
-                            && DateTimeOffset.TryParse(
-                                availabilityInfo.Value.TestTimestamp,
-                                CultureInfo.InvariantCulture,
-                                System.Globalization.DateTimeStyles.RoundtripKind,
-                                out var parsedTs)
-                            ? parsedTs.ToUniversalTime()
-                            : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
-
-                        telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "AvailabilityData",
-                                BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._availabilityCount++;
-                    }
-                    else
-                    {
-                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, logContext)
-                        {
-                            Data = new MonitorBase
-                            {
-                                BaseType = "MessageData",
-                                BaseData = new MessageData(Version, logRecord, message, properties),
-                            }
-                        };
-                        telemetrySchemaTypeCounter._traceCount++;
-                    }
-
-                    telemetryItems.Add(telemetryItem);
+                    telemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter, consumeMultiEndpointAttributes: false, tenantCloudRole: null));
                 }
                 catch (Exception ex)
                 {
@@ -154,7 +97,170 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return (telemetryItems, telemetrySchemaTypeCounter);
         }
 
-        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo)
+        /// <summary>
+        /// Converts a batch into envelopes grouped by the ingestion endpoint each <see cref="LogRecord"/>
+        /// was stamped with. A record whose routing attributes are missing or invalid is dropped rather
+        /// than sent under the exporter's own connection string.
+        /// </summary>
+        internal static void OtelToAzureMonitorLogsMultiTenant(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
+        {
+            foreach (var logRecord in batchLogRecord)
+            {
+                try
+                {
+                    if (!TryGetLogRoute(logRecord, out var instrumentationKey, out var ingestionEndpoint, out var tenantCloudRole))
+                    {
+                        // Routing attributes are stamped upstream only on records meant to be routed;
+                        // a record without them is not addressed to any tenant, so drop it quietly
+                        // instead of misrouting it to the exporter's own connection string. This is a
+                        // normal, expected outcome rather than a failed conversion.
+                        continue;
+                    }
+
+                    var group = routeBatch.GetOrAdd(ingestionEndpoint);
+
+                    // No schema counter on the routed path: IMultiTenantTransmitter.Track carries none,
+                    // matching the trace multi-tenant conversion.
+                    group.TelemetryItems.Add(BuildLogTelemetryItem(logRecord, resource, instrumentationKey, telemetrySchemaTypeCounter: null, consumeMultiEndpointAttributes: true, tenantCloudRole: tenantCloudRole));
+                }
+                catch (Exception ex)
+                {
+                    AzureMonitorExporterEventSource.Log.FailedToConvertLogRecord(instrumentationKey: string.Empty, ex);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Reads the route and tenant cloud role off a <see cref="LogRecord"/>. Only
+        /// <c>LogRecord.Attributes</c> are consulted - logging scopes are not a routing or role
+        /// source - and only string values are accepted (first occurrence of each key wins),
+        /// matching how trace routing reads an <see cref="AzMonList"/>.
+        /// </summary>
+        internal static bool TryGetLogRoute(
+            LogRecord logRecord,
+            [NotNullWhen(true)] out string? instrumentationKey,
+            [NotNullWhen(true)] out string? ingestionEndpoint,
+            [NotNullWhen(true)] out string? tenantCloudRole)
+        {
+            object? rawKey = null;
+            object? rawEndpoint = null;
+            object? rawTenantCloudRole = null;
+            bool keySeen = false;
+            bool endpointSeen = false;
+            bool tenantCloudRoleSeen = false;
+
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
+            {
+                if (!keySeen && item.Key == InstrumentationKeyAttributeName)
+                {
+                    rawKey = item.Value;
+                    keySeen = true;
+                }
+                else if (!endpointSeen && item.Key == IngestionEndpointAttributeName)
+                {
+                    rawEndpoint = item.Value;
+                    endpointSeen = true;
+                }
+                else if (!tenantCloudRoleSeen && item.Key == TenantCloudRoleAttributeName)
+                {
+                    rawTenantCloudRole = item.Value;
+                    tenantCloudRoleSeen = true;
+                }
+            }
+
+            tenantCloudRole = TenantRouting.GetTenantCloudRole(rawTenantCloudRole as string);
+
+            // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
+            // 'as string' drops it and routing fails, exactly as the trace path does.
+            return TenantRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
+        }
+
+        private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? tenantCloudRole)
+        {
+            var properties = new ChangeTrackingDictionary<string, string>();
+            ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, consumeMultiEndpointAttributes);
+
+            TelemetryItem telemetryItem;
+
+            if (logRecord.Exception is not null)
+            {
+                telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey, logContext)
+                {
+                    Data = new MonitorBase
+                    {
+                        BaseType = "ExceptionData",
+                        BaseData = new TelemetryExceptionData(Version, logRecord, message, properties),
+                    }
+                };
+                if (telemetrySchemaTypeCounter is not null)
+                {
+                    telemetrySchemaTypeCounter._exceptionCount++;
+                }
+            }
+            else if (eventName is not null)
+            {
+                telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey, logContext)
+                {
+                    Data = new MonitorBase
+                    {
+                        BaseType = "EventData",
+                        BaseData = new TelemetryEventData(Version, eventName, properties, message, logRecord),
+                    }
+                };
+                if (telemetrySchemaTypeCounter is not null)
+                {
+                    telemetrySchemaTypeCounter._eventCount++;
+                }
+            }
+            else if (availabilityInfo is not null)
+            {
+                DateTimeOffset envelopeTime = availabilityInfo.Value.TestTimestamp != null
+                    && DateTimeOffset.TryParse(
+                        availabilityInfo.Value.TestTimestamp,
+                        CultureInfo.InvariantCulture,
+                        System.Globalization.DateTimeStyles.RoundtripKind,
+                        out var parsedTs)
+                    ? parsedTs.ToUniversalTime()
+                    : TelemetryItem.FormatUtcTimestamp(logRecord.Timestamp);
+
+                telemetryItem = new TelemetryItem("Availability", envelopeTime, logRecord, resource, instrumentationKey, logContext)
+                {
+                    Data = new MonitorBase
+                    {
+                        BaseType = "AvailabilityData",
+                        BaseData = new AvailabilityData(Version, availabilityInfo.Value, properties, logRecord),
+                    }
+                };
+                if (telemetrySchemaTypeCounter is not null)
+                {
+                    telemetrySchemaTypeCounter._availabilityCount++;
+                }
+            }
+            else
+            {
+                telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey, logContext)
+                {
+                    Data = new MonitorBase
+                    {
+                        BaseType = "MessageData",
+                        BaseData = new MessageData(Version, logRecord, message, properties),
+                    }
+                };
+                if (telemetrySchemaTypeCounter is not null)
+                {
+                    telemetrySchemaTypeCounter._traceCount++;
+                }
+            }
+
+            if (tenantCloudRole is not null)
+            {
+                telemetryItem.SetTenantCloudRole(tenantCloudRole);
+            }
+
+            return telemetryItem;
+        }
+
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName, out LogContextInfo logContext, out AvailabilityInfo? availabilityInfo, bool consumeMultiEndpointAttributes = false)
         {
             eventName = null;
             availabilityInfo = null;
@@ -166,6 +272,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 switch (item.Key)
                 {
+                    // On the multi-tenant path these attributes are consumed for routing and role
+                    // attribution, so drop them here rather than leak them into custom dimensions.
+                    // On the single-tenant path (consumeMultiEndpointAttributes false) they fall through to
+                    // default and become ordinary properties exactly as before.
+                    case InstrumentationKeyAttributeName:
+                    case IngestionEndpointAttributeName:
+                    case TenantCloudRoleAttributeName:
+                        if (!consumeMultiEndpointAttributes)
+                        {
+                            goto default;
+                        }
+
+                        break;
                     case CustomEventAttributeName:
                         eventName = item.Value?.ToString();
                         break;
@@ -255,7 +374,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // If we detected availability data, do a second pass to extract all availability attributes
             if (hasAvailabilityData)
             {
-                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext);
+                availabilityInfo = ExtractAvailabilityInfo(logRecord, properties, message, out logContext, consumeMultiEndpointAttributes);
             }
 
             logRecord.ForEachScope(s_processScope, properties);
@@ -283,7 +402,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext)
+        private static AvailabilityInfo? ExtractAvailabilityInfo(LogRecord logRecord, IDictionary<string, string> properties, string? message, out LogContextInfo logContext, bool consumeMultiEndpointAttributes = false)
         {
             string? availabilityId = null;
             string? availabilityName = null;
@@ -298,6 +417,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 switch (item.Key)
                 {
+                    // Consumed for routing on the multi-tenant path; otherwise treated as an ordinary
+                    // availability property, matching single-tenant behavior.
+                    case InstrumentationKeyAttributeName:
+                    case IngestionEndpointAttributeName:
+                    case TenantCloudRoleAttributeName:
+                        if (!consumeMultiEndpointAttributes)
+                        {
+                            goto default;
+                        }
+
+                        break;
                     case AvailabilityIdAttributeName:
                         availabilityId = item.Value?.ToString();
                         break;

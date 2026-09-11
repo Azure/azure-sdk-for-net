@@ -564,16 +564,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 name,
                 resourceType,
                 systemData,
-                solutionType is null && secretStoreKeyVaultId is null && keyVaultSecretName is null ? default : new LinkerProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    new VnetSolution(solutionType, default, default),
+                targetService is null && authInfo is null && clientType is null && provisioningState is null && solutionType is null && deleteOrUpdateBehavior is null && secretStoreKeyVaultId is null && keyVaultSecretName is null && scope is null && publicNetworkSolution is null && configurationInfo is null ? default : new LinkerProperties(
+                    targetService,
+                    authInfo,
+                    clientType,
+                    provisioningState,
+                    new VnetSolution(solutionType, deleteOrUpdateBehavior, default),
                     new LinkerSecretStore(secretStoreKeyVaultId, keyVaultSecretName, default),
-                    default,
-                    default,
-                    default,
+                    scope,
+                    publicNetworkSolution,
+                    configurationInfo,
                     default),
                 default);
         }

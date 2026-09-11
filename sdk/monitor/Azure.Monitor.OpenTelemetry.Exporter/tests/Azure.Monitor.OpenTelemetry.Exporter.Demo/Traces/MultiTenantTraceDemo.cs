@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         /// retriable-failure path: back off the endpoint and persist the batch to that endpoint's
         /// partition. Statsbeat and any other host traffic is left alone.
         /// </summary>
-        private sealed class FaultInjectionPolicy : HttpPipelinePolicy
+        internal sealed class FaultInjectionPolicy : HttpPipelinePolicy
         {
             private readonly HashSet<string> _faultedHosts = new(StringComparer.OrdinalIgnoreCase);
 
@@ -172,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         }
 
         /// <summary>Reports where each batch went and what ingestion said about it.</summary>
-        private sealed class IngestionLoggingPolicy : HttpPipelinePolicy
+        internal sealed class IngestionLoggingPolicy : HttpPipelinePolicy
         {
             public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
@@ -232,6 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         private sealed class TenantRoutingProcessor : BaseProcessor<Activity>
         {
             private const int UnroutableEvery = 10;
+            private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
             private readonly IReadOnlyList<TenantRoute> _routes;
             private readonly string _runId;
@@ -279,6 +280,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
                 data.SetTag("microsoft.instrumentation_key", route.InstrumentationKey);
                 data.SetTag("microsoft.ingestion_endpoint", route.IngestionEndpoint);
+                data.SetTag(TenantCloudRoleAttributeName, route.Name);
 
                 // Survives into customDimensions, so a query can count what actually arrived.
                 data.SetTag("demo.run_id", _runId);

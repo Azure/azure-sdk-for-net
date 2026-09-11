@@ -28,7 +28,7 @@ public sealed class SteeringNudgeRaceTests
         Type activeRunType = typeof(TaskEngine)
             .GetNestedType("ActiveRun`1", BindingFlags.NonPublic)!
             .MakeGenericType(typeof(string));
-        object activeRun = Activator.CreateInstance(activeRunType, runState)!;
+        object activeRun = Activator.CreateInstance(activeRunType, "task-name", runState)!;
 
         PropertyInfo handlerCts = activeRunType.GetProperty("HandlerCts")!;
         MethodInfo signalSteering = activeRunType.GetMethod("SignalSteeringAsync")!;

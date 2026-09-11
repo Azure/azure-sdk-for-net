@@ -24,6 +24,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         private const int MaxEndpointLength = 2048;
 
+        private const string UnknownService = "unknown_service";
+
         /// <summary>
         /// Bounds the cache so a caller stamping many distinct endpoints cannot grow it without
         /// limit. The check is not atomic with the insert, so concurrent misses can overshoot by the
@@ -43,16 +45,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             [NotNullWhen(true)] out string? ingestionEndpoint,
             out RoutingRejectionReason reason)
         {
+            // Only a string is accepted: ToString() on an array-valued tag yields "System.String[]",
+            // which would become a tenant of its own.
+            return TryGetRoute(
+                mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string,
+                mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string,
+                out instrumentationKey,
+                out ingestionEndpoint,
+                out reason);
+        }
+
+        /// <summary>
+        /// Validates raw routing values and reduces them to the canonical instrumentation key and
+        /// ingestion endpoint used to group telemetry. Signal-neutral: traces resolve the raw values
+        /// from an <see cref="AzMonList"/>, logs from <see cref="System.Diagnostics.Activity"/>-free
+        /// <c>LogRecord.Attributes</c>, but both share this validation core.
+        /// </summary>
+        /// <remarks>
+        /// A non-string value is rejected by the caller passing <see langword="null"/>: an
+        /// array-valued attribute stringified to "System.String[]" would otherwise become a tenant
+        /// of its own.
+        /// </remarks>
+        internal static bool TryGetRoute(
+            string? rawInstrumentationKey,
+            string? rawIngestionEndpoint,
+            [NotNullWhen(true)] out string? instrumentationKey,
+            [NotNullWhen(true)] out string? ingestionEndpoint)
+            => TryGetRoute(rawInstrumentationKey, rawIngestionEndpoint, out instrumentationKey, out ingestionEndpoint, out _);
+
+        internal static bool TryGetRoute(
+            string? rawInstrumentationKey,
+            string? rawIngestionEndpoint,
+            [NotNullWhen(true)] out string? instrumentationKey,
+            [NotNullWhen(true)] out string? ingestionEndpoint,
+            out RoutingRejectionReason reason)
+        {
             ingestionEndpoint = null;
             reason = RoutingRejectionReason.None;
 
-            // Only a string is accepted: ToString() on an array-valued tag yields "System.String[]",
-            // which would become a tenant of its own.
-            var rawKey = mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string;
-            var trimmedKey = rawKey != null && rawKey.Length <= MaxInstrumentationKeyLength ? rawKey.Trim() : null;
+            var trimmedKey = rawInstrumentationKey != null && rawInstrumentationKey.Length <= MaxInstrumentationKeyLength ? rawInstrumentationKey.Trim() : null;
             if (trimmedKey == null || trimmedKey.Length == 0)
             {
-                reason = rawKey != null && rawKey.Length > MaxInstrumentationKeyLength
+                reason = rawInstrumentationKey != null && rawInstrumentationKey.Length > MaxInstrumentationKeyLength
                     ? RoutingRejectionReason.InstrumentationKeyTooLong
                     : RoutingRejectionReason.MissingInstrumentationKey;
                 instrumentationKey = null;
@@ -61,15 +95,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             instrumentationKey = trimmedKey;
 
-            var rawEndpoint = mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string;
-            if (rawEndpoint == null)
+            if (rawIngestionEndpoint == null)
             {
                 reason = RoutingRejectionReason.MissingIngestionEndpoint;
                 instrumentationKey = null;
                 return false;
             }
 
-            if ((ingestionEndpoint = NormalizeEndpoint(rawEndpoint, out reason)) == null)
+            if ((ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint, out reason)) == null)
             {
                 instrumentationKey = null;
                 return false;
@@ -77,6 +110,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             return true;
         }
+
+        internal static string GetTenantCloudRole(ref AzMonList mappedTags)
+        {
+            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftMultiEndpointCloudRole] as string);
+        }
+
+        internal static string GetTenantCloudRole(string? cloudRole)
+            => string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
 
         /// <summary>
         /// Validates an application-supplied endpoint and reduces it to the canonical form used as a

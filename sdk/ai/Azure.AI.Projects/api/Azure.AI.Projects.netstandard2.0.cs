@@ -1081,6 +1081,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.AIProjectIndexFieldMapping AIProjectIndexFieldMapping(System.Collections.Generic.IEnumerable<string> contentFields = null, string filepathField = null, string titleField = null, string urlField = null, System.Collections.Generic.IEnumerable<string> vectorFields = null, System.Collections.Generic.IEnumerable<string> metadataFields = null) { throw null; }
         public static Azure.AI.Projects.ArtifactProfile ArtifactProfile(Azure.AI.Projects.FoundryModelArtifactProfileCategory category = default(Azure.AI.Projects.FoundryModelArtifactProfileCategory), System.Collections.Generic.IEnumerable<Azure.AI.Projects.FoundryModelArtifactProfileSignal> signals = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name = null, string version = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions = null) { throw null; }
+        public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name, string version, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null, Azure.AI.Projects.Evaluation.ModelSamplingParams samplingParams = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.AIProjectIndexFieldMapping fieldMapping = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = null) { throw null; }
@@ -1149,10 +1150,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.GitHubIssueRoutineTrigger GitHubIssueRoutineTrigger(string connectionId = null, string owner = null, string repository = null, Azure.AI.Projects.GitHubIssueEvent issueEvent = default(Azure.AI.Projects.GitHubIssueEvent)) { throw null; }
         public static Azure.AI.Projects.Evaluation.HourlyRecurrenceSchedule HourlyRecurrenceSchedule() { throw null; }
         public static Azure.AI.Projects.Evaluation.HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = null) { throw null; }
-        public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, System.Uri fileUri) { throw null; }
-        public static Azure.AI.Projects.InputFileContentParam InputFileContentParam(string fileId = null, string filename = null, string fileData = null, System.Uri fileUri = null, Azure.AI.Projects.FileInputDetail? detail = default(Azure.AI.Projects.FileInputDetail?), Azure.AI.Projects.PromptCacheBreakpointParam promptCacheBreakpoint = null) { throw null; }
-        public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text) { throw null; }
-        public static Azure.AI.Projects.InputTextContentParam InputTextContentParam(string text = null, Azure.AI.Projects.PromptCacheBreakpointParam promptCacheBreakpoint = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightCluster InsightCluster(string id = null, string label = null, string suggestion = null, string suggestionTitle = null, string description = null, int weight = 0, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.InsightCluster> subClusters = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.InsightSample> samples = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.InsightRequest InsightRequest(string type = null) { throw null; }
@@ -1167,15 +1164,16 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Memory.MemoryItem MemoryItem(string memoryId = null, System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string scope = null, string content = null, string kind = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryOperation MemoryOperation(Azure.AI.Projects.Memory.MemoryOperationKind kind = default(Azure.AI.Projects.Memory.MemoryOperationKind), Azure.AI.Projects.Memory.MemoryItem memoryItem = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemorySearchItem MemorySearchItem(Azure.AI.Projects.Memory.MemoryItem memoryItem = null) { throw null; }
-        public static Azure.AI.Projects.Memory.MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default(int?)) { throw null; }
+        public static Azure.AI.Projects.Memory.MemorySearchOptions MemorySearchOptions(string scope = null, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items = null, string previousSearchId = null, Azure.AI.Extensions.OpenAI.MemorySearchResultOptions resultOptions = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStore MemoryStore(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset updatedAt = default(System.DateTimeOffset), string name = null, string description = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Projects.Memory.MemoryStoreDefinition definition = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreDefaultDefinition MemoryStoreDefaultDefinition(string chatModel = null, string embeddingModel = null, Azure.AI.Projects.Memory.MemoryStoreDefaultOptions options = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = false, string userProfileDetails = null, bool isChatSummaryEnabled = false, bool? isProceduralMemoryEnabled = default(bool?), System.TimeSpan? defaultTtlSeconds = default(System.TimeSpan?)) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreDefinition MemoryStoreDefinition(string kind = null) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = null, string scope = null, bool isDeleted = false) { throw null; }
-        public static Azure.AI.Projects.Memory.MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = 0, long inputTokens = (long)0, Azure.AI.Projects.ResponseUsageInputTokensDetails inputTokensDetails = null, long outputTokens = (long)0, Azure.AI.Projects.ResponseUsageOutputTokensDetails outputTokensDetails = null, long totalTokens = (long)0) { throw null; }
+        public static Azure.AI.Projects.Memory.MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = 0, long inputTokens = (long)0, OpenAI.Responses.ResponseInputTokenUsageDetails inputTokensDetails = null, long outputTokens = (long)0, OpenAI.Responses.ResponseOutputTokenUsageDetails outputTokensDetails = null, long totalTokens = (long)0) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryStoreSearchResponse MemoryStoreSearchResponse(string searchId = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Memory.MemorySearchItem> memories = null, Azure.AI.Projects.Memory.MemoryStoreOperationUsage usage = null) { throw null; }
+        public static Azure.AI.Projects.Memory.MemoryUpdateOptions MemoryUpdateOptions(string scope = null, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> items = null, string previousUpdateId = null, int? updateDelay = default(int?)) { throw null; }
         public static Azure.AI.Projects.Memory.MemoryUpdateResultDetails MemoryUpdateResultDetails(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Memory.MemoryOperation> memoryOperations = null, Azure.AI.Projects.Memory.MemoryStoreOperationUsage usage = null) { throw null; }
         public static Azure.AI.Projects.ModelCredentialRequest ModelCredentialRequest(System.Uri blobUri = null) { throw null; }
         public static Azure.AI.Projects.ModelDeployment ModelDeployment(string name = null, string modelName = null, string modelVersion = null, string modelPublisher = null, System.Collections.Generic.IReadOnlyDictionary<string, string> capabilities = null, Azure.AI.Projects.ModelDeploymentSku sku = null, string connectionName = null) { throw null; }
@@ -1198,15 +1196,11 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.ProjectsSchedule ProjectsSchedule(string id = null, string displayName = null, string description = null, bool enabled = false, Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus? provisioningStatus = default(Azure.AI.Projects.Evaluation.ScheduleProvisioningStatus?), Azure.AI.Projects.Evaluation.ScheduleTrigger trigger = null, Azure.AI.Projects.ProjectsScheduleTask task = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> systemData = null) { throw null; }
         public static Azure.AI.Projects.ProjectsScheduleTask ProjectsScheduleTask(string type = null, System.Collections.Generic.IDictionary<string, string> configuration = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.PromptBasedEvaluatorDefinition PromptBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, string promptText = null) { throw null; }
-        public static Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpointParam() { throw null; }
         public static Azure.AI.Projects.PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = null, string prompt = null) { throw null; }
         public static Azure.AI.Projects.PromptEvaluatorGenerationJobSource PromptEvaluatorGenerationJobSource(string description = null, string prompt = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RecurrenceSchedule RecurrenceSchedule(string type = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RecurrenceTrigger RecurrenceTrigger(System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?), string timeZone = null, int interval = 0, Azure.AI.Projects.Evaluation.RecurrenceSchedule schedule = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.RedTeam RedTeam(string name = null, string displayName = null, int? turnCount = default(int?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.AttackStrategy> attackStrategies = null, bool? isSimulationOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Projects.Evaluation.RiskCategory> riskCategories = null, string applicationScenario = null, System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> properties = null, string status = null, Azure.AI.Projects.Evaluation.TargetConfig target = null) { throw null; }
-        public static Azure.AI.Projects.ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens) { throw null; }
-        public static Azure.AI.Projects.ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = (long)0, long cacheWriteTokens = (long)0) { throw null; }
-        public static Azure.AI.Projects.ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = (long)0) { throw null; }
         public static Azure.AI.Projects.RoutineAction RoutineAction(string type = null) { throw null; }
         public static Azure.AI.Projects.RoutineDispatchPayload RoutineDispatchPayload(string type = null) { throw null; }
         public static Azure.AI.Projects.RoutineRun RoutineRun(string id = null, System.BinaryData statusInternal = null, Azure.AI.Projects.RoutineRunPhase? phase = default(Azure.AI.Projects.RoutineRunPhase?), Azure.AI.Projects.RoutineTriggerKind? triggerType = default(Azure.AI.Projects.RoutineTriggerKind?), string triggerName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> triggerEventPayload = null, Azure.AI.Projects.RoutineAttemptSource? attemptSource = default(Azure.AI.Projects.RoutineAttemptSource?), Azure.AI.Projects.RoutineActionKind? actionType = default(Azure.AI.Projects.RoutineActionKind?), string agentId = null, string agentEndpointId = null, string conversationId = null, string sessionId = null, System.DateTimeOffset? triggeredOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledFireOn = default(System.DateTimeOffset?), System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? endedOn = default(System.DateTimeOffset?), string dispatchId = null, string actionCorrelationId = null, string responseId = null, string taskId = null, int? errorStatusCode = default(int?), string errorType = null, string errorMessage = null) { throw null; }
@@ -1671,12 +1665,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FileDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public enum FileInputDetail
-    {
-        Auto = 0,
-        Low = 1,
-        High = 2,
-    }
     public partial class FolderDataset : Azure.AI.Projects.AIProjectDataset, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.FolderDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.FolderDataset>
     {
         public FolderDataset(System.Uri dataUri) { }
@@ -1859,40 +1847,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.GitHubIssueRoutineTrigger System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GitHubIssueRoutineTrigger>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GitHubIssueRoutineTrigger>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.GitHubIssueRoutineTrigger>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class InputFileContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>
-    {
-        public InputFileContentParam() { }
-        public Azure.AI.Projects.FileInputDetail? Detail { get { throw null; } set { } }
-        public string FileData { get { throw null; } set { } }
-        public string FileId { get { throw null; } set { } }
-        public string Filename { get { throw null; } set { } }
-        public System.Uri FileUri { get { throw null; } set { } }
-        public Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpoint { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.InputFileContentParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.InputFileContentParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.InputFileContentParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputFileContentParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.InputFileContentParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputFileContentParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class InputTextContentParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputTextContentParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>
-    {
-        public InputTextContentParam(string text) { }
-        public Azure.AI.Projects.PromptCacheBreakpointParam PromptCacheBreakpoint { get { throw null; } set { } }
-        public string Text { get { throw null; } }
-        protected virtual Azure.AI.Projects.InputTextContentParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.InputTextContentParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.InputTextContentParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputTextContentParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.InputTextContentParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.InputTextContentParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.InputTextContentParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class LoraConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.LoraConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.LoraConfig>
     {
@@ -2224,19 +2178,6 @@ namespace Azure.AI.Projects
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsScheduleTask>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ProjectsScheduleTask>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PromptCacheBreakpointParam : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>
-    {
-        public PromptCacheBreakpointParam() { }
-        protected virtual Azure.AI.Projects.PromptCacheBreakpointParam JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.PromptCacheBreakpointParam PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.PromptCacheBreakpointParam System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.PromptCacheBreakpointParam System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptCacheBreakpointParam>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class PromptDataGenerationJobSource : Azure.AI.Projects.DataGenerationJobSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.PromptDataGenerationJobSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptDataGenerationJobSource>
     {
         public PromptDataGenerationJobSource(string prompt) { }
@@ -2266,35 +2207,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.PromptEvaluatorGenerationJobSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.PromptEvaluatorGenerationJobSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResponseUsageInputTokensDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>
-    {
-        internal ResponseUsageInputTokensDetails() { }
-        public long CachedTokens { get { throw null; } }
-        public long CacheWriteTokens { get { throw null; } }
-        protected virtual Azure.AI.Projects.ResponseUsageInputTokensDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.ResponseUsageInputTokensDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.ResponseUsageInputTokensDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.ResponseUsageInputTokensDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageInputTokensDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ResponseUsageOutputTokensDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>
-    {
-        internal ResponseUsageOutputTokensDetails() { }
-        public long ReasoningTokens { get { throw null; } }
-        protected virtual Azure.AI.Projects.ResponseUsageOutputTokensDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.ResponseUsageOutputTokensDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.ResponseUsageOutputTokensDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.ResponseUsageOutputTokensDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.ResponseUsageOutputTokensDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class RoutineAction : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.RoutineAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.RoutineAction>
     {
@@ -2820,7 +2732,7 @@ namespace Azure.AI.Projects.Evaluation
         public AzureAIAgentTarget(string name) { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Projects.ToolDescription> ToolDescriptions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.AI.Projects.Agents.ProjectsAgentTool> Tools { get { throw null; } }
+        public System.Collections.Generic.IList<OpenAI.Responses.ResponseTool> Tools { get { throw null; } }
         public string Version { get { throw null; } set { } }
         protected override Azure.AI.Projects.Evaluation.EvaluationTarget JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4407,27 +4319,18 @@ namespace Azure.AI.Projects.Memory
         public MemorySearchOptions(string scope) { }
         public System.Collections.Generic.IList<OpenAI.Responses.ResponseItem> Items { get { throw null; } }
         public string PreviousSearchId { get { throw null; } set { } }
-        public Azure.AI.Projects.Memory.MemorySearchResultOptions ResultOptions { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.MemorySearchResultOptions ResultOptions { get { throw null; } set { } }
         public string Scope { get { throw null; } }
+        protected virtual Azure.AI.Projects.Memory.MemorySearchOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.Memory.MemorySearchOptions memorySearchOptions) { throw null; }
+        protected virtual Azure.AI.Projects.Memory.MemorySearchOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Projects.Memory.MemorySearchOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemorySearchOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemorySearchOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.Memory.MemorySearchOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MemorySearchResultOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>
-    {
-        public MemorySearchResultOptions() { }
-        public int? MaxMemories { get { throw null; } set { } }
-        protected virtual Azure.AI.Projects.Memory.MemorySearchResultOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.AI.Projects.Memory.MemorySearchResultOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.Memory.MemorySearchResultOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.Memory.MemorySearchResultOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemorySearchResultOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MemoryStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryStore>
     {
@@ -4556,9 +4459,9 @@ namespace Azure.AI.Projects.Memory
         internal MemoryStoreOperationUsage() { }
         public int EmbeddingTokens { get { throw null; } }
         public long InputTokens { get { throw null; } }
-        public Azure.AI.Projects.ResponseUsageInputTokensDetails InputTokensDetails { get { throw null; } }
+        public OpenAI.Responses.ResponseInputTokenUsageDetails InputTokensDetails { get { throw null; } }
         public long OutputTokens { get { throw null; } }
-        public Azure.AI.Projects.ResponseUsageOutputTokensDetails OutputTokensDetails { get { throw null; } }
+        public OpenAI.Responses.ResponseOutputTokenUsageDetails OutputTokensDetails { get { throw null; } }
         public long TotalTokens { get { throw null; } }
         protected virtual Azure.AI.Projects.Memory.MemoryStoreOperationUsage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4610,6 +4513,11 @@ namespace Azure.AI.Projects.Memory
         public string PreviousUpdateId { get { throw null; } set { } }
         public string Scope { get { throw null; } }
         public int? UpdateDelay { get { throw null; } set { } }
+        protected virtual Azure.AI.Projects.Memory.MemoryUpdateOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator System.ClientModel.BinaryContent (Azure.AI.Projects.Memory.MemoryUpdateOptions memoryUpdateOptions) { throw null; }
+        protected virtual Azure.AI.Projects.Memory.MemoryUpdateOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.AI.Projects.Memory.MemoryUpdateOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryUpdateOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Memory.MemoryUpdateOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Projects.Memory.MemoryUpdateOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.MemoryUpdateOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4663,12 +4571,5 @@ namespace Azure.AI.Projects.Memory
         Azure.AI.Projects.Memory.UserProfileMemoryItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.UserProfileMemoryItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.UserProfileMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Memory.UserProfileMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-}
-namespace OpenAI
-{
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential, Size=1)]
-    public readonly partial struct AgentObjectType
-    {
     }
 }

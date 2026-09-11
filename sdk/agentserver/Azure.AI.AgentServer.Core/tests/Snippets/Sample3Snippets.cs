@@ -137,7 +137,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                     ["phase"] = BinaryData.FromObjectAsJson("complete"),
                 },
                 tags: null,
-                ifMatch: null,
+                ifMatch: default,
                 requireExists: false,
                 callId: persistedCallId);
 
@@ -228,7 +228,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 await store.SetItemAsync(
                     "step-1",
                     new Dictionary<string, BinaryData> { ["done"] = BinaryData.FromObjectAsJson(true) },
-                    ifMatch: "\"stale-etag\"");
+                    ifMatch: new ETag("\"stale-etag\""));
             }
             catch (FoundryStoragePreconditionException ex)   // 412
             {

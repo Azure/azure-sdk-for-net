@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                deviceAdminPassword is null ? default : new SecuritySettingsProperties(deviceAdminPassword, default),
                 default);
         }
 
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.UploadCertificateContent"/> instance for mocking. </returns>
         public static UploadCertificateContent UploadCertificateContent(DataBoxEdgeAuthenticationType? authenticationType = default, string certificate = default)
         {
-            return new UploadCertificateContent(certificate is null ? default : new RawCertificateData(default, certificate, default), default);
+            return new UploadCertificateContent(authenticationType is null && certificate is null ? default : new RawCertificateData(authenticationType, certificate, default), default);
         }
 
         /// <summary> The upload registration certificate response. </summary>
@@ -1103,7 +1103,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default,
-                default);
+                iotDeviceDetails is null && iotEdgeDeviceDetails is null && version is null && hostPlatform is null && hostPlatformType is null && provisioningState is null ? default : new IoTAddonProperties(
+                    iotDeviceDetails,
+                    iotEdgeDeviceDetails,
+                    version,
+                    hostPlatform,
+                    hostPlatformType,
+                    provisioningState,
+                    default));
         }
 
         /// <summary> Azure container mapping of the endpoint. </summary>
@@ -1183,7 +1190,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default,
-                sourceInfoShareId is null && sinkInfoRoleId is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
+                sourceInfoShareId is null && sinkInfoRoleId is null && customContextTag is null ? default : new FileTriggerProperties(new EdgeFileSourceInfo(sourceInfoShareId, default), new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
 
         /// <summary> File source details. </summary>
@@ -1219,7 +1226,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 systemData,
                 default,
                 default,
-                sinkInfoRoleId is null ? default : new PeriodicTimerProperties(default, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), default, default));
+                sourceInfo is null && sinkInfoRoleId is null && customContextTag is null ? default : new PeriodicTimerProperties(sourceInfo, new DataBoxEdgeRoleSinkInfo(sinkInfoRoleId, default), customContextTag, default));
         }
 
         /// <summary> Periodic timer event source. </summary>
@@ -1246,7 +1253,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.DeviceCapacityRequestContent"/> instance for mocking. </returns>
         public static DeviceCapacityRequestContent DeviceCapacityRequestContent(IEnumerable<IList<string>> vmPlacementQuery = default, IEnumerable<VmPlacementRequestResult> vmPlacementResults = default)
         {
-            return new DeviceCapacityRequestContent(default, default);
+            return new DeviceCapacityRequestContent(vmPlacementQuery is null && vmPlacementResults is null ? default : new DeviceCapacityRequestInfoProperties((vmPlacementQuery ?? new ChangeTrackingList<IList<string>>()).ToList(), (vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>()).ToList(), default), default);
         }
 
         /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
@@ -1312,7 +1319,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 name,
                 resourceType,
                 systemData,
-                minimumTimeStamp is null && maximumTimeStamp is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, default, default),
+                minimumTimeStamp is null && maximumTimeStamp is null && include is null ? default : new SupportPackageRequestProperties(minimumTimeStamp, maximumTimeStamp, include, default),
                 default);
         }
 
