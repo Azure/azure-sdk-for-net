@@ -159,11 +159,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetPortHttpScheme))
-            {
-                writer.WritePropertyName("targetPortHttpScheme"u8);
-                writer.WriteStringValue(TargetPortHttpScheme.Value.ToString());
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -219,7 +214,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppIngressClientCertificateMode? clientCertificateMode = default;
             ContainerAppCorsPolicy corsPolicy = default;
             IList<IngressPortMapping> additionalPortMappings = default;
-            IngressTargetPortHttpScheme? targetPortHttpScheme = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -356,15 +350,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalPortMappings = array;
                     continue;
                 }
-                if (prop.NameEquals("targetPortHttpScheme"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetPortHttpScheme = new IngressTargetPortHttpScheme(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -384,7 +369,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 clientCertificateMode,
                 corsPolicy,
                 additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>(),
-                targetPortHttpScheme,
                 additionalBinaryDataProperties);
         }
     }

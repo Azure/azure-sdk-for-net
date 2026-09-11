@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("records"u8);
                 writer.WriteStartArray();
-                foreach (LabelHistoryRecordItem item in Records)
+                foreach (ContainerAppLabelHistoryRecordItem item in Records)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IReadOnlyList<LabelHistoryRecordItem> records = default;
+            IReadOnlyList<ContainerAppLabelHistoryRecordItem> records = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<LabelHistoryRecordItem> array = new List<LabelHistoryRecordItem>();
+                    List<ContainerAppLabelHistoryRecordItem> array = new List<ContainerAppLabelHistoryRecordItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LabelHistoryRecordItem.DeserializeLabelHistoryRecordItem(item, options));
+                        array.Add(ContainerAppLabelHistoryRecordItem.DeserializeContainerAppLabelHistoryRecordItem(item, options));
                     }
                     records = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LabelHistoryProperties(records ?? new ChangeTrackingList<LabelHistoryRecordItem>(), additionalBinaryDataProperties);
+            return new LabelHistoryProperties(records ?? new ChangeTrackingList<ContainerAppLabelHistoryRecordItem>(), additionalBinaryDataProperties);
         }
     }
 }

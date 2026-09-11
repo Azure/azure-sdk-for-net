@@ -7,7 +7,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Core;
 using Azure.Provisioning;
@@ -34,7 +33,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppManagedEnvironment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppManagedEnvironment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2025-10-02-preview")
+        public ContainerAppManagedEnvironment(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments", resourceVersion ?? "2026-07-01")
         {
         }
 
@@ -238,19 +237,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the PrivateLinkDefaultDomain. </summary>
-        public BicepValue<string> PrivateLinkDefaultDomain
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                return Properties.PrivateLinkDefaultDomain;
-            }
-        }
-
         /// <summary> Gets the StaticIP. </summary>
         public BicepValue<IPAddress> StaticIP
         {
@@ -312,23 +298,6 @@ namespace Azure.Provisioning.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IsZoneRedundant = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AvailabilityZones. </summary>
-        public BicepList<string> AvailabilityZones
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AvailabilityZones;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                Properties.AvailabilityZones = value;
             }
         }
 
@@ -410,6 +379,23 @@ namespace Azure.Provisioning.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IngressConfiguration = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EnvironmentMode. </summary>
+        public BicepValue<ManagedEnvironmentMode> EnvironmentMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedEnvironmentProperties();
+                }
+                Properties.EnvironmentMode = value;
             }
         }
 
@@ -520,23 +506,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the KeyVaultConfiguration. </summary>
-        public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiskEncryptionKeyVaultConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                Properties.DiskEncryptionKeyVaultConfiguration = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ContainerAppManagedEnvironment. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -608,9 +577,10 @@ namespace Azure.Provisioning.AppContainers
         /// <summary></summary>
         public static partial class ResourceVersions
         {
-            /// <summary> API version "2025-10-02-preview". </summary>
-            [Experimental("AZPROVISION001")]
-            public static readonly string V2025_10_02_PREVIEW = "2025-10-02-preview";
+            /// <summary> API version "2026-07-01". </summary>
+            public static readonly string V2026_07_01 = "2026-07-01";
+            /// <summary> API version "2026-01-01". </summary>
+            public static readonly string V2026_01_01 = "2026-01-01";
         }
     }
 }

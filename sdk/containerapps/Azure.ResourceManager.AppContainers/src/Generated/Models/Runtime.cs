@@ -24,22 +24,16 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="Runtime"/>. </summary>
         /// <param name="java"> Java app configuration. </param>
-        /// <param name="dotnet"> .NET app configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Runtime(RuntimeJava java, RuntimeDotnet dotnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Runtime(RuntimeJava java, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Java = java;
-            Dotnet = dotnet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Java app configuration. </summary>
         [WirePath("java")]
         internal RuntimeJava Java { get; set; }
-
-        /// <summary> .NET app configuration. </summary>
-        [WirePath("dotnet")]
-        internal RuntimeDotnet Dotnet { get; set; }
 
         /// <summary> Enable jmx core metrics for the java app. </summary>
         [WirePath("java.enableMetrics")]
@@ -56,42 +50,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     Java = new RuntimeJava();
                 }
                 Java.EnableMetrics = value;
-            }
-        }
-
-        /// <summary> Diagnostic capabilities achieved by java agent. </summary>
-        [WirePath("java.javaAgent")]
-        public ContainerAppRuntimeJavaAgent JavaAgent
-        {
-            get
-            {
-                return Java is null ? default : Java.JavaAgent;
-            }
-            set
-            {
-                if (Java is null)
-                {
-                    Java = new RuntimeJava();
-                }
-                Java.JavaAgent = value;
-            }
-        }
-
-        /// <summary> Auto configure the ASP.NET Core Data Protection feature. </summary>
-        [WirePath("dotnet.autoConfigureDataProtection")]
-        public bool? AutoConfigureDataProtection
-        {
-            get
-            {
-                return Dotnet is null ? default : Dotnet.AutoConfigureDataProtection;
-            }
-            set
-            {
-                if (Dotnet is null)
-                {
-                    Dotnet = new RuntimeDotnet();
-                }
-                Dotnet.AutoConfigureDataProtection = value;
             }
         }
     }

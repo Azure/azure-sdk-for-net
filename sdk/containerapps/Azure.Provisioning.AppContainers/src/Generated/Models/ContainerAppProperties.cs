@@ -18,11 +18,10 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepValue<ContainerAppProvisioningState> _provisioningState;
         private BicepValue<ContainerAppRunningStatus> _runningStatus;
-        private BicepValue<string> _deploymentErrors;
         private BicepValue<ResourceIdentifier> _managedEnvironmentId;
         private BicepValue<ResourceIdentifier> _environmentId;
+        private ContainerAppNetworkingConfiguration _networking;
         private BicepValue<string> _workloadProfileName;
-        private ContainerAppPropertiesPatchingConfiguration _patchingConfiguration;
         private BicepValue<string> _latestRevisionName;
         private BicepValue<string> _latestReadyRevisionName;
         private BicepValue<string> _latestRevisionFqdn;
@@ -57,16 +56,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the DeploymentErrors. </summary>
-        public BicepValue<string> DeploymentErrors
-        {
-            get
-            {
-                Initialize();
-                return _deploymentErrors;
-            }
-        }
-
         /// <summary> Gets or sets the ManagedEnvironmentId. </summary>
         public BicepValue<ResourceIdentifier> ManagedEnvironmentId
         {
@@ -97,6 +86,21 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the Networking. </summary>
+        internal ContainerAppNetworkingConfiguration Networking
+        {
+            get
+            {
+                Initialize();
+                return _networking;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _networking, value);
+            }
+        }
+
         /// <summary> Gets or sets the WorkloadProfileName. </summary>
         public BicepValue<string> WorkloadProfileName
         {
@@ -109,21 +113,6 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _workloadProfileName.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the PatchingConfiguration. </summary>
-        internal ContainerAppPropertiesPatchingConfiguration PatchingConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _patchingConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _patchingConfiguration, value);
             }
         }
 
@@ -217,20 +206,20 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the PatchingMode. </summary>
-        public BicepValue<PatchingMode> PatchingMode
+        /// <summary> Gets or sets the OutboundVnetSubnetId. </summary>
+        public BicepValue<string> NetworkingOutboundVnetSubnetId
         {
             get
             {
-                return PatchingConfiguration is null ? default : PatchingConfiguration.PatchingMode;
+                return Networking is null ? default : Networking.OutboundVnetSubnetId;
             }
             set
             {
-                if (PatchingConfiguration is null)
+                if (Networking is null)
                 {
-                    PatchingConfiguration = new ContainerAppPropertiesPatchingConfiguration();
+                    Networking = new ContainerAppNetworkingConfiguration();
                 }
-                PatchingConfiguration.PatchingMode = value;
+                Networking.OutboundVnetSubnetId = value;
             }
         }
 
@@ -240,11 +229,10 @@ namespace Azure.Provisioning.AppContainers
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ContainerAppProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _runningStatus = DefineProperty<ContainerAppRunningStatus>(nameof(RunningStatus), new string[] { "runningStatus" }, isOutput: true);
-            _deploymentErrors = DefineProperty<string>(nameof(DeploymentErrors), new string[] { "deploymentErrors" }, isOutput: true);
             _managedEnvironmentId = DefineProperty<ResourceIdentifier>(nameof(ManagedEnvironmentId), new string[] { "managedEnvironmentId" });
             _environmentId = DefineProperty<ResourceIdentifier>(nameof(EnvironmentId), new string[] { "environmentId" });
+            _networking = DefineModelProperty<ContainerAppNetworkingConfiguration>(nameof(Networking), new string[] { "networking" });
             _workloadProfileName = DefineProperty<string>(nameof(WorkloadProfileName), new string[] { "workloadProfileName" });
-            _patchingConfiguration = DefineModelProperty<ContainerAppPropertiesPatchingConfiguration>(nameof(PatchingConfiguration), new string[] { "patchingConfiguration" });
             _latestRevisionName = DefineProperty<string>(nameof(LatestRevisionName), new string[] { "latestRevisionName" }, isOutput: true);
             _latestReadyRevisionName = DefineProperty<string>(nameof(LatestReadyRevisionName), new string[] { "latestReadyRevisionName" }, isOutput: true);
             _latestRevisionFqdn = DefineProperty<string>(nameof(LatestRevisionFqdn), new string[] { "latestRevisionFqdn" }, isOutput: true);

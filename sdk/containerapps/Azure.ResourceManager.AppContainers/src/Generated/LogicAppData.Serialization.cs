@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
@@ -96,11 +95,6 @@ namespace Azure.ResourceManager.AppContainers
                 throw new FormatException($"The model {nameof(LogicAppData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -147,7 +141,6 @@ namespace Azure.ResourceManager.AppContainers
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ContainerAppLogicAppConfiguration properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,27 +176,12 @@ namespace Azure.ResourceManager.AppContainers
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerAppContainersContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = ContainerAppLogicAppConfiguration.DeserializeContainerAppLogicAppConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogicAppData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                additionalBinaryDataProperties);
+            return new LogicAppData(id, name, resourceType, systemData, additionalBinaryDataProperties);
         }
     }
 }
