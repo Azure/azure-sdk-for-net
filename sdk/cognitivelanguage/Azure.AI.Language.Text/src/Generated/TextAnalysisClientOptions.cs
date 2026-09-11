@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Text
     /// <summary> Client options for <see cref="TextAnalysisClient"/>. </summary>
     public partial class TextAnalysisClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2025_11_15_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_05_15_Preview;
 
         /// <summary> Initializes a new instance of TextAnalysisClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -27,8 +27,8 @@ namespace Azure.AI.Language.Text
                 ServiceVersion.V2023_04_01 => "2023-04-01",
                 ServiceVersion.V2024_11_01 => "2024-11-01",
                 ServiceVersion.V2025_11_01 => "2025-11-01",
-                ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
-                ServiceVersion.V2025_11_15_Preview => "2025-11-15-preview",
+                ServiceVersion.V2026_05_01 => "2026-05-01",
+                ServiceVersion.V2026_05_15_Preview => "2026-05-15-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Text
         [Experimental("SCME0002")]
         internal TextAnalysisClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2025-11-15-preview";
+            Version = "2026-05-15-preview";
             if (section is null || !section.Exists())
             {
                 return;
@@ -68,10 +68,10 @@ namespace Azure.AI.Language.Text
             V2024_11_01 = 3,
             /// <summary> Version 2025-11-01. </summary>
             V2025_11_01 = 4,
-            /// <summary> Version 2025-05-15-preview. </summary>
-            V2025_05_15_Preview = 5,
-            /// <summary> Version 2025-11-15-preview. </summary>
-            V2025_11_15_Preview = 6
+            /// <summary> Version 2026-05-01. </summary>
+            V2026_05_01 = 5,
+            /// <summary> Version 2026-05-15-preview. </summary>
+            V2026_05_15_Preview = 6
         }
     }
 }

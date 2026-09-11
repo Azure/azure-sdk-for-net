@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Text
             RedactionPolicyKind policyKind = default;
             IList<PiiCategoriesExclude> entityTypes = default;
             string policyName = default;
-            bool? isDefaultPolicy = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? preserveDataFormat = default;
             foreach (var prop in element.EnumerateObject())
@@ -138,13 +138,13 @@ namespace Azure.AI.Language.Text
                     policyName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("isDefaultPolicy"u8))
+                if (prop.NameEquals("isDefault"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isDefaultPolicy = prop.Value.GetBoolean();
+                    isDefault = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("preserveDataFormat"u8))
@@ -165,7 +165,7 @@ namespace Azure.AI.Language.Text
                 policyKind,
                 entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(),
                 policyName,
-                isDefaultPolicy,
+                isDefault,
                 additionalBinaryDataProperties,
                 preserveDataFormat);
         }

@@ -246,7 +246,7 @@ namespace Azure.AI.Language.Text
         /// <param name="entityType"> The entity name. </param>
         /// <param name="synonyms"> The entity synonyms. </param>
         /// <returns> A new <see cref="Text.EntitySynonyms"/> instance for mocking. </returns>
-        public static EntitySynonyms EntitySynonyms(EntityCategory entityType = default, IEnumerable<EntitySynonym> synonyms = default)
+        public static EntitySynonyms EntitySynonyms(PiiCategoriesExclude entityType = default, IEnumerable<EntitySynonym> synonyms = default)
         {
             synonyms ??= new ChangeTrackingList<EntitySynonym>();
 
@@ -269,24 +269,24 @@ namespace Azure.AI.Language.Text
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <returns> A new <see cref="Text.BaseRedactionPolicy"/> instance for mocking. </returns>
-        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default, IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        public static BaseRedactionPolicy BaseRedactionPolicy(string policyKind = default, IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
-            return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
+            return new UnknownBaseRedactionPolicy(new RedactionPolicyKind(policyKind), entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the policy of redacting with a redaction character. </summary>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will bce * as before. We allow specific ascii characters for redaction. </param>
         /// <param name="unmaskLength"> Optional parameter to indicate the length of unmasked characters at the end of the redacted PII entity. Default is 0. </param>
         /// <param name="unmaskFromEnd"> Optional parameter to indicate whether to unmask characters from the end of the redacted PII entity. Default is true. </param>
         /// <returns> A new <see cref="Text.CharacterMaskPolicyType"/> instance for mocking. </returns>
-        public static CharacterMaskPolicyType CharacterMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, RedactionCharacter? redactionCharacter = default, int? unmaskLength = default, bool? unmaskFromEnd = default)
+        public static CharacterMaskPolicyType CharacterMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefault = default, RedactionCharacter? redactionCharacter = default, int? unmaskLength = default, bool? unmaskFromEnd = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
@@ -294,7 +294,7 @@ namespace Azure.AI.Language.Text
                 RedactionPolicyKind.CharacterMask,
                 entityTypes.ToList(),
                 policyName,
-                isDefaultPolicy,
+                isDefault,
                 additionalBinaryDataProperties: null,
                 redactionCharacter,
                 unmaskLength,
@@ -304,10 +304,10 @@ namespace Azure.AI.Language.Text
         /// <summary> Represents the policy of replacing detected PII with synthetic values. </summary>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="preserveDataFormat"> Optional flag to indicate whether to preserve the original data format in the synthetic replacement. Default is false. </param>
         /// <returns> A new <see cref="Text.SyntheticReplacementPolicyType"/> instance for mocking. </returns>
-        public static SyntheticReplacementPolicyType SyntheticReplacementPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default, bool? preserveDataFormat = default)
+        public static SyntheticReplacementPolicyType SyntheticReplacementPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefault = default, bool? preserveDataFormat = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
@@ -315,7 +315,7 @@ namespace Azure.AI.Language.Text
                 RedactionPolicyKind.SyntheticReplacement,
                 entityTypes.ToList(),
                 policyName,
-                isDefaultPolicy,
+                isDefault,
                 additionalBinaryDataProperties: null,
                 preserveDataFormat);
         }
@@ -323,25 +323,25 @@ namespace Azure.AI.Language.Text
         /// <summary> Represents the policy of not redacting found PII. </summary>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <returns> A new <see cref="Text.NoMaskPolicyType"/> instance for mocking. </returns>
-        public static NoMaskPolicyType NoMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        public static NoMaskPolicyType NoMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
-            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
+            return new NoMaskPolicyType(RedactionPolicyKind.NoMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the policy of redacting PII with the entity type. </summary>
         /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
         /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
-        /// <param name="isDefaultPolicy"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <returns> A new <see cref="Text.EntityMaskPolicyType"/> instance for mocking. </returns>
-        public static EntityMaskPolicyType EntityMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefaultPolicy = default)
+        public static EntityMaskPolicyType EntityMaskPolicyType(IEnumerable<PiiCategoriesExclude> entityTypes = default, string policyName = default, bool? isDefault = default)
         {
             entityTypes ??= new ChangeTrackingList<PiiCategoriesExclude>();
 
-            return new EntityMaskPolicyType(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefaultPolicy, additionalBinaryDataProperties: null);
+            return new EntityMaskPolicyType(RedactionPolicyKind.EntityMask, entityTypes.ToList(), policyName, isDefault, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for confidence score threshold for PII entity recognition. </summary>
