@@ -10,6 +10,11 @@
       "$id": "1",
       "kind": "enum",
       "name": "ConfigurationStoreProvisioningState",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreProvisioningState",
       "valueType": {
         "$id": "2",
@@ -107,6 +112,11 @@
       "$id": "8",
       "kind": "enum",
       "name": "BackupPolicyKind",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.BackupPolicyKind",
       "valueType": {
         "$id": "9",
@@ -159,6 +169,11 @@
       "$id": "12",
       "kind": "enum",
       "name": "PublicNetworkAccess",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.PublicNetworkAccess",
       "valueType": {
         "$id": "13",
@@ -211,6 +226,11 @@
       "$id": "16",
       "kind": "enum",
       "name": "ConfigurationStoreSkuTier",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreSkuTier",
       "valueType": {
         "$id": "17",
@@ -278,6 +298,11 @@
       "$id": "21",
       "kind": "enum",
       "name": "ConfigurationStoreCreateMode",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreCreateMode",
       "valueType": {
         "$id": "22",
@@ -330,6 +355,12 @@
       "$id": "25",
       "kind": "enum",
       "name": "createdByType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
       "valueType": {
         "$id": "26",
@@ -1368,6 +1399,11 @@
       "$id": "143",
       "kind": "model",
       "name": "ConfigurationStore",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStore",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1404,6 +1440,12 @@
         "$id": "144",
         "kind": "model",
         "name": "TrackedResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
         "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1425,6 +1467,12 @@
           "$id": "145",
           "kind": "model",
           "name": "Resource",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
           "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
           "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1447,6 +1495,12 @@
               "$id": "146",
               "kind": "property",
               "name": "id",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
@@ -1481,6 +1535,12 @@
               "$id": "149",
               "kind": "property",
               "name": "name",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
@@ -1508,6 +1568,12 @@
               "$id": "151",
               "kind": "property",
               "name": "type",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
@@ -1542,12 +1608,24 @@
               "$id": "154",
               "kind": "property",
               "name": "systemData",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
                 "$id": "155",
                 "kind": "model",
                 "name": "SystemData",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
                 "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -1569,6 +1647,12 @@
                     "$id": "156",
                     "kind": "property",
                     "name": "createdBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
@@ -1596,6 +1680,12 @@
                     "$id": "158",
                     "kind": "property",
                     "name": "createdByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdByType",
                     "doc": "The type of identity that created the resource.",
                     "type": {
@@ -1619,6 +1709,12 @@
                     "$id": "159",
                     "kind": "property",
                     "name": "createdAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
@@ -1654,6 +1750,12 @@
                     "$id": "162",
                     "kind": "property",
                     "name": "lastModifiedBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
@@ -1681,6 +1783,12 @@
                     "$id": "164",
                     "kind": "property",
                     "name": "lastModifiedByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedByType",
                     "doc": "The type of identity that last modified the resource.",
                     "type": {
@@ -1704,6 +1812,12 @@
                     "$id": "165",
                     "kind": "property",
                     "name": "lastModifiedAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
@@ -1758,6 +1872,12 @@
             "$id": "168",
             "kind": "property",
             "name": "tags",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "serializedName": "tags",
             "doc": "Resource tags.",
             "type": {
@@ -1797,6 +1917,12 @@
             "$id": "172",
             "kind": "property",
             "name": "location",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "serializedName": "location",
             "doc": "The geo-location where the resource lives",
             "type": {
@@ -1834,12 +1960,18 @@
           "$id": "175",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "176",
             "kind": "model",
             "name": "ConfigurationStoreProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1861,6 +1993,11 @@
                 "$id": "177",
                 "kind": "property",
                 "name": "provisioningState",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "provisioningState",
                 "doc": "The provisioning state of the configuration store.",
                 "type": {
@@ -1884,6 +2021,11 @@
                 "$id": "178",
                 "kind": "property",
                 "name": "creationDate",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "creationDate",
                 "doc": "The creation date of configuration store.",
                 "type": {
@@ -1919,6 +2061,11 @@
                 "$id": "181",
                 "kind": "property",
                 "name": "endpoint",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "endpoint",
                 "doc": "The DNS endpoint where the configuration store API will be available.",
                 "type": {
@@ -1946,12 +2093,22 @@
                 "$id": "183",
                 "kind": "property",
                 "name": "sku",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "sku",
                 "doc": "The sku of the configuration store.",
                 "type": {
                   "$id": "184",
                   "kind": "model",
                   "name": "ConfigurationStoreSku",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStoreSku",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -1973,6 +2130,11 @@
                       "$id": "185",
                       "kind": "property",
                       "name": "name",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "name",
                       "doc": "The name of the sku.",
                       "type": {
@@ -2016,6 +2178,11 @@
                 "$id": "187",
                 "kind": "property",
                 "name": "softDeleteRetentionInDays",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "softDeleteRetentionInDays",
                 "doc": "Indicates whether the configuration store need to be recovered.",
                 "type": {
@@ -2043,6 +2210,11 @@
                 "$id": "189",
                 "kind": "property",
                 "name": "disableLocalAuth",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "disableLocalAuth",
                 "doc": "Disables all authentication methods other than AAD authentication.",
                 "type": {
@@ -2070,12 +2242,22 @@
                 "$id": "191",
                 "kind": "property",
                 "name": "backupPolicy",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "backupPolicy",
                 "doc": "The backup policy for the configuration store.",
                 "type": {
                   "$id": "192",
                   "kind": "model",
                   "name": "BackupPolicy",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.BackupPolicy",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2096,6 +2278,11 @@
                     "$id": "193",
                     "kind": "property",
                     "name": "kind",
+                    "apiVersions": [
+                      "2024-01-01-preview",
+                      "2024-04-01",
+                      "2024-05-01"
+                    ],
                     "serializedName": "kind",
                     "doc": "The backup policy kind.",
                     "type": {
@@ -2123,6 +2310,11 @@
                       "$id": "194",
                       "kind": "property",
                       "name": "retentionDays",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "retentionDays",
                       "doc": "The retention period in days.",
                       "type": {
@@ -2150,6 +2342,11 @@
                       "$id": "196",
                       "kind": "property",
                       "name": "isEnabled",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "isEnabled",
                       "doc": "Whether the backup policy is enabled.",
                       "type": {
@@ -2179,6 +2376,11 @@
                       "$id": "198",
                       "kind": "model",
                       "name": "PeriodicBackupPolicy",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "ProvisioningTypeSpec.PeriodicBackupPolicy",
                       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2204,6 +2406,11 @@
                           "$id": "199",
                           "kind": "property",
                           "name": "kind",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "kind",
                           "doc": "Periodic backup kind.",
                           "type": {
@@ -2300,6 +2507,11 @@
                           "$id": "205",
                           "kind": "property",
                           "name": "intervalInHours",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "intervalInHours",
                           "doc": "The backup interval in hours.",
                           "type": {
@@ -2329,6 +2541,11 @@
                       "$id": "207",
                       "kind": "model",
                       "name": "ContinuousBackupPolicy",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ContinuousBackupPolicy",
                       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2354,6 +2571,11 @@
                           "$id": "208",
                           "kind": "property",
                           "name": "kind",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "kind",
                           "doc": "Continuous backup kind.",
                           "type": {
@@ -2389,6 +2611,11 @@
                           "$id": "210",
                           "kind": "property",
                           "name": "tier",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "tier",
                           "doc": "The continuous backup tier.",
                           "type": {
@@ -2434,12 +2661,22 @@
                 "$id": "212",
                 "kind": "property",
                 "name": "stringDiscriminatedBackupPolicy",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "stringDiscriminatedBackupPolicy",
                 "doc": "The string-discriminated backup policy for the configuration store.",
                 "type": {
                   "$id": "213",
                   "kind": "model",
                   "name": "StringDiscriminatedBackupPolicy",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.StringDiscriminatedBackupPolicy",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2460,6 +2697,11 @@
                     "$id": "214",
                     "kind": "property",
                     "name": "strategy",
+                    "apiVersions": [
+                      "2024-01-01-preview",
+                      "2024-04-01",
+                      "2024-05-01"
+                    ],
                     "serializedName": "strategy",
                     "doc": "The backup strategy.",
                     "type": {
@@ -2493,6 +2735,11 @@
                       "$id": "216",
                       "kind": "model",
                       "name": "ManualBackupPolicy",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ManualBackupPolicy",
                       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2518,6 +2765,11 @@
                           "$id": "217",
                           "kind": "property",
                           "name": "strategy",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "strategy",
                           "doc": "Manual backup strategy.",
                           "type": {
@@ -2559,6 +2811,11 @@
                 "$id": "218",
                 "kind": "property",
                 "name": "publicNetworkAccess",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "publicNetworkAccess",
                 "doc": "Enables or disables public network access.",
                 "type": {
@@ -2582,6 +2839,11 @@
                 "$id": "219",
                 "kind": "property",
                 "name": "skuTier",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "skuTier",
                 "doc": "The SKU tier of the configuration store.",
                 "type": {
@@ -2605,6 +2867,11 @@
                 "$id": "220",
                 "kind": "property",
                 "name": "createMode",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "createMode",
                 "doc": "The create mode for the configuration store.",
                 "type": {
@@ -2628,6 +2895,11 @@
                 "$id": "221",
                 "kind": "property",
                 "name": "linkedResources",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "linkedResources",
                 "doc": "The linked resources of the configuration store.",
                 "type": {
@@ -2638,6 +2910,7 @@
                     "$id": "223",
                     "kind": "model",
                     "name": "SubResource",
+                    "apiVersions": [],
                     "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.Models.SubResource",
                     "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -2676,6 +2949,11 @@
                 "$id": "224",
                 "kind": "property",
                 "name": "retentionPeriod",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "retentionPeriod",
                 "doc": "The amount of time configuration data should be retained.",
                 "type": {
@@ -2711,6 +2989,11 @@
                 "$id": "227",
                 "kind": "property",
                 "name": "binaryContent",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "binaryContent",
                 "doc": "Byte-oriented content serialized as a base64 string.",
                 "type": {
@@ -2739,6 +3022,11 @@
                 "$id": "229",
                 "kind": "property",
                 "name": "urlSafeBinaryContent",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "urlSafeBinaryContent",
                 "doc": "Byte-oriented content serialized as a base64url string.",
                 "type": {
@@ -2767,6 +3055,11 @@
                 "$id": "231",
                 "kind": "property",
                 "name": "lastModified",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "lastModified",
                 "doc": "A date-time serialized using RFC 7231.",
                 "type": {
@@ -2802,6 +3095,11 @@
                 "$id": "234",
                 "kind": "property",
                 "name": "auditTimestamps",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "auditTimestamps",
                 "doc": "Date-times serialized using RFC 3339.",
                 "type": {
@@ -2844,6 +3142,11 @@
                 "$id": "238",
                 "kind": "property",
                 "name": "expirationTimestamp",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "expirationTimestamp",
                 "doc": "A date-time serialized as a Unix timestamp.",
                 "type": {
@@ -2879,6 +3182,11 @@
                 "$id": "241",
                 "kind": "property",
                 "name": "activationDate",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "activationDate",
                 "doc": "A calendar date without a time or timezone.",
                 "type": {
@@ -2906,6 +3214,11 @@
                 "$id": "243",
                 "kind": "property",
                 "name": "activationTime",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "activationTime",
                 "doc": "A clock time without a date or timezone.",
                 "type": {
@@ -2933,6 +3246,11 @@
                 "$id": "245",
                 "kind": "property",
                 "name": "retryAfter",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "retryAfter",
                 "doc": "A duration serialized as an integer number of seconds.",
                 "type": {
@@ -2968,6 +3286,11 @@
                 "$id": "248",
                 "kind": "property",
                 "name": "pollingInterval",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "pollingInterval",
                 "doc": "A duration serialized as a floating-point number of milliseconds.",
                 "type": {
@@ -3003,6 +3326,11 @@
                 "$id": "251",
                 "kind": "property",
                 "name": "encodedInteger",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "encodedInteger",
                 "doc": "An integer serialized as a string.",
                 "type": {
@@ -3031,6 +3359,11 @@
                 "$id": "253",
                 "kind": "property",
                 "name": "jsonMetadata",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "jsonMetadata",
                 "doc": "Arbitrary JSON content that should keep JSON literal semantics.",
                 "type": {
@@ -3074,6 +3407,7 @@
           "$id": "255",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the ConfigurationStore",
           "type": {
@@ -3108,6 +3442,7 @@
           "$id": "257",
           "kind": "property",
           "name": "eTag",
+          "apiVersions": [],
           "serializedName": "eTag",
           "doc": "If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.",
           "type": {
@@ -3170,6 +3505,11 @@
       "$id": "259",
       "kind": "model",
       "name": "KeyValue",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValue",
       "usage": "Input,Output,Json",
@@ -3198,6 +3538,12 @@
         "$id": "260",
         "kind": "model",
         "name": "ProxyResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
         "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ProxyResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -3225,12 +3571,18 @@
           "$id": "261",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "262",
             "kind": "model",
             "name": "KeyValueProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.KeyValueProperties",
             "usage": "Input,Output,Json",
@@ -3252,6 +3604,11 @@
                 "$id": "263",
                 "kind": "property",
                 "name": "value",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "value",
                 "doc": "The value of the key-value.",
                 "type": {
@@ -3279,6 +3636,11 @@
                 "$id": "265",
                 "kind": "property",
                 "name": "contentType",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "contentType",
                 "doc": "The content type of the key-value.",
                 "type": {
@@ -3322,6 +3684,7 @@
           "$id": "267",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the KeyValue",
           "type": {
@@ -3364,6 +3727,11 @@
       "$id": "269",
       "kind": "model",
       "name": "Item",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.Item",
       "usage": "Output,Json",
@@ -3396,12 +3764,18 @@
           "$id": "270",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "271",
             "kind": "model",
             "name": "ItemProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemProperties",
             "usage": "Input,Output,Json",
@@ -3423,6 +3797,11 @@
                 "$id": "272",
                 "kind": "property",
                 "name": "value",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "value",
                 "doc": "The value of the item.",
                 "type": {
@@ -3450,6 +3829,11 @@
                 "$id": "274",
                 "kind": "property",
                 "name": "contentType",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "contentType",
                 "doc": "The content type of the item.",
                 "type": {
@@ -3477,6 +3861,11 @@
                 "$id": "276",
                 "kind": "property",
                 "name": "nullableValue",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "nullableValue",
                 "doc": "Nullable value used to verify provisioning primitive wrapping.",
                 "type": {
@@ -3509,12 +3898,22 @@
                 "$id": "279",
                 "kind": "property",
                 "name": "attributes",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "attributes",
                 "doc": "The attributes of the item.",
                 "type": {
                   "$id": "280",
                   "kind": "model",
                   "name": "ItemAttributes",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemAttributes",
                   "usage": "Input,Output,Json",
@@ -3535,6 +3934,11 @@
                     "$id": "281",
                     "kind": "model",
                     "name": "BaseItemAttributes",
+                    "apiVersions": [
+                      "2024-01-01-preview",
+                      "2024-04-01",
+                      "2024-05-01"
+                    ],
                     "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.BaseItemAttributes",
                     "usage": "Input,Output,Json",
@@ -3556,6 +3960,11 @@
                         "$id": "282",
                         "kind": "property",
                         "name": "enabled",
+                        "apiVersions": [
+                          "2024-01-01-preview",
+                          "2024-04-01",
+                          "2024-05-01"
+                        ],
                         "serializedName": "enabled",
                         "doc": "Whether the item is enabled.",
                         "type": {
@@ -3583,6 +3992,11 @@
                         "$id": "284",
                         "kind": "property",
                         "name": "displayName",
+                        "apiVersions": [
+                          "2024-01-01-preview",
+                          "2024-04-01",
+                          "2024-05-01"
+                        ],
                         "serializedName": "displayName",
                         "doc": "The optional name inherited by item attributes.",
                         "type": {
@@ -3610,6 +4024,11 @@
                         "$id": "286",
                         "kind": "property",
                         "name": "created",
+                        "apiVersions": [
+                          "2024-01-01-preview",
+                          "2024-04-01",
+                          "2024-05-01"
+                        ],
                         "serializedName": "created",
                         "doc": "The creation date.",
                         "type": {
@@ -3645,6 +4064,11 @@
                         "$id": "289",
                         "kind": "property",
                         "name": "updated",
+                        "apiVersions": [
+                          "2024-01-01-preview",
+                          "2024-04-01",
+                          "2024-05-01"
+                        ],
                         "serializedName": "updated",
                         "doc": "The last updated date.",
                         "type": {
@@ -3683,6 +4107,11 @@
                       "$id": "292",
                       "kind": "property",
                       "name": "expires",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "expires",
                       "doc": "The expiry date.",
                       "type": {
@@ -3718,6 +4147,11 @@
                       "$id": "295",
                       "kind": "property",
                       "name": "displayName",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "displayName",
                       "doc": "The required item attribute name.",
                       "type": {
@@ -3782,6 +4216,7 @@
           "$id": "297",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the Item",
           "type": {
@@ -3816,6 +4251,11 @@
           "$id": "299",
           "kind": "property",
           "name": "tags",
+          "apiVersions": [
+            "2024-01-01-preview",
+            "2024-04-01",
+            "2024-05-01"
+          ],
           "serializedName": "tags",
           "doc": "Tags assigned to the item.",
           "type": {
@@ -3850,6 +4290,11 @@
       "$id": "300",
       "kind": "model",
       "name": "Profile",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.Profile",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -3882,12 +4327,18 @@
           "$id": "301",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "302",
             "kind": "model",
             "name": "ProfileProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -3909,6 +4360,11 @@
                 "$id": "303",
                 "kind": "property",
                 "name": "description",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "description",
                 "doc": "A scalar property that should land on the parent Profile resource\nafter flattening, and stay on `ProfileProperties` itself for the\nstandalone model.",
                 "type": {
@@ -3936,12 +4392,22 @@
                 "$id": "305",
                 "kind": "property",
                 "name": "sku",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "sku",
                 "doc": "A SKU sub-property.",
                 "type": {
                   "$id": "306",
                   "kind": "model",
                   "name": "ProfileSku",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.ProfileSku",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -3963,6 +4429,11 @@
                       "$id": "307",
                       "kind": "property",
                       "name": "name",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "name",
                       "doc": "The SKU name.",
                       "type": {
@@ -4027,6 +4498,7 @@
           "$id": "309",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the Profile",
           "type": {
@@ -4069,6 +4541,11 @@
       "$id": "311",
       "kind": "model",
       "name": "ResourceProfile",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ResourceProfile",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4101,12 +4578,18 @@
           "$id": "312",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "313",
             "kind": "model",
             "name": "ResourceProfileProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ResourceProfileProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4128,12 +4611,22 @@
                 "$id": "314",
                 "kind": "property",
                 "name": "latestRevision",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "latestRevision",
                 "doc": "The latest revision resource returned with the profile.",
                 "type": {
                   "$id": "315",
                   "kind": "model",
                   "name": "ResourceProfileRevision",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.ResourceProfileRevision",
                   "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -4166,12 +4659,18 @@
                       "$id": "316",
                       "kind": "property",
                       "name": "properties",
+                      "apiVersions": [],
                       "serializedName": "properties",
                       "doc": "The resource-specific properties for this resource.",
                       "type": {
                         "$id": "317",
                         "kind": "model",
                         "name": "ResourceProfileRevisionProperties",
+                        "apiVersions": [
+                          "2024-01-01-preview",
+                          "2024-04-01",
+                          "2024-05-01"
+                        ],
                         "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                         "crossLanguageDefinitionId": "ProvisioningTypeSpec.ResourceProfileRevisionProperties",
                         "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -4193,6 +4692,11 @@
                             "$id": "318",
                             "kind": "property",
                             "name": "description",
+                            "apiVersions": [
+                              "2024-01-01-preview",
+                              "2024-04-01",
+                              "2024-05-01"
+                            ],
                             "serializedName": "description",
                             "doc": "The revision description.",
                             "type": {
@@ -4236,6 +4740,7 @@
                       "$id": "320",
                       "kind": "property",
                       "name": "name",
+                      "apiVersions": [],
                       "serializedName": "name",
                       "doc": "The name of the ResourceProfileRevision",
                       "type": {
@@ -4286,6 +4791,11 @@
                 "$id": "322",
                 "kind": "property",
                 "name": "previousRevision",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "previousRevision",
                 "doc": "The previous revision resource returned with the profile.",
                 "type": {
@@ -4309,12 +4819,22 @@
                 "$id": "323",
                 "kind": "property",
                 "name": "specializedProfile",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "specializedProfile",
                 "doc": "The specialized profile resource returned with the profile.",
                 "type": {
                   "$id": "324",
                   "kind": "model",
                   "name": "SpecializedResourceProfile",
+                  "apiVersions": [
+                    "2024-01-01-preview",
+                    "2024-04-01",
+                    "2024-05-01"
+                  ],
                   "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                   "crossLanguageDefinitionId": "ProvisioningTypeSpec.SpecializedResourceProfile",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4336,6 +4856,11 @@
                     "$id": "325",
                     "kind": "model",
                     "name": "DiscriminatedResourceProfile",
+                    "apiVersions": [
+                      "2024-01-01-preview",
+                      "2024-04-01",
+                      "2024-05-01"
+                    ],
                     "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                     "crossLanguageDefinitionId": "ProvisioningTypeSpec.DiscriminatedResourceProfile",
                     "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4364,6 +4889,11 @@
                       "$id": "326",
                       "kind": "property",
                       "name": "kind",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "kind",
                       "doc": "The profile kind.",
                       "type": {
@@ -4395,12 +4925,18 @@
                         "$id": "328",
                         "kind": "property",
                         "name": "properties",
+                        "apiVersions": [],
                         "serializedName": "properties",
                         "doc": "The resource-specific properties for this resource.",
                         "type": {
                           "$id": "329",
                           "kind": "model",
                           "name": "DiscriminatedResourceProfileProperties",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                           "crossLanguageDefinitionId": "ProvisioningTypeSpec.DiscriminatedResourceProfileProperties",
                           "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4422,6 +4958,11 @@
                               "$id": "330",
                               "kind": "property",
                               "name": "description",
+                              "apiVersions": [
+                                "2024-01-01-preview",
+                                "2024-04-01",
+                                "2024-05-01"
+                              ],
                               "serializedName": "description",
                               "doc": "The profile description.",
                               "type": {
@@ -4465,6 +5006,7 @@
                         "$id": "332",
                         "kind": "property",
                         "name": "name",
+                        "apiVersions": [],
                         "serializedName": "name",
                         "doc": "The name of the DiscriminatedResourceProfile",
                         "type": {
@@ -4510,6 +5052,11 @@
                       "$id": "334",
                       "kind": "property",
                       "name": "kind",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "serializedName": "kind",
                       "doc": "The specialized profile kind.",
                       "type": {
@@ -4549,6 +5096,11 @@
                 "$id": "335",
                 "kind": "property",
                 "name": "baseDiscriminatedProfile",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "baseDiscriminatedProfile",
                 "doc": "The discriminated profile resource returned with the profile, typed as the discriminator base.",
                 "type": {
@@ -4588,6 +5140,7 @@
           "$id": "336",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the ResourceProfile",
           "type": {
@@ -4642,6 +5195,11 @@
       "$id": "338",
       "kind": "model",
       "name": "ExtensionAssignment",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignment",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4666,6 +5224,12 @@
         "$id": "339",
         "kind": "model",
         "name": "ExtensionResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
         "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4692,12 +5256,18 @@
           "$id": "340",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "341",
             "kind": "model",
             "name": "ExtensionAssignmentProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.ExtensionAssignmentProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -4719,6 +5289,11 @@
                 "$id": "342",
                 "kind": "property",
                 "name": "displayName",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "displayName",
                 "doc": "The display name of the assignment.",
                 "type": {
@@ -4762,6 +5337,7 @@
           "$id": "344",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the ExtensionAssignment",
           "type": {
@@ -4804,6 +5380,11 @@
       "$id": "346",
       "kind": "model",
       "name": "SingletonSetting",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.SingletonSetting",
       "usage": "Input,Output,Json",
@@ -4842,12 +5423,18 @@
           "$id": "347",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "348",
             "kind": "model",
             "name": "SingletonSettingProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.SingletonSettingProperties",
             "usage": "Input,Output,Json",
@@ -4869,6 +5456,11 @@
                 "$id": "349",
                 "kind": "property",
                 "name": "enabled",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "enabled",
                 "doc": "Indicates whether the singleton setting is enabled.",
                 "type": {
@@ -4912,6 +5504,7 @@
           "$id": "351",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the SingletonSetting",
           "type": {
@@ -4951,6 +5544,11 @@
       "$id": "353",
       "kind": "model",
       "name": "LegacySingleton",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.LegacySingleton",
       "usage": "Input,Output,Json",
@@ -4979,12 +5577,18 @@
           "$id": "354",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "355",
             "kind": "model",
             "name": "LegacySingletonProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.LegacySingletonProperties",
             "usage": "Input,Output,Json",
@@ -5006,6 +5610,11 @@
                 "$id": "356",
                 "kind": "property",
                 "name": "enabled",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "enabled",
                 "doc": "Indicates whether the legacy singleton is enabled.",
                 "type": {
@@ -5049,6 +5658,7 @@
           "$id": "358",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the LegacySingleton",
           "type": {
@@ -5088,6 +5698,11 @@
       "$id": "360",
       "kind": "model",
       "name": "OrphanedSingleton",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.OrphanedSingleton",
       "usage": "Input,Output,Json",
@@ -5116,12 +5731,18 @@
           "$id": "361",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "362",
             "kind": "model",
             "name": "OrphanedSingletonProperties",
+            "apiVersions": [
+              "2024-01-01-preview",
+              "2024-04-01",
+              "2024-05-01"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "ProvisioningTypeSpec.OrphanedSingletonProperties",
             "usage": "Input,Output,Json",
@@ -5143,6 +5764,11 @@
                 "$id": "363",
                 "kind": "property",
                 "name": "enabled",
+                "apiVersions": [
+                  "2024-01-01-preview",
+                  "2024-04-01",
+                  "2024-05-01"
+                ],
                 "serializedName": "enabled",
                 "doc": "Indicates whether the orphaned singleton is enabled.",
                 "type": {
@@ -5186,6 +5812,7 @@
           "$id": "365",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the OrphanedSingleton",
           "type": {
@@ -5225,6 +5852,11 @@
       "$id": "367",
       "kind": "model",
       "name": "ConfigurationStorePrivateLinkResource",
+      "apiVersions": [
+        "2024-01-01-preview",
+        "2024-04-01",
+        "2024-05-01"
+      ],
       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ConfigurationStorePrivateLinkResource",
       "usage": "Output,Json",
@@ -5256,12 +5888,24 @@
           "$id": "368",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "serializedName": "properties",
           "doc": "Resource properties.",
           "type": {
             "$id": "369",
             "kind": "model",
             "name": "PrivateLinkResourceProperties",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.PrivateLinkResourceProperties",
             "usage": "Output,Json",
@@ -5283,6 +5927,12 @@
                 "$id": "370",
                 "kind": "property",
                 "name": "groupId",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "groupId",
                 "doc": "The private link resource group id.",
                 "type": {
@@ -5310,6 +5960,12 @@
                 "$id": "372",
                 "kind": "property",
                 "name": "requiredMembers",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "requiredMembers",
                 "doc": "The private link resource required member names.",
                 "type": {
@@ -5344,6 +6000,12 @@
                 "$id": "375",
                 "kind": "property",
                 "name": "requiredZoneNames",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "requiredZoneNames",
                 "doc": "The private link resource private link DNS zone name.",
                 "type": {
@@ -6887,6 +7549,12 @@
                       "$id": "471",
                       "kind": "model",
                       "name": "OperationListResult",
+                      "apiVersions": [
+                        "v3",
+                        "v4",
+                        "v5",
+                        "v6"
+                      ],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
                       "usage": "Output,Json",
@@ -6908,6 +7576,7 @@
                           "$id": "472",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The Operation items on this page",
                           "type": {
@@ -6918,6 +7587,12 @@
                               "$id": "474",
                               "kind": "model",
                               "name": "Operation",
+                              "apiVersions": [
+                                "v3",
+                                "v4",
+                                "v5",
+                                "v6"
+                              ],
                               "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                               "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
                               "usage": "Output,Json",
@@ -6940,6 +7615,12 @@
                                   "$id": "475",
                                   "kind": "property",
                                   "name": "name",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
                                   "serializedName": "name",
                                   "doc": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
                                   "type": {
@@ -6967,6 +7648,12 @@
                                   "$id": "477",
                                   "kind": "property",
                                   "name": "isDataAction",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
                                   "serializedName": "isDataAction",
                                   "doc": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
                                   "type": {
@@ -6994,12 +7681,24 @@
                                   "$id": "479",
                                   "kind": "property",
                                   "name": "display",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
                                   "serializedName": "display",
                                   "doc": "Localized display information for this particular operation.",
                                   "type": {
                                     "$id": "480",
                                     "kind": "model",
                                     "name": "OperationDisplay",
+                                    "apiVersions": [
+                                      "v3",
+                                      "v4",
+                                      "v5",
+                                      "v6"
+                                    ],
                                     "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
                                     "usage": "Output,Json",
@@ -7021,6 +7720,12 @@
                                         "$id": "481",
                                         "kind": "property",
                                         "name": "provider",
+                                        "apiVersions": [
+                                          "v3",
+                                          "v4",
+                                          "v5",
+                                          "v6"
+                                        ],
                                         "serializedName": "provider",
                                         "doc": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
                                         "type": {
@@ -7048,6 +7753,12 @@
                                         "$id": "483",
                                         "kind": "property",
                                         "name": "resource",
+                                        "apiVersions": [
+                                          "v3",
+                                          "v4",
+                                          "v5",
+                                          "v6"
+                                        ],
                                         "serializedName": "resource",
                                         "doc": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
                                         "type": {
@@ -7075,6 +7786,12 @@
                                         "$id": "485",
                                         "kind": "property",
                                         "name": "operation",
+                                        "apiVersions": [
+                                          "v3",
+                                          "v4",
+                                          "v5",
+                                          "v6"
+                                        ],
                                         "serializedName": "operation",
                                         "doc": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
                                         "type": {
@@ -7102,6 +7819,12 @@
                                         "$id": "487",
                                         "kind": "property",
                                         "name": "description",
+                                        "apiVersions": [
+                                          "v3",
+                                          "v4",
+                                          "v5",
+                                          "v6"
+                                        ],
                                         "serializedName": "description",
                                         "doc": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
                                         "type": {
@@ -7145,12 +7868,24 @@
                                   "$id": "489",
                                   "kind": "property",
                                   "name": "origin",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
                                   "serializedName": "origin",
                                   "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
                                   "type": {
                                     "$id": "490",
                                     "kind": "enum",
                                     "name": "Origin",
+                                    "apiVersions": [
+                                      "v3",
+                                      "v4",
+                                      "v5",
+                                      "v6"
+                                    ],
                                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
                                     "valueType": {
                                       "$id": "491",
@@ -7232,12 +7967,24 @@
                                   "$id": "495",
                                   "kind": "property",
                                   "name": "actionType",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
                                   "serializedName": "actionType",
                                   "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
                                   "type": {
                                     "$id": "496",
                                     "kind": "enum",
                                     "name": "ActionType",
+                                    "apiVersions": [
+                                      "v3",
+                                      "v4",
+                                      "v5",
+                                      "v6"
+                                    ],
                                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
                                     "valueType": {
                                       "$id": "497",
@@ -7308,6 +8055,7 @@
                           "$id": "499",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
@@ -9576,6 +10324,7 @@
                       "$id": "614",
                       "kind": "model",
                       "name": "ConfigurationStoreListResult",
+                      "apiVersions": [],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
                       "usage": "Output,Json",
@@ -9597,6 +10346,7 @@
                           "$id": "615",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The ConfigurationStore items on this page",
                           "type": {
@@ -9627,6 +10377,7 @@
                           "$id": "617",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
@@ -11830,6 +12581,7 @@
                       "$id": "731",
                       "kind": "model",
                       "name": "KeyValueListResult",
+                      "apiVersions": [],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
                       "usage": "Output,Json",
@@ -11851,6 +12603,7 @@
                           "$id": "732",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The KeyValue items on this page",
                           "type": {
@@ -11881,6 +12634,7 @@
                           "$id": "734",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
@@ -12997,6 +13751,11 @@
                       "$id": "796",
                       "kind": "model",
                       "name": "ItemCreateOrUpdateParameters",
+                      "apiVersions": [
+                        "2024-01-01-preview",
+                        "2024-04-01",
+                        "2024-05-01"
+                      ],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "ProvisioningTypeSpec.ItemCreateOrUpdateParameters",
                       "usage": "Input,Json",
@@ -13018,6 +13777,11 @@
                           "$id": "797",
                           "kind": "property",
                           "name": "tags",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "tags",
                           "doc": "Tags assigned to the item.",
                           "type": {
@@ -13041,6 +13805,11 @@
                           "$id": "798",
                           "kind": "property",
                           "name": "properties",
+                          "apiVersions": [
+                            "2024-01-01-preview",
+                            "2024-04-01",
+                            "2024-05-01"
+                          ],
                           "serializedName": "properties",
                           "doc": "Properties of the item.",
                           "type": {
@@ -13521,6 +14290,7 @@
                       "$id": "819",
                       "kind": "model",
                       "name": "ItemListResult",
+                      "apiVersions": [],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
                       "usage": "Output,Json",
@@ -13542,6 +14312,7 @@
                           "$id": "820",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The Item items on this page",
                           "type": {
@@ -13572,6 +14343,7 @@
                           "$id": "822",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
@@ -15617,6 +16389,7 @@
                       "$id": "929",
                       "kind": "model",
                       "name": "ProfileListResult",
+                      "apiVersions": [],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
                       "usage": "Output,Json",
@@ -15638,6 +16411,7 @@
                           "$id": "930",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The Profile items on this page",
                           "type": {
@@ -15668,6 +16442,7 @@
                           "$id": "932",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
@@ -23927,6 +24702,7 @@
                       "$id": "1376",
                       "kind": "model",
                       "name": "ConfigurationStorePrivateLinkResourceListResult",
+                      "apiVersions": [],
                       "namespace": "Azure.Provisioning.ProvisioningTypeSpec",
                       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
                       "usage": "Output,Json",
@@ -23948,6 +24724,7 @@
                           "$id": "1377",
                           "kind": "property",
                           "name": "value",
+                          "apiVersions": [],
                           "serializedName": "value",
                           "doc": "The ConfigurationStorePrivateLinkResource items on this page",
                           "type": {
@@ -23978,6 +24755,7 @@
                           "$id": "1379",
                           "kind": "property",
                           "name": "nextLink",
+                          "apiVersions": [],
                           "serializedName": "nextLink",
                           "doc": "The link to the next page of items",
                           "type": {
