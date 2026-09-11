@@ -38,6 +38,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
                 { "IsDirectory", "false" },
                 { "Description", "test description" },
                 { "Initiator", "user@example.com" },
+                { "ReplacedFileId", "9223442405598965432" },
                 // Nested Identity dict exercises the recursive deserialization path
                 { "Identity", new Dictionary<string, object>
                     {
@@ -79,6 +80,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed.Tests
             Assert.IsFalse(evt.EventData.IsDirectory);
             Assert.AreEqual("test description", evt.EventData.Description);
             Assert.AreEqual("user@example.com", evt.EventData.Initiator);
+            Assert.AreEqual("9223442405598965432", evt.EventData.ReplacedFileId);
 
             // Verify nested Identity was deserialized
             Assert.IsNotNull(evt.EventData.Identity);

@@ -580,6 +580,7 @@ namespace Azure.Storage
                 public const string Description = "Description";
                 public const string Initiator = "Initiator";
                 public const string IsDirectory = "IsDirectory";
+                public const string ReplacedFileId = "ReplacedFileId";
             }
 
             internal static class EventIdentity

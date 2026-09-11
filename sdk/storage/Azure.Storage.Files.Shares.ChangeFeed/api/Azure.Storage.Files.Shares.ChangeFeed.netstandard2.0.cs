@@ -55,6 +55,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public string NewFullFilePath { get { throw null; } }
         public string NewParentFileId { get { throw null; } }
         public string ParentFileId { get { throw null; } }
+        public string ReplacedFileId { get { throw null; } }
     }
     public partial class ShareChangeFeedEventIdentity
     {
@@ -70,7 +71,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     public static partial class ShareChangeFeedModelFactory
     {
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent ShareChangeFeedEvent(long schemaVersion = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType reason = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType), Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol protocol = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol), System.DateTimeOffset eventTime = default(System.DateTimeOffset), string id = null, long containerVersionNumber = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData eventData = null) { throw null; }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData ShareChangeFeedEventData(string fileId = null, string parentFileId = null, string newParentFileId = null, Azure.ETag? eTag = default(Azure.ETag?), string fileName = null, string fullFilePath = null, string newFullFilePath = null, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity identity = null, string description = null, string initiator = null, bool isDirectory = false) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData ShareChangeFeedEventData(string fileId = null, string parentFileId = null, string newParentFileId = null, Azure.ETag? eTag = default(Azure.ETag?), string fileName = null, string fullFilePath = null, string newFullFilePath = null, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity identity = null, string description = null, string initiator = null, bool isDirectory = false, string replacedFileId = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity ShareChangeFeedEventIdentity(string entraObjectId = null, string securityIdentifier = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent ShareChangeFeedResetEvent(System.Guid resetId = default(System.Guid), long resetFileTime = (long)0, System.DateTimeOffset resetTimeUtc = default(System.DateTimeOffset), string accountName = null, string containerName = null, string resetReason = null, long schemaVersion = (long)1) { throw null; }
     }
