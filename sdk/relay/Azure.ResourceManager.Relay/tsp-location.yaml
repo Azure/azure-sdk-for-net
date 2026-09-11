@@ -1,5 +1,5 @@
 directory: specification/relay/resource-manager/Microsoft.Relay/Relay
-commit: 727040554de29a660e2ca33d73356fda3d118baf
+commit: a8dc15f9f973738e2e381a59e0911b700f179c5c
 repo: Azure/azure-rest-api-specs
 additionalDirectories: []
 
