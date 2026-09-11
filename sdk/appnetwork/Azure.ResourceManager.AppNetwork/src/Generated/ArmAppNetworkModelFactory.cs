@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 clusterType,
                 metadataResourceId is null ? default : new Metadata(metadataResourceId, default),
                 upgradeProfile,
-                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default),
+                observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(observabilityMetricsEndpoint is null ? default : new MetricsProfile(observabilityMetricsEndpoint, default), default),
                 connectivityProfile,
                 provisioningState,
                 default);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <returns> A new <see cref="Models.AppLinkMemberUpdateProperties"/> instance for mocking. </returns>
         public static AppLinkMemberUpdateProperties AppLinkMemberUpdateProperties(AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default)
         {
-            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
+            return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(observabilityMetricsEndpoint is null ? default : new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
         }
 
         /// <summary> AppLinkMember upgrade history. </summary>
