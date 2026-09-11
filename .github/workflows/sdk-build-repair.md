@@ -30,6 +30,7 @@ description: "Auto-repair custom-code build failures on release-planner Auto SDK
 
 imports:
   - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
 
 on:
   # Primary, fully-automatic path: the release pipeline labels an eligible Auto SDK PR.
@@ -74,7 +75,9 @@ if: >-
                   || github.event.pull_request.user.login == 'azure-sdk-automation[bot]')
               && startsWith(github.event.pull_request.head.ref, 'sdkauto/'))) }}
 
-engine: copilot
+engine:
+  id: copilot
+  version: "1.0.83"
 
 # Agent job runs read-only; copilot-requests:write bills Copilot CLI usage to the org.
 # The separate safe-outputs jobs receive the write scopes they need (contents/pull-requests).

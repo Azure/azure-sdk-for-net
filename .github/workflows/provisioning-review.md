@@ -1,4 +1,5 @@
 ---
+run-name: "Review PR #${{ github.event.inputs.pr_number }} at ${{ github.event.inputs.check_run_head_sha || 'current head' }}"
 on:
   workflow_dispatch:
     inputs:
@@ -23,6 +24,8 @@ if: |
 description: "Review Azure SDK for .NET provisioning library PRs using checked-in provisioning review guidance"
 imports:
   - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+  - shared/review-execution-status.md
 checkout:
   sparse-checkout: |
     .github
@@ -35,6 +38,7 @@ permissions:
   checks: read
 engine:
   id: copilot
+  version: "1.0.83"
   concurrency:
     group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.inputs.pr_number }}"
     queue: max
@@ -61,86 +65,11 @@ safe-outputs:
   noop:
     report-as-issue: false
   jobs:
-    publish_pr_check:
-      description: "Publish a PR-head check run linking to this provisioning review workflow run"
-      runs-on: ubuntu-latest
-      needs: safe_outputs
-      output: "Provisioning review check run published"
-      permissions:
-        checks: write
-        pull-requests: read
-      steps:
-        - name: Publish provisioning review check run
-          uses: actions/github-script@v9.0.0
-          env:
-            TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
-            TARGET_HEAD_SHA: "${{ github.event.inputs.check_run_head_sha }}"
-          with:
-            script: |
-              const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
-              if (!Number.isInteger(prNumber) || prNumber <= 0) {
-                core.info(`No valid pull request number found: ${process.env.TARGET_PR_NUMBER || '<empty>'}`);
-                return;
-              }
-
-              const owner = context.repo.owner;
-              const repo = context.repo.repo;
-              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
-
-              let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
-              if (!headSha) {
-                headSha = pr.head.sha;
-              } else if (headSha !== pr.head.sha) {
-                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the completed check run SHA.`);
-              }
-
-              const checkName = 'Azure .NET Provisioning SDK PR Review';
-              const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
-              const detailsUrl = `${serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
-              const output = {
-                title: checkName,
-                summary: `Provisioning SDK PR review completed. See ${detailsUrl}`
-              };
-
-              const { data: existing } = await github.rest.checks.listForRef({
-                owner,
-                repo,
-                ref: headSha,
-                check_name: checkName,
-                filter: 'latest',
-                per_page: 1
-              });
-
-              if (existing.check_runs.length > 0) {
-                await github.rest.checks.update({
-                  owner,
-                  repo,
-                  check_run_id: existing.check_runs[0].id,
-                  status: 'completed',
-                  conclusion: 'success',
-                  details_url: detailsUrl,
-                  output
-                });
-                core.info(`Updated provisioning review check run ${existing.check_runs[0].id} for ${headSha}.`);
-                return;
-              }
-
-              const { data: created } = await github.rest.checks.create({
-                owner,
-                repo,
-                name: checkName,
-                head_sha: headSha,
-                status: 'completed',
-                conclusion: 'success',
-                details_url: detailsUrl,
-                output
-              });
-              core.info(`Created provisioning review check run ${created.id} for ${headSha}.`);
-
     dismiss_stale_change_requests:
       description: "Dismiss the prior provisioning review change request after a newer non-blocking review"
       runs-on: ubuntu-latest
       needs: safe_outputs
+      if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
       output: "Stale provisioning review change request dismissed"
       permissions:
         pull-requests: write
@@ -152,6 +81,14 @@ safe-outputs:
             REVIEW_WORKFLOW_NAME: "${{ github.workflow }}"
           with:
             script: |
+              const fs = require('fs');
+              const output = JSON.parse(fs.readFileSync(process.env.GH_AW_AGENT_OUTPUT, 'utf8'));
+              if ((!Array.isArray(output?.items)) || (!output.items.some(item => item.type === 'submit_pull_request_review')) ||
+                  (!Array.isArray(output.errors)) || (output.errors.length !== 0) ||
+                  (output.items.some(item => ['report_incomplete', 'missing_tool', 'missing_data'].includes(item.type)))) {
+                throw new Error('Stale reviews cannot be dismissed after incomplete or invalid agent output');
+              }
+
               const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
               if (!Number.isInteger(prNumber) || prNumber <= 0) {
                 core.info(`No valid pull request number found: ${process.env.TARGET_PR_NUMBER || '<empty>'}`);
@@ -191,7 +128,8 @@ safe-outputs:
                 .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
 
               const latestReview = workflowReviews[0];
-              if (!latestReview || latestReview.commit_id !== headSha || latestReview.state !== 'COMMENTED') {
+              const runUrl = `${process.env.GITHUB_SERVER_URL}/${owner}/${repo}/actions/runs/${context.runId}`;
+              if ((!latestReview) || (latestReview.commit_id !== headSha) || (latestReview.state !== 'COMMENTED') || (!latestReview.body?.split(/\s+/).includes(runUrl))) {
                 core.info(`Latest provisioning review is not a non-blocking comment on current head ${headSha}; skipping dismissal.`);
                 return;
               }
@@ -279,8 +217,7 @@ Then check CI status: list the check runs and commit statuses for the PR head co
   1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
   2. Use its check-name mapping and log-symptom tables to classify each failure, fetch job logs for details, and include actionable fix instructions.
   3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
-  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on PR heads.
-  5. Stop. Do not run the provisioning SDK review, do not run schema extraction, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
+  4. Stop. Do not run the provisioning SDK review, do not run schema extraction, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
 - If `github.event.inputs.check_run_conclusion` is `success`, skip the status check because CI success is already confirmed. Proceed with the provisioning SDK review normally.
 - If CI checks have failed on other triggers, apply the same **CI failure analysis only** path as above and stop before the provisioning SDK review.
 - If CI checks have passed, proceed with the review normally.
@@ -355,7 +292,6 @@ Package: `<package path>`
 ````
 If the output is too large for one GitHub comment, include as much complete table content as fits and clearly state that the remaining output was truncated by the workflow comment size limit.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit only after confirming the latest review is this workflow's new non-blocking comment on the current head.
-- After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on PR heads.
 
 The review body should contain:
 
