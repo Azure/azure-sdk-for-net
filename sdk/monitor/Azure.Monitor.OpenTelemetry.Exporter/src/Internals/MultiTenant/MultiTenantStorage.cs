@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -423,7 +424,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             Interlocked.Add(ref _currentSizeBytes, -length);
 
-            AzureMonitorExporterEventSource.Log.RoutedTelemetryEvicted(DescribeOwner(candidate.Path), length, requestingEndpoint);
+            // Resolving the owner walks the partitions, so it waits until something is listening.
+            if (AzureMonitorExporterEventSource.Log.IsEnabled(EventLevel.Warning, EventKeywords.All))
+            {
+                AzureMonitorExporterEventSource.Log.RoutedTelemetryEvicted(DescribeOwner(candidate.Path), length, requestingEndpoint);
+            }
 
             return true;
         }

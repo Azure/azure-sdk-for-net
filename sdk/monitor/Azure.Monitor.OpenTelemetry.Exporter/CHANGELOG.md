@@ -10,8 +10,6 @@
 
 ### Other Changes
 
-- Multi-tenant export now reports what it collected, where it was sent, and what it dropped through the `OpenTelemetry-AzureMonitor-Exporter` event source, so a routing or delivery problem can be diagnosed without a debugger. At `Informational` each export reports how many Activities it collected, how many endpoints they were addressed to, how many were dropped as unroutable, and what each endpoint's batch did: transmitted, written to offline storage, or dropped. Also reported at this level are telemetry evicted from the shared offline storage budget to make room for another endpoint, naming both endpoints, and an endpoint refused a storage partition because the limit of 64 is in use. At `Verbose` each Activity is reported individually with its destination, instrumentation key, trace id, and span id, and each Activity dropped before routing is reported with the reason it failed validation. Every event from one export carries the same export sequence number, so the per-item records can be tied to the totals and to the delivery of the batch they became part of. Rejection reasons never repeat the endpoint that caused them, because an endpoint carrying credentials is one of the reasons. Collect with `dotnet-trace collect --process-id PID --providers OpenTelemetry-AzureMonitor-Exporter::Verbose`.
-
 ## 1.9.0 (2026-09-04)
 
 ### Features Added
