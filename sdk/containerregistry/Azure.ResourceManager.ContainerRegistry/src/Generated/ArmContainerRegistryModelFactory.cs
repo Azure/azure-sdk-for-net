@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     version,
                     connectionState,
                     lastActivityOn,
-                    new ActivationProperties(activationStatus, default),
+                    activationStatus is null ? default : new ActivationProperties(activationStatus, default),
                     parent,
                     (clientTokenIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     loginServer,
@@ -998,7 +998,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 name,
                 resourceType,
                 systemData,
-                source is null && sourceTriggerStatus is null && options is null && provisioningState is null ? default : new ImportPipelineProperties(source, new PipelineTriggerProperties(new PipelineSourceTriggerProperties(sourceTriggerStatus.GetValueOrDefault(), default), default), (options ?? new ChangeTrackingList<ContainerRegistryPipelineOption>()).ToList(), provisioningState, default),
+                source is null && sourceTriggerStatus is null && options is null && provisioningState is null ? default : new ImportPipelineProperties(source, sourceTriggerStatus is null ? default : new PipelineTriggerProperties(sourceTriggerStatus is null ? default : new PipelineSourceTriggerProperties(sourceTriggerStatus.GetValueOrDefault(), default), default), (options ?? new ChangeTrackingList<ContainerRegistryPipelineOption>()).ToList(), provisioningState, default),
                 location,
                 identity,
                 default);
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 source,
                 target,
                 catalogDigest,
-                sourceTriggerOn is null ? default : new PipelineTriggerDescriptor(new PipelineSourceTriggerDescriptor(sourceTriggerOn, default), default),
+                sourceTriggerOn is null ? default : new PipelineTriggerDescriptor(sourceTriggerOn is null ? default : new PipelineSourceTriggerDescriptor(sourceTriggerOn, default), default),
                 pipelineRunErrorMessage,
                 default);
         }
@@ -1385,7 +1385,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     version,
                     connectionState,
                     lastActivityOn,
-                    new ActivationProperties(activationStatus, default),
+                    activationStatus is null ? default : new ActivationProperties(activationStatus, default),
                     parent,
                     (clientTokenIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                     loginServer,

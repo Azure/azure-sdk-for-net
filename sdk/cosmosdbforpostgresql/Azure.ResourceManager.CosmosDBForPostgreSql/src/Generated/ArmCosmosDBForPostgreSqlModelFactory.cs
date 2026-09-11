@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
+                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
                 default);
         }
 
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                roleType is null && password is null && objectId is null && principalType is null && tenantId is null && provisioningState is null ? default : new RoleProperties(roleType, password, new RolePropertiesExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId, default), provisioningState, default),
+                roleType is null && password is null && objectId is null && principalType is null && tenantId is null && provisioningState is null ? default : new RoleProperties(roleType, password, objectId is null && principalType is null && tenantId is null ? default : new RolePropertiesExternalIdentity(objectId, principalType.GetValueOrDefault(), tenantId, default), provisioningState, default),
                 default);
         }
 
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
+                privateEndpointId is null && groupIds is null && privateLinkServiceConnectionState is null ? default : new PrivateEndpointConnectionSimpleProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, default),
                 default);
         }
 
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 name,
                 resourceType,
                 systemData,
-                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
     }
