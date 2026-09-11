@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="kind"> Get or Set Kind property. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Maps.MapsAccountData"/> instance for mocking. </returns>
-        public static MapsAccountData MapsAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MapsAccountProperties properties = default, MapsSku sku = default, MapsAccountKind? kind = default, ManagedServiceIdentity identity = default)
+        public static MapsAccountData MapsAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MapsAccountProperties properties, MapsSku sku, MapsAccountKind? kind, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Maps Account. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
         /// <returns> A new <see cref="Models.MapsAccountProperties"/> instance for mocking. </returns>
-        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, IEnumerable<MapsCorsRule> corsRules = default, MapsEncryption encryption = default, IEnumerable<MapsLocationItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, MapsPublicNetworkAccess? publicNetworkAccess = default)
+        public static MapsAccountProperties MapsAccountProperties(Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, IEnumerable<MapsCorsRule> corsRules, MapsEncryption encryption, IEnumerable<MapsLocationItem> locations, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, MapsPublicNetworkAccess? publicNetworkAccess = default)
         {
             linkedResources ??= new ChangeTrackingList<MapsLinkedResource>();
             locations ??= new ChangeTrackingList<MapsLocationItem>();
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="publicNetworkAccess"> Property to specify whether the Maps Account will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. </param>
         /// <param name="corsRules"> The list of CORS rules. You can include up to five CorsRule elements in the request. </param>
         /// <returns> A new <see cref="Models.MapsAccountPatch"/> instance for mocking. </returns>
-        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags = default, MapsAccountKind? kind = default, MapsSku sku = default, ManagedServiceIdentity identity = default, Guid? uniqueId = default, bool? disableLocalAuth = default, string provisioningState = default, IEnumerable<MapsLinkedResource> linkedResources = default, MapsEncryption encryption = default, IEnumerable<MapsLocationItem> locations = default, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections = default, MapsPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default)
+        public static MapsAccountPatch MapsAccountPatch(IDictionary<string, string> tags, MapsAccountKind? kind, MapsSku sku, ManagedServiceIdentity identity, Guid? uniqueId, bool? disableLocalAuth, string provisioningState, IEnumerable<MapsLinkedResource> linkedResources, MapsEncryption encryption, IEnumerable<MapsLocationItem> locations, IEnumerable<MapsPrivateEndpointConnectionData> privateEndpointConnections, MapsPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<MapsCorsRule> corsRules = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="totalStorageUnitSizeInBytes"> The total allocated storage unit size in bytes for the creator resource. </param>
         /// <param name="consumedStorageUnitSizeInBytes"> The consumed storage unit size in bytes for the creator resource. </param>
         /// <returns> A new <see cref="Models.MapsCreatorProperties"/> instance for mocking. </returns>
-        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState = default, int storageUnits = default, int? totalStorageUnitSizeInBytes = default, int? consumedStorageUnitSizeInBytes = default)
+        public static MapsCreatorProperties MapsCreatorProperties(string provisioningState, int storageUnits, int? totalStorageUnitSizeInBytes, int? consumedStorageUnitSizeInBytes = default)
         {
             return new MapsCreatorProperties(provisioningState, storageUnits, totalStorageUnitSizeInBytes, consumedStorageUnitSizeInBytes, default);
         }
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="totalStorageUnitSizeInBytes"> The total allocated storage unit size in bytes for the creator resource. </param>
         /// <param name="consumedStorageUnitSizeInBytes"> The consumed storage unit size in bytes for the creator resource. </param>
         /// <returns> A new <see cref="Models.MapsCreatorPatch"/> instance for mocking. </returns>
-        public static MapsCreatorPatch MapsCreatorPatch(IDictionary<string, string> tags = default, string provisioningState = default, int? storageUnits = default, int? totalStorageUnitSizeInBytes = default, int? consumedStorageUnitSizeInBytes = default)
+        public static MapsCreatorPatch MapsCreatorPatch(IDictionary<string, string> tags, string provisioningState, int? storageUnits, int? totalStorageUnitSizeInBytes, int? consumedStorageUnitSizeInBytes = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
