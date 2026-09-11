@@ -46,7 +46,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedEventIdentity identity = default,
             string description = default,
             string initiator = default,
-            bool isDirectory = default)
+            bool isDirectory = default,
+            string replacedFileId = default)
             => new ShareChangeFeedEventData
             {
                 FileId = fileId,
@@ -60,6 +61,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 Description = description,
                 Initiator = initiator,
                 IsDirectory = isDirectory,
+                ReplacedFileId = replacedFileId,
             };
 
         /// <summary>

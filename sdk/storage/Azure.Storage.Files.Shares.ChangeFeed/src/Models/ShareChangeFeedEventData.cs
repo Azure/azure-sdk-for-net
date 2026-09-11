@@ -68,6 +68,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public bool IsDirectory { get; internal set; }
 
         /// <summary>
+        /// The unique file ID of the file that was replaced by the affected file or directory, if applicable.
+        /// </summary>
+        public string ReplacedFileId { get; internal set; }
+
+        /// <summary>
         /// Initializes a new <see cref="ShareChangeFeedEventData"/> from a deserialized Avro data dictionary.
         /// </summary>
         /// <param name="record">The dictionary containing event data fields.</param>
@@ -100,6 +105,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 else if (isDirectory is bool isDirBool)
                     IsDirectory = isDirBool;
             }
+            if (record.TryGetValue(Constants.FilesChangeFeed.EventData.ReplacedFileId, out object replacedFileId))
+                ReplacedFileId = (string)replacedFileId;
         }
 
         /// <summary>
