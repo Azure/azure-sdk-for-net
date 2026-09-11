@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="kind"> Reservation or SavingsPlan. </param>
         /// <param name="properties"> The properties of the benefit recommendations. </param>
         /// <returns> A new <see cref="Models.BenefitRecommendationModel"/> instance for mocking. </returns>
-        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BillingAccountBenefitKind? kind = default, BenefitRecommendationProperties properties = default)
+        public static BenefitRecommendationModel BenefitRecommendationModel(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingAccountBenefitKind? kind, BenefitRecommendationProperties properties)
         {
             return new BenefitRecommendationModel(
                 id,

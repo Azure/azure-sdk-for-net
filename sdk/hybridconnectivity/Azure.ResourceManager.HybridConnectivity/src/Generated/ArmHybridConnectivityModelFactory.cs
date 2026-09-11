@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="serverId"> The arc ingress gateway server app id. </param>
         /// <param name="tenantId"> The target resource home tenant id. </param>
         /// <returns> A new <see cref="Models.IngressGatewayAsset"/> instance for mocking. </returns>
-        public static IngressGatewayAsset IngressGatewayAsset(string namespaceName = default, string namespaceNameSuffix = default, string hybridConnectionName = default, string accessKey = default, long? expiresOn = default, string serviceConfigurationToken = default, string hostname = default, Guid? serverId = default, Guid? tenantId = default)
+        public static IngressGatewayAsset IngressGatewayAsset(string namespaceName, string namespaceNameSuffix, string hybridConnectionName, string accessKey, long? expiresOn, string serviceConfigurationToken, string hostname, Guid? serverId, Guid? tenantId)
         {
             return new IngressGatewayAsset(namespaceName is null && namespaceNameSuffix is null && hybridConnectionName is null && accessKey is null && expiresOn is null && serviceConfigurationToken is null ? default : new RelayNamespaceAccessProperties(
                 namespaceName,
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="solutionType"> The type of the solution. </param>
         /// <param name="solutionSettings"> Solution settings. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionTypeSettings"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType = default, PublicCloudConnectorSolutionSettings solutionSettings = default)
+        public static PublicCloudConnectorSolutionTypeSettings PublicCloudConnectorSolutionTypeSettings(string solutionType, PublicCloudConnectorSolutionSettings solutionSettings)
         {
             return new PublicCloudConnectorSolutionTypeSettings(solutionType, solutionSettings, default);
         }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="awsCloudExcludedAccounts"> List of AWS accounts which need to be excluded. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorPatch"/> instance for mocking. </returns>
-        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, IEnumerable<string> awsCloudExcludedAccounts = default)
+        public static PublicCloudConnectorPatch PublicCloudConnectorPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, IEnumerable<string> awsCloudExcludedAccounts)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="statusDetails"> The detailed message of status details. </param>
         /// <param name="lastSyncedOn"> The last time resources were inventoried. </param>
         /// <returns> A new <see cref="Models.PublicCloudConnectorSolutionConfigurationProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState = default, string solutionType = default, PublicCloudConnectorSolutionSettings solutionSettings = default, PublicCloudConnectorSolutionConfigurationStatus? status = default, string statusDetails = default, DateTimeOffset? lastSyncedOn = default)
+        public static PublicCloudConnectorSolutionConfigurationProperties PublicCloudConnectorSolutionConfigurationProperties(PublicCloudResourceProvisioningState? provisioningState, string solutionType, PublicCloudConnectorSolutionSettings solutionSettings, PublicCloudConnectorSolutionConfigurationStatus? status, string statusDetails, DateTimeOffset? lastSyncedOn)
         {
             return new PublicCloudConnectorSolutionConfigurationProperties(
                 provisioningState,

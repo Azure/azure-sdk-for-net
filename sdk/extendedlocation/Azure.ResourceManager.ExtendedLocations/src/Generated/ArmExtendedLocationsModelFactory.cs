@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         /// <param name="provisioningState"> Provisioning State for the Custom Location. </param>
         /// <param name="identity"> Identity for the resource. </param>
         /// <returns> A new <see cref="ExtendedLocations.CustomLocationData"/> instance for mocking. </returns>
-        public static CustomLocationData CustomLocationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CustomLocationAuthentication authentication = default, IEnumerable<ResourceIdentifier> clusterExtensionIds = default, string displayName = default, ResourceIdentifier hostResourceId = default, CustomLocationHostType? hostType = default, string @namespace = default, string provisioningState = default, ManagedServiceIdentity identity = default)
+        public static CustomLocationData CustomLocationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CustomLocationAuthentication authentication, IEnumerable<ResourceIdentifier> clusterExtensionIds, string displayName, ResourceIdentifier hostResourceId, CustomLocationHostType? hostType, string @namespace, string provisioningState, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

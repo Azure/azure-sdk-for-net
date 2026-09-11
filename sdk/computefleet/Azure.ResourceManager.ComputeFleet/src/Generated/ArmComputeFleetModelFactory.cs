@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// </param>
         /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <returns> A new <see cref="Models.ComputeFleetProperties"/> instance for mocking. </returns>
-        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState = default, SpotPriorityProfile spotPriorityProfile = default, RegularPriorityProfile regularPriorityProfile = default, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile = default, ComputeFleetVmAttributes vmAttributes = default, IEnumerable<LocationProfile> additionalLocationsLocationProfiles = default, ComputeFleetComputeProfile computeProfile = default, DateTimeOffset? createdOn = default, string uniqueId = default, ComputeFleetMode? mode = default, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
+        public static ComputeFleetProperties ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IEnumerable<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, IEnumerable<LocationProfile> additionalLocationsLocationProfiles, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix = default, ComputeFleetCapacityType? capacityType = default, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy = default)
         {
             vmSizesProfile ??= new ChangeTrackingList<ComputeFleetVmSizeProfile>();
 

@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? eTag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, string resourceGroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
         /// <param name="disableLocalAuth"> Disables all authentication methods other than Azure RBAC. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default, string portalOperationsHostName = default, bool? disableLocalAuth = default)
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IEnumerable<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled, string portalOperationsHostName, bool? disableLocalAuth = default)
         {
             ipFilterRules ??= new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             privateEndpointConnections ??= new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="connectionString"> Connection string of the IoT hub. This is required when authenticationType is KeyBased. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
         /// <returns> A new <see cref="Models.IotHubDefinitionDescription"/> instance for mocking. </returns>
-        public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default, int? allocationWeight = default, string name = default, string hostName = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier selectedUserAssignedIdentityResourceId = default, string connectionString = default, AzureLocation location = default)
+        public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy, int? allocationWeight, string name, string hostName, IotHubAuthenticationType? authenticationType, ResourceIdentifier selectedUserAssignedIdentityResourceId = default, string connectionString = default, AzureLocation location = default)
         {
             return new IotHubDefinitionDescription(
                 applyAllocationPolicy,
