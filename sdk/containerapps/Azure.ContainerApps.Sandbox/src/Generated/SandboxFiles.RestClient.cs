@@ -14,8 +14,11 @@ namespace Azure.ContainerApps.Sandbox
     public partial class SandboxFiles
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier201;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
         internal HttpMessage CreateDeleteSandboxFileRequest(string path, bool? recursive, string containerName, RequestContext context)
         {
@@ -175,7 +178,7 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePutSandboxFileRequest(string path, RequestContent content, bool? createDirs, int? mode, string containerName, RequestContext context)
+        internal HttpMessage CreatePostSandboxFileRequest(string path, RequestContent content, bool? createDirs, int? mode, string containerName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -205,10 +208,10 @@ namespace Azure.ContainerApps.Sandbox
             {
                 uri.AppendQuery("containerName", containerName, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/octet-stream");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

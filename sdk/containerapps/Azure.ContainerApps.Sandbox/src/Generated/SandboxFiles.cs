@@ -538,16 +538,16 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PutSandboxFile(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
+        public virtual Response PostSandboxFile(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PutSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PostSandboxFile");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(path, nameof(path));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutSandboxFileRequest(path, content, createDirs, mode, containerName, context);
+                using HttpMessage message = CreatePostSandboxFileRequest(path, content, createDirs, mode, containerName, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -575,16 +575,16 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PutSandboxFileAsync(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
+        public virtual async Task<Response> PostSandboxFileAsync(string path, RequestContent content, bool? createDirs = default, int? mode = default, string containerName = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PutSandboxFile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxFiles.PostSandboxFile");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(path, nameof(path));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutSandboxFileRequest(path, content, createDirs, mode, containerName, context);
+                using HttpMessage message = CreatePostSandboxFileRequest(path, content, createDirs, mode, containerName, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -604,12 +604,12 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WriteFileResult> PutSandboxFile(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual Response<WriteFileResult> PostSandboxFile(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(path, nameof(path));
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = PutSandboxFile(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext());
+            Response result = PostSandboxFile(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext());
             return Response.FromValue((WriteFileResult)result, result);
         }
 
@@ -623,12 +623,12 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WriteFileResult>> PutSandboxFileAsync(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WriteFileResult>> PostSandboxFileAsync(string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(path, nameof(path));
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = await PutSandboxFileAsync(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await PostSandboxFileAsync(path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((WriteFileResult)result, result);
         }
     }

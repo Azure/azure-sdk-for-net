@@ -300,7 +300,7 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreatePutVolumeFileUploadRequest(string volumeName, RequestContent content, string path, bool? overwrite, RequestContext context)
+        internal HttpMessage CreatePostVolumeFileRequest(string volumeName, RequestContent content, string path, bool? overwrite, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -312,7 +312,7 @@ namespace Azure.ContainerApps.Sandbox
             uri.AppendPath(_sandboxGroupName, true);
             uri.AppendPath("/volumes/", false);
             uri.AppendPath(volumeName, true);
-            uri.AppendPath("/files/upload", false);
+            uri.AppendPath("/files", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -325,10 +325,10 @@ namespace Azure.ContainerApps.Sandbox
             {
                 uri.AppendQuery("overwrite", TypeFormatters.ConvertToString(overwrite), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Put;
+            request.Method = RequestMethod.Post;
             request.Headers.SetValue("Content-Type", "application/octet-stream");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;

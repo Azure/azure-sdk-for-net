@@ -1010,16 +1010,16 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PutVolumeFileUpload(string volumeName, RequestContent content, string path = default, bool? overwrite = default, RequestContext context = null)
+        public virtual Response PostVolumeFile(string volumeName, RequestContent content, string path = default, bool? overwrite = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.PutVolumeFileUpload");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.PostVolumeFile");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutVolumeFileUploadRequest(volumeName, content, path, overwrite, context);
+                using HttpMessage message = CreatePostVolumeFileRequest(volumeName, content, path, overwrite, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1046,16 +1046,16 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PutVolumeFileUploadAsync(string volumeName, RequestContent content, string path = default, bool? overwrite = default, RequestContext context = null)
+        public virtual async Task<Response> PostVolumeFileAsync(string volumeName, RequestContent content, string path = default, bool? overwrite = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.PutVolumeFileUpload");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupVolumes.PostVolumeFile");
             scope.Start();
             try
             {
                 Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutVolumeFileUploadRequest(volumeName, content, path, overwrite, context);
+                using HttpMessage message = CreatePostVolumeFileRequest(volumeName, content, path, overwrite, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1074,12 +1074,12 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VolumePathItem> PutVolumeFileUpload(string volumeName, BinaryData content, string path = default, bool? overwrite = default, CancellationToken cancellationToken = default)
+        public virtual Response<VolumePathItem> PostVolumeFile(string volumeName, BinaryData content, string path = default, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = PutVolumeFileUpload(volumeName, RequestContent.Create(content), path, overwrite, cancellationToken.ToRequestContext());
+            Response result = PostVolumeFile(volumeName, RequestContent.Create(content), path, overwrite, cancellationToken.ToRequestContext());
             return Response.FromValue((VolumePathItem)result, result);
         }
 
@@ -1092,12 +1092,12 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VolumePathItem>> PutVolumeFileUploadAsync(string volumeName, BinaryData content, string path = default, bool? overwrite = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumePathItem>> PostVolumeFileAsync(string volumeName, BinaryData content, string path = default, bool? overwrite = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
             Argument.AssertNotNull(content, nameof(content));
 
-            Response result = await PutVolumeFileUploadAsync(volumeName, RequestContent.Create(content), path, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await PostVolumeFileAsync(volumeName, RequestContent.Create(content), path, overwrite, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((VolumePathItem)result, result);
         }
     }

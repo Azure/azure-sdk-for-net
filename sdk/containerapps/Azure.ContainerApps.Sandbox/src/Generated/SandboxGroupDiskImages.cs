@@ -534,15 +534,15 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response PutDiskImage(RequestContent content, RequestContext context = null)
+        public virtual Response PostDiskImage(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupDiskImages.PutDiskImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupDiskImages.PostDiskImage");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutDiskImageRequest(content, context);
+                using HttpMessage message = CreatePostDiskImageRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -565,15 +565,15 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PutDiskImageAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> PostDiskImageAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupDiskImages.PutDiskImage");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SandboxGroupDiskImages.PostDiskImage");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreatePutDiskImageRequest(content, context);
+                using HttpMessage message = CreatePostDiskImageRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -588,11 +588,11 @@ namespace Azure.ContainerApps.Sandbox
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DiskImage> PutDiskImage(CreateDiskImageContent body, CancellationToken cancellationToken = default)
+        public virtual Response<DiskImage> PostDiskImage(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = PutDiskImage(body, cancellationToken.ToRequestContext());
+            Response result = PostDiskImage(body, cancellationToken.ToRequestContext());
             return Response.FromValue((DiskImage)result, result);
         }
 
@@ -601,11 +601,11 @@ namespace Azure.ContainerApps.Sandbox
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DiskImage>> PutDiskImageAsync(CreateDiskImageContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiskImage>> PostDiskImageAsync(CreateDiskImageContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await PutDiskImageAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await PostDiskImageAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiskImage)result, result);
         }
     }
