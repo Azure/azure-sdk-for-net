@@ -68,7 +68,12 @@ namespace Azure.Security.KeyVault.Secrets
             var authPolicy = new ChallengeBasedAuthenticationPolicy(
                 credential, options.DisableChallengeResourceVerification);
 
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [authPolicy],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,
