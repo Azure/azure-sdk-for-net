@@ -612,7 +612,7 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            return TryBuildModelCompatibilityArgument(method, constructorParameter, [], unavailableDirectParameterNames, out argument);
+            return TryBuildModelCompatibilityArgument(method, constructorParameter, [], unavailableDirectParameterNames, useNullGuard: true, out argument);
         }
 
         /// <summary>
@@ -622,12 +622,14 @@ namespace Azure.Generator.Management.Visitors
         /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
         /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
         /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
+        /// <param name="useNullGuard">Whether omission of all parameters mapped to this model should preserve a null model value.</param>
         /// <param name="argument">The reconstructed model argument and old parameters used by it.</param>
         private static bool TryBuildModelCompatibilityArgument(
             MethodProvider method,
             ParameterProvider constructorParameter,
             List<CSharpType> visitedTypes,
             IReadOnlySet<string> unavailableDirectParameterNames,
+            bool useNullGuard,
             [NotNullWhen(true)] out CompatibilityArgument? argument)
         {
             // For flattened models, old overload parameters often correspond to leaves of a nested model. Track visited
@@ -674,10 +676,10 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
-            // Preserve omission independently at every reconstructed model boundary. Creating a parent does not imply
-            // that an optional child was supplied; each model must consider only the old parameters mapped into it.
+            // Preserve omission independently for optional reconstructed models. Creating a parent does not imply
+            // that an optional child was supplied, while required children retain their existing construction behavior.
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
-            var condition = BuildAllNullCondition(matchedParameters);
+            var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
@@ -742,7 +744,13 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            return TryBuildModelCompatibilityArgument(method, nestedParameter, visitedTypes, unavailableDirectParameterNames, out argument);
+            return TryBuildModelCompatibilityArgument(
+                method,
+                nestedParameter,
+                visitedTypes,
+                unavailableDirectParameterNames,
+                useNullGuard: nestedParameter.Property?.WireInfo?.IsRequired == false,
+                out argument);
         }
 
         /// <summary>
