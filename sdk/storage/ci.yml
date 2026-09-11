@@ -37,26 +37,8 @@ extends:
     BuildSnippets: false
     ArtifactName: packages
     Artifacts:
-    - name: Azure.Storage.Blobs
-      safeName: AzureStorageBlobs
-      skipSmokeTests: true
     - name: Azure.Storage.Blobs.Batch
       safeName: AzureStorageBlobsBatch
-      skipSmokeTests: true
-    - name: Azure.Storage.Common
-      safeName: AzureStorageCommon
-      skipSmokeTests: true
-    - name: Azure.Storage.Files.Shares
-      safeName: AzureStorageFilesShares
-      skipSmokeTests: true
-    - name: Azure.Storage.Files.DataLake
-      safeName: AzureStorageFilesDataLake
-      skipSmokeTests: true
-    - name: Azure.Storage.Queues
-      safeName: AzureStorageQueues
-      skipSmokeTests: true
-    - name: Azure.Storage.Blobs.ChangeFeed
-      safeName: AzureStorageBlobsChangeFeed
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
