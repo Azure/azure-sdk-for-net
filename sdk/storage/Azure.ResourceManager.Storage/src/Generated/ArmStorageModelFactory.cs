@@ -3266,7 +3266,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType.GetValueOrDefault(),
                 default,
-                migrationStatus is null && migrationFailedReason is null && migrationFailedDetailedReason is null ? default : new StorageAccountMigrationProperties(targetSkuName, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, default),
+                new StorageAccountMigrationProperties(targetSkuName, migrationStatus, migrationFailedReason, migrationFailedDetailedReason, default),
                 name,
                 default);
         }
