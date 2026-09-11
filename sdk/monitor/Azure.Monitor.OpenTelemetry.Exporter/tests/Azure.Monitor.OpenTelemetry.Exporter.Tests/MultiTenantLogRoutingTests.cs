@@ -476,6 +476,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// The sequence correlates an export's events. Logs share the transmitter with traces, so a
+        /// batch that never begins an export would report every send under sequence zero.
+        /// </summary>
+        [Fact]
+        public void EachLogExportGetsItsOwnSequence()
+        {
+            var transmitter = new MockTransmitter(new List<TelemetryItem>());
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+
+            var sequences = new List<long>();
+            var routeBatchField = typeof(AzureMonitorLogExporter).GetField("_routeBatch", BindingFlags.Instance | BindingFlags.NonPublic)!;
+
+            for (int i = 0; i < 2; i++)
+            {
+                WithLiveBatch(batch => exporter.Export(batch), Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+                sequences.Add(((EndpointRouteBatch)routeBatchField.GetValue(exporter)!).Sequence);
+            }
+
+            Assert.DoesNotContain(0L, sequences);
+            Assert.Equal(2, sequences.Distinct().Count());
+        }
+
+        /// <summary>
         /// With the gate off the multi-tenant machinery must not even be allocated.
         /// </summary>
         [Fact]

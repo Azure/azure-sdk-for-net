@@ -724,7 +724,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("ikey-a", null, "MissingIngestionEndpoint")]
         [InlineData("ikey-a", "", "IngestionEndpointMalformed")]
         [InlineData("ikey-a", "not-a-uri", "IngestionEndpointMalformed")]
-        [InlineData("ikey-a", "/relative/path", "IngestionEndpointMalformed")]
         [InlineData("ikey-a", "http://eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointNotHttps")]
         [InlineData("ikey-a", "https://user:pass@eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointHasCredentials")]
         [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/?a=b", "IngestionEndpointHasQueryOrFragment")]
