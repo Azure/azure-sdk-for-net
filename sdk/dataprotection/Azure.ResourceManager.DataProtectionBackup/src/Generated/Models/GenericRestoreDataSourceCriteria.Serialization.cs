@@ -14,10 +14,10 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Generic criteria to be used during restore. </summary>
-    public partial class GenericRestoreDatasourceCriteria : ItemLevelRestoreCriteria, IJsonModel<GenericRestoreDatasourceCriteria>
+    public partial class GenericRestoreDataSourceCriteria : ItemLevelRestoreCriteria, IJsonModel<GenericRestoreDataSourceCriteria>
     {
-        /// <summary> Initializes a new instance of <see cref="GenericRestoreDatasourceCriteria"/> for deserialization. </summary>
-        internal GenericRestoreDatasourceCriteria()
+        /// <summary> Initializes a new instance of <see cref="GenericRestoreDataSourceCriteria"/> for deserialization. </summary>
+        internal GenericRestoreDataSourceCriteria()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ItemLevelRestoreCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDatasourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDataSourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenericRestoreDatasourceCriteria(document.RootElement, options);
+                        return DeserializeGenericRestoreDataSourceCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenericRestoreDatasourceCriteria)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericRestoreDataSourceCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDatasourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDataSourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenericRestoreDatasourceCriteria)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericRestoreDataSourceCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenericRestoreDatasourceCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GenericRestoreDataSourceCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenericRestoreDatasourceCriteria IPersistableModel<GenericRestoreDatasourceCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (GenericRestoreDatasourceCriteria)PersistableModelCreateCore(data, options);
+        GenericRestoreDataSourceCriteria IPersistableModel<GenericRestoreDataSourceCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => (GenericRestoreDataSourceCriteria)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenericRestoreDatasourceCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenericRestoreDataSourceCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenericRestoreDatasourceCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenericRestoreDataSourceCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDatasourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDataSourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericRestoreDatasourceCriteria)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericRestoreDataSourceCriteria)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceSelectors"u8);
@@ -86,24 +86,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenericRestoreDatasourceCriteria IJsonModel<GenericRestoreDatasourceCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GenericRestoreDatasourceCriteria)JsonModelCreateCore(ref reader, options);
+        GenericRestoreDataSourceCriteria IJsonModel<GenericRestoreDataSourceCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GenericRestoreDataSourceCriteria)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ItemLevelRestoreCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDatasourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericRestoreDataSourceCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericRestoreDatasourceCriteria)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericRestoreDataSourceCriteria)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenericRestoreDatasourceCriteria(document.RootElement, options);
+            return DeserializeGenericRestoreDataSourceCriteria(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenericRestoreDatasourceCriteria DeserializeGenericRestoreDatasourceCriteria(JsonElement element, ModelReaderWriterOptions options)
+        internal static GenericRestoreDataSourceCriteria DeserializeGenericRestoreDataSourceCriteria(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenericRestoreDatasourceCriteria(objectType, additionalBinaryDataProperties, resourceSelectors);
+            return new GenericRestoreDataSourceCriteria(objectType, additionalBinaryDataProperties, resourceSelectors);
         }
     }
 }

@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Class to contain criteria for item level restore
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>, <see cref="Models.GenericRestoreDatasourceCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, and <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>, <see cref="Models.GenericRestoreDataSourceCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, and <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.ItemLevelRestoreCriteria"/> instance for mocking. </returns>
@@ -1139,10 +1139,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Generic criteria to be used during restore. </summary>
         /// <param name="resourceSelectors"> List of resource identifiers that need to be restored. </param>
-        /// <returns> A new <see cref="Models.GenericRestoreDatasourceCriteria"/> instance for mocking. </returns>
-        public static GenericRestoreDatasourceCriteria GenericRestoreDatasourceCriteria(ResourceListSelectionCriteria resourceSelectors = default)
+        /// <returns> A new <see cref="Models.GenericRestoreDataSourceCriteria"/> instance for mocking. </returns>
+        public static GenericRestoreDataSourceCriteria GenericRestoreDataSourceCriteria(ResourceListSelectionCriteria resourceSelectors = default)
         {
-            return new GenericRestoreDatasourceCriteria(default, default, resourceSelectors);
+            return new GenericRestoreDataSourceCriteria(default, default, resourceSelectors);
         }
 
         /// <summary> Specifies the list of resources to be restored. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Class to contain criteria for item level restore
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="RangeBasedItemLevelRestoreCriteria"/>, <see cref="GenericRestoreDatasourceCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, and <see cref="KubernetesClusterVaultTierRestoreCriteria"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemPathBasedRestoreCriteria"/>, <see cref="RangeBasedItemLevelRestoreCriteria"/>, <see cref="GenericRestoreDataSourceCriteria"/>, <see cref="KubernetesStorageClassRestoreCriteria"/>, <see cref="KubernetesPVRestoreCriteria"/>, <see cref="KubernetesClusterRestoreCriteria"/>, and <see cref="KubernetesClusterVaultTierRestoreCriteria"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownItemLevelRestoreCriteria))]
     public abstract partial class ItemLevelRestoreCriteria : IJsonModel<ItemLevelRestoreCriteria>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     case "RangeBasedItemLevelRestoreCriteria":
                         return RangeBasedItemLevelRestoreCriteria.DeserializeRangeBasedItemLevelRestoreCriteria(element, options);
                     case "GenericRestoreDatasourceCriteria":
-                        return GenericRestoreDatasourceCriteria.DeserializeGenericRestoreDatasourceCriteria(element, options);
+                        return GenericRestoreDataSourceCriteria.DeserializeGenericRestoreDataSourceCriteria(element, options);
                     case "KubernetesStorageClassRestoreCriteria":
                         return KubernetesStorageClassRestoreCriteria.DeserializeKubernetesStorageClassRestoreCriteria(element, options);
                     case "KubernetesPVRestoreCriteria":

@@ -12,23 +12,23 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Generic criteria to be used during restore. </summary>
-    public partial class GenericRestoreDatasourceCriteria : ItemLevelRestoreCriteria
+    public partial class GenericRestoreDataSourceCriteria : ItemLevelRestoreCriteria
     {
-        /// <summary> Initializes a new instance of <see cref="GenericRestoreDatasourceCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRestoreDataSourceCriteria"/>. </summary>
         /// <param name="resourceSelectors"> List of resource identifiers that need to be restored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceSelectors"/> is null. </exception>
-        public GenericRestoreDatasourceCriteria(ResourceListSelectionCriteria resourceSelectors) : base("GenericRestoreDatasourceCriteria")
+        public GenericRestoreDataSourceCriteria(ResourceListSelectionCriteria resourceSelectors) : base("GenericRestoreDatasourceCriteria")
         {
             Argument.AssertNotNull(resourceSelectors, nameof(resourceSelectors));
 
             ResourceSelectors = resourceSelectors;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenericRestoreDatasourceCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericRestoreDataSourceCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceSelectors"> List of resource identifiers that need to be restored. </param>
-        internal GenericRestoreDatasourceCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceListSelectionCriteria resourceSelectors) : base(objectType, additionalBinaryDataProperties)
+        internal GenericRestoreDataSourceCriteria(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceListSelectionCriteria resourceSelectors) : base(objectType, additionalBinaryDataProperties)
         {
             ResourceSelectors = resourceSelectors;
         }
