@@ -526,10 +526,10 @@ namespace Azure.ResourceManager.Kusto.Models
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
-                    new DatabaseStatistics(statisticsSize, default),
+                    statisticsSize is null ? default : new DatabaseStatistics(statisticsSize, default),
                     isFollowed,
                     keyVaultProperties,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    suspensionStartOn is null ? default : new SuspensionDetails(suspensionStartOn, default),
                     default));
         }
 
@@ -582,14 +582,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
-                    new DatabaseStatistics(statisticsSize, default),
+                    statisticsSize is null ? default : new DatabaseStatistics(statisticsSize, default),
                     leaderClusterResourceId,
                     attachedDatabaseConfigurationName,
                     principalsModificationKind,
                     tableLevelSharingProperties,
                     originalDatabaseName,
                     databaseShareOrigin,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    suspensionStartOn is null ? default : new SuspensionDetails(suspensionStartOn, default),
                     default));
         }
 
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    value is null && nextLink is null ? default : new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
                 default);
         }
 
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
+                    value is null && nextLink is null ? default : new KustoLanguageExtensionList((value ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), nextLink, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -1375,7 +1375,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    languageExtensionsValue is null ? default : new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
+                privateEndpointId is null && connectionState is null && groupId is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), connectionState, groupId, provisioningState, default),
                 default);
         }
 
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    languageExtensionsValue is null ? default : new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -1628,7 +1628,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
-                    new DatabaseStatistics(statisticsSize, default),
+                    statisticsSize is null ? default : new DatabaseStatistics(statisticsSize, default),
                     isFollowed,
                     keyVaultProperties,
                     default,
@@ -1668,7 +1668,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
-                    new DatabaseStatistics(statisticsSize, default),
+                    statisticsSize is null ? default : new DatabaseStatistics(statisticsSize, default),
                     leaderClusterResourceId,
                     attachedDatabaseConfigurationName,
                     principalsModificationKind,
@@ -1740,7 +1740,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    languageExtensionsValue is null ? default : new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -1819,7 +1819,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    languageExtensionsValue is null ? default : new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
@@ -1904,7 +1904,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     virtualNetworkConfiguration,
                     keyVaultProperties,
                     isPurgeEnabled,
-                    new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
+                    languageExtensionsValue is null ? default : new KustoLanguageExtensionList((languageExtensionsValue ?? new ChangeTrackingList<KustoLanguageExtension>()).ToList(), default, default),
                     isDoubleEncryptionEnabled,
                     publicNetworkAccess,
                     (allowedIPRangeList ?? new ChangeTrackingList<string>()).ToList(),
