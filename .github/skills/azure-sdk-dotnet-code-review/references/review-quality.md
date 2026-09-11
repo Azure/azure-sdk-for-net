@@ -31,10 +31,18 @@ These are not judgment calls. A violation is always 🔴.
 
 ### H1 — No breaking changes
 
-**Always report** a change that breaks existing consumers. Assume every public/protected API
-already has callers you cannot see.
+**Always report** a concrete incompatibility with a GA-shipped contract.
 
-Classify by what changed and how it manifests:
+**All breaking-change checks apply only to APIs and observable contracts that have shipped in a
+GA (stable) release, evaluated individually.** A package, enclosing type, or neighboring member
+having shipped GA does not establish that this API has; a preview candidate does not undo an
+API's GA history. Protect the API's GA contract, not every subsequent preview-only shape.
+
+API additions, edits, removals, and renames are not findings by themselves. Beta-only and
+never-shipped contracts may change. Continue checking changed APIs against other applicable
+design, correctness, and repository rules.
+
+For an established GA contract, classify by what changed and how it manifests:
 
 **API-breaking — never permitted in any release (major, minor, or patch).**
 Existing code fails to compile or bind:
@@ -68,13 +76,18 @@ values, changed ordering/pagination, changed serialized wire or on-disk format, 
 thread-safety or disposal semantics, changed timing (sync → async-over-sync).
 
 **How to check:**
-- Diff the public surface, not just the implementation. If the repo checks in API listing
-  files (`api/*.cs`, `*.api`, `PublicAPI.Shipped.txt`), **every removed or modified line in
-  those files is a breaking change** — flag it. Added lines are additive and fine.
-- If a public signature line in the diff was *modified* rather than *added*, that is a break.
-  The additive alternative is a new overload that delegates to the new one.
-- If the change is genuinely required, the answer is a new API alongside the old, with the
-  old one kept working (and optionally `[Obsolete]`), not an edit in place.
+- Establish each affected API's GA contract using released reference assemblies or
+  release-tagged source. If release history is unavailable, state the limitation; do not turn
+  an API diff or uncertainty alone into a finding.
+- Diff the public surface and implementation, and compare the changed behavior or signature
+  against that GA contract. Checked-in API listings locate candidate changes; their presence,
+  additions, removals, or edits do not establish release history or incompatibility.
+- Check actual effects on GA callers even when their API is unchanged: a new overload can
+  alter resolution at an existing call site. Conversely, editing a preview-only shape to
+  restore the GA contract is not a break merely because the listing changed.
+- For an actual GA incompatibility, recommend preserving the GA API and behavior, adding a
+  compatible API alongside it when needed. Do not require aliases or overloads solely to
+  preserve beta-only or never-shipped contracts.
 
 ### H2 — Follow the .NET Framework Design Guidelines
 
@@ -117,7 +130,7 @@ listed here.
   gets, must not be order-dependent, and must be cheap
 - No `ref`/`out` in public APIs unless implementing `Try*`
 - Do not overload on parameters that differ only by optionality; do not add default parameter
-  values to an already-shipped signature
+  values to a GA-shipped signature
 - Validate all public/protected inputs and throw the right exception:
   `ArgumentNullException` / `ArgumentException` / `ArgumentOutOfRangeException` with the
   correct `paramName`

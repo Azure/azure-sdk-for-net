@@ -107,27 +107,35 @@ Do not re-check them by hand.
 
 ## Breaking Changes (repo-specific detection)
 
-🔴 **Check the checked-in API listing files first.** Every shipping package has
+**Establish the affected API's GA contract before checking compatibility**, as required by H1.
+`ApiCompatVersion` selects the released assembly used by the repository's compatibility checks.
+Use that baseline when configured and verify that the particular API and contract shipped GA.
+Recover prior metadata or other released GA artifacts when needed; absence from one baseline
+or missing metadata is not proof that an API never shipped.
+
+**Checked-in API listings describe the candidate surface, not its release history.** Every
+shipping package has
 `sdk/<service>/<Package>/api/<Package>.netstandard2.0.cs` plus per-TFM variants
 (`.net8.0.cs`, `.net10.0.cs`, `.net462.cs`, `.net472.cs`).
 
-- Any **removed or modified** line in these files is an API break → 🔴, no exceptions
-- **Added** lines are additive and fine
+- Use listing diffs to locate in-scope changes, then check actual compatibility with the
+  affected GA contract. No added, removed, or modified line is a finding by itself
 - A PR that changes public API but does **not** update the api files has not run
   `dotnet build /t:GenerateApiListing` — flag it
 - The public API must be **identical across all TFMs**. A member present in `.net8.0.cs` but
   not `.netstandard2.0.cs` is a violation
 
 Also specific to this repo:
-- Changing a `const` or a default parameter value on shipped API → binary break → 🔴
+- Changing a `const` or a default parameter value on GA-shipped API → binary break → 🔴
 - `ServiceVersion` enum: values are explicit and start at 1, `0` is reserved and must throw
-  `ArgumentException`. Never renumber or remove an existing member
-- Model property type changes (including nullability of a value type) are breaks
-- Changing the serialized JSON shape of a model is a wire break even when the C# API is
-  unchanged
+  `ArgumentException`. Never renumber or remove a GA-shipped member
+- Incompatible changes to a model property's GA type or value-type nullability are breaks
+- Incompatible changes to a GA-shipped serialization contract are wire breaks even when the
+  C# API is unchanged
 
-**ApiCompat baselines — `eng/apicompatbaselines/<Package>.xml`.** An entry here accepts a
-real API diff, so it is a break being waved through.
+**ApiCompat suppression baselines — `eng/apicompatbaselines/<Package>.xml`.** An entry suppresses
+a compatibility diagnostic; establish the underlying API's GA history before classifying the
+difference as a break. Suppression and opt-out changes remain independent review findings.
 
 - Surface every entry the PR adds, even ones you judge acceptable — the approve/reject call
   is the human reviewer's, and they cannot make it if they never see it. Quote the stated
@@ -198,8 +206,9 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   scope in `review-quality.md`)
 - **Configuration is public API surface, even though it never appears in an `api/*.cs` file.**
   A setting's name, section, type, and meaning are all things customers take a dependency on.
-  Renaming, removing, retyping, or quietly changing the precedence of one is a breaking change
-  and gets the same treatment as a signature change 🔴 — ApiCompat will not say a word about it
+  Apply H1 to each setting's GA-shipped contract: an incompatible rename, removal, type change,
+  or precedence change gets the same treatment as a signature break 🔴 — ApiCompat will not
+  say a word about it. Beta-only and never-shipped settings are not frozen
 - **A `ClientSettings` type is the shape for all config/DI integration**, so the experience stays
   consistent across the Azure SDKs. The generator emits it for a generated client; a hand-written
   client has to supply it deliberately, and that is where it gets missed
@@ -315,8 +324,8 @@ What they cover:
   `idx`. Highest-value case: a PR renames most of a type family to the expanded form
   (`ResponsesOpenApiAuthDetails` → `OpenApiAuthenticationDetails`) but misses one sibling
   (`OpenApiManagedAuthDetails`) or leaves the property/parameter carrying it abbreviated
-  (`Auth`/`auth`). The rename is already a break, so finishing it costs nothing now and costs
-  another break later. **Always check the whole family, not just the type in front of you.**
+  (`Auth`/`auth`). **Always check the whole family, not just the type in front of you.**
+  Apply H1 before recommending further renames; a naming cleanup does not waive GA compatibility
 - For a duration concept abbreviated `TTL`, prefer `TimeToLive` and apply the shared numeric-unit
   guidance rather than a universal unit suffix. A hop count is not a duration.
 - **Parameter names must be consistent and descriptive within a scope** (all methods on a
