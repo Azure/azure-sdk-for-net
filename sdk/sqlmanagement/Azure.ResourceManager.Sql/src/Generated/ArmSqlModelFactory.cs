@@ -3011,7 +3011,7 @@ namespace Azure.ResourceManager.Sql.Models
                 secondaryType is null && readWriteEndpoint is null && readOnlyEndpointFailoverPolicy is null && replicationRole is null && replicationState is null && partnerRegions is null && managedInstancePairs is null ? default : new InstanceFailoverGroupProperties(
                     secondaryType,
                     readWriteEndpoint,
-                    new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy, default),
+                    readOnlyEndpointFailoverPolicy is null ? default : new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy, default),
                     replicationRole,
                     replicationState,
                     (partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>()).ToList(),
@@ -3962,7 +3962,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
+                privateEndpointId is null && privateLinkServiceConnectionState is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), privateLinkServiceConnectionState, provisioningState, default),
                 default);
         }
 
@@ -4219,7 +4219,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new ServerPrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new ServerPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
                 default);
         }
 
@@ -7504,7 +7504,7 @@ namespace Azure.ResourceManager.Sql.Models
                 secondaryType is null && readWriteEndpoint is null && readOnlyEndpointFailoverPolicy is null && replicationRole is null && replicationState is null && partnerRegions is null && managedInstancePairs is null ? default : new InstanceFailoverGroupProperties(
                     secondaryType,
                     readWriteEndpoint,
-                    new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy, default),
+                    readOnlyEndpointFailoverPolicy is null ? default : new InstanceFailoverGroupReadOnlyEndpoint(readOnlyEndpointFailoverPolicy, default),
                     replicationRole,
                     replicationState,
                     (partnerRegions ?? new ChangeTrackingList<PartnerRegionInfo>()).ToList(),
@@ -7854,7 +7854,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default),
+                privateEndpointId is null && provisioningState is null ? default : new ManagedInstancePrivateEndpointConnectionProperties(privateEndpointId is null ? default : new ManagedInstancePrivateEndpointProperty(privateEndpointId, default), default, provisioningState, default),
                 default);
         }
 
@@ -8105,7 +8105,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new ServerPrivateEndpointConnectionProperties(new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
+                privateEndpointId is null && groupIds is null && connectionState is null && provisioningState is null ? default : new ServerPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpointProperty(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), connectionState, provisioningState, default),
                 default);
         }
 
