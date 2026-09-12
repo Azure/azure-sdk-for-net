@@ -19,28 +19,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 {
     /// <summary>
     /// Generates traffic for three Application Insights components in three regions from a single
-    /// exporter, to exercise multi-tenant routing end to end.
+    /// exporter, to exercise multi-endpoint routing end to end.
     /// </summary>
     /// <remarks>
     /// The switch this depends on is read once into a static, so
-    /// <see cref="EnableMultiTenantExport"/> has to run before any exporter type is touched.
+    /// <see cref="EnableMultiEndpointRouting"/> has to run before any exporter type is touched.
     /// </remarks>
-    internal sealed class MultiTenantTraceDemo : IDisposable
+    internal sealed class MultiEndpointTraceDemo : IDisposable
     {
-        internal const string ActivitySourceName = "MultiTenant.Demo";
+        internal const string ActivitySourceName = "MultiEndpoint.Demo";
 
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
 
         private readonly TracerProvider? _tracerProvider;
-        private readonly TenantRoutingProcessor _routingProcessor;
+        private readonly EndpointRoutingProcessor _routingProcessor;
 
-        public MultiTenantTraceDemo(string exporterConnectionString, IReadOnlyList<TenantRoute> routes, string runId, bool faultTenantEndpoints = false)
+        public MultiEndpointTraceDemo(string exporterConnectionString, IReadOnlyList<EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
         {
-            _routingProcessor = new TenantRoutingProcessor(routes, runId);
+            _routingProcessor = new EndpointRoutingProcessor(routes, runId);
 
             var resourceBuilder = ResourceBuilder.CreateDefault().AddAttributes(new Dictionary<string, object>
             {
-                { "service.name", "multi-tenant-demo" },
+                { "service.name", "multi-endpoint-demo" },
                 { "service.version", "1.0.0-demo" },
             });
 
@@ -57,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                     o.TracesPerSecond = null;
                     o.SamplingRatio = 1.0F;
 
-                    if (faultTenantEndpoints)
+                    if (faultRoutedEndpoints)
                     {
                         o.AddPolicy(new FaultInjectionPolicy(routes), HttpPipelinePosition.PerRetry);
                     }
@@ -67,10 +67,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 .Build();
         }
 
-        public static void EnableMultiTenantExport()
-            => AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", true);
+        public static void EnableMultiEndpointRouting()
+            => AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting", true);
 
-        public IReadOnlyDictionary<string, int> GeneratedPerTenant => _routingProcessor.Counts;
+        public IReadOnlyDictionary<string, int> GeneratedPerRoute => _routingProcessor.Counts;
 
         public IReadOnlyDictionary<string, int> UnroutablePerReason => _routingProcessor.UnroutableCounts;
 
@@ -78,12 +78,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         {
             for (int i = 0; i < count; i++)
             {
-                using (var activity = s_activitySource.StartActivity($"MultiTenantRequest-{i}", ActivityKind.Server))
+                using (var activity = s_activitySource.StartActivity($"MultiEndpointRequest-{i}", ActivityKind.Server))
                 {
                     activity?.SetTag("demo.iteration", i);
                     activity?.SetStatus(ActivityStatusCode.Ok);
 
-                    using var dependency = s_activitySource.StartActivity($"MultiTenantDependency-{i}", ActivityKind.Client);
+                    using var dependency = s_activitySource.StartActivity($"MultiEndpointDependency-{i}", ActivityKind.Client);
                     dependency?.SetTag("demo.iteration", i);
                     dependency?.SetStatus(ActivityStatusCode.Ok);
                 }
@@ -98,7 +98,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         public void Dispose() => _tracerProvider?.Dispose();
 
         /// <summary>
-        /// Answers 503 for the tenant stamps without going to the network, so the exporter takes its
+        /// Answers 503 for the routed stamps without going to the network, so the exporter takes its
         /// retriable-failure path: back off the endpoint and persist the batch to that endpoint's
         /// partition. Statsbeat and any other host traffic is left alone.
         /// </summary>
@@ -106,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         {
             private readonly HashSet<string> _faultedHosts = new(StringComparer.OrdinalIgnoreCase);
 
-            internal FaultInjectionPolicy(IReadOnlyList<TenantRoute> routes)
+            internal FaultInjectionPolicy(IReadOnlyList<EndpointRoute> routes)
             {
                 foreach (var route in routes)
                 {
@@ -208,9 +208,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         }
 
         /// <summary>An ingestion target: what the routing tags on an Activity will point at.</summary>
-        internal sealed class TenantRoute
+        internal sealed class EndpointRoute
         {
-            public TenantRoute(string name, string instrumentationKey, string ingestionEndpoint)
+            public EndpointRoute(string name, string instrumentationKey, string ingestionEndpoint)
             {
                 Name = name;
                 InstrumentationKey = instrumentationKey;
@@ -225,16 +225,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         }
 
         /// <summary>
-        /// Stamps each Activity with a randomly chosen tenant's routing tags, so one process feeds
+        /// Stamps each Activity with a randomly chosen route's routing tags, so one process feeds
         /// all three components and every export batch spans several ingestion endpoints. Every
         /// tenth Activity is left unroutable instead, cycling through the ways routing can fail.
         /// </summary>
-        private sealed class TenantRoutingProcessor : BaseProcessor<Activity>
+        private sealed class EndpointRoutingProcessor : BaseProcessor<Activity>
         {
             private const int UnroutableEvery = 10;
-            private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
+            private const string CloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
-            private readonly IReadOnlyList<TenantRoute> _routes;
+            private readonly IReadOnlyList<EndpointRoute> _routes;
             private readonly string _runId;
             private readonly Random _random = new(Seed: 42);
             private readonly Dictionary<string, int> _counts = new(StringComparer.Ordinal);
@@ -242,7 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
             private readonly object _lock = new();
             private int _sequence;
 
-            internal TenantRoutingProcessor(IReadOnlyList<TenantRoute> routes, string runId)
+            internal EndpointRoutingProcessor(IReadOnlyList<EndpointRoute> routes, string runId)
             {
                 _routes = routes;
                 _runId = runId;
@@ -260,7 +260,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
             public override void OnEnd(Activity data)
             {
-                TenantRoute route;
+                EndpointRoute route;
 
                 lock (_lock)
                 {
@@ -280,11 +280,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
                 data.SetTag("microsoft.instrumentation_key", route.InstrumentationKey);
                 data.SetTag("microsoft.ingestion_endpoint", route.IngestionEndpoint);
-                data.SetTag(TenantCloudRoleAttributeName, route.Name);
+                data.SetTag(CloudRoleAttributeName, route.Name);
 
                 // Survives into customDimensions, so a query can count what actually arrived.
                 data.SetTag("demo.run_id", _runId);
-                data.SetTag("demo.tenant", route.Name);
+                data.SetTag("demo.route", route.Name);
             }
 
             /// <summary>Returns the rejection reason this Activity should produce.</summary>

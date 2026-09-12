@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
     /// Telemetry for one export, grouped by ingestion endpoint so each group becomes a single POST.
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         }
 
         /// <remarks>
-        /// Endpoints are normalized by <see cref="TenantRouting"/> before they reach here, so an
+        /// Endpoints are normalized by <see cref="EndpointRouting"/> before they reach here, so an
         /// ordinal scan is exact. At the handful of regions a process talks to, scanning beats
         /// hashing and allocates nothing.
         /// </remarks>
@@ -89,7 +89,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             internal void Open(string ingestionEndpoint)
             {
                 // Self-clearing rather than relying on Close: a group that opened holding a previous
-                // export's items would POST one tenant's telemetry to another tenant's endpoint.
+                // export's items would POST one endpoint's telemetry to another endpoint.
                 Clear();
                 IngestionEndpoint = ingestionEndpoint;
             }

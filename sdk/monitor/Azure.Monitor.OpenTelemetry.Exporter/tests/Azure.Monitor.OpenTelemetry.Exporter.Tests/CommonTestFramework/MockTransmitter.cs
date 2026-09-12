@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal class MockTransmitter : ITransmitter, IMultiTenantTransmitter
+    internal class MockTransmitter : ITransmitter, IMultiEndpointTransmitter
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
@@ -45,11 +45,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public int TrackAsyncCallCount { get; private set; }
 
         /// <summary>
-        /// Per multi-tenant send: the destination endpoint and the items delivered to it.
+        /// Per multi-endpoint send: the destination endpoint and the items delivered to it.
         /// </summary>
         public readonly List<(string IngestionEndpoint, TelemetryItem[] TelemetryItems)> Sends = new();
 
-        public ExportResult MultiTenantResult { get; set; } = ExportResult.Success;
+        public ExportResult MultiEndpointResult { get; set; } = ExportResult.Success;
 
         public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
         {
@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 }
             }
 
-            return MultiTenantResult;
+            return MultiEndpointResult;
         }
 
         public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)

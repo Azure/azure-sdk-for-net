@@ -8,7 +8,7 @@ using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -85,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
                 }
 
-                builder.SetSampler(SamplerFactory.Create(exporterOptions, MultiTenantConfig.Enabled));
+                builder.SetSampler(SamplerFactory.Create(exporterOptions, MultiEndpointConfig.Enabled));
 
                 if (credential != null)
                 {

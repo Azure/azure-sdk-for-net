@@ -559,20 +559,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
         public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
 
-        [Event(61, Message = "Multi-tenant export is enabled. Telemetry is routed by its microsoft.instrumentation_key and microsoft.ingestion_endpoint tags.", Level = EventLevel.Informational)]
-        public void MultiTenantExportEnabled() => WriteEvent(61);
+        [Event(61, Message = "Multi-endpoint routing is enabled. Telemetry is routed by its microsoft.instrumentation_key and microsoft.ingestion_endpoint tags.", Level = EventLevel.Informational)]
+        public void MultiEndpointRoutingEnabled() => WriteEvent(61);
 
-        [Event(62, Message = "Live Metrics was disabled because multi-tenant export is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed tenants.", Level = EventLevel.Warning)]
-        public void LiveMetricsDisabledForMultiTenantExport() => WriteEvent(62);
+        [Event(62, Message = "Live Metrics was disabled because multi-endpoint routing is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed destinations.", Level = EventLevel.Warning)]
+        public void LiveMetricsDisabledForMultiEndpointRouting() => WriteEvent(62);
 
         [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
         public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
 
-        [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-tenant export is enabled. The limit is per process, so it would be shared across every tenant the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
-        public void RateLimitedSamplingIgnoredForMultiTenantExport(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
+        [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-endpoint routing is enabled. The limit is per process, so it would be shared across every destination the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
+        public void RateLimitedSamplingIgnoredForMultiEndpointRouting(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
 
         [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
-        public void MultiTenantPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
+        public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
         [NonEvent]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
@@ -599,7 +599,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void RoutedTelemetryCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string traceId, string spanId) => WriteEvent(67, exportSequence, ingestionEndpoint, instrumentationKey, traceId, spanId);
 
         [NonEvent]
-        public void RoutedTelemetryRejected(long exportSequence, MultiTenant.RoutingRejectionReason reason, Activity activity)
+        public void RoutedTelemetryRejected(long exportSequence, MultiEndpoint.RoutingRejectionReason reason, Activity activity)
         {
             if (IsEnabled(EventLevel.Verbose))
             {
@@ -611,7 +611,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void RoutedTelemetryRejected(long exportSequence, string reason, string traceId, string spanId) => WriteEvent(68, exportSequence, reason, traceId, spanId);
 
         [Event(69, Message = "No storage partition for ingestion endpoint '{0}': the limit of {1} partitions is already in use. Telemetry for this endpoint is transmitted without an offline storage fallback.", Level = EventLevel.Warning)]
-        public void MultiTenantPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
+        public void MultiEndpointPartitionCapReached(string ingestionEndpoint, int partitionCount) => WriteEvent(69, ingestionEndpoint, partitionCount);
 
         [NonEvent]
         public void RoutedTelemetryEvicted(string evictedOwner, long evictedBytes, string requestingEndpoint)
