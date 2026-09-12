@@ -5,6 +5,7 @@ using System;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using NUnit.Framework;
@@ -23,12 +24,21 @@ public sealed class SteeringNudgeRaceTests
         // the superseded source and a blocking handler on the new turn never wakes to drain the
         // queued input. The private ActiveRun<T> is reached via reflection, and the old source's
         // cancellation is paused inside a registered callback so the swap is deterministic.
-        var runState = new TaskRunState<string>("t", "i", isQueued: false);
+        var streams = new InMemoryEventStreamRegistry(new AgentEventStreamOptions());
+        var runState = new TaskRunState<string>(
+            "t",
+            "i",
+            isQueued: false,
+            new TaskStreamState(streams, "t", "i"));
 
         Type activeRunType = typeof(TaskEngine)
             .GetNestedType("ActiveRun`1", BindingFlags.NonPublic)!
             .MakeGenericType(typeof(string));
-        object activeRun = Activator.CreateInstance(activeRunType, "task-name", runState)!;
+        object activeRun = Activator.CreateInstance(
+            activeRunType,
+            "task-name",
+            runState,
+            (Action<Exception>)(_ => { }))!;
 
         PropertyInfo handlerCts = activeRunType.GetProperty("HandlerCts")!;
         MethodInfo signalSteering = activeRunType.GetMethod("SignalSteeringAsync")!;

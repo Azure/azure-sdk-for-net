@@ -82,6 +82,7 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
                     _state = StreamState.Closed;
                     _closeTime = now;
                     _hub.CompleteAll();
+                    selfDestroyed = EvictExpired(now);
                 }
             }
         }
@@ -98,14 +99,28 @@ internal class ReplayEventStream : AgentEventStream, IDestroyableStream
 
     public override ValueTask CloseAsync(CancellationToken cancellationToken = default)
     {
-        lock (_gate)
+        bool selfDestroyed = false;
+        try
         {
-            if (_state == StreamState.Active)
+            lock (_gate)
             {
-                _state = StreamState.Closed;
-                _closeTime = Now();
-                PersistClose();
-                _hub.CompleteAll();
+                double now = Now();
+                if (_state == StreamState.Active)
+                {
+                    _state = StreamState.Closed;
+                    _closeTime = now;
+                    PersistClose();
+                    _hub.CompleteAll();
+                }
+
+                selfDestroyed = EvictExpired(now);
+            }
+        }
+        finally
+        {
+            if (selfDestroyed)
+            {
+                _onDestroy();
             }
         }
 

@@ -67,7 +67,8 @@ the stream contract, and a few stream-specific exceptions (covered in
 
 | Type | Role |
 |---|---|
-| `IServiceCollection.AddAgentEventStreams(configure?)` | registration; selects the backing |
+| `IServiceCollection.AddAgentEventStreams(configure?)` | code-based application registration; selects the backing |
+| `IHostApplicationBuilder.AddAgentEventStreams(sectionName)` | binds application backing selection from configuration |
 | `AgentEventStreamOptions` | chooses and configures the single process backing |
 | `AgentEventStreamRegistry` | maps stream ids to live `AgentEventStream` instances |
 | `AgentEventStream` | a single producer/consumer event stream |
@@ -100,6 +101,11 @@ Choose the backing before you create streams (typically once at app startup thro
 `AddAgentEventStreams`). The .NET registry selects exactly **one** backing per process; if
 you select none, the default is in-memory live.
 
+An explicit application selection overrides protocol-package defaults regardless of
+registration order. Repeating the same canonical selection is idempotent. Conflicting
+selections at the same precedence (two application selections, or two protocol defaults)
+fail when the registry is first resolved, with both sources and selections in the error.
+
 | Backing | Use when | Reconnect / replay? | Survives process restart? | Notes |
 |---|---|---|---|---|
 | `UseInMemoryLive()` (default) | A subscriber attaches before the producer; lowest memory; late subscribers do not need to catch up. | No — late subscribers miss earlier events. | No. | Constant memory: only live subscribers, no event buffer. |
@@ -109,20 +115,43 @@ you select none, the default is in-memory live.
 ### Configurator signatures
 
 ```csharp
-builder.Services.AddAgentEventStreams(o => o.UseInMemoryLive());            // default
-
-builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
-    ttl: TimeSpan.FromMinutes(10)));                                  // optional retention
-
-// File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
-// TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
-// is needed — the caller serializes its own event and supplies an opaque EventId.
-builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay());
-
+// Choose exactly one application backing.
 builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay(
     storageDirectory: "/var/streams",                                 // one file per stream id
     ttl: TimeSpan.FromHours(1)));
 ```
+
+Other choices are `o.UseInMemoryLive()` (the Core default),
+`o.UseInMemoryReplay(ttl)`, and `o.UseFileBackedReplay()` with its default directory and
+10-minute TTL.
+
+### Configuration binding
+
+```C# Snippet:StreamingGuide_ConfigBinding
+public static IHostApplicationBuilder ConfigureStreams(
+    IHostApplicationBuilder builder)
+{
+    return builder.AddAgentEventStreams("ResilientTasks:Streams");
+}
+```
+
+```json
+{
+  "ResilientTasks": {
+    "Streams": {
+      "Backing": "FileBackedReplay",
+      "StorageDirectory": "/var/streams",
+      "Ttl": "01:00:00"
+    }
+  }
+}
+```
+
+`Backing` accepts `InMemoryLive`, `InMemoryReplay`, or `FileBackedReplay`
+case-insensitively. `StorageDirectory` is valid only for file-backed replay. `Ttl` is a
+non-negative invariant-culture `TimeSpan` and applies to replay backings.
+The section is read when the registry is first resolved, so configuration providers and
+overrides added after this registration call but before host startup are honored.
 
 - **`ttl`** — retention for replay backings. It bounds buffered history and also drives
   close-clock auto-destroy for closed streams (see *Lifecycle*).
@@ -137,6 +166,66 @@ serialization: serialize your event to a string, put that string in
 you want subscribers to use. Because replay stores strings, the previous
 `serializer`/`deserializer` options and typed `UseFileBackedReplay<TPayload>` overload
 are no longer needed.
+
+## Task-bound streams
+
+Every resilient task input has a lazy event stream keyed by its final `InputId`.
+Handlers receive producer-only access through `TaskContext<TInput>.Stream`; callers
+receive consumer-only access through `TaskRun<TOutput>.Stream`.
+The same explicit `InputId` cannot be reused by an unrelated `TaskId` while the stream is
+retained; this prevents cross-task replay leakage and closed-stream poisoning.
+
+```C# Snippet:StreamingGuide_TaskBoundStreams
+public static ValueTask EmitTaskProgress(
+    TaskContext<string> context,
+    CancellationToken cancellationToken)
+{
+    return context.Stream.EmitAsync(
+        new SseItem<string>("working", "progress") { EventId = "1" },
+        cancellationToken);
+}
+
+public static async Task ConsumeTaskProgress(
+    TaskDefinition<string, string> task,
+    CancellationToken cancellationToken)
+{
+    TaskRun<string> run = await task.StartAsync(
+        "input",
+        cancellationToken: cancellationToken);
+
+    await foreach (SseItem<string> item in
+        run.Stream.Subscribe(cancellationToken: cancellationToken))
+    {
+        _ = item.Data;
+    }
+
+    _ = await run.Completion;
+}
+```
+
+The underlying backing is created only when a producer emits, a consumer subscribes, or
+either side asks for the last event id. A task that never uses its stream creates no
+file or replay buffer.
+
+Core owns transport closure:
+
+- success, final failure, cancellation, and timeout close after the existing terminal
+  task-store transition or cleanup succeeds;
+- retry does not close;
+- shutdown, lease loss, and `ExitForRecoveryAsync` leave the stream open for the next
+  process;
+- each multi-turn input gets a distinct stream because its `InputId` is distinct.
+
+Core does not emit protocol terminal events. A protocol handler must emit its semantic
+terminal event before returning or throwing the terminal outcome. The advanced
+`AgentEventStreamRegistry` remains available for later GET replay, id-addressed deletion,
+custom backings, and standalone streams.
+Custom registry implementations are responsible for preventing cross-task reuse of a
+retained explicit `InputId`; the bundled registry enforces and persists this ownership.
+
+Task-bound handles do not change the in-memory live backing's timing semantics: events
+emitted before subscription are still not replayed. Use a replay backing when the caller
+cannot subscribe before the producer emits.
 
 ---
 
@@ -236,31 +325,28 @@ Three independent paths lead to destroyed:
 
 - the id was **never registered** (no `GetOrCreateAsync` ever ran for it);
 - it was **explicitly `registry.DeleteAsync(id)`**'d; or
-- **close-clock TTL elapsed** — for a **replay backing configured with a `ttl`**, a
+- **close-clock TTL elapsed** — for a **replay backing**, a
   CLOSED stream becomes eligible for auto-destroy once `close-time + ttl` passes,
-  regardless of whether anyone is still subscribed or events remain buffered. Cleanup is
-  **opportunistic**, not timer-driven: expiry is observed and applied on the next stream
-  operation or registry lookup (emit, subscribe, or `GetAsync`), so `GetAsync(id)` after
-  the window treats the stream as not found. Use `registry.DeleteAsync(id)` when you need
-  deterministic, immediate cleanup.
+  regardless of whether anyone is still subscribed or events remain buffered. The bundled
+  registry sweeps expired streams in the background (at least once per minute, or once per
+  TTL interval when shorter) and also observes expiry during stream operations and lookups.
+  Use `registry.DeleteAsync(id)` when you need deterministic, immediate cleanup.
 
 A few practical implications:
 
-- The **in-memory live** backing never auto-destroys — it has no TTL machinery. Call
-  `registry.DeleteAsync(id)` explicitly if you need to release the id.
-- Replay backings with a `ttl` clean up closed streams automatically — expiry is applied
-  opportunistically on the next stream operation or registry lookup after the close-clock
-  window, not by a background timer.
-- `GetLastEventIdAsync` remains safe to call during the close window, so a recovering
-  producer can read the last event id before cleanup.
+- The **in-memory live** backing retains no replay history and is removed from the registry
+  immediately when it closes.
+- Replay backings default to a 10-minute TTL and clean up closed streams automatically in
+  the background. An explicit TTL changes that retention window.
+- `GetLastEventIdAsync` remains safe during the close window. After the TTL expires and the
+  stream is destroyed, it throws `AgentEventStreamNotFoundException`.
 
 > **TTL is a close-clock, not just per-event.** The `ttl` you pass to
 > `UseInMemoryReplay`/`UseFileBackedReplay` both evicts individual events after their
 > emit time *and* arms the auto-destroy that fires `ttl` after the stream is closed.
-> The **in-memory live** backing has no TTL machinery and never auto-destroys — you
-> must call `registry.DeleteAsync(id)` to release the id. `GetLastEventIdAsync` remains
-> safe to call during the close window, so a recovering producer can always read the
-> last event id it saw before close.
+> Both replay backings default to a 10-minute TTL. The **in-memory live** backing has no
+> replay window and is removed immediately on close. `GetLastEventIdAsync` remains safe
+> only while the replay stream is retained; after destruction the stream is not found.
 
 ---
 

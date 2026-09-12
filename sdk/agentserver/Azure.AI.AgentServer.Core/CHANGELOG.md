@@ -4,8 +4,27 @@
 
 ### Features Added
 
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
+- Added `ResilientTaskSettings : ClientSettings` and configuration-bound
+  `IHostApplicationBuilder.AddResilientTasks(sectionName)` overloads. Hosted task storage
+  now accepts its credential and project endpoint from one settings object.
+
 ### Breaking Changes
 
+- `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
+  retaining closed streams indefinitely.
 - State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
   This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
   `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
@@ -13,6 +32,15 @@
   `DeleteItemAsync` `ifMatch` parameters.
 
 ### Bugs Fixed
+
+- Task-bound streams now record their owning task and reject cross-task reuse of an
+  explicit input id. File-backed replay persists the ownership beside the stream log so
+  isolation is enforced after process restart.
+- Closed replay streams are swept after their retention window, closed live streams are
+  removed immediately, and ownership entries are released with the stream.
+- Task-stream closure is synchronized with lazy materialization so a terminal transition
+  cannot miss a concurrently created stream. Deleting a task abandoned for recovery closes
+  its existing persisted turn stream without creating a stream that was never used.
 
 ### Other Changes
 
