@@ -1,4 +1,6 @@
-directory: specification/elastic/Elastic.Management
-commit: 775c7fc206962cb6ec494c6866bb396fa7f18d3f
+directory: specification/elastic/resource-manager/Microsoft.Elastic/Elastic
+commit: f398d14cf518231c3512b317db36c431794d1a83
 repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
