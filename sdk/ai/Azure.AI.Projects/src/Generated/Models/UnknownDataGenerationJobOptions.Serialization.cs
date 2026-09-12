@@ -103,7 +103,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             DataGenerationJobKind @type = default;
-            int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -112,11 +111,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DataGenerationJobKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("max_samples"u8))
-                {
-                    maxSamples = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("train_split"u8))
@@ -142,7 +136,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownDataGenerationJobOptions(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new UnknownDataGenerationJobOptions(@type, trainSplit, modelOptions, additionalBinaryDataProperties);
         }
     }
 }

@@ -850,6 +850,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
+    // Browser automation is not supported yet.
+    // [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]
@@ -953,6 +955,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
+    // Browser automation is not supported yet.
+    // [TestCase(ToolType.BrowserAutomationGA)]
     [TestCase(ToolType.BrowserAutomation)]
     [TestCase(ToolType.MicrosoftFabric)]
     [TestCase(ToolType.FabricIQ)]

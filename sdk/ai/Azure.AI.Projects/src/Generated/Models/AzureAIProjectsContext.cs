@@ -332,6 +332,11 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.InternalCreateMemoryStoreRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalCreateMemoryStoreRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.InternalCreateMemoryStoreRequest is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetConfig))]
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetDefaultConfig))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.InternalGitHubCopilotToolsetPreview is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetPreview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.InternalGitHubCopilotToolsetPreview is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ListMemoriesRequest))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.LoraConfig is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(LoraConfig))]

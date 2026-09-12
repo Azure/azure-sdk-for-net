@@ -10,6 +10,7 @@
 # explicitly acknowledge experimental usage; acknowledging it once at the
 # assembly level matches intent.
 nowarn:OPENAI001
+nowarn:OPENAI002
 
 # AAIP001 is this library's own [Experimental] marker for preview Foundry Agent
 # features (HostedAgentDefinition, WorkflowAgentDefinition, AgentToolboxes,
@@ -30,8 +31,17 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentVersion.JsonModelWriteCor
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.#ctor(System.String,System.Nullable{Azure.AI.Projects.Agents.AgentState},System.Collections.Generic.IDictionary{System.String,System.String},System.String,Azure.AI.Projects.Agents.ProjectsAgentDefinition,Azure.AI.Projects.Agents.AgentBlueprintReference,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},System.Nullable{System.Boolean},Azure.AI.Projects.Agents.AgentEndpointConfiguration,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.InternalCreateAgentRequest.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 # DigitalWorkerType property is experimental, while the rest of object is GA-ed.
-nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.#ctor(System.String,System.String,System.String,Azure.AI.Projects.Agents.AgentState,System.Nullable{Azure.AI.Projects.Agents.AgentStateSource},Azure.AI.Projects.Agents.AgentObjectVersions,Azure.AI.Projects.Agents.AgentEndpointConfiguration,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentBlueprintReference,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.#ctor(System.String,System.String,System.String,Azure.AI.Projects.Agents.AgentState,Azure.AI.Projects.Agents.AgentState,System.Nullable{Azure.AI.Projects.Agents.AgentStateSource},Azure.AI.Projects.Agents.AgentObjectVersions,Azure.AI.Projects.Agents.AgentEndpointConfiguration,System.Nullable{Azure.AI.Projects.Agents.DigitalWorkerType},Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentIdentity,Azure.AI.Projects.Agents.AgentBlueprintReference,Azure.AI.Projects.Agents.AgentCard,System.Collections.Generic.IDictionary{System.String,System.BinaryData})
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.#ctor(System.String)
+
+# TODO remove the fix below
+# Temporary fix to make the build
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.BrowserAutomationToolboxTool(System.String,System.String,System.Collections.Generic.IDictionary{System.String,Azure.AI.Extensions.OpenAI.ToolConfig},Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions)
+nowarn:AAIP001 T:Azure.AI.Projects.Agents.BrowserAutomationToolboxTool
+#################
 
 # AAIP002 marks generated declarations that expose OpenAI-experimental surface
 # (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes
@@ -44,7 +54,9 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore
 # override non-experimental base members. Scoping the suppression to this one
 # generated method keeps AAIP002 live everywhere else in the assembly.
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
-
+# Voice Agent use the OpenAI experimental classes
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.DeserializeVoiceResponseBase(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
 # WebSearchToolboxTool consumes OpenAI's experimental web-search filter and
 # approximate-location models. The generated serialization methods must access
 # those attributed members and invoke the attributed internal constructor.

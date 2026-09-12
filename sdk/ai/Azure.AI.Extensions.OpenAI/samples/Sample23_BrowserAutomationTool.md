@@ -1,14 +1,13 @@
-# Sample for use of `BrowserAutomationPreviewTool` and Agents in Azure.AI.Extensions.OpenAI.
+# Sample for use of `BrowserAutomationTool` and Agents in Azure.AI.Extensions.OpenAI.
 
-Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationPreviewTool.
-
-**Note:** This feature is in the preview.
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationTool.
 
 ## Create Azure Playwright workspace
 
-1. Deploy an Azure Playwright workspace.
-2. In the **Get started** section, open **2. Set up authentication**.
-3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+1. Deploy an Azure Playwright workspace and open the resource.
+2. In left panel select **Access management** and check the box **Playwright Service Access Token**.
+3. Click **Generate Token**.
+4. **Save the token immediately-once you close the page, it cannot be viewed again.**
 
 ## Configure Microsoft Foundry
 
@@ -30,15 +29,16 @@ AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
 };
+options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
-2. Create an Agent with  `BrowserAutomationPreviewTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
+2. Create an Agent with  `BrowserAutomationTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
 AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
@@ -58,7 +58,7 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));

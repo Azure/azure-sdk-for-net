@@ -67,6 +67,10 @@ public partial class AgentAdministrationClient
     private ProjectAgentSkills _cachedAgentSkills;
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
+    [Experimental("AAIP001")]
+    private AgentEndpointConversations _cachedAgentEndpointConversations;
+    [Experimental("AAIP001")]
+    private AgentTelephony _cachedAgentTelephony;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1122,5 +1126,21 @@ public partial class AgentAdministrationClient
     public virtual AgentOptimizationJobs GetAgentOptimizationJobs()
     {
         return Volatile.Read(ref _cachedAgentOptimizationJobs) ?? Interlocked.CompareExchange(ref _cachedAgentOptimizationJobs, new AgentOptimizationJobs(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentOptimizationJobs;
+    }
+
+    /// <summary> Gets the client for the voice Agent. </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentEndpointConversations GetAgentEndpointConversations()
+    {
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+    }
+
+    /// <summary>
+    /// Gets the AgentTelephony sub-client.
+    /// </summary>
+    [Experimental("AAIP001")]
+    public virtual AgentTelephony GetAgentTelephony()
+    {
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }
