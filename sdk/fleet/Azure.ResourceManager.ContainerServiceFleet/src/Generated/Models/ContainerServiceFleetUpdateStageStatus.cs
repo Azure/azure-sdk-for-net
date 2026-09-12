@@ -28,16 +28,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStageStatus"/>. </summary>
         /// <param name="status"> The status of the UpdateStage. </param>
         /// <param name="name"> The name of the UpdateStage. </param>
+        /// <param name="failureCount"> The total member upgrade failures within the stage. </param>
+        /// <param name="maxAllowedFailures"> The max number of member upgrade failures allowed within this stage, resolved from the UpdateStrategy.UpdateStage.maxAllowedFailures value. </param>
         /// <param name="maxConcurrency"> The max number of upgrades that can run concurrently across all groups in this stage, resolved from the UpdateStrategy.UpdateStage.maxConcurrency value. </param>
         /// <param name="groups"> The list of groups to be updated as part of this UpdateStage. </param>
         /// <param name="beforeGates"> The list of Gates that will run before this UpdateStage. </param>
         /// <param name="afterGates"> The list of Gates that will run after this UpdateStage. </param>
         /// <param name="afterStageWaitStatus"> The status of the wait period configured on the UpdateStage. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, int? maxConcurrency, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateStageStatus(ContainerServiceFleetUpdateStatus status, string name, int? failureCount, int? maxAllowedFailures, int? maxConcurrency, IReadOnlyList<ContainerServiceFleetUpdateGroupStatus> groups, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> beforeGates, IReadOnlyList<ContainerServiceFleetUpdateRunGateStatus> afterGates, ContainerServiceFleetWaitStatus afterStageWaitStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Name = name;
+            FailureCount = failureCount;
+            MaxAllowedFailures = maxAllowedFailures;
             MaxConcurrency = maxConcurrency;
             Groups = groups;
             BeforeGates = beforeGates;
@@ -51,6 +55,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The name of the UpdateStage. </summary>
         public string Name { get; }
+
+        /// <summary> The total member upgrade failures within the stage. </summary>
+        public int? FailureCount { get; }
+
+        /// <summary> The max number of member upgrade failures allowed within this stage, resolved from the UpdateStrategy.UpdateStage.maxAllowedFailures value. </summary>
+        public int? MaxAllowedFailures { get; }
 
         /// <summary> The max number of upgrades that can run concurrently across all groups in this stage, resolved from the UpdateStrategy.UpdateStage.maxConcurrency value. </summary>
         public int? MaxConcurrency { get; }

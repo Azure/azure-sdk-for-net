@@ -1,14 +1,14 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (2026-09-11)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the service API version to `2026-06-02-preview`.
+- Added Fleet managed namespace update support, including placement and propagation policies, rollout strategies, and cluster selectors.
+- Added scheduled start gates for update runs.
+- Added label-based member selection and configurable failure thresholds for update stages and groups.
+- Added the `SecurityPatch` auto-upgrade channel and additional trigger status details.
 
 ## 1.2.0 (2026-08-07)
 

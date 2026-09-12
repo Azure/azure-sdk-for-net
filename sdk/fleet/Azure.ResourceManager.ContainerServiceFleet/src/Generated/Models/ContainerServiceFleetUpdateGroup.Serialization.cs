@@ -81,10 +81,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(MaxAllowedFailures))
+            {
+                writer.WritePropertyName("maxAllowedFailures"u8);
+                writer.WriteStringValue(MaxAllowedFailures);
+            }
             if (Optional.IsDefined(MaxConcurrency))
             {
                 writer.WritePropertyName("maxConcurrency"u8);
                 writer.WriteStringValue(MaxConcurrency);
+            }
+            if (Optional.IsDefined(MemberSelector))
+            {
+                writer.WritePropertyName("memberSelector"u8);
+                writer.WriteObjectValue(MemberSelector, options);
             }
             if (Optional.IsCollectionDefined(BeforeGates))
             {
@@ -149,7 +159,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             string name = default;
+            string maxAllowedFailures = default;
             string maxConcurrency = default;
+            MemberSelector memberSelector = default;
             IList<ContainerServiceFleetGateConfiguration> beforeGates = default;
             IList<ContainerServiceFleetGateConfiguration> afterGates = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,9 +172,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("maxAllowedFailures"u8))
+                {
+                    maxAllowedFailures = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("maxConcurrency"u8))
                 {
                     maxConcurrency = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("memberSelector"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    memberSelector = MemberSelector.DeserializeMemberSelector(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("beforeGates"u8))
@@ -198,7 +224,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerServiceFleetUpdateGroup(name, maxConcurrency, beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(), afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(), additionalBinaryDataProperties);
+            return new ContainerServiceFleetUpdateGroup(
+                name,
+                maxAllowedFailures,
+                maxConcurrency,
+                memberSelector,
+                beforeGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
+                afterGates ?? new ChangeTrackingList<ContainerServiceFleetGateConfiguration>(),
+                additionalBinaryDataProperties);
         }
     }
 }

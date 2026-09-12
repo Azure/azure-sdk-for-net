@@ -106,6 +106,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(LastTriggerMessage))
+            {
+                writer.WritePropertyName("lastTriggerMessage"u8);
+                writer.WriteStringValue(LastTriggerMessage);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             AutoUpgradeLastTriggerStatus? lastTriggerStatus = default;
             ResponseError lastTriggerError = default;
             IReadOnlyList<string> lastTriggerUpgradeVersions = default;
+            string lastTriggerMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -203,12 +209,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     lastTriggerUpgradeVersions = array;
                     continue;
                 }
+                if (prop.NameEquals("lastTriggerMessage"u8))
+                {
+                    lastTriggerMessage = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AutoUpgradeProfileStatus(lastTriggeredOn, lastTriggerStatus, lastTriggerError, lastTriggerUpgradeVersions ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new AutoUpgradeProfileStatus(
+                lastTriggeredOn,
+                lastTriggerStatus,
+                lastTriggerError,
+                lastTriggerUpgradeVersions ?? new ChangeTrackingList<string>(),
+                lastTriggerMessage,
+                additionalBinaryDataProperties);
         }
     }
 }
