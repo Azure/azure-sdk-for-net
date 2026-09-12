@@ -56,11 +56,23 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             Assert.IsNotNull(jsonNode, $"({description}) Expected a non-null JSON node.");
 
             var expectedCount = expectedProperties.Count;
-            var actualCount = ((JsonObject)jsonNode!).Count;
+            var properties = (JsonObject)jsonNode!;
+            var optionalResourceAttributeIdMissing = !properties.ContainsKey("_MS.ResourceAttributeId") &&
+                expectedProperties.Contains(new KeyValuePair<string, string>("_MS.ResourceAttributeId", "*"));
+            if (optionalResourceAttributeIdMissing)
+            {
+                expectedCount--;
+            }
+            var actualCount = properties.Count;
             Assert.AreEqual(expectedCount, actualCount, $"({description}) Expected {expectedCount} properties but found {actualCount}.");
 
             foreach (var expectedProperty in expectedProperties)
             {
+                if (optionalResourceAttributeIdMissing && expectedProperty.Key == "_MS.ResourceAttributeId" && expectedProperty.Value == "*")
+                {
+                    continue;
+                }
+
                 var jsonValue = jsonNode![expectedProperty.Key];
                 Assert.IsNotNull(jsonValue, $"({description}) Expected a non-null JSON value for Properties.'{expectedProperty.Key}'.");
                 var actualValue = jsonValue!.ToString();

@@ -10,15 +10,19 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     public class TelemetryValidationHelperTests
     {
         [TestCase("{\"CustomProperty1\":\"Value1\",\"_MS.ResourceAttributeId\":\"generated-id\"}")]
-        public void AcceptsRequiredResourceAttributeId(string properties)
+        [TestCase("{\"CustomProperty1\":\"Value1\"}")]
+        public void AcceptsOptionalResourceAttributeId(string properties)
         {
             Assert.DoesNotThrow(() => TelemetryValidationHelper.ValidateProperties(
             "Telemetry", properties, new List<KeyValuePair<string, string>> { new("CustomProperty1", "Value1"), new("_MS.ResourceAttributeId", "*") }));
         }
 
-        [TestCase("{\"CustomProperty1\":\"Value1\"}")]
         [TestCase("{\"CustomProperty1\":\"Value1\",\"_MS.ResourceAttributeId\":null}")]
+        [TestCase("{\"CustomProperty1\":\"Value1\",\"_MS.ResourceAttributeId\":\"\"}")]
         [TestCase("{\"CustomProperty1\":\"Value1\",\"_MS.ResourceAttributeId\":\" \"}")]
+        [TestCase("{}")]
+        [TestCase("{\"CustomProperty1\":\"wrong\"}")]
+        [TestCase("{\"CustomProperty1\":\"Value1\",\"Unexpected\":\"value\"}")]
         [TestCase("{\"_MS.ResourceAttributeId\":\"generated-id\"}")]
         [TestCase("{\"CustomProperty1\":\"wrong\",\"_MS.ResourceAttributeId\":\"generated-id\"}")]
         [TestCase("{\"CustomProperty1\":\"Value1\",\"Unexpected\":\"value\",\"_MS.ResourceAttributeId\":\"generated-id\"}")]
@@ -28,11 +32,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 "Telemetry", properties, new List<KeyValuePair<string, string>> { new("CustomProperty1", "Value1"), new("_MS.ResourceAttributeId", "*") }));
         }
 
-        [Test]
-        public void ValidatesExplicitlyExpectedResourceAttributeId()
+        [TestCase("{\"_MS.ResourceAttributeId\":\"wrong\"}")]
+        [TestCase("{}")]
+        public void ValidatesExplicitlyExpectedResourceAttributeId(string properties)
         {
             Assert.Throws<AssertionException>(() => TelemetryValidationHelper.ValidateProperties(
-                "Telemetry", "{\"_MS.ResourceAttributeId\":\"wrong\"}",
+                "Telemetry", properties,
                 new List<KeyValuePair<string, string>> { new("_MS.ResourceAttributeId", "expected-id") }));
         }
     }
