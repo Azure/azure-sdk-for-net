@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="InternalGitHubCopilotToolsetConfig"/>. </summary>
         /// <param name="name"> The built-in tool to configure. </param>
-        public InternalGitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name)
+        internal InternalGitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name)
         {
             Name = name;
         }
@@ -31,9 +31,9 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The built-in tool to configure. </summary>
-        public GitHubCopilotBuiltInTool Name { get; set; }
+        public GitHubCopilotBuiltInTool Name { get; }
 
         /// <summary> Whether the built-in tool is enabled. If omitted, the toolset default applies. </summary>
-        public bool? Enabled { get; set; }
+        public bool? Enabled { get; }
     }
 }

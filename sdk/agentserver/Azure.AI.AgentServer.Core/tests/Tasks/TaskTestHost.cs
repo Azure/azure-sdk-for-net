@@ -23,17 +23,19 @@ internal sealed class TaskTestHost : IDisposable
         _tempDir = tempDir;
         Store = store;
         Registry = registry;
-        Builder = new DefaultResilientTaskBuilder(registry);
+        var engineAccessor = new TaskEngineAccessor();
+        Builder = new DefaultResilientTaskBuilder(registry, engineAccessor);
         AgentName = agentName;
         SessionId = sessionId;
         Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
+        engineAccessor.Bind(Engine);
     }
 
     public LocalTaskStore Store { get; }
 
     public TaskRegistry Registry { get; }
 
-    public ResilientTaskBuilder Builder { get; }
+    public DefaultResilientTaskBuilder Builder { get; }
 
     public TaskEngine Engine { get; }
 
@@ -55,7 +57,12 @@ internal sealed class TaskTestHost : IDisposable
     public TaskTestHost Restart(TaskRegistry registry, ILogger? logger = null)
         => new(_tempDir, new LocalTaskStore(_tempDir), registry, AgentName, SessionId, logger);
 
-    public ITaskInvoker Invoker => Engine;
+    /// <summary>
+    /// The task engine, exposed for tests to start/run/look-up tasks by name (the same operations
+    /// the typed <see cref="TaskDefinition{TInput, TOutput}"/> forwards to). Named <c>Invoker</c> for
+    /// readability at call sites.
+    /// </summary>
+    public TaskEngine Invoker => Engine;
 
     /// <summary>Signals cooperative shutdown on the engine so a handler may call
     /// <c>ExitForRecoveryAsync</c> (which is gated on <c>ctx.Shutdown</c>).</summary>

@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -367,13 +369,13 @@ public class AgentsTests : AgentsTestBase
         // Use the tool to create an Agent
         DeclarativeAgentDefinition definition = new(TestEnvironment.FOUNDRY_MODEL_NAME)
         {
-            Tools = { ProjectsAgentTool.AsProjectTool(toolBox.Tools[0]) }
+            Tools = { ToResponseTool(toolBox.Tools[0]) }
         };
         ProjectsAgentVersion agentVersion = await agentsClient.CreateAgentVersionAsync(AGENT_NAME, new ProjectsAgentVersionCreationOptions(definition));
         if (agentVersion.Definition is DeclarativeAgentDefinition declarativeDefinition)
         {
             Assert.That(declarativeDefinition.Tools, Has.Count.EqualTo(1));
-            Assert.That(declarativeDefinition.Tools[0].GetType(), Is.EqualTo(((ResponseTool)ProjectsAgentTool.AsProjectTool(toolBox.Tools[0])).GetType()));
+            Assert.That(declarativeDefinition.Tools[0].ToToolboxTool().GetType(), Is.EqualTo((toolBox.Tools[0]).GetType()));
         }
         else
         {
@@ -1298,6 +1300,20 @@ public class AgentsTests : AgentsTestBase
             }
         };
         return job;
+    }
+
+    /// <summary>
+    /// Converts a toolbox tool to an OpenAI response tool by round-tripping through the wire format.
+    /// </summary>
+    /// <param name="tool">The source tool instance.</param>
+    private static ResponseTool ToResponseTool(ToolboxTool tool)
+    {
+        Argument.AssertNotNull(tool, nameof(tool));
+
+        BinaryData serializedResponseItem = ModelReaderWriter.Write(tool, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
+
+        // The extensions context recognizes Azure-specific tool discriminators and delegates standard tools to OpenAI.
+        return ModelReaderWriter.Read<ResponseTool>(serializedResponseItem, ModelSerializationExtensions.WireOptions, AzureAIExtensionsOpenAIContext.Default);
     }
     #endregion
 }

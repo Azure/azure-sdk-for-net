@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                new DiscoveredSecuritySolutionProperties(securityFamily, offer, publisher, sku, default),
                 location,
                 default);
         }
@@ -3234,7 +3234,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                virtualMachines is null && requests is null && provisioningState is null ? default : new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>()).ToList(), provisioningState, default),
                 kind,
                 location,
                 default);
@@ -4761,7 +4761,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                privateEndpointConnections is null && privateLinkResources is null ? default : new PrivateLinkProperties(default, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), default, default),
+                provisioningState is null && privateEndpointConnections is null && privateLinkResources is null && publicNetworkAccess is null ? default : new PrivateLinkProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), publicNetworkAccess, default),
                 default);
         }
 

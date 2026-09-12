@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InternalGitHubCopilotToolsetDefaultConfig"/>. </summary>
-        public InternalGitHubCopilotToolsetDefaultConfig()
+        internal InternalGitHubCopilotToolsetDefaultConfig()
         {
         }
 
@@ -27,6 +27,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Whether built-in tools are enabled by default. Defaults to true. </summary>
-        public bool? Enabled { get; set; }
+        public bool? Enabled { get; }
     }
 }

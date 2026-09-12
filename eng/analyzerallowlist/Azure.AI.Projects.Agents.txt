@@ -37,6 +37,12 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.JsonModelWr
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.#ctor(System.String)
 
+# TODO remove the fix below
+# Temporary fix to make the build
+nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.BrowserAutomationToolboxTool(System.String,System.String,System.Collections.Generic.IDictionary{System.String,Azure.AI.Extensions.OpenAI.ToolConfig},Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions)
+nowarn:AAIP001 T:Azure.AI.Projects.Agents.BrowserAutomationToolboxTool
+#################
+
 # AAIP002 marks generated declarations that expose OpenAI-experimental surface
 # (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes
 # declarations by signature, so DeclarativeAgentDefinition's full internal
@@ -51,3 +57,8 @@ nowarn:AAIP002 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.Deserialize
 # Voice Agent use the OpenAI experimental classes
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.DeserializeVoiceResponseBase(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+# WebSearchToolboxTool consumes OpenAI's experimental web-search filter and
+# approximate-location models. The generated serialization methods must access
+# those attributed members and invoke the attributed internal constructor.
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.WebSearchToolboxTool.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.WebSearchToolboxTool.DeserializeWebSearchToolboxTool(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)

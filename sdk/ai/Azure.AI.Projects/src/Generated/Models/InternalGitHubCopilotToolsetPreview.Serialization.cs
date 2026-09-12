@@ -6,14 +6,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Projects
 {
-    internal partial class InternalGitHubCopilotToolsetPreview : InternalTool, IJsonModel<InternalGitHubCopilotToolsetPreview>
+    internal partial class InternalGitHubCopilotToolsetPreview : ResponseTool, IJsonModel<InternalGitHubCopilotToolsetPreview>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalGitHubCopilotToolsetPreview>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -85,6 +86,21 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -93,7 +109,7 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override InternalTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<InternalGitHubCopilotToolsetPreview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -112,15 +128,15 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "github_copilot_toolset_preview";
             InternalGitHubCopilotToolsetDefaultConfig defaultConfig = default;
             IList<InternalGitHubCopilotToolsetConfig> configs = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("default_config"u8))
@@ -151,7 +167,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InternalGitHubCopilotToolsetPreview(@type, additionalBinaryDataProperties, defaultConfig, configs ?? new ChangeTrackingList<InternalGitHubCopilotToolsetConfig>());
+            return new InternalGitHubCopilotToolsetPreview(@type, defaultConfig, configs ?? new ChangeTrackingList<InternalGitHubCopilotToolsetConfig>(), additionalBinaryDataProperties);
         }
     }
 }

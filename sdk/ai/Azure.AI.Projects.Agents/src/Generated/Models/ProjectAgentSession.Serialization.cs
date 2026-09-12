@@ -105,6 +105,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("expires_at"u8);
                 writer.WriteNumberValue(ExpiresOn, "U");
             }
+            if (options.Format != "W" && Optional.IsDefined(StoppedOn))
+            {
+                writer.WritePropertyName("stopped_at"u8);
+                writer.WriteNumberValue(StoppedOn.Value, "U");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -153,6 +158,7 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset createdOn = default;
             DateTimeOffset lastAccessedOn = default;
             DateTimeOffset expiresOn = default;
+            DateTimeOffset? stoppedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +192,15 @@ namespace Azure.AI.Projects.Agents
                     expiresOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
+                if (prop.NameEquals("stopped_at"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    stoppedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -198,6 +213,7 @@ namespace Azure.AI.Projects.Agents
                 createdOn,
                 lastAccessedOn,
                 expiresOn,
+                stoppedOn,
                 additionalBinaryDataProperties);
         }
     }

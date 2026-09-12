@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Azure.AI.Extensions.OpenAI;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
@@ -18,6 +19,7 @@ using OpenAI.Responses;
 
 #pragma warning disable OPENAICUA001
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
@@ -224,7 +226,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             IndexName = "sample_index",
             TopK = 5,
             Filter = "category eq 'sleeping bag'",
-            QueryType = AzureAISearchQueryType.Simple
+            QueryType = AzureAISearchQueryKind.Simple
         };
         return index;
     }
@@ -276,7 +278,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "web-search",
                 Description = "Test web search",
-                UserLocation = new OpenAI.WebSearchApproximateLocation()
+                UserLocation = new WebSearchToolApproximateLocation()
                 {
                     Country = "US",
                     Region = "Pennsylvania",
@@ -297,8 +299,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.OpenAPI => new OpenApiToolboxTool(new OpenApiFunctionDefinition(
                 name: "get_weather",
-                specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
-                authentication: new OpenAPIAnonymousAuthenticationDetails()
+                specification: BinaryData.FromBytes(File.ReadAllBytes(GetTestFile("weather_openapi.json"))),
+                authentication: new OpenApiAnonymousAuthenticationDetails()
             ))
             {
                 Name = "open-api",
@@ -306,7 +308,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             ))
             {
                 Name = "browser-automation",
@@ -314,7 +316,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             },
             ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             ))
             {
                 Name = "browser-automation",

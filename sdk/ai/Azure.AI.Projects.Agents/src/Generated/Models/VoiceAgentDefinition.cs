@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -194,10 +194,10 @@ namespace Azure.AI.Projects.Agents
         /// <description> "required". </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ToolChoiceFunction"/>. </description>
+        /// <description> <see cref="RealtimeCustomFunctionToolChoice"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="ToolChoiceMCP"/>. </description>
+        /// <description> <see cref="RealtimeCustomMcpToolChoice"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

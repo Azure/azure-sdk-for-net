@@ -10,6 +10,14 @@ namespace TestProjects.Spector.Tests.Http.SpecialWords
     public partial class SpecialWordsTests : SpectorTestBase
     {
         [SpectorTest]
+        public Task ReservedOperationBodyParamsWithItemsAsync() => Test(async (host) =>
+        {
+            var client = new SpecialWordsClient(host, null).GetReservedOperationBodyParamsClient();
+            var response = await client.WithItemsAsync(["item"]);
+            Assert.AreEqual(204, response.Status);
+        });
+
+        [SpectorTest]
         public Task ParametersWithAndAsync() => Test(async (host) =>
         {
             var client = new SpecialWordsClient(host, null).GetParametersClient();

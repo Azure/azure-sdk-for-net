@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
         /// <param name="domain"> The domain associated with the secret. </param>
         /// <param name="name"> The name of the secret to inject for the domain. </param>
         /// <param name="value"> The secret value to inject for the domain. </param>
-        public InternalContainerNetworkPolicyDomainSecretParam(string domain, string name, string value)
+        internal InternalContainerNetworkPolicyDomainSecretParam(string domain, string name, string value)
         {
             Domain = domain;
             Name = name;
@@ -37,12 +37,12 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The domain associated with the secret. </summary>
-        public string Domain { get; set; }
+        public string Domain { get; }
 
         /// <summary> The name of the secret to inject for the domain. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> The secret value to inject for the domain. </summary>
-        public string Value { get; set; }
+        public string Value { get; }
     }
 }
