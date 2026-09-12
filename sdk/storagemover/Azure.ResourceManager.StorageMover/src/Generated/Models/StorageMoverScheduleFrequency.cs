@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         private const string OnetimeValue = "Onetime";
         /// <summary> No schedule frequency. The job definition will not run on a schedule. </summary>
         private const string NoneValue = "None";
+        private const string HourlyValue = "Hourly";
 
         /// <summary> Initializes a new instance of <see cref="StorageMoverScheduleFrequency"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -46,6 +47,9 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> No schedule frequency. The job definition will not run on a schedule. </summary>
         public static StorageMoverScheduleFrequency None { get; } = new StorageMoverScheduleFrequency(NoneValue);
+
+        /// <summary> Gets the Hourly. </summary>
+        public static StorageMoverScheduleFrequency Hourly { get; } = new StorageMoverScheduleFrequency(HourlyValue);
 
         /// <summary> Determines if two <see cref="StorageMoverScheduleFrequency"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

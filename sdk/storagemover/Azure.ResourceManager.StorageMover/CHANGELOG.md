@@ -1,14 +1,26 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded to API version 2026-05-01.
+- Added cross-tenant job configuration through `IsCrossTenantJob`, `CrossTenantEndpointTenantId`, and `CrossTenantEndpointResourceId` on `JobDefinitionData`.
+- Added `EnableCrossTenantTransfer` and `AllowedStorageAccounts` to Azure Blob container and Azure Storage SMB file share endpoint properties and update properties, allowing endpoints to opt in to cross-tenant transfers and restrict partner storage accounts.
+- Added `ReconcileJob` and `ReconcileJobAsync` on `JobDefinitionResource` to reconcile a running job.
+- Added synchronization metadata through `SyncMode` and `MoverSyncedUntil` on `JobDefinitionData` and `JobDefinitionPatch`.
+- Added hourly scheduling through `StorageMoverScheduleFrequency.Hourly` and sub-daily repeat intervals through `StorageMoverScheduleInfo.RepeatInterval`.
+- Added `JobType.OnPremToCloudAgentLess` for on-premises-to-cloud jobs that do not use an agent.
+- Added `SourceType` on SMB and NFS mount endpoint properties, including `SmbMountSourceType.FSXSMB` and `NfsMountSourceType.FSXEFS` for `FSX-SMB` and `FSX-EFS` sources.
+- Added NFS 4.1 support through `NfsVersion.NFSv41`.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Added model factory overloads for the new job definition, endpoint, and schedule properties.
 
 ## 1.4.1 (2026-06-15)
 
