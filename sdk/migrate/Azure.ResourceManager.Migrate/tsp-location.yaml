@@ -1,0 +1,6 @@
+directory: specification/migrate/resource-manager/Microsoft.Migrate/Waves
+commit: f872f172e5ba8603e89de31604c61fbaab81ad61
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
