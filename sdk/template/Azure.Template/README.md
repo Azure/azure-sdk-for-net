@@ -1,5 +1,7 @@
 # Azure Template client library for .NET
 
+<!-- Use this README as a starting point and replace template guidance with package-specific content. -->
+
 Azure Template is a template project for creating Azure SDK libraries generated from TypeSpec.
 
 Use this template as a starting point for:
