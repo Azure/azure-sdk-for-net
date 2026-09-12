@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Net.ServerSentEvents;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
@@ -19,6 +21,143 @@ namespace Azure.Search.Documents.Tests
 {
     public class KnowledgeBaseRetrievalClientStreamingTests
     {
+        [Test]
+        public async Task RetrieveStreamProtocolReturnsGaResultAndPreservesRequest()
+        {
+            const string content = """
+                event: future.event
+                id: event-1
+                retry: 2500
+                data: {"value":true}
+
+                event: response.completed
+                data: {"statusCode":200,"response":{}}
+
+
+                """;
+            MemoryStream contentStream = new(Encoding.UTF8.GetBytes(content));
+            MockResponse response = new(200) { ContentStream = contentStream };
+            response.AddHeader("Content-Type", "text/event-stream");
+            response.AddHeader("x-ms-request-id", "request-id");
+            MockTransport transport = new(response);
+            KnowledgeBaseRetrievalClient client = CreateClient(transport);
+            using RequestContent requestContent = RequestContent.Create(BinaryData.FromString("{}"));
+
+            await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(
+                requestContent,
+                querySourceAuthorization: "query-auth",
+                queryWorkIQSourceAuthorization: "work-iq-auth");
+
+            Assert.That(result.Status, Is.EqualTo(200));
+            Assert.That(result.Headers.TryGetValue("x-ms-request-id", out string requestId), Is.True);
+            Assert.That(requestId, Is.EqualTo("request-id"));
+            Assert.That(contentStream.CanRead, Is.True);
+            Assert.That(contentStream.Position, Is.Zero);
+            Request request = transport.Requests.Single();
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Post));
+            Assert.That(request.Uri.ToUri().AbsolutePath, Does.EndWith("/knowledgebases('fake-knowledge-base')/retrieve"));
+            Assert.That(request.Headers.TryGetValue("Accept", out string accept), Is.True);
+            Assert.That(accept, Is.EqualTo("text/event-stream"));
+            Assert.That(request.Headers.TryGetValue("x-ms-query-source-authorization", out string queryAuth), Is.True);
+            Assert.That(queryAuth, Is.EqualTo("query-auth"));
+            Assert.That(request.Headers.TryGetValue("x-ms-query-work-iq-source-authorization", out string workIqAuth), Is.True);
+            Assert.That(workIqAuth, Is.EqualTo("work-iq-auth"));
+
+            List<SseItem<BinaryData>> items = new();
+            await foreach (SseItem<BinaryData> item in result)
+            {
+                items.Add(item);
+            }
+
+            Assert.That(items.Select(item => item.EventType), Is.EqualTo(new[] { "future.event", "response.completed" }));
+            Assert.That(items[0].Data.ToString(), Is.EqualTo("""{"value":true}"""));
+            Assert.That(items[0].EventId, Is.EqualTo("event-1"));
+            Assert.That(items[0].ReconnectionInterval, Is.EqualTo(TimeSpan.FromMilliseconds(2500)));
+            Assert.That(contentStream.CanRead, Is.False);
+            Assert.Throws<InvalidOperationException>(() => ((IAsyncEnumerable<SseItem<BinaryData>>)result).GetAsyncEnumerator());
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RetrieveStreamProtocolDisposesUnconsumedContent(bool beginEnumeration)
+        {
+            MemoryStream contentStream = new(Encoding.UTF8.GetBytes("data: first\n\ndata: second\n\n"));
+            MockResponse response = new(200) { ContentStream = contentStream };
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+            using RequestContent requestContent = RequestContent.Create(BinaryData.FromString("{}"));
+            AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(requestContent);
+
+            if (beginEnumeration)
+            {
+                await using IAsyncEnumerator<SseItem<BinaryData>> enumerator =
+                    ((IAsyncEnumerable<SseItem<BinaryData>>)result).GetAsyncEnumerator();
+                Assert.That(await enumerator.MoveNextAsync(), Is.True);
+            }
+            else
+            {
+                await result.DisposeAsync();
+            }
+
+            Assert.That(contentStream.CanRead, Is.False);
+            Assert.Throws<ObjectDisposedException>(() => _ = result.Status);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RetrieveStreamProtocolObservesCancellationAfterResponse(bool cancelOperation)
+        {
+            PausableSseStream contentStream = new();
+            MockResponse response = new(200) { ContentStream = contentStream };
+            response.AddHeader("Content-Type", "text/event-stream");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+            using CancellationTokenSource operation = new();
+            using CancellationTokenSource enumeration = new();
+            using RequestContent requestContent = RequestContent.Create(BinaryData.FromString("{}"));
+            await using AsyncStreamingResult<SseItem<BinaryData>> result = await client.RetrieveStreamAsync(
+                requestContent,
+                context: new RequestContext { CancellationToken = operation.Token });
+            await using IAsyncEnumerator<SseItem<BinaryData>> enumerator =
+                ((IAsyncEnumerable<SseItem<BinaryData>>)result).GetAsyncEnumerator(enumeration.Token);
+
+            Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
+            await contentStream.WaitForBlockedReadAsync();
+            (cancelOperation ? operation : enumeration).Cancel();
+
+            Assert.That(await Task.WhenAny(moveNext, Task.Delay(TimeSpan.FromSeconds(5))), Is.SameAs(moveNext));
+            Assert.CatchAsync<OperationCanceledException>(async () => await moveNext);
+            Assert.Throws<ObjectDisposedException>(() => _ = result.Status);
+        }
+
+        [Test]
+        public void RetrieveStreamProtocolRejectsNullContent()
+        {
+            MockTransport transport = new(new MockResponse(200));
+            KnowledgeBaseRetrievalClient client = CreateClient(transport);
+
+            ArgumentNullException exception = Assert.ThrowsAsync<ArgumentNullException>(
+                async () => await client.RetrieveStreamAsync((RequestContent)null));
+
+            Assert.That(exception.ParamName, Is.EqualTo("content"));
+            Assert.That(transport.Requests, Is.Empty);
+        }
+
+        [Test]
+        public void RetrieveStreamProtocolPropagatesPreflightFailure()
+        {
+            MockResponse response = new(400);
+            response.SetContent("""{"error":{"code":"InvalidRequest","message":"The request is invalid."}}""");
+            response.AddHeader("Content-Type", "application/json");
+            KnowledgeBaseRetrievalClient client = CreateClient(new MockTransport(response));
+            using RequestContent requestContent = RequestContent.Create(BinaryData.FromString("{}"));
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await client.RetrieveStreamAsync(requestContent));
+
+            Assert.That(exception.Status, Is.EqualTo(400));
+            Assert.That(response.IsDisposed, Is.True);
+        }
+
         [Test]
         public async Task RetrieveStreamAsyncEnumeratesEventsIncrementally()
         {

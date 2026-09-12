@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
@@ -21,8 +20,7 @@ namespace System.ClientModel;
 /// have a non-null <see cref="PipelineResponse.ContentStream"/>. Factories do
 /// not send a request or process response establishment errors.
 /// </remarks>
-[Experimental("SCME0005")]
-public static class AsyncStreamingClientResult
+public static class AsyncStreamingResult
 {
     private const int DefaultJsonLineLengthLimit = 1024 * 1024 * 1024;
 
@@ -33,11 +31,11 @@ public static class AsyncStreamingClientResult
     /// <param name="response">An established response containing the stream.</param>
     /// <param name="producer">The function that reads values from the stream.
     /// The producer must observe cancellation or stream closure. Otherwise,
-    /// <see cref="AsyncStreamingClientResult{T}.DisposeAsync"/> can wait indefinitely
+    /// <see cref="AsyncStreamingResult{T}.DisposeAsync"/> can wait indefinitely
     /// for an active read to complete.</param>
     /// <param name="operationCancellationToken">The cancellation token for the operation.</param>
     /// <returns>A one-shot asynchronous streaming result.</returns>
-    public static AsyncStreamingClientResult<T> Create<T>(
+    public static AsyncStreamingResult<T> Create<T>(
         PipelineResponse response,
         Func<Stream, CancellationToken, IAsyncEnumerable<T>> producer,
         CancellationToken operationCancellationToken = default)
@@ -61,7 +59,7 @@ public static class AsyncStreamingClientResult
     /// stream before a terminal event throws <see cref="InvalidDataException"/>.</param>
     /// <param name="operationCancellationToken">The cancellation token for the operation.</param>
     /// <returns>A one-shot asynchronous streaming result.</returns>
-    public static AsyncStreamingClientResult<SseItem<T>> CreateSse<T>(
+    public static AsyncStreamingResult<SseItem<T>> CreateSse<T>(
         PipelineResponse response,
         SseItemParser<T> itemParser,
         Func<SseItem<BinaryData>, bool>? isTerminal = null,
@@ -84,7 +82,7 @@ public static class AsyncStreamingClientResult
     /// stream before a terminal event throws <see cref="InvalidDataException"/>.</param>
     /// <param name="operationCancellationToken">The cancellation token for the operation.</param>
     /// <returns>A one-shot asynchronous streaming result.</returns>
-    public static AsyncStreamingClientResult<SseItem<BinaryData>> CreateSse(
+    public static AsyncStreamingResult<SseItem<BinaryData>> CreateSse(
         PipelineResponse response,
         Func<SseItem<BinaryData>, bool>? isTerminal = null,
         CancellationToken operationCancellationToken = default)
@@ -104,7 +102,7 @@ public static class AsyncStreamingClientResult
     /// <param name="itemParser">The parser for each JSON line.</param>
     /// <param name="operationCancellationToken">The cancellation token for the operation.</param>
     /// <returns>A one-shot asynchronous streaming result.</returns>
-    public static AsyncStreamingClientResult<T> CreateJsonLines<T>(
+    public static AsyncStreamingResult<T> CreateJsonLines<T>(
         PipelineResponse response,
         Func<BinaryData, T> itemParser,
         CancellationToken operationCancellationToken = default)
@@ -114,7 +112,7 @@ public static class AsyncStreamingClientResult
             DefaultJsonLineLengthLimit,
             operationCancellationToken);
 
-    internal static AsyncStreamingClientResult<T> CreateJsonLines<T>(
+    internal static AsyncStreamingResult<T> CreateJsonLines<T>(
         PipelineResponse response,
         Func<BinaryData, T> itemParser,
         int maxLineLength,
@@ -143,7 +141,7 @@ public static class AsyncStreamingClientResult
     /// <param name="response">An established response containing the stream.</param>
     /// <param name="operationCancellationToken">The cancellation token for the operation.</param>
     /// <returns>A one-shot asynchronous streaming result.</returns>
-    public static AsyncStreamingClientResult<BinaryData> CreateJsonLines(
+    public static AsyncStreamingResult<BinaryData> CreateJsonLines(
         PipelineResponse response,
         CancellationToken operationCancellationToken = default)
         => CreateJsonLines(response, static data => data, operationCancellationToken);

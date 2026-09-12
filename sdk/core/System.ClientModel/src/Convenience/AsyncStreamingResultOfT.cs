@@ -3,7 +3,6 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,7 +15,7 @@ namespace System.ClientModel;
 /// </summary>
 /// <typeparam name="T">The type of values in the response stream.</typeparam>
 /// <remarks>
-/// An <see cref="AsyncStreamingClientResult{T}"/> can be enumerated only once.
+/// An <see cref="AsyncStreamingResult{T}"/> can be enumerated only once.
 /// Disposing the enumerator or the result disposes the underlying response.
 /// The operation cancellation token remains active for the lifetime of the
 /// stream and is combined with the token supplied when enumeration begins.
@@ -25,8 +24,7 @@ namespace System.ClientModel;
 /// Enumerating a disposed result throws <see cref="ObjectDisposedException"/>;
 /// requesting a second enumerator throws <see cref="InvalidOperationException"/>.
 /// </remarks>
-[Experimental("SCME0005")]
-public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncDisposable
+public sealed class AsyncStreamingResult<T> : IAsyncEnumerable<T>, IAsyncDisposable
 {
     private readonly PipelineResponse _response;
     private readonly Stream _contentStream;
@@ -52,7 +50,7 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     // Disposal marks the enumerator under _sync before taking its _moveNextSync;
     // code holding _moveNextSync never acquires _sync.
 
-    internal AsyncStreamingClientResult(
+    internal AsyncStreamingResult(
         PipelineResponse response,
         Func<Stream, CancellationToken, IAsyncEnumerable<T>> producer,
         CancellationToken operationCancellationToken)
@@ -418,7 +416,7 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     }
 
     private sealed class StreamingAsyncEnumerator(
-        AsyncStreamingClientResult<T> result,
+        AsyncStreamingResult<T> result,
         IAsyncEnumerator<T> inner,
         CancellationTokenSource? linkedCancellationSource) : IAsyncEnumerator<T>
     {
