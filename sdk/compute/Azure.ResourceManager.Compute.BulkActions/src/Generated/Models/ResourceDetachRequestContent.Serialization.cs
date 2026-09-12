@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request model to detach a list of scheduled action resources. </summary>
+    /// <summary> Resources to remove from a scheduled action. </summary>
     public partial class ResourceDetachRequestContent : IJsonModel<ResourceDetachRequestContent>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceDetachRequestContent"/> for deserialization. </summary>

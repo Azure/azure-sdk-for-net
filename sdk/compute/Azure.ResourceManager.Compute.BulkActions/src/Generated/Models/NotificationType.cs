@@ -11,11 +11,11 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The type of notification supported. </summary>
+    /// <summary> The delivery method for scheduled action notifications. </summary>
     public readonly partial struct NotificationType : IEquatable<NotificationType>
     {
         private readonly string _value;
-        /// <summary> Notify through e-mail. </summary>
+        /// <summary> Sends notifications by email. </summary>
         private const string EmailValue = "Email";
 
         /// <summary> Initializes a new instance of <see cref="NotificationType"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Notify through e-mail. </summary>
+        /// <summary> Sends notifications by email. </summary>
         public static NotificationType Email { get; } = new NotificationType(EmailValue);
 
         /// <summary> Determines if two <see cref="NotificationType"/> values are the same. </summary>

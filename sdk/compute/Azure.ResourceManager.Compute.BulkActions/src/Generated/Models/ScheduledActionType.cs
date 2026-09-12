@@ -11,15 +11,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Specify which action user wants to be performed on the resources. </summary>
+    /// <summary> The operation performed by the scheduled action. </summary>
     public readonly partial struct ScheduledActionType : IEquatable<ScheduledActionType>
     {
         private readonly string _value;
-        /// <summary> Perform a start action on the specified resources. </summary>
+        /// <summary> Starts the targeted resources. </summary>
         private const string StartValue = "Start";
-        /// <summary> Perform a deallocate action on the specified resources. </summary>
+        /// <summary> Deallocates the targeted resources. </summary>
         private const string DeallocateValue = "Deallocate";
-        /// <summary> Perform hibernate and deallocate on the specified resources. </summary>
+        /// <summary> Hibernates the targeted resources. </summary>
         private const string HibernateValue = "Hibernate";
 
         /// <summary> Initializes a new instance of <see cref="ScheduledActionType"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> Perform a start action on the specified resources. </summary>
+        /// <summary> Starts the targeted resources. </summary>
         public static ScheduledActionType Start { get; } = new ScheduledActionType(StartValue);
 
-        /// <summary> Perform a deallocate action on the specified resources. </summary>
+        /// <summary> Deallocates the targeted resources. </summary>
         public static ScheduledActionType Deallocate { get; } = new ScheduledActionType(DeallocateValue);
 
-        /// <summary> Perform hibernate and deallocate on the specified resources. </summary>
+        /// <summary> Hibernates the targeted resources. </summary>
         public static ScheduledActionType Hibernate { get; } = new ScheduledActionType(HibernateValue);
 
         /// <summary> Determines if two <see cref="ScheduledActionType"/> values are the same. </summary>

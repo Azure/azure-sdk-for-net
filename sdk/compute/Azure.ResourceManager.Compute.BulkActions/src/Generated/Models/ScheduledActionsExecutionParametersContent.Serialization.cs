@@ -13,8 +13,8 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-    public partial class ScheduledActionsExecutionParametersContent : IJsonModel<ScheduledActionsExecutionParametersContent>
+    /// <summary> Settings that control how the scheduled action operation is executed. </summary>
+    internal partial class ScheduledActionsExecutionParametersContent : IJsonModel<ScheduledActionsExecutionParametersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,11 +74,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 throw new FormatException($"The model {nameof(ScheduledActionsExecutionParametersContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OptimizationPreference))
-            {
-                writer.WritePropertyName("optimizationPreference"u8);
-                writer.WriteStringValue(OptimizationPreference.Value.ToString());
-            }
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
@@ -126,20 +121,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
             ScheduledActionsRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("optimizationPreference"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    optimizationPreference = new OptimizationPreference(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("retryPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -154,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledActionsExecutionParametersContent(optimizationPreference, retryPolicy, additionalBinaryDataProperties);
+            return new ScheduledActionsExecutionParametersContent(retryPolicy, additionalBinaryDataProperties);
         }
     }
 }

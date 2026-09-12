@@ -13,15 +13,15 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (PST) 2025-05-30T06:35:00-07:00. </summary>
+    /// <summary> Request body for delaying a scheduled action occurrence. </summary>
     public partial class DelayRequestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DelayRequestContent"/>. </summary>
-        /// <param name="scheduleOn"> The exact time to delay the operations to. </param>
-        /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
+        /// <param name="scheduleOn"> The new date and time for the occurrence, including the UTC offset. </param>
+        /// <param name="resourceIds"> The resources to delay. An empty array delays all resources in the occurrence. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
         public DelayRequestContent(DateTimeOffset scheduleOn, IEnumerable<ResourceIdentifier> resourceIds)
         {
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DelayRequestContent"/>. </summary>
-        /// <param name="scheduleOn"> The exact time to delay the operations to. </param>
-        /// <param name="resourceIds"> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </param>
+        /// <param name="scheduleOn"> The new date and time for the occurrence, including the UTC offset. </param>
+        /// <param name="resourceIds"> The resources to delay. An empty array delays all resources in the occurrence. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DelayRequestContent(DateTimeOffset scheduleOn, IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The exact time to delay the operations to. </summary>
+        /// <summary> The new date and time for the occurrence, including the UTC offset. </summary>
         public DateTimeOffset ScheduleOn { get; }
 
-        /// <summary> The resources that should be delayed. If empty, the delay will apply to the all resources in the occurrence. </summary>
+        /// <summary> The resources to delay. An empty array delays all resources in the occurrence. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }
     }
 }

@@ -15,14 +15,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public readonly partial struct BulkActionOperationState : IEquatable<BulkActionOperationState>
     {
         private readonly string _value;
-        /// <summary> The default value for the operation state enum. </summary>
-        private const string UnknownValue = "Unknown";
-        /// <summary> Operations that are pending scheduling. </summary>
-        private const string PendingSchedulingValue = "PendingScheduling";
         /// <summary> Operations that have been scheduled. </summary>
         private const string ScheduledValue = "Scheduled";
-        /// <summary> Operations that are waiting to be executed. </summary>
-        private const string PendingExecutionValue = "PendingExecution";
         /// <summary> Operations that are in the process of being executed. </summary>
         private const string ExecutingValue = "Executing";
         /// <summary> Operations that succeeded. </summary>
@@ -33,6 +27,9 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private const string CancelledValue = "Cancelled";
         /// <summary> Operations that are blocked. </summary>
         private const string BlockedValue = "Blocked";
+        private const string UnknownValue = "Unknown";
+        private const string PendingSchedulingValue = "PendingScheduling";
+        private const string PendingExecutionValue = "PendingExecution";
 
         /// <summary> Initializes a new instance of <see cref="BulkActionOperationState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,17 +41,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             _value = value;
         }
 
-        /// <summary> The default value for the operation state enum. </summary>
-        public static BulkActionOperationState Unknown { get; } = new BulkActionOperationState(UnknownValue);
-
-        /// <summary> Operations that are pending scheduling. </summary>
-        public static BulkActionOperationState PendingScheduling { get; } = new BulkActionOperationState(PendingSchedulingValue);
-
         /// <summary> Operations that have been scheduled. </summary>
         public static BulkActionOperationState Scheduled { get; } = new BulkActionOperationState(ScheduledValue);
-
-        /// <summary> Operations that are waiting to be executed. </summary>
-        public static BulkActionOperationState PendingExecution { get; } = new BulkActionOperationState(PendingExecutionValue);
 
         /// <summary> Operations that are in the process of being executed. </summary>
         public static BulkActionOperationState Executing { get; } = new BulkActionOperationState(ExecutingValue);
@@ -70,6 +58,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Operations that are blocked. </summary>
         public static BulkActionOperationState Blocked { get; } = new BulkActionOperationState(BlockedValue);
+
+        /// <summary> Gets the Unknown. </summary>
+        public static BulkActionOperationState Unknown { get; } = new BulkActionOperationState(UnknownValue);
+
+        /// <summary> Gets the PendingScheduling. </summary>
+        public static BulkActionOperationState PendingScheduling { get; } = new BulkActionOperationState(PendingSchedulingValue);
+
+        /// <summary> Gets the PendingExecution. </summary>
+        public static BulkActionOperationState PendingExecution { get; } = new BulkActionOperationState(PendingExecutionValue);
 
         /// <summary> Determines if two <see cref="BulkActionOperationState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

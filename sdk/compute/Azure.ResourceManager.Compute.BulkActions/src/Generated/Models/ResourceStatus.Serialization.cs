@@ -16,7 +16,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The status of a resource after a resource level operation was performed. </summary>
+    /// <summary> Current status for a targeted resource in a scheduled action occurrence. </summary>
     public partial class ResourceStatus : IJsonModel<ResourceStatus>
     {
         /// <summary> Initializes a new instance of <see cref="ResourceStatus"/> for deserialization. </summary>
