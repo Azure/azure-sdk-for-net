@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
@@ -29,15 +29,15 @@ using Xunit;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
-    /// The logs counterpart to <see cref="MultiTenantRoutingTests"/>: routing reads
+    /// The logs counterpart to <see cref="MultiEndpointRoutingTests"/>: routing reads
     /// <see cref="LogRecord.Attributes"/> instead of Activity tags, but the grouping, dropping, and
     /// exporter gate behave the same. Because the SDK pools and recycles <see cref="LogRecord"/>
     /// instances, every conversion runs inside a batch export where the records are simultaneously
     /// alive rather than by holding record references across calls.
     /// </summary>
-    public class MultiTenantLogRoutingTests
+    public class MultiEndpointLogRoutingTests
     {
-        private const string SourceName = nameof(MultiTenantLogRoutingTests);
+        private const string SourceName = nameof(MultiEndpointLogRoutingTests);
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
 
@@ -99,7 +99,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-role")));
+            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
 
             var properties = ((MessageData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
@@ -164,7 +164,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void InstrumentationKeyIsTrimmedSoSpacingDoesNotCreateATenant()
+        public void InstrumentationKeyIsTrimmedSoSpacingDoesNotCreateADistinctRoute()
         {
             var routeBatch = Convert(
                 Emit(Ikey("ikey-a"), Endpoint(EastUs)),
@@ -187,14 +187,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void RoutedLogCarriesTenantCloudRoleAndHostRoleInstance()
+        public void RoutedLogCarriesCloudRoleAndHostRoleInstance()
         {
             var routeBatch = Convert(
                 CreateResource(),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-role")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
 
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
-            Assert.Equal("tenant-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("app-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("relay-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
         }
 
@@ -203,11 +203,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("")]
         [InlineData("   ")]
         [InlineData(42)]
-        public void InvalidTenantCloudRoleUsesUnknownService(object? tenantCloudRole)
+        public void InvalidCloudRoleUsesUnknownService(object? cloudRole)
         {
             var routeBatch = Convert(
                 CreateResource(),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole(tenantCloudRole)));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole(cloudRole)));
 
             Assert.Equal(
                 "unknown_service",
@@ -215,53 +215,53 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void TenantCloudRoleIsTrimmedAndTruncated()
+        public void CloudRoleIsTrimmedAndTruncated()
         {
-            var tenantCloudRole = new string('a', SchemaConstants.Tags_AiCloudRole_MaxLength + 1);
+            var cloudRole = new string('a', SchemaConstants.Tags_AiCloudRole_MaxLength + 1);
             var routeBatch = Convert(
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole($" {tenantCloudRole} ")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole($" {cloudRole} ")));
 
             Assert.Equal(
-                tenantCloudRole.Substring(0, SchemaConstants.Tags_AiCloudRole_MaxLength),
+                cloudRole.Substring(0, SchemaConstants.Tags_AiCloudRole_MaxLength),
                 routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
         }
 
         [Fact]
-        public void TenantCloudRoleIsResolvedPerLogWithinAnEndpointGroup()
+        public void CloudRoleIsResolvedPerLogWithinAnEndpointGroup()
         {
             var routeBatch = Convert(
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-a")),
-                Emit(Ikey("ikey-b"), Endpoint(EastUs), CloudRole("tenant-b")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-a")),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs), CloudRole("app-b")));
 
             Assert.Equal(
-                new[] { "tenant-a", "tenant-b" },
+                new[] { "app-a", "app-b" },
                 routeBatch[0].TelemetryItems.Select(item => item.Tags[ContextTagKeys.AiCloudRole.ToString()]));
         }
 
         [Fact]
-        public void FirstTenantCloudRoleAttributeWins()
+        public void FirstCloudRoleAttributeWins()
         {
             var routeBatch = Convert(
                 Emit(
                     Ikey("ikey-a"),
                     Endpoint(EastUs),
-                    CloudRole("tenant-a"),
-                    CloudRole("tenant-b")));
+                    CloudRole("app-a"),
+                    CloudRole("app-b")));
 
             Assert.Equal(
-                "tenant-a",
+                "app-a",
                 routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
         }
 
         [Fact]
-        public void EveryLogTelemetryTypeCarriesTenantCloudRoleAndHostRoleInstance()
+        public void EveryLogTelemetryTypeCarriesCloudRoleAndHostRoleInstance()
         {
-            var route = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-role") };
+            var route = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role") };
             var routeBatch = Convert(
                 CreateResource(),
                 Emit(route),
                 Emit("failed body", new InvalidOperationException("boom"), route),
-                Emit(route.Concat(new[] { new KeyValuePair<string, object?>(CustomEventAttributeName, "tenant-event") }).ToArray()),
+                Emit(route.Concat(new[] { new KeyValuePair<string, object?>(CustomEventAttributeName, "app-event") }).ToArray()),
                 Emit(route.Concat(AvailabilityMarkers()).ToArray()));
 
             Assert.Equal(
@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 routeBatch[0].TelemetryItems,
                 item =>
                 {
-                    Assert.Equal("tenant-role", item.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+                    Assert.Equal("app-role", item.Tags[ContextTagKeys.AiCloudRole.ToString()]);
                     Assert.Equal("relay-instance", item.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
                 });
         }
@@ -286,7 +286,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(false)]
         public void AvailabilityLogRoutesRegardlessOfWhereTheRoutingTagsSit(bool routingTagsBeforeMarker)
         {
-            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-role") };
+            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role") };
             var attributes = routingTagsBeforeMarker
                 ? routingTags.Concat(AvailabilityMarkers()).ToArray()
                 : AvailabilityMarkers().Concat(routingTags).ToArray();
@@ -299,7 +299,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
             Assert.Equal("AvailabilityData", telemetryItem.Data!.BaseType);
             Assert.Equal("ikey-a", telemetryItem.InstrumentationKey);
-            Assert.Equal("tenant-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("app-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
 
             var properties = ((AvailabilityData)telemetryItem.Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
@@ -308,16 +308,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Nothing consumes the routing attributes outside the multi-tenant conversion, so on the
-        /// single-tenant path they must survive as ordinary custom dimensions rather than be dropped.
+        /// Nothing consumes the routing attributes outside the multi-endpoint conversion, so on the
+        /// single-endpoint path they must survive as ordinary custom dimensions rather than be dropped.
         /// </summary>
         [Fact]
-        public void SingleTenantPathDoesNotApplyTenantCloudRole()
+        public void SingleEndpointPathDoesNotApplyCloudRole()
         {
-            var telemetryItems = ConvertSingleTenant(
+            var telemetryItems = ConvertSingleEndpoint(
                 "exporter-ikey",
                 CreateResource(),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("tenant-role")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
 
             var telemetryItem = telemetryItems.Single();
             Assert.Equal("exporter-ikey", telemetryItem.InstrumentationKey);
@@ -327,7 +327,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((MessageData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
-            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
+            Assert.Equal("app-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// same instrumentation key, so this compares the conversion itself across every log shape.
         /// </summary>
         [Fact]
-        public void RoutedConversionProducesTheSameEnvelopesAsSingleTenant()
+        public void RoutedConversionProducesTheSameEnvelopesAsSingleEndpoint()
         {
             var sharedException = new InvalidOperationException("boom");
             var resource = new AzureMonitorResource(
@@ -354,7 +354,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Without the routing tags the two paths see identical input, so any remaining difference
             // is the conversion itself rather than the tags one path consumes.
-            var singleTenantItems = ConvertSingleTenant(
+            var singleEndpointItems = ConvertSingleEndpoint(
                 "ikey-a",
                 resource,
                 corpus.Select(entry => Emit(entry.Message, entry.Exception, entry.Markers)).ToArray());
@@ -363,16 +363,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 resource,
                 corpus.Select(entry => Emit(entry.Message, entry.Exception, entry.Markers.Concat(new[] { Ikey("ikey-a"), Endpoint(EastUs) }).ToArray())).ToArray());
 
-            var singleTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleTenantItems));
-            var multiTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
+            var singleEndpoint = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleEndpointItems));
+            var multiEndpoint = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
 
-            Assert.Equal(Normalize(singleTenant), Normalize(multiTenant));
+            Assert.Equal(Normalize(singleEndpoint), Normalize(multiEndpoint));
         }
 
         [Fact]
-        public void GateOffKeepsTheSingleTenantPath()
+        public void GateOffKeepsTheSingleEndpointPath()
         {
-            var run = RunExporter(multiTenantEnabled: false, Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+            var run = RunExporter(multiEndpointEnabled: false, Emit(Ikey("ikey-a"), Endpoint(EastUs)));
 
             Assert.Equal(ExportResult.Success, run.Result);
             Assert.Equal(1, run.Transmitter.TrackAsyncCallCount);
@@ -387,7 +387,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void GateOnNeverFallsBackToTheExportersOwnTransmitter()
         {
             var run = RunExporter(
-                multiTenantEnabled: true,
+                multiEndpointEnabled: true,
                 Emit(Ikey("ikey-a"), Endpoint(EastUs)),
                 Emit(Ikey("ikey-b"), Endpoint(WestUs)));
 
@@ -400,7 +400,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void EachEndpointGroupIsSentToItsOwnEndpoint()
         {
             var run = RunExporter(
-                multiTenantEnabled: true,
+                multiEndpointEnabled: true,
                 Emit(Ikey("ikey-a"), Endpoint(EastUs)),
                 Emit(Ikey("ikey-b"), Endpoint(WestUs)),
                 Emit(Ikey("ikey-c"), Endpoint(EastUs)));
@@ -415,10 +415,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ManyTenantsInOneRegionBecomeOneSend()
+        public void ManyApplicationsInOneRegionBecomeOneSend()
         {
             var run = RunExporter(
-                multiTenantEnabled: true,
+                multiEndpointEnabled: true,
                 Emit(Ikey("ikey-a"), Endpoint(EastUs)),
                 Emit(Ikey("ikey-b"), Endpoint(EastUs)),
                 Emit(Ikey("ikey-c"), Endpoint(EastUs)));
@@ -431,8 +431,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void TransmissionFailureIsReportedToTheProvider()
         {
             var run = RunExporter(
-                configure: transmitter => transmitter.MultiTenantResult = ExportResult.Failure,
-                createExporter: transmitter => new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true),
+                configure: transmitter => transmitter.MultiEndpointResult = ExportResult.Failure,
+                createExporter: transmitter => new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true),
                 Emit(Ikey("ikey-a"), Endpoint(EastUs)));
 
             Assert.Equal(ExportResult.Failure, run.Result);
@@ -442,7 +442,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void GateOnWithNoRoutableLogReportsSuccess()
         {
-            var run = RunExporter(multiTenantEnabled: true, Emit());
+            var run = RunExporter(multiEndpointEnabled: true, Emit());
 
             Assert.Equal(ExportResult.Success, run.Result);
             Assert.Equal(0, run.Transmitter.TrackAsyncCallCount);
@@ -453,7 +453,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void GateOnWithAnEmptyBatchReportsSuccess()
         {
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
-            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true);
 
             Assert.Equal(ExportResult.Success, exporter.Export(new Batch<LogRecord>(Array.Empty<LogRecord>(), 0)));
         }
@@ -462,7 +462,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void RepeatedExportsLeaveTheCachedRouteBatchEmpty()
         {
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
-            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true);
 
             WithLiveBatch(batch => exporter.Export(batch), Emit(Ikey("ikey-a"), Endpoint(EastUs)), Emit(Ikey("ikey-b"), Endpoint(EastUs)));
             WithLiveBatch(batch => exporter.Export(batch), Emit(Ikey("ikey-c"), Endpoint(WestUs)));
@@ -483,7 +483,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void EachLogExportGetsItsOwnSequence()
         {
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
-            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true);
 
             var sequences = new List<long>();
             var routeBatchField = typeof(AzureMonitorLogExporter).GetField("_routeBatch", BindingFlags.Instance | BindingFlags.NonPublic)!;
@@ -499,12 +499,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// With the gate off the multi-tenant machinery must not even be allocated.
+        /// With the gate off the multi-endpoint machinery must not even be allocated.
         /// </summary>
         [Fact]
         public void GateOffAllocatesNoRouteBatch()
         {
-            var run = RunExporter(multiTenantEnabled: false, Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+            var run = RunExporter(multiEndpointEnabled: false, Emit(Ikey("ikey-a"), Endpoint(EastUs)));
 
             var routeBatch = typeof(AzureMonitorLogExporter)
                 .GetField("_routeBatch", BindingFlags.Instance | BindingFlags.NonPublic)!
@@ -514,12 +514,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void MultiTenantExportRequiresAMultiTenantTransmitter()
+        public void MultiEndpointRoutingRequiresAMultiEndpointTransmitter()
         {
-            var transmitter = new SingleTenantOnlyTransmitter();
+            var transmitter = new SingleEndpointOnlyTransmitter();
 
             Assert.Throws<NotSupportedException>(
-                () => new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true));
+                () => new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true));
 
             Assert.True(transmitter.Disposed);
         }
@@ -527,7 +527,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void GateDefaultsToOff()
         {
-            Assert.False(MultiTenantConfig.Enabled);
+            Assert.False(MultiEndpointConfig.Enabled);
 
             var run = RunExporter(
                 configure: null,
@@ -547,7 +547,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void TraceBasedFilteringDropsUnsampledRoutedLogsBeforeRouting()
         {
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
-            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true);
 
             using (var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -589,15 +589,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// On a persist-only shutdown a routed log still goes through the multi-tenant
-        /// <see cref="IMultiTenantTransmitter.Track"/> path (not <c>TrackAsync</c>), exercising the
+        /// On a persist-only shutdown a routed log still goes through the multi-endpoint
+        /// <see cref="IMultiEndpointTransmitter.Track"/> path (not <c>TrackAsync</c>), exercising the
         /// log-exporter-specific <see cref="AzureMonitorBatchLogRecordExportProcessor"/> wiring.
         /// </summary>
         [Fact]
-        public void RoutedLogUsesTheMultiTenantTrackPathDuringPersistOnlyShutdown()
+        public void RoutedLogUsesTheMultiEndpointTrackPathDuringPersistOnlyShutdown()
         {
             var transmitter = new MockTransmitter(new List<TelemetryItem>());
-            using var exporter = new AzureMonitorLogExporter(transmitter, multiTenantEnabled: true);
+            using var exporter = new AzureMonitorLogExporter(transmitter, multiEndpointEnabled: true);
 
             using (var loggerFactory = LoggerFactory.Create(builder =>
             {
@@ -628,22 +628,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private EndpointRouteBatch Convert(AzureMonitorResource? resource, params Action<ILogger>[] emits)
         {
             var routeBatch = new EndpointRouteBatch();
-            WithLiveBatch(batch => LogsHelper.OtelToAzureMonitorLogsMultiTenant(batch, resource, routeBatch), emits);
+            WithLiveBatch(batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource, routeBatch), emits);
             return routeBatch;
         }
 
-        private List<TelemetryItem> ConvertSingleTenant(string instrumentationKey, params Action<ILogger>[] emits)
-            => ConvertSingleTenant(instrumentationKey, resource: null, emits);
+        private List<TelemetryItem> ConvertSingleEndpoint(string instrumentationKey, params Action<ILogger>[] emits)
+            => ConvertSingleEndpoint(instrumentationKey, resource: null, emits);
 
-        private List<TelemetryItem> ConvertSingleTenant(string instrumentationKey, AzureMonitorResource? resource, params Action<ILogger>[] emits)
+        private List<TelemetryItem> ConvertSingleEndpoint(string instrumentationKey, AzureMonitorResource? resource, params Action<ILogger>[] emits)
         {
             List<TelemetryItem> telemetryItems = new();
             WithLiveBatch(batch => telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resource, instrumentationKey).TelemetryItems, emits);
             return telemetryItems;
         }
 
-        private ExporterRun RunExporter(bool multiTenantEnabled, params Action<ILogger>[] emits)
-            => RunExporter(configure: null, createExporter: transmitter => new AzureMonitorLogExporter(transmitter, multiTenantEnabled), emits);
+        private ExporterRun RunExporter(bool multiEndpointEnabled, params Action<ILogger>[] emits)
+            => RunExporter(configure: null, createExporter: transmitter => new AzureMonitorLogExporter(transmitter, multiEndpointEnabled), emits);
 
         private ExporterRun RunExporter(Action<MockTransmitter>? configure, Func<MockTransmitter, AzureMonitorLogExporter> createExporter, params Action<ILogger>[] emits)
         {
@@ -754,9 +754,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
-        private sealed class SingleTenantOnlyTransmitter : ITransmitter
+        private sealed class SingleEndpointOnlyTransmitter : ITransmitter
         {
-            public string InstrumentationKey => "single-tenant-ikey";
+            public string InstrumentationKey => "single-endpoint-ikey";
 
             public bool Disposed { get; private set; }
 

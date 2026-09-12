@@ -19,21 +19,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
         /// <summary>
-        /// The exporter's own connection string for the multi-tenant demo. Point this at a component
+        /// The exporter's own connection string for the multi-endpoint demo. Point this at a component
         /// that nothing is routed to: telemetry arriving there means routing fell back to the
         /// exporter's own configuration instead of failing closed.
         /// </summary>
-        private const string HostConnectionStringVariable = "MULTITENANT_HOST_CONNECTION_STRING";
+        private const string HostConnectionStringVariable = "MULTIENDPOINT_HOST_CONNECTION_STRING";
 
         /// <summary>
-        /// Comma-separated Application Insights connection strings, one per tenant. Use components in
+        /// Comma-separated Application Insights connection strings, one per destination. Use components in
         /// different regions, otherwise they share an ingestion endpoint and collapse into one group.
         /// </summary>
-        private const string RouteConnectionStringsVariable = "MULTITENANT_ROUTE_CONNECTION_STRINGS";
+        private const string RouteConnectionStringsVariable = "MULTIENDPOINT_ROUTE_CONNECTION_STRINGS";
 
         public static void Main(string[] args)
         {
-            if (args.Length > 0 && string.Equals(args[0], "multitenant", StringComparison.OrdinalIgnoreCase))
+            if (args.Length > 0 && string.Equals(args[0], "multiendpoint", StringComparison.OrdinalIgnoreCase))
             {
                 var faultEndpoints = Array.Exists(args, a => string.Equals(a, "down", StringComparison.OrdinalIgnoreCase));
                 var logs = Array.Exists(args, a => string.Equals(a, "logs", StringComparison.OrdinalIgnoreCase));
@@ -50,11 +50,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
                 if (logs)
                 {
-                    RunMultiTenantLogDemo(count, faultEndpoints);
+                    RunMultiEndpointLogDemo(count, faultEndpoints);
                 }
                 else
                 {
-                    RunMultiTenantDemo(count, faultEndpoints);
+                    RunMultiEndpointDemo(count, faultEndpoints);
                 }
 
                 return;
@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.ReadLine();
         }
 
-        private static void RunMultiTenantDemo(int activityCount, bool faultEndpoints)
+        private static void RunMultiEndpointDemo(int activityCount, bool faultEndpoints)
         {
             var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
@@ -86,12 +86,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
-                Console.WriteLine("string per tenant, using components in different regions.");
+                Console.WriteLine("string per destination, using components in different regions.");
                 return;
             }
 
             // Before any exporter type is touched: the gate is read once into a static.
-            MultiTenantTraceDemo.EnableMultiTenantExport();
+            MultiEndpointTraceDemo.EnableMultiEndpointRouting();
 
             using var listener = new ExporterEventListener();
 
@@ -110,13 +110,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             var stopwatch = Stopwatch.StartNew();
 
-            using (var demo = new MultiTenantTraceDemo(hostConnectionString, routes, runId, faultEndpoints))
+            using (var demo = new MultiEndpointTraceDemo(hostConnectionString, routes, runId, faultEndpoints))
             {
                 demo.GenerateTraces(activityCount);
 
                 Console.WriteLine("Generated, flushing...");
 
-                foreach (var pair in demo.GeneratedPerTenant)
+                foreach (var pair in demo.GeneratedPerRoute)
                 {
                     Console.WriteLine($"  {pair.Key,-12} {pair.Value}");
                 }
@@ -143,7 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
         }
 
-        private static void RunMultiTenantLogDemo(int logCount, bool faultEndpoints)
+        private static void RunMultiEndpointLogDemo(int logCount, bool faultEndpoints)
         {
             var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
@@ -152,12 +152,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
-                Console.WriteLine("string per tenant, using components in different regions.");
+                Console.WriteLine("string per destination, using components in different regions.");
                 return;
             }
 
             // Before any exporter type is touched: the gate is read once into a static.
-            MultiTenantTraceDemo.EnableMultiTenantExport();
+            MultiEndpointTraceDemo.EnableMultiEndpointRouting();
 
             using var listener = new ExporterEventListener();
 
@@ -176,13 +176,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             var stopwatch = Stopwatch.StartNew();
 
-            using (var demo = new MultiTenantLogDemo(hostConnectionString, routes, runId, faultEndpoints))
+            using (var demo = new MultiEndpointLogDemo(hostConnectionString, routes, runId, faultEndpoints))
             {
                 demo.GenerateLogs(logCount);
 
                 Console.WriteLine("Generated, flushing...");
 
-                foreach (var pair in demo.GeneratedPerTenant)
+                foreach (var pair in demo.GeneratedPerRoute)
                 {
                     Console.WriteLine($"  {pair.Key,-12} {pair.Value}");
                 }
@@ -203,12 +203,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         }
 
         /// <summary>
-        /// Turns connection strings into routes, assigning each tenant a stable name based on its
+        /// Turns connection strings into routes, assigning each route a stable name based on its
         /// position in the configured list.
         /// </summary>
-        private static List<MultiTenantTraceDemo.TenantRoute> ParseRoutes(string? connectionStrings)
+        private static List<MultiEndpointTraceDemo.EndpointRoute> ParseRoutes(string? connectionStrings)
         {
-            var routes = new List<MultiTenantTraceDemo.TenantRoute>();
+            var routes = new List<MultiEndpointTraceDemo.EndpointRoute>();
 
             if (string.IsNullOrWhiteSpace(connectionStrings))
             {
@@ -246,9 +246,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     continue;
                 }
 
-                var name = $"tenant{routes.Count + 1}";
+                var name = $"route{routes.Count + 1}";
 
-                routes.Add(new MultiTenantTraceDemo.TenantRoute(name, instrumentationKey, ingestionEndpoint));
+                routes.Add(new MultiEndpointTraceDemo.EndpointRoute(name, instrumentationKey, ingestionEndpoint));
             }
 
             return routes;
@@ -268,9 +268,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             Console.WriteLine($"{label}:");
 
-            foreach (var tenantRoot in Directory.GetDirectories(root, "*.tenants"))
+            foreach (var partitionRoot in Directory.GetDirectories(root, "*.endpoints"))
             {
-                foreach (var partition in Directory.GetDirectories(tenantRoot))
+                foreach (var partition in Directory.GetDirectories(partitionRoot))
                 {
                     // A leased blob is renamed to .lock, so counting only .blob reports an empty
                     // partition while a drain is holding its contents.

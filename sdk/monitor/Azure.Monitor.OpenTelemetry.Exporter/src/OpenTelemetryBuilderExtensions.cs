@@ -1,10 +1,10 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
@@ -80,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             builder.Services.ConfigureOpenTelemetryTracerProvider((sp, tracerProviderBuilder) =>
             {
                 var exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
-                tracerProviderBuilder.SetSampler(SamplerFactory.Create(exporterOptions, MultiTenantConfig.Enabled));
+                tracerProviderBuilder.SetSampler(SamplerFactory.Create(exporterOptions, MultiEndpointConfig.Enabled));
             });
 
             builder.Services.Configure<OpenTelemetryLoggerOptions>((loggingOptions) =>

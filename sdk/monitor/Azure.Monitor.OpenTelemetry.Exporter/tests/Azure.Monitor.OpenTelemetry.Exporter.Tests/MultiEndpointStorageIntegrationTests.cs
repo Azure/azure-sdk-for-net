@@ -11,7 +11,7 @@ using System.Text;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using OpenTelemetry;
@@ -21,12 +21,12 @@ using Xunit;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
-    /// Multi-tenant export with offline storage enabled: what happens to a group that cannot be
+    /// Multi-endpoint routing with offline storage enabled: what happens to a group that cannot be
     /// delivered, and whether it later reaches the endpoint it was routed to.
     /// </summary>
-    public class MultiTenantStorageIntegrationTests : IDisposable
+    public class MultiEndpointStorageIntegrationTests : IDisposable
     {
-        private const string ActivitySourceName = nameof(MultiTenantStorageIntegrationTests);
+        private const string ActivitySourceName = nameof(MultiEndpointStorageIntegrationTests);
 
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private readonly string _storageDirectory = Path.Combine(Path.GetTempPath(), $"mt-int-{Guid.NewGuid():N}");
         private readonly bool _eagerDrainWasDisabled = TransmitFromStorageHandler.DisableEagerDrainForTesting;
 
-        public MultiTenantStorageIntegrationTests()
+        public MultiEndpointStorageIntegrationTests()
         {
             // A background drain would race every assertion about what is on disk.
             TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
@@ -53,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             {
                 exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
 
-                var partition = transmitter._multiTenantStorage!.TryGet(EastUs);
+                var partition = transmitter._multiEndpointStorage!.TryGet(EastUs);
                 Assert.NotNull(partition);
                 Assert.NotEmpty(Directory.GetFiles(partition!.Directory));
             }
@@ -61,7 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// The whole point of partitioning by endpoint: a blob written for one stamp must be replayed
-        /// to that stamp, carrying the same tenant's telemetry.
+        /// to that stamp, carrying the same destination's telemetry.
         /// </summary>
         [Fact]
         public void APersistedGroupIsReplayedToTheEndpointItWasRoutedTo()
@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // The stamp recovers, and the partition drains what the failed export left behind.
             ingestion.SetStatus(EastUs, 200);
-            var partition = transmitter._multiTenantStorage!.TryGet(EastUs)!;
+            var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
             partition.TransmissionStateManager.ResetConsecutiveErrors();
             partition.TransmissionStateManager.CloseTransmission();
             partition.TransmitFromStorageHandler.Drain();
@@ -91,11 +91,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Tenants in one region share an ingestion endpoint, so they share a partition and a blob.
+        /// Applications sharing an ingestion endpoint share a partition and a blob.
         /// Both must come back in the single replay that blob produces.
         /// </summary>
         [Fact]
-        public void TenantsSharingAnEndpointArePersistedAndReplayedTogether()
+        public void ApplicationsSharingAnEndpointArePersistedAndReplayedTogether()
         {
             var ingestion = new MockIngestion();
             ingestion.SetStatus(EastUs, 500);
@@ -106,9 +106,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateActivity("ikey-east-a", EastUs),
                 CreateActivity("ikey-east-b", EastUs)));
 
-            // One endpoint, so one partition holding one blob for both tenants.
-            var partition = transmitter._multiTenantStorage!.TryGet(EastUs)!;
-            Assert.Single(transmitter._multiTenantStorage.Partitions);
+            // One endpoint, so one partition holding one blob for both applications.
+            var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            Assert.Single(transmitter._multiEndpointStorage.Partitions);
 
             var blob = Directory.GetFiles(partition.Directory, "*.blob").Single();
             var persisted = Encoding.UTF8.GetString(File.ReadAllBytes(blob));
@@ -143,8 +143,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateActivity("ikey-east", EastUs),
                 CreateActivity("ikey-west", WestUs)));
 
-            Assert.Equal(TransmissionState.Open, transmitter._multiTenantStorage!.TryGet(EastUs)!.TransmissionStateManager.State);
-            Assert.Equal(TransmissionState.Closed, transmitter._multiTenantStorage.TryGet(WestUs)!.TransmissionStateManager.State);
+            Assert.Equal(TransmissionState.Open, transmitter._multiEndpointStorage!.TryGet(EastUs)!.TransmissionStateManager.State);
+            Assert.Equal(TransmissionState.Closed, transmitter._multiEndpointStorage.TryGet(WestUs)!.TransmissionStateManager.State);
 
             ingestion.Requests.Clear();
 
@@ -168,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
 
-            var partition = transmitter._multiTenantStorage!.TryGet(EastUs)!;
+            var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
             var hostDirectory = transmitter._fileBlobProvider == null ? null : GetHostStorageDirectory(transmitter);
 
             Assert.NotNull(hostDirectory);
@@ -182,8 +182,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             try
             {
                 // Partitions live in a sibling root, so deleting only the host directory leaves the
-                // tenant blobs behind on every run.
-                foreach (var directory in new[] { _storageDirectory, _storageDirectory + MultiTenantStorage.RootDirectorySuffix })
+                // routed blobs behind on every run.
+                foreach (var directory in new[] { _storageDirectory, _storageDirectory + MultiEndpointStorage.RootDirectorySuffix })
                 {
                     if (Directory.Exists(directory))
                     {
@@ -214,9 +214,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 EnableStatsbeat = false,
             };
 
-            transmitter = new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiTenantEnabled: true);
+            transmitter = new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled: true);
 
-            return new AzureMonitorTraceExporter(options, transmitter, multiTenantEnabled: true);
+            return new AzureMonitorTraceExporter(options, transmitter, multiEndpointEnabled: true);
         }
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);

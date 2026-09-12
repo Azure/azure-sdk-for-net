@@ -6,10 +6,10 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry.PersistentStorage.Abstractions;
 using OpenTelemetry.PersistentStorage.FileSystem;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
-    /// The only handle on a partition's storage that <see cref="MultiTenantStorage"/> hands out.
+    /// The only handle on a partition's storage that <see cref="MultiEndpointStorage"/> hands out.
     /// Reads pass straight through; writes go through the shared budget.
     /// </summary>
     /// <remarks>
@@ -21,11 +21,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
     /// </remarks>
     internal sealed class BudgetedBlobProvider : PersistentBlobProvider
     {
-        private readonly MultiTenantStorage _owner;
+        private readonly MultiEndpointStorage _owner;
         private readonly FileBlobProvider _inner;
         private readonly string _ingestionEndpoint;
 
-        internal BudgetedBlobProvider(MultiTenantStorage owner, FileBlobProvider inner, string ingestionEndpoint)
+        internal BudgetedBlobProvider(MultiEndpointStorage owner, FileBlobProvider inner, string ingestionEndpoint)
         {
             _owner = owner;
             _inner = inner;

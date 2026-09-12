@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -101,9 +101,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        internal void SetTenantCloudRole(string tenantCloudRole)
+        internal void SetCloudRole(string cloudRole)
         {
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = tenantCloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = cloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
         }
 
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :

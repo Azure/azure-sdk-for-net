@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -70,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
 
         /// <summary>
-        /// Host for failures that never produced a request. Null for the single-tenant handler, where
+        /// Host for failures that never produced a request. Null for the single-endpoint handler, where
         /// the stats manager falls back to the exporter's configured endpoint; a routed partition has
         /// no such fallback and must name its own.
         /// </summary>

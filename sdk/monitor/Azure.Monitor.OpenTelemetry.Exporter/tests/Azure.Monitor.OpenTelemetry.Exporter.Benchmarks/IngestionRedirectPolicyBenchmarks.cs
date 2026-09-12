@@ -14,9 +14,9 @@ using BenchmarkDotNet.Attributes;
 
 /*
 Measures what a single request pays inside IngestionRedirectPolicy, which sits in the shared
-pipeline and therefore runs for single-tenant callers too.
+pipeline and therefore runs for single-endpoint callers too.
 
-Multi-tenant export required two changes on this path, and both are now live for every caller
+Multi-endpoint routing required two changes on this path, and both are now live for every caller
 whether or not the feature is switched on:
 
   - CreateRequest builds a fresh RawRequestUriBuilder per request. It previously reused one
@@ -57,7 +57,7 @@ Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10
 1. A learned redirect adds 373 ns and 248 B per request, roughly doubling what the policy itself
    costs. An ingestion POST costs milliseconds, so that is about 0.04% of a real request. The
    per-request URI builder every caller pays regardless is 48 ns. Neither is worth optimizing, which
-   is the useful result: the correctness fixes did not cost the single-tenant path anything.
+   is the useful result: the correctness fixes did not cost the single-endpoint path anything.
 
 2. That 373 ns splits about evenly. Building the cache key and taking the lock is 176 ns and 144 B,
    which is what RedirectLearnedOtherOrigin pays before missing. The trust check and the rewrite are

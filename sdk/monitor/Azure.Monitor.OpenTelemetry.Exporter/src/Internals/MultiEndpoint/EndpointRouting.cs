@@ -7,14 +7,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Threading;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
+namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 {
     /// <summary>
     /// Reads the destination an <see cref="System.Diagnostics.Activity"/> was stamped with. The
-    /// application resolves the tenant upstream, so this is pure synchronous validation with no
+    /// application resolves the destination upstream, so this is pure synchronous validation with no
     /// network calls and no blocking lookups.
     /// </summary>
-    internal static class TenantRouting
+    internal static class EndpointRouting
     {
         /// <summary>
         /// The connection string parser imposes no format on an instrumentation key, so neither does
@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             out RoutingRejectionReason reason)
         {
             // Only a string is accepted: ToString() on an array-valued tag yields "System.String[]",
-            // which would become a tenant of its own.
+            // which would become a destination of its own.
             return TryGetRoute(
                 mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string,
                 mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string,
@@ -63,8 +63,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// </summary>
         /// <remarks>
         /// A non-string value is rejected by the caller passing <see langword="null"/>: an
-        /// array-valued attribute stringified to "System.String[]" would otherwise become a tenant
-        /// of its own.
+        /// array-valued attribute stringified to "System.String[]" would otherwise become a
+        /// destination of its own.
         /// </remarks>
         internal static bool TryGetRoute(
             string? rawInstrumentationKey,
@@ -111,12 +111,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             return true;
         }
 
-        internal static string GetTenantCloudRole(ref AzMonList mappedTags)
+        internal static string GetCloudRole(ref AzMonList mappedTags)
         {
-            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftMultiEndpointCloudRole] as string);
+            return GetCloudRole(mappedTags[SemanticSlot.MicrosoftMultiEndpointCloudRole] as string);
         }
 
-        internal static string GetTenantCloudRole(string? cloudRole)
+        internal static string GetCloudRole(string? cloudRole)
             => string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
 
         /// <summary>

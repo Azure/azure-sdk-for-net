@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
@@ -30,7 +30,7 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
-    public class MultiTenantStorageTests : IDisposable
+    public class MultiEndpointStorageTests : IDisposable
     {
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private readonly string _rootDirectory = Path.Combine(Path.GetTempPath(), $"mt-storage-{Guid.NewGuid():N}");
         private readonly bool _eagerDrainWasDisabled = TransmitFromStorageHandler.DisableEagerDrainForTesting;
 
-        public MultiTenantStorageTests()
+        public MultiEndpointStorageTests()
         {
             // A partition starts draining 50 ms after it opens, which would lease and delete the very
             // blobs these tests count.
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var storage = CreateStorage();
 
-            for (int i = 0; i < MultiTenantStorage.MaxEndpointPartitions; i++)
+            for (int i = 0; i < MultiEndpointStorage.MaxEndpointPartitions; i++)
             {
                 Assert.NotNull(storage.TryGet($"https://region-{i}.in.applicationinsights.azure.com/"));
             }
@@ -111,7 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var storage = CreateStorage();
 
-            for (int i = 0; i < MultiTenantStorage.MaxEndpointPartitions; i++)
+            for (int i = 0; i < MultiEndpointStorage.MaxEndpointPartitions; i++)
             {
                 Assert.NotNull(storage.TryGet($"https://region-{i}.in.applicationinsights.azure.com/"));
             }
@@ -121,9 +121,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Null(storage.TryGet("https://one-too-many.in.applicationinsights.azure.com/"));
 
-            var refused = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiTenantPartitionCapReached"));
+            var refused = Assert.Single(listener.Messages.Where(e => e.EventName == "MultiEndpointPartitionCapReached"));
             Assert.Equal("https://one-too-many.in.applicationinsights.azure.com/", refused.Payload![0]);
-            Assert.Equal(MultiTenantStorage.MaxEndpointPartitions, refused.Payload[1]);
+            Assert.Equal(MultiEndpointStorage.MaxEndpointPartitions, refused.Payload[1]);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// One budget covers every tenant, so a busy endpoint is held back by what the others have
+        /// One budget covers every endpoint, so a busy endpoint is held back by what the others have
         /// already written rather than getting a private allowance.
         /// </summary>
         [Fact]
@@ -396,7 +396,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// The retriable-response path persists through whatever provider it was handed rather than
-        /// through <see cref="MultiTenantStorage"/>, so handing out the underlying provider left the
+        /// through <see cref="MultiEndpointStorage"/>, so handing out the underlying provider left the
         /// budget enforced per partition and the real cap multiplied by the partition count.
         /// </summary>
         [Fact]
@@ -428,7 +428,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// A write can fail for reasons eviction cannot fix - a removed directory, a full disk, a
-        /// denied ACL. Evicting for those destroys other tenants' telemetry and still does not land
+        /// denied ACL. Evicting for those destroys other endpoints' telemetry and still does not land
         /// the batch, so the budget must not be the thing blamed when it was not in the way.
         /// </summary>
         [Fact]
@@ -449,7 +449,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Directory.Delete(eastUs.Directory, recursive: true);
 
             Assert.Equal(ExportResult.Failure, eastUs.BlobProvider.SaveTelemetry(new byte[4096]));
-            Assert.True(File.Exists(backlog[0]), "a failure the budget did not cause must not cost another tenant its telemetry");
+            Assert.True(File.Exists(backlog[0]), "a failure the budget did not cause must not cost another endpoint its telemetry");
         }
 
         /// <summary>
@@ -559,11 +559,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Partitions are keyed by ingestion endpoint, not by tenant, so tenants in the same region
-        /// share one directory and their telemetry ends up in the same blob.
+        /// Partitions are keyed by the normalized ingestion endpoint, not by application, so applications
+        /// sharing an endpoint share one directory and their telemetry ends up in the same blob.
         /// </summary>
         [Fact]
-        public void TenantsSharingAnEndpointShareOnePartition()
+        public void ApplicationsSharingAnEndpointShareOnePartition()
         {
             using var storage = CreateStorage();
 
@@ -573,7 +573,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Same(first, second);
             Assert.Single(storage.Partitions);
 
-            // A group is serialized as one payload, so both tenants' envelopes land in one blob.
+            // A group is serialized as one payload, so both applications' envelopes land in one blob.
             var payload = Encoding.UTF8.GetBytes("{\"iKey\":\"ikey-a\"}\n{\"iKey\":\"ikey-b\"}");
             Assert.Equal(ExportResult.Success, storage.SaveTelemetry(first, payload));
 
@@ -647,13 +647,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GC.SuppressFinalize(this);
         }
 
-        private MultiTenantStorage CreateStorage(long maxSizeBytes = 1024 * 1024)
+        private MultiEndpointStorage CreateStorage(long maxSizeBytes = 1024 * 1024)
         {
             var options = new AzureMonitorExporterOptions();
             var restClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), EastUs);
             var connectionVars = new ConnectionVars("ikey", EastUs, EastUs, aadAudience: null);
 
-            return new MultiTenantStorage(restClient, connectionVars, isAadEnabled: false, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
+            return new MultiEndpointStorage(restClient, connectionVars, isAadEnabled: false, _rootDirectory, maxSizeBytes, networkSdkStatsManager: null);
         }
 
         /// <summary>Fails the drain before any request is issued.</summary>
