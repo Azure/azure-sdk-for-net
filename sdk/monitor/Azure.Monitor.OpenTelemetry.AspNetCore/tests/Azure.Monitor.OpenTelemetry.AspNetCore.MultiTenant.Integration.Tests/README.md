@@ -1,8 +1,8 @@
 # Multi-tenant Trace and Log Live Tests
 
-Task 39601050: verify multi-tenant export through a local ASP.NET Core application, the real Azure Monitor exporters, and real Application Insights ingestion. Like the neighboring integration tests, these tests use `Azure.Core.TestFramework` credentials and query Log Analytics for delivered telemetry.
+These tests verify multi-tenant trace and log export from a local ASP.NET Core application to Application Insights. They use `Azure.Core.TestFramework` credentials to query Log Analytics and verify that telemetry reaches the intended resources.
 
-The project runs in a separate test process. Its runtime configuration enables `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` before the first exporter is constructed. Do not move these fixtures into the ordinary integration test assembly: the exporter caches this switch for the lifetime of the process. Tests run on modern .NET only.
+The project enables `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` in a separate test process because the exporter caches this switch for the lifetime of the process. The runner defaults to .NET 8 and also supports .NET 9 and .NET 10.
 
 ## Coverage
 
@@ -12,15 +12,15 @@ The project runs in a separate test process. Its runtime configuration enables `
 - Each run and record has a unique ID. Every configured workspace is queried, including the host resource, and `_ResourceId` is checked even when resources share a workspace.
 - A test-only transport returns HTTP 503 for one endpoint. Other endpoints must still ingest telemetry. The failed endpoint's requests, dependencies, logs, and exceptions must be on disk, then arrive in Azure after recovery and shutdown drain or lease-recovery retries.
 
-Only the failure is simulated; successful ingestion and all queries in the Live tests use Azure. The tests do not disable or alter any Azure service. Separate local pipeline tests use mock ingestion to check the same WebApp/export/storage workflow without Azure.
+Only the ingestion failure is simulated; successful ingestion and all queries use Azure. Separate local tests use mock ingestion to exercise the same export and storage workflow without Azure.
 
 ## Resource Setup
 
-Use dedicated test resources. Telemetry ingestion and Log Analytics queries can incur charges. Do not route these tests to production resources.
+Use dedicated test resources, not production resources. Telemetry ingestion and Log Analytics queries can incur charges.
 
 ### Standard Monitor Provisioner
 
-Use the same resource provisioner as the existing Live tests. From the repository root, authenticate and enable the dedicated topology:
+From the repository root:
 
 ```powershell
 Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'
@@ -36,15 +36,15 @@ eng\common\TestResources\New-TestResources.ps1 `
   }
 ```
 
-This deploys the existing Monitor resources plus four dedicated Application Insights components and two dedicated Log Analytics workspaces. The host, tenant-a, and tenant-b use `westus2`; tenant-c uses `eastus2`. The host/control resource must receive none of the marked telemetry. The template grants Log Analytics Reader on both dedicated workspaces to the signed-in user. Deployment requires permission to create resources and role assignments; the standard provisioner also attempts to grant the test identity Owner on the resource group and sets a `DeleteAfter` tag.
+This deploys the existing Monitor resources plus four Application Insights components and two Log Analytics workspaces. The host, tenant-a, and tenant-b use `westus2`; tenant-c uses `eastus2`. The template grants Log Analytics Reader on both dedicated workspaces to the signed-in user. Deployment requires permission to create resources and role assignments; the standard provisioner also attempts to grant the test identity Owner on the resource group.
 
 When updating an existing group, pass its original `-BaseName` and resource-group `-Location` to retain baseline resource names and locations. The dedicated regions above are independent of the baseline location. Use `multiTenantPrincipalType = 'ServicePrincipal'` for service-principal authentication; this remains the CI default. The topology is opt-in so other Live jobs do not create these additional resources.
 
-On Windows, the provisioner normally writes encrypted settings, including `MONITOR_MULTI_TENANT_RESOURCES`, to `sdk/monitor/test-resources.bicep.env`. The SDK test framework loads this file when the runner starts the tests; there is no need to copy its contents into an environment variable or chat. Keep the generated file out of source control. Provisioning authentication is separate from test query authentication; the latter must use a credential supported by the test framework.
+On Windows, the provisioner normally writes encrypted settings to `sdk/monitor/test-resources.bicep.env`. The test framework loads this file automatically. Keep the generated file out of source control. Configure query authentication separately as described below.
 
 ### Standalone Alternative
 
-The [multi-tenant-resources.bicep](multi-tenant-resources.bicep) module can also deploy only the dedicated resources. Its name deliberately avoids `test-resources.bicep` so the standard provisioner does not discover and deploy it separately from the opt-in Monitor module.
+To deploy only the dedicated resources, use [multi-tenant-resources.bicep](multi-tenant-resources.bicep).
 
 From this directory, using Azure PowerShell:
 
@@ -65,8 +65,6 @@ $env:MONITOR_LOGS_ENDPOINT = $deployment.Outputs.LOGS_ENDPOINT.Value
 ```
 
 Use `ServicePrincipal` for a CI identity. The regions must produce different ingestion endpoints; the test validates this and also requires at least two routed tenants to share an endpoint. For sovereign clouds, choose supported regions and set the appropriate `logsEndpoint` and Azure authentication authority. The automated matrix currently targets Azure Public cloud only.
-
-Use an approved subscription and identity. The standard Monitor template's `MULTI_TENANT_RESOURCES` output is a JSON string, whereas the standalone template above returns an array.
 
 Alternatively, set `MONITOR_MULTI_TENANT_RESOURCES` to a JSON array describing existing resources, or pass an external JSON file to the runner. Keep resource configuration out of source control:
 
@@ -111,9 +109,9 @@ $env:MONITOR_USE_AZURE_POWERSHELL_CREDENTIAL = 'true'
 ./Run-LiveTests.ps1
 ```
 
-The account must have Log Analytics Reader access to all test workspaces. `MONITOR_TENANT_ID`, normally loaded from the generated environment file, selects the query tenant; set it explicitly when using standalone resource configuration. No client secret is needed. The flag works with the runner and direct `dotnet test`, and with the neighboring baseline integration project because they share the test environment.
+The account must have Log Analytics Reader access to all test workspaces. `MONITOR_TENANT_ID`, normally loaded from the generated environment file, selects the query tenant; set it explicitly when using standalone resource configuration.
 
-The flag only changes the developer-credential fallback. Playback still uses mock credentials, and configured client-secret and Azure Pipelines credentials still take precedence. Leave the flag unset in CI. To return to the framework default locally, remove it with `Remove-Item Env:MONITOR_USE_AZURE_POWERSHELL_CREDENTIAL`. You can put the opt-in in your local PowerShell profile to retain it across sessions; no source edits are needed.
+Configured client-secret and Azure Pipelines credentials take precedence over this flag. Leave it unset in CI. To return to the default developer credential, run `Remove-Item Env:MONITOR_USE_AZURE_POWERSHELL_CREDENTIAL`.
 
 ## Run
 
@@ -129,7 +127,9 @@ Or use an existing resource configuration file outside the repository:
 ./Run-LiveTests.ps1 -ResourcesFile '<path-to-resources.json>' -Framework net8.0
 ```
 
-The runner sets `AZURE_TEST_MODE=Live` and `MONITOR_MULTI_TENANT_REQUIRED=true`, runs only the Live fixtures, writes TRX results to a new temporary directory, checks both required scenarios passed, and restores the caller's environment. Use `-ResultsDirectory` to select a new directory explicitly. Existing directories are rejected to prevent stale results from satisfying the gate. Configuration can come from the SDK test framework's generated environment file, process environment, or `-ResourcesFile`. Without configuration the required fixtures fail during setup instead of skipping. An ordinary test run skips these fixtures outside Live mode, or when optional resource configuration is absent. Missing resources in required CI mode fail; malformed configuration always fails.
+The runner enables Live mode, requires resource configuration, and verifies that both scenarios pass. TRX results are written to a new temporary directory; use `-ResultsDirectory` to specify another directory that does not already exist. Resource configuration can come from the generated environment file, environment variables, or `-ResourcesFile`.
+
+Ordinary test runs skip the Azure scenarios outside Live mode or when resource configuration is absent. Use the runner to treat missing configuration as a failure.
 
 For local validation without Azure:
 
@@ -138,26 +138,18 @@ dotnet test ./Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tes
 ./Test-LiveTestInfrastructure.ps1
 ```
 
-Ingestion is polled every 30 seconds for up to ten minutes per phase. After all expected records appear, queries continue for a one-minute negative-observation window. Cross-tenant delivery, host fallback, unexpected records, partial query results, and correlation mismatches fail immediately. Duplicate copies with the same record ID are tolerated because delivery is not an exactly-once guarantee. Absence checks cover only the configured workspaces and bounded observation window, not arbitrarily late ingestion.
+Tests poll ingestion every 30 seconds for up to ten minutes per phase, then observe for another minute to detect unexpected delivery. Duplicate records are tolerated. Each scenario has a 35-minute timeout and reports its run ID for troubleshooting.
 
-Storage assertions include both `.blob` and leased `.lock` files. Shutdown gets a one-minute drain budget; replay allows up to seven additional minutes for a three-minute lease and periodic retries. Even the local outage test can take several minutes if the eager drain acquires a lease. Each scenario is bounded to 35 minutes and reports its run ID for investigation. Temporary storage is removed after provider disposal.
+The outage scenario checks persisted telemetry and retries after endpoint recovery. It can take several minutes even with mock ingestion because of storage leases and retry intervals. Temporary storage is removed after each scenario.
 
-## Automation
+## CI
 
-The existing `net - Azure.Monitor.OpenTelemetry.AspNetCore - tests` pipeline uses [AspNetCore tests.yml](../../tests.yml) and adds [one dedicated matrix entry](../multi-tenant-matrix.json) through the standard Live Test templates. No new Azure DevOps pipeline definition is needed. The separate Exporter tests pipeline is unchanged: the AspNetCore pipeline already hosts WebApp-based exporter ingestion tests and discovers this sibling assembly through `eng/service.proj`. The existing matrix remains in place; its jobs exclude these Live scenarios. The additional Public-cloud Windows/.NET 8 job uses project references, enables `enableMultiTenantExport`, and explicitly selects Live mode and these fixtures. The job timeout is 100 minutes, including resource provisioning and cleanup.
+The [AspNetCore live-test pipeline](../../tests.yml) runs these scenarios in a dedicated [Windows/.NET 8 matrix job](../multi-tenant-matrix.json) in Azure Public cloud. The job builds with project references, provisions the dedicated resources, and runs the Live fixtures. Baseline matrix jobs exclude these scenarios.
 
-For the first real run, publish the changes through the normal review process to a trusted revision the existing pipeline can read, then use its manual or authorized PR run mechanism. Uncommitted local changes cannot be tested by a remote agent. Confirm the selected revision includes this YAML and that `MultiTenantExport_Windows_NET8` appears in the generated matrix. Do not exclude it with `jobMatrixFilter`: a gate inside a job cannot detect that the whole job was filtered out. Record the run URL, commit SHA, two synchronous scenario results, and cleanup evidence. No separate local runner is invoked by CI.
+The shared pipeline templates handle authentication, result publishing, and resource cleanup. Missing resource configuration fails the dedicated job. Two synchronous scenarios are expected to pass; the asynchronous fixture variants are skipped by `[SyncOnly]`.
 
-The Monitor resource template passes the pipeline identity to the dedicated module and exposes its configuration as `MONITOR_MULTI_TENANT_RESOURCES`. The standard resource tooling masks deployment output values and passes them to subsequent tasks. The dedicated job sets `MONITOR_MULTI_TENANT_REQUIRED=true` so missing outputs fail instead of skipping. No developer-created resource file is needed in CI.
+The pipeline uses `trigger: none` and participates in existing scheduled and manual runs.
 
-The default service connection is `azure-sdk-tests-public`; the pipeline parameter `publicTestServiceConnection` can select another approved connection for both deployment and cleanup verification. The standard template uses workload identity federation. `TestEnvironment.Credential` uses `AzurePipelinesCredential` with the job token and service connection identifiers for queries, unless an explicitly configured client-secret credential takes precedence. Do not configure an ingestion credential for the multi-tenant exporters.
+## Cleanup
 
-The inherited agent subnet setup also uses the existing `azure-sdk-tests` service connection. Reuse the established pipeline authorization for both connections and the agent pool; do not create new credentials or bypass approval checks to resolve access failures.
-
-TRX files go to a build/attempt-specific directory under `artifacts/multi-tenant-results`. The standard job publishes test results even after failures. A post-step requires both synchronous scenarios to pass; zero tests, missing results, skipped required cases, or failures cannot satisfy the gate. The framework's separate asynchronous variants are excluded by `[SyncOnly]` and are not required cases. `Test-LiveTestInfrastructure.ps1` checks this gate using synthetic XML fixtures, not Azure results.
-
-The standard removal step attempts to delete the resource group even after deployment/test failure. An additional check fails if the group remains and is not in `Deleting` state. Deletion may be asynchronous; this check verifies acceptance, not guaranteed completion. Agent loss or cancellation can prevent cleanup steps from finishing. A maintainer must confirm the scheduled cleanup process that honors the standard `DeleteAfter` tag; Azure does not automatically delete resources merely because that tag exists.
-
-The additional job participates in existing scheduled and manual runs when the chosen revision includes these changes. Preserve the generator-managed schedules and comment-authorized PR rules. The YAML also enables relevant `main` push triggers and declares `pr: none`, but ADO definition overrides can take precedence; that declaration does not disable the generator's authorized PR mechanism. Before relying on immediate post-merge coverage, maintainers must confirm the existing definition's effective CI trigger. A working push trigger is not a prerequisite for the first authorized Live run. Service connection authorization and trusted-branch controls must prevent untrusted PR/fork code from using the cloud identity. Required subscription permissions include resource creation/deletion and role assignments, with allowed regions `westus2` and `eastus2` by default. No secrets should be placed in source control or chat.
-
-Cloud validation is still pending: local tests and template checks do not establish successful Azure ingestion, cleanup completion, or automatic triggering. Acceptance requires an actual CI run on the intended revision with both scenarios passing and resource lifecycle evidence. For standalone local deployment, remove the dedicated group through your subscription's approved cleanup process when finished.
+Delete locally provisioned test resources when finished. The standard provisioner's `DeleteAfter` tag requires an external cleanup process; Azure does not automatically delete tagged resources.
