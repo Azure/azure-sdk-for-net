@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(HealthState))
+            {
+                writer.WritePropertyName("healthState"u8);
+                writer.WriteObjectValue(HealthState, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             DeviceRegistryStatusError error = default;
+            HealthState healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     error = DeviceRegistryStatusError.DeserializeDeviceRegistryStatusError(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("healthState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthState = HealthState.DeserializeHealthState(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeviceStatusEndpoint(error, additionalBinaryDataProperties);
+            return new DeviceStatusEndpoint(error, healthState, additionalBinaryDataProperties);
         }
     }
 }

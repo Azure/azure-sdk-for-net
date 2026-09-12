@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             DeviceRegistryNamespaceProperties properties = default;
-            Models.SystemAssignedServiceIdentity identity = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     {
                         continue;
                     }
-                    identity = Models.SystemAssignedServiceIdentity.DeserializeSystemAssignedServiceIdentity(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerDeviceRegistryContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

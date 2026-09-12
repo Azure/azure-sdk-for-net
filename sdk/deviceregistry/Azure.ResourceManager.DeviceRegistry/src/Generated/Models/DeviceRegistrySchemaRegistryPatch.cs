@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.DeviceRegistry;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistrySchemaRegistryPatch(SystemAssignedServiceIdentity identity, IDictionary<string, string> tags, SchemaRegistryUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistrySchemaRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, SchemaRegistryUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
-        public SystemAssignedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }

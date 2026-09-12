@@ -36,15 +36,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema registry. </param>
         /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistrySchemaRegistryProperties(string uuid, string @namespace, string displayName, string description, Uri storageAccountContainerUri, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistrySchemaRegistryProperties(string uuid, string @namespace, string displayName, string description, Uri storageAccountContainerUri, OutboundIdentity outboundIdentity, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uuid = uuid;
             Namespace = @namespace;
             DisplayName = displayName;
             Description = description;
             StorageAccountContainerUri = storageAccountContainerUri;
+            OutboundIdentity = outboundIdentity;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -63,6 +65,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> The Storage Account's Container URL where schemas will be stored. </summary>
         public Uri StorageAccountContainerUri { get; set; }
+
+        /// <summary> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </summary>
+        public OutboundIdentity OutboundIdentity { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }

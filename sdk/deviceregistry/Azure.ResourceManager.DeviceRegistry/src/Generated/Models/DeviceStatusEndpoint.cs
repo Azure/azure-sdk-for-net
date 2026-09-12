@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="DeviceStatusEndpoint"/>. </summary>
         /// <param name="error"> Defines the error related to this endpoint. </param>
+        /// <param name="healthState"> Health state of the endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceStatusEndpoint(DeviceRegistryStatusError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceStatusEndpoint(DeviceRegistryStatusError error, HealthState healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Error = error;
+            HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Defines the error related to this endpoint. </summary>
         public DeviceRegistryStatusError Error { get; }
+
+        /// <summary> Health state of the endpoint. </summary>
+        public HealthState HealthState { get; }
     }
 }

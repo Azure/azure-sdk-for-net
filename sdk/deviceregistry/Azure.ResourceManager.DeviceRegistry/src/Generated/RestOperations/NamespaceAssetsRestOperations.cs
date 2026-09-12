@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
+        internal HttpMessage CreateGetByNamespaceRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             return message;
         }
 
-        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
+        internal HttpMessage CreateNextGetByNamespaceRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string namespaceName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -192,6 +192,34 @@ namespace Azure.ResourceManager.DeviceRegistry
             request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateExecuteActionRequest(Guid subscriptionId, string resourceGroupName, string namespaceName, string assetName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DeviceRegistry/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/assets/", false);
+            uri.AppendPath(assetName, true);
+            uri.AppendPath("/executeAction", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }
