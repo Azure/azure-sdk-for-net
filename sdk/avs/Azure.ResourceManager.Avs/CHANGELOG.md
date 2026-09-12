@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Upgraded the service API version to `2026-03-01`.
+- Added host licensing and maintenance scheduling support.
+
 ### Breaking Changes
 
 ### Bugs Fixed

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Defines constraints for schedule operation on maintenance
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsSchedulingWindow"/>, <see cref="AvailableWindowForMaintenanceWhileScheduleOperation"/>, and <see cref="BlockedWhileScheduleOperation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvsSchedulingWindow"/>, <see cref="WeekendSchedulingConstraint"/>, <see cref="AvailableWindowForMaintenanceWhileScheduleOperation"/>, and <see cref="BlockedWhileScheduleOperation"/>.
     /// </summary>
     public abstract partial class AvsScheduleOperationConstraint
     {

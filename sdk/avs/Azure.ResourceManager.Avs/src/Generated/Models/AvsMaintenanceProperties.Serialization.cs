@@ -89,6 +89,26 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteNumberValue(ClusterId.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Activities))
+            {
+                writer.WritePropertyName("activities"u8);
+                writer.WriteStartArray();
+                foreach (MaintenanceActivity item in Activities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Group))
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteObjectValue(Group, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Relationships))
+            {
+                writer.WritePropertyName("relationships"u8);
+                writer.WriteObjectValue(Relationships, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(InfoLink))
             {
                 writer.WritePropertyName("infoLink"u8);
@@ -184,6 +204,9 @@ namespace Azure.ResourceManager.Avs.Models
             AvsMaintenanceType? component = default;
             string displayName = default;
             int? clusterId = default;
+            IReadOnlyList<MaintenanceActivity> activities = default;
+            MaintenanceGroup @group = default;
+            MaintenanceRelationships relationships = default;
             string infoLink = default;
             string impact = default;
             bool? isScheduledByMicrosoft = default;
@@ -217,6 +240,38 @@ namespace Azure.ResourceManager.Avs.Models
                         continue;
                     }
                     clusterId = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("activities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MaintenanceActivity> array = new List<MaintenanceActivity>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(MaintenanceActivity.DeserializeMaintenanceActivity(item, options));
+                    }
+                    activities = array;
+                    continue;
+                }
+                if (prop.NameEquals("group"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @group = MaintenanceGroup.DeserializeMaintenanceGroup(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("relationships"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    relationships = MaintenanceRelationships.DeserializeMaintenanceRelationships(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("infoLink"u8))
@@ -306,6 +361,9 @@ namespace Azure.ResourceManager.Avs.Models
                 component,
                 displayName,
                 clusterId,
+                activities ?? new ChangeTrackingList<MaintenanceActivity>(),
+                @group,
+                relationships,
                 infoLink,
                 impact,
                 isScheduledByMicrosoft,

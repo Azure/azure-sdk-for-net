@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.Avs.Models
             string fqdn = default;
             AvsHostMaintenance? maintenance = default;
             string faultDomain = default;
+            IList<HostLicense> licenses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,6 +156,20 @@ namespace Azure.ResourceManager.Avs.Models
                     faultDomain = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("licenses"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<HostLicense> array = new List<HostLicense>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(HostLicense.DeserializeHostLicense(item, options));
+                    }
+                    licenses = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -168,6 +183,7 @@ namespace Azure.ResourceManager.Avs.Models
                 fqdn,
                 maintenance,
                 faultDomain,
+                licenses ?? new ChangeTrackingList<HostLicense>(),
                 additionalBinaryDataProperties);
         }
     }

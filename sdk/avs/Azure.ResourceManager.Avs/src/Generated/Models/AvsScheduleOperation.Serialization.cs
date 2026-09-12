@@ -95,6 +95,11 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(Recommendation))
+            {
+                writer.WritePropertyName("recommendation"u8);
+                writer.WriteObjectValue(Recommendation, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.Avs.Models
             bool? isDisabled = default;
             string disabledReason = default;
             IReadOnlyList<AvsScheduleOperationConstraint> constraints = default;
+            MaintenanceRecommendation recommendation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -162,12 +168,27 @@ namespace Azure.ResourceManager.Avs.Models
                     constraints = array;
                     continue;
                 }
+                if (prop.NameEquals("recommendation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recommendation = MaintenanceRecommendation.DeserializeMaintenanceRecommendation(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AvsScheduleOperation(kind, additionalBinaryDataProperties, isDisabled, disabledReason, constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>());
+            return new AvsScheduleOperation(
+                kind,
+                additionalBinaryDataProperties,
+                isDisabled,
+                disabledReason,
+                constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>(),
+                recommendation);
         }
     }
 }
