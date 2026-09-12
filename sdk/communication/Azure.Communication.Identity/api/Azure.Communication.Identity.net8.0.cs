@@ -34,7 +34,7 @@ namespace Azure.Communication.Identity
     }
     public partial class CommunicationIdentityClientOptions : Azure.Core.ClientOptions
     {
-        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2025_03_02_PREVIEW) { }
+        public CommunicationIdentityClientOptions(Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion version = Azure.Communication.Identity.CommunicationIdentityClientOptions.ServiceVersion.V2026_09_23) { }
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
@@ -42,6 +42,7 @@ namespace Azure.Communication.Identity
             V2022_10_01 = 3,
             V2023_10_01 = 4,
             V2025_03_02_PREVIEW = 5,
+            V2026_09_23 = 6,
         }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
