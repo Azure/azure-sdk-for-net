@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private readonly string _value;
         /// <summary> Promote option forces the promotion without waiting for the replica to be caught up to the primary. This can result in data-loss so should only be used during disaster recovery scenarios. </summary>
         private const string ForcedValue = "Forced";
+        /// <summary> Promote option waits for the replica to be caught up to the primary before promoting, guaranteeing no data loss during the promotion. </summary>
+        private const string PlannedValue = "Planned";
 
         /// <summary> Initializes a new instance of <see cref="MongoClusterPromoteOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
 
         /// <summary> Promote option forces the promotion without waiting for the replica to be caught up to the primary. This can result in data-loss so should only be used during disaster recovery scenarios. </summary>
         public static MongoClusterPromoteOption Forced { get; } = new MongoClusterPromoteOption(ForcedValue);
+
+        /// <summary> Promote option waits for the replica to be caught up to the primary before promoting, guaranteeing no data loss during the promotion. </summary>
+        public static MongoClusterPromoteOption Planned { get; } = new MongoClusterPromoteOption(PlannedValue);
 
         /// <summary> Determines if two <see cref="MongoClusterPromoteOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
