@@ -44,8 +44,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
         /// <param name="hyperVGeneration"> The hypervisor generation of the Virtual Machine [V1, V2]. </param>
         /// <param name="interconnectInstanceView"> The Interconnect runtime view of the Scale Set VM instance. Minimum api-version: 2026-03-01. </param>
+        /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine scale set VM instance will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IReadOnlyList<InstanceViewStatus> statuses, ResourceIdentifier assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, InterconnectInstanceView interconnectInstanceView, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, IReadOnlyList<InstanceViewStatus> statuses, ResourceIdentifier assignedHost, string placementGroupId, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, InterconnectInstanceView interconnectInstanceView, CapacityReservationType? capacityReservationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -64,6 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             OSVersion = osVersion;
             HyperVGeneration = hyperVGeneration;
             InterconnectInstanceView = interconnectInstanceView;
+            CapacityReservationType = capacityReservationType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -117,6 +119,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The Interconnect runtime view of the Scale Set VM instance. Minimum api-version: 2026-03-01. </summary>
         internal InterconnectInstanceView InterconnectInstanceView { get; }
+
+        /// <summary> Specifies which type of capacity reservation the virtual machine scale set VM instance will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </summary>
+        public CapacityReservationType? CapacityReservationType { get; }
 
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus

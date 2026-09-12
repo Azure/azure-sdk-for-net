@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies the hardware settings for the virtual machine scale set. </summary>
-    internal partial class VirtualMachineScaleSetHardwareProfile : IJsonModel<VirtualMachineScaleSetHardwareProfile>
+    public partial class VirtualMachineScaleSetHardwareProfile : IJsonModel<VirtualMachineScaleSetHardwareProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("vmSizeProperties"u8);
                 writer.WriteObjectValue(VmSizeProperties, options);
             }
+            if (Optional.IsDefined(ProcessorMode))
+            {
+                writer.WritePropertyName("processorMode"u8);
+                writer.WriteStringValue(ProcessorMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             VirtualMachineSizeProperties vmSizeProperties = default;
+            ProcessorMode? processorMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.Compute.Models
                     vmSizeProperties = VirtualMachineSizeProperties.DeserializeVirtualMachineSizeProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("processorMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    processorMode = new ProcessorMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new VirtualMachineScaleSetHardwareProfile(vmSizeProperties, additionalBinaryDataProperties);
+            return new VirtualMachineScaleSetHardwareProfile(vmSizeProperties, processorMode, additionalBinaryDataProperties);
         }
     }
 }

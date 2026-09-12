@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<ComputeSubResourceData> associatedVirtualMachineResources = default;
             CapacityReservationGroupInstanceView instanceView = default;
             ResourceSharingProfile sharingProfile = default;
-            CapacityReservationType? reservationType = default;
+            ReservationType? reservationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    reservationType = new CapacityReservationType(prop.Value.GetString());
+                    reservationType = new ReservationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
