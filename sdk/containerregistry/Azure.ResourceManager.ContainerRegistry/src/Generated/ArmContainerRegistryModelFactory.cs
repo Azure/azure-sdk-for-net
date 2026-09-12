@@ -640,8 +640,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
         /// <param name="registrySyncResult"> The result of the connected registry's most recent sync with its parent. </param>
         /// <param name="activationStatus"> The activation status of the connected registry. </param>
+        /// <param name="identity"> The user-assigned managed identity used by the on-prem connected registry to authenticate with the cloud registry for sync operations. Requires authType to be ManagedIdentity. </param>
         /// <returns> A new <see cref="ContainerRegistry.ConnectedRegistryData"/> instance for mocking. </returns>
-        public static ConnectedRegistryData ConnectedRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryProvisioningState? provisioningState = default, ConnectedRegistryMode? mode = default, string version = default, ConnectedRegistryConnectionState? connectionState = default, DateTimeOffset? lastActivityOn = default, ConnectedRegistryParent parent = default, IEnumerable<ResourceIdentifier> clientTokenIds = default, ConnectedRegistryLoginServer loginServer = default, ConnectedRegistryLogging logging = default, IEnumerable<ConnectedRegistryStatusDetail> statusDetails = default, IEnumerable<string> notificationsList = default, GarbageCollectionProperties garbageCollection = default, ContainerRegistrySyncResult registrySyncResult = default, ConnectedRegistryActivationStatus? activationStatus = default)
+        public static ConnectedRegistryData ConnectedRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerRegistryProvisioningState? provisioningState = default, ConnectedRegistryMode? mode = default, string version = default, ConnectedRegistryConnectionState? connectionState = default, DateTimeOffset? lastActivityOn = default, ConnectedRegistryParent parent = default, IEnumerable<ResourceIdentifier> clientTokenIds = default, ConnectedRegistryLoginServer loginServer = default, ConnectedRegistryLogging logging = default, IEnumerable<ConnectedRegistryStatusDetail> statusDetails = default, IEnumerable<string> notificationsList = default, GarbageCollectionProperties garbageCollection = default, ContainerRegistrySyncResult registrySyncResult = default, ConnectedRegistryActivationStatus? activationStatus = default, ManagedServiceIdentity identity = default)
         {
             return new ConnectedRegistryData(
                 id,
@@ -664,6 +665,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     garbageCollection,
                     registrySyncResult,
                     default),
+                identity,
                 default);
         }
 
@@ -683,8 +685,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
+        /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistrySyncProperties"/> instance for mocking. </returns>
-        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId = default, string schedule = default, TimeSpan? syncWindow = default, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = default, string gatewayEndpoint = default)
+        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId = default, string schedule = default, TimeSpan? syncWindow = default, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = default, string gatewayEndpoint = default, AuthType? authType = default)
         {
             return new ConnectedRegistrySyncProperties(
                 tokenId,
@@ -693,6 +696,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 messageTtl,
                 lastSyncOn,
                 gatewayEndpoint,
+                authType,
                 default);
         }
 
@@ -738,8 +742,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="description"> The description of the status. </param>
         /// <param name="timestamp"> The timestamp of the status. </param>
         /// <param name="correlationId"> The correlation ID of the status. </param>
+        /// <param name="totalGib"> The total disk space in gibibytes (Gib, base-2). </param>
+        /// <param name="availableGib"> The available disk space in gibibytes (Gib, base-2). </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryStatusDetail"/> instance for mocking. </returns>
-        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = default, string code = default, string description = default, DateTimeOffset? timestamp = default, Guid? correlationId = default)
+        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = default, string code = default, string description = default, DateTimeOffset? timestamp = default, Guid? correlationId = default, double? totalGib = default, double? availableGib = default)
         {
             return new ConnectedRegistryStatusDetail(
                 statusDetailType,
@@ -747,6 +753,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 description,
                 timestamp,
                 correlationId,
+                totalGib,
+                availableGib,
                 default);
         }
 
@@ -782,8 +790,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
         /// <param name="notificationsList"> The list of notifications subscription information for the connected registry. </param>
         /// <param name="garbageCollection"> The garbage collection properties of the connected registry. </param>
+        /// <param name="identity"> The user-assigned managed identity used to authenticate the connected registry with its parent during synchronization. Requires authType to be ManagedIdentity. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryPatch"/> instance for mocking. </returns>
-        public static ConnectedRegistryPatch ConnectedRegistryPatch(ConnectedRegistrySyncUpdateProperties syncProperties = default, ConnectedRegistryLogging logging = default, IEnumerable<ResourceIdentifier> clientTokenIds = default, IEnumerable<string> notificationsList = default, GarbageCollectionProperties garbageCollection = default)
+        public static ConnectedRegistryPatch ConnectedRegistryPatch(ConnectedRegistrySyncUpdateProperties syncProperties = default, ConnectedRegistryLogging logging = default, IEnumerable<ResourceIdentifier> clientTokenIds = default, IEnumerable<string> notificationsList = default, GarbageCollectionProperties garbageCollection = default, ManagedServiceIdentity identity = default)
         {
             return new ConnectedRegistryPatch(syncProperties is null && logging is null && clientTokenIds is null && notificationsList is null && garbageCollection is null ? default : new ConnectedRegistryUpdateProperties(
                 syncProperties,
@@ -791,17 +800,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 (clientTokenIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 (notificationsList ?? new ChangeTrackingList<string>()).ToList(),
                 garbageCollection,
-                default), default);
+                default), identity, default);
         }
 
         /// <summary> The parameters for updating the sync properties of the connected registry with its parent. </summary>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
         /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistrySyncUpdateProperties"/> instance for mocking. </returns>
-        public static ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = default, TimeSpan? syncWindow = default, TimeSpan? messageTtl = default)
+        public static ConnectedRegistrySyncUpdateProperties ConnectedRegistrySyncUpdateProperties(string schedule = default, TimeSpan? syncWindow = default, TimeSpan? messageTtl = default, AuthType? authType = default)
         {
-            return new ConnectedRegistrySyncUpdateProperties(schedule, syncWindow, messageTtl, default);
+            return new ConnectedRegistrySyncUpdateProperties(schedule, syncWindow, messageTtl, authType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1466,6 +1476,50 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     garbageCollection,
                     default,
                     default),
+                default,
+                default);
+        }
+
+        /// <summary> The sync properties of the connected registry with its parent. </summary>
+        /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
+        /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
+        /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
+        /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
+        /// <returns> A new <see cref="Models.ConnectedRegistrySyncProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConnectedRegistrySyncProperties ConnectedRegistrySyncProperties(ResourceIdentifier tokenId = default, string schedule = default, TimeSpan? syncWindow = default, TimeSpan messageTtl = default, DateTimeOffset? lastSyncOn = default, string gatewayEndpoint = default)
+        {
+            return new ConnectedRegistrySyncProperties(
+                tokenId,
+                schedule,
+                syncWindow,
+                messageTtl,
+                lastSyncOn,
+                gatewayEndpoint,
+                default,
+                default);
+        }
+
+        /// <summary> The status detail properties of the connected registry. </summary>
+        /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
+        /// <param name="code"> The HTTP status code. </param>
+        /// <param name="description"> The description of the status. </param>
+        /// <param name="timestamp"> The timestamp of the status. </param>
+        /// <param name="correlationId"> The correlation ID of the status. </param>
+        /// <returns> A new <see cref="Models.ConnectedRegistryStatusDetail"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConnectedRegistryStatusDetail ConnectedRegistryStatusDetail(string statusDetailType = default, string code = default, string description = default, DateTimeOffset? timestamp = default, Guid? correlationId = default)
+        {
+            return new ConnectedRegistryStatusDetail(
+                statusDetailType,
+                code,
+                description,
+                timestamp,
+                correlationId,
+                default,
+                default,
                 default);
         }
 
