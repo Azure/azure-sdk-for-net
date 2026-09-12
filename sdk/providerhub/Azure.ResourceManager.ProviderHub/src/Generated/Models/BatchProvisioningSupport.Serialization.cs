@@ -14,7 +14,7 @@ using Azure.ResourceManager.ProviderHub;
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> Batch provisioning support. </summary>
-    internal partial class BatchProvisioningSupport : IJsonModel<BatchProvisioningSupport>
+    public partial class BatchProvisioningSupport : IJsonModel<BatchProvisioningSupport>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,46 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("supportedOperations"u8);
                 writer.WriteStringValue(SupportedOperations.Value.ToString());
             }
+            if (Optional.IsDefined(MaxBatchSize))
+            {
+                writer.WritePropertyName("maxBatchSize"u8);
+                writer.WriteNumberValue(MaxBatchSize.Value);
+            }
+            if (Optional.IsDefined(BatchContractVersion))
+            {
+                writer.WritePropertyName("batchContractVersion"u8);
+                writer.WriteStringValue(BatchContractVersion);
+            }
+            if (Optional.IsDefined(MaxNestedBatchSize))
+            {
+                writer.WritePropertyName("maxNestedBatchSize"u8);
+                writer.WriteNumberValue(MaxNestedBatchSize.Value);
+            }
+            if (Optional.IsCollectionDefined(RequiredFeatures))
+            {
+                writer.WritePropertyName("requiredFeatures"u8);
+                writer.WriteStartArray();
+                foreach (string item in RequiredFeatures)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ActionConfigurations))
+            {
+                writer.WritePropertyName("actionConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (ActionConfiguration item in ActionConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +162,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             ResourceManagementSupportedOperation? supportedOperations = default;
+            long? maxBatchSize = default;
+            string batchContractVersion = default;
+            long? maxNestedBatchSize = default;
+            IList<string> requiredFeatures = default;
+            IList<ActionConfiguration> actionConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +179,77 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     supportedOperations = new ResourceManagementSupportedOperation(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("maxBatchSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxBatchSize = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("batchContractVersion"u8))
+                {
+                    batchContractVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("maxNestedBatchSize"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxNestedBatchSize = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("requiredFeatures"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    requiredFeatures = array;
+                    continue;
+                }
+                if (prop.NameEquals("actionConfigurations"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ActionConfiguration> array = new List<ActionConfiguration>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ActionConfiguration.DeserializeActionConfiguration(item, options));
+                    }
+                    actionConfigurations = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BatchProvisioningSupport(supportedOperations, additionalBinaryDataProperties);
+            return new BatchProvisioningSupport(
+                supportedOperations,
+                maxBatchSize,
+                batchContractVersion,
+                maxNestedBatchSize,
+                requiredFeatures ?? new ChangeTrackingList<string>(),
+                actionConfigurations ?? new ChangeTrackingList<ActionConfiguration>(),
+                additionalBinaryDataProperties);
         }
     }
 }

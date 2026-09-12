@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="skuLink"> The sku link. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceProviderEndpoint(bool? isEnabled, IReadOnlyList<string> apiVersions, Uri endpointUri, IReadOnlyList<AzureLocation> locations, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceProviderEndpoint(bool? isEnabled, IList<string> apiVersions, Uri endpointUri, IList<AzureLocation> locations, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, TimeSpan? timeout, ProviderEndpointType? endpointType, string skuLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             ApiVersions = apiVersions;
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public bool? IsEnabled { get; set; }
 
         /// <summary> The api versions. </summary>
-        public IReadOnlyList<string> ApiVersions { get; }
+        public IList<string> ApiVersions { get; }
 
         /// <summary> The endpoint uri. </summary>
         public Uri EndpointUri { get; set; }
 
         /// <summary> The locations. </summary>
-        public IReadOnlyList<AzureLocation> Locations { get; }
+        public IList<AzureLocation> Locations { get; }
 
         /// <summary> The required features. </summary>
-        public IReadOnlyList<string> RequiredFeatures { get; }
+        public IList<string> RequiredFeatures { get; }
 
         /// <summary> The feature rules. </summary>
         internal ProviderFeaturesRule FeaturesRule { get; set; }

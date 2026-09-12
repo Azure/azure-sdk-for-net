@@ -134,20 +134,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("incidentContactEmail"u8);
                 writer.WriteStringValue(IncidentContactEmail);
             }
-            if (Optional.IsCollectionDefined(ServiceTreeInfos))
-            {
-                writer.WritePropertyName("serviceTreeInfos"u8);
-                writer.WriteStartArray();
-                foreach (ServiceTreeInfo item in ServiceTreeInfos)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(ResourceAccessPolicy))
             {
                 writer.WritePropertyName("resourceAccessPolicy"u8);
-                writer.WriteStringValue(ResourceAccessPolicy.Value.ToSerialString());
+                writer.WriteStringValue(ResourceAccessPolicy.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ResourceAccessRoleList))
             {
@@ -209,6 +199,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("profitCenterProgramId"u8);
                 writer.WriteStringValue(ProfitCenterProgramId);
             }
+            if (Optional.IsCollectionDefined(FeatureManagementOwners))
+            {
+                writer.WritePropertyName("featureManagementOwners"u8);
+                writer.WriteStartArray();
+                foreach (string item in FeatureManagementOwners)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -257,7 +262,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string incidentRoutingService = default;
             string incidentRoutingTeam = default;
             string incidentContactEmail = default;
-            IList<ServiceTreeInfo> serviceTreeInfos = default;
             ResourceAccessPolicy? resourceAccessPolicy = default;
             IList<ResourceAccessRole> resourceAccessRoleList = default;
             IList<string> expeditedRolloutSubmitters = default;
@@ -266,6 +270,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> canaryManifestOwners = default;
             string profitCenterCode = default;
             string profitCenterProgramId = default;
+            IList<string> featureManagementOwners = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -347,27 +352,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     incidentContactEmail = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("serviceTreeInfos"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ServiceTreeInfo> array = new List<ServiceTreeInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(ServiceTreeInfo.DeserializeServiceTreeInfo(item, options));
-                    }
-                    serviceTreeInfos = array;
-                    continue;
-                }
                 if (prop.NameEquals("resourceAccessPolicy"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceAccessPolicy = prop.Value.GetString().ToResourceAccessPolicy();
+                    resourceAccessPolicy = new ResourceAccessPolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("resourceAccessRoles"u8))
@@ -454,6 +445,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     profitCenterProgramId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("featureManagementOwners"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    featureManagementOwners = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -466,7 +478,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 incidentRoutingService,
                 incidentRoutingTeam,
                 incidentContactEmail,
-                serviceTreeInfos ?? new ChangeTrackingList<ServiceTreeInfo>(),
                 resourceAccessPolicy,
                 resourceAccessRoleList ?? new ChangeTrackingList<ResourceAccessRole>(),
                 expeditedRolloutSubmitters ?? new ChangeTrackingList<string>(),
@@ -475,6 +486,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 canaryManifestOwners ?? new ChangeTrackingList<string>(),
                 profitCenterCode,
                 profitCenterProgramId,
+                featureManagementOwners ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

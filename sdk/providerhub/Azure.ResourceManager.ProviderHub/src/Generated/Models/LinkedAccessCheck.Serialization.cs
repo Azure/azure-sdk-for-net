@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("linkedType"u8);
                 writer.WriteStringValue(LinkedType);
             }
+            if (options.Format != "W" && Optional.IsDefined(Options))
+            {
+                writer.WritePropertyName("options"u8);
+                writer.WriteStringValue(Options.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,6 +151,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             string linkedAction = default;
             string linkedActionVerb = default;
             string linkedType = default;
+            LinkedAccessCheckOptions? options0 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -174,6 +180,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     linkedType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("options"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    options0 = new LinkedAccessCheckOptions(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -185,6 +200,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 linkedAction,
                 linkedActionVerb,
                 linkedType,
+                options0,
                 additionalBinaryDataProperties);
         }
     }

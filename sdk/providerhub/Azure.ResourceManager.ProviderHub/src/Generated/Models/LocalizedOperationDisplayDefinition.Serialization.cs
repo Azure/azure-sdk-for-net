@@ -166,6 +166,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("zhHant"u8);
                 writer.WriteObjectValue(ZhHant, options);
             }
+            if (Optional.IsDefined(QpsPloc))
+            {
+                writer.WritePropertyName("qpsPloc"u8);
+                writer.WriteObjectValue(QpsPloc, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -226,6 +231,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             OperationsDisplayDefinition sv = default;
             OperationsDisplayDefinition zhHans = default;
             OperationsDisplayDefinition zhHant = default;
+            LocalizedOperationDisplayDefinitionQpsPloc qpsPloc = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -387,6 +393,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     zhHant = OperationsDisplayDefinition.DeserializeOperationsDisplayDefinition(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("qpsPloc"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    qpsPloc = LocalizedOperationDisplayDefinitionQpsPloc.DeserializeLocalizedOperationDisplayDefinitionQpsPloc(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -411,6 +426,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 sv,
                 zhHans,
                 zhHant,
+                qpsPloc,
                 additionalBinaryDataProperties);
         }
     }

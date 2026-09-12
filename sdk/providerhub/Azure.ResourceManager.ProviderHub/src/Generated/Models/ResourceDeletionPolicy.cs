@@ -16,8 +16,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         private readonly string _value;
         private const string NotSpecifiedValue = "NotSpecified";
-        private const string CascadeDeleteAllValue = "CascadeDeleteAll";
-        private const string CascadeDeleteProxyOnlyChildrenValue = "CascadeDeleteProxyOnlyChildren";
+        private const string CascadeValue = "Cascade";
+        private const string ForceValue = "Force";
+        /// <summary> Soft delete deletion policy. </summary>
+        private const string SoftDeleteValue = "SoftDelete";
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeletionPolicy"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -32,11 +34,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Gets the NotSpecified. </summary>
         public static ResourceDeletionPolicy NotSpecified { get; } = new ResourceDeletionPolicy(NotSpecifiedValue);
 
-        /// <summary> Gets the CascadeDeleteAll. </summary>
-        public static ResourceDeletionPolicy CascadeDeleteAll { get; } = new ResourceDeletionPolicy(CascadeDeleteAllValue);
+        /// <summary> Gets the Cascade. </summary>
+        public static ResourceDeletionPolicy Cascade { get; } = new ResourceDeletionPolicy(CascadeValue);
 
-        /// <summary> Gets the CascadeDeleteProxyOnlyChildren. </summary>
-        public static ResourceDeletionPolicy CascadeDeleteProxyOnlyChildren { get; } = new ResourceDeletionPolicy(CascadeDeleteProxyOnlyChildrenValue);
+        /// <summary> Gets the Force. </summary>
+        public static ResourceDeletionPolicy Force { get; } = new ResourceDeletionPolicy(ForceValue);
+
+        /// <summary> Soft delete deletion policy. </summary>
+        public static ResourceDeletionPolicy SoftDelete { get; } = new ResourceDeletionPolicy(SoftDeleteValue);
 
         /// <summary> Determines if two <see cref="ResourceDeletionPolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
