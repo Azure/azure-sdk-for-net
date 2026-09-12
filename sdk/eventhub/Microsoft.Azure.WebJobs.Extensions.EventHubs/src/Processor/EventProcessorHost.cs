@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         {
             if (events == null || !events.Any())
             {
-                return Task.CompletedTask;
+                return partition.EventProcessor.TryCheckpointOnIdleAsync(partition, cancellationToken);
             }
 
             return partition.EventProcessor.ProcessEventsAsync(partition, events);
