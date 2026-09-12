@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- The protocol `KnowledgeBaseRetrievalClient.RetrieveStreamAsync` overload now returns `AsyncStreamingResult<SseItem<BinaryData>>` instead of the experimental `AsyncStreamingClientResult<SseItem<BinaryData>>`.
+
 ### Bugs Fixed
 
 ### Other Changes

@@ -34,4 +34,12 @@
     <PackageReference Include="System.Threading.Channels" />
   </ItemGroup>
 
+  <!-- Use the local runtime until AsyncStreamingResult is available in a published System.ClientModel package. -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\System.ClientModel\src\System.ClientModel.csproj" />
+    <ProjectReference Condition="'$(UseProjectReferenceToAzureClients)' != 'true'"
+                      Include="..\..\..\core\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj"
+                      ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+
 </Project>
