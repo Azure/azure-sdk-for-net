@@ -1,14 +1,32 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 2.0.0 (2026-09-23)
 
 ### Features Added
 
+- Added support for the `2026-09-23` stable service API version, which is now the default. Use
+  `CommunicationIdentityClientOptions.ServiceVersion.V2026_09_23` to target it explicitly.
+
 ### Breaking Changes
+
+- The library is now generated from TypeSpec. The public API surface is unchanged by this, apart from the
+  additions noted below.
+- Removed preview-only API surface that is not modelled in the `2026-09-23` stable API version. All of the
+  following shipped only in `1.4.0-beta.1` and were never part of a stable release:
+  - Removed `CommunicationIdentityClient.GetUserDetail` and `GetUserDetailAsync`.
+  - Removed the `Azure.Communication.Identity.Models.CommunicationUserDetail` type and the corresponding
+    `CommunicationIdentityModelFactory.CommunicationUserDetail` factory method.
+  - Removed the `customId` overloads of `CreateUser`, `CreateUserAsync`, `CreateUserAndToken` and
+    `CreateUserAndTokenAsync`. The overloads without `customId` are unchanged.
+- Removed `ServiceVersion.V2025_03_02_PREVIEW`. The previously released stable service API versions
+  `V2021_03_07`, `V2022_06_01`, `V2022_10_01` and `V2023_10_01` remain available and unchanged.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- `CommunicationUserIdentifierAndToken` now implements `IJsonModel<T>` and `IPersistableModel<T>`, and
+  `CommunicationTokenScope` gains an implicit conversion from a nullable string. Both are additive.
 
 ## 1.4.0-beta.1 (2025-06-09)
 
