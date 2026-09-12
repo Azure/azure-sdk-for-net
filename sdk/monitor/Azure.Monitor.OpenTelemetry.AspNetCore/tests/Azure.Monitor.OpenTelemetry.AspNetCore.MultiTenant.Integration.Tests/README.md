@@ -99,7 +99,21 @@ Alternatively, set `MONITOR_MULTI_TENANT_RESOURCES` to a JSON array describing e
 ]
 ```
 
-Use workspace GUIDs, not workspace ARM resource IDs. Use full connection strings with explicit HTTPS ingestion endpoints. Each component must have a distinct instrumentation key and ARM resource ID. Local authentication must be enabled for ingestion; the multi-tenant exporter intentionally does not accept Entra credentials. Query authentication still uses the normal SDK test-framework credential, with Log Analytics Reader access to every workspace. For local development, authenticate the query identity through a credential supported by the test framework, such as Azure CLI. Allow time for newly assigned permissions to propagate.
+Use workspace GUIDs, not workspace ARM resource IDs. Use full connection strings with explicit HTTPS ingestion endpoints. Each component must have a distinct instrumentation key and ARM resource ID. Local authentication must be enabled for ingestion; the multi-tenant exporter intentionally does not accept Entra credentials. Query authentication still uses the normal SDK test-framework credential, with Log Analytics Reader access to every workspace. Allow time for newly assigned permissions to propagate.
+
+### Local Query Authentication
+
+To reuse your Azure PowerShell login instead of the framework's default developer credential (including Windows broker authentication), opt in before starting the tests:
+
+```powershell
+Connect-AzAccount -Tenant '<tenant-id>' -Subscription '<subscription-id>'
+$env:MONITOR_USE_AZURE_POWERSHELL_CREDENTIAL = 'true'
+./Run-LiveTests.ps1
+```
+
+The account must have Log Analytics Reader access to all test workspaces. `MONITOR_TENANT_ID`, normally loaded from the generated environment file, selects the query tenant; set it explicitly when using standalone resource configuration. No client secret is needed. The flag works with the runner and direct `dotnet test`, and with the neighboring baseline integration project because they share the test environment.
+
+The flag only changes the developer-credential fallback. Playback still uses mock credentials, and configured client-secret and Azure Pipelines credentials still take precedence. Leave the flag unset in CI. To return to the framework default locally, remove it with `Remove-Item Env:MONITOR_USE_AZURE_POWERSHELL_CREDENTIAL`. You can put the opt-in in your local PowerShell profile to retain it across sessions; no source edits are needed.
 
 ## Run
 

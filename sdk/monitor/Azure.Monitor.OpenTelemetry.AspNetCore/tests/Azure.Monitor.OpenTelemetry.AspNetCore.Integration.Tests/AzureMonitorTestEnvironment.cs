@@ -9,6 +9,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
+        protected override Azure.Core.TokenCredential CreateDeveloperCredential()
+        {
+            if (string.Equals(GetOptionalVariable("USE_AZURE_POWERSHELL_CREDENTIAL"), "true", StringComparison.OrdinalIgnoreCase))
+            {
+                return new Azure.Identity.AzurePowerShellCredential(
+                    new Azure.Identity.AzurePowerShellCredentialOptions { TenantId = GetOptionalVariable("TENANT_ID") });
+            }
+
+            return base.CreateDeveloperCredential();
+        }
+
         public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
 
         /// <summary>
