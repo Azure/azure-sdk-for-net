@@ -80,7 +80,54 @@ namespace Azure.Security.Attestation.Tests
             var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
             string serializedToken = token.Serialize();
 
-            await ValidateSerializedToken(serializedToken, tokenBody);
+            var parsedToken = AttestationToken.Deserialize(serializedToken);
+            await Task.Yield();
+
+            // An unsecured token round-trips its body, but it carries no signature. Validation of unsecured
+            // tokens is covered by ValidateUnsecuredAttestationTokenFails.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+            Assert.AreEqual(JsonSerializer.Serialize(tokenBody), Encoding.UTF8.GetString(parsedToken.TokenBodyBytes.ToArray()));
+        }
+
+        [RecordedTest]
+        public async Task ValidateUnsecuredAttestationTokenFails()
+        {
+            // Regression test: a token with "alg": "none" carries no signature, so there is nothing to verify
+            // and it must never pass validation.
+            object tokenBody = new JwtTestBody
+            {
+                StringField = "Foo",
+                NotBefore = DateTimeOffset.Now.AddSeconds(-5).ToUnixTimeSeconds(),
+                ExpiresAt = DateTimeOffset.Now.AddSeconds(60).ToUnixTimeSeconds(),
+            };
+
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+
+            // The token is well formed and inside its validity window, so the missing signature is the only
+            // reason to reject it.
+            Assert.AreEqual("none", parsedToken.Algorithm);
+            Assert.IsFalse(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions(), null));
+
+            // Callers who explicitly turn validation off still opt out entirely.
+            Assert.IsTrue(await parsedToken.ValidateTokenAsync(new AttestationTokenValidationOptions { ValidateToken = false }, null));
+        }
+
+        [RecordedTest]
+        public async Task GetBodyOfEmptyBodiedTokenReturnsNull()
+        {
+            // The attestation service uses a token with an empty body to represent the absence of a value,
+            // for instance when an attestation type has no policy configured. Deserializing that body used to
+            // throw "The input does not contain any JSON tokens", which surfaced as a GetPolicy failure.
+            var token = new AttestationToken((AttestationTokenSigningKey)null);
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+            await Task.Yield();
+
+            Assert.AreEqual(0, parsedToken.TokenBodyBytes.Length);
+            Assert.IsNull(parsedToken.GetBody<StoredAttestationPolicy>());
+
+            // The body is empty regardless of the type requested, so no cached deserialization can leak in.
+            Assert.IsNull(parsedToken.GetBody<TestBody>());
         }
 
         [RecordedTest]
@@ -92,7 +139,10 @@ namespace Azure.Security.Attestation.Tests
                 ExpiresAt = DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(5)).ToUnixTimeSeconds(),
             };
 
-            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            X509Certificate2 fullCertificate = TestEnvironment.PolicyManagementCertificate;
+            AsymmetricAlgorithm privateKey = TestEnvironment.PolicyManagementKey;
+
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
             // This check should fail since the token expired 5 seconds ago.

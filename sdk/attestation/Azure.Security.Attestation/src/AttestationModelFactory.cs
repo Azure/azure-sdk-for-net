@@ -12,7 +12,9 @@ namespace Azure.Security.Attestation
     /// <summary>
     /// Factory class for creating Attestation Service Model types, used for Mocking.
     /// </summary>
-    public static class AttestationModelFactory
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("AttestationResult", typeof(string), typeof(string), typeof(long?), typeof(long?), typeof(long?), typeof(IDictionary<string, string>), typeof(string), typeof(string), typeof(object), typeof(object), typeof(object), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(bool?), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(BinaryData), typeof(object), typeof(string), typeof(bool?), typeof(object), typeof(BinaryData), typeof(BinaryData), typeof(float?), typeof(string), typeof(string), typeof(float?), typeof(string), typeof(AttestationSigner), typeof(BinaryData), typeof(string))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("PolicyCertificatesModificationResult", typeof(string), typeof(PolicyCertificateResolution?))]
+    public static partial class AttestationModelFactory
     {
         /// <summary>
         /// Create an instance of an AttestationResponse object for mocking purposes.
@@ -25,7 +27,9 @@ namespace Azure.Security.Attestation
         /// <returns>An <see cref="Attestation.AttestationResponse"/> object.</returns>
         public static AttestationResponse<T> AttestationResponse<T>(Response response, AttestationToken token, T body = default(T))
             where T : class =>
-            new AttestationResponse<T>(response, token, body);
+            body is null
+                ? new AttestationResponse<T>(response, token)
+                : new AttestationResponse<T>(response, token, body);
 
         /// <summary> Initializes a new instance of AttestationResult for mocking purposes. </summary>
         /// <param name="jti"> Unique Identifier for the token. </param>
@@ -99,43 +103,44 @@ namespace Azure.Security.Attestation
             BinaryData deprecatedPolicyHash = null,
             string deprecatedRpData = null)
         {
-            var policySignerJwk = JwkFromAttestationSigner(policySigner);
-            var deprecatedPolicySignerJwk = JwkFromAttestationSigner(deprecatedPolicySigner);
-
             return new AttestationResult(jti,
                 issuer,
                 issuedAt.ToUnixTimeSeconds(),
                 expiration.ToUnixTimeSeconds(),
                 notBefore.ToUnixTimeSeconds(),
-                cnf,
+                cnf as IDictionary<string, string>,
                 nonce,
                 version,
                 runtimeClaims,
                 inittimeClaims,
                 policyClaims,
                 verifierType,
-                policySignerJwk,
-                policyHash != null ? Base64Url.Encode(policyHash.ToArray()) : null,
+                policySigner,
+                policyHash,
                 isDebuggable,
                 productId,
                 mrEnclave,
                 mrSigner,
                 svn,
-                enclaveHeldData != null ? Base64Url.Encode(enclaveHeldData.ToArray()) : null,
+                enclaveHeldData,
                 sgxCollateral,
                 deprecatedVersion,
                 deprecatedIsDebuggable,
                 deprecatedSgxCollateral,
-                deprecatedEnclaveHeldData != null ? Base64Url.Encode(deprecatedEnclaveHeldData.ToArray()) : null,
-                deprecatedEnclaveHeldData != null ? Base64Url.Encode(deprecatedEnclaveHeldData2.ToArray()) : null,
+                deprecatedEnclaveHeldData,
+                deprecatedEnclaveHeldData2,
                 deprecatedProductId,
                 deprecatedMrEnclave,
                 deprecatedMrSigner,
                 deprecatedSvn,
                 deprecatedTee,
-                deprecatedPolicySignerJwk,
-                deprecatedPolicyHash != null ? Base64Url.Encode(deprecatedPolicyHash.ToArray()) : null,
-                deprecatedRpData);
+                deprecatedPolicySigner,
+                deprecatedPolicyHash,
+                deprecatedRpData,
+                null)
+            {
+                Confirmation = cnf,
+            };
         }
         /// <summary>
         /// Creates a new instance of <see cref="Attestation.PolicyCertificatesModificationResult"/> for mocking purposes.
@@ -144,7 +149,7 @@ namespace Azure.Security.Attestation
         /// <param name="certificateResolution">The modification which was performed.</param>
         /// <returns>A <see cref="Attestation.PolicyCertificatesModificationResult"/> object.</returns>
         public static PolicyCertificatesModificationResult PolicyCertificatesModificationResult(PolicyCertificateResolution certificateResolution, string certificateThumbprint) =>
-            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution);
+            new PolicyCertificatesModificationResult(certificateThumbprint, certificateResolution, null);
 
         /// <summary>
         /// Create a PolicyModificationResult type for mocking purposes.
@@ -156,28 +161,38 @@ namespace Azure.Security.Attestation
         public static PolicyModificationResult PolicyModificationResult(PolicyModification policyModification, string policyHash, AttestationSigner signer)
         {
             JsonWebKey jwk = JwkFromAttestationSigner(signer);
-            return new PolicyModificationResult(policyModification, policyHash, jwk, null);
+            return new PolicyModificationResult(policyModification, policyHash != null ? BinaryData.FromBytes(Base64Url.Decode(policyHash)) : null, jwk, null, null);
         }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="TpmAttestationResponse"/> for mocking purposes.
-        /// </summary>
-        /// <param name="data">Protocol data containing the attestation service response.</param>
-        /// <returns>A <see cref="TpmAttestationResponse"/> object.</returns>
-        public static TpmAttestationResponse TpmAttestationResponse(BinaryData data) =>
-            new TpmAttestationResponse(data != null ? Base64Url.Encode(data.ToArray()) : null);
 
         private static JsonWebKey JwkFromAttestationSigner(AttestationSigner signer)
         {
             JsonWebKey jwk = null;
             if (signer != null)
             {
-                jwk = new JsonWebKey("RSA");
-                jwk.Kid = signer.CertificateKeyId;
+                List<string> x5c = new List<string>();
                 foreach (var cert in signer.SigningCertificates)
                 {
-                    jwk.X5C.Add(Convert.ToBase64String(cert.Export(X509ContentType.Cert)));
+                    x5c.Add(Convert.ToBase64String(cert.Export(X509ContentType.Cert)));
                 }
+                jwk = new JsonWebKey(
+                    alg: null,
+                    crv: null,
+                    d: null,
+                    dp: null,
+                    dq: null,
+                    e: null,
+                    k: null,
+                    kid: signer.CertificateKeyId,
+                    kty: "RSA",
+                    n: null,
+                    p: null,
+                    q: null,
+                    qi: null,
+                    use: null,
+                    x: null,
+                    x5c: x5c,
+                    y: null,
+                    additionalBinaryDataProperties: null);
             }
             return jwk;
         }

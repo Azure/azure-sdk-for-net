@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The JsonWebKeySet. </summary>
     internal partial class JsonWebKeySet
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="JsonWebKeySet"/>. </summary>
         internal JsonWebKeySet()
         {
@@ -26,9 +29,11 @@ namespace Azure.Security.Attestation
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </param>
-        internal JsonWebKeySet(IReadOnlyList<JsonWebKey> keys)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal JsonWebKeySet(IList<JsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Keys = keys;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -38,6 +43,6 @@ namespace Azure.Security.Attestation
         /// can choose to assign a meaning to the order for their purposes, if
         /// desired.
         /// </summary>
-        public IReadOnlyList<JsonWebKey> Keys { get; }
+        public IList<JsonWebKey> Keys { get; }
     }
 }
