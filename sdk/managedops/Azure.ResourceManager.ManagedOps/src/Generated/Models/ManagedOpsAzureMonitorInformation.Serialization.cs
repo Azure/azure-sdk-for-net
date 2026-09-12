@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ManagedOps.Models
             writer.WriteStringValue(DcrId);
             writer.WritePropertyName("enablementStatus"u8);
             writer.WriteStringValue(EnablementStatus.ToString());
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteObjectValue(ErrorDetails, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,6 +133,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
             }
             ResourceIdentifier dcrId = default;
             ManagedOpsEnablementStatus enablementStatus = default;
+            ErrorDetails errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,12 +147,21 @@ namespace Azure.ResourceManager.ManagedOps.Models
                     enablementStatus = new ManagedOpsEnablementStatus(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("errorDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorDetails = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, additionalBinaryDataProperties);
+            return new ManagedOpsAzureMonitorInformation(dcrId, enablementStatus, errorDetails, additionalBinaryDataProperties);
         }
     }
 }

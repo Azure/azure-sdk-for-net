@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ManagedOps
     [ModelReaderWriterBuildable(typeof(ChangeTrackingConfiguration))]
     [ModelReaderWriterBuildable(typeof(DefenderCspmInformation))]
     [ModelReaderWriterBuildable(typeof(DefenderForServersInformation))]
+    [ModelReaderWriterBuildable(typeof(ErrorDetails))]
     [ModelReaderWriterBuildable(typeof(GuestConfigurationInformation))]
     [ModelReaderWriterBuildable(typeof(ManagedOpData))]
     [ModelReaderWriterBuildable(typeof(ManagedOpListResult))]

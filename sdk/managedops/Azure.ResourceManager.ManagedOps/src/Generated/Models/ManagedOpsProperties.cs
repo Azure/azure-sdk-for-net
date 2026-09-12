@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         }
 
         /// <summary> Product plan details of this resource. </summary>
-        public ManagedOpsSku Sku { get; }
+        public ManagedOpsSku Sku { get; set; }
 
         /// <summary> Provisioning state of the resource. </summary>
         public ManagedOpsProvisioningState? ProvisioningState { get; }
