@@ -1767,6 +1767,37 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectedItemConfigureSourceScanContent(sourceScanAction, default);
         }
 
+        /// <summary> Target details for file / folder restore. </summary>
+        /// <param name="clientScripts"> List of client scripts. </param>
+        /// <returns> A new <see cref="Models.InstantItemRecoveryTarget"/> instance for mocking. </returns>
+        public static InstantItemRecoveryTarget InstantItemRecoveryTarget(IEnumerable<ClientScriptForConnect> clientScripts = default)
+        {
+            clientScripts ??= new ChangeTrackingList<ClientScriptForConnect>();
+
+            return new InstantItemRecoveryTarget((clientScripts ?? new ChangeTrackingList<ClientScriptForConnect>()).ToList(), default);
+        }
+
+        /// <summary> Client script details for file / folder restore. </summary>
+        /// <param name="scriptContent"> File content of the client script for file / folder restore. </param>
+        /// <param name="scriptExtension"> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </param>
+        /// <param name="osType"> OS type - Windows, Linux etc. for which this file / folder restore client script works. </param>
+        /// <param name="uri"> URL of Executable from where to source the content. If this is not null then ScriptContent should not be used. </param>
+        /// <param name="scriptNameSuffix">
+        /// Mandatory suffix that should be added to the name of script that is given for download to user.
+        /// If its null or empty then , ignore it.
+        /// </param>
+        /// <returns> A new <see cref="Models.ClientScriptForConnect"/> instance for mocking. </returns>
+        public static ClientScriptForConnect ClientScriptForConnect(string scriptContent = default, string scriptExtension = default, string osType = default, string uri = default, string scriptNameSuffix = default)
+        {
+            return new ClientScriptForConnect(
+                scriptContent,
+                scriptExtension,
+                osType,
+                uri,
+                scriptNameSuffix,
+                default);
+        }
+
         /// <summary> ListRecoveryPointsRecommendedForMoveRequest Request. </summary>
         /// <param name="objectType"> Gets the class type. </param>
         /// <param name="excludedRPList"> List of Recovery Points excluded from Move. </param>
@@ -4122,6 +4153,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 virtualMachineId,
                 initiatorName,
                 renewExistingRegistration);
+        }
+
+        /// <summary> Parameters for the listInstantItemRecoveryOperationResult action. </summary>
+        /// <param name="provisionInstantItemRecoveryOperationId"> Operation ID returned by the prior provisionInstantItemRecovery action whose iSCSI mount scripts are to be retrieved. </param>
+        /// <returns> A new <see cref="Models.InstantItemRecoveryOperationResultContent"/> instance for mocking. </returns>
+        public static InstantItemRecoveryOperationResultContent InstantItemRecoveryOperationResultContent(string provisionInstantItemRecoveryOperationId = default)
+        {
+            return new InstantItemRecoveryOperationResultContent(provisionInstantItemRecoveryOperationId, default);
         }
 
         /// <summary> Base class for backup policy. Workload-specific backup policies are derived from this class. </summary>
