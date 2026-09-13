@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Tracing;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
@@ -82,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             rejected++;
                             AzureMonitorExporterEventSource.Log.RoutedMetricRejected(routeBatch.Sequence, rejection, metric.MeterName, metric.Name);
 
-                            if (instrumentRejection == RoutingRejectionReason.None)
+                            if (IsMoreActionable(rejection, instrumentRejection))
                             {
                                 instrumentRejection = rejection;
                             }
@@ -178,5 +177,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // 'as string' drops it and routing fails, exactly as the trace and log paths do.
             return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint, out reason);
         }
+
+        /// <summary>
+        /// One instrument's points can fail for different reasons, and metric point order is
+        /// aggregation-slot order, so reporting whichever came first would be arbitrary. A value the
+        /// caller supplied and got wrong outranks one they never supplied: an absent dimension is the
+        /// expected steady state for host instruments, while a malformed one is a mistake to fix.
+        /// </summary>
+        private static bool IsMoreActionable(RoutingRejectionReason candidate, RoutingRejectionReason current)
+            => Rank(candidate) > Rank(current);
+
+        private static int Rank(RoutingRejectionReason reason) => reason switch
+        {
+            RoutingRejectionReason.None => 0,
+            RoutingRejectionReason.MissingInstrumentationKey or RoutingRejectionReason.MissingIngestionEndpoint => 1,
+            _ => 2,
+        };
     }
 }

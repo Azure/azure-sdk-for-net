@@ -360,6 +360,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// An instrument can have some points routing and others not. The drop still has to be
+        /// reported, otherwise partial loss is invisible.
+        /// </summary>
+        [Fact]
+        public void APartiallyRoutableInstrumentStillReportsItsDrop()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            var routeBatch = Convert(
+                Measure(1, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(1, Ikey("ikey-b"), Endpoint("not-a-uri")));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+        }
+
+        /// <summary>
+        /// Metric point order is aggregation-slot order, so reporting whichever failed first would
+        /// tell a customer with a malformed endpoint to go and check stamping they already did.
+        /// </summary>
+        [Fact]
+        public void AMisconfiguredDimensionOutranksAnAbsentOne()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(
+                Measure(1, Endpoint(EastUs)),
+                Measure(1, Ikey("ikey-b"), Endpoint("not-a-uri")));
+
+            var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+            Assert.Equal("IngestionEndpointMalformed", dropped.Payload![2]);
+        }
+
+        /// <summary>
         /// Apart from the routing dimensions the routed path must produce the same envelope the
         /// single-endpoint path would, so routing cannot silently change what a customer sees.
         /// </summary>
