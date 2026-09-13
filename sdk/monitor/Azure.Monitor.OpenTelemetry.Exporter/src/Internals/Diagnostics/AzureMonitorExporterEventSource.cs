@@ -574,6 +574,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
+        [Event(73, Message = "Standard metrics and performance counters were disabled because multi-endpoint routing is enabled. They are derived from the host process and carry no routing dimensions, so they cannot be attributed to a routed destination.", Level = EventLevel.Warning)]
+        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+
         [NonEvent]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
         {
@@ -627,7 +630,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: collected {1} Activities for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: collected {1} telemetry items for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))
@@ -644,5 +647,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
             }
         }
+
+        // A metric point has no trace or span id, so it is identified by the instrument that
+        // produced it. Guarded in the body rather than by a typed wrapper, because an overload
+        // taking the same string parameters would be ambiguous with the event method itself.
+        [Event(74, Message = "Export {0}: collected a metric point for ingestion endpoint '{1}'. Instrumentation Key: {2}. Meter: {3}. Instrument: {4}", Level = EventLevel.Verbose)]
+        public void RoutedMetricCollected(long exportSequence, string ingestionEndpoint, string instrumentationKey, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                WriteEvent(74, exportSequence, ingestionEndpoint, instrumentationKey, meterName, instrumentName);
+            }
+        }
+
+        [NonEvent]
+        public void RoutedMetricRejected(long exportSequence, MultiEndpoint.RoutingRejectionReason reason, string meterName, string instrumentName)
+        {
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                RoutedMetricRejected(exportSequence, reason.ToString(), meterName, instrumentName);
+            }
+        }
+
+        [Event(75, Message = "Export {0}: dropped a metric point that could not be routed. Reason: {1}. Meter: {2}. Instrument: {3}. The measurement must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint dimension.", Level = EventLevel.Verbose)]
+        public void RoutedMetricRejected(long exportSequence, string reason, string meterName, string instrumentName) => WriteEvent(75, exportSequence, reason, meterName, instrumentName);
     }
 }

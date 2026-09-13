@@ -12,7 +12,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         private const string azureMonitorResourceKey = "_OTELRESOURCE_";
 
-        public MetricsData(int version, Metric metric, MetricPoint metricPoint) : base(version)
+        public MetricsData(int version, Metric metric, MetricPoint metricPoint) : this(version, metric, metricPoint, consumeMultiEndpointAttributes: false)
+        {
+        }
+
+        public MetricsData(int version, Metric metric, MetricPoint metricPoint, bool consumeMultiEndpointAttributes) : base(version)
         {
             if (metric == null)
             {
@@ -26,6 +30,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Properties = new ChangeTrackingDictionary<string, string>();
             foreach (var tag in metricPoint.Tags)
             {
+                if (consumeMultiEndpointAttributes && IsRoutingDimension(tag.Key))
+                {
+                    // The routing dimensions selected the destination; re-emitting them would bill
+                    // the customer for a dimension they only added to address the telemetry.
+                    continue;
+                }
+
                 if (tag.Key.Length <= SchemaConstants.MetricsData_Properties_MaxKeyLength && tag.Value != null)
                 {
                     // Note: if Key exceeds MaxLength or if Value is null, the entire KVP will be dropped.
@@ -41,6 +52,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
             }
         }
+
+        private static bool IsRoutingDimension(string key)
+            => key == SemanticConventions.AttributeMicrosoftInstrumentationKey
+                || key == SemanticConventions.AttributeMicrosoftIngestionEndpoint
+                || key == SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
 
         /// <summary>
         /// This constructor is used only for creating resource metrics with the name "_OTELRESOURCE_".

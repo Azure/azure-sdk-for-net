@@ -6,6 +6,7 @@ using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 
@@ -18,6 +19,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
+        private readonly bool _multiEndpointEnabled;
+        private readonly IMultiEndpointTransmitter? _multiEndpointTransmitter;
+        private EndpointRouteBatch? _routeBatch;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
@@ -30,9 +34,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         }
 
         internal AzureMonitorMetricExporter(ITransmitter transmitter)
+            : this(transmitter, MultiEndpointConfig.Enabled)
+        {
+        }
+
+        /// <remarks>
+        /// The gate is a constructor parameter so a test can exercise either path without mutating
+        /// process-wide state that other tests observe.
+        /// </remarks>
+        internal AzureMonitorMetricExporter(ITransmitter transmitter, bool multiEndpointEnabled)
         {
             _transmitter = transmitter;
             _instrumentationKey = transmitter.InstrumentationKey;
+            _multiEndpointEnabled = multiEndpointEnabled;
+
+            if (_multiEndpointEnabled)
+            {
+                if (transmitter is not IMultiEndpointTransmitter multiEndpointTransmitter)
+                {
+                    // The caller already took a reference on the shared transmitter, which owns
+                    // storage timers and statsbeat, so it has to be released before unwinding.
+                    transmitter.Dispose();
+
+                    throw new NotSupportedException($"Multi-endpoint routing requires a transmitter implementing {nameof(IMultiEndpointTransmitter)}.");
+                }
+
+                _multiEndpointTransmitter = multiEndpointTransmitter;
+            }
         }
 
         internal AzureMonitorResource? MetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource(_instrumentationKey);
@@ -44,6 +72,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
             // Prevent Azure Monitor's HTTP operations from being instrumented.
             using var scope = SuppressInstrumentationScope.Begin();
+
+            if (_multiEndpointEnabled)
+            {
+                return ExportMultiEndpoint(batch);
+            }
 
             var exportResult = ExportResult.Failure;
 
@@ -70,6 +103,45 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
             return exportResult;
+        }
+
+        private ExportResult ExportMultiEndpoint(in Batch<Metric> batch)
+        {
+            if (batch.Count == 0)
+            {
+                return ExportResult.Success;
+            }
+
+            // A concurrent Export takes a fresh batch rather than sharing the cached one.
+            var routeBatch = Interlocked.Exchange(ref _routeBatch, null) ?? new EndpointRouteBatch();
+            routeBatch.BeginExport();
+
+            try
+            {
+                MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(batch, MetricResource, routeBatch);
+
+                if (routeBatch.Count == 0)
+                {
+                    // Routing dimensions are stamped upstream only on measurements meant to be routed;
+                    // a collection where nothing carried them is not addressed to any endpoint, so
+                    // report success rather than treating an empty routed batch as a failed export.
+                    return ExportResult.Success;
+                }
+
+                // Blocks until every group has been sent, so Reset cannot run under a consumer that
+                // still holds a group's item list.
+                return _multiEndpointTransmitter!.Track(routeBatch, TelemetryItemOrigin.AzureMonitorMetricExporter, CancellationToken.None);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToExport(nameof(AzureMonitorMetricExporter), _instrumentationKey, ex);
+                return ExportResult.Failure;
+            }
+            finally
+            {
+                routeBatch.Reset();
+                Interlocked.Exchange(ref _routeBatch, routeBatch);
+            }
         }
 
         /// <inheritdoc/>

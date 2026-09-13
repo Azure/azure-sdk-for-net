@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
@@ -72,9 +73,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal AzureMonitorResource? StandardMetricResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
 
         internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, AzureMonitorExporterOptions options)
+            : this(metricExporter, options, MultiEndpointConfig.Enabled)
         {
-            _enableStandardMetrics = options.EnableStandardMetrics;
-            _enablePerformanceCounters = options.EnablePerformanceCounters;
+        }
+
+        /// <remarks>
+        /// The gate is a constructor parameter so a test can exercise either path without mutating
+        /// process-wide state that other tests observe.
+        /// </remarks>
+        internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, AzureMonitorExporterOptions options, bool multiEndpointEnabled)
+        {
+            // Both are derived from the host process and carry no routing dimensions, so under
+            // routing they would be dropped at conversion anyway. Suppressing them here avoids
+            // paying for the meters that feed them.
+            if (multiEndpointEnabled && (options.EnableStandardMetrics || options.EnablePerformanceCounters))
+            {
+                AzureMonitorExporterEventSource.Log.StandardMetricsDisabledForMultiEndpointRouting();
+            }
+
+            _enableStandardMetrics = options.EnableStandardMetrics && !multiEndpointEnabled;
+            _enablePerformanceCounters = options.EnablePerformanceCounters && !multiEndpointEnabled;
             _metricExporter = metricExporter;
 
             // Initialize Lazy<T> for thread-safe lazy initialization of MeterProvider

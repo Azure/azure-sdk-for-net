@@ -37,6 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             {
                 var faultEndpoints = Array.Exists(args, a => string.Equals(a, "down", StringComparison.OrdinalIgnoreCase));
                 var logs = Array.Exists(args, a => string.Equals(a, "logs", StringComparison.OrdinalIgnoreCase));
+                var metrics = Array.Exists(args, a => string.Equals(a, "metrics", StringComparison.OrdinalIgnoreCase));
                 var count = 1000;
 
                 foreach (var arg in args)
@@ -48,7 +49,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     }
                 }
 
-                if (logs)
+                if (metrics)
+                {
+                    RunMultiEndpointMetricDemo(count, faultEndpoints);
+                }
+                else if (logs)
                 {
                     RunMultiEndpointLogDemo(count, faultEndpoints);
                 }
@@ -124,6 +129,72 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                 Console.WriteLine("Unroutable, expected to be dropped and reported:");
 
                 foreach (var pair in demo.UnroutablePerReason)
+                {
+                    Console.WriteLine($"  {pair.Key,-28} {pair.Value}");
+                }
+
+                if (!faultEndpoints)
+                {
+                    // Give the storage drain a chance to run before the provider is torn down.
+                    Thread.Sleep(TimeSpan.FromSeconds(15));
+                }
+            }
+
+            stopwatch.Stop();
+
+            ReportStoredBlobs("stored after");
+
+            Console.WriteLine();
+            Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
+        }
+
+        private static void RunMultiEndpointMetricDemo(int measurementCount, bool faultEndpoints)
+        {
+            var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
+            var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
+
+            if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
+            {
+                Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
+                Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
+                Console.WriteLine("string per destination, using components in different regions.");
+                return;
+            }
+
+            // Before any exporter type is touched: the gate is read once into a static.
+            MultiEndpointTraceDemo.EnableMultiEndpointRouting();
+
+            using var listener = new ExporterEventListener();
+
+            var runId = Guid.NewGuid().ToString("N");
+
+            var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
+
+            Console.WriteLine($"Run id       : {runId}");
+            Console.WriteLine($"Measurements : {measurementCount} across 2 instruments (counter and histogram)");
+            Console.WriteLine($"Routes       : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
+            Console.WriteLine($"Groups       : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
+            Console.WriteLine($"Endpoints    : {(faultEndpoints ? "FAULTED (503 injected)" : "live")}");
+            Console.WriteLine();
+
+            ReportStoredBlobs("stored before");
+
+            var stopwatch = Stopwatch.StartNew();
+
+            using (var demo = new MultiEndpointMetricDemo(hostConnectionString, routes, runId, faultEndpoints))
+            {
+                demo.GenerateMetrics(measurementCount);
+
+                Console.WriteLine("Recorded, flushing...");
+
+                foreach (var pair in demo.GeneratedPerRoute)
+                {
+                    Console.WriteLine($"  {pair.Key,-12} {pair.Value} measurement(s)");
+                }
+
+                Console.WriteLine("Unroutable, expected to be dropped:");
+
+                foreach (var pair in demo.UnroutableCounts)
                 {
                     Console.WriteLine($"  {pair.Key,-28} {pair.Value}");
                 }
