@@ -645,6 +645,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [Event(73, Message = "Standard metrics and performance counters are not collected while multi-endpoint routing is enabled. Routed destinations are not sent standard metrics, and a process-scoped performance counter has no single owner among the destinations a routed process carries.", Level = EventLevel.Warning)]
+        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+
         // A metric point has no trace or span id, so it is identified by the instrument that
         // produced it. Guarded in the body rather than by a typed wrapper, because an overload
         // taking the same string parameters would be ambiguous with the event method itself.
@@ -669,10 +672,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(75, Message = "Export {0}: dropped a metric point that could not be routed. Reason: {1}. Meter: {2}. Instrument: {3}. The measurement must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint dimension.", Level = EventLevel.Verbose)]
         public void RoutedMetricRejected(long exportSequence, string reason, string meterName, string instrumentName) => WriteEvent(75, exportSequence, reason, meterName, instrumentName);
 
-        [Event(73, Message = "Standard metrics and performance counters were not collected because multi-endpoint routing is enabled. Routed destinations are not sent standard metrics.", Level = EventLevel.Warning)]
-        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+        [NonEvent]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, MultiEndpoint.RoutingRejectionReason reason)
+        {
+            if (IsEnabled(EventLevel.Informational))
+            {
+                RoutedInstrumentDropped(meterName, instrumentName, reason.ToString());
+            }
+        }
 
-        [Event(76, Message = "Instrument '{1}' from meter '{0}' is being dropped because its measurements carry no routing dimensions. Reported once per instrument. Enable Verbose for the individual points.", Level = EventLevel.Informational)]
-        public void RoutedInstrumentDropped(string meterName, string instrumentName) => WriteEvent(76, meterName, instrumentName);
+        [Event(76, Message = "Measurements from meter '{0}' instrument '{1}' were dropped because they could not be routed. Reason: {2}. Reported once per instrument per export; enable Verbose for the individual points.", Level = EventLevel.Informational)]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName, string reason) => WriteEvent(76, meterName, instrumentName, reason);
     }
 }

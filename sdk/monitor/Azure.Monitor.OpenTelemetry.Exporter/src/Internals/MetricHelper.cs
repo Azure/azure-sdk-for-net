@@ -19,10 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        // Bounded by the number of instruments in the process, and each is reported once so a
-        // customer can see what routing is dropping without turning on the per-point firehose.
-        private static readonly HashSet<string> s_reportedDroppedInstruments = new(StringComparer.Ordinal);
-
         internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
         {
             List<TelemetryItem> telemetryItems = new();
@@ -69,6 +65,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var metric in batch)
             {
+                // Reported once per instrument per export rather than once per point, so a reader at
+                // Informational learns what is being dropped and why without the per-point firehose.
+                var instrumentRejection = RoutingRejectionReason.None;
+
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
                     try
@@ -81,7 +81,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             // failed conversion.
                             rejected++;
                             AzureMonitorExporterEventSource.Log.RoutedMetricRejected(routeBatch.Sequence, rejection, metric.MeterName, metric.Name);
-                            ReportDroppedInstrumentOnce(metric);
+
+                            if (instrumentRejection == RoutingRejectionReason.None)
+                            {
+                                instrumentRejection = rejection;
+                            }
+
                             continue;
                         }
 
@@ -105,6 +110,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     {
                         AzureMonitorExporterEventSource.Log.FailedToConvertMetricPoint(meterName: metric.MeterName, instrumentName: metric.Name, ex: ex);
                     }
+                }
+
+                if (instrumentRejection != RoutingRejectionReason.None)
+                {
+                    AzureMonitorExporterEventSource.Log.RoutedInstrumentDropped(metric.MeterName, metric.Name, instrumentRejection);
                 }
             }
 
@@ -167,26 +177,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
             // 'as string' drops it and routing fails, exactly as the trace and log paths do.
             return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint, out reason);
-        }
-
-        private static void ReportDroppedInstrumentOnce(Metric metric)
-        {
-            if (!AzureMonitorExporterEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.All))
-            {
-                return;
-            }
-
-            var instrument = metric.MeterName + "/" + metric.Name;
-
-            lock (s_reportedDroppedInstruments)
-            {
-                if (!s_reportedDroppedInstruments.Add(instrument))
-                {
-                    return;
-                }
-            }
-
-            AzureMonitorExporterEventSource.Log.RoutedInstrumentDropped(metric.MeterName, metric.Name);
         }
     }
 }

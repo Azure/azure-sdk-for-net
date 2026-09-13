@@ -328,25 +328,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Statsbeat and Customer SDK Stats are the SDK's own telemetry: addressed to the exporter's
-        /// own connection string and carrying no routing dimensions. If routing applied to them,
-        /// every measurement would be dropped while the export reported success, blinding us to the
-        /// feature being rolled out.
+        /// Without this a customer can only learn which instruments routing is dropping by enabling
+        /// Verbose, which also enables the per-collected-point event and buries the answer.
         /// </summary>
         [Fact]
-        public void InternalTelemetryExportersNeverRoute()
+        public void ADroppedInstrumentIsNamedOnceWithItsReason()
         {
-            var exporter = AzureMonitorMetricExporter.CreateForInternalTelemetry(
-                new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={Guid.NewGuid()}" });
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
 
-            using (exporter)
-            {
-                var enabled = (bool)typeof(AzureMonitorMetricExporter)
-                    .GetField("_multiEndpointEnabled", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .GetValue(exporter)!;
+            Convert(
+                Measure(1, Ikey("ikey-a"), Endpoint("http://eastus-1.in.applicationinsights.azure.com/")),
+                Measure(2, Ikey("ikey-a"), Endpoint("http://eastus-1.in.applicationinsights.azure.com/")));
 
-                Assert.False(enabled);
-            }
+            var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+            Assert.Equal("test.counter", dropped.Payload![1]);
+
+            // The reason must be the real one, not an assumption that the dimensions were absent.
+            Assert.Equal("IngestionEndpointNotHttps", dropped.Payload[2]);
+        }
+
+        [Fact]
+        public void AnInstrumentThatRoutesIsNotReportedAsDropped()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(Measure(1, Ikey("ikey-a"), Endpoint(EastUs)));
+
+            Assert.Empty(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
         }
 
         /// <summary>
@@ -509,8 +519,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Metric points are reused across collections, so a second collection must route on the
-        /// values it actually carries rather than on anything retained from the first.
+        /// Two collections must each route on the values they carry. Recording a different
+        /// destination between them proves the second collection is not replaying the first.
         /// </summary>
         [Fact]
         public void SuccessiveCollectionsRouteIndependently()

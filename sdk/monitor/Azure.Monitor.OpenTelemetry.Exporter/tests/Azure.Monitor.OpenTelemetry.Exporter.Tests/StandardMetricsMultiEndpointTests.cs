@@ -56,6 +56,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Single(listener.Messages.Where(e => e.EventName == "StandardMetricsDisabledForMultiEndpointRouting"));
         }
 
+        /// <summary>
+        /// Performance counters are suppressed on their own account, not only as a side effect of
+        /// standard metrics being off.
+        /// </summary>
+        [Fact]
+        public void RoutingSuppressesPerformanceCountersEvenWithStandardMetricsOff()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
+
+            var metrics = new List<TelemetryItem>();
+            var processor = CreateProcessor(enableStandardMetrics: false, enablePerformanceCounters: true, multiEndpointEnabled: true, metrics);
+
+            Assert.Single(listener.Messages.Where(e => e.EventName == "StandardMetricsDisabledForMultiEndpointRouting"));
+
+            processor._meterProvider?.Value?.ForceFlush();
+            Assert.Empty(metrics);
+        }
+
         /// <summary>Nothing was suppressed, so there is nothing to report.</summary>
         [Fact]
         public void NothingIsAnnouncedWhenBothWereAlreadyOff()
