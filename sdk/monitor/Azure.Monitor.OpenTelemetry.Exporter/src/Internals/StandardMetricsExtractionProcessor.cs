@@ -83,9 +83,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </remarks>
         internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter, AzureMonitorExporterOptions options, bool multiEndpointEnabled)
         {
-            // Both are derived from the host process and carry no routing dimensions, so under
-            // routing they would be dropped at conversion anyway. Suppressing them here avoids
-            // paying for the meters that feed them.
+            // Routed destinations are not sent standard metrics, and a process-scoped performance
+            // counter has no single owner among the destinations a routed process carries.
             if (multiEndpointEnabled && (options.EnableStandardMetrics || options.EnablePerformanceCounters))
             {
                 AzureMonitorExporterEventSource.Log.StandardMetricsDisabledForMultiEndpointRouting();

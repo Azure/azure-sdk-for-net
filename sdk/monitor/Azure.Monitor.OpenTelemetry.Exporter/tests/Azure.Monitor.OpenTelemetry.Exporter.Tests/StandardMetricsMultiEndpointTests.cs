@@ -2,46 +2,47 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Linq;
-using System.Reflection;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Trace;
+
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
-    /// Standard metrics and performance counters are derived from the host process and carry no
-    /// routing dimensions, so under multi-endpoint routing they could only ever be dropped at
-    /// conversion. They are suppressed at the source instead, and the suppression is announced so
-    /// nobody has to guess where their standard metrics went.
+    /// Routed destinations are not sent standard metrics, and a process-scoped performance counter
+    /// has no single owner among the destinations a routed process carries. Both are therefore not
+    /// collected while routing is on, and the suppression is announced so nobody has to guess where
+    /// their standard metrics went.
     /// </summary>
     public class StandardMetricsMultiEndpointTests
     {
-        [Theory]
-        [InlineData(true, true)]
-        [InlineData(true, false)]
-        [InlineData(false, true)]
-        public void RoutingSuppressesHostDerivedMetrics(bool enableStandardMetrics, bool enablePerformanceCounters)
+        [Fact]
+        public void RoutingEmitsNoStandardMetrics()
         {
-            var processor = CreateProcessor(enableStandardMetrics, enablePerformanceCounters, multiEndpointEnabled: true);
+            var metrics = RunRequestThrough(multiEndpointEnabled: true);
 
-            Assert.False(FlagOf(processor, "_enableStandardMetrics"));
-            Assert.False(FlagOf(processor, "_enablePerformanceCounters"));
+            Assert.Empty(metrics);
         }
 
         [Fact]
-        public void WithoutRoutingHostDerivedMetricsAreUntouched()
+        public void WithoutRoutingStandardMetricsAreStillEmitted()
         {
-            var processor = CreateProcessor(enableStandardMetrics: true, enablePerformanceCounters: true, multiEndpointEnabled: false);
+            var metrics = RunRequestThrough(multiEndpointEnabled: false);
 
-            Assert.True(FlagOf(processor, "_enableStandardMetrics"));
-            Assert.True(FlagOf(processor, "_enablePerformanceCounters"));
+            Assert.Contains(
+                metrics,
+                item => ((MetricsData)item.Data.BaseData).Metrics.Any(m => m.Name == StandardMetricConstants.RequestDurationMetricIdValue));
         }
 
         [Fact]
@@ -50,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var listener = new TestEventListener();
             listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
 
-            CreateProcessor(enableStandardMetrics: true, enablePerformanceCounters: false, multiEndpointEnabled: true);
+            CreateProcessor(enableStandardMetrics: true, enablePerformanceCounters: false, multiEndpointEnabled: true, new List<TelemetryItem>());
 
             Assert.Single(listener.Messages.Where(e => e.EventName == "StandardMetricsDisabledForMultiEndpointRouting"));
         }
@@ -62,12 +63,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             using var listener = new TestEventListener();
             listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Warning, EventKeywords.All);
 
-            CreateProcessor(enableStandardMetrics: false, enablePerformanceCounters: false, multiEndpointEnabled: true);
+            CreateProcessor(enableStandardMetrics: false, enablePerformanceCounters: false, multiEndpointEnabled: true, new List<TelemetryItem>());
 
             Assert.Empty(listener.Messages.Where(e => e.EventName == "StandardMetricsDisabledForMultiEndpointRouting"));
         }
 
-        private static StandardMetricsExtractionProcessor CreateProcessor(bool enableStandardMetrics, bool enablePerformanceCounters, bool multiEndpointEnabled)
+        /// <summary>
+        /// Drives a request Activity through the processor and returns whatever metric telemetry
+        /// reached the transmitter, so the assertion is on emitted telemetry rather than on private
+        /// configuration flags.
+        /// </summary>
+        private static List<TelemetryItem> RunRequestThrough(bool multiEndpointEnabled)
+        {
+            var sourceName = $"{nameof(StandardMetricsMultiEndpointTests)}.{multiEndpointEnabled}";
+            var metrics = new List<TelemetryItem>();
+
+            var processor = CreateProcessor(enableStandardMetrics: true, enablePerformanceCounters: false, multiEndpointEnabled, metrics);
+
+            using var activitySource = new ActivitySource(new ActivitySourceOptions(sourceName));
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .AddSource(sourceName)
+                .AddProcessor(processor)
+                .Build();
+
+            using (var activity = activitySource.StartActivity("Test", ActivityKind.Server))
+            {
+                activity?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            processor._meterProvider?.Value?.ForceFlush();
+
+            return metrics;
+        }
+
+        private static StandardMetricsExtractionProcessor CreateProcessor(bool enableStandardMetrics, bool enablePerformanceCounters, bool multiEndpointEnabled, IList<TelemetryItem> metrics)
         {
             var options = new AzureMonitorExporterOptions
             {
@@ -75,14 +106,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 EnablePerformanceCounters = enablePerformanceCounters,
             };
 
-            var exporter = new AzureMonitorMetricExporter(new MockTransmitter(new List<TelemetryItem>()), multiEndpointEnabled: false);
+            var exporter = new AzureMonitorMetricExporter(new MockTransmitter(metrics), multiEndpointEnabled: false);
 
             return new StandardMetricsExtractionProcessor(exporter, options, multiEndpointEnabled);
         }
-
-        private static bool FlagOf(StandardMetricsExtractionProcessor processor, string fieldName)
-            => (bool)typeof(StandardMetricsExtractionProcessor)
-                .GetField(fieldName, BindingFlags.Instance | BindingFlags.NonPublic)!
-                .GetValue(processor)!;
     }
 }

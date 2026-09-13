@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Tracing;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
@@ -18,9 +19,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        private const string InstrumentationKeyAttributeName = SemanticConventions.AttributeMicrosoftInstrumentationKey;
-        private const string IngestionEndpointAttributeName = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
-        private const string CloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
+        // Bounded by the number of instruments in the process, and each is reported once so a
+        // customer can see what routing is dropping without turning on the per-point firehose.
+        private static readonly HashSet<string> s_reportedDroppedInstruments = new(StringComparer.Ordinal);
 
         internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
         {
@@ -80,6 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             // failed conversion.
                             rejected++;
                             AzureMonitorExporterEventSource.Log.RoutedMetricRejected(routeBatch.Sequence, rejection, metric.MeterName, metric.Name);
+                            ReportDroppedInstrumentOnce(metric);
                             continue;
                         }
 
@@ -134,20 +136,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (var tag in metricPoint.Tags)
             {
-                if (!keySeen && tag.Key == InstrumentationKeyAttributeName)
+                if (!keySeen && tag.Key == SemanticConventions.AttributeMicrosoftInstrumentationKey)
                 {
                     rawKey = tag.Value;
                     keySeen = true;
                 }
-                else if (!endpointSeen && tag.Key == IngestionEndpointAttributeName)
+                else if (!endpointSeen && tag.Key == SemanticConventions.AttributeMicrosoftIngestionEndpoint)
                 {
                     rawEndpoint = tag.Value;
                     endpointSeen = true;
                 }
-                else if (!cloudRoleSeen && tag.Key == CloudRoleAttributeName)
+                else if (!cloudRoleSeen && tag.Key == SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole)
                 {
                     rawCloudRole = tag.Value;
                     cloudRoleSeen = true;
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (keySeen && endpointSeen && cloudRoleSeen)
+                {
+                    break;
                 }
             }
 
@@ -156,6 +167,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
             // 'as string' drops it and routing fails, exactly as the trace and log paths do.
             return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint, out reason);
+        }
+
+        private static void ReportDroppedInstrumentOnce(Metric metric)
+        {
+            if (!AzureMonitorExporterEventSource.Log.IsEnabled(EventLevel.Informational, EventKeywords.All))
+            {
+                return;
+            }
+
+            var instrument = metric.MeterName + "/" + metric.Name;
+
+            lock (s_reportedDroppedInstruments)
+            {
+                if (!s_reportedDroppedInstruments.Add(instrument))
+                {
+                    return;
+                }
+            }
+
+            AzureMonitorExporterEventSource.Log.RoutedInstrumentDropped(metric.MeterName, metric.Name);
         }
     }
 }

@@ -574,9 +574,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
         public void MultiEndpointPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
 
-        [Event(73, Message = "Standard metrics and performance counters were disabled because multi-endpoint routing is enabled. They are derived from the host process and carry no routing dimensions, so they cannot be attributed to a routed destination.", Level = EventLevel.Warning)]
-        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
-
         [NonEvent]
         public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
         {
@@ -671,5 +668,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(75, Message = "Export {0}: dropped a metric point that could not be routed. Reason: {1}. Meter: {2}. Instrument: {3}. The measurement must carry a valid microsoft.instrumentation_key and microsoft.ingestion_endpoint dimension.", Level = EventLevel.Verbose)]
         public void RoutedMetricRejected(long exportSequence, string reason, string meterName, string instrumentName) => WriteEvent(75, exportSequence, reason, meterName, instrumentName);
+
+        [Event(73, Message = "Standard metrics and performance counters were not collected because multi-endpoint routing is enabled. Routed destinations are not sent standard metrics.", Level = EventLevel.Warning)]
+        public void StandardMetricsDisabledForMultiEndpointRouting() => WriteEvent(73);
+
+        [Event(76, Message = "Instrument '{1}' from meter '{0}' is being dropped because its measurements carry no routing dimensions. Reported once per instrument. Enable Verbose for the individual points.", Level = EventLevel.Informational)]
+        public void RoutedInstrumentDropped(string meterName, string instrumentName) => WriteEvent(76, meterName, instrumentName);
     }
 }

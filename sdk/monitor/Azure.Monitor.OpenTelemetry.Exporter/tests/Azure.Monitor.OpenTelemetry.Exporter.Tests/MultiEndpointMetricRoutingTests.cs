@@ -328,6 +328,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// Statsbeat and Customer SDK Stats are the SDK's own telemetry: addressed to the exporter's
+        /// own connection string and carrying no routing dimensions. If routing applied to them,
+        /// every measurement would be dropped while the export reported success, blinding us to the
+        /// feature being rolled out.
+        /// </summary>
+        [Fact]
+        public void InternalTelemetryExportersNeverRoute()
+        {
+            var exporter = AzureMonitorMetricExporter.CreateForInternalTelemetry(
+                new AzureMonitorExporterOptions { ConnectionString = $"InstrumentationKey={Guid.NewGuid()}" });
+
+            using (exporter)
+            {
+                var enabled = (bool)typeof(AzureMonitorMetricExporter)
+                    .GetField("_multiEndpointEnabled", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .GetValue(exporter)!;
+
+                Assert.False(enabled);
+            }
+        }
+
+        /// <summary>
         /// Apart from the routing dimensions the routed path must produce the same envelope the
         /// single-endpoint path would, so routing cannot silently change what a customer sees.
         /// </summary>
@@ -441,6 +463,120 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static string RoleOf(EndpointRouteBatch batch)
             => Assert.Single(Assert.Single(Groups(batch)).TelemetryItems).Tags[ContextTagKeys.AiCloudRole.ToString()];
+
+        /// <summary>
+        /// Grouping alone does not prove the values went to the right place: a point could be
+        /// grouped correctly and still carry another destination's measurement.
+        /// </summary>
+        [Fact]
+        public void EachDestinationCarriesItsOwnValues()
+        {
+            var routeBatch = Convert(
+                Measure(3, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(4, Ikey("ikey-a"), Endpoint(EastUs)),
+                Measure(10, Ikey("ikey-b"), Endpoint(WestUs)));
+
+            Assert.Equal(7, SumFor(routeBatch, EastUs));
+            Assert.Equal(10, SumFor(routeBatch, WestUs));
+        }
+
+        /// <summary>
+        /// A histogram point carries a count and a sum rather than a single value, so it is the
+        /// shape most likely to break if the routed conversion diverged from the single-endpoint one.
+        /// </summary>
+        [Fact]
+        public void HistogramPointsRouteWithTheirCountAndSum()
+        {
+            var routeBatch = new EndpointRouteBatch();
+            routeBatch.BeginExport();
+
+            WithInstruments(
+                (_, histogram) =>
+                {
+                    histogram.Record(10, RoutingTags("ikey-a", EastUs));
+                    histogram.Record(30, RoutingTags("ikey-a", EastUs));
+                    histogram.Record(50, RoutingTags("ikey-b", WestUs));
+                },
+                batch => MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(batch, resource: null, routeBatch));
+
+            Assert.Equal(2, routeBatch.Count);
+
+            var eastUs = Groups(routeBatch).Single(g => g.IngestionEndpoint == EastUs).TelemetryItems;
+            var point = ((MetricsData)Assert.Single(eastUs).Data.BaseData).Metrics[0];
+
+            Assert.Equal(2, point.Count);
+            Assert.Equal(40, point.Value);
+        }
+
+        /// <summary>
+        /// Metric points are reused across collections, so a second collection must route on the
+        /// values it actually carries rather than on anything retained from the first.
+        /// </summary>
+        [Fact]
+        public void SuccessiveCollectionsRouteIndependently()
+        {
+            var batches = new[] { new EndpointRouteBatch(), new EndpointRouteBatch() };
+            batches[0].BeginExport();
+            batches[1].BeginExport();
+            var collection = 0;
+
+            WithInstruments(
+                (counter, _) => counter.Add(1, RoutingTags("ikey-a", EastUs)),
+                batch =>
+                {
+                    if (collection < batches.Length)
+                    {
+                        MetricHelper.OtelToAzureMonitorMetricsMultiEndpoint(batch, resource: null, batches[collection]);
+                    }
+
+                    collection++;
+                },
+                betweenCollections: (counter, _) => counter.Add(1, RoutingTags("ikey-b", WestUs)));
+
+            Assert.Equal(EastUs, Assert.Single(Groups(batches[0])).IngestionEndpoint);
+            Assert.Equal(WestUs, Assert.Single(Groups(batches[1])).IngestionEndpoint);
+        }
+
+        private static double SumFor(EndpointRouteBatch batch, string ingestionEndpoint)
+            => Groups(batch)
+                .Single(g => g.IngestionEndpoint == ingestionEndpoint)
+                .TelemetryItems
+                .Sum(item => ((MetricsData)item.Data.BaseData).Metrics[0].Value);
+
+        private static KeyValuePair<string, object?>[] RoutingTags(string instrumentationKey, string ingestionEndpoint)
+            => new[] { Ikey(instrumentationKey), Endpoint(ingestionEndpoint) };
+
+        /// <summary>
+        /// Delta temporality means a point only appears in the collection that followed its
+        /// measurement, so anything asserting across collections has to record between them.
+        /// </summary>
+        private static void WithInstruments(
+            Action<Counter<long>, Histogram<double>> record,
+            Action<Batch<Metric>> consume,
+            Action<Counter<long>, Histogram<double>>? betweenCollections = null)
+        {
+            var meterName = $"{nameof(MultiEndpointMetricRoutingTests)}.{Guid.NewGuid():N}";
+            using var meter = new Meter(new MeterOptions(meterName));
+            var counter = meter.CreateCounter<long>("test.counter");
+            var histogram = meter.CreateHistogram<double>("test.histogram");
+
+            using var provider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(meterName)
+                .AddReader(new BaseExportingMetricReader(new DelegatingMetricExporter(consume))
+                {
+                    TemporalityPreference = MetricReaderTemporalityPreference.Delta
+                })
+                .Build();
+
+            record(counter, histogram);
+            provider!.ForceFlush();
+
+            if (betweenCollections != null)
+            {
+                betweenCollections(counter, histogram);
+                provider.ForceFlush();
+            }
+        }
 
         [Fact]
         public void EachEndpointGroupIsSentToItsOwnEndpoint()

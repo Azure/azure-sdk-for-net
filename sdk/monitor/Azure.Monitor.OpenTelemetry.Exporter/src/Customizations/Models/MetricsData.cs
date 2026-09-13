@@ -32,8 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 if (consumeMultiEndpointAttributes && IsRoutingDimension(tag.Key))
                 {
-                    // The routing dimensions selected the destination; re-emitting them would bill
-                    // the customer for a dimension they only added to address the telemetry.
+                    // The routing dimensions addressed the telemetry; they are not part of it.
                     continue;
                 }
 

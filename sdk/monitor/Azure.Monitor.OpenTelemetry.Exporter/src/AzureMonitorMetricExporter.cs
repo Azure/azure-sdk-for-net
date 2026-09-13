@@ -38,6 +38,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         {
         }
 
+        /// <summary>
+        /// Builds an exporter for the SDK's own telemetry (Statsbeat, Customer SDK Stats), which is
+        /// addressed to the exporter's own connection string and carries no routing dimensions.
+        /// Routing would drop every measurement while reporting success, blinding us to the very
+        /// feature being rolled out.
+        /// </summary>
+        internal static AzureMonitorMetricExporter CreateForInternalTelemetry(AzureMonitorExporterOptions options)
+            => new(TransmitterFactory.Instance.Get(options), multiEndpointEnabled: false);
+
         /// <remarks>
         /// The gate is a constructor parameter so a test can exercise either path without mutating
         /// process-wide state that other tests observe.
@@ -60,6 +69,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 }
 
                 _multiEndpointTransmitter = multiEndpointTransmitter;
+
+                AzureMonitorExporterEventSource.Log.MultiEndpointRoutingEnabled();
             }
         }
 
