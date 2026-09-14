@@ -1,5 +1,5 @@
 directory: specification/app/resource-manager/Microsoft.App/ContainerApps
-commit: 8e6d0efd932fdbbcb930527b82b0b985102798f9
+commit: aacdbe71d42e2e79ff09699751c2d543e3ecc826
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
