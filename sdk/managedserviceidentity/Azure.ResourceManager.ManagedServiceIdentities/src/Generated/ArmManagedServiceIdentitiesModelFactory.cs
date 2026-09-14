@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="audiences"> The list of audiences that can appear in the issued token. </param>
         /// <param name="claimsMatchingExpression"> Object for defining the allowed identifiers of external identities. Either 'subject' or 'claimsMatchingExpression' must be defined, but not both. Introduced in 2025-01-31-preview. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.FederatedIdentityCredentialData"/> instance for mocking. </returns>
-        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri issuerUri = default, string subject = default, IEnumerable<string> audiences = default, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression = default)
+        public static FederatedIdentityCredentialData FederatedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri issuerUri, string subject, IEnumerable<string> audiences, FederatedIdentityClaimsMatchingExpression claimsMatchingExpression)
         {
             return new FederatedIdentityCredentialData(
                 id,
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <param name="assignmentRestrictionsProviders"> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </param>
         /// <returns> A new <see cref="ManagedServiceIdentities.UserAssignedIdentityData"/> instance for mocking. </returns>
-        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
+        public static UserAssignedIdentityData UserAssignedIdentityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope, IEnumerable<string> assignmentRestrictionsProviders)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         /// <param name="isolationScope"> Enum to configure regional restrictions on identity assignment, as necessary. </param>
         /// <param name="assignmentRestrictionsProviders"> List of resource providers or resource providers with resource types that this identity can be assigned to (case-insensitive). Examples: 'Microsoft.Compute', 'Microsoft.Storage/Accounts', 'Microsoft.Network/VirtualNetworks'. </param>
         /// <returns> A new <see cref="Models.UserAssignedIdentityPatch"/> instance for mocking. </returns>
-        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? tenantId = default, Guid? principalId = default, Guid? clientId = default, IsolationScope? isolationScope = default, IEnumerable<string> assignmentRestrictionsProviders = default)
+        public static UserAssignedIdentityPatch UserAssignedIdentityPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Guid? tenantId, Guid? principalId, Guid? clientId, IsolationScope? isolationScope, IEnumerable<string> assignmentRestrictionsProviders)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

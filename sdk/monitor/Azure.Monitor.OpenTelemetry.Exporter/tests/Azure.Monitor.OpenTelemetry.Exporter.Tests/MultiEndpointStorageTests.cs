@@ -130,14 +130,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// Eviction is the one place telemetry is lost to make room for a different endpoint, so the
         /// report has to name both sides.
         /// </summary>
+        /// <remarks>
+        /// The victim is written with an explicit timestamp rather than through the provider. Blobs
+        /// are ordered by their timestamped name, and two saves can land inside one clock tick - on
+        /// net462 they reliably do - leaving which of the two is "oldest" to partition enumeration
+        /// order.
+        /// </remarks>
         [Fact]
         public void EvictingAnotherEndpointsTelemetryIsReported()
         {
+            WriteBlobFile(Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(EastUs)), DateTime.UtcNow.AddMinutes(-1), 4096);
+
             using var storage = CreateStorage(8192);
-            var eastUs = storage.TryGet(EastUs)!;
+
+            // The partition has to be open, otherwise the report names the directory instead of the endpoint.
+            Assert.NotNull(storage.TryGet(EastUs));
+
             var westUs = storage.TryGet(WestUs)!;
             var payload = new byte[4096];
-            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
             Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
 
             using var listener = new TestEventListener();

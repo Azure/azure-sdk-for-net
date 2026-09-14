@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="eTag"> The ETag for the application. </param>
         /// <param name="tags"> The tags for the application. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightApplicationProperties properties = default, ETag? eTag = default, IDictionary<string, string> tags = default)
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HDInsightApplicationProperties properties, ETag? eTag, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HDInsightClusterProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default)
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, ETag? eTag, IEnumerable<string> zones, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="privateEndpointId"> The private endpoint id. </param>
         /// <returns> A new <see cref="HDInsight.HDInsightPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HDInsightPrivateLinkServiceConnectionState connectionState = default, string linkIdentifier = default, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static HDInsightPrivateEndpointConnectionData HDInsightPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HDInsightPrivateLinkServiceConnectionState connectionState, string linkIdentifier, HDInsightPrivateEndpointConnectionProvisioningState? provisioningState, ResourceIdentifier privateEndpointId)
         {
             return new HDInsightPrivateEndpointConnectionData(
                 id,

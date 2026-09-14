@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteDeallocateContent"/> instance for mocking. </returns>
-        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteDeallocateContent ExecuteDeallocateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext)
         {
             return new ExecuteDeallocateContent(executionParameters, resources, resourcesWithContext, default);
         }
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="shouldVerifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
         /// <param name="capacityRecommendationParameters"> Capacity recommendation parameters for the request. When provided on an executeStart request, the service computes placement recommendations only if the VM fails to start due to an allocation failure; the recommendations for the desired sizes and locations are then surfaced in the operation's capacityRecommendation response. </param>
         /// <returns> A new <see cref="Models.BulkActionExecutionParameterDetail"/> instance for mocking. </returns>
-        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference = default, BulkOperationRetryPolicy retryPolicy = default, bool? shouldVerifyVmAgentHealth = default, BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = default)
+        public static BulkActionExecutionParameterDetail BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference, BulkOperationRetryPolicy retryPolicy, bool? shouldVerifyVmAgentHealth = default, BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = default)
         {
             return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, capacityRecommendationParameters, default);
         }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="operation"> Details of the operation performed on a resource. </param>
         /// <param name="virtualMachineInfo"> Information about the virtual machine. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationResult"/> instance for mocking. </returns>
-        public static ComputeBulkOperationResult ComputeBulkOperationResult(ResourceIdentifier resourceId = default, string errorCode = default, string errorDetails = default, ComputeBulkOperationDetails operation = default, VirtualMachineInfo virtualMachineInfo = default)
+        public static ComputeBulkOperationResult ComputeBulkOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, VirtualMachineInfo virtualMachineInfo)
         {
             return new ComputeBulkOperationResult(
                 resourceId,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourceContext"> Resource context for notification tracking. </param>
         /// <param name="capacityRecommendation"> The capacity/placement recommendation computed for the operation, if requested. </param>
         /// <returns> A new <see cref="Models.ComputeBulkOperationDetails"/> instance for mocking. </returns>
-        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ComputeBulkOperationKind? operationKind = default, Guid? subscriptionId = default, DateTimeOffset? deadlineOn = default, BulkActionDeadlineKind? deadlineKind = default, BulkActionOperationState? state = default, string timeZone = default, ComputeBulkOperationError error = default, ComputeBulkFallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, BulkOperationRetryPolicy retryPolicy = default, string resourceContext = default, CapacityRecommendation capacityRecommendation = default)
+        public static ComputeBulkOperationDetails ComputeBulkOperationDetails(string operationId, ResourceIdentifier resourceId, ComputeBulkOperationKind? operationKind, Guid? subscriptionId, DateTimeOffset? deadlineOn, BulkActionDeadlineKind? deadlineKind, BulkActionOperationState? state, string timeZone, ComputeBulkOperationError error, ComputeBulkFallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, BulkOperationRetryPolicy retryPolicy, string resourceContext, CapacityRecommendation capacityRecommendation = default)
         {
             return new ComputeBulkOperationDetails(
                 operationId,
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteHibernateContent"/> instance for mocking. </returns>
-        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteHibernateContent ExecuteHibernateContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext)
         {
             return new ExecuteHibernateContent(executionParameters, resources, resourcesWithContext, default);
         }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resources"> The resources for the request. </param>
         /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <returns> A new <see cref="Models.ExecuteStartContent"/> instance for mocking. </returns>
-        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default)
+        public static ExecuteStartContent ExecuteStartContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext)
         {
             return new ExecuteStartContent(executionParameters, resources, resourcesWithContext, default);
         }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="resourcesWithContext"> The resources for the request with resource context information. Cannot be provided together with `resources` - exactly one must be specified. </param>
         /// <param name="isForceDeletion"> Forced delete resource item. </param>
         /// <returns> A new <see cref="Models.ExecuteDeleteContent"/> instance for mocking. </returns>
-        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters = default, UserRequestResources resources = default, ResourcesWithContext resourcesWithContext = default, bool? isForceDeletion = default)
+        public static ExecuteDeleteContent ExecuteDeleteContent(BulkActionExecutionParameterDetail executionParameters, UserRequestResources resources, ResourcesWithContext resourcesWithContext, bool? isForceDeletion)
         {
             return new ExecuteDeleteContent(executionParameters, resources, resourcesWithContext, isForceDeletion, default);
         }
