@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// stamped with. An Activity whose routing tags are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorTraceMultiTenant(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
         {
             var collected = 0;
             var rejected = 0;
@@ -114,7 +114,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     try
                     {
-                        if (!TenantRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
+                        if (!EndpointRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
                         {
                             rejected++;
                             AzureMonitorExporterEventSource.Log.RoutedTelemetryRejected(routeBatch.Sequence, rejection, activity);
@@ -128,10 +128,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
-                        // process and would be filed as the tenant's own application.
-                        var tenantCloudRole = TenantRouting.GetTenantCloudRole(ref activityTagsProcessor.MappedTags);
+                        // process and would be filed as the destination's own application.
+                        var cloudRole = EndpointRouting.GetCloudRole(ref activityTagsProcessor.MappedTags);
                         var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
-                        telemetryItem.SetTenantCloudRole(tenantCloudRole);
+                        telemetryItem.SetCloudRole(cloudRole);
 
                         if (activity.Events.Any())
                         {

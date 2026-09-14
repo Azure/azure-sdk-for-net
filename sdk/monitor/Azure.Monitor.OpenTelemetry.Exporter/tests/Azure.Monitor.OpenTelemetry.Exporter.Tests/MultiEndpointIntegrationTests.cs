@@ -27,13 +27,13 @@ using Xunit;
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 {
     /// <summary>
-    /// End-to-end multi-tenant export through the real transmitter, REST client, and HTTP pipeline.
+    /// End-to-end multi-endpoint routing through the real transmitter, REST client, and HTTP pipeline.
     /// Several mock ingestion stamps answer on their own hosts, so routing, per-endpoint URIs, and
     /// pipeline policies are all exercised rather than stubbed at the transmitter boundary.
     /// </summary>
-    public class MultiTenantIntegrationTests
+    public class MultiEndpointIntegrationTests
     {
-        private const string ActivitySourceName = nameof(MultiTenantIntegrationTests);
+        private const string ActivitySourceName = nameof(MultiEndpointIntegrationTests);
 
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static readonly ActivityListener s_listener = CreateListener();
 
         [Fact]
-        public void EachTenantReachesItsOwnStamp()
+        public void EachDestinationReachesItsOwnStamp()
         {
             var ingestion = new MockIngestion();
             using var exporter = CreateExporter(ingestion, out _);
@@ -219,7 +219,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ManyTenantsInOneRegionShareOneRequest()
+        public void ManyApplicationsInOneRegionShareOneRequest()
         {
             var ingestion = new MockIngestion();
             using var exporter = CreateExporter(ingestion, out _);
@@ -257,7 +257,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(ExportResult.Failure, result);
             Assert.Equal(3, ingestion.Requests.Count);
 
-            // The healthy stamps must still receive their own tenants' telemetry, not just a request.
+            // The healthy stamps must still receive their own destinations' telemetry, not just a request.
             Assert.Contains("ikey-east", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
             Assert.Contains("ikey-north", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
             Assert.Contains("ikey-west", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
@@ -316,33 +316,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// The redirect cache is keyed by endpoint including its path, because a gateway can serve
-        /// several tenants on one host and tell them apart only by path. Keyed by authority alone,
-        /// one tenant's redirect would silently retarget the other's telemetry.
+        /// several endpoints on one host and tell them apart only by path. Keyed by authority alone,
+        /// one endpoint's redirect would silently retarget the other's telemetry.
         /// </summary>
         [Fact]
-        public void ACachedRedirectDoesNotCrossTenantsOnASharedGatewayHost()
+        public void ACachedRedirectDoesNotCrossEndpointsOnASharedGatewayHost()
         {
-            const string FirstTenant = "https://gateway.example.com/tenant-a/";
-            const string SecondTenant = "https://gateway.example.com/tenant-b/";
-            const string FirstTenantRedirect = "https://gateway.example.com/tenant-a-moved/v2.1/track";
+            const string FirstEndpoint = "https://gateway.example.com/app-a/";
+            const string SecondEndpoint = "https://gateway.example.com/app-b/";
+            const string FirstEndpointRedirect = "https://gateway.example.com/app-a-moved/v2.1/track";
 
             var ingestion = new MockIngestion();
-            ingestion.SetRedirectOnce(FirstTenant, FirstTenantRedirect);
+            ingestion.SetRedirectOnce(FirstEndpoint, FirstEndpointRedirect);
 
             using var exporter = CreateExporter(ingestion, out _);
 
-            exporter.Export(CreateBatch(CreateActivity("ikey-a", FirstTenant)));
+            exporter.Export(CreateBatch(CreateActivity("ikey-a", FirstEndpoint)));
             ingestion.Requests.Clear();
 
             exporter.Export(CreateBatch(
-                CreateActivity("ikey-a", FirstTenant),
-                CreateActivity("ikey-b", SecondTenant)));
+                CreateActivity("ikey-a", FirstEndpoint),
+                CreateActivity("ikey-b", SecondEndpoint)));
 
             Assert.Equal(2, ingestion.Requests.Count);
-            Assert.Equal(FirstTenantRedirect, ingestion.Requests[0].Uri);
+            Assert.Equal(FirstEndpointRedirect, ingestion.Requests[0].Uri);
 
-            // Same host, different path: the second tenant must be untouched by the first's redirect.
-            Assert.Equal(SecondTenant + "v2.1/track", ingestion.Requests[1].Uri);
+            // Same host, different path: the second endpoint must be untouched by the first's redirect.
+            Assert.Equal(SecondEndpoint + "v2.1/track", ingestion.Requests[1].Uri);
         }
 
         /// <summary>
@@ -383,7 +383,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateActivity(instrumentationKey: null, ingestionEndpoint: null),
                 CreateActivity("ikey-a", "not-a-uri")));
 
-            // Tenants without observability enabled are the norm, not an export failure.
+            // Applications without observability enabled are the norm, not an export failure.
             Assert.Equal(ExportResult.Success, result);
             Assert.Empty(ingestion.Requests);
         }
@@ -410,25 +410,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var ingestion = new MockIngestion();
             using var exporter = CreateExporter(ingestion, out var connectionStringIKey);
 
-            exporter.Export(CreateBatch(CreateActivity("ikey-tenant", EastUs)));
+            exporter.Export(CreateBatch(CreateActivity("ikey-app", EastUs)));
 
             var request = Assert.Single(ingestion.Requests);
-            Assert.Contains("ikey-tenant", request.Body, StringComparison.Ordinal);
+            Assert.Contains("ikey-app", request.Body, StringComparison.Ordinal);
             Assert.DoesNotContain(connectionStringIKey, request.Body, StringComparison.Ordinal);
         }
 
         /// <summary>
         /// Customer SDK stats are reported under the exporter's own connection string, so counting a
-        /// tenant's telemetry there would attribute one customer's volume to another.
+        /// endpoint's telemetry there would attribute one customer's volume to another.
         /// </summary>
         /// <remarks>
-        /// The single-tenant export is the control. Without it this would pass even if the listener
+        /// The single-endpoint export is the control. Without it this would pass even if the listener
         /// were attached to the wrong meter or the counters were switched off entirely, which is
         /// exactly what happened when it was first written against a mock transmitter that never
         /// reaches the code emitting them.
         /// </remarks>
         [Fact]
-        public void RoutedExportEmitsNoCustomerSdkStatsWhileSingleTenantDoes()
+        public void RoutedExportEmitsNoCustomerSdkStatsWhileSingleEndpointDoes()
         {
             var measurements = 0;
 
@@ -448,9 +448,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var ingestion = new MockIngestion();
 
-            using (var singleTenant = CreateExporter(ingestion, multiTenantEnabled: false, out _))
+            using (var singleEndpoint = CreateExporter(ingestion, multiEndpointEnabled: false, out _))
             {
-                singleTenant.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+                singleEndpoint.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
             }
 
             var control = Volatile.Read(ref measurements);
@@ -473,9 +473,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out string instrumentationKey)
-            => CreateExporter(ingestion, multiTenantEnabled: true, out instrumentationKey);
+            => CreateExporter(ingestion, multiEndpointEnabled: true, out instrumentationKey);
 
-        private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiTenantEnabled, out string instrumentationKey)
+        private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiEndpointEnabled, out string instrumentationKey)
         {
             instrumentationKey = "00000000-0000-0000-0000-0000000000ff";
 
@@ -492,8 +492,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // would disagree about the mode they are running in.
             return new AzureMonitorTraceExporter(
                 options,
-                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiTenantEnabled),
-                multiTenantEnabled);
+                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled),
+                multiEndpointEnabled);
         }
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
@@ -532,7 +532,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// Stands in for the regional ingestion stamps: answers per endpoint and records what it saw.
         /// </summary>
         /// <remarks>
-        /// Keyed by the whole endpoint rather than the host, so two tenants behind one gateway that
+        /// Keyed by the whole endpoint rather than the host, so two endpoints behind one gateway that
         /// differ only by path are distinguishable. A request whose path is not the ingestion API is
         /// a 404; an unconfigured endpoint that does address the API is a healthy stamp answering
         /// 200, which is what most tests want.

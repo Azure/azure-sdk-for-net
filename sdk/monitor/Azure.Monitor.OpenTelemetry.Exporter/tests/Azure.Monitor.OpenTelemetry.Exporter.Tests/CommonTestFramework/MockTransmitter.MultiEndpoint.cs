@@ -5,18 +5,18 @@ using System.Collections.Generic;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal partial class MockTransmitter : IMultiTenantTransmitter
+    internal partial class MockTransmitter : IMultiEndpointTransmitter
     {
         public readonly List<(string IngestionEndpoint, TelemetryItem[] TelemetryItems)> Sends = new();
 
-        public ExportResult MultiTenantResult { get; set; } = ExportResult.Success;
+        public ExportResult MultiEndpointResult { get; set; } = ExportResult.Success;
 
         public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
         {
@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
                 }
             }
 
-            return MultiTenantResult;
+            return MultiEndpointResult;
         }
     }
 }
