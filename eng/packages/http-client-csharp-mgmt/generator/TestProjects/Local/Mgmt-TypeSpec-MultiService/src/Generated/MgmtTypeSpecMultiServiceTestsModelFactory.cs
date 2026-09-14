@@ -33,6 +33,15 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
             return new CheckAvailabilityResponse(isAvailable, reason, default);
         }
 
+        /// <summary> The FooProperties. </summary>
+        /// <param name="displayName"></param>
+        /// <param name="provisioningState"></param>
+        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
+        public static FooProperties FooProperties(string displayName = default, ResourceProvisioningState? provisioningState = default)
+        {
+            return new FooProperties(displayName, provisioningState, default);
+        }
+
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -57,13 +66,13 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 default);
         }
 
-        /// <summary> The FooProperties. </summary>
-        /// <param name="displayName"></param>
+        /// <summary> The BarProperties. </summary>
+        /// <param name="description"></param>
         /// <param name="provisioningState"></param>
-        /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(string displayName = default, ResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
+        public static BarProperties BarProperties(string description = default, ResourceProvisioningState? provisioningState = default)
         {
-            return new FooProperties(displayName, provisioningState, default);
+            return new BarProperties(description, provisioningState, default);
         }
 
         /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
@@ -88,15 +97,6 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary> The BarProperties. </summary>
-        /// <param name="description"></param>
-        /// <param name="provisioningState"></param>
-        /// <returns> A new <see cref="Models.BarProperties"/> instance for mocking. </returns>
-        public static BarProperties BarProperties(string description = default, ResourceProvisioningState? provisioningState = default)
-        {
-            return new BarProperties(description, provisioningState, default);
         }
     }
 }
