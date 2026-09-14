@@ -109,12 +109,12 @@ namespace Azure.Search.Documents.KnowledgeBases
         /// </returns>
 #pragma warning disable AZC0004 // Streaming APIs are async-only.
 #pragma warning disable AZC0015 // IAsyncEnumerable<T> is the temporary streaming convenience shape.
-    [ForwardsClientCalls(true)]
+        [ForwardsClientCalls(true)]
         public virtual async IAsyncEnumerable<SseItem<KnowledgeBaseRetrievalStreamEvent>> RetrieveStreamAsync(
-            KnowledgeBaseRetrievalRequest retrievalRequest,
-            string querySourceAuthorization = default,
-            string queryWorkIQSourceAuthorization = default,
-            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+                KnowledgeBaseRetrievalRequest retrievalRequest,
+                string querySourceAuthorization = default,
+                string queryWorkIQSourceAuthorization = default,
+                [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(retrievalRequest, nameof(retrievalRequest));
 
