@@ -11,6 +11,8 @@ using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -29,6 +31,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
     [NonParallelizable]
     public class MultiTenantExportLiveTests : BaseLiveTest
     {
+        private const string TestServerPort = "9998";
+        private const string TestServerUrl = $"http://localhost:{TestServerPort}/";
         private const string SourceName = "MultiTenantLiveTests";
         private const string RunAttribute = "multiTenantRunId";
         private const string RecordAttribute = "multiTenantRecordId";
@@ -50,11 +54,14 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             TestContext.Out.WriteLine($"Multi-tenant run {runId}: {resources.Count} destinations, {resources.Select(resource => resource.Endpoint).Distinct().Count()} endpoints.");
 
             AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", true);
+
+            // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             using (var activitySource = new ActivitySource(SourceName))
             {
-                var services = new ServiceCollection();
-                services.AddLogging();
-                services.AddOpenTelemetry()
+                var builder = WebApplication.CreateBuilder();
+                builder.WebHost.UseUrls(TestServerUrl);
+                builder.Logging.ClearProviders();
+                builder.Services.AddOpenTelemetry()
                     .WithTracing(tracing => tracing.AddSource(SourceName).AddAzureMonitorTraceExporter(Configure))
                     .WithLogging(logging => logging.AddAzureMonitorLogExporter(Configure));
 
@@ -70,21 +77,36 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                     options.TracesPerSecond = null;
                 }
 
-                using var serviceProvider = services.BuildServiceProvider();
-                var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
-                var loggerProvider = serviceProvider.GetRequiredService<LoggerProvider>();
-                var logger = serviceProvider.GetRequiredService<ILoggerFactory>().CreateLogger(SourceName);
-                foreach (var resource in resources)
+                using var app = builder.Build();
+                app.MapGet("/", (ILoggerFactory loggerFactory) =>
                 {
-                    EmitTelemetry(activitySource, logger, resource, runId, expected);
-                }
+                    var logger = loggerFactory.CreateLogger(SourceName);
+                    foreach (var resource in resources)
+                    {
+                        EmitTelemetry(activitySource, logger, resource, runId, expected);
+                    }
 
+                    return "Response from Test Server";
+                });
+
+                await app.StartAsync().ConfigureAwait(false);
+
+                // ACT
+                using var httpClient = new System.Net.Http.HttpClient();
+                var response = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
+                Assert.That(response, Is.EqualTo("Response from Test Server"), "The in-process test server did not return the expected response.");
+
+                // SHUTDOWN
+                var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+                var loggerProvider = app.Services.GetRequiredService<LoggerProvider>();
                 Assert.That(tracerProvider.ForceFlush(FlushTimeoutMilliseconds), Is.True, "Trace flush failed.");
                 Assert.That(loggerProvider.ForceFlush(FlushTimeoutMilliseconds), Is.True, "Log flush failed.");
                 Assert.That(tracerProvider.Shutdown(FlushTimeoutMilliseconds), Is.True, "Trace shutdown failed.");
                 Assert.That(loggerProvider.Shutdown(FlushTimeoutMilliseconds), Is.True, "Log shutdown failed.");
+                await app.StopAsync().ConfigureAwait(false);
             }
 
+            // ASSERT
             await VerifyIngestionAsync(resources, expected, runId);
         }
 
