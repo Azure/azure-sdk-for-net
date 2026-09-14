@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachinePatchStatus patchStatus = default;
             bool? isVmInStandbyPool = default;
             InterconnectInstanceView interconnectInstanceView = default;
-            CapacityReservationType? capacityReservationType = default;
+            VirtualMachineCapacityReservationType? capacityReservationType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    capacityReservationType = new CapacityReservationType(prop.Value.GetString());
+                    capacityReservationType = new VirtualMachineCapacityReservationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

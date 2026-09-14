@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="interconnectSubgroupId"> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </param>
         /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine scale set VM instance will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineScaleSetVmInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string interconnectSubgroupId = default, CapacityReservationType? capacityReservationType = default)
+        public static VirtualMachineScaleSetVmInstanceView VirtualMachineScaleSetVmInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, IEnumerable<InstanceViewStatus> statuses = default, ResourceIdentifier assignedHost = default, string placementGroupId = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string interconnectSubgroupId = default, VirtualMachineCapacityReservationType? capacityReservationType = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -2655,7 +2655,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="interconnectSubgroupId"> The ID (GUID) of the Interconnect subgroup in which the Virtual Machine was placed. </param>
         /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <returns> A new <see cref="Models.VirtualMachineInstanceView"/> instance for mocking. </returns>
-        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default, string interconnectSubgroupId = default, CapacityReservationType? capacityReservationType = default)
+        public static VirtualMachineInstanceView VirtualMachineInstanceView(int? platformUpdateDomain = default, int? platformFaultDomain = default, string computerName = default, string osName = default, string osVersion = default, HyperVGeneration? hyperVGeneration = default, string rdpThumbPrint = default, VirtualMachineAgentInstanceView vmAgent = default, MaintenanceRedeployStatus maintenanceRedeployStatus = default, IEnumerable<DiskInstanceView> disks = default, IEnumerable<VirtualMachineExtensionInstanceView> extensions = default, InstanceViewStatus vmHealthStatus = default, BootDiagnosticsInstanceView bootDiagnostics = default, string assignedHost = default, IEnumerable<InstanceViewStatus> statuses = default, VirtualMachinePatchStatus patchStatus = default, bool? isVmInStandbyPool = default, string interconnectSubgroupId = default, VirtualMachineCapacityReservationType? capacityReservationType = default)
         {
             disks ??= new ChangeTrackingList<DiskInstanceView>();
             extensions ??= new ChangeTrackingList<VirtualMachineExtensionInstanceView>();
@@ -3786,7 +3786,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="sharingSubscriptionResources"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="Compute.CapacityReservationGroupData"/> instance for mocking. </returns>
-        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, ReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default, IEnumerable<string> zones = default)
+        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             zones ??= new ChangeTrackingList<string>();
@@ -3864,7 +3864,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group, 'Targeted' for reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full, and 'Open' for reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group and fall back to the publicly available capacity if the reservation is full. The reservation type is immutable and cannot be changed after the capacity reservation group is created. </param>
         /// <param name="sharingSubscriptionResources"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
-        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, ReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default)
+        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -7554,41 +7554,6 @@ namespace Azure.ResourceManager.Compute.Models
                 default);
         }
 
-        /// <summary> Specifies information about the capacity reservation group that the capacity reservations should be assigned to. Currently, a capacity reservation can only be added to a capacity reservation group at creation time. An existing capacity reservation cannot be added or moved to another capacity reservation group. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="capacityReservationResources"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="associatedVirtualMachineResources"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="reservationType"></param>
-        /// <param name="sharingSubscriptionResources"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="Compute.CapacityReservationGroupData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default, IEnumerable<string> zones = default)
-        {
-            return new CapacityReservationGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                capacityReservationResources is null && associatedVirtualMachineResources is null && instanceView is null && sharingSubscriptionResources is null ? default : new CapacityReservationGroupProperties(
-                    (capacityReservationResources ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                    (associatedVirtualMachineResources ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                    instanceView,
-                    new ResourceSharingProfile((sharingSubscriptionResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(), default),
-                    default,
-                    default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
         /// <summary> The instance view of a capacity reservation that includes the name of the capacity reservation. It is used for the response to the instance view of a capacity reservation group. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
@@ -7618,26 +7583,6 @@ namespace Azure.ResourceManager.Compute.Models
         public static CapacityReservationUtilization CapacityReservationUtilization(int? currentCapacity = default, IEnumerable<SubResource> virtualMachinesAllocated = default)
         {
             return new CapacityReservationUtilization(currentCapacity, (virtualMachinesAllocated ?? new ChangeTrackingList<SubResource>()).ToList(), default, default);
-        }
-
-        /// <summary> Specifies information about the capacity reservation group. Only tags can be updated. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="capacityReservationResources"> A list of all capacity reservation resource ids that belong to capacity reservation group. </param>
-        /// <param name="associatedVirtualMachineResources"> A list of references to all virtual machines associated to the capacity reservation group. </param>
-        /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
-        /// <param name="reservationType"></param>
-        /// <param name="sharingSubscriptionResources"> Specifies an array of subscription resource IDs that capacity reservation group is shared with. Block Capacity Reservations does not support sharing across subscriptions. <b>Note:</b> Minimum api-version: 2023-09-01. Please refer to https://aka.ms/computereservationsharing for more details. </param>
-        /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<ComputeSubResourceData> capacityReservationResources = default, IEnumerable<ComputeSubResourceData> associatedVirtualMachineResources = default, CapacityReservationGroupInstanceView instanceView = default, CapacityReservationType? reservationType = default, IEnumerable<ComputeWriteableSubResourceData> sharingSubscriptionResources = default)
-        {
-            return new CapacityReservationGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, capacityReservationResources is null && associatedVirtualMachineResources is null && instanceView is null && sharingSubscriptionResources is null ? default : new CapacityReservationGroupProperties(
-                (capacityReservationResources ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                (associatedVirtualMachineResources ?? new ChangeTrackingList<ComputeSubResourceData>()).ToList(),
-                instanceView,
-                new ResourceSharingProfile((sharingSubscriptionResources ?? new ChangeTrackingList<ComputeWriteableSubResourceData>()).ToList(), default),
-                default,
-                default));
         }
 
         /// <summary> Defines the schedule for Block and Future capacity reservations. Specifies the schedule during which capacity reservation is active and VM or VMSS resource can be allocated using reservation. For Block capacity reservations, the scheduleProfile, start, and end fields are immutable after creation. Please refer to https://aka.ms/blockcapacityreservation for more details. Minimum API version for Block capacity reservations: 2025-04-01. Future capacity reservations must use this property with only a start time, which can be changed until the ‘modifiableUntil’ time. Please refer to https://aka.ms/futurecapacityreservation for more details. Minimum API version for Future capacity reservations: 2026-04-01. </summary>
@@ -9011,7 +8956,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="virtualMachinesAssociated"></param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
         /// <param name="sharingSubscriptionIds"></param>
-        /// <param name="reservationType"></param>
+        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group, 'Targeted' for reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full, and 'Open' for reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group and fall back to the publicly available capacity if the reservation is full. The reservation type is immutable and cannot be changed after the capacity reservation group is created. </param>
         /// <returns> A new <see cref="Compute.CapacityReservationGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationGroupData CapacityReservationGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default, IEnumerable<SubResource> capacityReservations = default, IEnumerable<SubResource> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, IEnumerable<WritableSubResource> sharingSubscriptionIds = default, CapacityReservationType? reservationType = default)
@@ -9023,12 +8968,12 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                instanceView is null ? default : new CapacityReservationGroupProperties(
+                instanceView is null && reservationType is null ? default : new CapacityReservationGroupProperties(
                     default,
                     default,
                     instanceView,
                     default,
-                    default,
+                    reservationType,
                     default),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
@@ -9366,17 +9311,17 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="virtualMachinesAssociated"></param>
         /// <param name="instanceView"> The capacity reservation group instance view which has the list of instance views for all the capacity reservations that belong to the capacity reservation group. </param>
         /// <param name="sharingSubscriptionIds"></param>
-        /// <param name="reservationType"></param>
+        /// <param name="reservationType"> Indicates the type of capacity reservation. Allowed values are 'Block' for block capacity reservations that enable a VM to consume capacity only from this capacity block when it is associated using a capacity reservation group, 'Targeted' for reservations that enable a VM to consume capacity from an explicitly associated capacity reservation group and fall back to the publicly available capacity if the reservation is full, and 'Open' for reservations that a VM consumes when it is eligible from an implicitly associated capacity reservation group with the matching VM size and zone without associating that capacity reservation group and fall back to the publicly available capacity if the reservation is full. The reservation type is immutable and cannot be changed after the capacity reservation group is created. </param>
         /// <returns> A new <see cref="Models.CapacityReservationGroupPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CapacityReservationGroupPatch CapacityReservationGroupPatch(IDictionary<string, string> tags = default, IEnumerable<SubResource> capacityReservations = default, IEnumerable<SubResource> virtualMachinesAssociated = default, CapacityReservationGroupInstanceView instanceView = default, IEnumerable<WritableSubResource> sharingSubscriptionIds = default, CapacityReservationType? reservationType = default)
         {
-            return new CapacityReservationGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, instanceView is null ? default : new CapacityReservationGroupProperties(
+            return new CapacityReservationGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, instanceView is null && reservationType is null ? default : new CapacityReservationGroupProperties(
                 default,
                 default,
                 instanceView,
                 default,
-                default,
+                reservationType,
                 default));
         }
 
