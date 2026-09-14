@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.Severity;
+                return Properties is null ? (SecurityAssessmentSeverity?)default : Properties.Severity;
             }
             set
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.AssessmentType;
+                return Properties is null ? (SecurityAssessmentType?)default : Properties.AssessmentType;
             }
             set
             {

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsEnabled;
+                return Properties is null ? (bool?)default : Properties.IsEnabled;
             }
             set
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.Frequency;
+                return Properties is null ? (TimeSpan?)default : Properties.Frequency;
             }
             set
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.SettingsStatus;
+                return Properties is null ? (AnomalySecurityMLAnalyticsSettingsStatus?)default : Properties.SettingsStatus;
             }
             set
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.IsDefaultSettings;
+                return Properties is null ? (bool?)default : Properties.IsDefaultSettings;
             }
             set
             {
