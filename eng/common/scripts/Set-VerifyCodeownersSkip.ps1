@@ -111,11 +111,16 @@ function Get-PullRequestAuthor {
     )
 
     $uri = "https://api.github.com/repos/$Repo/pulls/$PullRequestNumber"
+    $headers = @{
+        Accept                 = 'application/vnd.github+json'
+        'X-GitHub-Api-Version' = '2022-11-28'
+    }
+    if (![string]::IsNullOrEmpty($env:GH_TOKEN)) {
+        $headers.Authorization = "Bearer $env:GH_TOKEN"
+    }
 
-    # The request is unauthenticated and subject to GitHub's anonymous per IP
-    # rate limit. Retries are kept low, because every attempt spends budget.
     try {
-        $pullRequest = Invoke-RestMethod -Uri $uri -MaximumRetryCount 3 -RetryIntervalSec 2
+        $pullRequest = Invoke-RestMethod -Uri $uri -Headers $headers -MaximumRetryCount 3 -RetryIntervalSec 2
         $author = "$($pullRequest.user.login)"
 
         if ($pullRequest.user.type -eq 'Bot') {

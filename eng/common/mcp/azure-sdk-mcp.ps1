@@ -164,6 +164,7 @@ if ($mcpMode) {
             -Package $packageName `
             -Directory $tempInstallDirectory `
             -Repository $Repository `
+            -GitHubToken $env:GH_TOKEN `
             *>&1
         | Tee-Object -Variable _
         | ForEach-Object { log $_; $_ }
@@ -189,6 +190,7 @@ else {
         -Package $packageName `
         -Directory $tempInstallDirectory `
         -Repository $Repository `
+        -GitHubToken $env:GH_TOKEN `
 
 }
 

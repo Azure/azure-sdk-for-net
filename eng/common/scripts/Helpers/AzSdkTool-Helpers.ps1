@@ -123,6 +123,8 @@ function Install-Standalone-Tool (
     [Parameter()]
     [string]$Repository = "Azure/azure-sdk-tools",
     [Parameter()]
+    [string]$GitHubToken = $env:GH_TOKEN,
+    [Parameter()]
     $Directory = "."
 ) {
     $ErrorActionPreference = "Stop"
@@ -139,7 +141,14 @@ function Install-Standalone-Tool (
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl
+        $headers = @{
+            Accept                 = "application/vnd.github+json"
+            "X-GitHub-Api-Version" = "2022-11-28"
+        }
+        if (![string]::IsNullOrEmpty($GitHubToken)) {
+            $headers.Authorization = "Bearer $GitHubToken"
+        }
+        $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $headers
         $found = $false
         foreach ($release in $releases) {
             if ($release.tag_name -like "$Package*") {

@@ -52,6 +52,7 @@ steps:
 
   # Run CODEOWNERS verification before artifacts are produced and uploaded to
   # prevent artifact collisions.
+  - template: /eng/common/pipelines/templates/steps/login-to-github.yml
   - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
     parameters:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'

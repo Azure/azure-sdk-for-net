@@ -16,3 +16,5 @@ steps:
         Write-Host "Set AZSDK variable to: $azsdkPath"
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
+    env:
+      GH_TOKEN: $(GH_TOKEN)

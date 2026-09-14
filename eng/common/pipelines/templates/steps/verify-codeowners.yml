@@ -53,6 +53,8 @@ steps:
           -PullRequestNumber '$(System.PullRequest.PullRequestNumber)'
           -AdditionalSkipAliases '${{ parameters.AllowSkipAliases }}'
         workingDirectory: $(Build.SourcesDirectory)
+      env:
+        GH_TOKEN: $(GH_TOKEN)
 
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
       parameters:
@@ -96,6 +98,8 @@ steps:
           -BuildReason '$(Build.Reason)'
           -AdditionalSkipEmails '${{ parameters.AllowSkipEmails }}'
         workingDirectory: $(Build.SourcesDirectory)
+      env:
+        GH_TOKEN: $(GH_TOKEN)
 
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
       parameters:
