@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                organizationId is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
-                    default,
-                    default,
+                createdOn is null && provisioningState is null && organizationId is null && ssoUri is null && offerDetail is null && userDetail is null && linkOrganizationToken is null ? default : new OrganizationResourceProperties(
+                    createdOn,
+                    provisioningState,
                     organizationId,
-                    default,
-                    default,
-                    default,
+                    ssoUri,
+                    offerDetail,
+                    userDetail,
                     new LinkOrganization(linkOrganizationToken, default),
                     default),
                 default);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
         /// <param name="status"> SaaS Offer Status. </param>
         /// <returns> A new <see cref="Models.ConfluentOfferDetail"/> instance for mocking. </returns>
-        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId = default, string id = default, string planId = default, string planName = default, string termUnit = default, string termId = default, string privateOfferId = default, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
+        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
         {
             privateOfferIds ??= new ChangeTrackingList<string>();
 
@@ -564,6 +564,50 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessRoleBindingNameListResult(kind, metadata, (data ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> SaaS-related data properties. </summary>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <returns> A new <see cref="Models.ConfluentSaaSInfo"/> instance for mocking. </returns>
+        public static ConfluentSaaSInfo ConfluentSaaSInfo(ResourceIdentifier saaSResourceId = default)
+        {
+            return new ConfluentSaaSInfo(saaSResourceId, default);
+        }
+
+        /// <summary> Response of get latest linked SaaS resource operation. </summary>
+        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
+        /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
+        public static LatestLinkedSaaSResult LatestLinkedSaaSResult(ResourceIdentifier saaSResourceId = default, bool? isHiddenSaaS = default)
+        {
+            return new LatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, default);
+        }
+
+        /// <summary> SaaS guid &amp; PublisherId for Activate and Validate SaaS Resource. </summary>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        /// <param name="publisherId"> Publisher Id for Confluent resource. </param>
+        /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
+        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(string saasGuid = default, string publisherId = default)
+        {
+            return new ActivateSaaSParameterContent(saasGuid, publisherId, default);
+        }
+
+        /// <summary> Proxy Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="saasId"> Id of the Marketplace SaaS Resource. </param>
+        /// <returns> A new <see cref="Models.SaaSResourceDetailsResult"/> instance for mocking. </returns>
+        public static SaaSResourceDetailsResult SaaSResourceDetailsResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string saasId = default)
+        {
+            return new SaaSResourceDetailsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                saasId,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -660,7 +704,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, ConfluentPackage? package = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
             return new SCClusterSpecEntity(
                 name,
@@ -803,11 +847,11 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
         /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
         /// <param name="cosmosContainersTopicMapping"> Azure Cosmos Database Containers Topic Mapping. </param>
-        /// <param name="cosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
+        /// <param name="isCosmosMessageKeyEnabled"> Azure Cosmos Database Message Key Enabled. </param>
         /// <param name="cosmosMessageKeyField"> Azure Cosmos Database Message Key Field. </param>
         /// <param name="cosmosIncludeAllContainers"> Azure Cosmos Database Include all the containers in the database. </param>
         /// <returns> A new <see cref="Models.AzureCosmosDBSourceConnectorServiceInfo"/> instance for mocking. </returns>
-        public static AzureCosmosDBSourceConnectorServiceInfo AzureCosmosDBSourceConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, bool? cosmosMessageKeyEnabled = default, string cosmosMessageKeyField = default, string cosmosIncludeAllContainers = default)
+        public static AzureCosmosDBSourceConnectorServiceInfo AzureCosmosDBSourceConnectorServiceInfo(string cosmosDatabaseName = default, string cosmosMasterKey = default, string cosmosConnectionEndpoint = default, string cosmosContainersTopicMapping = default, bool? isCosmosMessageKeyEnabled = default, string cosmosMessageKeyField = default, string cosmosIncludeAllContainers = default)
         {
             return new AzureCosmosDBSourceConnectorServiceInfo(
                 default,
@@ -816,7 +860,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 cosmosMasterKey,
                 cosmosConnectionEndpoint,
                 cosmosContainersTopicMapping,
-                cosmosMessageKeyEnabled,
+                isCosmosMessageKeyEnabled,
                 cosmosMessageKeyField,
                 cosmosIncludeAllContainers);
         }
@@ -1063,6 +1107,105 @@ namespace Azure.ResourceManager.Confluent.Models
         public static TopicsInputConfig TopicsInputConfig(string name = default, string value = default)
         {
             return new TopicsInputConfig(name, value, default);
+        }
+
+        /// <summary> Details of network gateway record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Network Gateway Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentNetworkGatewayData"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayData ConfluentNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentNetworkGatewayProperties properties = default)
+        {
+            return new ConfluentNetworkGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Network Gateway Properties. </summary>
+        /// <param name="networkGatewayName"> Display name of the network gateway. </param>
+        /// <param name="region"> The cloud service provider region for the network gateway. </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the network gateway. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.ConfluentNetworkGatewayProperties"/> instance for mocking. </returns>
+        public static ConfluentNetworkGatewayProperties ConfluentNetworkGatewayProperties(string networkGatewayName = default, string region = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        {
+            dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
+
+            return new ConfluentNetworkGatewayProperties(
+                networkGatewayName,
+                region,
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <summary> A key-value pair for extensibility. </summary>
+        /// <param name="key"> The key. </param>
+        /// <param name="value"> The value. </param>
+        /// <returns> A new <see cref="Models.ConfluentKeyValuePair"/> instance for mocking. </returns>
+        public static ConfluentKeyValuePair ConfluentKeyValuePair(string key = default, string value = default)
+        {
+            return new ConfluentKeyValuePair(key, value, default);
+        }
+
+        /// <summary> Details of access point record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Access Point Properties. </param>
+        /// <returns> A new <see cref="Confluent.ConfluentAccessPointData"/> instance for mocking. </returns>
+        public static ConfluentAccessPointData ConfluentAccessPointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConfluentAccessPointProperties properties = default)
+        {
+            return new ConfluentAccessPointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Access Point Properties. </summary>
+        /// <param name="accessPointName"> Display name of the access point. </param>
+        /// <param name="region"> The cloud service provider region for the access point. </param>
+        /// <param name="vnetInjection"> VNet injection target (LiftrBase standard model). Contains the virtual network resource ID and the delegated subnet resource ID. </param>
+        /// <param name="egressRoutes"> IP ranges to route through your virtual network instead of Confluent's default path. Required for Kafka clients in peered VNets or on-premises networks (e.g., 10.0.0.0/8, 172.16.0.0/12). </param>
+        /// <param name="metadata"> Metadata of the record. </param>
+        /// <param name="provisioningState"> Provisioning state of the access point. </param>
+        /// <param name="dictionary"> Additional properties for extensibility. </param>
+        /// <returns> A new <see cref="Models.ConfluentAccessPointProperties"/> instance for mocking. </returns>
+        public static ConfluentAccessPointProperties ConfluentAccessPointProperties(string accessPointName = default, string region = default, VNetInjectionDetails vnetInjection = default, IEnumerable<string> egressRoutes = default, SCMetadataEntity metadata = default, ConfluentProvisionState? provisioningState = default, IEnumerable<ConfluentKeyValuePair> dictionary = default)
+        {
+            egressRoutes ??= new ChangeTrackingList<string>();
+            dictionary ??= new ChangeTrackingList<ConfluentKeyValuePair>();
+
+            return new ConfluentAccessPointProperties(
+                accessPointName,
+                region,
+                vnetInjection,
+                (egressRoutes ?? new ChangeTrackingList<string>()).ToList(),
+                metadata,
+                provisioningState,
+                (dictionary ?? new ChangeTrackingList<ConfluentKeyValuePair>()).ToList(),
+                default);
+        }
+
+        /// <summary> Details for VNet injection. </summary>
+        /// <param name="virtualNetworkResourceId"> Resource ID of the virtual network. </param>
+        /// <param name="subnetResourceId"> Resource ID of the subnet. </param>
+        /// <returns> A new <see cref="Models.VNetInjectionDetails"/> instance for mocking. </returns>
+        public static VNetInjectionDetails VNetInjectionDetails(ResourceIdentifier virtualNetworkResourceId = default, ResourceIdentifier subnetResourceId = default)
+        {
+            return new VNetInjectionDetails(virtualNetworkResourceId, subnetResourceId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

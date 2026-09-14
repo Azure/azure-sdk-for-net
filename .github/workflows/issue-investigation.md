@@ -5,6 +5,14 @@ description: |
   is actionable for Copilot, and either comments, closes clear service-side issues, or assigns
   Copilot to implementation work.
 
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+
+engine:
+  id: copilot
+  version: "1.0.83"
+
 on:
   workflow_dispatch:
     inputs:
