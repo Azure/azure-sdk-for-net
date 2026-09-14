@@ -1317,7 +1317,815 @@
                 "decorators": [
                   {
                     "name": "Azure.ResourceManager.@armResourceAction",
-                    "arguments": {}
+                    "arguments": {
+                      "resourceModel": {
+                        "$id": "83",
+                        "kind": "model",
+                        "decorators": [
+                          {
+                            "name": "Azure.ResourceManager.Private.@armResourceInternal",
+                            "arguments": {
+                              "properties": {
+                                "$id": "84",
+                                "kind": "model",
+                                "decorators": [],
+                                "name": "LargeHeaderProperties",
+                                "isGeneratedName": false,
+                                "isExactName": false,
+                                "namespace": "Azure.ResourceManager.LargeHeader",
+                                "properties": [
+                                  {
+                                    "$id": "85",
+                                    "doc": "The provisioning state of the resource.",
+                                    "apiVersions": [
+                                      "2023-12-01-preview"
+                                    ],
+                                    "type": {
+                                      "$id": "86",
+                                      "kind": "string",
+                                      "decorators": [],
+                                      "doc": "A sequence of textual characters.",
+                                      "name": "string",
+                                      "crossLanguageDefinitionId": "TypeSpec.string"
+                                    },
+                                    "name": "provisioningState",
+                                    "isGeneratedName": false,
+                                    "isExactName": false,
+                                    "optional": true,
+                                    "isApiVersionParam": false,
+                                    "onClient": false,
+                                    "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaderProperties.provisioningState",
+                                    "decorators": [],
+                                    "visibility": [
+                                      1
+                                    ],
+                                    "access": "public",
+                                    "flatten": false,
+                                    "kind": "property",
+                                    "discriminator": false,
+                                    "serializedName": "provisioningState",
+                                    "isMultipartFileInput": false,
+                                    "serializationOptions": {}
+                                  }
+                                ],
+                                "access": "public",
+                                "usage": "None",
+                                "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeaderProperties",
+                                "apiVersions": [
+                                  "2023-12-01-preview"
+                                ],
+                                "serializationOptions": {}
+                              }
+                            }
+                          }
+                        ],
+                        "doc": "Concrete tracked resource types can be created by aliasing this type using a specific property type.",
+                        "name": "LargeHeader",
+                        "isGeneratedName": false,
+                        "isExactName": false,
+                        "namespace": "Azure.ResourceManager.LargeHeader",
+                        "properties": [
+                          {
+                            "$id": "87",
+                            "doc": "The resource-specific properties for this resource.",
+                            "apiVersions": [
+                              "2023-12-01-preview"
+                            ],
+                            "type": {
+                              "$ref": "84"
+                            },
+                            "name": "properties",
+                            "isGeneratedName": false,
+                            "isExactName": false,
+                            "optional": true,
+                            "isApiVersionParam": false,
+                            "onClient": false,
+                            "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeader.properties",
+                            "decorators": [],
+                            "visibility": [
+                              1,
+                              2,
+                              4,
+                              8,
+                              16
+                            ],
+                            "access": "public",
+                            "flatten": false,
+                            "kind": "property",
+                            "discriminator": false,
+                            "serializedName": "properties",
+                            "isMultipartFileInput": false,
+                            "serializationOptions": {}
+                          },
+                          {
+                            "$id": "88",
+                            "doc": "The name of the LargeHeader",
+                            "apiVersions": [
+                              "2023-12-01-preview"
+                            ],
+                            "type": {
+                              "$id": "89",
+                              "kind": "string",
+                              "decorators": [],
+                              "doc": "A sequence of textual characters.",
+                              "name": "string",
+                              "crossLanguageDefinitionId": "TypeSpec.string"
+                            },
+                            "name": "name",
+                            "isGeneratedName": false,
+                            "isExactName": false,
+                            "optional": false,
+                            "isApiVersionParam": false,
+                            "onClient": false,
+                            "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeader.name",
+                            "decorators": [
+                              {
+                                "name": "TypeSpec.@pattern",
+                                "arguments": {
+                                  "pattern": "^[a-zA-Z0-9-]{3,24}$"
+                                }
+                              }
+                            ],
+                            "visibility": [
+                              1
+                            ],
+                            "access": "public",
+                            "flatten": false,
+                            "kind": "property",
+                            "discriminator": false,
+                            "serializedName": "name",
+                            "isMultipartFileInput": false,
+                            "serializationOptions": {}
+                          }
+                        ],
+                        "access": "public",
+                        "usage": "None",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.LargeHeader.LargeHeader",
+                        "apiVersions": [
+                          "2023-12-01-preview"
+                        ],
+                        "serializationOptions": {},
+                        "baseModel": {
+                          "$id": "90",
+                          "kind": "model",
+                          "decorators": [],
+                          "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+                          "summary": "Tracked Resource",
+                          "name": "TrackedResource",
+                          "isGeneratedName": false,
+                          "isExactName": false,
+                          "namespace": "Azure.ResourceManager.CommonTypes",
+                          "properties": [
+                            {
+                              "$id": "91",
+                              "doc": "Resource tags.",
+                              "apiVersions": [
+                                "v3",
+                                "v4",
+                                "v5",
+                                "v6"
+                              ],
+                              "type": {
+                                "$id": "92",
+                                "kind": "dict",
+                                "decorators": [],
+                                "keyType": {
+                                  "$id": "93",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "A sequence of textual characters.",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string"
+                                },
+                                "valueType": {
+                                  "$id": "94",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "A sequence of textual characters.",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string"
+                                }
+                              },
+                              "name": "tags",
+                              "isGeneratedName": false,
+                              "isExactName": false,
+                              "optional": true,
+                              "isApiVersionParam": false,
+                              "onClient": false,
+                              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags",
+                              "decorators": [],
+                              "visibility": [
+                                1,
+                                2,
+                                4,
+                                8,
+                                16
+                              ],
+                              "access": "public",
+                              "flatten": false,
+                              "kind": "property",
+                              "discriminator": false,
+                              "serializedName": "tags",
+                              "isMultipartFileInput": false,
+                              "serializationOptions": {}
+                            },
+                            {
+                              "$id": "95",
+                              "doc": "The geo-location where the resource lives",
+                              "apiVersions": [
+                                "v3",
+                                "v4",
+                                "v5",
+                                "v6"
+                              ],
+                              "type": {
+                                "$id": "96",
+                                "kind": "string",
+                                "decorators": [],
+                                "doc": "Represents an Azure geography region where supported resource providers live.",
+                                "name": "azureLocation",
+                                "baseType": {
+                                  "$id": "97",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "A sequence of textual characters.",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string"
+                                },
+                                "crossLanguageDefinitionId": "Azure.Core.azureLocation"
+                              },
+                              "name": "location",
+                              "isGeneratedName": false,
+                              "isExactName": false,
+                              "optional": false,
+                              "isApiVersionParam": false,
+                              "onClient": false,
+                              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location",
+                              "decorators": [],
+                              "visibility": [
+                                1,
+                                2
+                              ],
+                              "access": "public",
+                              "flatten": false,
+                              "kind": "property",
+                              "discriminator": false,
+                              "serializedName": "location",
+                              "isMultipartFileInput": false,
+                              "serializationOptions": {}
+                            }
+                          ],
+                          "access": "public",
+                          "usage": "None",
+                          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+                          "apiVersions": [
+                            "v3",
+                            "v4",
+                            "v5",
+                            "v6"
+                          ],
+                          "serializationOptions": {},
+                          "baseModel": {
+                            "$id": "98",
+                            "kind": "model",
+                            "decorators": [],
+                            "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+                            "summary": "Resource",
+                            "name": "Resource",
+                            "isGeneratedName": false,
+                            "isExactName": false,
+                            "namespace": "Azure.ResourceManager.CommonTypes",
+                            "properties": [
+                              {
+                                "$id": "99",
+                                "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+                                "apiVersions": [
+                                  "v3",
+                                  "v4",
+                                  "v5",
+                                  "v6"
+                                ],
+                                "type": {
+                                  "$id": "100",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "A type definition that refers the id to an Azure Resource Manager resource.",
+                                  "name": "armResourceIdentifier",
+                                  "baseType": {
+                                    "$id": "101",
+                                    "kind": "string",
+                                    "decorators": [],
+                                    "doc": "A sequence of textual characters.",
+                                    "name": "string",
+                                    "crossLanguageDefinitionId": "TypeSpec.string"
+                                  },
+                                  "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier"
+                                },
+                                "name": "id",
+                                "isGeneratedName": false,
+                                "isExactName": false,
+                                "optional": true,
+                                "isApiVersionParam": false,
+                                "onClient": false,
+                                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+                                "decorators": [],
+                                "visibility": [
+                                  1
+                                ],
+                                "access": "public",
+                                "flatten": false,
+                                "kind": "property",
+                                "discriminator": false,
+                                "serializedName": "id",
+                                "isMultipartFileInput": false,
+                                "serializationOptions": {}
+                              },
+                              {
+                                "$id": "102",
+                                "doc": "The name of the resource",
+                                "apiVersions": [
+                                  "v3",
+                                  "v4",
+                                  "v5",
+                                  "v6"
+                                ],
+                                "type": {
+                                  "$id": "103",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "A sequence of textual characters.",
+                                  "name": "string",
+                                  "crossLanguageDefinitionId": "TypeSpec.string"
+                                },
+                                "name": "name",
+                                "isGeneratedName": false,
+                                "isExactName": false,
+                                "optional": true,
+                                "isApiVersionParam": false,
+                                "onClient": false,
+                                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+                                "decorators": [],
+                                "visibility": [
+                                  1
+                                ],
+                                "access": "public",
+                                "flatten": false,
+                                "kind": "property",
+                                "discriminator": false,
+                                "serializedName": "name",
+                                "isMultipartFileInput": false,
+                                "serializationOptions": {}
+                              },
+                              {
+                                "$id": "104",
+                                "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+                                "apiVersions": [
+                                  "v3",
+                                  "v4",
+                                  "v5",
+                                  "v6"
+                                ],
+                                "type": {
+                                  "$id": "105",
+                                  "kind": "string",
+                                  "decorators": [],
+                                  "doc": "Represents an Azure Resource Type.",
+                                  "name": "armResourceType",
+                                  "baseType": {
+                                    "$id": "106",
+                                    "kind": "string",
+                                    "decorators": [],
+                                    "doc": "A sequence of textual characters.",
+                                    "name": "string",
+                                    "crossLanguageDefinitionId": "TypeSpec.string"
+                                  },
+                                  "crossLanguageDefinitionId": "Azure.Core.armResourceType"
+                                },
+                                "name": "type",
+                                "isGeneratedName": false,
+                                "isExactName": false,
+                                "optional": true,
+                                "isApiVersionParam": false,
+                                "onClient": false,
+                                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+                                "decorators": [],
+                                "visibility": [
+                                  1
+                                ],
+                                "access": "public",
+                                "flatten": false,
+                                "kind": "property",
+                                "discriminator": false,
+                                "serializedName": "type",
+                                "isMultipartFileInput": false,
+                                "serializationOptions": {}
+                              },
+                              {
+                                "$id": "107",
+                                "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+                                "apiVersions": [
+                                  "v3",
+                                  "v4",
+                                  "v5",
+                                  "v6"
+                                ],
+                                "type": {
+                                  "$id": "108",
+                                  "kind": "model",
+                                  "decorators": [],
+                                  "doc": "Metadata pertaining to creation and last modification of the resource.",
+                                  "name": "SystemData",
+                                  "isGeneratedName": false,
+                                  "isExactName": false,
+                                  "namespace": "Azure.ResourceManager.CommonTypes",
+                                  "properties": [
+                                    {
+                                      "$id": "109",
+                                      "doc": "The identity that created the resource.",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$id": "110",
+                                        "kind": "string",
+                                        "decorators": [],
+                                        "doc": "A sequence of textual characters.",
+                                        "name": "string",
+                                        "crossLanguageDefinitionId": "TypeSpec.string"
+                                      },
+                                      "name": "createdBy",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "createdBy",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    },
+                                    {
+                                      "$id": "111",
+                                      "doc": "The type of identity that created the resource.",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$id": "112",
+                                        "kind": "enum",
+                                        "decorators": [],
+                                        "doc": "The kind of entity that created the resource.",
+                                        "name": "createdByType",
+                                        "isGeneratedName": false,
+                                        "isExactName": false,
+                                        "namespace": "Azure.ResourceManager.CommonTypes",
+                                        "valueType": {
+                                          "$id": "113",
+                                          "kind": "string",
+                                          "decorators": [],
+                                          "doc": "A sequence of textual characters.",
+                                          "name": "string",
+                                          "crossLanguageDefinitionId": "TypeSpec.string"
+                                        },
+                                        "values": [
+                                          {
+                                            "$id": "114",
+                                            "kind": "enumvalue",
+                                            "decorators": [],
+                                            "doc": "The entity was created by a user.",
+                                            "name": "User",
+                                            "isExactName": false,
+                                            "value": "User",
+                                            "valueType": {
+                                              "$ref": "113"
+                                            },
+                                            "enumType": {
+                                              "$ref": "112"
+                                            },
+                                            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType.User"
+                                          },
+                                          {
+                                            "$id": "115",
+                                            "kind": "enumvalue",
+                                            "decorators": [],
+                                            "doc": "The entity was created by an application.",
+                                            "name": "Application",
+                                            "isExactName": false,
+                                            "value": "Application",
+                                            "valueType": {
+                                              "$ref": "113"
+                                            },
+                                            "enumType": {
+                                              "$ref": "112"
+                                            },
+                                            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType.Application"
+                                          },
+                                          {
+                                            "$id": "116",
+                                            "kind": "enumvalue",
+                                            "decorators": [],
+                                            "doc": "The entity was created by a managed identity.",
+                                            "name": "ManagedIdentity",
+                                            "isExactName": false,
+                                            "value": "ManagedIdentity",
+                                            "valueType": {
+                                              "$ref": "113"
+                                            },
+                                            "enumType": {
+                                              "$ref": "112"
+                                            },
+                                            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType.ManagedIdentity"
+                                          },
+                                          {
+                                            "$id": "117",
+                                            "kind": "enumvalue",
+                                            "decorators": [],
+                                            "doc": "The entity was created by a key.",
+                                            "name": "Key",
+                                            "isExactName": false,
+                                            "value": "Key",
+                                            "valueType": {
+                                              "$ref": "113"
+                                            },
+                                            "enumType": {
+                                              "$ref": "112"
+                                            },
+                                            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType.Key"
+                                          }
+                                        ],
+                                        "isFixed": false,
+                                        "isFlags": false,
+                                        "usage": "None",
+                                        "access": "public",
+                                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+                                        "apiVersions": [
+                                          "v3",
+                                          "v4",
+                                          "v5",
+                                          "v6"
+                                        ],
+                                        "isUnionAsEnum": true
+                                      },
+                                      "name": "createdByType",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "createdByType",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    },
+                                    {
+                                      "$id": "118",
+                                      "doc": "The timestamp of resource creation (UTC).",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$id": "119",
+                                        "kind": "utcDateTime",
+                                        "decorators": [],
+                                        "doc": "An instant in coordinated universal time (UTC)\"",
+                                        "name": "utcDateTime",
+                                        "encode": "rfc3339",
+                                        "wireType": {
+                                          "$id": "120",
+                                          "kind": "string",
+                                          "decorators": [],
+                                          "doc": "A sequence of textual characters.",
+                                          "name": "string",
+                                          "crossLanguageDefinitionId": "TypeSpec.string"
+                                        },
+                                        "crossLanguageDefinitionId": "TypeSpec.utcDateTime"
+                                      },
+                                      "name": "createdAt",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "createdAt",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    },
+                                    {
+                                      "$id": "121",
+                                      "doc": "The identity that last modified the resource.",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$id": "122",
+                                        "kind": "string",
+                                        "decorators": [],
+                                        "doc": "A sequence of textual characters.",
+                                        "name": "string",
+                                        "crossLanguageDefinitionId": "TypeSpec.string"
+                                      },
+                                      "name": "lastModifiedBy",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "lastModifiedBy",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    },
+                                    {
+                                      "$id": "123",
+                                      "doc": "The type of identity that last modified the resource.",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$ref": "112"
+                                      },
+                                      "name": "lastModifiedByType",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "lastModifiedByType",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    },
+                                    {
+                                      "$id": "124",
+                                      "doc": "The timestamp of resource last modification (UTC)",
+                                      "apiVersions": [
+                                        "v3",
+                                        "v4",
+                                        "v5",
+                                        "v6"
+                                      ],
+                                      "type": {
+                                        "$id": "125",
+                                        "kind": "utcDateTime",
+                                        "decorators": [],
+                                        "doc": "An instant in coordinated universal time (UTC)\"",
+                                        "name": "utcDateTime",
+                                        "encode": "rfc3339",
+                                        "wireType": {
+                                          "$id": "126",
+                                          "kind": "string",
+                                          "decorators": [],
+                                          "doc": "A sequence of textual characters.",
+                                          "name": "string",
+                                          "crossLanguageDefinitionId": "TypeSpec.string"
+                                        },
+                                        "crossLanguageDefinitionId": "TypeSpec.utcDateTime"
+                                      },
+                                      "name": "lastModifiedAt",
+                                      "isGeneratedName": false,
+                                      "isExactName": false,
+                                      "optional": true,
+                                      "isApiVersionParam": false,
+                                      "onClient": false,
+                                      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
+                                      "decorators": [],
+                                      "visibility": [
+                                        1,
+                                        2,
+                                        4,
+                                        8,
+                                        16
+                                      ],
+                                      "access": "public",
+                                      "flatten": false,
+                                      "kind": "property",
+                                      "discriminator": false,
+                                      "serializedName": "lastModifiedAt",
+                                      "isMultipartFileInput": false,
+                                      "serializationOptions": {}
+                                    }
+                                  ],
+                                  "access": "public",
+                                  "usage": "None",
+                                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+                                  "apiVersions": [
+                                    "v3",
+                                    "v4",
+                                    "v5",
+                                    "v6"
+                                  ],
+                                  "serializationOptions": {}
+                                },
+                                "name": "systemData",
+                                "isGeneratedName": false,
+                                "isExactName": false,
+                                "optional": true,
+                                "isApiVersionParam": false,
+                                "onClient": false,
+                                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+                                "decorators": [],
+                                "visibility": [
+                                  1
+                                ],
+                                "access": "public",
+                                "flatten": false,
+                                "kind": "property",
+                                "discriminator": false,
+                                "serializedName": "systemData",
+                                "isMultipartFileInput": false,
+                                "serializationOptions": {}
+                              }
+                            ],
+                            "access": "public",
+                            "usage": "None",
+                            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+                            "apiVersions": [
+                              "v3",
+                              "v4",
+                              "v5",
+                              "v6"
+                            ],
+                            "serializationOptions": {}
+                          }
+                        }
+                      }
+                    }
                   }
                 ],
                 "namespace": "Azure.ResourceManager.LargeHeader"
@@ -1333,7 +2141,7 @@
                   "$ref": "78"
                 },
                 {
-                  "$id": "83",
+                  "$id": "127",
                   "kind": "method",
                   "name": "subscriptionId",
                   "doc": "The ID of the target subscription. The value must be an UUID.",
@@ -1373,13 +2181,13 @@
           ],
           "parameters": [
             {
-              "$id": "84",
+              "$id": "128",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "85",
+                "$id": "129",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1390,7 +2198,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "86",
+                  "$id": "130",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
