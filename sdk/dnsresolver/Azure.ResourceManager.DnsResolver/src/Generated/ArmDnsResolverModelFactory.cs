@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure;
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <param name="virtualNetworkId"> Resource ID. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
-        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default, ResourceIdentifier virtualNetworkId = default, ETag? eTag = default)
+        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> metadata, DnsResolverProvisioningState? provisioningState, ResourceIdentifier virtualNetworkId, ETag? eTag)
         {
             return new DnsForwardingRulesetVirtualNetworkLinkData(
                 id,
@@ -447,6 +448,29 @@ namespace Azure.ResourceManager.DnsResolver.Models
         public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction action = default)
         {
             return new DnsResolverDomainListBulk(new DnsResolverDomainListBulkProperties(storageUri, action, default), default);
+        }
+
+        /// <summary> Describes a virtual network link. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="virtualNetworkId"> Resource ID. </param>
+        /// <param name="metadata"> Metadata attached to the virtual network link. </param>
+        /// <param name="provisioningState"> The current provisioning state of the virtual network link. This is a read-only property and any attempt to set this value will be ignored. </param>
+        /// <returns> A new <see cref="DnsResolver.DnsForwardingRulesetVirtualNetworkLinkData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsForwardingRulesetVirtualNetworkLinkData DnsForwardingRulesetVirtualNetworkLinkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, ResourceIdentifier virtualNetworkId = default, IDictionary<string, string> metadata = default, DnsResolverProvisioningState? provisioningState = default)
+        {
+            return new DnsForwardingRulesetVirtualNetworkLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualNetworkId is null && metadata is null && provisioningState is null ? default : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, default), metadata ?? new ChangeTrackingDictionary<string, string>(), provisioningState, default),
+                etag,
+                default);
         }
     }
 }
