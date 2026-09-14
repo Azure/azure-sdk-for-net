@@ -653,6 +653,7 @@ namespace Azure.Generator.Management.Visitors
             // Missing nested parameters intentionally stay defaulted to preserve old overload shape.
             var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
             var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
+            var nestedCompatibilityArguments = new List<CompatibilityArgument?>(nestedConstructorParameters.Count);
             var matchedParameters = new List<ParameterProvider>();
             var parameterDocumentation = new List<ParameterDocumentation>();
             foreach (var nestedParameter in nestedConstructorParameters)
@@ -660,12 +661,14 @@ namespace Azure.Generator.Management.Visitors
                 if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, constructorParameter.Name, nestedParameter, visitedTypes, unavailableDirectParameterNames, out var nestedArgument))
                 {
                     nestedArguments.Add(nestedArgument.Argument);
+                    nestedCompatibilityArguments.Add(nestedArgument);
                     matchedParameters.AddRange(nestedArgument.MatchedParameters);
                     parameterDocumentation.AddRange(nestedArgument.ParameterDocumentation);
                 }
                 else
                 {
                     nestedArguments.Add(GetDefaultArgument(nestedParameter));
+                    nestedCompatibilityArguments.Add(null);
                 }
             }
 
@@ -678,12 +681,28 @@ namespace Azure.Generator.Management.Visitors
 
             // Preserve omission independently for optional reconstructed models. Creating a parent does not imply
             // that an optional child was supplied, while required children retain their existing construction behavior.
-            var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
+            if (condition is not null)
+            {
+                // When an optional parent and child are controlled by exactly the same old parameters, the parent's
+                // false branch already proves that at least one of those parameters is present. Keep only the outer
+                // guard rather than repeating the identical condition at every single-input model boundary.
+                for (var i = 0; i < nestedArguments.Count; i++)
+                {
+                    var nestedArgument = nestedCompatibilityArguments[i];
+                    if (nestedArgument?.UnguardedArgument is not null
+                        && HaveSameMatchedParameters(matchedParameters, nestedArgument.MatchedParameters))
+                    {
+                        nestedArguments[i] = nestedArgument.UnguardedArgument;
+                    }
+                }
+            }
+
+            var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
-            argument = new CompatibilityArgument(expression, matchedParameters, parameterDocumentation);
+            argument = new CompatibilityArgument(expression, matchedParameters, parameterDocumentation, condition is null ? null : newInstance);
             visitedTypes.Remove(constructorParameter.Type);
             return true;
         }
@@ -932,9 +951,18 @@ namespace Azure.Generator.Management.Visitors
 
         private record ParameterDocumentation(ParameterProvider Parameter, FormattableString Description);
 
+        private static bool HaveSameMatchedParameters(
+            IEnumerable<ParameterProvider> left,
+            IEnumerable<ParameterProvider> right)
+        {
+            var leftSet = left.ToHashSet();
+            return leftSet.SetEquals(right);
+        }
+
         private record CompatibilityArgument(
             ValueExpression Argument,
             IReadOnlyList<ParameterProvider> MatchedParameters,
-            IReadOnlyList<ParameterDocumentation> ParameterDocumentation);
+            IReadOnlyList<ParameterDocumentation> ParameterDocumentation,
+            ValueExpression? UnguardedArgument = null);
     }
 }

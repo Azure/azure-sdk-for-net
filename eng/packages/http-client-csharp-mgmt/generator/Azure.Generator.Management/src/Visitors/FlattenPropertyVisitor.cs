@@ -660,7 +660,7 @@ namespace Azure.Generator.Management.Visitors
                 var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
                 var shouldPreserveSetter = ShouldPreserveLastContractSetter(model, flattenPropertyName);
                 var flattenPropertyBody = new MethodPropertyBody(
-                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty),
+                    PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, propertyModel, innerProperty, shouldLiftToNullable),
                     !internalProperty.Body.HasSetter || !innerProperty.Body.HasSetter ? null : PropertyHelpers.BuildSetterForPropertyFlatten(propertyModel, internalProperty, innerProperty, shouldLiftToNullable, shouldPreserveSetter)
                 );
 
@@ -746,7 +746,7 @@ namespace Azure.Generator.Management.Visitors
             var shouldEmitCollectionSetter = shouldPreserveSetter
                 || IsFlattenedIntoParentWithLastContractSetter(model, flattenPropertyName);
             var flattenPropertyBody = new MethodPropertyBody(
-                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty),
+                PropertyHelpers.BuildGetter(includeGetterNullCheck, internalProperty, modelProvider, innerProperty, shouldLiftToNullable),
                 // Emit collection setters only when compatibility or parent delegation requires them.
                 isFlattenedPropertyReadOnly || (innerProperty.Type.IsCollection && !shouldEmitCollectionSetter) ? null : PropertyHelpers.BuildSetterForSafeFlatten(includeSetterNullCheck, modelProvider, internalProperty, innerProperty, shouldLiftToNullable)
             );

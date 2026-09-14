@@ -167,6 +167,35 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestFlattenedGetterReturnsNullableDefaultWhenOptionalParentIsMissing()
+        {
+            var countProperty = InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true, serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [countProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, propertiesModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore.Invoke(visitor, [model]);
+            }
+
+            var rendered = plugin.Object.GetWriter(model).Write().Content;
+            Assert.That(rendered, Does.Contain("? ((int?)default) : Properties.Count;"));
+        }
+
+        [Test]
         public void TestFlattenedDateTimePropertyPreservesOuterLastContractName()
         {
             var dateTimeType = new InputDateTimeType(
@@ -814,6 +843,61 @@ namespace Azure.Generator.Mgmt.Tests
             var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(lockLevel,"));
             Assert.That(rendered, Does.Contain("(deploymentMode is null) ? default : new global::Samples.Models.TestDeploymentPolicy(deploymentMode.GetValueOrDefault(),"));
+        }
+
+        [Test]
+        public void TestBackwardCompatNewInstanceDoesNotRepeatEquivalentRecursiveGuards()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, serializedName: "value");
+            var innerPolicyModel = InputFactory.Model(
+                "TestInnerPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [valueProperty]);
+            var innerPolicyProperty = InputFactory.Property("innerPolicy", innerPolicyModel, serializedName: "innerPolicy");
+            var outerPolicyModel = InputFactory.Model(
+                "TestOuterPolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [innerPolicyProperty]);
+            var lockLevelProperty = InputFactory.Property("lockLevel", InputPrimitiveType.Int32, isRequired: true, serializedName: "lockLevel");
+            var outerPolicyProperty = InputFactory.Property("outerPolicy", outerPolicyModel, serializedName: "outerPolicy");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [lockLevelProperty, outerPolicyProperty]);
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, serializedName: "properties");
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, outerPolicyModel, innerPolicyModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(outerPolicyModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(innerPolicyModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var oldLockLevelParam = new ParameterProvider("lockLevel", $"", typeof(int));
+            var oldValueParam = new ParameterProvider("value", $"", typeof(string), Default);
+            var oldSignature = new MethodSignature(
+                "TestResource",
+                null,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                parentProvider.Type,
+                null,
+                [oldLockLevelParam, oldValueParam],
+                Attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), Snippet.FrameworkEnumValue(EditorBrowsableState.Never))]);
+            var constructorArguments = parentProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(oldSignature, Return(New.Instance(parentProvider.Type, constructorArguments)), modelFactory)]);
+
+            ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(modelFactory.Methods);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("(value is null) ? default : new global::Samples.Models.TestOuterPolicy(new global::Samples.Models.TestInnerPolicy(value,"));
+            Assert.That(rendered.Split("value is null", StringSplitOptions.None), Has.Length.EqualTo(2));
         }
 
         [Test]

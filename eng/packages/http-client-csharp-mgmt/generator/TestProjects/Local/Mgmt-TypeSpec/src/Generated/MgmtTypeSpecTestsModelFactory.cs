@@ -175,7 +175,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     default,
                     eTag,
                     writableSubResourceProp,
-                    computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
+                    computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                     default),
                 extendedLocation,
                 identity,
@@ -215,7 +215,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default,
                 eTag,
                 writableSubResourceProp,
-                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(computeFleetVmCapacityReservationGroupId is null ? default : new CapacityReservationProfile(computeFleetVmCapacityReservationGroupId is null ? default : new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
+                computeFleetVmCapacityReservationGroupId is null ? default : new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                 default);
         }
 
