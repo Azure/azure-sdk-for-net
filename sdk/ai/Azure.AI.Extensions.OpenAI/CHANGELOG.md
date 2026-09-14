@@ -3,6 +3,7 @@
 ## 3.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added `GitHubCopilotToolsetPreview`.
 
 ### Breaking Changes
 

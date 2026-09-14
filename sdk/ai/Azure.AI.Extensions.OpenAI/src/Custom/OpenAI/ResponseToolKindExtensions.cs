@@ -90,7 +90,7 @@ namespace Azure.AI.Extensions.OpenAI
             /// </summary>
             public static ResponseToolKind BrowserAutomation => new ResponseToolKind("browser_automation");
             /// <summary></summary>
-            public static ResponseToolKind GithubCopilotToolsetPreviewValue => new ResponseToolKind("github_copilot_toolset_preview");
+            public static ResponseToolKind GitHubCopilotToolsetPreviewValue => new ResponseToolKind("github_copilot_toolset_preview");
         }
     }
 }

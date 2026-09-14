@@ -10,10 +10,10 @@ public partial class GitHubCopilotToolsetPreview : ResponseTool, IJsonModel<GitH
 {
     // The generated parameterless deserialization constructor did not chain to the required
     // base ResponseTool(ResponseToolKind) constructor (ResponseTool has no parameterless
-    // constructor). We add the chain here and supply the "browser_automation_preview"
+    // constructor). We add the chain here and supply the "github_copilot_toolset_preview"
     // discriminator so the tool kind is set correctly during deserialization.
-    /// <summary> Initializes a new instance of <see cref="BrowserAutomationPreviewTool"/> for deserialization. </summary>
-    internal GitHubCopilotToolsetPreview() : base(ResponseToolKind.GithubCopilotToolsetPreviewValue)
+    /// <summary> Initializes a new instance of <see cref="GitHubCopilotToolsetPreview"/> for deserialization. </summary>
+    internal GitHubCopilotToolsetPreview() : base(ResponseToolKind.GitHubCopilotToolsetPreviewValue)
     {
     }
 }

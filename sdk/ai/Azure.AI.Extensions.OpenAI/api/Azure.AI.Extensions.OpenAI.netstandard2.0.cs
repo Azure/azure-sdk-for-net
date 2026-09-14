@@ -1376,7 +1376,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static OpenAI.Responses.ResponseToolKind get_Custom() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_FabricDataAgentPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_FabricIQPreview() { throw null; }
-        public static OpenAI.Responses.ResponseToolKind get_GithubCopilotToolsetPreviewValue() { throw null; }
+        public static OpenAI.Responses.ResponseToolKind get_GitHubCopilotToolsetPreviewValue() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_MemorySearchPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_Namespace() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_OpenAPI() { throw null; }
@@ -1398,7 +1398,7 @@ namespace Azure.AI.Extensions.OpenAI
             public static OpenAI.Responses.ResponseToolKind Custom { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind FabricDataAgentPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind FabricIQPreview { get { throw null; } }
-            public static OpenAI.Responses.ResponseToolKind GithubCopilotToolsetPreviewValue { get { throw null; } }
+            public static OpenAI.Responses.ResponseToolKind GitHubCopilotToolsetPreviewValue { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind MemorySearchPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind Namespace { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind OpenAPI { get { throw null; } }
