@@ -80,10 +80,25 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("namespaceResourceId"u8);
                 writer.WriteStringValue(NamespaceResourceId);
             }
-            if (Optional.IsDefined(IdentityResourceId))
+            if (Optional.IsDefined(NamespaceUuid))
             {
-                writer.WritePropertyName("identityResourceId"u8);
-                writer.WriteStringValue(IdentityResourceId);
+                writer.WritePropertyName("namespaceUuid"u8);
+                writer.WriteStringValue(NamespaceUuid);
+            }
+            if (Optional.IsDefined(DataPlaneHostName))
+            {
+                writer.WritePropertyName("dataPlaneHostName"u8);
+                writer.WriteStringValue(DataPlaneHostName);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkingProperties))
+            {
+                writer.WritePropertyName("linkingProperties"u8);
+                writer.WriteObjectValue(LinkingProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -128,7 +143,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 return null;
             }
             ResourceIdentifier namespaceResourceId = default;
-            ResourceIdentifier identityResourceId = default;
+            string namespaceUuid = default;
+            string dataPlaneHostName = default;
+            DeviceRegistryIdentity identity = default;
+            DeviceRegistryLinkingProperties linkingProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,13 +159,32 @@ namespace Azure.ResourceManager.IotHub.Models
                     namespaceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("identityResourceId"u8))
+                if (prop.NameEquals("namespaceUuid"u8))
+                {
+                    namespaceUuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dataPlaneHostName"u8))
+                {
+                    dataPlaneHostName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("identity"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    identityResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    identity = DeviceRegistryIdentity.DeserializeDeviceRegistryIdentity(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("linkingProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkingProperties = DeviceRegistryLinkingProperties.DeserializeDeviceRegistryLinkingProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -155,7 +192,13 @@ namespace Azure.ResourceManager.IotHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IotHubDeviceRegistry(namespaceResourceId, identityResourceId, additionalBinaryDataProperties);
+            return new IotHubDeviceRegistry(
+                namespaceResourceId,
+                namespaceUuid,
+                dataPlaneHostName,
+                identity,
+                linkingProperties,
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -45,8 +45,9 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="batchFrequencyInSeconds"> Time interval at which blobs are written to storage. Value should be between 60 and 720 seconds. Default value is 300 seconds. </param>
         /// <param name="maxChunkSizeInBytes"> Maximum number of bytes for each blob written to storage. Value should be between 10485760(10MB) and 524288000(500MB). Default value is 314572800(300MB). </param>
         /// <param name="encoding"> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </param>
+        /// <param name="messagePayloadFormat"> The format of the message payload delivered to this endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingStorageContainerProperties(Guid? id, string connectionString, string endpoint, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, string containerName, string fileNameFormat, int? batchFrequencyInSeconds, int? maxChunkSizeInBytes, RoutingStorageContainerPropertiesEncoding? encoding, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingStorageContainerProperties(Guid? id, string connectionString, string endpoint, IotHubAuthenticationType? authenticationType, ManagedIdentity identity, string name, string subscriptionId, string resourceGroup, string containerName, string fileNameFormat, int? batchFrequencyInSeconds, int? maxChunkSizeInBytes, RoutingStorageContainerPropertiesEncoding? encoding, MessagePayloadFormat? messagePayloadFormat, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ConnectionString = connectionString;
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.IotHub.Models
             BatchFrequencyInSeconds = batchFrequencyInSeconds;
             MaxChunkSizeInBytes = maxChunkSizeInBytes;
             Encoding = encoding;
+            MessagePayloadFormat = messagePayloadFormat;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -102,6 +104,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </summary>
         public RoutingStorageContainerPropertiesEncoding? Encoding { get; set; }
+
+        /// <summary> The format of the message payload delivered to this endpoint. </summary>
+        public MessagePayloadFormat? MessagePayloadFormat { get; set; }
 
         /// <summary> The user assigned identity. </summary>
         public ResourceIdentifier UserAssignedIdentity

@@ -272,7 +272,17 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("ipVersion"u8);
                 writer.WriteStringValue(IPVersion.Value.ToString());
             }
-            if (Optional.IsDefined(DeviceRegistry))
+            if (Optional.IsDefined(ConnectionProfile))
+            {
+                writer.WritePropertyName("connectionProfile"u8);
+                writer.WriteStringValue(ConnectionProfile.Value.ToString());
+            }
+            if (Optional.IsDefined(MqttV5Settings))
+            {
+                writer.WritePropertyName("mqttV5Settings"u8);
+                writer.WriteObjectValue(MqttV5Settings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceRegistry))
             {
                 writer.WritePropertyName("deviceRegistry"u8);
                 writer.WriteObjectValue(DeviceRegistry, options);
@@ -354,6 +364,8 @@ namespace Azure.ResourceManager.IotHub.Models
             bool? enableDataResidency = default;
             IotHubRootCertificateProperties rootCertificate = default;
             IotHubIPVersion? ipVersion = default;
+            ConnectionProfile? connectionProfile = default;
+            MqttV5Settings mqttV5Settings = default;
             IotHubDeviceRegistry deviceRegistry = default;
             IotHubDetails iotHubDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -648,6 +660,24 @@ namespace Azure.ResourceManager.IotHub.Models
                     ipVersion = new IotHubIPVersion(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("connectionProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    connectionProfile = new ConnectionProfile(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("mqttV5Settings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mqttV5Settings = MqttV5Settings.DeserializeMqttV5Settings(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("deviceRegistry"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -702,6 +732,8 @@ namespace Azure.ResourceManager.IotHub.Models
                 enableDataResidency,
                 rootCertificate,
                 ipVersion,
+                connectionProfile,
+                mqttV5Settings,
                 deviceRegistry,
                 iotHubDetails,
                 additionalBinaryDataProperties);

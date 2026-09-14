@@ -115,6 +115,11 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
             }
+            if (Optional.IsDefined(MessagePayloadFormat))
+            {
+                writer.WritePropertyName("messagePayloadFormat"u8);
+                writer.WriteStringValue(MessagePayloadFormat.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string workspaceId = default;
             string eventStreamId = default;
             string sourceId = default;
+            MessagePayloadFormat? messagePayloadFormat = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -222,6 +228,15 @@ namespace Azure.ResourceManager.IotHub.Models
                     sourceId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("messagePayloadFormat"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    messagePayloadFormat = new MessagePayloadFormat(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -237,6 +252,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 workspaceId,
                 eventStreamId,
                 sourceId,
+                messagePayloadFormat,
                 additionalBinaryDataProperties);
         }
     }
