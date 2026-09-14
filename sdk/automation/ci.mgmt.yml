@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Automation
       safeName: AzureResourceManagerAutomation
+    - name: Azure.Provisioning.Automation
+      safeName: AzureProvisioningAutomation
