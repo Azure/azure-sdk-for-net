@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> ImageRepositoryCredentialsPatch represents the credentials used to login to the image repository for patch operations. </summary>
-    internal partial class ImageRepositoryCredentialsPatch
+    public partial class ImageRepositoryCredentialsPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

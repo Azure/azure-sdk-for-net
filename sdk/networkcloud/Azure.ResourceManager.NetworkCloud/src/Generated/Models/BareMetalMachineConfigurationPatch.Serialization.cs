@@ -14,7 +14,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> BareMetalMachineConfigurationDataPatch represents configuration for the bare metal machine for patch operations. </summary>
-    internal partial class BareMetalMachineConfigurationPatch : IJsonModel<BareMetalMachineConfigurationPatch>
+    public partial class BareMetalMachineConfigurationPatch : IJsonModel<BareMetalMachineConfigurationPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

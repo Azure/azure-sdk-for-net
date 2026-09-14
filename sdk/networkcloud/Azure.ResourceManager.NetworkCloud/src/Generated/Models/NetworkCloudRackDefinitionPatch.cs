@@ -13,7 +13,7 @@ using Azure.ResourceManager.NetworkCloud;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> RackDefinitionPatch represents details regarding the rack for patch operations. </summary>
-    internal partial class NetworkCloudRackDefinitionPatch
+    public partial class NetworkCloudRackDefinitionPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
