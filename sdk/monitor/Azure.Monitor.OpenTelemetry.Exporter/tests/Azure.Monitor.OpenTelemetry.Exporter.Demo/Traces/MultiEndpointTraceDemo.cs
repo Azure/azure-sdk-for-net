@@ -34,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         private readonly TracerProvider? _tracerProvider;
         private readonly EndpointRoutingProcessor _routingProcessor;
 
-        public MultiEndpointTraceDemo(string exporterConnectionString, IReadOnlyList<EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false)
+        public MultiEndpointTraceDemo(string exporterConnectionString, IReadOnlyList<EndpointRoute> routes, string runId, bool faultRoutedEndpoints = false, TokenCredential? credential = null)
         {
             _routingProcessor = new EndpointRoutingProcessor(routes, runId);
 
@@ -51,6 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 .AddAzureMonitorTraceExporter(o =>
                 {
                     o.ConnectionString = exporterConnectionString;
+                    o.Credential = credential;
 
                     // Rate-limited sampling is the default at 5 traces/second and takes precedence
                     // over SamplingRatio, which would drop almost everything this demo generates.
@@ -210,11 +211,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         /// <summary>An ingestion target: what the routing tags on an Activity will point at.</summary>
         internal sealed class EndpointRoute
         {
-            public EndpointRoute(string name, string instrumentationKey, string ingestionEndpoint)
+            public EndpointRoute(string name, string instrumentationKey, string ingestionEndpoint, bool useAadAuth = false)
             {
                 Name = name;
                 InstrumentationKey = instrumentationKey;
                 IngestionEndpoint = ingestionEndpoint;
+                UseAadAuth = useAadAuth;
             }
 
             public string Name { get; }
@@ -222,6 +224,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
             public string InstrumentationKey { get; }
 
             public string IngestionEndpoint { get; }
+
+            /// <summary>Whether this destination's telemetry asks to be sent with the Entra ID token.</summary>
+            public bool UseAadAuth { get; }
         }
 
         /// <summary>
@@ -233,6 +238,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         {
             private const int UnroutableEvery = 10;
             private const string CloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
+            private const string UseAadAuthAttributeName = "microsoft.use_aad_auth";
 
             private readonly IReadOnlyList<EndpointRoute> _routes;
             private readonly string _runId;
@@ -281,6 +287,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 data.SetTag("microsoft.instrumentation_key", route.InstrumentationKey);
                 data.SetTag("microsoft.ingestion_endpoint", route.IngestionEndpoint);
                 data.SetTag(CloudRoleAttributeName, route.Name);
+
+                if (route.UseAadAuth)
+                {
+                    data.SetTag(UseAadAuthAttributeName, true);
+                }
 
                 // Survives into customDimensions, so a query can count what actually arrived.
                 data.SetTag("demo.run_id", _runId);

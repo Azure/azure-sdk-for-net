@@ -31,6 +31,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         /// </summary>
         private const string RouteConnectionStringsVariable = "MULTIENDPOINT_ROUTE_CONNECTION_STRINGS";
 
+        /// <summary>
+        /// Comma-separated 1-based positions in <see cref="RouteConnectionStringsVariable"/> whose
+        /// telemetry should carry microsoft.use_aad_auth. Setting it also attaches a
+        /// DefaultAzureCredential, so the signed-in identity needs Monitoring Metrics Publisher on
+        /// those components. Leave it unset to run without a credential.
+        /// </summary>
+        private const string AadRoutesVariable = "MULTIENDPOINT_AAD_ROUTES";
+
         public static void Main(string[] args)
         {
             if (args.Length > 0 && string.Equals(args[0], "multiendpoint", StringComparison.OrdinalIgnoreCase))
@@ -80,15 +88,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         private static void RunMultiEndpointDemo(int activityCount, bool faultEndpoints)
         {
             var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
-            var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
+            var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable), Environment.GetEnvironmentVariable(AadRoutesVariable));
 
             if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
                 Console.WriteLine("string per destination, using components in different regions.");
+                Console.WriteLine($"Optionally set {AadRoutesVariable} to the 1-based positions that should authenticate.");
                 return;
             }
+
+            var aadRoutes = routes.FindAll(r => r.UseAadAuth);
+            var credential = aadRoutes.Count > 0 ? new DefaultAzureCredential() : null;
 
             // Before any exporter type is touched: the gate is read once into a static.
             MultiEndpointTraceDemo.EnableMultiEndpointRouting();
@@ -101,8 +113,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             Console.WriteLine($"Run id     : {runId}");
             Console.WriteLine($"Activities : {activityCount} requests, each with one dependency");
-            Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
-            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
+            Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.UseAadAuth ? r.Name + " (aad)" : r.Name))}");
+            Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), and an endpoint with both kinds of route is split, so expect one POST per group per export");
+            Console.WriteLine($"Entra ID   : {(credential == null ? "off" : $"DefaultAzureCredential, {aadRoutes.Count} of {routes.Count} route(s) opted in")}");
             Console.WriteLine($"Endpoints  : {(faultEndpoints ? "FAULTED (503 injected)" : "live")}");
             Console.WriteLine();
 
@@ -110,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
             var stopwatch = Stopwatch.StartNew();
 
-            using (var demo = new MultiEndpointTraceDemo(hostConnectionString, routes, runId, faultEndpoints))
+            using (var demo = new MultiEndpointTraceDemo(hostConnectionString, routes, runId, faultEndpoints, credential))
             {
                 demo.GenerateTraces(activityCount);
 
@@ -206,13 +219,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         /// Turns connection strings into routes, assigning each route a stable name based on its
         /// position in the configured list.
         /// </summary>
-        private static List<MultiEndpointTraceDemo.EndpointRoute> ParseRoutes(string? connectionStrings)
+        private static List<MultiEndpointTraceDemo.EndpointRoute> ParseRoutes(string? connectionStrings, string? aadRoutes = null)
         {
             var routes = new List<MultiEndpointTraceDemo.EndpointRoute>();
 
             if (string.IsNullOrWhiteSpace(connectionStrings))
             {
                 return routes;
+            }
+
+            var aadPositions = new HashSet<int>();
+            foreach (var position in (aadRoutes ?? string.Empty).Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (int.TryParse(position.Trim(), out var parsed))
+                {
+                    aadPositions.Add(parsed);
+                }
             }
 
             foreach (var connectionString in connectionStrings!.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
@@ -248,7 +270,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
                 var name = $"route{routes.Count + 1}";
 
-                routes.Add(new MultiEndpointTraceDemo.EndpointRoute(name, instrumentationKey, ingestionEndpoint));
+                routes.Add(new MultiEndpointTraceDemo.EndpointRoute(name, instrumentationKey, ingestionEndpoint, aadPositions.Contains(routes.Count + 1)));
             }
 
             return routes;
