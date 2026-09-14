@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     isPanoramaManaged,
                     isStrataCloudManaged,
                     panoramaConfig,
-                    new StrataCloudManagerConfig(cloudManagerName, default),
+                    cloudManagerName is null ? default : new StrataCloudManagerConfig(cloudManagerName, default),
                     associatedRulestack,
                     dnsSettings,
                     (frontEndSettings ?? new ChangeTrackingList<FirewallFrontendSetting>()).ToList(),
