@@ -105,7 +105,12 @@ namespace Azure.Security.KeyVault.Certificates
             // flow through automatically. No field-by-field copy is needed - future
             // additions to ClientOptions are picked up for free.
             var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
-            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(
+                options,
+                perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
+                perRetryPolicies: [authPolicy],
+                transportOptions: new HttpPipelineTransportOptions(),
+                responseClassifier: null);
 
             _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
 

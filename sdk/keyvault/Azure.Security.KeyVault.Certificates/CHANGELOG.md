@@ -4,16 +4,20 @@
 
 ### Features Added
 
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Fixed intermittent authentication failures by retrying requests rejected because the mTLS Proof-of-Possession certificate did not match the token binding.
 - Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
 
 ### Other Changes
 
 - Internal: the `CertificateClient` transport now delegates to a TypeSpec-generated implementation. All public method signatures, return types, exception contracts, default service version, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are unchanged for existing callers. `CertificateClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end into the new pipeline. A small set of additive types from the new transport layer (`AzureSecurityKeyVaultCertificatesContext`, `KeyVaultCertificatesModelFactory`, and `IJsonModel<PlatformManaged>` / `IPersistableModel<PlatformManaged>` on `PlatformManaged`) appears on the public surface; these are net additions that existing customer code is unaffected by — same pattern as `Azure.Security.KeyVault.Administration`.
+
 ## 4.10.0-beta.1 (2026-06-04)
 
 ### Features Added
