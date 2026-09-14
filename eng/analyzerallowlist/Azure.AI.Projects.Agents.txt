@@ -37,12 +37,6 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.JsonModelWr
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.#ctor(System.String)
 
-# TODO remove the fix below
-# Temporary fix to make the build
-nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentsModelFactory.BrowserAutomationToolboxTool(System.String,System.String,System.Collections.Generic.IDictionary{System.String,Azure.AI.Extensions.OpenAI.ToolConfig},Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions)
-nowarn:AAIP001 T:Azure.AI.Projects.Agents.BrowserAutomationToolboxTool
-#################
-
 # AAIP002 marks generated declarations that expose OpenAI-experimental surface
 # (see OpenAIExperimentalVisitor in sdk/ai/codegen). The visitor attributes
 # declarations by signature, so DeclarativeAgentDefinition's full internal

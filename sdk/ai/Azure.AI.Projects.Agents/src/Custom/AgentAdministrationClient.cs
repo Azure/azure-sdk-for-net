@@ -68,9 +68,9 @@ public partial class AgentAdministrationClient
     [Experimental("AAIP001")]
     private AgentOptimizationJobs _cachedAgentOptimizationJobs;
     [Experimental("AAIP001")]
-    private AgentEndpointConversations _cachedAgentEndpointConversations;
+    private BetaVoiceAgentEndpointConversations _cachedAgentEndpointConversations;
     [Experimental("AAIP001")]
-    private AgentTelephony _cachedAgentTelephony;
+    private BetaVoiceAgentTelephony _cachedAgentTelephony;
     /// <summary>
     /// Initializes a new <see cref="AgentAdministrationClient"/> with the specified
     /// service endpoint and authentication token provider.
@@ -1130,17 +1130,17 @@ public partial class AgentAdministrationClient
 
     /// <summary> Gets the client for the voice Agent. </summary>
     [Experimental("AAIP001")]
-    public virtual AgentEndpointConversations GetAgentEndpointConversations()
+    public virtual BetaVoiceAgentEndpointConversations GetBetaVoiceAgentEndpointConversations()
     {
-        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new AgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
+        return Volatile.Read(ref _cachedAgentEndpointConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointConversations, new BetaVoiceAgentEndpointConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentEndpointConversations;
     }
 
     /// <summary>
     /// Gets the AgentTelephony sub-client.
     /// </summary>
     [Experimental("AAIP001")]
-    public virtual AgentTelephony GetAgentTelephony()
+    public virtual BetaVoiceAgentTelephony GetBetaVoiceAgentTelephony()
     {
-        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new AgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
+        return Volatile.Read(ref _cachedAgentTelephony) ?? Interlocked.CompareExchange(ref _cachedAgentTelephony, new BetaVoiceAgentTelephony(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedAgentTelephony;
     }
 }

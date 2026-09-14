@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.Projects.Agents
 {
     /// <summary></summary>
-    public partial class AgentTelephony
+    public partial class BetaVoiceAgentTelephony
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
         private static PipelineMessageClassifier _pipelineMessageClassifier200202;

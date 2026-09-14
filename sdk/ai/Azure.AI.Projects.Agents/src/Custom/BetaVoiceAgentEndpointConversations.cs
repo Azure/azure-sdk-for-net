@@ -13,6 +13,7 @@ using OpenAI.Realtime;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
+[CodeGenType("AgentEndpointConversations")]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationsAsync", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversations", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -29,7 +30,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetAgentConversationResponses", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgentConversationResponsesAsync", typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-public partial class AgentEndpointConversations
+public partial class BetaVoiceAgentEndpointConversations
 {
     /// <summary>
     /// Returns the conversations persisted for the specified voice agent endpoint.

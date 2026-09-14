@@ -8,5 +8,5 @@ namespace Azure.AI.Projects.Agents;
 [Experimental("AAIP001")] internal partial class CreateSkillVersionRequest { }
 [Experimental("AAIP001")] internal partial class ProjectAgentSkillsGetSkillVersionsAsyncCollectionResult { }
 [Experimental("AAIP001")] internal partial class ProjectAgentSkillsGetSkillVersionsCollectionResult { }
-[Experimental("AAIP001")] internal partial class AgentTelephonyGetTelephonyCallsAsyncCollectionResult { }
-[Experimental("AAIP001")] internal partial class AgentTelephonyGetTelephonyCallsCollectionResult { }
+[Experimental("AAIP001")] internal partial class BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResult { }
+[Experimental("AAIP001")] internal partial class BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult { }

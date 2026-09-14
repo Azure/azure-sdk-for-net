@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace Azure.AI.Projects.Agents;
 
 [Experimental("AAIP001")]
+[CodeGenType("AgentTelephony")]
 [CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyBindingsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyBindingStatus?), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyBindings", typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
@@ -20,7 +21,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(TelephonyProvider?), typeof(TelephonyCallStatus?), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetTelephonyCalls", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetTelephonyCallsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(DateTimeOffset?), typeof(DateTimeOffset?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-public partial class AgentTelephony
+public partial class BetaVoiceAgentTelephony
 {
     /// <summary> Creates a telephony binding for the voice agent named in the path. </summary>
     /// <param name="agentName"> The name of the voice agent that owns the binding. </param>
@@ -329,7 +330,7 @@ public partial class AgentTelephony
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new AgentTelephonyGetTelephonyCallsCollectionResultOfT(
+        return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResultOfT(
             client: this,
             agentName: agentName,
             foundryFeatures: default,
@@ -377,7 +378,7 @@ public partial class AgentTelephony
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        return new AgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
+        return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
             client: this,
             agentName: agentName,
             foundryFeatures: default,

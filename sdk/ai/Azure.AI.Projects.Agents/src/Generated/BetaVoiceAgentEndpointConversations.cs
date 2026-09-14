@@ -19,22 +19,22 @@ namespace Azure.AI.Projects.Agents
     /// default) nothing is persisted, so these routes return `404`. The merged-recording routes additionally
     /// require the session to have ended and return `409` while it is still in progress.
     /// </summary>
-    public partial class AgentEndpointConversations
+    public partial class BetaVoiceAgentEndpointConversations
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AgentEndpointConversations for mocking. </summary>
-        protected AgentEndpointConversations()
+        /// <summary> Initializes a new instance of BetaVoiceAgentEndpointConversations for mocking. </summary>
+        protected BetaVoiceAgentEndpointConversations()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentEndpointConversations. </summary>
+        /// <summary> Initializes a new instance of BetaVoiceAgentEndpointConversations. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentEndpointConversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BetaVoiceAgentEndpointConversations(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -66,7 +66,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversation");
             scope.Start();
             try
             {
@@ -101,7 +101,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversation");
             scope.Start();
             try
             {
@@ -174,7 +174,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult DeleteAgentConversation(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.DeleteAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.DeleteAgentConversation");
             scope.Start();
             try
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> DeleteAgentConversationAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.DeleteAgentConversation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.DeleteAgentConversation");
             scope.Start();
             try
             {
@@ -281,7 +281,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationResponse(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponse");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationResponse");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationResponseAsync(string agentName, string conversationId, string responseId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationResponse");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationResponse");
             scope.Start();
             try
             {
@@ -400,7 +400,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItem(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItem");
             scope.Start();
             try
             {
@@ -440,7 +440,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItem");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItem");
             scope.Start();
             try
             {
@@ -481,7 +481,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemAudio(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudio");
             scope.Start();
             try
             {
@@ -522,7 +522,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudio");
             scope.Start();
             try
             {
@@ -612,7 +612,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudioContent");
             scope.Start();
             try
             {
@@ -652,7 +652,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemAudioContent");
             scope.Start();
             try
             {
@@ -739,7 +739,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemGeneratedAudio(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
             scope.Start();
             try
             {
@@ -778,7 +778,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudio");
             scope.Start();
             try
             {
@@ -865,7 +865,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationItemGeneratedAudioContent(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
             scope.Start();
             try
             {
@@ -906,7 +906,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationItemGeneratedAudioContentAsync(string agentName, string conversationId, string itemId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationItemGeneratedAudioContent");
             scope.Start();
             try
             {
@@ -1000,7 +1000,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudio(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudio");
             scope.Start();
             try
             {
@@ -1043,7 +1043,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudio");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudio");
             scope.Start();
             try
             {
@@ -1139,7 +1139,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual ClientResult GetAgentConversationAudioContent(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudioContent");
             scope.Start();
             try
             {
@@ -1181,7 +1181,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<ClientResult> GetAgentConversationAudioContentAsync(string agentName, string conversationId, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentEndpointConversations.GetAgentConversationAudioContent");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentEndpointConversations.GetAgentConversationAudioContent");
             scope.Start();
             try
             {

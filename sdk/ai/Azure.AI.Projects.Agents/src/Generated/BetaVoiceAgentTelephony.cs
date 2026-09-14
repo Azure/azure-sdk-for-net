@@ -13,23 +13,23 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AgentTelephony sub-client. </summary>
-    public partial class AgentTelephony
+    /// <summary> The BetaVoiceAgentTelephony sub-client. </summary>
+    public partial class BetaVoiceAgentTelephony
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AgentTelephony for mocking. </summary>
-        protected AgentTelephony()
+        /// <summary> Initializes a new instance of BetaVoiceAgentTelephony for mocking. </summary>
+        protected BetaVoiceAgentTelephony()
         {
         }
 
-        /// <summary> Initializes a new instance of AgentTelephony. </summary>
+        /// <summary> Initializes a new instance of BetaVoiceAgentTelephony. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal AgentTelephony(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BetaVoiceAgentTelephony(ClientDiagnostics clientDiagnostics, ClientPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateTelephonyBinding(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyBinding");
             scope.Start();
             try
             {
@@ -89,7 +89,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateTelephonyBindingAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyBinding");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyBinding(string agentName, string bindingId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyBinding");
             scope.Start();
             try
             {
@@ -173,7 +173,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyBindingAsync(string agentName, string bindingId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyBinding");
             scope.Start();
             try
             {
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult UpdateTelephonyBinding(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.UpdateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.UpdateTelephonyBinding");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> UpdateTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.UpdateTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.UpdateTelephonyBinding");
             scope.Start();
             try
             {
@@ -292,7 +292,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult DeleteTelephonyBinding(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.DeleteTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.DeleteTelephonyBinding");
             scope.Start();
             try
             {
@@ -323,7 +323,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> DeleteTelephonyBindingAsync(string agentName, string bindingId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.DeleteTelephonyBinding");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.DeleteTelephonyBinding");
             scope.Start();
             try
             {
@@ -398,11 +398,11 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual CollectionResult GetTelephonyCalls(string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCalls");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCalls");
             scope.Start();
             try
             {
-                return new AgentTelephonyGetTelephonyCallsCollectionResult(
+                return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult(
                     this,
                     agentName,
                     foundryFeatures,
@@ -460,11 +460,11 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncCollectionResult GetTelephonyCallsAsync(string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCalls");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCalls");
             scope.Start();
             try
             {
-                return new AgentTelephonyGetTelephonyCallsAsyncCollectionResult(
+                return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResult(
                     this,
                     agentName,
                     foundryFeatures,
@@ -514,7 +514,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual CollectionResult<TelephonyCallSummary> GetTelephonyCalls(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new AgentTelephonyGetTelephonyCallsCollectionResultOfT(
+            return new BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResultOfT(
                 this,
                 agentName,
                 foundryFeatures?.ToSerialString(),
@@ -558,7 +558,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual AsyncCollectionResult<TelephonyCallSummary> GetTelephonyCallsAsync(string agentName, AgentDefinitionOptInKeys? foundryFeatures = default, TelephonyProvider? provider = default, TelephonyCallStatus? status = default, DateTimeOffset? startedAfter = default, DateTimeOffset? startedBefore = default, int? limit = default, AgentListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
         {
-            return new AgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
+            return new BetaVoiceAgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(
                 this,
                 agentName,
                 foundryFeatures?.ToSerialString(),
@@ -589,7 +589,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCall(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCall");
             scope.Start();
             try
             {
@@ -619,7 +619,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCallAsync(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCall");
             scope.Start();
             try
             {
@@ -674,7 +674,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult TransferTelephonyCall(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.TransferTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.TransferTelephonyCall");
             scope.Start();
             try
             {
@@ -705,7 +705,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> TransferTelephonyCallAsync(string agentName, string callId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.TransferTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.TransferTelephonyCall");
             scope.Start();
             try
             {
@@ -763,7 +763,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult EndTelephonyCall(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.EndTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.EndTelephonyCall");
             scope.Start();
             try
             {
@@ -793,7 +793,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> EndTelephonyCallAsync(string agentName, string callId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.EndTelephonyCall");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.EndTelephonyCall");
             scope.Start();
             try
             {
@@ -846,7 +846,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyTransferTargets(string agentName, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -875,7 +875,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyTransferTargetsAsync(string agentName, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -928,7 +928,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult ReplaceTelephonyTransferTargets(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ReplaceTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ReplaceTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -959,7 +959,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ReplaceTelephonyTransferTargets");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ReplaceTelephonyTransferTargets");
             scope.Start();
             try
             {
@@ -1018,7 +1018,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateTelephonyCallJob(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1049,7 +1049,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1105,7 +1105,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCallJob(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1135,7 +1135,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCallJobAsync(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1190,7 +1190,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CancelTelephonyCallJob(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1221,7 +1221,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelTelephonyCallJobAsync(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCallJob");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCallJob");
             scope.Start();
             try
             {
@@ -1277,7 +1277,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CreateTelephonyCampaign(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1307,7 +1307,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CreateTelephonyCampaignAsync(string agentName, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CreateTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CreateTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1361,7 +1361,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1391,7 +1391,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1441,7 +1441,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual OperationResult ImportTelephonyCampaignRecipients(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ImportTelephonyCampaignRecipients");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ImportTelephonyCampaignRecipients");
             scope.Start();
             try
             {
@@ -1467,7 +1467,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual async Task<OperationResult> ImportTelephonyCampaignRecipientsAsync(bool waitUntilCompleted, string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ImportTelephonyCampaignRecipients");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ImportTelephonyCampaignRecipients");
             scope.Start();
             try
             {
@@ -1528,7 +1528,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyCampaignRecipientImport(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaignRecipientImport");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaignRecipientImport");
             scope.Start();
             try
             {
@@ -1559,7 +1559,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyCampaignRecipientImportAsync(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCampaignRecipientImport");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCampaignRecipientImport");
             scope.Start();
             try
             {
@@ -1609,7 +1609,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual OperationResult ValidateTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ValidateTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ValidateTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1633,7 +1633,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual async Task<OperationResult> ValidateTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ValidateTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ValidateTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1684,7 +1684,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual OperationResult PublishTelephonyCampaign(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PublishTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PublishTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1709,7 +1709,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0006")]
         internal virtual async Task<OperationResult> PublishTelephonyCampaignAsync(bool waitUntilCompleted, string agentName, string campaignId, BinaryContent content, string foundryFeatures = default, RequestOptions options = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PublishTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PublishTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1767,7 +1767,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult PauseTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PauseTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PauseTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1797,7 +1797,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> PauseTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.PauseTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.PauseTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1851,7 +1851,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult ResumeTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ResumeTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ResumeTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1881,7 +1881,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> ResumeTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.ResumeTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.ResumeTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1935,7 +1935,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult CancelTelephonyCampaign(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCampaign");
             scope.Start();
             try
             {
@@ -1965,7 +1965,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> CancelTelephonyCampaignAsync(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.CancelTelephonyCampaign");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.CancelTelephonyCampaign");
             scope.Start();
             try
             {
@@ -2019,7 +2019,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual ClientResult GetTelephonyOperation(string agentName, string operationId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyOperation");
             scope.Start();
             try
             {
@@ -2049,7 +2049,7 @@ namespace Azure.AI.Projects.Agents
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<ClientResult> GetTelephonyOperationAsync(string agentName, string operationId, string foundryFeatures, RequestOptions options)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyOperation");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyOperation");
             scope.Start();
             try
             {

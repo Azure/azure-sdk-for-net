@@ -6,15 +6,12 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
-    [Experimental("AAIP001")]
-    internal partial class AgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT : AsyncCollectionResult<TelephonyCallSummary>
+    internal partial class BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult : CollectionResult
     {
-        private readonly AgentTelephony _client;
+        private readonly BetaVoiceAgentTelephony _client;
         private readonly string _agentName;
         private readonly string _foundryFeatures;
         private readonly string _provider;
@@ -27,8 +24,8 @@ namespace Azure.AI.Projects.Agents
         private readonly string _before;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of AgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The AgentTelephony client used to send requests. </param>
+        /// <summary> Initializes a new instance of BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The BetaVoiceAgentTelephony client used to send requests. </param>
         /// <param name="agentName"> The name of the voice agent whose calls are listed. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="provider"> Filters calls by provider. </param>
@@ -54,7 +51,7 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public AgentTelephonyGetTelephonyCallsAsyncCollectionResultOfT(AgentTelephony client, string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
+        public BetaVoiceAgentTelephonyGetTelephonyCallsCollectionResult(BetaVoiceAgentTelephony client, string agentName, string foundryFeatures, string provider, string status, DateTimeOffset? startedAfter, DateTimeOffset? startedBefore, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
             _agentName = agentName;
@@ -72,13 +69,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
+        public override IEnumerable<ClientResult> GetRawPages()
         {
             PipelineMessage message = _client.CreateGetTelephonyCallsRequest(_agentName, _foundryFeatures, _provider, _status, _startedAfter, _startedBefore, _limit, _order, _after, _before, _options);
             string nextToken = null;
             while (true)
             {
-                ClientResult result = await GetNextResponseAsync(message).ConfigureAwait(false);
+                ClientResult result = GetNextResponse(message);
                 yield return result;
 
                 nextToken = ((AgentsPagedResultTelephonyCallSummary)result).LastId;
@@ -106,27 +103,15 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Gets the values from the specified page. </summary>
-        /// <param name="page"></param>
-        /// <returns> The values from the specified page. </returns>
-        protected override async IAsyncEnumerable<TelephonyCallSummary> GetValuesFromPageAsync(ClientResult page)
-        {
-            foreach (TelephonyCallSummary item in ((AgentsPagedResultTelephonyCallSummary)page).Data)
-            {
-                yield return item;
-                await Task.Yield();
-            }
-        }
-
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-        private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
+        private ClientResult GetNextResponse(PipelineMessage message)
         {
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentTelephony.GetTelephonyCalls");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BetaVoiceAgentTelephony.GetTelephonyCalls");
             scope.Start();
             try
             {
-                return ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
+                return ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
             }
             catch (Exception e)
             {
