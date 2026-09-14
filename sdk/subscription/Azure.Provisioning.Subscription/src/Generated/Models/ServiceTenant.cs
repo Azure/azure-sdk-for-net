@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Billing account service tenant. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceTenant : ProvisionableConstruct
     {
         private BicepValue<string> _tenantId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantId
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.Subscription
         }
 
         /// <summary> Gets the TenantName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TenantName
         {
             get

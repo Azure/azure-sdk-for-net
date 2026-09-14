@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Subscription
 {
     /// <summary> Tenant policy Information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TenantPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

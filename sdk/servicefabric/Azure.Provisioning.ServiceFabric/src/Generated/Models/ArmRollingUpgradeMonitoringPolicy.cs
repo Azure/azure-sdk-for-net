@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The policy used for monitoring the application upgrade. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ArmRollingUpgradeMonitoringPolicy : ProvisionableConstruct
     {
         private BicepValue<ArmUpgradeFailureAction> _failureAction;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the FailureAction. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ArmUpgradeFailureAction> FailureAction
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckWaitDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckWaitDuration
         {
             get
@@ -57,6 +61,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckStableDuration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckStableDuration
         {
             get
@@ -72,6 +77,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HealthCheckRetryTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> HealthCheckRetryTimeout
         {
             get
@@ -87,6 +93,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeTimeout
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the UpgradeDomainTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<TimeSpan> UpgradeDomainTimeout
         {
             get

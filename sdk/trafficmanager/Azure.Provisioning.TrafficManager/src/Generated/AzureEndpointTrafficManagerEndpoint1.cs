@@ -12,17 +12,17 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.TrafficManager
 {
     /// <summary> Class representing a Traffic Manager endpoint. </summary>
-    public partial class ExternalEndpointTrafficManagerEndpoint : ProvisionableResource
+    public partial class AzureEndpointTrafficManagerEndpoint1 : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private EndpointProperties _properties;
         private ResourceReference<TrafficManagerProfile> _parent;
 
-        /// <summary> Creates a new ExternalEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Creates a new AzureEndpointTrafficManagerEndpoint1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ExternalEndpointTrafficManagerEndpoint(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/ExternalEndpoints", resourceVersion ?? "2022-04-01")
+        public AzureEndpointTrafficManagerEndpoint1(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/trafficmanagerprofiles/AzureEndpoints", resourceVersion ?? "2022-04-01")
         {
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Provisioning.TrafficManager
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExternalEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Define all the provisionable properties for AzureEndpointTrafficManagerEndpoint1. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -330,17 +330,17 @@ namespace Azure.Provisioning.TrafficManager
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing ExternalEndpointTrafficManagerEndpoint. </summary>
+        /// <summary> Creates a reference to an existing AzureEndpointTrafficManagerEndpoint1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static ExternalEndpointTrafficManagerEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static AzureEndpointTrafficManagerEndpoint1 FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            ExternalEndpointTrafficManagerEndpoint result = new ExternalEndpointTrafficManagerEndpoint(bicepIdentifier, resourceVersion);
+            AzureEndpointTrafficManagerEndpoint1 result = new AzureEndpointTrafficManagerEndpoint1(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for ExternalEndpointTrafficManagerEndpoint that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AzureEndpointTrafficManagerEndpoint1 that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

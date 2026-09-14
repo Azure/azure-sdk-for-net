@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class UniformInt64RangePartitionSchemeDescription : PartitionSchemeDescription
     {
         private BicepValue<int> _count;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the Count. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Count
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the LowKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LowKey
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ServiceFabric
         }
 
         /// <summary> Gets or sets the HighKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HighKey
         {
             get
