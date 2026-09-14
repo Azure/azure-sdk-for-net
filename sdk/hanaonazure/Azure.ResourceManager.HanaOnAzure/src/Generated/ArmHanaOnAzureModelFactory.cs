@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.HanaOnAzure.Models
                 default);
         }
 
+        /// <summary> Tags field of the resource. </summary>
         /// <param name="tags"> Tags field of the resource. </param>
         /// <returns> A new <see cref="Models.SapMonitorPatch"/> instance for mocking. </returns>
         public static SapMonitorPatch SapMonitorPatch(IDictionary<string, string> tags = default)
