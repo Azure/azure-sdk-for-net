@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppOpenIdConnectLogin : ProvisionableConstruct
     {
         private BicepValue<string> _nameClaimType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the NameClaimType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NameClaimType
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App registry information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppRegistryInfo : ProvisionableConstruct
     {
         private BicepValue<string> _registryServer;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryServer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegistryServer
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryUserName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegistryUserName
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegistryPassword. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegistryPassword
         {
             get

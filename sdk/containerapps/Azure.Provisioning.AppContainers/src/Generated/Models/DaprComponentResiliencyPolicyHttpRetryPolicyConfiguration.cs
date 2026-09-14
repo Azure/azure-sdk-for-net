@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy HTTP Retry Policy Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _maxRetries;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxRetries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxRetries
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RetryBackOff. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration RetryBackOff
         {
             get

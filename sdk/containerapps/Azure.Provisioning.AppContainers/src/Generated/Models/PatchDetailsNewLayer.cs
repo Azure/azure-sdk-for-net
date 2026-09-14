@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> New layer update details in the target image. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PatchDetailsNewLayer : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the FrameworkAndVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FrameworkAndVersion
         {
             get
@@ -43,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OSAndVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OSAndVersion
         {
             get

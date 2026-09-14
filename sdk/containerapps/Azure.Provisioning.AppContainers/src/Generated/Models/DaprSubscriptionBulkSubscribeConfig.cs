@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr PubSub Bulk Subscription Options. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprSubscriptionBulkSubscribeConfig : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxMessagesCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxMessagesCount
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxAwaitDurationMs. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxAwaitDurationMs
         {
             get

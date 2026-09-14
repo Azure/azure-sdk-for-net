@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Java Component. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JavaComponent : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

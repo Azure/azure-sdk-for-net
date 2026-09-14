@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -65,6 +66,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpointConnectionProperties Properties
         {
             get
@@ -95,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the GroupIds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> GroupIds
         {
             get
@@ -108,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -125,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppPrivateEndpointConnectionProvisioningState> ProvisioningState
         {
             get
@@ -138,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

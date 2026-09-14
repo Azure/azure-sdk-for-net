@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Body of the error response returned from the API. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WorkflowErrorEntity : ProvisionableConstruct
     {
         private BicepValue<string> _extendedCode;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ExtendedCode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExtendedCode
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the MessageTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MessageTemplate
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Parameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Parameters
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InnerErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WorkflowErrorEntity> InnerErrors
         {
             get
@@ -68,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Details. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<WorkflowErrorEntity> Details
         {
             get
@@ -78,6 +85,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get
@@ -88,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Code. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Code
         {
             get
@@ -98,6 +107,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get

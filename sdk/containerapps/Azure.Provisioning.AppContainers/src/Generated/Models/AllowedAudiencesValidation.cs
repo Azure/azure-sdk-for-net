@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Allowed Audiences validation flow. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AllowedAudiencesValidation : ProvisionableConstruct
     {
         private BicepList<string> _allowedAudiences;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedAudiences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedAudiences
         {
             get

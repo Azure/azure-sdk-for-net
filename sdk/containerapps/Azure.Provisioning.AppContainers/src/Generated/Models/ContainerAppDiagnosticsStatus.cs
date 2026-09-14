@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Rendering details of a diagnostics table. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppDiagnosticsStatus : ProvisionableConstruct
     {
         private BicepValue<string> _message;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StatusId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> StatusId
         {
             get

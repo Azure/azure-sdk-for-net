@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppOpenIdConnectRegistration : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientCredential. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppOpenIdConnectClientCredential ClientCredential
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OpenIdConnectConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppOpenIdConnectConfig OpenIdConnectConfiguration
         {
             get

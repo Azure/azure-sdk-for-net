@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.AppContainers
     /// Java Component common properties.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SpringCloudGatewayComponent"/>, <see cref="SpringBootAdminComponent"/>, <see cref="NacosComponent"/>, <see cref="SpringCloudEurekaComponent"/>, and <see cref="SpringCloudConfigComponent"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JavaComponentProperties : ProvisionableConstruct
     {
         private BicepValue<JavaComponentType> _componentType;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Type of the Java Component. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<JavaComponentType> ComponentType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<JavaComponentProvisioningState> ProvisioningState
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<JavaComponentConfigurationProperty> Configurations
         {
             get
@@ -63,6 +68,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scale. </summary>
+        [Experimental("AZPROVISION001")]
         public JavaComponentPropertiesScale Scale
         {
             get
@@ -78,6 +84,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceBinds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<JavaComponentServiceBind> ServiceBinds
         {
             get

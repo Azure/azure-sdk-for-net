@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Custom Domain of a Container App. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCustomDomain : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the BindingType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppCustomDomainBindingType> BindingType
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificateId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CertificateId
         {
             get

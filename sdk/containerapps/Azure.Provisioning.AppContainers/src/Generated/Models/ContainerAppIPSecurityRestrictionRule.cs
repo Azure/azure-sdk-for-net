@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Rule to restrict incoming IP address. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppIPSecurityRestrictionRule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IPAddressRange. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IPAddressRange
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Action. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppIPRuleAction> Action
         {
             get

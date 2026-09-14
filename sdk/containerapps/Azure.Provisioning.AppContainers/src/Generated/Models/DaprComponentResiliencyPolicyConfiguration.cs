@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprComponentResiliencyPolicyConfiguration : ProvisionableConstruct
     {
         private DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration _httpRetryPolicy;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpRetryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyHttpRetryPolicyConfiguration HttpRetryPolicy
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeoutPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         internal DaprComponentResiliencyPolicyTimeoutPolicyConfiguration TimeoutPolicy
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CircuitBreakerPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyCircuitBreakerPolicyConfiguration CircuitBreakerPolicy
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ResponseTimeoutInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ResponseTimeoutInSeconds
         {
             get

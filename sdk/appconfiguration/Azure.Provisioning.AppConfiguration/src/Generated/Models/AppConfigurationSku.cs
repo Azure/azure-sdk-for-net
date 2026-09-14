@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Describes a configuration store SKU. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AppConfigurationSku : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get

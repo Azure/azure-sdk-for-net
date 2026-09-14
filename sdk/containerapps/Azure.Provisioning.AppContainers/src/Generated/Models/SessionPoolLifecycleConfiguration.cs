@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The lifecycle configuration properties of a session in the dynamic session pool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionPoolLifecycleConfiguration : ProvisionableConstruct
     {
         private BicepValue<SessionPoolLifecycleType> _lifecycleType;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LifecycleType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionPoolLifecycleType> LifecycleType
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CooldownPeriodInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> CooldownPeriodInSeconds
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxAlivePeriodInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxAlivePeriodInSeconds
         {
             get

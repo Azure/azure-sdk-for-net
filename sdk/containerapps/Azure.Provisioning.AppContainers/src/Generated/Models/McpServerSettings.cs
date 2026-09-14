@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The settings of the MCP (Model Context Protocol) server for this session pool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class McpServerSettings : ProvisionableConstruct
     {
         private BicepValue<bool> _isMcpServerEnabled;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsMcpServerEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMcpServerEnabled
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsMcpServerApiKeyDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMcpServerApiKeyDisabled
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the McpServerEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> McpServerEndpoint
         {
             get

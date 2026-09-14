@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App to be a dev service. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class Service : ProvisionableConstruct
     {
         private BicepValue<string> _type;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Type
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr application health check configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprAppHealth : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Path. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Path
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ProbeIntervalSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ProbeIntervalSeconds
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ProbeTimeoutMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ProbeTimeoutMilliseconds
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Threshold
         {
             get

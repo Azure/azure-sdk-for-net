@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Diagnostic capabilities achieved by java agent. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppRuntimeJavaAgent : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Enabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> Enabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Logging. </summary>
+        [Experimental("AZPROVISION001")]
         internal RuntimeJavaJavaAgentLogging Logging
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LoggerSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppJavaLoggerSetting> LoggingLoggerSettings
         {
             get

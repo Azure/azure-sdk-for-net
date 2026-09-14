@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App container Tcp scaling rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppTcpScaleRule : ProvisionableConstruct
     {
         private BicepDictionary<string> _metadata;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Metadata
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppScaleRuleAuth> Auth
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get

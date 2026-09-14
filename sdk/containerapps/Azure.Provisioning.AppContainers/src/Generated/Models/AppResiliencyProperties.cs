@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> App Resiliency resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AppResiliencyProperties : ProvisionableConstruct
     {
         private TimeoutPolicy _timeoutPolicy;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeoutPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public TimeoutPolicy TimeoutPolicy
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpRetryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpRetryPolicy HttpRetryPolicy
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TcpRetryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         internal TcpRetryPolicy TcpRetryPolicy
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CircuitBreakerPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public CircuitBreakerPolicy CircuitBreakerPolicy
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpConnectionPool. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpConnectionPool HttpConnectionPool
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TcpConnectionPool. </summary>
+        [Experimental("AZPROVISION001")]
         internal TcpConnectionPool TcpConnectionPool
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnectAttempts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TcpRetryMaxConnectAttempts
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TcpConnectionPoolMaxConnections
         {
             get

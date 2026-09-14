@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Properties for a certificate stored in a Key Vault. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCertificateKeyVaultProperties : ProvisionableConstruct
     {
         private BicepValue<string> _identity;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the KeyVaultUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> KeyVaultUri
         {
             get

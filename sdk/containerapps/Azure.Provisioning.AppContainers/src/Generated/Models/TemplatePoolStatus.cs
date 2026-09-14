@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The status of pods in the pool of this template. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TemplatePoolStatus : ProvisionableConstruct
     {
         private BicepValue<int> _expectedCount;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ExpectedCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ExpectedCount
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ReadyCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReadyCount
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PendingCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> PendingCount
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ImagePullFailCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ImagePullFailCount
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CrashCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> CrashCount
         {
             get
@@ -76,6 +83,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the AllocatedCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> AllocatedCount
         {
             get

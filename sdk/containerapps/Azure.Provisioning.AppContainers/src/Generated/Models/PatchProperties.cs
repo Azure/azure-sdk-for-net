@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Top level properties that describes current states of the patch resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PatchProperties : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _targetEnvironmentId;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TargetEnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetEnvironmentId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TargetContainerAppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetContainerAppId
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TargetRevisionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> TargetRevisionId
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PatchApplyStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PatchApplyStatus> PatchApplyStatus
         {
             get
@@ -69,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -79,6 +86,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LastModifiedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastModifiedOn
         {
             get
@@ -89,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PatchDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<PatchDetails> PatchDetails
         {
             get

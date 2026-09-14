@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Auth Secrets for Scale Rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppScaleRuleAuth : ProvisionableConstruct
     {
         private BicepValue<string> _secretRef;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SecretRef. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecretRef
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TriggerParameter. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TriggerParameter
         {
             get

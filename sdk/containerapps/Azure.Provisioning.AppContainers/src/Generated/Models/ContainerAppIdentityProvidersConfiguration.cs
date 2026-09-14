@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppIdentityProvidersConfiguration : ProvisionableConstruct
     {
         private ContainerAppAzureActiveDirectoryConfiguration _azureActiveDirectory;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureActiveDirectory. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureActiveDirectoryConfiguration AzureActiveDirectory
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Facebook. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppFacebookConfiguration Facebook
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the GitHub. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppGitHubConfiguration GitHub
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Google. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppGoogleConfiguration Google
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Twitter. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTwitterConfiguration Twitter
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Apple. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAppleConfiguration Apple
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureStaticWebApps. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAzureStaticWebAppsConfiguration AzureStaticWebApps
         {
             get
@@ -133,6 +142,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomOpenIdConnectProviders. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<ContainerAppCustomOpenIdConnectProviderConfiguration> CustomOpenIdConnectProviders
         {
             get

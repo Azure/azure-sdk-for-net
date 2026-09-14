@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Port mappings of container app ingress. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IngressPortMapping : ProvisionableConstruct
     {
         private BicepValue<bool> _external;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the External. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> External
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TargetPort
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExposedPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ExposedPort
         {
             get

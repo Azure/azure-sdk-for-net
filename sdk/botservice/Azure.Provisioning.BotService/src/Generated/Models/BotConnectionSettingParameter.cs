@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Extra Parameter in a Connection Setting Properties to indicate service provider specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotConnectionSettingParameter : ProvisionableConstruct
     {
         private BicepValue<string> _key;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Key. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Key
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

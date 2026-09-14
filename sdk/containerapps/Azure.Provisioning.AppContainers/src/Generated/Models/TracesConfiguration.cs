@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of Open Telemetry traces. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TracesConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isDaprIncluded;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsDaprIncluded. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDaprIncluded
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Destinations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Destinations
         {
             get

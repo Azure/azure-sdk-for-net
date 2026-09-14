@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Cross-Origin-Resource-Sharing policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppCorsPolicy : ProvisionableConstruct
     {
         private BicepList<string> _allowedOrigins;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedOrigins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedOrigins
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedMethods. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedMethods
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedHeaders. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedHeaders
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExposeHeaders. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ExposeHeaders
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxAge. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxAge
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowCredentials. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowCredentials
         {
             get

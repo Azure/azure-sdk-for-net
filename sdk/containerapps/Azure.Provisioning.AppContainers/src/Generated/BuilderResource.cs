@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Information about the SourceToCloud builder resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BuilderResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -128,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuilderProvisioningState> ProvisioningState
         {
             get
@@ -141,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> EnvironmentId
         {
             get
@@ -158,6 +161,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerRegistries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistry> ContainerRegistries
         {
             get

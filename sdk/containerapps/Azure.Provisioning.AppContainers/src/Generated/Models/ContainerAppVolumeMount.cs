@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Volume mount for the Container App. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppVolumeMount : ProvisionableConstruct
     {
         private BicepValue<string> _volumeName;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the VolumeName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> VolumeName
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MountPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MountPath
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SubPath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubPath
         {
             get

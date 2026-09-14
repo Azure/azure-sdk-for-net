@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Non versioned Container Apps Job configuration properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJobConfiguration : ProvisionableConstruct
     {
         private BicepList<ContainerAppWritableSecret> _secrets;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppWritableSecret> Secrets
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TriggerType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppJobTriggerType> TriggerType
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ReplicaTimeout. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReplicaTimeout
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ReplicaRetryLimit. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReplicaRetryLimit
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManualTriggerConfig. </summary>
+        [Experimental("AZPROVISION001")]
         public JobConfigurationManualTriggerConfig ManualTriggerConfig
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ScheduleTriggerConfig. </summary>
+        [Experimental("AZPROVISION001")]
         public JobConfigurationScheduleTriggerConfig ScheduleTriggerConfig
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EventTriggerConfig. </summary>
+        [Experimental("AZPROVISION001")]
         public EventTriggerConfiguration EventTriggerConfig
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Registries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppRegistryCredentials> Registries
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IdentitySettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppIdentitySettings> IdentitySettings
         {
             get

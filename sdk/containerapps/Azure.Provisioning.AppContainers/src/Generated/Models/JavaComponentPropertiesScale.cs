@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Java component scaling configurations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class JavaComponentPropertiesScale : ProvisionableConstruct
     {
         private BicepValue<int> _minReplicas;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MinReplicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MinReplicas
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxReplicas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxReplicas
         {
             get

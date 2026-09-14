@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Defines parameters for tcp connection pooling. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TcpConnectionPool : ProvisionableConstruct
     {
         private BicepValue<int> _maxConnections;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxConnections
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the registration for the Azure Static Web Apps provider. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AzureStaticWebAppsRegistration : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get

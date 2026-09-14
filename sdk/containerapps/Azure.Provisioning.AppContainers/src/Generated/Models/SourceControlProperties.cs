@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> SourceControl resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SourceControlProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppSourceControlOperationState> _operationState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OperationState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppSourceControlOperationState> OperationState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RepoUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> RepoUri
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Branch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Branch
         {
             get
@@ -65,6 +70,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the GitHubActionConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppGitHubActionConfiguration GitHubActionConfiguration
         {
             get

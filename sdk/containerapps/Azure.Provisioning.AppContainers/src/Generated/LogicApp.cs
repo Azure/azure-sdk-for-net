@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> A logic app extension resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LogicApp : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

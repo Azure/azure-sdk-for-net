@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> All snapshot properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class SnapshotProperties : ProvisionableConstruct
     {
         private BicepValue<AppConfigurationProvisioningState> _provisioningState;
@@ -33,6 +35,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationSnapshotStatus> Status
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Filters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SnapshotKeyValueFilter> Filters
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the CompositionType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SnapshotCompositionType> CompositionType
         {
             get
@@ -83,6 +89,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -93,6 +100,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -103,6 +111,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the RetentionPeriod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> RetentionPeriod
         {
             get
@@ -118,6 +127,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the Size. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> Size
         {
             get
@@ -128,6 +138,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ItemsCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> ItemsCount
         {
             get
@@ -138,6 +149,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Tags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Tags
         {
             get
@@ -153,6 +165,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get

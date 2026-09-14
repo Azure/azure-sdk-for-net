@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Policy that defines tcp request retry conditions. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class TcpRetryPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxConnectAttempts;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnectAttempts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxConnectAttempts
         {
             get

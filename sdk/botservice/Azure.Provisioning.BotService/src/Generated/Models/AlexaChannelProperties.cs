@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Alexa channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AlexaChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _alexaSkillId;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AlexaSkillId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AlexaSkillId
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the UriFragment. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UriFragment
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets the ServiceEndpointUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ServiceEndpointUri
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

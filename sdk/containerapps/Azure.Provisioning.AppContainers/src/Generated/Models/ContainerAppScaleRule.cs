@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App container scaling rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppScaleRule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureQueue. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppQueueScaleRule AzureQueue
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Custom. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCustomScaleRule Custom
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Http. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppHttpScaleRule Http
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Tcp. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTcpScaleRule Tcp
         {
             get

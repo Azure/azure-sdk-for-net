@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> List of provisioning errors for a Http Route Config object. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppHttpRouteProvisioningErrors : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _errorOccurredOn;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ErrorOccurredOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ErrorOccurredOn
         {
             get
@@ -33,6 +36,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Message. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Message
         {
             get

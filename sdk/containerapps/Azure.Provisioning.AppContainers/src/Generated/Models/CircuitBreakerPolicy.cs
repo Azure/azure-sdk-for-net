@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Policy that defines circuit breaker conditions. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class CircuitBreakerPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _consecutiveErrors;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConsecutiveErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ConsecutiveErrors
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IntervalInSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> IntervalInSeconds
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxEjectionPercent. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxEjectionPercent
         {
             get

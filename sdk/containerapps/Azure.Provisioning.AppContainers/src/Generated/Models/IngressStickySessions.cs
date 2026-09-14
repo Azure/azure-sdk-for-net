@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Sticky Sessions for Single Revision Mode. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IngressStickySessions : ProvisionableConstruct
     {
         private BicepValue<StickySessionAffinity> _stickySessionAffinity;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StickySessionAffinity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<StickySessionAffinity> StickySessionAffinity
         {
             get

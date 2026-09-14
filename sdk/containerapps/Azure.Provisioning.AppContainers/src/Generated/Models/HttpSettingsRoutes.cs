@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the paths HTTP requests. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HttpSettingsRoutes : ProvisionableConstruct
     {
         private BicepValue<string> _apiPrefix;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ApiPrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ApiPrefix
         {
             get

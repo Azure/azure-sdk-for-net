@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppOpenIdConnectClientCredential : ProvisionableConstruct
     {
         private BicepValue<ContainerAppOpenIdConnectClientCredentialMethod> _method;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Method. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppOpenIdConnectClientCredentialMethod> Method
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretSettingName
         {
             get

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> An environment for Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppConnectedEnvironment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -113,6 +114,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppExtendedLocation ExtendedLocation
         {
             get
@@ -128,6 +130,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppConnectedEnvironmentProvisioningState> ProvisioningState
         {
             get
@@ -141,6 +144,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -154,6 +158,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DefaultDomain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultDomain
         {
             get
@@ -167,6 +172,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StaticIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IPAddress> StaticIP
         {
             get
@@ -184,6 +190,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DaprAIConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DaprAIConnectionString
         {
             get
@@ -201,6 +208,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomDomainConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration
         {
             get

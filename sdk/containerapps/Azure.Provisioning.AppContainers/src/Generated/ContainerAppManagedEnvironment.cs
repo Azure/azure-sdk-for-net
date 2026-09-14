@@ -20,6 +20,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> An environment for hosting container apps. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppManagedEnvironment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -104,6 +105,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedEnvironmentProperties Properties
         {
             get
@@ -119,6 +121,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Kind. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Kind
         {
             get
@@ -134,6 +137,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get
@@ -149,6 +153,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppEnvironmentProvisioningState> ProvisioningState
         {
             get
@@ -162,6 +167,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DaprAIInstrumentationKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DaprAIInstrumentationKey
         {
             get
@@ -179,6 +185,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DaprAIConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DaprAIConnectionString
         {
             get
@@ -196,6 +203,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the VnetConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppVnetConfiguration VnetConfiguration
         {
             get
@@ -213,6 +221,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -226,6 +235,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DefaultDomain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultDomain
         {
             get
@@ -239,6 +249,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PrivateLinkDefaultDomain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrivateLinkDefaultDomain
         {
             get
@@ -252,6 +263,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StaticIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IPAddress> StaticIP
         {
             get
@@ -265,6 +277,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppLogsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppLogsConfiguration AppLogsConfiguration
         {
             get
@@ -282,6 +295,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OpenTelemetryConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public OpenTelemetryConfiguration OpenTelemetryConfiguration
         {
             get
@@ -299,6 +313,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsZoneRedundant. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsZoneRedundant
         {
             get
@@ -316,6 +331,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AvailabilityZones. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AvailabilityZones
         {
             get
@@ -333,6 +349,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomDomainConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration
         {
             get
@@ -350,6 +367,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the EventStreamEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventStreamEndpoint
         {
             get
@@ -363,6 +381,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WorkloadProfiles. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppWorkloadProfile> WorkloadProfiles
         {
             get
@@ -380,6 +399,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InfrastructureResourceGroup. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> InfrastructureResourceGroup
         {
             get
@@ -397,6 +417,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IngressConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedEnvironmentIngressConfiguration IngressConfiguration
         {
             get
@@ -414,6 +435,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -427,6 +449,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -444,6 +467,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppInsightsConnectionString
         {
             get
@@ -461,6 +485,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KedaVersion
         {
             get
@@ -474,6 +499,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Version. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DaprVersion
         {
             get
@@ -487,6 +513,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsMtlsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> PeerAuthenticationIsMtlsEnabled
         {
             get
@@ -504,6 +531,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> PeerTrafficEncryptionIsEnabled
         {
             get
@@ -521,6 +549,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the KeyVaultConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppRegistration : ProvisionableConstruct
     {
         private BicepValue<string> _appId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AppSecretSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AppSecretSettingName
         {
             get

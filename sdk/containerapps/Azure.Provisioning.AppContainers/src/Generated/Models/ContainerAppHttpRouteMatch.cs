@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Criteria to match on. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppHttpRouteMatch : ProvisionableConstruct
     {
         private BicepValue<string> _prefix;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Prefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Prefix
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Path. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Path
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PathSeparatedPrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PathSeparatedPrefix
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsCaseSensitive. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCaseSensitive
         {
             get

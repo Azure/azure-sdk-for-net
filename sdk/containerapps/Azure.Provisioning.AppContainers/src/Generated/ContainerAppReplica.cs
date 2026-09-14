@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Revision Replica. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppReplica : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -91,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -100,6 +102,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppReplicaRunningState> RunningState
         {
             get
@@ -109,6 +112,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningStateDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunningStateDetails
         {
             get
@@ -118,6 +122,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppReplicaContainer> Containers
         {
             get
@@ -127,6 +132,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InitContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppReplicaContainer> InitContainers
         {
             get

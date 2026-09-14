@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Label History Item resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LabelHistoryRecordItem : ProvisionableConstruct
     {
         private BicepValue<string> _revision;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Revision. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Revision
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StartedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StartedOn
         {
             get
@@ -45,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the StoppedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> StoppedOn
         {
             get
@@ -55,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Status> Status
         {
             get

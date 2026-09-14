@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Represents the workflow health. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LogicAppWorkflowHealth : ProvisionableConstruct
     {
         private BicepValue<LogicAppWorkflowHealthState> _state;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<LogicAppWorkflowHealthState> State
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Error. </summary>
+        [Experimental("AZPROVISION001")]
         public WorkflowErrorEntity Error
         {
             get

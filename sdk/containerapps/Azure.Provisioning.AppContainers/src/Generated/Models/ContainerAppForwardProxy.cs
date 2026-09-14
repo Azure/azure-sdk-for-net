@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppForwardProxy : ProvisionableConstruct
     {
         private BicepValue<ContainerAppForwardProxyConvention> _convention;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Convention. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppForwardProxyConvention> Convention
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomHostHeaderName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomHostHeaderName
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomProtoHeaderName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CustomProtoHeaderName
         {
             get

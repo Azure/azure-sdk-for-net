@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppConfiguration
 {
     /// <summary> Properties of a private endpoint connection. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<AppConfigurationProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<AppConfigurationProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the PrivateEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         internal PrivateEndpoint PrivateEndpoint
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the ConnectionState. </summary>
+        [Experimental("AZPROVISION001")]
         public AppConfigurationPrivateLinkServiceConnectionState ConnectionState
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get

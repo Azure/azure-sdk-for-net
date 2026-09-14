@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of Open Telemetry metrics. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MetricsConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isKedaIncluded;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsKedaIncluded. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsKedaIncluded
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Destinations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Destinations
         {
             get

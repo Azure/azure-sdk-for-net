@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> .NET app configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RuntimeDotnet : ProvisionableConstruct
     {
         private BicepValue<bool> _autoConfigureDataProtection;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AutoConfigureDataProtection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AutoConfigureDataProtection
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Java app configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RuntimeJava : ProvisionableConstruct
     {
         private BicepValue<bool> _enableMetrics;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnableMetrics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableMetrics
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the JavaAgent. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppRuntimeJavaAgent JavaAgent
         {
             get

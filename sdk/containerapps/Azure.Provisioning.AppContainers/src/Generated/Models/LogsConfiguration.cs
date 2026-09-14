@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of Open Telemetry logs. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class LogsConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _destinations;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Destinations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Destinations
         {
             get

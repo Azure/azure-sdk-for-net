@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureActiveDirectoryLoginConfiguration : ProvisionableConstruct
     {
         private BicepList<string> _loginParameters;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LoginParameters. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> LoginParameters
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsWwwAuthenticationDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsWwwAuthenticationDisabled
         {
             get

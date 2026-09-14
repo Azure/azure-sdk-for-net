@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Capabilities on the java logging scenario. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class RuntimeJavaJavaAgentLogging : ProvisionableConstruct
     {
         private BicepList<ContainerAppJavaLoggerSetting> _loggerSettings;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LoggerSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppJavaLoggerSetting> LoggerSettings
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the login flow, including the scopes that should be requested. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class LoginScopes : ProvisionableConstruct
     {
         private BicepList<string> _scopes;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get

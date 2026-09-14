@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Ingress configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppIngressConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _fqdn;
@@ -34,6 +36,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get
@@ -44,6 +47,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the External. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> External
         {
             get
@@ -59,6 +63,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TargetPort
         {
             get
@@ -74,6 +79,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExposedPort. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ExposedPort
         {
             get
@@ -89,6 +95,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Transport. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppIngressTransportMethod> Transport
         {
             get
@@ -104,6 +111,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Traffic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppRevisionTrafficWeight> Traffic
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomDomains. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppCustomDomain> CustomDomains
         {
             get
@@ -134,6 +143,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowInsecure. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> AllowInsecure
         {
             get
@@ -149,6 +159,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IPSecurityRestrictions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppIPSecurityRestrictionRule> IPSecurityRestrictions
         {
             get
@@ -164,6 +175,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StickySessions. </summary>
+        [Experimental("AZPROVISION001")]
         internal IngressStickySessions StickySessions
         {
             get
@@ -179,6 +191,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientCertificateMode. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppIngressClientCertificateMode> ClientCertificateMode
         {
             get
@@ -194,6 +207,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CorsPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCorsPolicy CorsPolicy
         {
             get
@@ -209,6 +223,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AdditionalPortMappings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IngressPortMapping> AdditionalPortMappings
         {
             get
@@ -224,6 +239,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TargetPortHttpScheme. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IngressTargetPortHttpScheme> TargetPortHttpScheme
         {
             get
@@ -239,6 +255,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StickySessionAffinity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<StickySessionAffinity> StickySessionAffinity
         {
             get

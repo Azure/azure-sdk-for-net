@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> A set of routing conditions and targets. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppHttpRouteRule : ProvisionableConstruct
     {
         private BicepList<ContainerAppHttpRouteTarget> _targets;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Targets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppHttpRouteTarget> Targets
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Routes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppHttpRoute> Routes
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get

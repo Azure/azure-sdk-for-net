@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Label History. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LabelHistory : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -91,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Records. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<LabelHistoryRecordItem> LabelHistoryRecords
         {
             get

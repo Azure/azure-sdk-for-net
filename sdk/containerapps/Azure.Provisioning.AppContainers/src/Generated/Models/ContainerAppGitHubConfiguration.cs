@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the GitHub provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppGitHubConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Registration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppClientRegistration Registration
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Login. </summary>
+        [Experimental("AZPROVISION001")]
         internal LoginScopes Login
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> LoginScopes
         {
             get

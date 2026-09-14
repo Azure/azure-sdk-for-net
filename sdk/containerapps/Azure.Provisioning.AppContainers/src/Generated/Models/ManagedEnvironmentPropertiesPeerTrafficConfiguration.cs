@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Peer traffic settings for the Managed Environment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ManagedEnvironmentPropertiesPeerTrafficConfiguration : ProvisionableConstruct
     {
         private ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption _encryption;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption Encryption
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EncryptionIsEnabled
         {
             get

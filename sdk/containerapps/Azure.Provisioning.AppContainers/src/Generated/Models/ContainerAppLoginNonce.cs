@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the nonce used in the login flow. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppLoginNonce : ProvisionableConstruct
     {
         private BicepValue<bool> _validateNonce;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ValidateNonce. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> ValidateNonce
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the NonceExpirationInterval. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NonceExpirationInterval
         {
             get

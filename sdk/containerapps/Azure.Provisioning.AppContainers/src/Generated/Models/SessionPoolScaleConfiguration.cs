@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Scale configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionPoolScaleConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _maxConcurrentSessions;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConcurrentSessions. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxConcurrentSessions
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ReadySessionInstances. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReadySessionInstances
         {
             get

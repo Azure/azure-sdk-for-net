@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppLogin : ProvisionableConstruct
     {
         private LoginRoutes _routes;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Routes. </summary>
+        [Experimental("AZPROVISION001")]
         internal LoginRoutes Routes
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TokenStore. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppTokenStore TokenStore
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PreserveUrlFragmentsForLogins. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> PreserveUrlFragmentsForLogins
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AllowedExternalRedirectUrls. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedExternalRedirectUrls
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CookieExpiration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCookieExpiration CookieExpiration
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Nonce. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppLoginNonce Nonce
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LogoutEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RoutesLogoutEndpoint
         {
             get

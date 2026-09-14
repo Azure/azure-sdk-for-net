@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration of application logs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppLogsConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _destination;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Destination. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Destination
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LogAnalyticsConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppLogAnalyticsConfiguration LogAnalyticsConfiguration
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Policy that defines http request retry conditions. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HttpRetryPolicy : ProvisionableConstruct
     {
         private BicepValue<int> _maxRetries;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxRetries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxRetries
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RetryBackOff. </summary>
+        [Experimental("AZPROVISION001")]
         internal HttpRetryPolicyRetryBackOff RetryBackOff
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Matches. </summary>
+        [Experimental("AZPROVISION001")]
         internal HttpRetryPolicyMatches Matches
         {
             get
@@ -68,6 +73,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitialDelayInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> InitialDelayInMilliseconds
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxIntervalInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> MaxIntervalInMilliseconds
         {
             get
@@ -102,6 +109,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HeaderMatch> Headers
         {
             get
@@ -119,6 +127,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpStatusCodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<int> HttpStatusCodes
         {
             get
@@ -136,6 +145,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Errors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Errors
         {
             get

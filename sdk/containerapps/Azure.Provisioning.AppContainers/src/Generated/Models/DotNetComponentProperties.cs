@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> .NET Component resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DotNetComponentProperties : ProvisionableConstruct
     {
         private BicepValue<DotNetComponentType> _componentType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ComponentType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DotNetComponentType> ComponentType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DotNetComponentProvisioningState> ProvisioningState
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Configurations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DotNetComponentConfigurationProperty> Configurations
         {
             get
@@ -64,6 +69,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceBinds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DotNetComponentServiceBind> ServiceBinds
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppOpenIdConnectConfig : ProvisionableConstruct
     {
         private BicepValue<string> _authorizationEndpoint;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AuthorizationEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AuthorizationEndpoint
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TokenEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TokenEndpoint
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Issuer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Issuer
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CertificationUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> CertificationUri
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the WellKnownOpenIdConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> WellKnownOpenIdConfiguration
         {
             get

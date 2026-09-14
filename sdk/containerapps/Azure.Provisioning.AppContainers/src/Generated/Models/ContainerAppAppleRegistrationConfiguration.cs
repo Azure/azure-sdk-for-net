@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the registration for the Apple provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAppleRegistrationConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _clientId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientSecretSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientSecretSettingName
         {
             get

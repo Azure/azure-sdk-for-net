@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy HTTP Retry Backoff Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprComponentResiliencyPolicyHttpRetryBackOffConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _initialDelayInMilliseconds;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitialDelayInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> InitialDelayInMilliseconds
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxIntervalInMilliseconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> MaxIntervalInMilliseconds
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The detailed info of patch operation performing when applying a patch. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PatchDetails : ProvisionableConstruct
     {
         private BicepValue<string> _targetContainerName;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TargetContainerName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetContainerName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TargetImage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TargetImage
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the LastDetectionOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> LastDetectionOn
         {
             get
@@ -59,6 +64,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DetectionStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DetectionStatus> DetectionStatus
         {
             get
@@ -69,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the NewImageName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> NewImageName
         {
             get
@@ -79,6 +86,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the NewLayer. </summary>
+        [Experimental("AZPROVISION001")]
         public PatchDetailsNewLayer NewLayer
         {
             get
@@ -89,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the OldLayer. </summary>
+        [Experimental("AZPROVISION001")]
         public PatchDetailsOldLayer OldLayer
         {
             get
@@ -99,6 +108,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PatchType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PatchType> PatchType
         {
             get

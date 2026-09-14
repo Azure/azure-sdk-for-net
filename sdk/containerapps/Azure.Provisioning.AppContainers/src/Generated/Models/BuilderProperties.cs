@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The builder properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BuilderProperties : ProvisionableConstruct
     {
         private BicepValue<BuilderProvisioningState> _provisioningState;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<BuilderProvisioningState> ProvisioningState
         {
             get
@@ -34,6 +37,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> EnvironmentId
         {
             get
@@ -49,6 +53,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerRegistries. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistry> ContainerRegistries
         {
             get

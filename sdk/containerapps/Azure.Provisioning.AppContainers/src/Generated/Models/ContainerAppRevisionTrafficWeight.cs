@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Traffic weight assigned to a revision. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppRevisionTrafficWeight : ProvisionableConstruct
     {
         private BicepValue<string> _revisionName;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RevisionName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RevisionName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Weight. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Weight
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsLatestRevision. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsLatestRevision
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Label. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Label
         {
             get

@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Nacos properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NacosComponent : JavaComponentProperties
     {
         private JavaComponentIngress _ingress;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Ingress. </summary>
+        [Experimental("AZPROVISION001")]
         internal JavaComponentIngress Ingress
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> IngressFqdn
         {
             get

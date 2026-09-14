@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Peer authentication settings for the Managed Environment. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ManagedEnvironmentPropertiesPeerAuthentication : ProvisionableConstruct
     {
         private Mtls _mtls;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Mtls. </summary>
+        [Experimental("AZPROVISION001")]
         internal Mtls Mtls
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsMtlsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsMtlsEnabled
         {
             get

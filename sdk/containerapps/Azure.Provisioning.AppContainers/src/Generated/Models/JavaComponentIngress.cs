@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App Ingress configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class JavaComponentIngress : ProvisionableConstruct
     {
         private BicepValue<string> _fqdn;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Fqdn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Fqdn
         {
             get

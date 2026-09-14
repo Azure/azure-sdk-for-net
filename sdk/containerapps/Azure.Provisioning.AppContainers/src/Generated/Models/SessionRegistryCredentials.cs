@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Session pool private registry credentials. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionRegistryCredentials : ProvisionableConstruct
     {
         private BicepValue<string> _server;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Server. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Server
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Username. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Username
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PasswordSecretRef. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PasswordSecretRef
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Conditions that must be met for a request to be retried. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HttpRetryPolicyMatches : ProvisionableConstruct
     {
         private BicepList<HeaderMatch> _headers;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Headers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<HeaderMatch> Headers
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpStatusCodes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<int> HttpStatusCodes
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Errors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Errors
         {
             get

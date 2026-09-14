@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppTwitterRegistration : ProvisionableConstruct
     {
         private BicepValue<string> _consumerKey;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConsumerKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConsumerKey
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ConsumerSecretSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ConsumerSecretSettingName
         {
             get

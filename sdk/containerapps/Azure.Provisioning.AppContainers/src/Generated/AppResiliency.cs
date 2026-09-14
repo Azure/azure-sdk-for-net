@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration to setup App Resiliency. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppResiliency : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TimeoutPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public TimeoutPolicy TimeoutPolicy
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpRetryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpRetryPolicy HttpRetryPolicy
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CircuitBreakerPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public CircuitBreakerPolicy CircuitBreakerPolicy
         {
             get
@@ -147,6 +151,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpConnectionPool. </summary>
+        [Experimental("AZPROVISION001")]
         public HttpConnectionPool HttpConnectionPool
         {
             get
@@ -164,6 +169,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnectAttempts. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TcpRetryMaxConnectAttempts
         {
             get
@@ -181,6 +187,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the MaxConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> TcpConnectionPoolMaxConnections
         {
             get

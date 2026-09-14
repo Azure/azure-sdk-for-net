@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> ConnectedEnvironment resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ConnectedEnvironmentProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppConnectedEnvironmentProvisioningState> _provisioningState;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppConnectedEnvironmentProvisioningState> ProvisioningState
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DeploymentErrors. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeploymentErrors
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the DefaultDomain. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DefaultDomain
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the StaticIP. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IPAddress> StaticIP
         {
             get
@@ -72,6 +78,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DaprAIConnectionString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DaprAIConnectionString
         {
             get
@@ -87,6 +94,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomDomainConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration
         {
             get

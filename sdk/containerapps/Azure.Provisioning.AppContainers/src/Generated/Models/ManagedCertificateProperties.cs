@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Certificate resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ManagedCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerAppCertificateProvisioningState> _provisioningState;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppCertificateProvisioningState> ProvisioningState
         {
             get
@@ -35,6 +38,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SubjectName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubjectName
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Error. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Error
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DomainControlValidation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ManagedCertificateDomainControlValidation> DomainControlValidation
         {
             get
@@ -75,6 +81,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ValidationToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValidationToken
         {
             get

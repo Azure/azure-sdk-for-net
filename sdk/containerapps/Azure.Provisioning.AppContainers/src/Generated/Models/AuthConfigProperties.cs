@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> AuthConfig resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AuthConfigProperties : ProvisionableConstruct
     {
         private ContainerAppAuthPlatform _platform;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Platform. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppAuthPlatform Platform
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the GlobalValidation. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppGlobalValidation GlobalValidation
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IdentityProviders. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppIdentityProvidersConfiguration IdentityProviders
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Login. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppLogin Login
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the HttpSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppHttpSettings HttpSettings
         {
             get
@@ -100,6 +107,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EncryptionSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public EncryptionSettings EncryptionSettings
         {
             get

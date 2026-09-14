@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The parameters to provide for the Telegram channel. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class TelegramChannelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _accessToken;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the AccessToken. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccessToken
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsValidated. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsValidated
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.BotService
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get

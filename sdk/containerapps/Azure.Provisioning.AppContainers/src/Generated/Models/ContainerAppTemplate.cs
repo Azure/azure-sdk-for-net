@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.AppContainers
     /// Defines the desired state of an immutable revision.
     /// Any changes to this section Will result in a new revision being created
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppTemplate : ProvisionableConstruct
     {
         private BicepValue<string> _revisionSuffix;
@@ -31,6 +33,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RevisionSuffix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RevisionSuffix
         {
             get
@@ -46,6 +49,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the TerminationGracePeriodSeconds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<long> TerminationGracePeriodSeconds
         {
             get
@@ -61,6 +65,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InitContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppInitContainer> InitContainers
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppContainer> Containers
         {
             get
@@ -91,6 +97,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scale. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppScale Scale
         {
             get
@@ -106,6 +113,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Volumes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppVolume> Volumes
         {
             get
@@ -121,6 +129,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ServiceBinds. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppServiceBind> ServiceBinds
         {
             get

@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App session pool. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionPool : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -129,6 +130,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the EnvironmentId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> EnvironmentId
         {
             get
@@ -146,6 +148,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ContainerType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerType> ContainerType
         {
             get
@@ -163,6 +166,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PoolManagementType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<PoolManagementType> PoolManagementType
         {
             get
@@ -180,6 +184,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the NodeCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> NodeCount
         {
             get
@@ -193,6 +198,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ScaleConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionPoolScaleConfiguration ScaleConfiguration
         {
             get
@@ -210,6 +216,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionPoolSecret> Secrets
         {
             get
@@ -227,6 +234,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the CustomContainerTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public CustomContainerTemplate CustomContainerTemplate
         {
             get
@@ -244,6 +252,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the TemplateUpdateStatus. </summary>
+        [Experimental("AZPROVISION001")]
         public TemplateUpdateStatus TemplateUpdateStatus
         {
             get
@@ -253,6 +262,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PoolManagementEndpoint. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> PoolManagementEndpoint
         {
             get
@@ -266,6 +276,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionPoolProvisioningState> ProvisioningState
         {
             get
@@ -279,6 +290,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedIdentitySettings. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionPoolManagedIdentitySetting> ManagedIdentitySettings
         {
             get
@@ -296,6 +308,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the McpServerSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public McpServerSettings McpServerSettings
         {
             get
@@ -313,6 +326,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the LifecycleConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public SessionPoolLifecycleConfiguration DynamicPoolLifecycleConfiguration
         {
             get
@@ -330,6 +344,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Status. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionNetworkStatus> SessionNetworkStatus
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Container App container Azure Queue based scaling rule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppQueueScaleRule : ProvisionableConstruct
     {
         private BicepValue<string> _accountName;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AccountName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AccountName
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the QueueName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> QueueName
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the QueueLength. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> QueueLength
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Auth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppScaleRuleAuth> Auth
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Identity
         {
             get

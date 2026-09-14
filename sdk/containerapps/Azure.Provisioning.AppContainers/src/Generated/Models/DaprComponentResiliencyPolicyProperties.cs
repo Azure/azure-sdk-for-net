@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DaprComponentResiliencyPolicyProperties : ProvisionableConstruct
     {
         private DaprComponentResiliencyPolicyConfiguration _inboundPolicy;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the InboundPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyConfiguration InboundPolicy
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OutboundPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprComponentResiliencyPolicyConfiguration OutboundPolicy
         {
             get

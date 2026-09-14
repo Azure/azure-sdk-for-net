@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr PubSub Event Subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprSubscription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -95,6 +96,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PubsubName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PubsubName
         {
             get
@@ -112,6 +114,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Topic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Topic
         {
             get
@@ -129,6 +132,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the DeadLetterTopic. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeadLetterTopic
         {
             get
@@ -146,6 +150,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Routes. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprSubscriptionRoutes Routes
         {
             get
@@ -163,6 +168,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scopes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Scopes
         {
             get
@@ -180,6 +186,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Metadata. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<string> Metadata
         {
             get
@@ -197,6 +204,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the BulkSubscribe. </summary>
+        [Experimental("AZPROVISION001")]
         public DaprSubscriptionBulkSubscribeConfig BulkSubscribe
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the Azure Static Web Apps provider. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAzureStaticWebAppsConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Registration. </summary>
+        [Experimental("AZPROVISION001")]
         internal AzureStaticWebAppsRegistration Registration
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegistrationClientId
         {
             get

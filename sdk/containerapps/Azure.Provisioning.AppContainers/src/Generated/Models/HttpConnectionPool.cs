@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Defines parameters for http connection pooling. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class HttpConnectionPool : ProvisionableConstruct
     {
         private BicepValue<int> _http1MaxPendingRequests;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Http1MaxPendingRequests. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Http1MaxPendingRequests
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Http2MaxRequests. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Http2MaxRequests
         {
             get

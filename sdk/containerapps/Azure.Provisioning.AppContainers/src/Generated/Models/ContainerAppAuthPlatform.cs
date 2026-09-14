@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAuthPlatform : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsEnabled
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RuntimeVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RuntimeVersion
         {
             get

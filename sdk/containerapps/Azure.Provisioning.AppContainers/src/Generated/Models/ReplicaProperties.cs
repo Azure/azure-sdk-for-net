@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Replica resource specific properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ReplicaProperties : ProvisionableConstruct
     {
         private BicepValue<DateTimeOffset> _createdOn;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppReplicaRunningState> RunningState
         {
             get
@@ -46,6 +50,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningStateDetails. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunningStateDetails
         {
             get
@@ -56,6 +61,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Containers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppReplicaContainer> Containers
         {
             get
@@ -66,6 +72,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the InitContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerAppReplicaContainer> InitContainers
         {
             get

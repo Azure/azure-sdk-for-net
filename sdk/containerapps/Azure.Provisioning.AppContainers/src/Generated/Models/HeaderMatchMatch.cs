@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Type of match to perform. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class HeaderMatchMatch : ProvisionableConstruct
     {
         private BicepValue<string> _exactMatch;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ExactMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExactMatch
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the PrefixMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrefixMatch
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the SuffixMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SuffixMatch
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the RegexMatch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RegexMatch
         {
             get

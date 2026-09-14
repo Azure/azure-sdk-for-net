@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The properties of logic apps extension. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ContainerAppLogicAppConfiguration : ProvisionableConstruct
     {
         /// <summary> Creates a new ContainerAppLogicAppConfiguration. </summary>

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Logger settings for java workloads. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppJavaLoggerSetting : ProvisionableConstruct
     {
         private BicepValue<string> _logger;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Logger. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Logger
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Level. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerAppJavaLoggerLevel> Level
         {
             get

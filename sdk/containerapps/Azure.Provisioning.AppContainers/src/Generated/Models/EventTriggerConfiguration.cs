@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Trigger configuration of an event driven job. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventTriggerConfiguration : ProvisionableConstruct
     {
         private BicepValue<int> _replicaCompletionCount;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ReplicaCompletionCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> ReplicaCompletionCount
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Parallelism. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Parallelism
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Scale. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerAppJobScale Scale
         {
             get

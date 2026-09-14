@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> TCPSocket specifies an action involving a TCP port. TCP hooks not yet supported. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppTcpSocketRequestInfo : ProvisionableConstruct
     {
         private BicepValue<string> _host;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Host. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Host
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the Port. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Port
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> The configuration settings of the storage of the tokens if blob storage is used. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class BlobStorageTokenStore : ProvisionableConstruct
     {
         private BicepValue<string> _azureBlobStorageSasUrlSettingName;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the AzureBlobStorageSasUrlSettingName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AzureBlobStorageSasUrlSettingName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the BlobContainerUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BlobContainerUri
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ClientId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ClientId
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentityResourceId
         {
             get
