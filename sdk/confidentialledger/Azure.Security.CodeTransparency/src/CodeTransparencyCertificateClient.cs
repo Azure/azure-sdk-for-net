@@ -21,7 +21,7 @@ namespace Azure.Security.CodeTransparency
         private readonly HttpPipeline _pipeline;
         // Caches the fetched certs json for a specified amount of time
         private readonly ConcurrentDictionary<string, ServiceIdentityResult> _results;
-        private readonly double _cacheTTLSec;
+        private readonly TimeSpan _cacheTTL;
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
@@ -51,7 +51,7 @@ namespace Azure.Security.CodeTransparency
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _certificateEndpoint = endpoint;
             _results = new ConcurrentDictionary<string, ServiceIdentityResult>();
-            _cacheTTLSec = options.CacheTTLSeconds;
+            _cacheTTL = options.CacheTTL;
         }
 
         /// <summary>
@@ -65,8 +65,8 @@ namespace Azure.Security.CodeTransparency
             Argument.AssertNotNullOrEmpty(ledgerId, nameof(ledgerId));
             if (_results.TryGetValue(ledgerId, out ServiceIdentityResult serviceIdentity))
             {
-                TimeSpan age = DateTime.Now - serviceIdentity.CreatedAt;
-                if (age < TimeSpan.FromSeconds(_cacheTTLSec))
+                TimeSpan age = DateTimeOffset.UtcNow - serviceIdentity.CreatedOn;
+                if (age < _cacheTTL)
                 {
                     return serviceIdentity;
                 }

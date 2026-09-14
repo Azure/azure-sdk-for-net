@@ -25,7 +25,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Prefix for receipts with unknown/unrecognized issuers.
         /// </summary>
-        public static readonly string UnknownIssuerPrefix = "__unknown-issuer::";
+        private static string UnknownIssuerPrefix { get; } = "__unknown-issuer::";
 
         /// <summary>
         /// Trusted key storage used to verify receipts. The value can be set through the verification options.

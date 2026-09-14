@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -28,8 +28,8 @@ namespace Azure.Security.CodeTransparency.Tests
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com",
-                CacheTTLSeconds = 1
+                IdentityClientEndpoint = new Uri("https://foo.bar.com"),
+                CacheTTL = TimeSpan.FromSeconds(1)
             };
             CodeTransparencyCertificateClient client = options.CreateCertificateClient();
             ServiceIdentityResult responseFirst = await client.GetServiceIdentityAsync("serviceName");
@@ -38,8 +38,8 @@ namespace Azure.Security.CodeTransparency.Tests
 
             Assert.AreEqual(1, mockTransport.Requests.Count, "called only once");
             Assert.AreEqual("https://foo.bar.com/ledgerIdentity/serviceName", mockTransport.Requests[0].Uri.ToString());
-            Assert.AreEqual(responseFirst.CreatedAt, responseSecond.CreatedAt);
-            Assert.AreEqual(responseFirst.CreatedAt, responseThird.CreatedAt);
+            Assert.AreEqual(responseFirst.CreatedOn, responseSecond.CreatedOn);
+            Assert.AreEqual(responseFirst.CreatedOn, responseThird.CreatedOn);
         }
 
         [Test]

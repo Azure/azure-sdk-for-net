@@ -37,11 +37,12 @@
         {
           "type": "object",
           "properties": {
-            "CacheTTLSeconds": {
-              "type": "number"
+            "CacheTTL": {
+              "type": "string"
             },
             "IdentityClientEndpoint": {
-              "type": "string"
+              "type": "string",
+              "format": "uri"
             }
           }
         }

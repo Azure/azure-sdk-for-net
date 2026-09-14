@@ -14,12 +14,12 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// The default time to keep the successful certificate responses that have TLS CA.
         /// </summary>
-        public double CacheTTLSeconds { get; set; } = 300;
+        public TimeSpan CacheTTL { get; set; } = TimeSpan.FromMinutes(5);
 
         /// <summary>
         /// The default identity service endpoint.
         /// </summary>
-        public string IdentityClientEndpoint { get; set; } = "https://identity.confidential-ledger.core.azure.com/";
+        public Uri IdentityClientEndpoint { get; set; } = new Uri("https://identity.confidential-ledger.core.azure.com/");
 
         /// <summary>
         /// Used in the regular client constructor.
@@ -27,7 +27,7 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         public virtual CodeTransparencyCertificateClient CreateCertificateClient()
         {
-            return new CodeTransparencyCertificateClient(new Uri(IdentityClientEndpoint), this);
+            return new CodeTransparencyCertificateClient(IdentityClientEndpoint, this);
         }
     }
 }
