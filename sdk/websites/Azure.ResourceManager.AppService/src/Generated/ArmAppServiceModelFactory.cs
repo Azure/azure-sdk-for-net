@@ -52,21 +52,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
         public static AppServiceValidateContent AppServiceValidateContent(string name = default, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = default, string skuName = default, bool? needLinuxWorkers = default, bool? isSpot = default, int? capacity = default, string hostingEnvironment = default, bool? isXenon = default, Uri containerRegistryBaseUri = default, string containerRegistryUsername = default, string containerRegistryPassword = default, string containerImageRepository = default, string containerImageTag = default, string containerImagePlatform = default, AppServiceEnvironmentProperties appServiceEnvironment = default)
         {
-            return new AppServiceValidateContent(name, validateResourceType, location, needLinuxWorkers is null && isSpot is null && isXenon is null ? default : new ValidateProperties(
-                default,
-                default,
+            return new AppServiceValidateContent(name, validateResourceType, location, serverFarmId is null && skuName is null && needLinuxWorkers is null && isSpot is null && capacity is null && hostingEnvironment is null && isXenon is null && containerRegistryBaseUri is null && containerRegistryUsername is null && containerRegistryPassword is null && containerImageRepository is null && containerImageTag is null && containerImagePlatform is null && appServiceEnvironment is null ? default : new ValidateProperties(
+                serverFarmId,
+                skuName,
                 needLinuxWorkers,
                 isSpot,
-                default,
-                default,
+                capacity,
+                hostingEnvironment,
                 isXenon,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                containerRegistryBaseUri,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
                 default), default);
         }
 
@@ -7288,22 +7288,22 @@ namespace Azure.ResourceManager.AppService.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                startOn is null && endOn is null && repetitionIndexes is null ? default : new WorkflowRunActionRepetitionProperties(
+                startOn is null && endOn is null && correlation is null && status is null && code is null && error is null && trackingId is null && inputs is null && inputsLink is null && outputs is null && outputsLink is null && trackedProperties is null && retryHistory is null && iterationCount is null && repetitionIndexes is null ? default : new WorkflowRunActionRepetitionProperties(
                     startOn,
                     endOn,
+                    correlation,
+                    status,
+                    code,
+                    error,
                     default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    trackingId,
+                    inputs,
+                    inputsLink,
+                    outputs,
+                    outputsLink,
+                    trackedProperties,
+                    (retryHistory ?? new ChangeTrackingList<WebAppRetryHistory>()).ToList(),
+                    iterationCount,
                     (repetitionIndexes ?? new ChangeTrackingList<WorkflowRunActionRepetitionIndex>()).ToList()),
                 default);
         }

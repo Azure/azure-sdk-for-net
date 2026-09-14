@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 name,
                 resourceType,
                 systemData,
-                fhirServiceResourceId is null && fhirMappingContent is null ? default : new HealthcareApisIotFhirDestinationProperties(default, default, default, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
+                new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
                 eTag,
                 location,
                 default);
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && fhirServiceResourceId is null && fhirMappingContent is null ? default : new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
+                new HealthcareApisIotFhirDestinationProperties(provisioningState, default, resourceIdentityResolutionType, fhirServiceResourceId, new HealthcareApisIotMappingProperties(fhirMappingContent, default)),
                 etag,
                 location,
                 default);

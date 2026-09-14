@@ -51,14 +51,13 @@ Use the following code to submit the signature:
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content);
 ```
 
 Then obtain the transparent statement:
 
 ```C# Snippet:CodeTransparencyDownloadTransparentStatement
-await operation.WaitForCompletionAsync();
-string entryId = operation.Id;
+string entryId = CcfReceipt.GetRegistrationTransactionId(receiptResponse.Value.ToArray());
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();

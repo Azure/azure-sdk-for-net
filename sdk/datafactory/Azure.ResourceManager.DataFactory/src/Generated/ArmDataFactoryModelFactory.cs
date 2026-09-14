@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                default);
+                recurrence is null ? default : new ScheduleTriggerTypeProperties(recurrence, default));
         }
 
         /// <summary> The workflow trigger recurrence. </summary>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                default,
+                new BlobTriggerTypeProperties(folderPath, maxConcurrency, default, default),
                 linkedService0);
         }
 
@@ -591,12 +591,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                ignoreEmptyBlobs is null ? default : new BlobEventsTriggerTypeProperties(
-                    default,
-                    default,
+                blobPathBeginsWith is null && blobPathEndsWith is null && ignoreEmptyBlobs is null && events is null && scope is null ? default : new BlobEventsTriggerTypeProperties(
+                    blobPathBeginsWith,
+                    blobPathEndsWith,
                     ignoreEmptyBlobs,
-                    default,
-                    default,
+                    (events ?? new ChangeTrackingList<DataFactoryBlobEventType>()).ToList(),
+                    scope,
                     default));
         }
 
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                default);
+                subjectBeginsWith is null && subjectEndsWith is null && events is null && scope is null ? default : new CustomEventsTriggerTypeProperties(subjectBeginsWith, subjectEndsWith, (events ?? new ChangeTrackingList<BinaryData>()).ToList(), scope, default));
         }
 
         /// <param name="description"> Trigger description. </param>
@@ -652,15 +652,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 pipeline,
-                endOn is null ? default : new TumblingWindowTriggerTypeProperties(
-                    default,
-                    default,
+                new TumblingWindowTriggerTypeProperties(
+                    frequency,
+                    interval,
                     startOn,
                     endOn,
-                    default,
-                    default,
-                    default,
-                    default,
+                    delay,
+                    maxConcurrency,
+                    retryPolicy,
+                    (dependsOn ?? new ChangeTrackingList<DependencyReference>()).ToList(),
                     default));
         }
 
@@ -740,7 +740,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 runtimeState,
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                new RerunTumblingWindowTriggerTypeProperties(default, requestedStartOn, requestedEndOn, default, default));
+                new RerunTumblingWindowTriggerTypeProperties(parentTrigger, requestedStartOn, requestedEndOn, rerunConcurrency, default));
         }
 
         /// <param name="description"> Trigger description. </param>
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 pipeline,
-                default);
+                dependsOn is null && runDimension is null ? default : new ChainingTriggerTypeProperties((dependsOn ?? new ChangeTrackingList<DataFactoryPipelineReference>()).ToList(), runDimension, default));
         }
 
         /// <summary> Trigger runs. </summary>
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 description,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 state,
-                customerVirtualNetworkSubnetId is null ? default : new ManagedIntegrationRuntimeTypeProperties(default, default, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), default, default),
+                computeProperties is null && ssisProperties is null && customerVirtualNetworkSubnetId is null && interactiveQuery is null ? default : new ManagedIntegrationRuntimeTypeProperties(computeProperties, ssisProperties, new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, default), interactiveQuery, default),
                 managedVirtualNetwork);
         }
 
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.EnvironmentVariableSetup"/> instance for mocking. </returns>
         public static EnvironmentVariableSetup EnvironmentVariableSetup(string variableName = default, string variableValue = default)
         {
-            return new EnvironmentVariableSetup(default, default, default);
+            return new EnvironmentVariableSetup(default, default, variableName is null && variableValue is null ? default : new EnvironmentVariableSetupTypeProperties(variableName, variableValue, default));
         }
 
         /// <param name="componentName"> The name of the 3rd party component. </param>
@@ -1339,7 +1339,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.ComponentSetup"/> instance for mocking. </returns>
         public static ComponentSetup ComponentSetup(string componentName = default, DataFactorySecret licenseKey = default)
         {
-            return new ComponentSetup(default, default, default);
+            return new ComponentSetup(default, default, componentName is null && licenseKey is null ? default : new LicensedComponentSetupTypeProperties(componentName, licenseKey, default));
         }
 
         /// <param name="version"> The required version of Azure PowerShell to install. </param>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.AzPowerShellSetup"/> instance for mocking. </returns>
         public static AzPowerShellSetup AzPowerShellSetup(string version = default)
         {
-            return new AzPowerShellSetup(default, default, default);
+            return new AzPowerShellSetup(default, default, version is null ? default : new AzPowerShellSetupTypeProperties(version, default));
         }
 
         /// <summary> Package store for the SSIS integration runtime. </summary>
@@ -2295,7 +2295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                tableName is null ? default : new AzureTableDatasetTypeProperties(tableName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2476,7 +2476,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collectionName is null ? default : new CosmosDBSqlApiCollectionDatasetTypeProperties(collectionName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2505,7 +2505,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collectionName is null ? default : new DocumentDBCollectionDatasetTypeProperties(collectionName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2622,7 +2622,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                tableName is null && predicate is null ? default : new Office365DatasetTypeProperties(tableName, predicate, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2651,7 +2651,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collectionName is null ? default : new MongoDBCollectionDatasetTypeProperties(collectionName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2680,7 +2680,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collection is null ? default : new MongoDBAtlasCollectionDatasetTypeProperties(collection, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2709,7 +2709,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collection is null ? default : new MongoDBV2CollectionDatasetTypeProperties(collection, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2738,7 +2738,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                collection is null ? default : new CosmosDBMongoDBApiCollectionDatasetTypeProperties(collection, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -2859,7 +2859,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                tableName is null && table is null ? default : new AzureMySqlTableDatasetTypeProperties(tableName, table, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -3361,7 +3361,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                tableName is null ? default : new SapTableResourceDatasetTypeProperties(tableName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -3391,7 +3391,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                context is null && objectName is null ? default : new SapOdpResourceDatasetTypeProperties(context, objectName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -3420,7 +3420,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                indexName is null ? default : new AzureSearchIndexDatasetTypeProperties(indexName, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -4431,7 +4431,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                table is null ? default : new AzureDataExplorerDatasetTypeProperties(table, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -4490,7 +4490,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                schemaTypePropertiesSchema is null ? default : new SnowflakeDatasetTypeProperties(schemaTypePropertiesSchema, default, default));
+                schemaTypePropertiesSchema is null && table is null ? default : new SnowflakeDatasetTypeProperties(schemaTypePropertiesSchema, table, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -4520,7 +4520,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 folderName is null ? default : new DatasetFolder(folderName, default),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                schemaTypePropertiesSchema is null ? default : new SnowflakeDatasetTypeProperties(schemaTypePropertiesSchema, default, default));
+                schemaTypePropertiesSchema is null && table is null ? default : new SnowflakeDatasetTypeProperties(schemaTypePropertiesSchema, table, default));
         }
 
         /// <param name="description"> Dataset description. </param>
@@ -4807,7 +4807,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && accountKey is null && sasUri is null && sasToken is null && encryptedCredential is null ? default : new AzureStorageLinkedServiceTypeProperties(
+                    connectionString,
+                    accountKey,
+                    sasUri,
+                    sasToken,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -4838,7 +4844,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && accountKey is null && sasUri is null && sasToken is null && encryptedCredential is null && serviceEndpoint is null && credential is null ? default : new AzureTableStorageLinkedServiceTypeProperties(
+                    connectionString,
+                    accountKey,
+                    sasUri,
+                    sasToken,
+                    encryptedCredential,
+                    default,
+                    serviceEndpoint,
+                    credential));
         }
 
         /// <summary> Sql always encrypted properties. </summary>
@@ -4881,7 +4895,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default,
+                accountName is null && accessKey is null && batchUri is null && poolName is null && encryptedCredential is null && credential is null ? default : new AzureBatchLinkedServiceTypeProperties(
+                    accountName,
+                    accessKey,
+                    batchUri,
+                    poolName,
+                    default,
+                    encryptedCredential,
+                    credential,
+                    default),
                 linkedServiceName0);
         }
 
@@ -4908,7 +4930,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                baseUri is null && credential is null ? default : new AzureKeyVaultLinkedServiceTypeProperties(baseUri, credential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -4937,7 +4959,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default,
+                host is null && userId is null && encryptedCredential is null ? default : new FileServerLinkedServiceTypeProperties(host, userId, default, encryptedCredential, default),
                 password0);
         }
 
@@ -4975,7 +4997,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default,
+                host is null && userId is null && connectionString is null && accountKey is null && sasUri is null && sasToken is null && fileShare is null && snapshot is null && encryptedCredential is null && serviceEndpoint is null && credential is null ? default : new AzureFileStorageLinkedServiceTypeProperties(
+                    host,
+                    userId,
+                    default,
+                    connectionString,
+                    accountKey,
+                    sasUri,
+                    sasToken,
+                    fileShare,
+                    snapshot,
+                    encryptedCredential,
+                    serviceEndpoint,
+                    credential,
+                    default),
                 password0);
         }
 
@@ -5005,7 +5040,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                accessKeyId is null && secretAccessKey is null && serviceUri is null && forcePathStyle is null && encryptedCredential is null ? default : new AmazonS3CompatibleLinkedServiceTypeProperties(
+                    accessKeyId,
+                    secretAccessKey,
+                    serviceUri,
+                    forcePathStyle,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5033,7 +5074,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                accessKeyId is null && secretAccessKey is null && serviceUri is null && encryptedCredential is null ? default : new OracleCloudStorageLinkedServiceTypeProperties(accessKeyId, secretAccessKey, serviceUri, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5061,7 +5102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                accessKeyId is null && secretAccessKey is null && serviceUri is null && encryptedCredential is null ? default : new GoogleCloudStorageLinkedServiceTypeProperties(accessKeyId, secretAccessKey, serviceUri, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5088,7 +5129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && password is null && encryptedCredential is null ? default : new AzureMySqlLinkedServiceTypeProperties(connectionString, password, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5115,7 +5156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && password is null && encryptedCredential is null ? default : new PostgreSqlLinkedServiceTypeProperties(connectionString, password, encryptedCredential, default));
         }
 
         /// <summary> Web linked service. </summary>
@@ -5208,7 +5249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && database is null && driverVersion is null ? default : new MongoDBAtlasLinkedServiceTypeProperties(connectionString, database, driverVersion, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5234,7 +5275,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && database is null ? default : new MongoDBV2LinkedServiceTypeProperties(connectionString, database, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5261,7 +5302,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                isServerVersionAbove32 is null && connectionString is null && database is null ? default : new CosmosDBMongoDBApiLinkedServiceTypeProperties(isServerVersionAbove32, connectionString, database, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5287,7 +5328,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                apiToken is null && encryptedCredential is null ? default : new SmartsheetLinkedServiceTypeProperties(apiToken, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5313,7 +5354,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                apiToken is null && encryptedCredential is null ? default : new DataworldLinkedServiceTypeProperties(apiToken, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5339,7 +5380,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                apiToken is null && encryptedCredential is null ? default : new AsanaLinkedServiceTypeProperties(apiToken, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5365,7 +5406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                apiToken is null && encryptedCredential is null ? default : new GoogleSheetsLinkedServiceTypeProperties(apiToken, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5395,13 +5436,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null ? default : new AmazonS3LinkedServiceTypeProperties(
+                authenticationType is null && accessKeyId is null && secretAccessKey is null && serviceUri is null && sessionToken is null && encryptedCredential is null ? default : new AmazonS3LinkedServiceTypeProperties(
                     authenticationType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    accessKeyId,
+                    secretAccessKey,
+                    serviceUri,
+                    sessionToken,
+                    encryptedCredential,
                     default));
         }
 
@@ -5459,13 +5500,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null ? default : new SapHanaLinkedServiceProperties(
-                    default,
-                    default,
+                connectionString is null && server is null && authenticationType is null && userName is null && encryptedCredential is null ? default : new SapHanaLinkedServiceProperties(
+                    connectionString,
+                    server,
                     authenticationType,
+                    userName,
                     default,
-                    default,
-                    default,
+                    encryptedCredential,
                     default),
                 password0);
         }
@@ -5521,7 +5562,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                endpoint is null && marketplaceId is null && sellerId is null && mwsAuthToken is null && accessKeyId is null && secretKey is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new AmazonMWSLinkedServiceTypeProperties(
+                    endpoint,
+                    marketplaceId,
+                    sellerId,
+                    mwsAuthToken,
+                    accessKeyId,
+                    secretKey,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5548,7 +5600,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && credString is null && encryptedCredential is null ? default : new CouchbaseLinkedServiceTypeProperties(connectionString, credString, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5575,7 +5627,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && pwd is null && encryptedCredential is null ? default : new DrillLinkedServiceTypeProperties(connectionString, pwd, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5607,13 +5659,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 new GoogleBigQueryV2LinkedServiceTypeProperties(
-                    default,
+                    projectId,
                     authenticationType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    clientId,
+                    clientSecret,
+                    refreshToken,
+                    keyFileContent,
+                    encryptedCredential,
                     default));
         }
 
@@ -5646,7 +5698,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                clientId is null && clientSecret is null && accessToken is null && refreshToken is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new HubspotLinkedServiceTypeProperties(
+                    clientId,
+                    clientSecret,
+                    accessToken,
+                    refreshToken,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5676,7 +5737,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                host is null && accessToken is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new MagentoLinkedServiceTypeProperties(
+                    host,
+                    accessToken,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5703,7 +5771,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && pwd is null && encryptedCredential is null ? default : new AzureMariaDBLinkedServiceTypeProperties(connectionString, pwd, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5734,7 +5802,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                endpoint is null && clientId is null && clientSecret is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new MarketoLinkedServiceTypeProperties(
+                    endpoint,
+                    clientId,
+                    clientSecret,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5765,7 +5841,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                host is null && clientId is null && clientSecret is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new PaypalLinkedServiceTypeProperties(
+                    host,
+                    clientId,
+                    clientSecret,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5799,7 +5883,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionProperties is null && endpoint is null && companyId is null && consumerKey is null && consumerSecret is null && accessToken is null && accessTokenSecret is null && refreshToken is null && useEncryptedEndpoints is null && encryptedCredential is null ? default : new QuickBooksLinkedServiceTypeProperties(
+                    connectionProperties,
+                    endpoint,
+                    companyId,
+                    consumerKey,
+                    consumerSecret,
+                    accessToken,
+                    accessTokenSecret,
+                    refreshToken,
+                    useEncryptedEndpoints,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5829,7 +5924,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                host is null && accessToken is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new ShopifyLinkedServiceTypeProperties(
+                    host,
+                    accessToken,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5862,7 +5964,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionProperties is null && host is null && clientId is null && clientSecret is null && redirectUri is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new SquareLinkedServiceTypeProperties(
+                    connectionProperties,
+                    host,
+                    clientId,
+                    clientSecret,
+                    redirectUri,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5897,7 +6009,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionProperties is null && host is null && consumerKey is null && privateKey is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new XeroLinkedServiceTypeProperties(
+                    connectionProperties,
+                    host,
+                    consumerKey,
+                    privateKey,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5928,7 +6049,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionProperties is null && endpoint is null && accessToken is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new ZohoLinkedServiceTypeProperties(
+                    connectionProperties,
+                    endpoint,
+                    accessToken,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5959,7 +6088,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && server is null && port is null && uid is null && database is null && pwd is null && encryptedCredential is null ? default : new VerticaLinkedServiceTypeProperties(
+                    connectionString,
+                    server,
+                    port,
+                    uid,
+                    database,
+                    pwd,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -5991,7 +6128,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && server is null && port is null && uid is null && database is null && securityLevel is null && pwd is null && encryptedCredential is null ? default : new NetezzaLinkedServiceTypeProperties(
+                    connectionString,
+                    server,
+                    port,
+                    uid,
+                    database,
+                    securityLevel,
+                    pwd,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -6022,7 +6168,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionProperties is null && clientId is null && clientSecret is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new SalesforceMarketingCloudLinkedServiceTypeProperties(
+                    connectionProperties,
+                    clientId,
+                    clientSecret,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
@@ -6064,7 +6218,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                endpoint is null && clientId is null && clientSecret is null && useEncryptedEndpoints is null && useHostVerification is null && usePeerVerification is null && encryptedCredential is null ? default : new ResponsysLinkedServiceTypeProperties(
+                    endpoint,
+                    clientId,
+                    clientSecret,
+                    useEncryptedEndpoints,
+                    useHostVerification,
+                    usePeerVerification,
+                    encryptedCredential,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -6104,23 +6266,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null && supportLegacyDataTypes is null ? default : new GoogleAdWordsLinkedServiceTypeProperties(
-                    default,
-                    default,
-                    default,
+                connectionProperties is null && clientCustomerId is null && developerToken is null && authenticationType is null && refreshToken is null && clientId is null && clientSecret is null && email is null && keyFilePath is null && trustedCertPath is null && useSystemTrustStore is null && privateKey is null && loginCustomerId is null && googleAdsApiVersion is null && supportLegacyDataTypes is null && encryptedCredential is null ? default : new GoogleAdWordsLinkedServiceTypeProperties(
+                    connectionProperties,
+                    clientCustomerId,
+                    developerToken,
                     authenticationType,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    refreshToken,
+                    clientId,
+                    clientSecret,
+                    email,
+                    keyFilePath,
+                    trustedCertPath,
+                    useSystemTrustStore,
+                    privateKey,
+                    loginCustomerId,
+                    googleAdsApiVersion,
                     supportLegacyDataTypes,
-                    default,
+                    encryptedCredential,
                     default));
         }
 
@@ -6151,7 +6313,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                functionAppUri is null && functionKey is null && encryptedCredential is null && credential is null && resourceId is null && authentication is null ? default : new AzureFunctionLinkedServiceTypeProperties(
+                    functionAppUri,
+                    functionKey,
+                    encryptedCredential,
+                    credential,
+                    resourceId,
+                    authentication,
+                    default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -6178,7 +6347,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                connectionString is null && password is null && encryptedCredential is null ? default : new SnowflakeLinkedServiceTypeProperties(connectionString, password, encryptedCredential, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -6205,7 +6374,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                endpoint is null && authentication is null && workspaceResourceId is null ? default : new AzureSynapseArtifactsLinkedServiceTypeProperties(endpoint, authentication, workspaceResourceId, default));
         }
 
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
@@ -6235,13 +6404,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null ? default : new SalesforceV2LinkedServiceTypeProperties(
-                    default,
+                environmentUri is null && authenticationType is null && clientId is null && clientSecret is null && apiVersion is null && encryptedCredential is null ? default : new SalesforceV2LinkedServiceTypeProperties(
+                    environmentUri,
                     authenticationType,
-                    default,
-                    default,
-                    default,
-                    default,
+                    clientId,
+                    clientSecret,
+                    apiVersion,
+                    encryptedCredential,
                     default));
         }
 
@@ -6272,13 +6441,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                authenticationType is null ? default : new SalesforceServiceCloudV2LinkedServiceTypeProperties(
-                    default,
+                environmentUri is null && authenticationType is null && clientId is null && clientSecret is null && apiVersion is null && encryptedCredential is null ? default : new SalesforceServiceCloudV2LinkedServiceTypeProperties(
+                    environmentUri,
                     authenticationType,
-                    default,
-                    default,
-                    default,
-                    default,
+                    clientId,
+                    clientSecret,
+                    apiVersion,
+                    encryptedCredential,
                     default));
         }
 
@@ -6430,7 +6599,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new ManagedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
+            return new ManagedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), createdOn is null && nodes is null && otherErrors is null && lastOperation is null ? default : new ManagedIntegrationRuntimeStatusTypeProperties(createdOn, (nodes ?? new ChangeTrackingList<ManagedIntegrationRuntimeNode>()).ToList(), (otherErrors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>()).ToList(), lastOperation, default));
         }
 
         /// <summary> Properties of integration runtime node. </summary>
@@ -6511,23 +6680,23 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new SelfHostedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), isSelfContainedInteractiveAuthoringEnabled is null ? default : new SelfHostedIntegrationRuntimeStatusTypeProperties(
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
-                default,
+            return new SelfHostedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), createdOn is null && taskQueueId is null && internalChannelEncryption is null && version is null && nodes is null && scheduledUpdateOn is null && updateDelayOffset is null && localTimeZoneOffset is null && capabilities is null && serviceUriStringList is null && autoUpdate is null && versionStatus is null && links is null && pushedVersion is null && latestVersion is null && autoUpdateEta is null && isSelfContainedInteractiveAuthoringEnabled is null ? default : new SelfHostedIntegrationRuntimeStatusTypeProperties(
+                createdOn,
+                taskQueueId,
+                internalChannelEncryption,
+                version,
+                (nodes ?? new ChangeTrackingList<SelfHostedIntegrationRuntimeNode>()).ToList(),
+                scheduledUpdateOn,
+                updateDelayOffset,
+                localTimeZoneOffset,
+                capabilities ?? new ChangeTrackingDictionary<string, string>(),
+                (serviceUriStringList ?? new ChangeTrackingList<string>()).ToList(),
+                autoUpdate,
+                versionStatus,
+                (links ?? new ChangeTrackingList<LinkedIntegrationRuntime>()).ToList(),
+                pushedVersion,
+                latestVersion,
+                autoUpdateEta,
                 isSelfContainedInteractiveAuthoringEnabled,
                 default));
         }
@@ -6795,14 +6964,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 resourceType,
                 systemData,
-                folderName is null && elapsedTimeMetricDuration is null ? default : new Pipeline(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                description is null && activities is null && parameters is null && variables is null && concurrency is null && annotations is null && runDimensions is null && folderName is null && elapsedTimeMetricDuration is null ? default : new Pipeline(
+                    description,
+                    (activities ?? new ChangeTrackingList<PipelineActivity>()).ToList(),
+                    parameters ?? new ChangeTrackingDictionary<string, EntityParameterSpecification>(),
+                    variables ?? new ChangeTrackingDictionary<string, PipelineVariableSpecification>(),
+                    concurrency,
+                    (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    runDimensions ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     new PipelineFolder(folderName, default),
                     new PipelinePolicy(new PipelineElapsedTimeMetricPolicy(elapsedTimeMetricDuration, default), default),
                     default),
@@ -6916,7 +7085,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 policy,
-                waitOnCompletion is null ? default : new ExecutePipelineActivityTypeProperties(default, default, waitOnCompletion, default));
+                pipeline is null && parameters is null && waitOnCompletion is null ? default : new ExecutePipelineActivityTypeProperties(pipeline, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), waitOnCompletion, default));
         }
 
         /// <summary> Execution policy for an execute pipeline activity. </summary>
@@ -6956,7 +7125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                expression is null && ifTrueActivities is null && ifFalseActivities is null ? default : new IfConditionActivityTypeProperties(expression, (ifTrueActivities ?? new ChangeTrackingList<PipelineActivity>()).ToList(), (ifFalseActivities ?? new ChangeTrackingList<PipelineActivity>()).ToList(), default));
         }
 
         /// <summary> Azure Data Factory expression definition. </summary>
@@ -6994,7 +7163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                @on is null && cases is null && defaultActivities is null ? default : new SwitchActivityTypeProperties(@on, (cases ?? new ChangeTrackingList<SwitchCaseActivity>()).ToList(), (defaultActivities ?? new ChangeTrackingList<PipelineActivity>()).ToList(), default));
         }
 
         /// <summary> Switch cases with have a value and corresponding activities. </summary>
@@ -7035,7 +7204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                isSequential is null ? default : new ForEachActivityTypeProperties(isSequential, default, default, default, default));
+                isSequential is null && batchCount is null && items is null && activities is null ? default : new ForEachActivityTypeProperties(isSequential, batchCount, items, (activities ?? new ChangeTrackingList<PipelineActivity>()).ToList(), default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -7062,7 +7231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                waitTimeInSeconds is null ? default : new WaitActivityTypeProperties(waitTimeInSeconds, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -7090,7 +7259,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                message is null && errorCode is null ? default : new FailActivityTypeProperties(message, errorCode, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -7118,7 +7287,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default);
+                items is null && condition is null ? default : new FilterActivityTypeProperties(items, condition, default));
         }
 
         /// <summary> Execution policy for an activity that supports secure input and output. </summary>
@@ -7249,7 +7418,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default,
+                source is null && sink is null && translator is null && enableStaging is null && stagingSettings is null && parallelCopies is null && dataIntegrationUnits is null && enableSkipIncompatibleRow is null && redirectIncompatibleRowSettings is null && logStorageSettings is null && logSettings is null && preserveRules is null && preserve is null && validateDataConsistency is null && skipErrorFile is null ? default : new CopyActivityTypeProperties(
+                    source,
+                    sink,
+                    translator,
+                    enableStaging,
+                    stagingSettings,
+                    parallelCopies,
+                    dataIntegrationUnits,
+                    enableSkipIncompatibleRow,
+                    redirectIncompatibleRowSettings,
+                    logStorageSettings,
+                    logSettings,
+                    (preserveRules ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    (preserve ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    validateDataConsistency,
+                    skipErrorFile,
+                    default),
                 (inputs ?? new ChangeTrackingList<DatasetReference>()).ToList(),
                 (outputs ?? new ChangeTrackingList<DatasetReference>()).ToList());
         }
@@ -12858,7 +13043,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                storageLinkedServices is null && arguments is null && getDebugInfo is null && scriptPath is null && scriptLinkedService is null && defines is null && variables is null && queryTimeout is null ? default : new HDInsightHiveActivityTypeProperties(
+                    (storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>()).ToList(),
+                    (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    getDebugInfo,
+                    scriptPath,
+                    scriptLinkedService,
+                    defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    variables ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    queryTimeout,
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -12894,7 +13088,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                storageLinkedServices is null && arguments is null && getDebugInfo is null && scriptPath is null && scriptLinkedService is null && defines is null ? default : new HDInsightPigActivityTypeProperties(
+                    (storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>()).ToList(),
+                    arguments,
+                    getDebugInfo,
+                    scriptPath,
+                    scriptLinkedService,
+                    defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -12932,7 +13133,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                storageLinkedServices is null && arguments is null && getDebugInfo is null && className is null && jarFilePath is null && jarLinkedService is null && jarLibs is null && defines is null ? default : new HDInsightMapReduceActivityTypeProperties(
+                    (storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>()).ToList(),
+                    (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    getDebugInfo,
+                    className,
+                    jarFilePath,
+                    jarLinkedService,
+                    (jarLibs ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -12974,7 +13184,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                storageLinkedServices is null && arguments is null && getDebugInfo is null && mapper is null && reducer is null && input is null && output is null && filePaths is null && fileLinkedService is null && combiner is null && commandEnvironment is null && defines is null ? default : new HDInsightStreamingActivityTypeProperties(
+                    (storageLinkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>()).ToList(),
+                    (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    getDebugInfo,
+                    mapper,
+                    reducer,
+                    input,
+                    output,
+                    (filePaths ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    fileLinkedService,
+                    combiner,
+                    (commandEnvironment ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    defines ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13012,7 +13235,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                rootPath is null && entryFilePath is null && arguments is null && getDebugInfo is null && sparkJobLinkedService is null && className is null && proxyUser is null && sparkConfig is null ? default : new HDInsightSparkActivityTypeProperties(
+                    rootPath,
+                    entryFilePath,
+                    (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    getDebugInfo,
+                    sparkJobLinkedService,
+                    className,
+                    proxyUser,
+                    sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13054,7 +13286,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                packageLocation is null && runtime is null && loggingLevel is null && environmentPath is null && executionCredential is null && connectVia is null && projectParameters is null && packageParameters is null && projectConnectionManagers is null && packageConnectionManagers is null && propertyOverrides is null && logLocation is null ? default : new ExecuteSsisPackageActivityTypeProperties(
+                    packageLocation,
+                    runtime,
+                    loggingLevel,
+                    environmentPath,
+                    executionCredential,
+                    connectVia,
+                    projectParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                    packageParameters ?? new ChangeTrackingDictionary<string, SsisExecutionParameter>(),
+                    projectConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                    packageConnectionManagers ?? new ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>>(),
+                    propertyOverrides ?? new ChangeTrackingDictionary<string, SsisPropertyOverride>(),
+                    logLocation,
+                    default));
         }
 
         /// <summary> SSIS access credential. </summary>
@@ -13112,7 +13357,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <returns> A new <see cref="Models.SsisLogLocation"/> instance for mocking. </returns>
         public static SsisLogLocation SsisLogLocation(DataFactoryElement<string> logPath = default, SsisLogLocationType locationType = default, SsisAccessCredential accessCredential = default, DataFactoryElement<string> logRefreshInterval = default)
         {
-            return new SsisLogLocation(logPath, locationType, default, default);
+            return new SsisLogLocation(logPath, locationType, accessCredential is null && logRefreshInterval is null ? default : new SSISLogLocationTypeProperties(accessCredential, logRefreshInterval, default), default);
         }
 
         /// <summary> Reference objects for custom activity. </summary>
@@ -13156,7 +13401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                storedProcedureName is null && storedProcedureParameters is null ? default : new SqlServerStoredProcedureActivityTypeProperties(storedProcedureName, storedProcedureParameters, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13188,7 +13433,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                command is null && commandTimeout is null ? default : new AzureDataExplorerCommandActivityTypeProperties(command, commandTimeout, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13222,7 +13467,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                source is null && dataset is null && firstRowOnly is null && treatDecimalAsString is null ? default : new LookupActivityTypeProperties(source, dataset, firstRowOnly, treatDecimalAsString, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13256,7 +13501,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                dataset is null && fieldList is null && storeSettings is null && formatSettings is null ? default : new GetMetadataActivityTypeProperties(dataset, (fieldList ?? new ChangeTrackingList<BinaryData>()).ToList(), storeSettings, formatSettings, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13289,7 +13534,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                globalParameters is null && webServiceOutputs is null && webServiceInputs is null ? default : new AzureMLBatchExecutionActivityTypeProperties(globalParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), webServiceOutputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(), webServiceInputs ?? new ChangeTrackingDictionary<string, AzureMLWebServiceFile>(), default));
         }
 
         /// <summary> Azure ML WebService Input/Output file. </summary>
@@ -13331,7 +13576,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                trainedModelName is null && trainedModelLinkedServiceName is null && trainedModelFilePath is null ? default : new AzureMLUpdateResourceActivityTypeProperties(trainedModelName, trainedModelLinkedServiceName, trainedModelFilePath, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13368,7 +13613,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                scriptPath is null && scriptLinkedService is null && degreeOfParallelism is null && priority is null && parameters is null && runtimeVersion is null && compilationMode is null ? default : new DataLakeAnalyticsUSQLActivityTypeProperties(
+                    scriptPath,
+                    scriptLinkedService,
+                    degreeOfParallelism,
+                    priority,
+                    parameters ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                    runtimeVersion,
+                    compilationMode,
+                    default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13401,7 +13654,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                notebookPath is null && baseParameters is null && libraries is null ? default : new DatabricksNotebookActivityTypeProperties(notebookPath, baseParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13434,7 +13687,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                mainClassName is null && parameters is null && libraries is null ? default : new DatabricksSparkJarActivityTypeProperties(mainClassName, (parameters ?? new ChangeTrackingList<BinaryData>()).ToList(), (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13467,7 +13720,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                pythonFile is null && parameters is null && libraries is null ? default : new DatabricksSparkPythonActivityTypeProperties(pythonFile, (parameters ?? new ChangeTrackingList<BinaryData>()).ToList(), (libraries ?? new ChangeTrackingList<IDictionary<string, BinaryData>>()).ToList(), default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13499,7 +13752,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                jobId is null && jobParameters is null ? default : new DatabricksJobActivityTypeProperties(jobId, jobParameters ?? new ChangeTrackingDictionary<string, BinaryData>(), default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13533,7 +13786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                new AzureFunctionActivityTypeProperties(@method, functionName, requestHeaders ?? new ChangeTrackingDictionary<string, BinaryData>(), body, default));
         }
 
         /// <param name="name"> Activity name. </param>
@@ -13572,7 +13825,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                dataFlow is null && staging is null && integrationRuntime is null && continuationSettings is null && compute is null && traceLevel is null && continueOnError is null && runConcurrently is null && sourceStagingConcurrency is null ? default : new ExecuteDataFlowActivityTypeProperties(
+                    dataFlow,
+                    staging,
+                    integrationRuntime,
+                    continuationSettings,
+                    compute,
+                    traceLevel,
+                    continueOnError,
+                    runConcurrently,
+                    sourceStagingConcurrency,
+                    default));
         }
 
         /// <summary> Continuation settings for execute data flow activity. </summary>
@@ -13626,7 +13889,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                default);
+                scriptBlockExecutionTimeout is null && scripts is null && logSettings is null && returnMultistatementResult is null && treatDecimalAsString is null ? default : new ScriptActivityTypeProperties(
+                    scriptBlockExecutionTimeout,
+                    (scripts ?? new ChangeTrackingList<ScriptActivityScriptBlock>()).ToList(),
+                    logSettings,
+                    returnMultistatementResult,
+                    treatDecimalAsString,
+                    default));
         }
 
         /// <summary> Script block of scripts. </summary>
@@ -13705,17 +13974,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                configurationType is null ? default : new SynapseNotebookActivityTypeProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                notebook is null && sparkPool is null && parameters is null && executorSize is null && conf is null && driverSize is null && numExecutors is null && configurationType is null && targetSparkConfiguration is null && sparkConfig is null ? default : new SynapseNotebookActivityTypeProperties(
+                    notebook,
+                    sparkPool,
+                    parameters ?? new ChangeTrackingDictionary<string, NotebookParameter>(),
+                    executorSize,
+                    conf,
+                    driverSize,
+                    numExecutors,
                     configurationType,
-                    default,
-                    default,
+                    targetSparkConfiguration,
+                    sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     default));
         }
 
@@ -13798,23 +14067,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 linkedServiceName,
                 policy,
-                configurationType is null ? default : new SynapseSparkJobActivityTypeProperties(
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                sparkJob is null && arguments is null && @file is null && scanFolder is null && className is null && files is null && pythonCodeReference is null && filesV2 is null && targetBigDataPool is null && executorSize is null && conf is null && driverSize is null && numExecutors is null && configurationType is null && targetSparkConfiguration is null && sparkConfig is null ? default : new SynapseSparkJobActivityTypeProperties(
+                    sparkJob,
+                    (arguments ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    @file,
+                    scanFolder,
+                    className,
+                    (files ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    (pythonCodeReference ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    (filesV2 ?? new ChangeTrackingList<BinaryData>()).ToList(),
+                    targetBigDataPool,
+                    executorSize,
+                    conf,
+                    driverSize,
+                    numExecutors,
                     configurationType,
-                    default,
-                    default,
+                    targetSparkConfiguration,
+                    sparkConfig ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     default));
         }
 
@@ -13862,7 +14131,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>()).ToList(),
                 (userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                default,
+                dataFlow is null && staging is null && integrationRuntime is null && continuationSettings is null && compute is null && traceLevel is null && continueOnError is null && runConcurrently is null && sourceStagingConcurrency is null && sinks is null && queries is null ? default : new ExecutePowerQueryActivityTypeProperties(
+                    dataFlow,
+                    staging,
+                    integrationRuntime,
+                    continuationSettings,
+                    compute,
+                    traceLevel,
+                    continueOnError,
+                    runConcurrently,
+                    sourceStagingConcurrency,
+                    default,
+                    sinks ?? new ChangeTrackingDictionary<string, PowerQuerySink>(),
+                    (queries ?? new ChangeTrackingList<PowerQuerySinkMapping>()).ToList()),
                 policy);
         }
 
@@ -14195,14 +14476,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 name,
                 resourceType,
                 systemData,
-                folderName is null && allowVnetOverride is null ? default : new ChangeDataCapture(
+                folderName is null && description is null && sourceConnectionsInfo is null && targetConnectionsInfo is null && policy is null && allowVnetOverride is null && status is null ? default : new ChangeDataCapture(
                     new ChangeDataCaptureFolder(folderName, default),
-                    default,
-                    default,
-                    default,
-                    default,
+                    description,
+                    (sourceConnectionsInfo ?? new ChangeTrackingList<MapperSourceConnectionsInfo>()).ToList(),
+                    (targetConnectionsInfo ?? new ChangeTrackingList<MapperTargetConnectionsInfo>()).ToList(),
+                    policy,
                     allowVnetOverride,
-                    default,
+                    status,
                     default),
                 eTag,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
@@ -14479,7 +14760,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(),
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList(),
-                folderPath is null ? default : new BlobTriggerTypeProperties(folderPath, maxConcurrency, default, default),
+                new BlobTriggerTypeProperties(folderPath, maxConcurrency, default, default),
                 linkedService);
         }
 

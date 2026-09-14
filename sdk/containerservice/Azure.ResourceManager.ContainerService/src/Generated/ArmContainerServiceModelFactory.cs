@@ -2099,7 +2099,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                controlPlaneProfile is null && agentPoolProfiles is null ? default : new ManagedClusterUpgradeProfileProperties(controlPlaneProfile, (agentPoolProfiles ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfile>()).ToList(), default),
                 default);
         }
 
@@ -2555,13 +2555,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                upgrades is null ? default : new AgentPoolUpgradeProfileProperties(
-                    default,
-                    default,
+                new AgentPoolUpgradeProfileProperties(
+                    kubernetesVersion,
+                    osType,
                     (upgrades ?? new ChangeTrackingList<AgentPoolUpgradeProfilePropertiesUpgradesItem>()).ToList(),
-                    default,
-                    default,
-                    default,
+                    (componentsByReleases ?? new ChangeTrackingList<KubernetesVersionComponents>()).ToList(),
+                    (recentlyUsedVersions ?? new ChangeTrackingList<AgentPoolRecentlyUsedVersion>()).ToList(),
+                    latestNodeImageVersion,
                     default),
                 default);
         }
@@ -2922,7 +2922,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                provisioningState is null && sourceResourceId is null && roles is null ? default : new TrustedAccessRoleBindingProperties(provisioningState, sourceResourceId, (roles ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 

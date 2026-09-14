@@ -162,19 +162,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                boolValue is null && nestedPropertyProperties is null && flattenedProperty is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
-                    default,
-                    default,
+                serviceUri is null && something is null && boolValue is null && floatValue is null && doubleValue is null && prop1 is null && prop2 is null && nestedPropertyProperties is null && flattenedProperty is null && eTag is null && writableSubResourceProp is null && computeFleetVmCapacityReservationGroupId is null ? default : new FooProperties(
+                    serviceUri,
+                    something,
                     boolValue,
-                    default,
-                    default,
-                    default,
-                    default,
+                    floatValue,
+                    doubleValue,
+                    (prop1 ?? new ChangeTrackingList<string>()).ToList(),
+                    (prop2 ?? new ChangeTrackingList<int>()).ToList(),
                     new NestedFooModel(nestedPropertyProperties, default),
                     new SafeFlattenModel((flattenedProperty ?? new ChangeTrackingList<string>()).ToList(), default),
                     default,
-                    default,
-                    default,
+                    eTag,
+                    writableSubResourceProp,
                     new ComputeFleetVmProfile(new CapacityReservationProfile(new TestSubResource(computeFleetVmCapacityReservationGroupId, default), default), default),
                     default),
                 extendedLocation,
@@ -389,10 +389,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
-        /// <summary>
-        /// LimitJson abstract class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-        /// </summary>
+        /// <summary> LimitJson abstract class. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
         public static LimitJsonObject LimitJsonObject(string limitObjectType = default)

@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "@azure-typespec/http-client-csharp": "1.0.0-alpha.20260908.4",
-    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260908.3",
+    "@azure-typespec/http-client-csharp-mgmt": "1.0.0-alpha.20260911.2",
     "@typespec/http-client-csharp": "1.0.0-alpha.20260908.4"
   },
   "devDependencies": {
