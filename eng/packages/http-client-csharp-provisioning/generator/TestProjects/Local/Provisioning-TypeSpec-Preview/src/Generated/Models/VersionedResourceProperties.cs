@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -38,6 +39,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the PreviewOnlyProperty. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PreviewOnlyProperty
         {
             get
@@ -53,6 +55,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the PreviewRetainedProperty. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PreviewRetainedProperty
         {
             get

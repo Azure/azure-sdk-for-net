@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> A resource available only in the preview API version. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PreviewOnlyResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -112,6 +113,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PreviewOnlyResourceValue
         {
             get
