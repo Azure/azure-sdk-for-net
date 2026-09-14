@@ -20,7 +20,7 @@ type ProjectionScopeOperation = "Create" | "Read";
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
 
-interface ResourceProjection {
+export interface ResourceProjection {
   resourceModel: InputModelType;
   isSettable: boolean;
   resourceModelId: string;
@@ -88,7 +88,7 @@ export function updateProvisioningCodeModel(
   return codeModel;
 }
 
-function buildResourceProjections(
+export function buildResourceProjections(
   codeModel: CodeModel,
   armProviderSchema: ArmProviderSchema
 ): ResourceProjection[] {
@@ -144,12 +144,14 @@ function buildResourceProjections(
     );
   }
 
-  return projections.map((projection) =>
+  const resolvedProjections = projections.map((projection) =>
     resolveResourceProjectionName(
       projection,
       projectionCountByModel.get(projection.resourceModelId) === 1
     )
   );
+  validateResourceProjectionNames(resolvedProjections);
+  return resolvedProjections;
 }
 
 export function buildResourceProjectionMetadata(
@@ -239,6 +241,22 @@ export function buildResourceNameFromResourceType(
         : singularSegment[0].toUpperCase() + singularSegment.slice(1);
     })
     .join("");
+}
+
+export function validateResourceProjectionNames(
+  projections: ResourceProjection[]
+): void {
+  const projectionsByName = new Map<string, ResourceProjection>();
+  for (const projection of projections) {
+    const normalizedName = projection.resourceName.toLowerCase();
+    const existing = projectionsByName.get(normalizedName);
+    if (existing) {
+      throw new Error(
+        `Provisioning resource projections '${existing.resourceType}' (${existing.resourceModelId}) and '${projection.resourceType}' (${projection.resourceModelId}) resolve to the same class name '${projection.resourceName}'. Resource projection class names must be unique.`
+      );
+    }
+    projectionsByName.set(normalizedName, projection);
+  }
 }
 
 function resourcePathsEqual(

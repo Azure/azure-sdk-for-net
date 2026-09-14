@@ -179,9 +179,14 @@ Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies
 
 The result names the generated C# provisioning resource class and its file. It
 does not determine the deployed resource instance's `Name` value; that value is
-derived separately from the resource path and singleton metadata. Use
-`CodeGenTypeAttribute` in the provisioning library when the generated class
-needs a different public name.
+derived separately from the resource path and singleton metadata. Resolved class
+names must be unique across all projections; generation fails with the
+conflicting resource types and model IDs when this invariant is violated.
+
+After projection names are distinct, `CodeGenTypeAttribute` in the provisioning
+library can give an individual generated class a different public name. It
+cannot disambiguate projections that resolve to the same name because the
+generator must identify each projection before applying custom code.
 
 ---
 

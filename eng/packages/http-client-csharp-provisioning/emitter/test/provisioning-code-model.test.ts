@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { deepStrictEqual, strictEqual } from "assert";
+import { deepStrictEqual, strictEqual, throws } from "assert";
+import { CodeModel } from "@typespec/http-client-csharp";
 import { describe, it } from "vitest";
 import {
   RequestPath,
@@ -13,8 +14,11 @@ import {
 } from "../../../http-client-csharp-mgmt/emitter/src/resource-metadata.js";
 import {
   buildResourceNameFromResourceType,
+  buildResourceProjections,
   buildResourceProjectionMetadata,
-  determineResourceProjectionName
+  determineResourceProjectionName,
+  type ResourceProjection,
+  validateResourceProjectionNames
 } from "../src/provisioning-code-model.js";
 
 describe("resource projection metadata", () => {
@@ -129,6 +133,89 @@ describe("resource projection metadata", () => {
     );
   });
 
+  it("resolves distinct names after building all projections", () => {
+    const modelId = "Microsoft.Web.PublishingPolicy";
+    const resources = [
+      createResource({
+        resourceModelId: modelId,
+        resourceType: "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+        resourceName: "WebSiteFtpPublishingCredentialsPolicy",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/basicPublishingCredentialsPolicies/{policyName}"
+      }),
+      createResource({
+        resourceModelId: modelId,
+        resourceType: "Microsoft.Web/sites/basicPublishingCredentialsPolicies",
+        resourceName: "ScmSiteBasicPublishingCredentialsPolicy",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/basicPublishingCredentialsPolicies/{policyName}"
+      }),
+      createResource({
+        resourceModelId: modelId,
+        resourceType:
+          "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies",
+        resourceName: "WebSiteSlotFtpPublishingCredentialsPolicy",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName}/basicPublishingCredentialsPolicies/{policyName}"
+      }),
+      createResource({
+        resourceModelId: modelId,
+        resourceType:
+          "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies",
+        resourceName: "ScmSiteSlotBasicPublishingCredentialsPolicy",
+        path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName}/basicPublishingCredentialsPolicies/{policyName}"
+      })
+    ];
+    const codeModel = {
+      models: [
+        {
+          crossLanguageDefinitionId: modelId,
+          name: "PublishingPolicy"
+        }
+      ]
+    } as CodeModel;
+
+    const projections = buildResourceProjections(codeModel, {
+      resources
+    } as Parameters<typeof buildResourceProjections>[1]);
+
+    deepStrictEqual(
+      projections.map((projection) => ({
+        resourceName: projection.resourceName,
+        resourceType: projection.resourceType
+      })),
+      [
+        {
+          resourceName: "SiteBasicPublishingCredentialsPolicy",
+          resourceType: "Microsoft.Web/sites/basicPublishingCredentialsPolicies"
+        },
+        {
+          resourceName: "SiteSlotBasicPublishingCredentialsPolicy",
+          resourceType:
+            "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies"
+        }
+      ]
+    );
+  });
+
+  it("rejects duplicate resolved resource projection names", () => {
+    const projection = {
+      resourceName: "Widget",
+      resourceType: "Microsoft.Test/widgets",
+      resourceModelId: "Microsoft.Test.Widget"
+    } as ResourceProjection;
+
+    throws(
+      () =>
+        validateResourceProjectionNames([
+          projection,
+          {
+            ...projection,
+            resourceName: "widget",
+            resourceType: "Microsoft.Test/widget"
+          }
+        ]),
+      /resolve to the same class name 'widget'/
+    );
+  });
+
   it("compares resource and parent paths structurally", () => {
     const first = createResource({
       path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
@@ -177,6 +264,8 @@ describe("resource projection metadata", () => {
 
 interface ResourceOptions {
   path: string;
+  resourceModelId?: string;
+  resourceType?: string;
   resourceName?: string;
   singletonResourceName?: string;
   parentResourceId?: string;
@@ -199,10 +288,10 @@ function createResource(options: ResourceOptions): ValidArmResourceSchema {
   };
 
   return {
-    resourceModelId: "Microsoft.Test.Widget",
+    resourceModelId: options.resourceModelId ?? "Microsoft.Test.Widget",
     metadata: {
       resourceIdPattern: new RequestPath(options.path),
-      resourceType: "Microsoft.Test/widgets",
+      resourceType: options.resourceType ?? "Microsoft.Test/widgets",
       methods: (options.methodKinds ?? []).map((kind, index) => ({
         methodId: `Microsoft.Test.Widget.${kind}.${index}`,
         kind,
