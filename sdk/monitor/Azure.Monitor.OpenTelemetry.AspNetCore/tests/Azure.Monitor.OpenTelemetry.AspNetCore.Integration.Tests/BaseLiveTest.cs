@@ -18,45 +18,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     public abstract class BaseLiveTest : RecordedTestBase<AzureMonitorTestEnvironment>
     {
-        public BaseLiveTest(bool isAsync, RecordedTestMode? mode = null, bool usesMultiTenantExport = false) : base(isAsync, mode)
-        {
-            UsesMultiTenantExport = usesMultiTenantExport;
-            ValidateExecutionMode();
-        }
+        public BaseLiveTest(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode) { }
 
         protected string? _testStartTimeStamp;
         private LogsQueryClient? _logsQueryClient = null;
         protected bool? _useTimestampInQuery;
 
-        protected bool UsesMultiTenantExport { get; }
         protected LogsQueryClient QueryClient => _logsQueryClient!;
-
-        internal static void ValidateExecutionMode(bool multiTenantFixture, bool multiTenantRun, RecordedTestMode? mode, bool switchEnabled)
-        {
-            if (multiTenantFixture && (!multiTenantRun || mode != RecordedTestMode.Live))
-            {
-                throw new InvalidOperationException("Multi-tenant tests require AZURE_TEST_MODE=Live and MONITOR_MULTI_TENANT_LIVE=true in a fresh, filtered test host.");
-            }
-
-            if (!multiTenantFixture && (multiTenantRun || switchEnabled))
-            {
-                throw new InvalidOperationException("Ordinary integration fixtures must run in a separate test host with multi-tenant export disabled.");
-            }
-        }
-
-        private void ValidateExecutionMode()
-        {
-            ValidateExecutionMode(UsesMultiTenantExport,
-                string.Equals(Environment.GetEnvironmentVariable("MONITOR_MULTI_TENANT_LIVE"), "true", StringComparison.OrdinalIgnoreCase),
-                TestEnvironment.Mode,
-                AppContext.TryGetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", out var enabled) && enabled);
-        }
 
         [SetUp] // SetUp is run before every individual test method.
         public void Setup()
         {
-            ValidateExecutionMode();
-
             // Print the current test Name and Mode. This is needed to identify the Mode when reviewing logs.
             var startupMessage = $"Integration test '{TestContext.CurrentContext.Test.Name}' running in mode '{TestEnvironment.Mode}'";
             Console.WriteLine(startupMessage);
@@ -75,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new LogsQueryClientOptions()
                 {
-                    Diagnostics = { IsLoggingContentEnabled = !UsesMultiTenantExport }
+                    Diagnostics = { IsLoggingContentEnabled = true }
                 })
             ));
         }
