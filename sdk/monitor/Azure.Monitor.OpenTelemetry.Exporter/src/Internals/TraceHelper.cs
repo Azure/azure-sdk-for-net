@@ -121,9 +121,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             continue;
                         }
 
-                        collected++;
-                        AzureMonitorExporterEventSource.Log.RoutedTelemetryCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, activity);
-
                         var group = routeBatch.GetOrAdd(ingestionEndpoint);
                         var telemetryItems = group.TelemetryItems;
 
@@ -163,6 +160,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
 
                         telemetryItems.Add(telemetryItem);
+
+                        // Counted once the envelope exists, so a conversion that throws is not
+                        // reported as collected.
+                        collected++;
+                        AzureMonitorExporterEventSource.Log.RoutedTelemetryCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, activity);
                     }
                     finally
                     {
