@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
 
         private ClientDiagnostics FrontDoorsClientDiagnostics => _frontDoorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(FrontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private FrontDoors FrontDoorsRestClient => _frontDoorsRestClient ??= new FrontDoors(FrontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics PoliciesClientDiagnostics => _policiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(PoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private Policies PoliciesRestClient => _policiesRestClient ??= new Policies(PoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics NetworkExperimentProfilesClientDiagnostics => _networkExperimentProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(NetworkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private NetworkExperimentProfiles NetworkExperimentProfilesRestClient => _networkExperimentProfilesRestClient ??= new NetworkExperimentProfiles(NetworkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics ManagedRuleSetsClientDiagnostics => _managedRuleSetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private ManagedRuleSets ManagedRuleSetsRestClient => _managedRuleSetsRestClient ??= new ManagedRuleSets(ManagedRuleSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         private ClientDiagnostics FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics => _frontDoorNameAvailabilityWithSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoorNameAvailabilityWithSubscription FrontDoorNameAvailabilityWithSubscriptionRestClient => _frontDoorNameAvailabilityWithSubscriptionRestClient ??= new FrontDoorNameAvailabilityWithSubscription(FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private FrontDoorNameAvailabilityWithSubscription FrontDoorNameAvailabilityWithSubscriptionRestClient => _frontDoorNameAvailabilityWithSubscriptionRestClient ??= new FrontDoorNameAvailabilityWithSubscription(FrontDoorNameAvailabilityWithSubscriptionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         /// <summary>
         /// Lists all of the Front Doors within an Azure subscription.
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

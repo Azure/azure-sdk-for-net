@@ -99,6 +99,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format != "W" && Optional.IsDefined(ParanoiaLevel))
+            {
+                writer.WritePropertyName("paranoiaLevel"u8);
+                writer.WriteStringValue(ParanoiaLevel.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,6 +151,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             RuleMatchActionType? defaultAction = default;
             FrontDoorSensitivityType? defaultSensitivity = default;
             string description = default;
+            ParanoiaLevel? paranoiaLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,6 +192,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("paranoiaLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    paranoiaLevel = new ParanoiaLevel(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -197,6 +212,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 defaultAction,
                 defaultSensitivity,
                 description,
+                paranoiaLevel,
                 additionalBinaryDataProperties);
         }
     }

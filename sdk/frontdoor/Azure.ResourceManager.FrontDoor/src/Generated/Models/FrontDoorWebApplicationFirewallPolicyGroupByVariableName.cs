@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private const string GeoLocationValue = "GeoLocation";
         /// <summary> None. </summary>
         private const string NoneValue = "None";
+        /// <summary> Autonomous System Number. </summary>
+        private const string AsnValue = "Asn";
+        /// <summary> JA4 TLS fingerprint. </summary>
+        private const string Ja4Value = "Ja4";
 
         /// <summary> Initializes a new instance of <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +44,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> None. </summary>
         public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName None { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(NoneValue);
+
+        /// <summary> Autonomous System Number. </summary>
+        public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName Asn { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(AsnValue);
+
+        /// <summary> JA4 TLS fingerprint. </summary>
+        public static FrontDoorWebApplicationFirewallPolicyGroupByVariableName Ja4 { get; } = new FrontDoorWebApplicationFirewallPolicyGroupByVariableName(Ja4Value);
 
         /// <summary> Determines if two <see cref="FrontDoorWebApplicationFirewallPolicyGroupByVariableName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
