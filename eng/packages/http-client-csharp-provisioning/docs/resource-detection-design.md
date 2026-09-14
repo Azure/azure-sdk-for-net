@@ -159,14 +159,12 @@ is unique until it has identified every projection:
 2. Create a pending projection for each group, retaining:
    - the complete ARM resource type;
    - the shared resource model;
-   - any resource name reported by every entry in the group; and
-   - any `provisioning-resource-name` override for that resource type.
+   - any resource name reported by every entry in the group.
 3. Count how many projections use each resource model.
 4. Resolve each pending projection's class name using the following precedence:
-   1. Use the resource-type-specific `provisioning-resource-name` override.
-   2. If every grouped resource reports the same resource name, use that name.
-   3. If only one projection uses the resource model, use the model name.
-   4. Otherwise, derive the name from the ARM resource type.
+   1. If every grouped resource reports the same resource name, use that name.
+   2. If only one projection uses the resource model, use the model name.
+   3. Otherwise, derive the name from the ARM resource type.
 
 To derive a name from an ARM resource type, remove the provider namespace,
 singularize each remaining type segment, capitalize each segment, and
@@ -181,39 +179,9 @@ Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies
 
 The result names the generated C# provisioning resource class and its file. It
 does not determine the deployed resource instance's `Name` value; that value is
-derived separately from the resource path and singleton metadata.
-
-#### Customizing a projection name
-
-Use the `provisioning-resource-name` client option on the shared TypeSpec
-resource model to map complete ARM resource types to generated provisioning
-class names:
-
-```typespec
-#suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
-#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
-@@clientOption(PublishingPolicy, "provisioning-resource-name", #{
-  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSitePublishingCredentialsPolicy",
-  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotPublishingCredentialsPolicy",
-}, "csharp");
-```
-
-The option value must be a record whose:
-
-- keys are complete ARM resource type strings;
-- values are non-empty C# resource class names.
-
-ARM resource type matching is case-insensitive. The override is applied after
-resource entries are grouped, so it names the complete projection rather than
-an individual path or singleton variant. It affects only the generated
-provisioning class and file name; resource types, resource ID patterns,
-singleton behavior, parent relationships, operations, serialization, and
-management SDK names remain unchanged.
-
-Use this option when the intended public provisioning name cannot be derived
-unambiguously from the grouped resource metadata. Do not use it to combine
-different ARM resource types or to compensate for an incorrectly modeled
-resource identity.
+derived separately from the resource path and singleton metadata. Use
+`CodeGenTypeAttribute` in the provisioning library when the generated class
+needs a different public name.
 
 ---
 

@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> Publishing Credentials Policies parameters. </summary>
-    public partial class WebSitePublishingCredentialsPolicy : ProvisionableResource
+    public partial class SiteBasicPublishingCredentialsPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _kind;
         private ResourceReference<WebSite> _parent;
 
-        /// <summary> Creates a new WebSitePublishingCredentialsPolicy. </summary>
+        /// <summary> Creates a new SiteBasicPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public WebSitePublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
+        public SiteBasicPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for WebSitePublishingCredentialsPolicy. </summary>
+        /// <summary> Define all the provisionable properties for SiteBasicPublishingCredentialsPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -139,17 +139,17 @@ namespace Azure.Provisioning.AppService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing WebSitePublishingCredentialsPolicy. </summary>
+        /// <summary> Creates a reference to an existing SiteBasicPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static WebSitePublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SiteBasicPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            WebSitePublishingCredentialsPolicy result = new WebSitePublishingCredentialsPolicy(bicepIdentifier, resourceVersion);
+            SiteBasicPublishingCredentialsPolicy result = new SiteBasicPublishingCredentialsPolicy(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for WebSitePublishingCredentialsPolicy that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SiteBasicPublishingCredentialsPolicy that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

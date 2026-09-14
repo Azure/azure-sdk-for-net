@@ -93,23 +93,9 @@ describe("resource projection metadata", () => {
     );
   });
 
-  it("prefers a resource name override", () => {
-    strictEqual(
-      determineResourceProjectionName(
-        "OverrideWidget",
-        "ConsistentWidget",
-        "WidgetModel",
-        true,
-        "Microsoft.Test/widgets"
-      ),
-      "OverrideWidget"
-    );
-  });
-
   it("uses a consistent resource name before the model name", () => {
     strictEqual(
       determineResourceProjectionName(
-        undefined,
         "ConsistentWidget",
         "WidgetModel",
         true,
@@ -123,7 +109,6 @@ describe("resource projection metadata", () => {
     strictEqual(
       determineResourceProjectionName(
         undefined,
-        undefined,
         "WidgetModel",
         true,
         "Microsoft.Test/widgets"
@@ -135,7 +120,6 @@ describe("resource projection metadata", () => {
   it("uses resource type segments when the model has multiple projections", () => {
     strictEqual(
       determineResourceProjectionName(
-        undefined,
         undefined,
         "PublishingPolicy",
         false,
