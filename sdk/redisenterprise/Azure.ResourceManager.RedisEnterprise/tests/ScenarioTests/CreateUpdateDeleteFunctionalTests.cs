@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -152,9 +153,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
             Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Monday, clusterResponse.Data.MaintenanceWindows[0].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Tuesday, clusterResponse.Data.MaintenanceWindows[1].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Wednesday, clusterResponse.Data.MaintenanceWindows[2].ScheduleDayOfWeek);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.ScheduleDayOfWeek),
+                Is.EquivalentTo(new[]
+                {
+                    RedisEnterpriseMaintenanceDayOfWeek.Monday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Tuesday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Wednesday
+                }));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
@@ -162,9 +168,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
             Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
-            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows[0].StartHourUtc);
-            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows[1].StartHourUtc);
-            Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows[2].StartHourUtc);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.StartHourUtc),
+                Is.All.EqualTo(3));
 
             var databaseCollection = clusterResponse.GetRedisEnterpriseDatabases();
             string databaseName = "default";
@@ -222,9 +228,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
             Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Friday, clusterResponse.Data.MaintenanceWindows[0].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Saturday, clusterResponse.Data.MaintenanceWindows[1].ScheduleDayOfWeek);
-            Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Sunday, clusterResponse.Data.MaintenanceWindows[2].ScheduleDayOfWeek);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.ScheduleDayOfWeek),
+                Is.EquivalentTo(new[]
+                {
+                    RedisEnterpriseMaintenanceDayOfWeek.Friday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Saturday,
+                    RedisEnterpriseMaintenanceDayOfWeek.Sunday
+                }));
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
             Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
@@ -232,9 +243,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
             Assert.AreEqual(3, clusterResponse.Data.MaintenanceWindows.Count);
-            Assert.AreEqual(12, clusterResponse.Data.MaintenanceWindows[0].StartHourUtc);
-            Assert.AreEqual(12, clusterResponse.Data.MaintenanceWindows[1].StartHourUtc);
-            Assert.AreEqual(12, clusterResponse.Data.MaintenanceWindows[2].StartHourUtc);
+            Assert.That(
+                clusterResponse.Data.MaintenanceWindows.Select(window => window.StartHourUtc),
+                Is.All.EqualTo(12));
 
             await databaseResponse.DeleteAsync(WaitUntil.Completed);
             var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;

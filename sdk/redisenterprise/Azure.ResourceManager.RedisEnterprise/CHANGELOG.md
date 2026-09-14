@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0-beta.2 (2026-09-14)
 
 ### Features Added
 
@@ -13,10 +13,6 @@
 ### Breaking Changes
 
 - Removed the service no-op `IsForceMigrate` property from `RedisEnterpriseMigrationValidationRequestContent`. `IsForceMigrate` remains available when starting a migration.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0-beta.1 (2026-06-28)
 
