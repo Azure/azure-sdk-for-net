@@ -14,6 +14,7 @@ using System.Threading;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -472,8 +473,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(control, Volatile.Read(ref measurements));
         }
 
+        /// <summary>
+        /// The primary success path of a process that has no component of its own: routing is the
+        /// only way anything is sent, so this is the case that must keep working.
+        /// </summary>
+        [Fact]
+        public void EachDestinationReachesItsOwnStampWithoutAConnectionString()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateUnconfiguredExporter(ingestion);
+
+            var result = exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs),
+                CreateActivity("ikey-west", WestUs),
+                CreateActivity("ikey-north", NorthEurope)));
+
+            Assert.Equal(ExportResult.Success, result);
+
+            Assert.Equal(
+                new[]
+                {
+                    EastUs + "v2.1/track",
+                    WestUs + "v2.1/track",
+                    NorthEurope + "v2.1/track",
+                },
+                ingestion.Requests.Select(request => request.Uri));
+
+            // The exact serialized shape, so the negative assertion below cannot silently stop
+            // matching if the envelope's field name or formatting ever changes.
+            Assert.Contains("\"iKey\":\"ikey-east\"", ingestion.RequestTo(EastUs).Body, StringComparison.Ordinal);
+            Assert.Contains("\"iKey\":\"ikey-west\"", ingestion.RequestTo(WestUs).Body, StringComparison.Ordinal);
+            Assert.Contains("\"iKey\":\"ikey-north\"", ingestion.RequestTo(NorthEurope).Body, StringComparison.Ordinal);
+
+            // The placeholder endpoint seeds the REST client, so a routed send that failed to rewrite
+            // the URI would land there rather than failing outright.
+            Assert.DoesNotContain(
+                ingestion.Requests,
+                request => request.Uri.Contains(Constants.DefaultIngestionEndpoint, StringComparison.OrdinalIgnoreCase));
+
+            // Nothing may be attributed to the component that does not exist.
+            Assert.All(ingestion.Requests, request => Assert.DoesNotContain("\"iKey\":\"\"", request.Body, StringComparison.Ordinal));
+        }
+
+        /// <summary>
+        /// Without a connection string there is nowhere of the process's own to fall back to, so an
+        /// item that names no destination must reach nothing at all rather than the placeholder.
+        /// </summary>
+        [Fact]
+        public void UnroutableActivitiesReachNoStampWithoutAConnectionString()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateUnconfiguredExporter(ingestion);
+
+            var result = exporter.Export(CreateBatch(
+                CreateActivity(instrumentationKey: null, ingestionEndpoint: null),
+                CreateActivity("ikey-a", "not-a-uri")));
+
+            Assert.Equal(ExportResult.Success, result);
+            Assert.Empty(ingestion.Requests);
+        }
+
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out string instrumentationKey)
             => CreateExporter(ingestion, multiEndpointEnabled: true, out instrumentationKey);
+
+        /// <summary>The same wiring as <see cref="CreateExporter(MockIngestion, out string)"/>, minus the connection string.</summary>
+        private static AzureMonitorTraceExporter CreateUnconfiguredExporter(MockIngestion ingestion)
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                Transport = ingestion.Transport,
+                DisableOfflineStorage = true,
+                EnableStatsbeat = false,
+            };
+
+            return new AzureMonitorTraceExporter(
+                options,
+                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled: true),
+                multiEndpointEnabled: true);
+        }
 
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiEndpointEnabled, out string instrumentationKey)
         {
