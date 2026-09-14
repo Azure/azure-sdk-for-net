@@ -605,11 +605,19 @@ namespace Azure.Storage.Blobs
             Uri endpoint,
             BlobClientOptions options,
             HttpPipelinePolicy authentication,
-            HttpPipeline pipeline)
+            HttpPipeline pipeline,
+            TokenCredential tokenCredential)
         {
             Uri serviceUri = ContainerSessionProvider.GetServiceEndpoint(endpoint);
             return new ContainerSessionProvider(
-                () => CreateClient(serviceUri, options, authentication, pipeline));
+                () => CreateClient(
+                    serviceUri,
+                    options,
+                    authentication,
+                    pipeline,
+                    sharedKeyCredential: null,
+                    sasCredential: null,
+                    tokenCredential: tokenCredential));
         }
 
         private ServiceRestClient BuildServiceRestClient(Uri uri)

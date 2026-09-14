@@ -588,6 +588,7 @@ namespace Azure.Storage.Files.DataLake
                     DataLakeServiceClient.BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
                     options.SessionOptions);
                 blobPipeline = options.Build(blobAuthentication);
             }

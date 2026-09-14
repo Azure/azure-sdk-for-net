@@ -408,6 +408,7 @@ namespace Azure.Storage.Files.DataLake
                     BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
                     authentication,
                     dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
+                    tokenCredential,
                     options.SessionOptions);
                 blobPipeline = options.Build(blobAuthentication);
             }
@@ -473,6 +474,7 @@ namespace Azure.Storage.Files.DataLake
                 BlobClientOptions blobClientOptions,
                 HttpPipelinePolicy bearerTokenAuthPolicy,
                 HttpPipeline createSessionPipeline,
+                TokenCredential tokenCredential,
                 Blobs.Models.SessionOptions sessionOptions)
             {
                 Blobs.Models.SessionProvider sessionProvider = sessionOptions?.SessionProvider
@@ -480,7 +482,8 @@ namespace Azure.Storage.Files.DataLake
                         endpoint,
                         blobClientOptions,
                         bearerTokenAuthPolicy,
-                        createSessionPipeline);
+                        createSessionPipeline,
+                        tokenCredential);
                 return BlobServiceClient.CreateSessionAuthenticationPolicy(
                     endpoint,
                     bearerTokenAuthPolicy,
