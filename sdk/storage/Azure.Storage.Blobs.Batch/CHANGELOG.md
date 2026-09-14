@@ -1,6 +1,6 @@
 # Release History
 
-## 12.26.1 (2026-09-10)
+## 12.26.1 (2026-09-14)
 
 ### Bugs Fixed
 - Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
