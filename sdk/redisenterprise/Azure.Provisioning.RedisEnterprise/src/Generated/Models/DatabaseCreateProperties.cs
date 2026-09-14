@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Properties for creating Redis Enterprise databases. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DatabaseCreateProperties : DatabaseProperties
     {
         private BicepValue<AccessKeysAuthentication> _accessKeysAuthentication;
@@ -20,6 +22,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the AccessKeysAuthentication. </summary>
+        [Experimental("AZPROVISION001")]
         public new BicepValue<AccessKeysAuthentication> AccessKeysAuthentication
         {
             get

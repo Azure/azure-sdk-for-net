@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> Cluster-level maintenance configuration. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class MaintenanceConfiguration : ProvisionableConstruct
     {
         private BicepList<RedisEnterpriseMaintenanceWindow> _maintenanceWindows;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the MaintenanceWindows. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RedisEnterpriseMaintenanceWindow> MaintenanceWindows
         {
             get

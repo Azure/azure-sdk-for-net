@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RedisEnterprise
 {
     /// <summary> The user associated with the access policy. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class AccessPolicyAssignmentPropertiesUser : ProvisionableConstruct
     {
         private BicepValue<Guid> _objectId;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.RedisEnterprise
         }
 
         /// <summary> Gets or sets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> ObjectId
         {
             get

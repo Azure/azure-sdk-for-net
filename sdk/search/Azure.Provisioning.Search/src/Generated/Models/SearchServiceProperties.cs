@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Search
         private BicepValue<bool> _isLocalAuthDisabled;
         private SearchAadAuthDataPlaneAuthOptions _authOptions;
         private BicepValue<SearchSemanticSearch> _semanticSearch;
-        private BicepList<SearchPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<SearchPrivateEndpointConnection1> _privateEndpointConnections;
         private BicepList<SharedSearchServicePrivateLink> _sharedPrivateLinkResources;
         private BicepValue<ETag> _eTag;
         private BicepValue<SearchServiceUpgradeAvailable> _isUpgradeAvailable;
@@ -251,7 +251,7 @@ namespace Azure.Provisioning.Search
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<SearchPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<SearchPrivateEndpointConnection1> PrivateEndpointConnections
         {
             get
             {
@@ -324,7 +324,7 @@ namespace Azure.Provisioning.Search
             _isLocalAuthDisabled = DefineProperty<bool>(nameof(IsLocalAuthDisabled), new string[] { "disableLocalAuth" });
             _authOptions = DefineModelProperty<SearchAadAuthDataPlaneAuthOptions>(nameof(AuthOptions), new string[] { "authOptions" });
             _semanticSearch = DefineProperty<SearchSemanticSearch>(nameof(SemanticSearch), new string[] { "semanticSearch" });
-            _privateEndpointConnections = DefineListProperty<SearchPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<SearchPrivateEndpointConnection1>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _sharedPrivateLinkResources = DefineListProperty<SharedSearchServicePrivateLink>(nameof(SharedPrivateLinkResources), new string[] { "sharedPrivateLinkResources" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" }, isOutput: true);
             _isUpgradeAvailable = DefineProperty<SearchServiceUpgradeAvailable>(nameof(IsUpgradeAvailable), new string[] { "upgradeAvailable" });
