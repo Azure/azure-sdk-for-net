@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleRequestHeaderAction. </summary>
         public DeliveryRuleRequestHeaderAction()
         {
+            Name.Assign(DeliveryRuleActionName.ModifyRequestHeader);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "ModifyRequestHeader");
             _properties = DefineModelProperty<HeaderActionProperties>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

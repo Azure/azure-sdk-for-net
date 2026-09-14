@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Search
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetOfferingsRequest(RequestContext context)
+        internal HttpMessage CreateFetchOfferingsRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/Microsoft.Search/offerings", false);
+            uri.AppendPath("/providers/Microsoft.Search/fetchOfferings", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
             return message;

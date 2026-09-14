@@ -31,21 +31,21 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </param>
         /// <param name="multilingualResource"> Resource enabled for multiple languages across projects or not. </param>
         /// <param name="settings"> Configurable settings of the Project. </param>
-        /// <param name="createdDateTime"> Project creation date-time. </param>
-        /// <param name="lastModifiedDateTime"> Represents the project last modified date-time. </param>
-        /// <param name="lastDeployedDateTime"> Represents the project last deployment date-time. </param>
+        /// <param name="createdOn"> Project creation date-time. </param>
+        /// <param name="lastModifiedOn"> Represents the project last modified date-time. </param>
+        /// <param name="lastDeployedOn"> Represents the project last deployment date-time. </param>
         /// <param name="configureSemanticRanking"> Represents if semantic ranking is configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuestionAnsweringProject(string projectName, string description, string language, bool? multilingualResource, ProjectSettings settings, DateTimeOffset? createdDateTime, DateTimeOffset? lastModifiedDateTime, DateTimeOffset? lastDeployedDateTime, bool? configureSemanticRanking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuestionAnsweringProject(string projectName, string description, string language, bool? multilingualResource, ProjectSettings settings, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastDeployedOn, bool? configureSemanticRanking, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             Description = description;
             Language = language;
             MultilingualResource = multilingualResource;
             Settings = settings;
-            CreatedDateTime = createdDateTime;
-            LastModifiedDateTime = lastModifiedDateTime;
-            LastDeployedDateTime = lastDeployedDateTime;
+            CreatedOn = createdOn;
+            LastModifiedOn = lastModifiedOn;
+            LastDeployedOn = lastDeployedOn;
             ConfigureSemanticRanking = configureSemanticRanking;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -70,13 +70,13 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public ProjectSettings Settings { get; set; }
 
         /// <summary> Project creation date-time. </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Represents the project last modified date-time. </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> Represents the project last deployment date-time. </summary>
-        public DateTimeOffset? LastDeployedDateTime { get; }
+        public DateTimeOffset? LastDeployedOn { get; }
 
         /// <summary> Represents if semantic ranking is configured. </summary>
         public bool? ConfigureSemanticRanking { get; set; }

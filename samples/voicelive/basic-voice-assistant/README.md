@@ -20,7 +20,6 @@ This sample now demonstrates some of the new convenience methods added to the Vo
 **Used in this sample:**
 - `ClearStreamingAudioAsync()` - Clears all input audio currently being streamed
 - `ConfigureSessionAsync()` - Configures conversation session options
-- `CancelResponseAsync()` - Cancels the current response generation
 - `SendInputAudioAsync()` - Sends audio data to the service
 
 **Additional convenience methods available:**

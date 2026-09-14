@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    public partial class SapDiscoveryServerInstanceData : IUtf8JsonSerializable, IJsonModel<SapDiscoveryServerInstanceData>
+    /// <summary> Define the Server Instance resource. </summary>
+    public partial class SapDiscoveryServerInstanceData : ResourceData, IJsonModel<SapDiscoveryServerInstanceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiscoveryServerInstanceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapDiscoveryServerInstanceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapDiscoveryServerInstanceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDiscoveryServerInstanceData IPersistableModel<SapDiscoveryServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapDiscoveryServerInstanceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapDiscoveryServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="sapDiscoveryServerInstanceData"> The <see cref="SapDiscoveryServerInstanceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SapDiscoveryServerInstanceData sapDiscoveryServerInstanceData)
+        {
+            if (sapDiscoveryServerInstanceData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(sapDiscoveryServerInstanceData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapDiscoveryServerInstanceData"/> from. </param>
+        internal static SapDiscoveryServerInstanceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSapDiscoveryServerInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapDiscoveryServerInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,269 +90,120 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("serverName"u8);
-                writer.WriteStringValue(ServerName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(SapInstanceType))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("sapInstanceType"u8);
-                writer.WriteStringValue(SapInstanceType.Value.ToString());
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(InstanceSid))
-            {
-                writer.WritePropertyName("instanceSid"u8);
-                writer.WriteStringValue(InstanceSid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SapProduct))
-            {
-                writer.WritePropertyName("sapProduct"u8);
-                writer.WriteStringValue(SapProduct);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SapProductVersion))
-            {
-                writer.WritePropertyName("sapProductVersion"u8);
-                writer.WriteStringValue(SapProductVersion);
-            }
-            if (options.Format != "W" && Optional.IsDefined(OperatingSystem))
-            {
-                writer.WritePropertyName("operatingSystem"u8);
-                writer.WriteStringValue(OperatingSystem.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
-            {
-                writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue(ConfigurationData, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(PerformanceData))
-            {
-                writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue(PerformanceData, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(Errors))
-            {
-                writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors, options);
-            }
-            writer.WriteEndObject();
         }
 
-        SapDiscoveryServerInstanceData IJsonModel<SapDiscoveryServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapDiscoveryServerInstanceData IJsonModel<SapDiscoveryServerInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapDiscoveryServerInstanceData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapDiscoveryServerInstanceData(document.RootElement, options);
         }
 
-        internal static SapDiscoveryServerInstanceData DeserializeSapDiscoveryServerInstanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapDiscoveryServerInstanceData DeserializeSapDiscoveryServerInstanceData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            string serverName = default;
-            SapInstanceType? sapInstanceType = default;
-            string instanceSid = default;
-            string sapProduct = default;
-            string sapProductVersion = default;
-            SapDiscoveryOperatingSystem? operatingSystem = default;
-            ConfigurationDetail configurationData = default;
-            PerformanceDetail performanceData = default;
-            SapDiscoveryProvisioningState? provisioningState = default;
-            SapMigrateError errors = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            ServerInstanceProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("serverName"u8))
-                        {
-                            serverName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sapInstanceType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sapInstanceType = new SapInstanceType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("instanceSid"u8))
-                        {
-                            instanceSid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sapProduct"u8))
-                        {
-                            sapProduct = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("sapProductVersion"u8))
-                        {
-                            sapProductVersion = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("operatingSystem"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            operatingSystem = new SapDiscoveryOperatingSystem(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("configurationData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            configurationData = ConfigurationDetail.DeserializeConfigurationDetail(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("performanceData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            performanceData = PerformanceDetail.DeserializePerformanceDetail(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new SapDiscoveryProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("errors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            errors = SapMigrateError.DeserializeSapMigrateError(property0.Value, options);
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = ServerInstanceProperties.DeserializeServerInstanceProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new SapDiscoveryServerInstanceData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                serverName,
-                sapInstanceType,
-                instanceSid,
-                sapProduct,
-                sapProductVersion,
-                operatingSystem,
-                configurationData,
-                performanceData,
-                provisioningState,
-                errors,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SapDiscoveryServerInstanceData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SapDiscoveryServerInstanceData IPersistableModel<SapDiscoveryServerInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryServerInstanceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSapDiscoveryServerInstanceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapDiscoveryServerInstanceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SapDiscoveryServerInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

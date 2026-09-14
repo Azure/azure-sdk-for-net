@@ -21,6 +21,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         private BicepValue<string> _registrationStatus;
         private BicepValue<string> _backupEngineState;
         private BicepValue<string> _healthStatus;
+        private BicepValue<BackupEngineType> _backupEngineType;
         private BicepValue<bool> _canReRegister;
         private BicepValue<string> _backupEngineId;
         private BicepValue<string> _dpmVersion;
@@ -81,6 +82,16 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             {
                 Initialize();
                 return _healthStatus;
+            }
+        }
+
+        /// <summary> Type of the backup engine. </summary>
+        internal BicepValue<BackupEngineType> BackupEngineType
+        {
+            get
+            {
+                Initialize();
+                return _backupEngineType;
             }
         }
 
@@ -163,6 +174,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _registrationStatus = DefineProperty<string>(nameof(RegistrationStatus), new string[] { "registrationStatus" });
             _backupEngineState = DefineProperty<string>(nameof(BackupEngineState), new string[] { "backupEngineState" });
             _healthStatus = DefineProperty<string>(nameof(HealthStatus), new string[] { "healthStatus" });
+            _backupEngineType = DefineProperty<BackupEngineType>(nameof(BackupEngineType), new string[] { "backupEngineType" });
             _canReRegister = DefineProperty<bool>(nameof(CanReRegister), new string[] { "canReRegister" });
             _backupEngineId = DefineProperty<string>(nameof(BackupEngineId), new string[] { "backupEngineId" });
             _dpmVersion = DefineProperty<string>(nameof(DpmVersion), new string[] { "dpmVersion" });

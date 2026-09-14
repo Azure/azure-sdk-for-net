@@ -1126,7 +1126,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new DotNetComponentCollection(client, Id));
         }
 
-        /// <summary> Get a .NET Component. </summary>
+        /// <summary> Gets the details of a .NET component in a managed environment. </summary>
         /// <param name="name"> Name of the .NET Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetDotNetComponents().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a .NET Component. </summary>
+        /// <summary> Gets the details of a .NET component in a managed environment. </summary>
         /// <param name="name"> Name of the .NET Component. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

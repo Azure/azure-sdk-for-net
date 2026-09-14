@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _kubernetesConfigurationPrivateLinkScopesClientDiagnostics;
-        private KubernetesConfigurationPrivateLinkScopes _kubernetesConfigurationPrivateLinkScopesRestClient;
+        private ClientDiagnostics _privateLinkScopesOperationsClientDiagnostics;
+        private PrivateLinkScopesOperations _privateLinkScopesOperationsRestClient;
 
         /// <summary> Initializes a new instance of MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource for mocking. </summary>
         protected MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource()
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
         {
         }
 
-        private ClientDiagnostics KubernetesConfigurationPrivateLinkScopesClientDiagnostics => _kubernetesConfigurationPrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics PrivateLinkScopesOperationsClientDiagnostics => _privateLinkScopesOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private KubernetesConfigurationPrivateLinkScopes KubernetesConfigurationPrivateLinkScopesRestClient => _kubernetesConfigurationPrivateLinkScopesRestClient ??= new KubernetesConfigurationPrivateLinkScopes(KubernetesConfigurationPrivateLinkScopesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01-preview");
+        private PrivateLinkScopesOperations PrivateLinkScopesOperationsRestClient => _privateLinkScopesOperationsRestClient ??= new PrivateLinkScopesOperations(PrivateLinkScopesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01-preview");
 
         /// <summary>
         /// Gets a list of all Azure Arc PrivateLinkScopes within a subscription.
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllAsyncCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new AsyncPageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new PrivateLinkScopesOperationsGetAllAsyncCollectionResultOfT(PrivateLinkScopesOperationsRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes.Mockin
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new KubernetesConfigurationPrivateLinkScopesGetAllCollectionResultOfT(KubernetesConfigurationPrivateLinkScopesRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
+            return new PageableWrapper<KubernetesConfigurationPrivateLinkScopeData, KubernetesConfigurationPrivateLinkScopeResource>(new PrivateLinkScopesOperationsGetAllCollectionResultOfT(PrivateLinkScopesOperationsRestClient, Id.SubscriptionId, context, "MockableKubernetesConfigurationPrivateLinkScopesSubscriptionResource.GetKubernetesConfigurationPrivateLinkScopes"), data => new KubernetesConfigurationPrivateLinkScopeResource(Client, data));
         }
     }
 }

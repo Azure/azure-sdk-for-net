@@ -13,6 +13,21 @@ namespace Azure.SdkAnalyzers
             return symbol != null && IsSdkNamespace(symbol.ContainingNamespace);
         }
 
+        public static bool IsNamespace(INamespaceSymbol namespaceSymbol, params string[] segments)
+        {
+            for (int i = segments.Length - 1; i >= 0; i--)
+            {
+                if (namespaceSymbol is null || !namespaceSymbol.Name.Equals(segments[i], StringComparison.Ordinal))
+                {
+                    return false;
+                }
+
+                namespaceSymbol = namespaceSymbol.ContainingNamespace;
+            }
+
+            return namespaceSymbol is { IsGlobalNamespace: true };
+        }
+
         private static bool IsSdkNamespace(INamespaceSymbol namespaceSymbol)
         {
             if (namespaceSymbol is null || namespaceSymbol.IsGlobalNamespace)

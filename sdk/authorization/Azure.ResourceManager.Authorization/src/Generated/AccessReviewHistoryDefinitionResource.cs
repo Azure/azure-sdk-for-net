@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _accessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _accessReviewHistoryDefinitionsRestClient.CreateGetByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Id.SubscriptionId, Id.Name, context);
+                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateDeleteByIdRequest(Guid.Parse(Id.SubscriptionId), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewHistoryDefinitionInstancesGetAllAsyncCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Id.SubscriptionId, Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryDefinitionInstancesGetAllAsyncCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 CancellationToken = cancellationToken
             };
-            return new AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Id.SubscriptionId, Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
+            return new AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(_accessReviewHistoryDefinitionInstancesRestClient, Guid.Parse(Id.SubscriptionId), Id.Name, context, "AccessReviewHistoryDefinitionResource.GetAll");
         }
 
         /// <summary>
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.SubscriptionId, Id.Name, instanceId, context);
+                HttpMessage message = _accessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.Name, instanceId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryInstance> response = Response.FromValue(AccessReviewHistoryInstance.FromResponse(result), result);
                 if (response.Value == null)
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Id.SubscriptionId, Id.Name, instanceId, context);
+                HttpMessage message = _accessReviewHistoryDefinitionInstanceRestClient.CreateGenerateDownloadUriRequest(Guid.Parse(Id.SubscriptionId), Id.Name, instanceId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryInstance> response = Response.FromValue(AccessReviewHistoryInstance.FromResponse(result), result);
                 if (response.Value == null)
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewHistoryDefinitionRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, AccessReviewHistoryDefinitionProperties.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewHistoryDefinitionData> response = Response.FromValue(AccessReviewHistoryDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

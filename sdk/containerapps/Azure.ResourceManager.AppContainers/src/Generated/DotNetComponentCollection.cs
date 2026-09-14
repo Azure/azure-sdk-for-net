@@ -65,10 +65,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_CreateOrUpdate. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,10 +119,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_CreateOrUpdate. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -171,7 +163,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a .NET Component.
+        /// Gets the details of a .NET component in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -180,10 +172,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +208,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a .NET Component.
+        /// Gets the details of a .NET component in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -229,10 +217,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the .NET Components for a managed environment.
+        /// Lists the .NET components in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -278,10 +262,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the .NET Components for a managed environment.
+        /// Lists the .NET components in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -312,10 +292,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,10 +322,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -404,10 +376,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the .NET Component. </param>
@@ -460,10 +428,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,10 +485,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

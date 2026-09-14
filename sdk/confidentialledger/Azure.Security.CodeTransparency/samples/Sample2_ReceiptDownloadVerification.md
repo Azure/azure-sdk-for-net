@@ -66,15 +66,15 @@ catch (Exception e)
 
 ### Using a receipt and a signed statement
 
-Alternatively, you can provide separate files for the receipt and the signed statement, plus a `JsonWebKey` obtained from the service:
+Alternatively, you can provide separate files for the receipt and the signed statement, plus a `CodeTransparencyVerificationKey` obtained from the service:
 
 ```C# Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
-JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+CodeTransparencyVerificationKey verificationKey = new CodeTransparencyVerificationKey("<key id>", <ECDsa public key>);
 byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
 byte[] inputReceipt = readFileBytes("<input_receipt>");
 try
 {
-    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, inputReceipt, inputSignedStatement);
+    CcfReceiptVerifier.Verify(inputReceipt, inputSignedStatement, verificationKey);
     Console.WriteLine("Verification succeeded: The statement was registered in the immutable ledger.");
 }
 catch (Exception e)
@@ -97,9 +97,9 @@ Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.
 string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
 File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
 // Download and store the public keys for offline verification
-Response<JwksDocument> ledgerKeys = client.GetPublicKeys();
-CodeTransparencyOfflineKeys allKeys = new();
-allKeys.Add("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
+Response<CodeTransparencyVerificationKeySet> ledgerKeys = client.GetPublicKeys();
+CodeTransparencyTrustStore allKeys = new();
+allKeys.SetKeys("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
 string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");
 File.WriteAllBytes(keysFilePath, allKeys.ToBinaryData().ToArray());
 ```
@@ -114,8 +114,8 @@ try
 var verificationOptions = new CodeTransparencyVerificationOptions
 {
     UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.VerifyAll,
-    OfflineKeys = CodeTransparencyOfflineKeys.FromBinaryData(BinaryData.FromBytes(keys)),
-    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+    TrustStore = CodeTransparencyTrustStore.FromBinaryData(BinaryData.FromBytes(keys)),
+    KeyResolutionMode = CodeTransparencyKeyResolutionMode.TrustStoreOnly
 };
 CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions);
 

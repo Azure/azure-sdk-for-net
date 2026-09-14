@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("currencyCode"u8);
                 writer.WriteStringValue(CurrencyCode);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IReadOnlyList<DevTestLabCostDetails> labCostDetails = default;
             IReadOnlyList<DevTestLabResourceCost> resourceCosts = default;
             string currencyCode = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             DateTimeOffset? createdOn = default;
             string provisioningState = default;
             Guid? uniqueIdentifier = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdDate"u8))
@@ -292,8 +292,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>(),
                 resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>(),
                 currencyCode,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 createdOn,
                 provisioningState,
                 uniqueIdentifier,

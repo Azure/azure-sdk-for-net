@@ -86,20 +86,20 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(StartedAt))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedAt"u8);
-                writer.WriteStringValue(StartedAt.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(CompletedAt))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedAt"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastPolledAt))
+            if (Optional.IsDefined(LastPolledOn))
             {
                 writer.WritePropertyName("lastPolledAt"u8);
-                writer.WriteStringValue(LastPolledAt.Value, "O");
+                writer.WriteStringValue(LastPolledOn.Value, "O");
             }
             if (Optional.IsDefined(State))
             {
@@ -182,9 +182,9 @@ namespace Azure.Analytics.Defender.Easm
                 return null;
             }
             string id = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? completedAt = default;
-            DateTimeOffset? lastPolledAt = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
+            DateTimeOffset? lastPolledOn = default;
             TaskResourceState? state = default;
             TaskResourcePhase? phase = default;
             string reason = default;
@@ -203,7 +203,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    startedAt = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    completedAt = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastPolledAt"u8))
@@ -221,7 +221,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    lastPolledAt = prop.Value.GetDateTimeOffset("O");
+                    lastPolledOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -275,9 +275,9 @@ namespace Azure.Analytics.Defender.Easm
             }
             return new TaskResource(
                 id,
-                startedAt,
-                completedAt,
-                lastPolledAt,
+                startedOn,
+                completedOn,
+                lastPolledOn,
                 state,
                 phase,
                 reason,

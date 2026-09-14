@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
-    internal class MockTransmitter : ITransmitter
+    internal partial class MockTransmitter : ITransmitter
     {
         public readonly IList<TelemetryItem> TelemetryItems;
 
@@ -29,6 +30,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         {
             lock (this.TelemetryItems)
             {
+                TrackAsyncCallCount++;
+
                 foreach (var telemetryItem in telemetryItems)
                 {
                     this.TelemetryItems.Add(telemetryItem);
@@ -38,13 +41,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             return new ValueTask<ExportResult>(Task.FromResult(ExportResult.Success));
         }
 
+        public int TrackAsyncCallCount { get; private set; }
+
         public ValueTask TransmitFromStorage(long maxFileToTransmit, bool async, CancellationToken cancellationToken)
         {
             throw new System.NotImplementedException();
         }
 
+        public IDisposable BeginPersistOnlyScope()
+        {
+            PersistOnlyScopeCount++;
+            return new NoopScope();
+        }
+
+        public void DrainStorage(int waitMilliseconds) => DrainStorageCallCount++;
+
+        public int PersistOnlyScopeCount { get; private set; }
+
+        public int DrainStorageCallCount { get; private set; }
+
         public void Dispose()
         {
+        }
+
+        private sealed class NoopScope : IDisposable
+        {
+            public void Dispose()
+            {
+            }
         }
     }
 }

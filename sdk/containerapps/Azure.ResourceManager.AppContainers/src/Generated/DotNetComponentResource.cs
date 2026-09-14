@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a .NET Component.
+        /// Gets the details of a .NET component in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -101,10 +101,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -140,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a .NET Component.
+        /// Gets the details of a .NET component in a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -149,10 +145,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -197,10 +189,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Update. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -258,10 +246,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> DotNetComponents_Update. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="DotNetComponentResource"/>. </description>
         /// </item>
@@ -306,7 +290,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a .NET Component.
+        /// Deletes a .NET component from a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -315,10 +299,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -355,7 +335,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete a .NET Component.
+        /// Deletes a .NET component from a managed environment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -364,10 +344,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DotNetComponents_Delete. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

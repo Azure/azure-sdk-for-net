@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -29,11 +27,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
 
-            string? microsoftClientIp = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftClientIp)?.ToString();
+            string? microsoftClientIp = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftClientIp]?.ToString();
 
             // Check for microsoft.operation_name override (applies to both request and dependency)
             string? overrideOperationName = activityTagsProcessor.HasOverrideAttributes
-                ? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftOperationName)?.ToString()
+                ? activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftOperationName]?.ToString()
                 : null;
 
             if (activity.GetTelemetryType() == TelemetryType.Request)
@@ -58,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 if (activity.Kind == ActivityKind.Server)
                 {
                     var locationIp = microsoftClientIp ??
-                                     AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeClientAddress)?.ToString();
+                                     activityTagsProcessor.MappedTags[SemanticSlot.ClientAddress]?.ToString();
 
                     if (locationIp != null)
                     {
@@ -79,8 +77,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
             }
 
-            var userAgent = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeUserAgentOriginal)?.ToString()
-                ?? AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+            var userAgent = activityTagsProcessor.MappedTags[SemanticSlot.UserAgentOriginal]?.ToString()
+                ?? activityTagsProcessor.MappedTags[SemanticSlot.HttpUserAgent]?.ToString();
 
             if (userAgent != null)
             {
@@ -101,6 +99,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 SampleRate = sampleRate;
             }
+        }
+
+        internal void SetTenantCloudRole(string tenantCloudRole)
+        {
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = tenantCloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
         }
 
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
@@ -136,7 +139,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
+        public TelemetryItem(string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp), logRecord, resource, instrumentationKey, logContext)
         {
         }
@@ -301,19 +304,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void SetOverrideContextTags(ref ActivityTagsProcessor activityTagsProcessor)
         {
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSessionId, ContextTagKeys.AiSessionId, SchemaConstants.Tags_AiSessionId_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceId, ContextTagKeys.AiDeviceId, SchemaConstants.Tags_AiDeviceId_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceModel, ContextTagKeys.AiDeviceModel, SchemaConstants.Tags_AiDeviceModel_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceType, ContextTagKeys.AiDeviceType, SchemaConstants.Tags_AiDeviceType_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeAiDeviceOsVersion, ContextTagKeys.AiDeviceOSVersion, SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftSyntheticSource, ContextTagKeys.AiOperationSyntheticSource, SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
-            SetTagFromMappedTags(ref activityTagsProcessor, SemanticConventions.AttributeMicrosoftUserAccountId, ContextTagKeys.AiUserAccountId, SchemaConstants.Tags_AiUserAccountId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.MicrosoftSessionId, ContextTagKeys.AiSessionId, SchemaConstants.Tags_AiSessionId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.AiDeviceId, ContextTagKeys.AiDeviceId, SchemaConstants.Tags_AiDeviceId_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.AiDeviceModel, ContextTagKeys.AiDeviceModel, SchemaConstants.Tags_AiDeviceModel_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.AiDeviceType, ContextTagKeys.AiDeviceType, SchemaConstants.Tags_AiDeviceType_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.AiDeviceOsVersion, ContextTagKeys.AiDeviceOSVersion, SchemaConstants.Tags_AiDeviceOsVersion_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.MicrosoftSyntheticSource, ContextTagKeys.AiOperationSyntheticSource, SchemaConstants.Tags_AiOperationSyntheticSource_MaxLength);
+            SetTagFromMappedTags(ref activityTagsProcessor, SemanticSlot.MicrosoftUserAccountId, ContextTagKeys.AiUserAccountId, SchemaConstants.Tags_AiUserAccountId_MaxLength);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetTagFromMappedTags(ref ActivityTagsProcessor activityTagsProcessor, string attributeKey, ContextTagKeys contextTagKey, int maxLength)
+        private void SetTagFromMappedTags(ref ActivityTagsProcessor activityTagsProcessor, SemanticSlot slot, ContextTagKeys contextTagKey, int maxLength)
         {
-            var value = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, attributeKey)?.ToString();
+            var value = activityTagsProcessor.MappedTags[slot]?.ToString();
             if (value != null)
             {
                 Tags[contextTagKey.ToString()] = value.Truncate(maxLength);

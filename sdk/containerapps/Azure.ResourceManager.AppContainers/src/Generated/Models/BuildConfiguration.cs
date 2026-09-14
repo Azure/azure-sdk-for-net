@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BuildConfiguration"/>. </summary>
-        /// <param name="baseOs"> Base OS used to build and run the app. </param>
+        /// <param name="baseOS"> Base OS used to build and run the app. </param>
         /// <param name="platform"> Platform to be used to build and run the app. </param>
         /// <param name="platformVersion"> Platform version to be used to build and run the app. </param>
         /// <param name="environmentVariables"> List of environment variables to be passed to the build, secrets should not be used in environment variable. </param>
         /// <param name="preBuildSteps"> List of steps to perform before the build. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BuildConfiguration(string baseOs, string platform, string platformVersion, IList<EnvironmentVariable> environmentVariables, IList<PreBuildStep> preBuildSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BuildConfiguration(string baseOS, string platform, string platformVersion, IList<EnvironmentVariable> environmentVariables, IList<PreBuildStep> preBuildSteps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            BaseOs = baseOs;
+            BaseOS = baseOS;
             Platform = platform;
             PlatformVersion = platformVersion;
             EnvironmentVariables = environmentVariables;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Base OS used to build and run the app. </summary>
         [WirePath("baseOs")]
-        public string BaseOs { get; set; }
+        public string BaseOS { get; set; }
 
         /// <summary> Platform to be used to build and run the app. </summary>
         [WirePath("platform")]

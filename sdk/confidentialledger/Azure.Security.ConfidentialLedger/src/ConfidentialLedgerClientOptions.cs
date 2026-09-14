@@ -46,15 +46,17 @@ namespace Azure.Security.ConfidentialLedger
 
         /// <summary>
         /// Controls whether a current-entry read transparently falls back to ledger history when a
-        /// collection's live entry has been archived by collection pruning. Defaults to <c>true</c>.
+        /// collection's live entry has been archived by collection pruning. Defaults to <c>false</c>.
         /// </summary>
         /// <remarks>
         /// This mirrors the service-side collection pruning feature: when a ledger is configured to prune (archive) old collections, the
         /// <c>GetCurrentLedgerEntry</c> endpoint returns <c>404 Not Found</c> for a pruned collection. With this option enabled the client
-        /// transparently performs a historical query for the collection and returns its latest committed entry. Defaults to <c>true</c>.
-        /// Set this option to <c>false</c> only when the caller requires the legacy behavior where a pruned collection returns 404.
+        /// transparently performs a historical query for the collection and returns its latest committed entry. Defaults to <c>false</c>
+        /// because the service returns the same 404 for a pruned collection and a collection that never existed, and a historical query
+        /// can be expensive on a ledger with a long transaction history. Set this option to <c>true</c> only when transparent access to
+        /// archived collections is required.
         /// </remarks>
-        public bool EnableArchivedCollectionFallback { get; set; } = true;
+        public bool EnableArchivedCollectionFallback { get; set; }
 
         /// <summary>
         /// Controls the order in which a read request is retried against the ledger's failover endpoints

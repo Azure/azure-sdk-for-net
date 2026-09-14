@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryAgentPoolPatch(count is null ? default : new AgentPoolPropertiesUpdateParameters(count, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The QueueStatus of Agent Pool. </summary>
         /// <param name="count"> The number of pending runs in the queue. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryAgentPoolQueueStatus"/> instance for mocking. </returns>
         public static ContainerRegistryAgentPoolQueueStatus ContainerRegistryAgentPoolQueueStatus(int? count = default)
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="runType"> The type of run. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="createdOn"> The time the run was scheduled. </param>
-        /// <param name="startOn"> The time the run started. </param>
+        /// <param name="startsOn"> The time the run started. </param>
         /// <param name="finishOn"> The time the run finished. </param>
         /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
         /// <param name="task"> The task against which run was scheduled. </param>
@@ -94,21 +95,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <returns> A new <see cref="Tasks.ContainerRegistryRunData"/> instance for mocking. </returns>
-        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
+        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
         {
             return new ContainerRegistryRunData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
+                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startsOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
                     runId,
                     status,
                     lastUpdatedOn,
                     runType,
                     agentPoolName,
                     createdOn,
-                    startOn,
+                    startsOn,
                     finishOn,
                     (outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>()).ToList(),
                     task,
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> Properties for a registry image. </summary>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>
         /// <param name="tag"> The tag name. </param>
@@ -138,6 +140,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskImageDescriptor(registry, repository, tag, digest, default);
         }
 
+        /// <summary> The image update trigger that caused a build. </summary>
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="occurredOn"> The timestamp when the image update happened. </param>
         /// <param name="images"> The list of image updates that caused the build. </param>
@@ -149,6 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskImageUpdateTrigger(id, occurredOn, (images ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>()).ToList(), default);
         }
 
+        /// <summary> The source trigger that caused a run. </summary>
         /// <param name="id"> The unique ID of the trigger. </param>
         /// <param name="eventType"> The event type of the trigger. </param>
         /// <param name="commitId"> The unique ID that identifies a commit. </param>
@@ -170,6 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> The ContainerRegistryTaskTimerTriggerDescriptor. </summary>
         /// <param name="timerTriggerName"> The timer trigger name that caused the run. </param>
         /// <param name="scheduleOccurrence"> The occurrence that triggered the run. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskTimerTriggerDescriptor"/> instance for mocking. </returns>
@@ -178,6 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskTimerTriggerDescriptor(timerTriggerName, scheduleOccurrence, default);
         }
 
+        /// <summary> The platform properties against which the run has to happen. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         /// <param name="architecture"> The OS architecture. </param>
         /// <param name="variant"> Variant of the CPU. </param>
@@ -187,6 +193,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskPlatformProperties(os, architecture, variant, default);
         }
 
+        /// <summary> The set of run properties that can be updated. </summary>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryRunPatch"/> instance for mocking. </returns>
         public static ContainerRegistryRunPatch ContainerRegistryRunPatch(bool? isArchiveEnabled = default)
@@ -194,6 +201,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryRunPatch(isArchiveEnabled, default);
         }
 
+        /// <summary> The result of get log link operation. </summary>
         /// <param name="logLink"> The link to logs for a run on a azure container registry. </param>
         /// <param name="logArtifactLink"> The link to logs in registry for a run on a azure container registry. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskRunLogResult"/> instance for mocking. </returns>
@@ -226,6 +234,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary>
+        /// The request parameters for scheduling a run.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildContent"/>, <see cref="Models.ContainerRegistryFileTaskRunContent"/>, <see cref="Models.ContainerRegistryTaskRunContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskRunContent"/>.
+        /// </summary>
         /// <param name="type"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
@@ -278,6 +290,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 credentials);
         }
 
+        /// <summary> The properties of a run argument. </summary>
         /// <param name="name"> The name of the argument. </param>
         /// <param name="value"> The value of the argument. </param>
         /// <param name="isSecret"> Flag to indicate whether the argument represents a secret and want to be removed from build logs. </param>
@@ -287,6 +300,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskArgument(name, value, isSecret, default);
         }
 
+        /// <summary> The parameters that describes a set of credentials that will be used when a run is invoked. </summary>
         /// <param name="sourceRegistry"> Describes the credential parameters for accessing the source registry. </param>
         /// <param name="customRegistries">
         /// Describes the credential parameters for accessing other custom registries. The key
@@ -301,6 +315,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, ContainerRegistryTaskCustomRegistryCredentials>(), default);
         }
 
+        /// <summary> Describes the credential parameters for accessing the source registry. </summary>
         /// <param name="identity">
         /// The Entra identity used for source registry login.
         /// The value is `[system]` for system-assigned managed identity, `[caller]` for caller identity,
@@ -317,6 +332,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSourceRegistryCredentials(identity, loginMode, default);
         }
 
+        /// <summary> Describes the credentials that will be used to access a custom registry during a run. </summary>
         /// <param name="userName"> The username for logging into the custom registry. </param>
         /// <param name="password">
         /// The password for logging into the custom registry. The password is a secret
@@ -335,6 +351,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskCustomRegistryCredentials(userName, password, identity, default);
         }
 
+        /// <summary> Describes the properties of a secret object value. </summary>
         /// <param name="value">
         /// The value of the secret. The format of this value will be determined
         /// based on the type of the secret object. If the type is Opaque, the value will be
@@ -385,6 +402,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 credentials);
         }
 
+        /// <summary> The properties of a overridable value that can be passed to a task template. </summary>
         /// <param name="name"> The name of the overridable value. </param>
         /// <param name="value"> The overridable value. </param>
         /// <param name="isSecret"> Flag to indicate whether the value represents a secret or not. </param>
@@ -394,6 +412,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSetValue(name, value, isSecret, default);
         }
 
+        /// <summary> The parameters for a task run request. </summary>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
@@ -412,6 +431,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 overrideTaskStepProperties);
         }
 
+        /// <summary> The ContainerRegistryTaskOverrideStepProperties. </summary>
         /// <param name="contextPath"> The source context against which run has to be queued. </param>
         /// <param name="file"> The file against which run has to be queued. </param>
         /// <param name="arguments">
@@ -472,6 +492,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 credentials);
         }
 
+        /// <summary> Managed identity for the resource. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="type"> The identity type. </param>
@@ -489,6 +510,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskIdentityProperties(principalId, tenantId, @type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, ContainerRegistryTaskUserIdentityProperties>(), default);
         }
 
+        /// <summary> The ContainerRegistryTaskUserIdentityProperties. </summary>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <param name="clientId"> The client id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskUserIdentityProperties"/> instance for mocking. </returns>
@@ -559,6 +581,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary>
+        /// Base properties for any task step.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStep"/>, <see cref="Models.ContainerRegistryFileTaskStep"/>, and <see cref="Models.ContainerRegistryEncodedTaskStep"/>.
+        /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
@@ -571,6 +597,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new UnknownContainerRegistryTaskStepProperties(default, (baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTaskBaseImageDependency>()).ToList(), contextPath, contextAccessToken, default);
         }
 
+        /// <summary> Properties that describe a base image dependency. </summary>
         /// <param name="type"> The type of the base image dependency. </param>
         /// <param name="registry"> The registry login server. </param>
         /// <param name="repository"> The repository name. </param>
@@ -588,6 +615,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> The Docker build step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
@@ -618,6 +646,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 (arguments ?? new ChangeTrackingList<ContainerRegistryTaskArgument>()).ToList());
         }
 
+        /// <summary> The properties of a task step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
@@ -641,6 +670,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 (values ?? new ChangeTrackingList<ContainerRegistryTaskSetValue>()).ToList());
         }
 
+        /// <summary> The properties of a encoded task step. </summary>
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
@@ -664,6 +694,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 (values ?? new ChangeTrackingList<ContainerRegistryTaskSetValue>()).ToList());
         }
 
+        /// <summary> The properties of a trigger. </summary>
         /// <param name="timerTriggers"> The collection of timer triggers. </param>
         /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
         /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
@@ -676,6 +707,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskTriggerProperties((timerTriggers ?? new ChangeTrackingList<ContainerRegistryTaskTimerTrigger>()).ToList(), (sourceTriggers ?? new ChangeTrackingList<ContainerRegistryTaskSourceTrigger>()).ToList(), baseImageTrigger, default);
         }
 
+        /// <summary> The properties of a timer trigger. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
@@ -685,6 +717,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskTimerTrigger(schedule, status, name, default);
         }
 
+        /// <summary> The properties of a source based trigger. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="status"> The current status of trigger. </param>
@@ -697,6 +730,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSourceTrigger(sourceRepository, (sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>()).ToList(), status, name, default);
         }
 
+        /// <summary> The properties of the source code repository. </summary>
         /// <param name="sourceControlType"> The type of source control service. </param>
         /// <param name="repositoryUri"> The full URL to the source code repository. </param>
         /// <param name="branch"> The branch name of the source code. </param>
@@ -710,6 +744,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSourceProperties(sourceControlType, repositoryUri, branch, sourceControlAuthProperties, default);
         }
 
+        /// <summary> The authorization properties for accessing the source code repository. </summary>
         /// <param name="tokenType"> The type of Auth token. </param>
         /// <param name="token"> The access token used to access the source control provider. </param>
         /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>
@@ -727,6 +762,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> The trigger based on base image dependency. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
         /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
         /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
@@ -773,6 +809,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The properties for updating the platform configuration. </summary>
         /// <param name="os"> The operating system type required for the run. </param>
         /// <param name="architecture"> The OS architecture. </param>
         /// <param name="variant"> Variant of the CPU. </param>
@@ -782,6 +819,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskPlatformUpdateContent(os, architecture, variant, default);
         }
 
+        /// <summary>
+        /// Base properties for updating any task step.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerRegistryDockerBuildStepUpdateContent"/>, <see cref="Models.ContainerRegistryFileTaskStepUpdateContent"/>, and <see cref="Models.ContainerRegistryEncodedTaskStepUpdateContent"/>.
+        /// </summary>
         /// <param name="type"> The type of the step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
@@ -791,6 +832,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new UnknownContainerRegistryTaskStepUpdateContent(default, contextPath, contextAccessToken, default);
         }
 
+        /// <summary> The properties for updating a docker build step. </summary>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <param name="imageNames"> The fully qualified image names including the repository and tag. </param>
@@ -818,6 +860,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 target);
         }
 
+        /// <summary> The properties of updating a task step. </summary>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <param name="taskFilePath"> The task template/definition file path relative to the source context. </param>
@@ -838,6 +881,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 (values ?? new ChangeTrackingList<ContainerRegistryTaskSetValue>()).ToList());
         }
 
+        /// <summary> The properties for updating encoded task step. </summary>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
@@ -858,6 +902,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 (values ?? new ChangeTrackingList<ContainerRegistryTaskSetValue>()).ToList());
         }
 
+        /// <summary> The properties for updating triggers. </summary>
         /// <param name="timerTriggers"> The collection of timer triggers. </param>
         /// <param name="sourceTriggers"> The collection of triggers based on source code repository. </param>
         /// <param name="baseImageTrigger"> The trigger based on base image dependencies. </param>
@@ -870,6 +915,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskTriggerUpdateContent((timerTriggers ?? new ChangeTrackingList<ContainerRegistryTaskTimerTriggerUpdateContent>()).ToList(), (sourceTriggers ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerUpdateContent>()).ToList(), baseImageTrigger, default);
         }
 
+        /// <summary> The properties for updating a timer trigger. </summary>
         /// <param name="schedule"> The CRON expression for the task schedule. </param>
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
@@ -879,6 +925,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskTimerTriggerUpdateContent(schedule, status, name, default);
         }
 
+        /// <summary> The properties for updating a source based trigger. </summary>
         /// <param name="sourceRepository"> The properties that describes the source(code) for the task. </param>
         /// <param name="sourceTriggerEvents"> The source event corresponding to the trigger. </param>
         /// <param name="status"> The current status of trigger. </param>
@@ -891,6 +938,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSourceTriggerUpdateContent(sourceRepository, (sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistryTaskSourceTriggerEvent>()).ToList(), status, name, default);
         }
 
+        /// <summary> The properties for updating the source code repository. </summary>
         /// <param name="sourceControlType"> The type of source control service. </param>
         /// <param name="repositoryUri"> The full URL to the source code repository. </param>
         /// <param name="branch"> The branch name of the source code. </param>
@@ -904,6 +952,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return new ContainerRegistryTaskSourceUpdateContent(sourceControlType, repositoryUri, branch, sourceControlAuthProperties, default);
         }
 
+        /// <summary> The authorization properties for accessing the source code repository. </summary>
         /// <param name="tokenType"> The type of Auth token. </param>
         /// <param name="token"> The access token used to access the source control provider. </param>
         /// <param name="refreshToken"> The refresh token used to refresh the access token. </param>
@@ -921,6 +970,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> The properties for updating base image dependency trigger. </summary>
         /// <param name="baseImageTriggerType"> The type of the auto trigger for base image dependency updates. </param>
         /// <param name="updateTriggerEndpoint"> The endpoint URL for receiving update triggers. </param>
         /// <param name="updateTriggerPayloadType"> Type of Payload body for Base image update triggers. </param>
@@ -938,6 +988,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 default);
         }
 
+        /// <summary> The properties of a response to source upload request. </summary>
         /// <param name="uploadUri"> The URL where the client can upload the source. </param>
         /// <param name="relativePath"> The relative path to the source. This is used to submit the subsequent queue build request. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskSourceUploadResult"/> instance for mocking. </returns>

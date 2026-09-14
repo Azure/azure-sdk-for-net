@@ -24,6 +24,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new MabBackupJob. </summary>
         public MabBackupJob()
         {
+            JobType.Assign("MabJob");
         }
 
         /// <summary> Gets the Duration. </summary>
@@ -100,7 +101,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "MabJob");
             _duration = DefineProperty<TimeSpan>(nameof(Duration), new string[] { "duration" }, format: "P");
             _actionsInfo = DefineListProperty<JobSupportedAction>(nameof(ActionsInfo), new string[] { "actionsInfo" });
             _mabServerName = DefineProperty<string>(nameof(MabServerName), new string[] { "mabServerName" });

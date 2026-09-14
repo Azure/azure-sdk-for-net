@@ -82,10 +82,10 @@ namespace Azure.AI.Discovery
             writer.WriteStringValue(Content);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +131,7 @@ namespace Azure.AI.Discovery
             }
             string content = default;
             WorkingMemoryEntryType @type = default;
-            DateTimeOffset? createdAt = default;
+            DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -151,7 +151,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,7 +159,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkingMemoryEntry(content, @type, createdAt, additionalBinaryDataProperties);
+            return new WorkingMemoryEntry(content, @type, createdOn, additionalBinaryDataProperties);
         }
     }
 }
