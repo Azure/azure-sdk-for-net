@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
 {
     /// <summary> Properties of a resource introduced in preview and retained in stable. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class PreviewRetainedResourceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _value;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get
