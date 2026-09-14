@@ -11,7 +11,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string? instrumentationKey)
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
+            => GetStorageDirectory(platform, configuredStorageDirectory, instrumentationKey, omitInstrumentationKey: false);
+
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey, bool omitInstrumentationKey)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
@@ -23,10 +26,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
             var processName = platform.GetCurrentProcessName();
             var applicationDirectory = platform.GetApplicationBaseDirectory();
 
-            // Without a connection string there is no key to distinguish by. The remaining three
-            // already identify an application on a machine, and omitting the segment rather than
-            // substituting a placeholder keeps every existing directory name unchanged.
-            string seed = string.IsNullOrEmpty(instrumentationKey)
+            // The caller decides, never the value: a configured connection string can legitimately
+            // trim to an empty key, and inferring from that would move an existing directory and
+            // strand the backlog inside it.
+            string seed = omitInstrumentationKey
                 ? $"{userName};{processName};{applicationDirectory}"
                 : $"{instrumentationKey};{userName};{processName};{applicationDirectory}";
 

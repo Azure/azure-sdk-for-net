@@ -9,31 +9,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
     internal class ConnectionVars
     {
         public ConnectionVars(string instrumentationKey, string ingestionEndpoint, string liveEndpoint, string? aadAudience)
-            : this(instrumentationKey, ingestionEndpoint, liveEndpoint, aadAudience, isRoutingOnly: false)
+            : this(instrumentationKey, ingestionEndpoint, liveEndpoint, aadAudience, isUnconfigured: false)
         {
         }
 
-        private ConnectionVars(string instrumentationKey, string ingestionEndpoint, string liveEndpoint, string? aadAudience, bool isRoutingOnly)
+        private ConnectionVars(string instrumentationKey, string ingestionEndpoint, string liveEndpoint, string? aadAudience, bool isUnconfigured)
         {
             this.InstrumentationKey = instrumentationKey;
             this.IngestionEndpoint = ingestionEndpoint;
             this.LiveEndpoint = liveEndpoint;
             this.AadAudience = aadAudience;
-            this.IsRoutingOnly = isRoutingOnly;
+            this.IsUnconfigured = isUnconfigured;
         }
 
         /// <summary>
-        /// Stands in for a connection string the process does not have. Multi-endpoint routing takes
-        /// every destination from the telemetry itself, so there is no component that owns the
-        /// exporter, and nothing is ever sent to these values: the endpoint only seeds the REST
-        /// client, which rewrites the URI for each routed group.
+        /// Stands in for a connection string the process does not have. The endpoint seeds the REST
+        /// client host, which every routed send replaces with the endpoint its own group names.
         /// </summary>
-        public static ConnectionVars CreateRoutingOnly() => new(
+        /// <remarks>
+        /// The endpoint is deliberately the same value <see cref="ConnectionStringParser"/> defaults
+        /// to, so it cannot be told apart from a real destination by inspection. Callers must branch
+        /// on <see cref="IsUnconfigured"/> rather than on the values.
+        /// </remarks>
+        public static ConnectionVars CreateUnconfigured() => new(
             instrumentationKey: string.Empty,
             ingestionEndpoint: Constants.DefaultIngestionEndpoint,
             liveEndpoint: Constants.DefaultLiveEndpoint,
             aadAudience: null,
-            isRoutingOnly: true);
+            isUnconfigured: true);
 
         public string InstrumentationKey { get; }
 
@@ -43,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString
 
         public string? AadAudience { get; }
 
-        /// <summary>No connection string was configured; only routed telemetry can be sent.</summary>
-        public bool IsRoutingOnly { get; }
+        /// <summary>No connection string was configured, so these values name no destination.</summary>
+        public bool IsUnconfigured { get; }
     }
 }
