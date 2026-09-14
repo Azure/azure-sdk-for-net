@@ -51,12 +51,7 @@ steps:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   # Run CODEOWNERS verification before artifacts are produced and uploaded to
-  # prevent artifact collisions. login-to-github.yml is only needed for the
-  # PullRequest/Manual branches that verify-codeowners.yml actually uses
-  # GH_TOKEN in; skip it for CI/scheduled builds so they don't pick up an
-  # unnecessary Azure Key Vault/GitHub dependency.
-  - ${{ if or(eq(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.Reason'], 'Manual')) }}:
-    - template: /eng/common/pipelines/templates/steps/login-to-github.yml
+  # prevent artifact collisions.
   - template: /eng/common/pipelines/templates/steps/verify-codeowners.yml
     parameters:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'

@@ -123,8 +123,6 @@ function Install-Standalone-Tool (
     [Parameter()]
     [string]$Repository = "Azure/azure-sdk-tools",
     [Parameter()]
-    [string]$GitHubToken = $env:GH_TOKEN,
-    [Parameter()]
     $Directory = "."
 ) {
     $ErrorActionPreference = "Stop"
@@ -142,7 +140,7 @@ function Install-Standalone-Tool (
         Write-Host "Attempting to find latest version for package '$Package'"
         $found = $false
 
-        # First attempt: use git ls-remote on the repository tags to avoid GitHub REST API rate limits
+        # First attempt: use git ls-remote on repository tags to avoid GitHub REST API rate limits
         try {
             $remoteUrl = "https://github.com/$Repository.git"
             $rawTags = git ls-remote --tags --refs $remoteUrl "${Package}_*"
@@ -171,14 +169,7 @@ function Install-Standalone-Tool (
         # Fallback: GitHub REST API
         if (!$found) {
             $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-            $headers = @{
-                Accept                 = "application/vnd.github+json"
-                "X-GitHub-Api-Version" = "2022-11-28"
-            }
-            if (![string]::IsNullOrEmpty($GitHubToken)) {
-                $headers.Authorization = "Bearer $GitHubToken"
-            }
-            $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $headers
+            $releases = Invoke-RestMethod -Uri $releasesUrl
             foreach ($release in $releases) {
                 if ($release.tag_name -like "$Package*") {
                     $tag = $release.tag_name
