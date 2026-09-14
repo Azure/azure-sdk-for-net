@@ -43,9 +43,9 @@ namespace Azure.Security.CodeTransparency
             {
                 Version = version;
             }
-            if (TimeSpan.TryParse(section["CacheTTL"], out TimeSpan cacheTTL))
+            if (TimeSpan.TryParse(section["CacheTimeToLive"], out TimeSpan cacheTimeToLive))
             {
-                CacheTTL = cacheTTL;
+                CacheTimeToLive = cacheTimeToLive;
             }
             if (Uri.TryCreate(section["IdentityClientEndpoint"], UriKind.Absolute, out Uri identityClientEndpoint))
             {

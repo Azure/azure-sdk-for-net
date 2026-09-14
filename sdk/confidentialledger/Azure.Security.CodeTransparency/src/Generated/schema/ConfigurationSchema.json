@@ -37,7 +37,7 @@
         {
           "type": "object",
           "properties": {
-            "CacheTTL": {
+            "CacheTimeToLive": {
               "type": "string"
             },
             "IdentityClientEndpoint": {

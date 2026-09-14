@@ -14,7 +14,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// The default time to keep the successful certificate responses that have TLS CA.
         /// </summary>
-        public TimeSpan CacheTTL { get; set; } = TimeSpan.FromMinutes(5);
+        public TimeSpan CacheTimeToLive { get; set; } = TimeSpan.FromMinutes(5);
 
         /// <summary>
         /// The default identity service endpoint.

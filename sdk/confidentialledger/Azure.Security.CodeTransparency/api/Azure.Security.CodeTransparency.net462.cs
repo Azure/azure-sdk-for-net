@@ -97,7 +97,7 @@ namespace Azure.Security.CodeTransparency
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
         public CodeTransparencyClientOptions(Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion version = Azure.Security.CodeTransparency.CodeTransparencyClientOptions.ServiceVersion.V2026_03_26) { }
-        public System.TimeSpan CacheTTL { get { throw null; } set { } }
+        public System.TimeSpan CacheTimeToLive { get { throw null; } set { } }
         public System.Uri IdentityClientEndpoint { get { throw null; } set { } }
         public virtual Azure.Security.CodeTransparency.CodeTransparencyCertificateClient CreateCertificateClient() { throw null; }
         public enum ServiceVersion

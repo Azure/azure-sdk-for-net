@@ -29,7 +29,7 @@ namespace Azure.Security.CodeTransparency.Tests
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = new Uri("https://foo.bar.com"),
-                CacheTTL = TimeSpan.FromSeconds(1)
+                CacheTimeToLive = TimeSpan.FromSeconds(1)
             };
             CodeTransparencyCertificateClient client = options.CreateCertificateClient();
             ServiceIdentityResult responseFirst = await client.GetServiceIdentityAsync("serviceName");

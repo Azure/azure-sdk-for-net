@@ -9,7 +9,7 @@
 - Removed the obsolete single-argument `RunTransparentStatementVerification` overload; use the static `VerifyTransparentStatement` method with verification options instead.
 - Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
 - Renamed the preview-generated `CreateEntryV09`, `GetEntryV09`, and `GetEntryStatementV09` method families to `CreateEntry`, `GetEntry`, and `GetEntryStatement`, respectively. `GetOperationV09` and `GetOperationV09Async` are no longer public because the operation-status endpoint is deprecated; clients should poll `GetEntry` instead.
-- Replaced `CodeTransparencyClientOptions.CacheTTLSeconds` with the `TimeSpan`-valued `CacheTTL` property and changed `IdentityClientEndpoint` from `string` to `Uri`.
+- Replaced `CodeTransparencyClientOptions.CacheTTLSeconds` with the `TimeSpan`-valued `CacheTimeToLive` property and changed `IdentityClientEndpoint` from `string` to `Uri`.
 - Renamed `ServiceIdentityResult.CreatedAt` to `CreatedOn` and changed its type from `DateTime` to `DateTimeOffset`.
 - Made `CodeTransparencyVerificationOptions.AuthorizedDomains` get-only, changed `CcfReceipt` to a static class with get-only properties for its protocol values, and removed the unused `CodeTransparencyOperationStatus` enum and `CodeTransparencyClient.UnknownIssuerPrefix` field.
 - Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.

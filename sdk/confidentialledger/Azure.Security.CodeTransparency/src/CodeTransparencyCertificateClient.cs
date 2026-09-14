@@ -51,7 +51,7 @@ namespace Azure.Security.CodeTransparency
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
             _certificateEndpoint = endpoint;
             _results = new ConcurrentDictionary<string, ServiceIdentityResult>();
-            _cacheTTL = options.CacheTTL;
+            _cacheTTL = options.CacheTimeToLive;
         }
 
         /// <summary>
