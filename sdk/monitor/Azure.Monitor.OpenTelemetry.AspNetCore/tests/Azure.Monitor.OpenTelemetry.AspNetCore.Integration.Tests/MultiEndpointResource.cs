@@ -36,7 +36,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
         internal static IReadOnlyList<MultiEndpointResource> Parse(string configuration)
         {
-            var resources = JsonSerializer.Deserialize<MultiEndpointResource[]>(configuration)!;
+            var resources = JsonSerializer.Deserialize<MultiEndpointResource[]>(configuration, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            })!;
             Assert.That(resources.Length, Is.GreaterThanOrEqualTo(3), "At least three destinations are required.");
             Assert.That(resources[0].Endpoint, Is.EqualTo(resources[1].Endpoint), "Destinations A/B must share an actual ingestion endpoint.");
             Assert.That(resources[0].Endpoint, Is.Not.EqualTo(resources[2].Endpoint), "Destination C must use another actual ingestion endpoint.");

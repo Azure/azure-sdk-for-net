@@ -5,10 +5,21 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     using System;
 
+    using Azure.Core;
     using Azure.Core.TestFramework;
+    using Azure.Identity;
 
     public class AzureMonitorTestEnvironment : TestEnvironment
     {
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            return new AzurePowerShellCredential(new AzurePowerShellCredentialOptions
+            {
+                TenantId = TenantId,
+                AuthorityHost = new Uri(AuthorityHostUrl)
+            });
+        }
+
         public Uri LogsEndpoint => new(GetRecordedVariable("LOGS_ENDPOINT"));
 
         /// <summary>
