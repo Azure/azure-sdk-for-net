@@ -29,14 +29,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
+        /// <param name="status"> Describes the lifecycle status of the managed rule set version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedRuleSetDefinitionProperties(string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedRuleSetDefinitionProperties(string provisioningState, string ruleSetId, string ruleSetType, string ruleSetVersion, IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups, string displayName, ManagedRuleSetStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             RuleSetId = ruleSetId;
             RuleSetType = ruleSetType;
             RuleSetVersion = ruleSetVersion;
             RuleGroups = ruleGroups;
+            DisplayName = displayName;
+            Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -59,5 +63,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Rule groups of the managed rule set. </summary>
         [WirePath("ruleGroups")]
         public IReadOnlyList<ManagedRuleGroupDefinition> RuleGroups { get; } = new ChangeTrackingList<ManagedRuleGroupDefinition>();
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("displayName")]
+        public string DisplayName { get; }
+
+        /// <summary> Describes the lifecycle status of the managed rule set version. </summary>
+        [WirePath("status")]
+        public ManagedRuleSetStatus? Status { get; }
     }
 }

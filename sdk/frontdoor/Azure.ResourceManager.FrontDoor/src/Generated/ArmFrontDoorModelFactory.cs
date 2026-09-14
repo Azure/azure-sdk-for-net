@@ -806,15 +806,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="ruleSetType"> Type of the managed rule set. </param>
         /// <param name="ruleSetVersion"> Version of the managed rule set type. </param>
         /// <param name="ruleGroups"> Rule groups of the managed rule set. </param>
+        /// <param name="displayName"> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </param>
+        /// <param name="status"> Describes the lifecycle status of the managed rule set version. </param>
         /// <returns> A new <see cref="Models.ManagedRuleSetDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default)
+        public static ManagedRuleSetDefinition ManagedRuleSetDefinition(string provisioningState = default, string ruleSetId = default, string ruleSetType = default, string ruleSetVersion = default, IEnumerable<ManagedRuleGroupDefinition> ruleGroups = default, string displayName = default, ManagedRuleSetStatus? status = default)
         {
-            return new ManagedRuleSetDefinition(provisioningState is null && ruleSetId is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null ? default : new ManagedRuleSetDefinitionProperties(
+            return new ManagedRuleSetDefinition(provisioningState is null && ruleSetId is null && ruleSetType is null && ruleSetVersion is null && ruleGroups is null && displayName is null && status is null ? default : new ManagedRuleSetDefinitionProperties(
                 provisioningState,
                 ruleSetId,
                 ruleSetType,
                 ruleSetVersion,
                 (ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>()).ToList(),
+                displayName,
+                status,
                 default), default);
         }
 
@@ -836,8 +840,9 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
         /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
         /// <param name="description"> Describes the functionality of the managed rule. </param>
+        /// <param name="paranoiaLevel"> Describes the paranoia level of the managed rule. Applicable only for DRS rules. Omitted for Bot Manager, DDoS, and AI rules. </param>
         /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
-        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, FrontDoorSensitivityType? defaultSensitivity = default, string description = default)
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, FrontDoorSensitivityType? defaultSensitivity = default, string description = default, ParanoiaLevel? paranoiaLevel = default)
         {
             return new ManagedRuleDefinition(
                 ruleId,
@@ -845,6 +850,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 defaultAction,
                 defaultSensitivity,
                 description,
+                paranoiaLevel,
                 default);
         }
 
@@ -1106,7 +1112,29 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 ruleSetType,
                 ruleSetVersion,
                 (ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>()).ToList(),
+                default,
+                default,
                 default), default);
+        }
+
+        /// <summary> Describes a managed rule definition. </summary>
+        /// <param name="ruleId"> Identifier for the managed rule. </param>
+        /// <param name="defaultState"> Describes the default state for the managed rule. </param>
+        /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
+        /// <param name="defaultSensitivity"> Describes the default sensitivity to be applied when the managed rule matches. </param>
+        /// <param name="description"> Describes the functionality of the managed rule. </param>
+        /// <returns> A new <see cref="Models.ManagedRuleDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedRuleDefinition ManagedRuleDefinition(string ruleId = default, ManagedRuleEnabledState? defaultState = default, RuleMatchActionType? defaultAction = default, FrontDoorSensitivityType? defaultSensitivity = default, string description = default)
+        {
+            return new ManagedRuleDefinition(
+                ruleId,
+                defaultState,
+                defaultAction,
+                defaultSensitivity,
+                description,
+                default,
+                default);
         }
 
         /// <summary> Defines web application firewall policy. </summary>
@@ -1157,6 +1185,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 defaultAction,
                 default,
                 description,
+                default,
                 default);
         }
 

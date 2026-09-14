@@ -84,5 +84,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return Properties.RuleGroups;
             }
         }
+
+        /// <summary> Human-readable display name for the managed rule set version (e.g., 'Default Ruleset 2.2 (Latest, Recommended)'). </summary>
+        [WirePath("properties.displayName")]
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+        }
+
+        /// <summary> Describes the lifecycle status of the managed rule set version. </summary>
+        [WirePath("properties.status")]
+        public ManagedRuleSetStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
     }
 }

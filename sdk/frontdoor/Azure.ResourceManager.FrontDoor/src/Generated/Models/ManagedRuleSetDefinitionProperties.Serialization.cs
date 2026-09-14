@@ -104,6 +104,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -151,6 +161,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string ruleSetType = default;
             string ruleSetVersion = default;
             IReadOnlyList<ManagedRuleGroupDefinition> ruleGroups = default;
+            string displayName = default;
+            ManagedRuleSetStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,6 +200,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     ruleGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("displayName"u8))
+                {
+                    displayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new ManagedRuleSetStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -199,6 +225,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 ruleSetType,
                 ruleSetVersion,
                 ruleGroups ?? new ChangeTrackingList<ManagedRuleGroupDefinition>(),
+                displayName,
+                status,
                 additionalBinaryDataProperties);
         }
     }

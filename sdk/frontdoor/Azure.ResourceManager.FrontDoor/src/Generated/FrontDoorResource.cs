@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(ResourceType, out string frontDoorApiVersion);
             _frontDoorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _frontDoorsRestClient = new FrontDoors(_frontDoorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2026-04-01");
             _endpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2025-11-01");
+            _endpointsRestClient = new Endpoints(_endpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

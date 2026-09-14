@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(ResourceType, out string frontDoorNetworkExperimentProfileApiVersion);
             _networkExperimentProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _networkExperimentProfilesRestClient = new NetworkExperimentProfiles(_networkExperimentProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2026-04-01");
             _preconfiguredEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _preconfiguredEndpointsRestClient = new PreconfiguredEndpoints(_preconfiguredEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2025-11-01");
+            _preconfiguredEndpointsRestClient = new PreconfiguredEndpoints(_preconfiguredEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorNetworkExperimentProfileApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

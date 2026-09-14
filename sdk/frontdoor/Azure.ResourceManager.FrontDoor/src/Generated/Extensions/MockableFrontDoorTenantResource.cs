@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
 
         private ClientDiagnostics FrontDoorNameAvailabilityClientDiagnostics => _frontDoorNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.FrontDoor.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FrontDoorNameAvailability FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailability(FrontDoorNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-11-01");
+        private FrontDoorNameAvailability FrontDoorNameAvailabilityRestClient => _frontDoorNameAvailabilityRestClient ??= new FrontDoorNameAvailability(FrontDoorNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-04-01");
 
         /// <summary>
         /// Check the availability of a Front Door resource name.
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-11-01. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
