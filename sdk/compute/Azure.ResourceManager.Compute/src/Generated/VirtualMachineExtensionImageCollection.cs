@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualMachineExtensionImageResource> GetAllAsync(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@type, nameof(@type));
 
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="type"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="VirtualMachineExtensionImageResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpandOptions? expand = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualMachineExtensionImageResource> GetAll(string @type, string filter = default, int? top = default, string @orderby = default, ListVersionsExpand? expand = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(@type, nameof(@type));
 

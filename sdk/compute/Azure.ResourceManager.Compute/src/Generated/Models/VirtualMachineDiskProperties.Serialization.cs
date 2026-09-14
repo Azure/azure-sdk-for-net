@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
             }
-            if (Optional.IsDefined(PerformancePlus))
+            if (Optional.IsDefined(IsPerformancePlusEnabled))
             {
                 writer.WritePropertyName("performancePlus"u8);
-                writer.WriteBooleanValue(PerformancePlus.Value);
+                writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
-            if (Optional.IsDefined(OptimizedForFrequentAttach))
+            if (Optional.IsDefined(IsOptimizedForFrequentAttach))
             {
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
-                writer.WriteBooleanValue(OptimizedForFrequentAttach.Value);
+                writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
             if (Optional.IsDefined(AvailabilityPolicy))
             {
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string tier = default;
             bool? burstingEnabled = default;
-            bool? performancePlus = default;
-            bool? optimizedForFrequentAttach = default;
+            bool? isPerformancePlusEnabled = default;
+            bool? isOptimizedForFrequentAttach = default;
             DiskAvailabilityPolicy availabilityPolicy = default;
             int? maxShares = default;
             VirtualMachineDiskNetworkAccessPolicy? networkAccessPolicy = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    performancePlus = prop.Value.GetBoolean();
+                    isPerformancePlusEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("optimizedForFrequentAttach"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    optimizedForFrequentAttach = prop.Value.GetBoolean();
+                    isOptimizedForFrequentAttach = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("availabilityPolicy"u8))
@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.Compute.Models
             return new VirtualMachineDiskProperties(
                 tier,
                 burstingEnabled,
-                performancePlus,
-                optimizedForFrequentAttach,
+                isPerformancePlusEnabled,
+                isOptimizedForFrequentAttach,
                 availabilityPolicy,
                 maxShares,
                 networkAccessPolicy,

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="interconnectInstanceView"> The Interconnect runtime view of the Virtual Machine. Minimum api-version: 2026-03-01. </param>
         /// <param name="capacityReservationType"> Specifies which type of capacity reservation the virtual machine will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, InterconnectInstanceView interconnectInstanceView, VirtualMachineCapacityReservationType? capacityReservationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstanceView(int? platformUpdateDomain, int? platformFaultDomain, string computerName, string osName, string osVersion, HyperVGeneration? hyperVGeneration, string rdpThumbPrint, VirtualMachineAgentInstanceView vmAgent, MaintenanceRedeployStatus maintenanceRedeployStatus, IReadOnlyList<DiskInstanceView> disks, IReadOnlyList<VirtualMachineExtensionInstanceView> extensions, VirtualMachineHealthStatus vmHealth, BootDiagnosticsInstanceView bootDiagnostics, string assignedHost, IReadOnlyList<InstanceViewStatus> statuses, VirtualMachinePatchStatus patchStatus, bool? isVmInStandbyPool, InterconnectInstanceView interconnectInstanceView, ComputeCapacityReservationType? capacityReservationType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal InterconnectInstanceView InterconnectInstanceView { get; }
 
         /// <summary> Specifies which type of capacity reservation the virtual machine will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </summary>
-        public VirtualMachineCapacityReservationType? CapacityReservationType { get; }
+        public ComputeCapacityReservationType? CapacityReservationType { get; }
 
         /// <summary> The health status information for the VM. </summary>
         public InstanceViewStatus VmHealthStatus

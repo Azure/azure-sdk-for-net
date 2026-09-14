@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineDiskProperties"/>. </summary>
         /// <param name="tier"> Performance tier of the disk (e.g., P4, S10) as described here: https://azure.microsoft.com/en-us/pricing/details/managed-disks/. Does not apply to Ultra disks. </param>
         /// <param name="burstingEnabled"> Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. </param>
-        /// <param name="performancePlus"> Set this flag to true to get a boost on the performance target of the disk deployed. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
-        /// <param name="optimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
+        /// <param name="isPerformancePlusEnabled"> Set this flag to true to get a boost on the performance target of the disk deployed. This flag can only be set on disk creation time and cannot be disabled after enabled. </param>
+        /// <param name="isOptimizedForFrequentAttach"> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </param>
         /// <param name="availabilityPolicy"> In the case of an availability or connectivity issue with the disk, specify the behavior of your VM. </param>
         /// <param name="maxShares"> The maximum number of VMs that can attach to the disk at the same time. Value greater than one indicates a disk that can be mounted on multiple VMs at the same time. Applies to data disks only. </param>
         /// <param name="networkAccessPolicy"> Policy for accessing the disk via network. </param>
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="diskMBpsReadOnly"> The total throughput (MBps) that will be allowed across all VMs mounting the shared disk as ReadOnly. MBps means millions of bytes per second - MB here uses the ISO notation, of powers of 10. </param>
         /// <param name="logicalSectorSize"> Logical sector size in bytes for Ultra Disks. Supported values are 512 and 4096. 4096 is the default. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineDiskProperties(string tier, bool? burstingEnabled, bool? performancePlus, bool? optimizedForFrequentAttach, DiskAvailabilityPolicy availabilityPolicy, int? maxShares, VirtualMachineDiskNetworkAccessPolicy? networkAccessPolicy, string diskAccessId, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineDiskProperties(string tier, bool? burstingEnabled, bool? isPerformancePlusEnabled, bool? isOptimizedForFrequentAttach, DiskAvailabilityPolicy availabilityPolicy, int? maxShares, VirtualMachineDiskNetworkAccessPolicy? networkAccessPolicy, string diskAccessId, long? diskIopsReadOnly, long? diskMBpsReadOnly, int? logicalSectorSize, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tier = tier;
             BurstingEnabled = burstingEnabled;
-            PerformancePlus = performancePlus;
-            OptimizedForFrequentAttach = optimizedForFrequentAttach;
+            IsPerformancePlusEnabled = isPerformancePlusEnabled;
+            IsOptimizedForFrequentAttach = isOptimizedForFrequentAttach;
             AvailabilityPolicy = availabilityPolicy;
             MaxShares = maxShares;
             NetworkAccessPolicy = networkAccessPolicy;
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? BurstingEnabled { get; set; }
 
         /// <summary> Set this flag to true to get a boost on the performance target of the disk deployed. This flag can only be set on disk creation time and cannot be disabled after enabled. </summary>
-        public bool? PerformancePlus { get; set; }
+        public bool? IsPerformancePlusEnabled { get; set; }
 
         /// <summary> Setting this property to true improves reliability and performance of data disks that are frequently (more than 5 times a day) detached from one virtual machine and attached to another. This property should not be set for disks that are not detached and attached frequently as it causes the disks to not align with the fault domain of the virtual machine. </summary>
-        public bool? OptimizedForFrequentAttach { get; set; }
+        public bool? IsOptimizedForFrequentAttach { get; set; }
 
         /// <summary> In the case of an availability or connectivity issue with the disk, specify the behavior of your VM. </summary>
         internal DiskAvailabilityPolicy AvailabilityPolicy { get; set; }

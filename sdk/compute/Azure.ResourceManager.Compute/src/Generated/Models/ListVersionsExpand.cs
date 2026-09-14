@@ -12,16 +12,16 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Defines the allowed values for the $expand query parameter on the ListVersions operation. </summary>
-    public readonly partial struct ListVersionsExpandOptions : IEquatable<ListVersionsExpandOptions>
+    public readonly partial struct ListVersionsExpand : IEquatable<ListVersionsExpand>
     {
         private readonly string _value;
         /// <summary> Expand to include all properties in the response. </summary>
         private const string PropertiesValue = "properties";
 
-        /// <summary> Initializes a new instance of <see cref="ListVersionsExpandOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListVersionsExpand"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ListVersionsExpandOptions(string value)
+        public ListVersionsExpand(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> Expand to include all properties in the response. </summary>
-        public static ListVersionsExpandOptions Properties { get; } = new ListVersionsExpandOptions(PropertiesValue);
+        public static ListVersionsExpand Properties { get; } = new ListVersionsExpand(PropertiesValue);
 
-        /// <summary> Determines if two <see cref="ListVersionsExpandOptions"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ListVersionsExpand"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ListVersionsExpandOptions left, ListVersionsExpandOptions right) => left.Equals(right);
+        public static bool operator ==(ListVersionsExpand left, ListVersionsExpand right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ListVersionsExpandOptions"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ListVersionsExpand"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ListVersionsExpandOptions left, ListVersionsExpandOptions right) => !left.Equals(right);
+        public static bool operator !=(ListVersionsExpand left, ListVersionsExpand right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ListVersionsExpandOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ListVersionsExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListVersionsExpandOptions(string value) => new ListVersionsExpandOptions(value);
+        public static implicit operator ListVersionsExpand(string value) => new ListVersionsExpand(value);
 
-        /// <summary> Converts a string to a <see cref="ListVersionsExpandOptions"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ListVersionsExpand"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ListVersionsExpandOptions?(string value) => value == null ? null : new ListVersionsExpandOptions(value);
+        public static implicit operator ListVersionsExpand?(string value) => value == null ? null : new ListVersionsExpand(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ListVersionsExpandOptions other && Equals(other);
+        public override bool Equals(object obj) => obj is ListVersionsExpand other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ListVersionsExpandOptions other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ListVersionsExpand other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

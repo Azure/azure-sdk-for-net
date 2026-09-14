@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Specifies which type of capacity reservation the virtual machine will consume capacity from if eligible or whether it is explicitly opted out from being associated and consuming capacity from any reserved capacity available in the subscription. Minimum api-version: 2026-04-01. </summary>
-    public readonly partial struct VirtualMachineCapacityReservationType : IEquatable<VirtualMachineCapacityReservationType>
+    public readonly partial struct ComputeCapacityReservationType : IEquatable<ComputeCapacityReservationType>
     {
         private readonly string _value;
         /// <summary> The virtual machine is not eligible to be implicitly associated with an open capacity reservation and is not explicitly associated with any capacity reservation group, so it will consume capacity from the publicly available capacity. </summary>
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> The virtual machine consumes capacity from a specific matching capacity reservation when associated with a capacity reservation group resource of type block, and will hit capacity failures if there is no available capacity in the block reservation. </summary>
         private const string BlockValue = "Block";
 
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineCapacityReservationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeCapacityReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VirtualMachineCapacityReservationType(string value)
+        public ComputeCapacityReservationType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -37,44 +37,44 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> The virtual machine is not eligible to be implicitly associated with an open capacity reservation and is not explicitly associated with any capacity reservation group, so it will consume capacity from the publicly available capacity. </summary>
-        public static VirtualMachineCapacityReservationType NotEligible { get; } = new VirtualMachineCapacityReservationType(NotEligibleValue);
+        public static ComputeCapacityReservationType NotEligible { get; } = new ComputeCapacityReservationType(NotEligibleValue);
 
         /// <summary> The virtual machine will consume capacity from a specific matching capacity reservation when associated with a capacity reservation group resource of type targeted, but can fall back to consume capacity from the publicly available capacity if there is no capacity available in the targeted reservation. </summary>
-        public static VirtualMachineCapacityReservationType Targeted { get; } = new VirtualMachineCapacityReservationType(TargetedValue);
+        public static ComputeCapacityReservationType Targeted { get; } = new ComputeCapacityReservationType(TargetedValue);
 
         /// <summary> The virtual machine if eligible will implicitly associate and consume any available capacity from a matching open capacity reservation created or shared in the subscription. <b>Note:</b> The VM should not be explicitly associated with the open capacity reservation group resource containing the matching reservation. </summary>
-        public static VirtualMachineCapacityReservationType Open { get; } = new VirtualMachineCapacityReservationType(OpenValue);
+        public static ComputeCapacityReservationType Open { get; } = new ComputeCapacityReservationType(OpenValue);
 
         /// <summary> The virtual machine has capacity reservation assignment disabled and will not be allowed to implicitly or explicitly associate with any type of capacity reservation. </summary>
-        public static VirtualMachineCapacityReservationType Disabled { get; } = new VirtualMachineCapacityReservationType(DisabledValue);
+        public static ComputeCapacityReservationType Disabled { get; } = new ComputeCapacityReservationType(DisabledValue);
 
         /// <summary> The virtual machine consumes capacity from a specific matching capacity reservation when associated with a capacity reservation group resource of type block, and will hit capacity failures if there is no available capacity in the block reservation. </summary>
-        public static VirtualMachineCapacityReservationType Block { get; } = new VirtualMachineCapacityReservationType(BlockValue);
+        public static ComputeCapacityReservationType Block { get; } = new ComputeCapacityReservationType(BlockValue);
 
-        /// <summary> Determines if two <see cref="VirtualMachineCapacityReservationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeCapacityReservationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(VirtualMachineCapacityReservationType left, VirtualMachineCapacityReservationType right) => left.Equals(right);
+        public static bool operator ==(ComputeCapacityReservationType left, ComputeCapacityReservationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="VirtualMachineCapacityReservationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ComputeCapacityReservationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(VirtualMachineCapacityReservationType left, VirtualMachineCapacityReservationType right) => !left.Equals(right);
+        public static bool operator !=(ComputeCapacityReservationType left, ComputeCapacityReservationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineCapacityReservationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeCapacityReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineCapacityReservationType(string value) => new VirtualMachineCapacityReservationType(value);
+        public static implicit operator ComputeCapacityReservationType(string value) => new ComputeCapacityReservationType(value);
 
-        /// <summary> Converts a string to a <see cref="VirtualMachineCapacityReservationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ComputeCapacityReservationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator VirtualMachineCapacityReservationType?(string value) => value == null ? null : new VirtualMachineCapacityReservationType(value);
+        public static implicit operator ComputeCapacityReservationType?(string value) => value == null ? null : new ComputeCapacityReservationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is VirtualMachineCapacityReservationType other && Equals(other);
+        public override bool Equals(object obj) => obj is ComputeCapacityReservationType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(VirtualMachineCapacityReservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ComputeCapacityReservationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
