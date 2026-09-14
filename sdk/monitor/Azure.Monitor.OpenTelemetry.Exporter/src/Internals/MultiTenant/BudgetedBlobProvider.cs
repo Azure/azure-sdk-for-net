@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         private bool TryCreate(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
         {
-            var created = _owner.TryCreateBlobWithinBudget(_inner, buffer, leasePeriodMilliseconds, out var inner);
+            var created = _owner.TryCreateBlobWithinBudget(_inner, buffer, leasePeriodMilliseconds, _ingestionEndpoint, out var inner);
             blob = inner!;
 
             if (!created)

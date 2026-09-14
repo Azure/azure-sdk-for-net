@@ -389,10 +389,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 default);
         }
 
-        /// <summary>
-        /// LimitJson abstract class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: 
-        /// </summary>
+        /// <summary> LimitJson abstract class. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
         public static LimitJsonObject LimitJsonObject(string limitObjectType = default)

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="urn"> String of the URN for this Capability Type. </param>
         /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string publisher = default, string targetType = default, string description = default, string parametersSchema = default, string urn = default, ChaosProvisioningState? provisioningState = default)
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, ChaosProvisioningState? provisioningState)
         {
             return new ChaosCapabilityData(
                 id,
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="selectors"> List of selectors. </param>
         /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentData"/> instance for mocking. </returns>
-        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ChaosProvisioningState? provisioningState = default, IEnumerable<ChaosExperimentStep> steps = default, IEnumerable<ChaosTargetSelector> selectors = default, CustomerDataStorageProperties customerDataStorage = default)
+        public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors, CustomerDataStorageProperties customerDataStorage)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
         /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState)
         {
             return new ChaosExperimentExecutionData(
                 id,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformationSteps"> The steps of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string status = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ChaosProvisioningState? provisioningState = default, string failureReason = default, DateTimeOffset? lastActionOn = default, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = default)
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState, string failureReason, DateTimeOffset? lastActionOn, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps)
         {
             return new ExperimentExecutionDetails(
                 id,
