@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
@@ -16,10 +17,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
     {
         private const int DefaultCapacity = 4;
 
+        private static long s_exportSequence;
+
         private Group?[] _groups = new Group?[DefaultCapacity];
         private int _count;
 
         internal int Count => _count;
+
+        /// <summary>Stitches one export's routing decisions to the sends they produced.</summary>
+        internal long Sequence { get; private set; }
+
+        internal void BeginExport() => Sequence = Interlocked.Increment(ref s_exportSequence);
 
         internal Group this[int index]
         {
