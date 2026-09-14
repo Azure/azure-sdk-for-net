@@ -4198,13 +4198,35 @@ namespace Azure.Provisioning.Network
     public partial class NetworkInterface : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public NetworkInterface(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliaryMode> AuxiliaryMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliarySku> AuxiliarySku { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> DefaultOutboundConnectivityEnabled { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> DisableTcpStateTracking { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkInterfaceDnsSettings DnsSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> EnableAcceleratedNetworking { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableIPForwarding { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> HostedWorkloads { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> MacAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceMigrationPhase> MigrationPhase { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Network.NetworkInterfacePropertiesFormat Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkSecurityGroup NetworkSecurityGroup { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceNicType> NicType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
+        public Azure.Provisioning.Network.PrivateEndpoint PrivateEndpoint { get { throw null; } }
+        public Azure.Provisioning.Network.PrivateLinkService PrivateLinkService { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceTapConfiguration> TapConfigurations { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> VnetEncryptionSupported { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> WorkloadType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Network.NetworkInterface FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
@@ -4424,34 +4446,6 @@ namespace Azure.Provisioning.Network
     {
         Standard = 0,
         Elastic = 1,
-    }
-    public partial class NetworkInterfacePropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public NetworkInterfacePropertiesFormat() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliaryMode> AuxiliaryMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceAuxiliarySku> AuxiliarySku { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> DefaultOutboundConnectivityEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> DisableTcpStateTracking { get { throw null; } set { } }
-        public Azure.Provisioning.Network.NetworkInterfaceDnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> EnableAcceleratedNetworking { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableIPForwarding { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<string> HostedWorkloads { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceIPConfiguration> IPConfigurations { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MacAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceMigrationPhase> MigrationPhase { get { throw null; } set { } }
-        public Azure.Provisioning.Network.NetworkSecurityGroup NetworkSecurityGroup { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkInterfaceNicType> NicType { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> Primary { get { throw null; } }
-        public Azure.Provisioning.Network.PrivateEndpoint PrivateEndpoint { get { throw null; } }
-        public Azure.Provisioning.Network.PrivateLinkService PrivateLinkService { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.NetworkInterfaceTapConfiguration> TapConfigurations { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualMachineId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> VnetEncryptionSupported { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> WorkloadType { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class NetworkInterfaceTapConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -6156,12 +6150,27 @@ namespace Azure.Provisioning.Network
     public partial class PublicIPAddress : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public PublicIPAddress(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.Network.DdosSettings DdosSettings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.IPAddressDeleteOption> DeleteOption { get { throw null; } set { } }
+        public Azure.Provisioning.Network.PublicIPAddressDnsSettings DnsSettings { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> IdleTimeoutInMinutes { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> IPAddress { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NetworkIPConfiguration IPConfiguration { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.IPTag> IPTags { get { throw null; } set { } }
+        public Azure.Provisioning.Network.PublicIPAddress LinkedPublicIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.PublicIPAddressMigrationPhase> MigrationPhase { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PublicIPAddressPropertiesFormat Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Network.NatGateway NatGateway { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PublicIPAddressVersion { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PublicIPAllocationMethod { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
+        public Azure.Provisioning.Network.PublicIPAddress ServicePublicIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.Network.PublicIPAddressSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
@@ -6264,27 +6273,6 @@ namespace Azure.Provisioning.Network
         Commit = 2,
         Abort = 3,
         Committed = 4,
-    }
-    public partial class PublicIPAddressPropertiesFormat : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public PublicIPAddressPropertiesFormat() { }
-        public Azure.Provisioning.Network.DdosSettings DdosSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.IPAddressDeleteOption> DeleteOption { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PublicIPAddressDnsSettings DnsSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> IdleTimeoutInMinutes { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> IPAddress { get { throw null; } set { } }
-        public Azure.Provisioning.Network.NetworkIPConfiguration IPConfiguration { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Network.IPTag> IPTags { get { throw null; } set { } }
-        public Azure.Provisioning.Network.PublicIPAddress LinkedPublicIPAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.PublicIPAddressMigrationPhase> MigrationPhase { get { throw null; } set { } }
-        public Azure.Provisioning.Network.NatGateway NatGateway { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkProvisioningState> ProvisioningState { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPVersion> PublicIPAddressVersion { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Network.NetworkIPAllocationMethod> PublicIPAllocationMethod { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPPrefixId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Guid> ResourceGuid { get { throw null; } }
-        public Azure.Provisioning.Network.PublicIPAddress ServicePublicIPAddress { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class PublicIPAddressSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

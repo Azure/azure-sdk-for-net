@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> NetworkInterface properties. </summary>
-    public partial class NetworkInterfacePropertiesFormat : ProvisionableConstruct
+    internal partial class NetworkInterfacePropertiesFormat : ProvisionableConstruct
     {
         private NetworkSubResource _virtualMachine;
         private NetworkSecurityGroup _networkSecurityGroup;
