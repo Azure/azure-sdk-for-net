@@ -1,0 +1,15 @@
+{
+  "matrix": {
+    "Agent": {
+      "MultiTenantExport_Windows_NET8": {
+        "OSVmImage": "env:WINDOWSVMIMAGE",
+        "Pool": "env:WINDOWSPOOL",
+        "TestTargetFramework": "net8.0",
+        "SupportedClouds": "Public",
+        "MultiTenantE2E": "true",
+        "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=true",
+        "BuildConfiguration": "Debug"
+      }
+    }
+  }
+}

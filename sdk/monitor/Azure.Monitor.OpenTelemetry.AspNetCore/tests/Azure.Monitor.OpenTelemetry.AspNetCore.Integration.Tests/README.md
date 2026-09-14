@@ -2,6 +2,8 @@
 
 This project is the Integration tests using the [Azure SDK TestFramework](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md).
 
+Multi-tenant trace and log routing is tested in the separate [multi-tenant integration test project](../Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/README.md). It enables the process-wide routing switch and verifies real Azure ingestion, tenant isolation, and outage recovery using dedicated resources.
+
 ## Getting started
 
 ### First time setup
@@ -22,7 +24,11 @@ Before running these integration tests against Azure for the first time, you mus
 
     If this script fails, it should instruct you to install any missing dependencies.
 
-    On Windows, this script normally creates `sdk/monitor/test-resources.bicep.env` containing your local test settings. The test framework loads it automatically. It is encrypted for the Windows account that created it; run the tests as that same account, and do not edit or commit this file.
+    The script deploys the checked-in `sdk/monitor/test-resources.bicep` template.
+    On Windows, it normally writes encrypted settings to `sdk/monitor/test-resources.bicep.env`.
+    This generated environment file is not checked in and represents your unique test environment.
+
+    To include the dedicated multi-tenant topology, append `-AdditionalParameters @{ enableMultiTenantExport = $true; multiTenantPrincipalType = 'User'; multiTenantPrimaryLocation = 'westus2'; multiTenantSecondaryLocation = 'eastus2' }` to the command above. This adds four Application Insights resources and two workspaces. See the [multi-tenant resource setup](../Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/README.md#standard-monitor-provisioner) for update and identity options.
 
     `sdk/monitor/test-resources.bicep` is the existing, checked-in deployment template, not the generated settings file.
 
@@ -63,6 +69,12 @@ Before running these integration tests against Azure for the first time, you mus
   - **Query returns 403:** verify the querying identity has access to the workspace and allow time for new role assignments to propagate.
   - **Missing configuration or settings cannot be decrypted:** confirm provisioning completed and `sdk/monitor/test-resources.bicep.env` exists, and use the Windows account that created it. Do not paste its contents into logs or issue reports.
   - **No telemetry found:** check the selected resources, ingestion connectivity, and test output. Resource provisioning and ingestion can take several minutes.
+
+### Running in CI
+
+The existing [tests.yml](../../tests.yml) uses the repository's Azure Pipelines Live Test templates to deploy resources, run tests, remove resources, and publish TRX results. CI does not use your local `Connect-AzAccount` session or environment file. Deployment authentication comes from the authorized Azure Resource Manager service connection; query authentication is supplied through the SDK test framework's pipeline credential flow.
+
+The multi-tenant scenarios run in an additional Windows/.NET 8 matrix job with opt-in resources and strict result checks. Existing matrix jobs retain their tests and exclude these dedicated scenarios. See the [multi-tenant CI setup and prerequisites](../Azure.Monitor.OpenTelemetry.AspNetCore.MultiTenant.Integration.Tests/README.md#automation).
 
 ### Recording New Tests
 

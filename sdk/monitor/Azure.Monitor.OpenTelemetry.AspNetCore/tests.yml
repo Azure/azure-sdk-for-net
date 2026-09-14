@@ -5,3 +5,27 @@ extends:
     parameters:
       ServiceDirectory: monitor
       Project: Azure.Monitor.OpenTelemetry.AspNetCore
+      AdditionalMatrixConfigs:
+        - Name: MultiTenantExport
+          Path: sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/multi-tenant-matrix.json
+          Selection: all
+          GenerateVMJobs: true
+      EnvVars:
+        MONITOR_MULTI_TENANT_RESOURCES: $(MONITOR_MULTI_TENANT_RESOURCES)
+        MONITOR_LOGS_ENDPOINT: $(MONITOR_LOGS_ENDPOINT)
+      TestSetupSteps:
+        - pwsh: |
+            if ($env:MULTITENANTE2E -eq 'true') {
+              Write-Host '##vso[task.setvariable variable=ArmTemplateParameters]@{enableMultiTenantExport=$true}'
+              Write-Host '##vso[task.setvariable variable=TestMode]Live'
+              Write-Host '##vso[task.setvariable variable=MONITOR_MULTI_TENANT_REQUIRED]true'
+              Write-Host '##vso[task.setvariable variable=AdditionalTestFilters]FullyQualifiedName~MultiTenantExportLiveTests'
+            }
+            else {
+              $filter = 'FullyQualifiedName!~MultiTenantExportLiveTests'
+              if ($env:ADDITIONALTESTFILTERS) {
+                $filter = "($($env:ADDITIONALTESTFILTERS)) & ($filter)"
+              }
+              Write-Host "##vso[task.setvariable variable=AdditionalTestFilters]$filter"
+            }
+          displayName: Configure multi-tenant live coverage
