@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             Uri.TryCreate(connectionVars.IngestionEndpoint, UriKind.Absolute, out var ownIngestionEndpoint);
 
-            return new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint);
+            return new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint, connectionVars.AadAudience);
         }
 
         private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, EndpointTrustPolicy trustPolicy, out bool isAadEnabled)
@@ -137,12 +137,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (trustPolicy.Enabled)
                 {
-                    // Redirect first, so the address is final before the token is attached and each
-                    // redirect hop is authorized against the host that actually receives it.
+                    // Ordered exactly as the single-endpoint case. Putting the redirect policy first
+                    // would re-enter the token policy per hop, and Azure.Core strips the header when
+                    // it sees the authority change, so a redirected batch would arrive anonymous.
                     httpPipelinePolicy = new HttpPipelinePolicy[]
                     {
-                        new IngestionRedirectPolicy(),
-                        new MultiEndpointBearerTokenAuthenticationPolicy(options.Credential, scope, trustPolicy)
+                        new MultiEndpointBearerTokenAuthenticationPolicy(options.Credential, scope, trustPolicy),
+                        new IngestionRedirectPolicy()
                     };
 
                     AzureMonitorExporterEventSource.Log.MultiEndpointEntraAuthenticationEnabled(options.Credential.GetType().Name, scope);
@@ -494,7 +495,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 storage?.TransmissionStateManager.EnableBackOff(httpMessage.HasResponse ? httpMessage.Response : null);
 
-                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled, telemetrySchemaTypeCounter: null, networkSdkStats);
+                var transmission = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, storage?.BlobProvider, blob: null, _connectionVars, origin, _isAadEnabled && group.UseAadAuth, telemetrySchemaTypeCounter: null, networkSdkStats);
                 var accepted = AcceptedCount(transmission.ItemsAccepted, itemCount);
                 ReportDelivery(exportSequence, group, itemCount, DescribeDelivery(transmission.ExportResult, accepted, itemCount, statusCode), accepted, statusCode);
 

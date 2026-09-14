@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // One endpoint, so one partition holding one blob for both applications.
             var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
-            Assert.Single(transmitter._multiEndpointStorage.Partitions);
+            Assert.Single(transmitter._multiEndpointStorage!.Partitions);
 
             var blob = Directory.GetFiles(partition.Directory, "*.blob").Single();
             var persisted = Encoding.UTF8.GetString(File.ReadAllBytes(blob));
@@ -144,7 +144,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateActivity("ikey-west", WestUs)));
 
             Assert.Equal(TransmissionState.Open, transmitter._multiEndpointStorage!.TryGet(EastUs)!.TransmissionStateManager.State);
-            Assert.Equal(TransmissionState.Closed, transmitter._multiEndpointStorage.TryGet(WestUs)!.TransmissionStateManager.State);
+            Assert.Equal(TransmissionState.Closed, transmitter._multiEndpointStorage!.TryGet(WestUs)!.TransmissionStateManager.State);
 
             ingestion.Requests.Clear();
 
@@ -199,12 +199,115 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// The header applies to a whole request, so one endpoint's two auth modes cannot share a
+        /// partition: a blob is re-POSTed long after the telemetry that asked to be authenticated.
+        /// </summary>
+        [Fact]
+        public void EachAuthModeGetsItsOwnPartition()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using (var exporter = CreateExporter(ingestion, new StorageStubCredential(), out var transmitter))
+            {
+                exporter.Export(CreateBatch(
+                    CreateActivity("ikey-auth", EastUs, useAadAuth: true),
+                    CreateActivity("ikey-key-only", EastUs)));
+
+                var authenticated = transmitter._multiEndpointStorage!.TryGet(EastUs, useAadAuth: true);
+                var unauthenticated = transmitter._multiEndpointStorage!.TryGet(EastUs, useAadAuth: false);
+
+                Assert.NotNull(authenticated);
+                Assert.NotNull(unauthenticated);
+                Assert.NotEqual(authenticated!.Directory, unauthenticated!.Directory);
+
+                Assert.Contains("ikey-auth", ReadBlobs(authenticated), StringComparison.Ordinal);
+                Assert.Contains("ikey-key-only", ReadBlobs(unauthenticated), StringComparison.Ordinal);
+            }
+        }
+
+        /// <summary>
+        /// The directory for unauthenticated telemetry must not move, or every blob written by an
+        /// earlier version is orphaned on upgrade.
+        /// </summary>
+        [Fact]
+        public void TheUnauthenticatedPartitionKeepsItsPreExistingDirectory()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            using var exporter = CreateExporter(ingestion, out var transmitter);
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs)));
+
+            var partition = transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            var expected = Path.Combine(
+                GetHostStorageDirectory(transmitter) + MultiEndpointStorage.RootDirectorySuffix,
+                HashHelper.GetSHA256Hash(EastUs));
+
+            Assert.Equal(expected, partition.Directory);
+        }
+
+        /// <summary>
+        /// Once an endpoint opts in, nothing else opens the partition its earlier telemetry was
+        /// written to, so without an explicit probe that backlog is never transmitted.
+        /// </summary>
+        [Fact]
+        public void APartitionLeftByTheOtherAuthModeIsStillDrained()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetStatus(EastUs, 500);
+
+            string strandedDirectory;
+
+            using (var exporter = CreateExporter(ingestion, out var transmitter))
+            {
+                exporter.Export(CreateBatch(CreateActivity("ikey-key-only", EastUs)));
+                strandedDirectory = transmitter._multiEndpointStorage!.TryGet(EastUs)!.Directory;
+                Assert.NotEmpty(Directory.GetFiles(strandedDirectory, "*.blob"));
+            }
+
+            // A new process, now stamping the flag, must still find the old partition.
+            using (var exporter = CreateExporter(ingestion, new StorageStubCredential(), out var transmitter))
+            {
+                exporter.Export(CreateBatch(CreateActivity("ikey-auth", EastUs, useAadAuth: true)));
+
+                Assert.Contains(
+                    transmitter._multiEndpointStorage!.Partitions,
+                    partition => partition.Directory == strandedDirectory);
+            }
+        }
+
+        private static string ReadBlobs(MultiEndpointStorage.EndpointStorage partition)
+        {
+            var contents = new StringBuilder();
+
+            foreach (var blob in Directory.GetFiles(partition.Directory, "*.blob"))
+            {
+                contents.Append(Encoding.UTF8.GetString(File.ReadAllBytes(blob)));
+            }
+
+            return contents.ToString();
+        }
+
+        private sealed class StorageStubCredential : Azure.Core.TokenCredential
+        {
+            public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken)
+                => new("storage-token", DateTimeOffset.UtcNow.AddHours(1));
+
+            public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken)
+                => new(GetToken(requestContext, cancellationToken));
+        }
+
         private static string? GetHostStorageDirectory(AzureMonitorTransmitter transmitter) =>
             typeof(AzureMonitorTransmitter)
                 .GetField("_storageDirectory", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
                 ?.GetValue(transmitter) as string;
 
         private AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out AzureMonitorTransmitter transmitter)
+            => CreateExporter(ingestion, credential: null, out transmitter);
+
+        private AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, Azure.Core.TokenCredential? credential, out AzureMonitorTransmitter transmitter)
         {
             var options = new AzureMonitorExporterOptions
             {
@@ -212,6 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Transport = ingestion.Transport,
                 StorageDirectory = _storageDirectory,
                 EnableStatsbeat = false,
+                Credential = credential,
             };
 
             transmitter = new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled: true);
@@ -221,11 +325,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint)
+        private static Activity CreateActivity(string instrumentationKey, string ingestionEndpoint, bool useAadAuth = false)
         {
             var activity = s_activitySource.StartActivity("StorageIntegrationTest", ActivityKind.Server)!;
             activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, instrumentationKey);
             activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+
+            if (useAadAuth)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftUseAadAuth, true);
+            }
+
             activity.Stop();
 
             return activity;

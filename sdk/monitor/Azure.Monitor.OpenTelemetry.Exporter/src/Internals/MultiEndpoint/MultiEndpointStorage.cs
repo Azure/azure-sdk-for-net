@@ -44,7 +44,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// <summary>
         /// Bounds the number of endpoint partitions, each of which owns a directory, a drain timer,
         /// and a blob provider. A caller routing past this loses persistence for the excess
-        /// endpoints rather than growing without limit.
+        /// endpoints rather than growing without limit. An endpoint carrying both authenticated and
+        /// unauthenticated telemetry occupies two of these.
         /// </summary>
         internal const int MaxEndpointPartitions = 64;
 
@@ -77,6 +78,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         private const long EvictionRecountIntervalMilliseconds = 1000;
 
         private readonly ConcurrentDictionary<string, EndpointStorage> _partitions = new(StringComparer.Ordinal);
+
+        /// <summary>Endpoints whose other-auth-mode partition has already been looked for on disk.</summary>
+        private readonly ConcurrentDictionary<string, byte> _siblingProbed = new(StringComparer.Ordinal);
         private readonly ApplicationInsightsRestClient _restClient;
         private readonly ConnectionVars _connectionVars;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
@@ -486,7 +490,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// the telemetry that produced it is gone, so the partition is the only place the intent to
         /// authenticate can be kept.
         /// </remarks>
-        internal EndpointStorage? TryGet(string ingestionEndpoint, bool useAadAuth = false)
+        internal EndpointStorage? TryGet(string ingestionEndpoint, bool useAadAuth)
+        {
+            var storage = OpenPartition(ingestionEndpoint, useAadAuth);
+
+            // An earlier run, or this endpoint before it opted in, may have left blobs under the
+            // other auth mode. Nothing else opens that partition, so without this its drain timer
+            // never starts and the telemetry is lost to eviction rather than transmitted.
+            if (_siblingProbed.TryAdd(ingestionEndpoint, 0) && Directory.Exists(GetPartitionDirectory(ingestionEndpoint, !useAadAuth)))
+            {
+                OpenPartition(ingestionEndpoint, !useAadAuth);
+            }
+
+            return storage;
+        }
+
+        private string GetPartitionDirectory(string ingestionEndpoint, bool useAadAuth)
+            => Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(useAadAuth ? ingestionEndpoint + AadPartitionSuffix : ingestionEndpoint));
+
+        private EndpointStorage? OpenPartition(string ingestionEndpoint, bool useAadAuth)
         {
             // Checked first: Dispose empties the dictionary before tearing partitions down, so a
             // hit after this point cannot be on one that is already disposed.
@@ -521,7 +543,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
                 try
                 {
-                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(partitionKey));
+                    var directory = GetPartitionDirectory(ingestionEndpoint, useAadAuth);
 
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.

@@ -42,28 +42,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
-            => IsTrusted(message) && base.AuthorizeRequestOnChallenge(message);
+            => IsTrusted(message, report: false) && base.AuthorizeRequestOnChallenge(message);
 
         protected override async ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
-            => IsTrusted(message) && await base.AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false);
+            => IsTrusted(message, report: false) && await base.AuthorizeRequestOnChallengeAsync(message).ConfigureAwait(false);
 
-        private bool IsTrusted(HttpMessage message)
+        private bool IsTrusted(HttpMessage message, bool report = true)
         {
             // Opt-in: a routed destination that did not ask for a token is a component that still
             // accepts instrumentation key auth, and sending one would fail it on a missing role.
-            if (!message.TryGetProperty(ApplicationInsightsRestClient.UseAadAuthProperty, out var useAadAuth) || useAadAuth is not true)
-            {
-                return false;
-            }
+            var optedIn = message.TryGetProperty(ApplicationInsightsRestClient.UseAadAuthProperty, out var useAadAuth) && useAadAuth is true;
 
-            var uri = message.Request.Uri.ToUri();
-
-            if (_trustPolicy.IsTrusted(uri))
+            if (optedIn && _trustPolicy.IsTrusted(message.Request.Uri.ToUri()))
             {
                 return true;
             }
 
-            AzureMonitorExporterEventSource.Log.MultiEndpointTokenWithheld(uri.Host);
+            // Skipping authorization is not enough on its own: a redirect hop can re-enter this
+            // policy on a request an earlier hop already put a header on.
+            message.Request.Headers.Remove(HttpHeader.Names.Authorization);
+
+            if (optedIn && report)
+            {
+                AzureMonitorExporterEventSource.Log.MultiEndpointTokenWithheld(message.Request.Uri.Host ?? string.Empty);
+            }
 
             return false;
         }

@@ -216,15 +216,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
-            var entry = new NormalizedEndpoint(normalized, canonicalHost, uri.IsDefaultPort);
+            var entry = new NormalizedEndpoint(normalized, canonicalHost, uri.IsDefaultPort, uri.Port);
 
-            if (Volatile.Read(ref s_cachedEndpointCount) < MaxCachedEndpoints
+            var authorized = Authorize(entry, trustPolicy, useAadAuth, out reason);
+
+            // Inserted only once it is usable, so a caller stamping hosts this exporter may not send
+            // a token to cannot fill the cache with entries that never work for it.
+            if (authorized != null
+                && Volatile.Read(ref s_cachedEndpointCount) < MaxCachedEndpoints
                 && s_normalizedEndpoints.TryAdd(rawEndpoint, entry))
             {
                 Interlocked.Increment(ref s_cachedEndpointCount);
             }
 
-            return Authorize(entry, trustPolicy, useAadAuth, out reason);
+            return authorized;
         }
 
         /// <summary>
@@ -237,7 +242,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </remarks>
         private static string? Authorize(NormalizedEndpoint endpoint, EndpointTrustPolicy trustPolicy, bool useAadAuth, out RoutingRejectionReason reason)
         {
-            if (!useAadAuth || trustPolicy.IsTrusted(endpoint.CanonicalHost, endpoint.IsDefaultPort))
+            if (!useAadAuth || trustPolicy.IsTrusted(endpoint.CanonicalHost, endpoint.IsDefaultPort, endpoint.Port))
             {
                 reason = RoutingRejectionReason.None;
                 return endpoint.Value;
@@ -276,11 +281,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </summary>
         private sealed class NormalizedEndpoint
         {
-            internal NormalizedEndpoint(string value, string canonicalHost, bool isDefaultPort)
+            internal NormalizedEndpoint(string value, string canonicalHost, bool isDefaultPort, int port)
             {
                 Value = value;
                 CanonicalHost = canonicalHost;
                 IsDefaultPort = isDefaultPort;
+                Port = port;
             }
 
             internal string Value { get; }
@@ -288,6 +294,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             internal string CanonicalHost { get; }
 
             internal bool IsDefaultPort { get; }
+
+            internal int Port { get; }
         }
     }
 }

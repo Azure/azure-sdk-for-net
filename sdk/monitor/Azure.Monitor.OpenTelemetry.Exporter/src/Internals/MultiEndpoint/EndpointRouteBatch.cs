@@ -107,6 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             private void Clear()
             {
+                UseAadAuth = false;
                 IngestionEndpoint = string.Empty;
                 TelemetryItems.Clear();
             }

@@ -7,17 +7,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class RedirectPolicyHelper
     {
-        private static readonly string[] s_allowedRedirectDomainSuffixes =
+        private static readonly string[] s_publicCloudIngestionSuffixes =
         {
             ".livediagnostics.monitor.azure.com",
             ".monitor.azure.com",
             ".services.visualstudio.com",
             ".applicationinsights.azure.com",
+        };
+
+        private static readonly string[] s_usGovernmentIngestionSuffixes =
+        {
             ".monitor.azure.us",
             ".applicationinsights.azure.us",
+        };
+
+        private static readonly string[] s_chinaIngestionSuffixes =
+        {
             ".monitor.azure.cn",
             ".applicationinsights.azure.cn",
         };
+
+        /// <remarks>
+        /// Every cloud, which is safe here only because a redirect is accepted only when both hops
+        /// share one suffix, so a redirect cannot cross clouds.
+        /// </remarks>
+        private static readonly string[] s_allowedRedirectDomainSuffixes = Combine(
+            s_publicCloudIngestionSuffixes,
+            s_usGovernmentIngestionSuffixes,
+            s_chinaIngestionSuffixes);
 
         internal static bool IsTrustedIngestionRedirect(Uri currentUri, Uri redirectUri)
         {
@@ -60,12 +77,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         /// <summary>
+        /// The ingestion hosts reachable with a token minted for <paramref name="aadAudience"/>. A
+        /// token identifies Azure Monitor in one cloud, so the other clouds' hosts are not ours to
+        /// send it to even though ingestion answers on them.
+        /// </summary>
+        internal static string[] GetIngestionSuffixesForAudience(string? aadAudience)
+        {
+            if (!string.IsNullOrWhiteSpace(aadAudience) && Uri.TryCreate(aadAudience, UriKind.Absolute, out var audience))
+            {
+                if (audience.Host.EndsWith(".azure.us", StringComparison.OrdinalIgnoreCase))
+                {
+                    return s_usGovernmentIngestionSuffixes;
+                }
+
+                if (audience.Host.EndsWith(".azure.cn", StringComparison.OrdinalIgnoreCase))
+                {
+                    return s_chinaIngestionSuffixes;
+                }
+            }
+
+            return s_publicCloudIngestionSuffixes;
+        }
+
+        /// <summary>
         /// Whether a host is one Azure Monitor ingestion answers on, for deciding what may be sent
         /// an Entra ID token when the destination came from telemetry rather than configuration.
         /// </summary>
-        internal static bool IsTrustedIngestionHost(string canonicalHost)
+        internal static bool IsTrustedIngestionHost(string canonicalHost, string[] allowedSuffixes)
         {
-            foreach (string suffix in s_allowedRedirectDomainSuffixes)
+            foreach (string suffix in allowedSuffixes)
             {
                 if (canonicalHost.EndsWith(suffix, StringComparison.Ordinal))
                 {
@@ -76,6 +116,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return false;
         }
 
+        private static string[] Combine(params string[][] suffixSets)
+        {
+            var combined = new System.Collections.Generic.List<string>();
+
+            foreach (var set in suffixSets)
+            {
+                combined.AddRange(set);
+            }
+
+            return combined.ToArray();
+        }
+
         internal static bool IsTrustedLiveMetricsRedirect(Uri redirectUri)
         {
             if (!IsValidHttpsRedirect(redirectUri) || !redirectUri.IsDefaultPort)
@@ -83,7 +135,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return false;
             }
 
-            return TryGetCanonicalHost(redirectUri, out var redirectHost) && IsTrustedIngestionHost(redirectHost);
+            return TryGetCanonicalHost(redirectUri, out var redirectHost) && IsTrustedIngestionHost(redirectHost, s_allowedRedirectDomainSuffixes);
         }
 
         private static bool IsValidHttpsRedirect(Uri redirectUri) =>

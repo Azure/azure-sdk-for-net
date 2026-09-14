@@ -129,12 +129,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, cloudRole: "app-role"));
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, cloudRole: "app-role", useAadAuth: true));
 
             var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftUseAadAuth, properties.Keys);
         }
 
         [Theory]
@@ -450,8 +451,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Theory]
         [InlineData(WestUs)]
         [InlineData("https://dc.services.visualstudio.com/")]
-        [InlineData("https://dc.applicationinsights.azure.cn/")]
-        [InlineData("https://westus-2.in.applicationinsights.azure.us/")]
         [InlineData("https://ingestion.contoso-private.example/")] // the exporter's own endpoint
         public void EntraTelemetryReachesATrustedEndpoint(string ingestionEndpoint)
         {
@@ -470,6 +469,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("https://evilapplicationinsights.azure.com/")]      // suffix without the dot boundary
         [InlineData("https://eastus-1.in.applicationinsights.azure.com:8443/")] // non-default port
         [InlineData("https://localhost:9000/")]
+        [InlineData("https://ingestion.contoso-private.example:9443/")]  // own host, another port, so another service
+        [InlineData("https://westus-2.in.applicationinsights.azure.cn/")] // another cloud, another operator
+        [InlineData("https://westus-2.in.applicationinsights.azure.us/")]
         public void EntraTelemetryIsDroppedForAnUntrustedEndpoint(string ingestionEndpoint)
         {
             var routeBatch = Convert(EntraTrustPolicy(), CreateActivity("ikey-a", ingestionEndpoint, useAadAuth: true));
@@ -478,6 +480,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Null(EndpointRouting.NormalizeEndpoint(ingestionEndpoint, EntraTrustPolicy(), useAadAuth: true, out var reason));
             Assert.Equal(RoutingRejectionReason.IngestionEndpointNotTrusted, reason);
+        }
+
+        /// <summary>
+        /// The scope names Azure Monitor in one cloud, so the hosts reachable with it are that
+        /// cloud's. A sovereign exporter gets the sovereign set, not the union.
+        /// </summary>
+        [Theory]
+        [InlineData("https://monitor.azure.cn/", "https://westus-2.in.applicationinsights.azure.cn/", true)]
+        [InlineData("https://monitor.azure.cn/", WestUs, false)]
+        [InlineData("https://monitor.azure.us/", "https://westus-2.in.applicationinsights.azure.us/", true)]
+        [InlineData("https://monitor.azure.us/", WestUs, false)]
+        [InlineData(null, WestUs, true)]
+        [InlineData(null, "https://westus-2.in.applicationinsights.azure.cn/", false)]
+        public void TheTrustedHostsFollowTheCredentialsCloud(string? audience, string ingestionEndpoint, bool expectRouted)
+        {
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint: null, audience);
+
+            var routeBatch = Convert(trustPolicy, CreateActivity("ikey-a", ingestionEndpoint, useAadAuth: true));
+
+            Assert.Equal(expectRouted ? 1 : 0, routeBatch.Count);
+        }
+
+        /// <summary>
+        /// The normalization cache holds values that work. An endpoint this exporter may not send a
+        /// token to is not one, so it must not take a slot from the endpoints that are usable.
+        /// </summary>
+        [Fact]
+        public void AnUntrustedEndpointIsNotMemoised()
+        {
+            const string Endpoint = "https://never-trusted.example/";
+
+            Assert.Null(EndpointRouting.NormalizeEndpoint(Endpoint, EntraTrustPolicy(), useAadAuth: true, out _));
+
+            // Cached only on the way out, so the unrestricted caller still had to normalize it.
+            Assert.Equal("https://never-trusted.example/", EndpointRouting.NormalizeEndpoint(Endpoint));
         }
 
         /// <summary>
@@ -963,6 +1000,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var summaries = listener.Messages.Where(e => e.EventName == "RoutedExportSummary").ToArray();
             Assert.Equal(2, summaries.Length);
             Assert.NotEqual(summaries[0].Payload![0], summaries[1].Payload![0]);
+        }
+
+        /// <remarks>
+        /// Nothing outside the multi-endpoint conversion consumes the routing attributes, so on the
+        /// single-endpoint path they must survive as ordinary custom dimensions.
+        /// </remarks>
+        [Fact]
+        public void SingleEndpointPathKeepsTheAuthFlagAsACustomDimension()
+        {
+            var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
+                CreateBatch(CreateActivity("ikey-a", EastUs, useAadAuth: true)),
+                null,
+                "exporter-ikey",
+                sampleRate: 100);
+
+            var properties = ((RequestData)telemetryItems.Single().Data!.BaseData).Properties;
+            Assert.Equal("True", properties[SemanticConventions.AttributeMicrosoftUseAadAuth]);
         }
 
         private static EndpointRouteBatch Convert(params Activity[] activities)

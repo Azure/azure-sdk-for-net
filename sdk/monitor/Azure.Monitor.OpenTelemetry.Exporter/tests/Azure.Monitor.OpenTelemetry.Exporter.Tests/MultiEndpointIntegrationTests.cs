@@ -572,6 +572,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(expectedAuthorization, authorization);
         }
 
+        /// <summary>
+        /// Exercises the real pipeline, not a hand-built one: the token policy and the redirect
+        /// policy have to be ordered so a redirected batch still arrives authenticated. Azure.Core
+        /// strips the header if the token policy is re-entered after the authority changes.
+        /// </summary>
+        [Fact]
+        public void ARedirectedRequestStillCarriesTheEntraToken()
+        {
+            var ingestion = new MockIngestion();
+            ingestion.SetRedirectOnce(EastUs, WestUs + "v2.1/track");
+
+            using var exporter = CreateExporter(ingestion, new StubCredential("redirect-token"), out _);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs, useAadAuth: true)));
+
+            Assert.All(ingestion.Requests, request => Assert.Equal("Bearer redirect-token", request.Authorization));
+
+            // The redirect target answered, so the batch was delivered there rather than lost.
+            Assert.Contains(ingestion.Requests, request => request.Uri == WestUs + "v2.1/track");
+        }
+
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out string instrumentationKey)
             => CreateExporter(ingestion, multiEndpointEnabled: true, credential: null, out instrumentationKey);
 
