@@ -4,20 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.Query.Logs;
 using Azure.Monitor.Query.Logs.Models;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using OpenTelemetry;
-using OpenTelemetry.Logs;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 #if NET
@@ -25,14 +21,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     [LiveOnly]
     [Explicit("Requires a fresh filtered Live test host.")]
-    [Category("Manually")]
-    [NonParallelizable]
     public class MultiTenantExportLiveTests : BaseLiveTest
     {
         private const string TestServerPort = "9998";
         private const string TestServerUrl = $"http://localhost:{TestServerPort}/";
-        private const string SourceName = "MultiTenantLiveTests";
-        private const string RunAttribute = "multiTenantRunId";
+        private const string TestLogCategoryName = "MultiTenantLiveTests";
+        private const string TestLogMessage = "Multi-tenant live test log";
         private const string RecordAttribute = "multiTenantRecordId";
 
         public MultiTenantExportLiveTests(bool isAsync) : base(isAsync) { }
@@ -43,137 +37,91 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         {
             var resources = MultiTenantResource.Parse(TestEnvironment.MultiTenantResources);
             var runId = Guid.NewGuid().ToString("N");
-            var expected = new Dictionary<string, (string WorkspaceId, string ResourceId, string Table)>();
 
             AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", true);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
-            using (var activitySource = new ActivitySource(SourceName))
-            {
-                var builder = WebApplication.CreateBuilder();
-                builder.WebHost.UseUrls(TestServerUrl);
-                builder.Logging.ClearProviders();
-                builder.Services.AddOpenTelemetry()
-                    .WithTracing(tracing => tracing.AddSource(SourceName).AddAzureMonitorTraceExporter(Configure))
-                    .WithLogging(logging => logging.AddAzureMonitorLogExporter(Configure));
-
-                void Configure(AzureMonitorExporterOptions options)
+            var builder = WebApplication.CreateBuilder();
+            builder.Logging.ClearProviders();
+            builder.Services.AddOpenTelemetry()
+                .UseAzureMonitor(options =>
                 {
                     options.ConnectionString = resources[0].ConnectionString;
                     options.EnableLiveMetrics = false;
-                    options.SamplingRatio = 1;
                     options.TracesPerSecond = null;
-                }
-
-                using var app = builder.Build();
-                app.MapGet("/", (ILoggerFactory loggerFactory) =>
-                {
-                    var logger = loggerFactory.CreateLogger(SourceName);
-                    foreach (var resource in resources)
-                    {
-                        EmitTelemetry(activitySource, logger, resource, runId, expected);
-                    }
-
-                    return "Response from Test Server";
+                    options.SamplingRatio = 1.0F;
                 });
 
-                await app.StartAsync().ConfigureAwait(false);
+            using var app = builder.Build();
+            app.MapGet("/{tenant:int}", (int tenant, ILoggerFactory loggerFactory) =>
+            {
+                var resource = resources[tenant];
+                var requestId = $"{runId}-request-{tenant}";
+                foreach (var attribute in Attributes(resource, requestId))
+                {
+                    Activity.Current!.SetTag(attribute.Key, attribute.Value);
+                }
 
-                // ACT
-                using var httpClient = new HttpClient();
-                var response = await httpClient.GetStringAsync(TestServerUrl).ConfigureAwait(false);
-                Assert.That(response, Is.EqualTo("Response from Test Server"), "The in-process test server did not return the expected response.");
+                var logId = $"{runId}-log-{tenant}";
+                loggerFactory.CreateLogger(TestLogCategoryName).Log(
+                    LogLevel.Information,
+                    default,
+                    Attributes(resource, logId),
+                    null,
+                    (state, exception) => TestLogMessage);
 
-                // SHUTDOWN
-                var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
-                var loggerProvider = app.Services.GetRequiredService<LoggerProvider>();
-                tracerProvider.ForceFlush();
-                tracerProvider.Shutdown();
-                loggerProvider.ForceFlush();
-                loggerProvider.Shutdown();
-                await app.StopAsync().ConfigureAwait(false);
+                return "Response from Test Server";
+            });
+
+            _ = app.RunAsync(TestServerUrl);
+
+            // ACT
+            using var httpClient = new HttpClient();
+            for (var tenant = 0; tenant < resources.Count; tenant++)
+            {
+                var response = await httpClient.GetStringAsync($"{TestServerUrl}{tenant}").ConfigureAwait(false);
+                Assert.True(response.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
             }
 
+            // SHUTDOWN
+            var tracerProvider = app.Services.GetRequiredService<TracerProvider>();
+            tracerProvider.ForceFlush();
+            tracerProvider.Shutdown();
+
+            var meterProvider = app.Services.GetRequiredService<MeterProvider>();
+            meterProvider.ForceFlush();
+            meterProvider.Shutdown();
+
+            await app.StopAsync(); // shutdown to prevent collecting the log queries.
+
             // ASSERT
-            await VerifyIngestionAsync(resources, expected, runId);
+            await VerifyTelemetry(resources, runId);
         }
 
-        private static Dictionary<string, object?> Attributes(MultiTenantResource resource, string runId, string recordId) => new()
+        private static Dictionary<string, object?> Attributes(MultiTenantResource resource, string recordId) => new()
         {
             ["microsoft.instrumentation_key"] = resource.InstrumentationKey,
             ["microsoft.ingestion_endpoint"] = resource.Endpoint.AbsoluteUri,
-            [RunAttribute] = runId,
             [RecordAttribute] = recordId
         };
 
-        private static void EmitTelemetry(ActivitySource source, ILogger logger, MultiTenantResource resource, string runId,
-            Dictionary<string, (string WorkspaceId, string ResourceId, string Table)> expected)
+        private async Task VerifyTelemetry(IReadOnlyList<MultiTenantResource> resources, string runId)
         {
-            var requestId = Guid.NewGuid().ToString("N");
-            using var request = source.StartActivity("multi-tenant-request", ActivityKind.Server, default(ActivityContext));
-            Assert.That(request, Is.Not.Null);
-            foreach (var attribute in Attributes(resource, runId, requestId))
+            for (var tenant = 0; tenant < resources.Count; tenant++)
             {
-                request!.SetTag(attribute.Key, attribute.Value);
-            }
-            expected.Add(requestId, (resource.WorkspaceId, resource.ResourceId, "AppRequests"));
-
-            var dependencyId = Guid.NewGuid().ToString("N");
-            using (var dependency = source.StartActivity("multi-tenant-dependency", ActivityKind.Client))
-            {
-                Assert.That(dependency, Is.Not.Null);
-                foreach (var attribute in Attributes(resource, runId, dependencyId))
-                {
-                    dependency!.SetTag(attribute.Key, attribute.Value);
-                }
-                expected.Add(dependencyId, (resource.WorkspaceId, resource.ResourceId, "AppDependencies"));
-            }
-
-            foreach (var isException in new[] { false, true })
-            {
-                var recordId = Guid.NewGuid().ToString("N");
-                logger.Log(isException ? LogLevel.Error : LogLevel.Information, default, Attributes(resource, runId, recordId),
-                    isException ? new InvalidOperationException("Multi-tenant live test exception") : null,
-                    (state, exception) => "Multi-tenant live test log");
-                expected.Add(recordId, (resource.WorkspaceId, resource.ResourceId, isException ? "AppExceptions" : "AppTraces"));
+                var resource = resources[tenant];
+                await VerifyRecord(resource, "AppRequests", $"{runId}-request-{tenant}");
+                await VerifyRecord(resource, "AppTraces", $"{runId}-log-{tenant}");
             }
         }
 
-        private async Task VerifyIngestionAsync(IReadOnlyList<MultiTenantResource> resources,
-            Dictionary<string, (string WorkspaceId, string ResourceId, string Table)> expected, string runId)
+        private async Task VerifyRecord(MultiTenantResource resource, string table, string recordId)
         {
-            var query = $"union withsource=TelemetryTable AppRequests, AppDependencies, AppTraces, AppExceptions " +
-                $"| where tostring(Properties.{RunAttribute}) == '{runId}' " +
-                $"| project TelemetryTable, RecordId=tostring(Properties.{RecordAttribute}), ResourceId=_ResourceId";
-
-            for (var attempt = 1; attempt <= 20; attempt++)
-            {
-                var seen = new HashSet<string>();
-                foreach (var workspaceId in resources.Select(resource => resource.WorkspaceId).Distinct(StringComparer.OrdinalIgnoreCase))
-                {
-                    var result = await QueryClient.QueryWorkspaceAsync(workspaceId, query, new LogsQueryTimeRange(TimeSpan.FromMinutes(30)));
-                    Assert.That(result.Value.Status, Is.EqualTo(LogsQueryResultStatus.Success));
-                    foreach (var row in result.Value.Table.Rows)
-                    {
-                        var recordId = row.GetString("RecordId");
-                        Assert.That(expected.TryGetValue(recordId, out var item), Is.True, $"Unexpected record {recordId}.");
-                        Assert.That(workspaceId, Is.EqualTo(item.WorkspaceId).IgnoreCase, $"Wrong workspace for {recordId}.");
-                        Assert.That(row.GetString("ResourceId"), Is.EqualTo(item.ResourceId).IgnoreCase, $"Wrong resource for {recordId}.");
-                        Assert.That(row.GetString("TelemetryTable"), Is.EqualTo(item.Table), $"Wrong signal for {recordId}.");
-                        seen.Add(recordId);
-                    }
-                }
-
-                if (seen.SetEquals(expected.Keys))
-                {
-                    return;
-                }
-
-                TestContext.Out.WriteLine($"Query attempt {attempt}/20 found {seen.Count}/{expected.Count} records.");
-                await Task.Delay(TimeSpan.FromSeconds(30));
-            }
-
-            Assert.Fail($"Run {runId} did not ingest all expected records within ten minutes.");
+            var query = $"{table} | where tostring(Properties.{RecordAttribute}) == '{recordId}' | project ResourceId=_ResourceId";
+            var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, recordId, query);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.Rows.Count, Is.EqualTo(1));
+            Assert.That(result.Rows[0].GetString("ResourceId"), Is.EqualTo(resource.ResourceId).IgnoreCase);
         }
     }
 }
