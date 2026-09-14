@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> OAuth2 settings details. </summary>
     public partial class AuthorizationProviderOAuth2Settings : ProvisionableConstruct
     {
-        private BicepValue<string> _redirectUri;
+        private BicepValue<Uri> _redirectUri;
         private AuthorizationProviderOAuth2GrantTypes _grantTypes;
         private AuthorizationProviderKeyVaultContract _keyVault;
         private AuthorizationProviderFederatedIdentityCredentialsProperties _federatedIdentityCredentialsProperties;
@@ -24,7 +25,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the RedirectUri. </summary>
-        public BicepValue<string> RedirectUri
+        public BicepValue<Uri> RedirectUri
         {
             get
             {
@@ -82,7 +83,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _redirectUri = DefineProperty<string>(nameof(RedirectUri), new string[] { "redirectUrl" });
+            _redirectUri = DefineProperty<Uri>(nameof(RedirectUri), new string[] { "redirectUrl" });
             _grantTypes = DefineModelProperty<AuthorizationProviderOAuth2GrantTypes>(nameof(GrantTypes), new string[] { "grantTypes" });
             _keyVault = DefineModelProperty<AuthorizationProviderKeyVaultContract>(nameof(KeyVault), new string[] { "keyVault" });
             _federatedIdentityCredentialsProperties = DefineModelProperty<AuthorizationProviderFederatedIdentityCredentialsProperties>(nameof(FederatedIdentityCredentialsProperties), new string[] { "federatedIdentityCredentialsProperties" }, isOutput: true);

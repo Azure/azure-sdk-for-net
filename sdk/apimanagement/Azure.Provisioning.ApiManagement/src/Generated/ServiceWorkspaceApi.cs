@@ -262,7 +262,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersionSetId. </summary>
-        public BicepValue<string> ApiVersionSetId
+        public BicepValue<ResourceIdentifier> ApiVersionSetId
         {
             get
             {

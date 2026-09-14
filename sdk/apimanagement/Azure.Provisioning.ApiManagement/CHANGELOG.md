@@ -8,7 +8,7 @@
 
 ### Other Changes
 
-- Migrated the library to TypeSpec-based code generation and aligned the public API with the generated TypeSpec surface while retaining the `ApiManagementApi` name.
+- Migrated the library to TypeSpec-based code generation while retaining the `ApiManagementApi` name and strongly typed URI, location, IP address, and resource identifier properties.
 
 ## 1.0.0-beta.1 (2026-03-19)
 

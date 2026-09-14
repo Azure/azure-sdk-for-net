@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<bool> _isOnline;
         private BicepValue<string> _apiRevisionDescription;
         private BicepValue<string> _apiVersionDescription;
-        private BicepValue<string> _apiVersionSetId;
+        private BicepValue<ResourceIdentifier> _apiVersionSetId;
         private BicepValue<bool> _isSubscriptionRequired;
         private BicepValue<string> _termsOfServiceLink;
         private ApiContactInformation _contact;
@@ -181,7 +182,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the ApiVersionSetId. </summary>
-        public BicepValue<string> ApiVersionSetId
+        public BicepValue<ResourceIdentifier> ApiVersionSetId
         {
             get
             {
@@ -284,7 +285,7 @@ namespace Azure.Provisioning.ApiManagement
             _isOnline = DefineProperty<bool>(nameof(IsOnline), new string[] { "isOnline" }, isOutput: true);
             _apiRevisionDescription = DefineProperty<string>(nameof(ApiRevisionDescription), new string[] { "apiRevisionDescription" });
             _apiVersionDescription = DefineProperty<string>(nameof(ApiVersionDescription), new string[] { "apiVersionDescription" });
-            _apiVersionSetId = DefineProperty<string>(nameof(ApiVersionSetId), new string[] { "apiVersionSetId" });
+            _apiVersionSetId = DefineProperty<ResourceIdentifier>(nameof(ApiVersionSetId), new string[] { "apiVersionSetId" });
             _isSubscriptionRequired = DefineProperty<bool>(nameof(IsSubscriptionRequired), new string[] { "subscriptionRequired" });
             _termsOfServiceLink = DefineProperty<string>(nameof(TermsOfServiceLink), new string[] { "termsOfServiceUrl" });
             _contact = DefineModelProperty<ApiContactInformation>(nameof(Contact), new string[] { "contact" });

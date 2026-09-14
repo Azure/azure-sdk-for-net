@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class ApiContactInformation : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _uri;
+        private BicepValue<Uri> _uri;
         private BicepValue<string> _email;
 
         /// <summary> Creates a new ApiContactInformation. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
-        public BicepValue<string> Uri
+        public BicepValue<Uri> Uri
         {
             get
             {
@@ -72,7 +73,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" });
+            _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "url" });
             _email = DefineProperty<string>(nameof(Email), new string[] { "email" });
             DefineAdditionalProperties();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
     public partial class BackendProxyContract : ProvisionableConstruct
     {
-        private BicepValue<string> _uri;
+        private BicepValue<Uri> _uri;
         private BicepValue<string> _username;
         private BicepValue<string> _password;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.ApiManagement
         }
 
         /// <summary> Gets or sets the Uri. </summary>
-        public BicepValue<string> Uri
+        public BicepValue<Uri> Uri
         {
             get
             {
@@ -71,7 +72,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" }, isRequired: true);
+            _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "url" }, isRequired: true);
             _username = DefineProperty<string>(nameof(Username), new string[] { "username" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
             DefineAdditionalProperties();

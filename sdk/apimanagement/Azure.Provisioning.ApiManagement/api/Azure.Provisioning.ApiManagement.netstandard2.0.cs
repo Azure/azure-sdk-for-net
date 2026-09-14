@@ -4,13 +4,13 @@ namespace Azure.Provisioning.ApiManagement
     {
         public AdditionalLocation() { }
         public Azure.Provisioning.BicepValue<bool> DisableGateway { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> GatewayRegionalUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> GatewayRegionalUri { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.ApiManagementNatGatewayState> NatGatewayState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> OutboundPublicIPAddresses { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ApiManagement.PlatformVersion> PlatformVersion { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> PrivateIPAddresses { get { throw null; } }
-        public Azure.Provisioning.BicepList<string> PublicIPAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> PrivateIPAddresses { get { throw null; } }
+        public Azure.Provisioning.BicepList<System.Net.IPAddress> PublicIPAddresses { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PublicIPAddressId { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiManagementServiceSkuProperties Sku { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.VirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         public ApiContactInformation() { }
         public Azure.Provisioning.BicepValue<string> Email { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApiDiagnostic : Azure.Provisioning.Primitives.ProvisionableResource
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.ApiManagement
     {
         public ApiLicenseInformation() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ApiManagementApi : Azure.Provisioning.Primitives.ProvisionableResource
@@ -180,7 +180,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> ApiVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiVersionDescription { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiVersionSetContractDetails ApiVersionSet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ApiVersionSetId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiVersionSetId { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.AuthenticationSettingsContract AuthenticationSettings { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiContactInformation Contact { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
@@ -1423,7 +1423,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.ApiManagement.AuthorizationProviderFederatedIdentityCredentialsProperties FederatedIdentityCredentialsProperties { get { throw null; } }
         public Azure.Provisioning.ApiManagement.AuthorizationProviderOAuth2GrantTypes GrantTypes { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.AuthorizationProviderKeyVaultContract KeyVault { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> RedirectUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> RedirectUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BackendAuthorizationHeaderCredentials : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1463,7 +1463,7 @@ namespace Azure.Provisioning.ApiManagement
     {
         public BackendProxyContract() { }
         public Azure.Provisioning.BicepValue<string> Password { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Uri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Username { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1768,7 +1768,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> IdentityClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsClientCertificateNegotiationEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDefaultSslBindingEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> KeyVaultSecretUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultSecretUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum HostnameType
@@ -2078,7 +2078,7 @@ namespace Azure.Provisioning.ApiManagement
         public PortalConfigDelegationProperties() { }
         public Azure.Provisioning.BicepValue<bool> DelegateRegistration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DelegateSubscription { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> DelegationUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> DelegationUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ValidationKey { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2355,7 +2355,7 @@ namespace Azure.Provisioning.ApiManagement
         public Azure.Provisioning.BicepValue<string> ApiVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ApiVersionDescription { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiVersionSetContractDetails ApiVersionSet { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ApiVersionSetId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ApiVersionSetId { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.AuthenticationSettingsContract AuthenticationSettings { get { throw null; } set { } }
         public Azure.Provisioning.ApiManagement.ApiContactInformation Contact { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
