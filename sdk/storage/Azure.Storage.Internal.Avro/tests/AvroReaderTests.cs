@@ -94,6 +94,45 @@ namespace Azure.Storage.Internal.Avro.Tests
         }
 
         [Test]
+        public async Task ReadBoolAsync_ReturnsFalseAndTrue()
+        {
+            using MemoryStream stream = new MemoryStream(new byte[] { 0, 1 });
+
+            Assert.IsFalse(await AvroParser.ReadBoolAsync(stream, async: true, default));
+            Assert.IsTrue(await AvroParser.ReadBoolAsync(stream, async: true, default));
+        }
+
+        [Test]
+        public async Task ReadFloatAsync_ReturnsFloat()
+        {
+            float expected = 1234.5f;
+            using MemoryStream stream = new MemoryStream(BitConverter.GetBytes(expected));
+
+            float result = await AvroParser.ReadFloatAsync(stream, async: true, default);
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public async Task ReadMapAsync_NegativeBlockCount_ReadsBlockSizeAndItems()
+        {
+            byte[] payload = new byte[]
+            {
+                0x01,       // block count -1
+                0x06,       // block byte size 3
+                0x02, 0x61, // key "a"
+                0x0E,       // value 7
+                0x00        // end of map
+            };
+            using MemoryStream stream = new MemoryStream(payload);
+
+            Dictionary<string, int> result = await AvroParser.ReadMapAsync(stream, AvroParser.ReadIntAsync, async: true, default);
+
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(7, result["a"]);
+        }
+
+        [Test]
         public void ReadFixedBytesAsync_NegativeLength_ThrowsInvalidDataException()
         {
             using MemoryStream stream = new MemoryStream(new byte[10]);
