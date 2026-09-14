@@ -314,14 +314,15 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Name = "browser-automation",
                 Description = "Test browser automation"
             },
-            ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
-            new BrowserAutomationToolOptions(
-                new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            ))
-            {
-                Name = "browser-automation",
-                Description = "Test browser automation"
-            },
+            // TODO: Uncomment this code when the BrowserAutomation will be available on the service side.
+            //ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
+            //new BrowserAutomationToolOptions(
+            //    new BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            //))
+            //{
+            //    Name = "browser-automation",
+            //    Description = "Test browser automation"
+            //},
             ToolType.A2A => new A2APreviewToolboxTool()
             {
                 Name = "a2a-preview",

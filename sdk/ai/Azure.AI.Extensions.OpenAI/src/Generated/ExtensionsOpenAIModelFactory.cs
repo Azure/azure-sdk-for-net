@@ -353,15 +353,6 @@ namespace Azure.AI.Extensions.OpenAI
             return new BrowserAutomationToolConnectionOptions(projectConnectionId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The input definition information for a Browser Automation Tool, as used to configure an Agent. </summary>
-        /// <param name="browserAutomation"> The Browser Automation Tool parameters. </param>
-        /// <returns> A new <see cref="OpenAI.BrowserAutomationTool"/> instance for mocking. </returns>
-        [Experimental("AAIP002")]
-        public static BrowserAutomationTool BrowserAutomationTool(BrowserAutomationToolOptions browserAutomation = default)
-        {
-            return new BrowserAutomationTool("browser_automation", browserAutomation, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> The input definition information for an Azure Function Tool, as used to configure an Agent. </summary>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="azureFunction"> The Azure Function Tool definition. </param>

@@ -623,10 +623,11 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
             ToolType.Sharepoint => GetSharepointTool(projectClient),
-            ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
-            new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
-                new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
-            )),
+            // TODO: Uncomment this code when the service will be available and BrowserAutomationTool will be generated.
+            //ToolType.BrowserAutomationGA => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationTool(
+            //new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
+            //    new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            //)),
             ToolType.BrowserAutomation => new global::Azure.AI.Extensions.OpenAI.BrowserAutomationPreviewTool(
             new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolOptions(
                 new global::Azure.AI.Extensions.OpenAI.BrowserAutomationToolConnectionOptions(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)

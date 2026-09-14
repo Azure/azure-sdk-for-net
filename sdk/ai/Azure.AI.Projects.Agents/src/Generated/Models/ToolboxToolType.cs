@@ -38,8 +38,6 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Shell. </summary>
         Shell,
         /// <summary> WebIqPreview. </summary>
-        WebIqPreview,
-        /// <summary> BrowserAutomation. </summary>
-        BrowserAutomation
+        WebIqPreview
     }
 }
