@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed invalid JSON when `JsonPatch` replaces string-like values inside stored JSON objects or arrays.
+
 ### Other Changes
 
 ## 1.15.0 (2026-08-04)
