@@ -110,18 +110,26 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             for (var destination = 0; destination < resources.Count; destination++)
             {
                 var resource = resources[destination];
-                await VerifyRecord(resource, "AppRequests", $"{runId}-request-{destination}");
-                await VerifyRecord(resource, "AppTraces", $"{runId}-log-{destination}");
+                await VerifyRecords(resource, runId, destination);
             }
         }
 
-        private async Task VerifyRecord(MultiEndpointResource resource, string table, string recordId)
+        private async Task VerifyRecords(MultiEndpointResource resource, string runId, int destination)
         {
-            var query = $"{table} | where tostring(Properties.{RecordAttribute}) == '{recordId}' | project ResourceId=_ResourceId";
-            var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, recordId, query);
+            var expectedRequestId = $"{runId}-request-{destination}";
+            var expectedLogId = $"{runId}-log-{destination}";
+            var query = $"union withsource=TableName AppRequests, AppTraces | where tostring(Properties.{RecordAttribute}) startswith '{runId}-' | project TableName, RecordId=tostring(Properties.{RecordAttribute}), ResourceId=_ResourceId";
+            var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, $"records for destination {destination}", query);
             Assert.That(result, Is.Not.Null);
-            Assert.That(result!.Rows.Count, Is.EqualTo(1));
-            Assert.That(result.Rows[0].GetString("ResourceId"), Is.EqualTo(resource.ResourceId).IgnoreCase);
+            Assert.That(result!.Rows.Count, Is.EqualTo(2));
+            Assert.That(result.Rows, Has.Exactly(1).Matches<LogsTableRow>(row =>
+                row.GetString("TableName") == "AppRequests" &&
+                row.GetString("RecordId") == expectedRequestId &&
+                row.GetString("ResourceId").Equals(resource.ResourceId, StringComparison.OrdinalIgnoreCase)));
+            Assert.That(result.Rows, Has.Exactly(1).Matches<LogsTableRow>(row =>
+                row.GetString("TableName") == "AppTraces" &&
+                row.GetString("RecordId") == expectedLogId &&
+                row.GetString("ResourceId").Equals(resource.ResourceId, StringComparison.OrdinalIgnoreCase)));
         }
     }
 }
