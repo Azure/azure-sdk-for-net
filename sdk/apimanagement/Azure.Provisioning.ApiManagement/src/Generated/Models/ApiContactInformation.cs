@@ -14,6 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class ApiContactInformation : ProvisionableConstruct
     {
         private BicepValue<string> _name;
+        private BicepValue<string> _uri;
         private BicepValue<string> _email;
 
         /// <summary> Creates a new ApiContactInformation. </summary>
@@ -33,6 +34,21 @@ namespace Azure.Provisioning.ApiManagement
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Uri. </summary>
+        public BicepValue<string> Uri
+        {
+            get
+            {
+                Initialize();
+                return _uri;
+            }
+            set
+            {
+                Initialize();
+                _uri.Assign(value);
             }
         }
 
@@ -56,6 +72,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" });
             _email = DefineProperty<string>(nameof(Email), new string[] { "email" });
             DefineAdditionalProperties();
         }

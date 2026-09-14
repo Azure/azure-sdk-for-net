@@ -11,11 +11,13 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> Properties of the Certificate contract. </summary>
     internal partial class CertificateContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subject;
         private BicepValue<string> _thumbprint;
         private BicepValue<DateTimeOffset> _expiresOn;
+        private KeyVaultContractProperties _keyVaultDetails;
 
         /// <summary> Creates a new CertificateContractProperties. </summary>
         public CertificateContractProperties()
@@ -67,6 +69,21 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the KeyVaultDetails. </summary>
+        public KeyVaultContractProperties KeyVaultDetails
+        {
+            get
+            {
+                Initialize();
+                return _keyVaultDetails;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _keyVaultDetails, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CertificateContractProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -74,6 +91,7 @@ namespace Azure.Provisioning.ApiManagement
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isRequired: true);
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" }, isRequired: true);
             _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationDate" }, isRequired: true, format: "O");
+            _keyVaultDetails = DefineModelProperty<KeyVaultContractProperties>(nameof(KeyVaultDetails), new string[] { "keyVault" });
             DefineAdditionalProperties();
         }
 

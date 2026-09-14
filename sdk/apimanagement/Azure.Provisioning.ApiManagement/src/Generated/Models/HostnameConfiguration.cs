@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ApiManagement
     {
         private BicepValue<HostnameType> _hostnameType;
         private BicepValue<string> _hostName;
+        private BicepValue<string> _keyVaultSecretUri;
         private BicepValue<string> _identityClientId;
         private BicepValue<string> _encodedCertificate;
         private BicepValue<string> _certificatePassword;
@@ -56,6 +57,21 @@ namespace Azure.Provisioning.ApiManagement
             {
                 Initialize();
                 _hostName.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the KeyVaultSecretUri. </summary>
+        public BicepValue<string> KeyVaultSecretUri
+        {
+            get
+            {
+                Initialize();
+                return _keyVaultSecretUri;
+            }
+            set
+            {
+                Initialize();
+                _keyVaultSecretUri.Assign(value);
             }
         }
 
@@ -185,6 +201,7 @@ namespace Azure.Provisioning.ApiManagement
             base.DefineProvisionableProperties();
             _hostnameType = DefineProperty<HostnameType>(nameof(HostnameType), new string[] { "type" }, isRequired: true);
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isRequired: true);
+            _keyVaultSecretUri = DefineProperty<string>(nameof(KeyVaultSecretUri), new string[] { "keyVaultId" });
             _identityClientId = DefineProperty<string>(nameof(IdentityClientId), new string[] { "identityClientId" });
             _encodedCertificate = DefineProperty<string>(nameof(EncodedCertificate), new string[] { "encodedCertificate" });
             _certificatePassword = DefineProperty<string>(nameof(CertificatePassword), new string[] { "certificatePassword" });

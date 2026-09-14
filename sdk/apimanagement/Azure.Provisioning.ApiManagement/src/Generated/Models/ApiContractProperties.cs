@@ -10,6 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> API Entity Properties. </summary>
     internal partial class ApiContractProperties : ApiEntityBaseContract
     {
         private BicepValue<ResourceIdentifier> _sourceApiId;

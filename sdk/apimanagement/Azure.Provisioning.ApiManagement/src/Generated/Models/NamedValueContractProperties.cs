@@ -9,6 +9,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> NamedValue Contract properties. </summary>
     internal partial class NamedValueContractProperties : NamedValueEntityBaseParameters
     {
         private BicepValue<string> _displayName;

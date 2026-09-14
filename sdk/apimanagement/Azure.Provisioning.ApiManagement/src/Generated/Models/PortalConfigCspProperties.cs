@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class PortalConfigCspProperties : ProvisionableConstruct
     {
         private BicepValue<PortalSettingsCspMode> _mode;
+        private BicepValue<Uri> _reportUri;
         private BicepList<string> _allowedSources;
 
         /// <summary> Creates a new PortalConfigCspProperties. </summary>
@@ -33,6 +35,21 @@ namespace Azure.Provisioning.ApiManagement
             {
                 Initialize();
                 _mode.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ReportUri. </summary>
+        public BicepValue<Uri> ReportUri
+        {
+            get
+            {
+                Initialize();
+                return _reportUri;
+            }
+            set
+            {
+                Initialize();
+                _reportUri.Assign(value);
             }
         }
 
@@ -56,6 +73,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             base.DefineProvisionableProperties();
             _mode = DefineProperty<PortalSettingsCspMode>(nameof(Mode), new string[] { "mode" });
+            _reportUri = DefineProperty<Uri>(nameof(ReportUri), new string[] { "reportUri" });
             _allowedSources = DefineListProperty<string>(nameof(AllowedSources), new string[] { "allowedSources" });
             DefineAdditionalProperties();
         }

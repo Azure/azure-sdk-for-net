@@ -5,7 +5,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.ApiManagement;
 
-// Preserve the released name and avoid the analyzer-invalid generic type name generated from ApiContract.
 [CodeGenType("Api")]
 public partial class ApiManagementApi
 {

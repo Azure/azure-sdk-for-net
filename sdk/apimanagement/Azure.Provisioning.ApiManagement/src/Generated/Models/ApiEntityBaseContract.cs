@@ -10,6 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> API base contract details. </summary>
     internal partial class ApiEntityBaseContract : ProvisionableConstruct
     {
         private BicepValue<string> _description;
@@ -22,6 +23,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<bool> _isOnline;
         private BicepValue<string> _apiRevisionDescription;
         private BicepValue<string> _apiVersionDescription;
+        private BicepValue<string> _apiVersionSetId;
         private BicepValue<bool> _isSubscriptionRequired;
         private BicepValue<string> _termsOfServiceLink;
         private ApiContactInformation _contact;
@@ -178,6 +180,21 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the ApiVersionSetId. </summary>
+        public BicepValue<string> ApiVersionSetId
+        {
+            get
+            {
+                Initialize();
+                return _apiVersionSetId;
+            }
+            set
+            {
+                Initialize();
+                _apiVersionSetId.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the IsSubscriptionRequired. </summary>
         public BicepValue<bool> IsSubscriptionRequired
         {
@@ -267,6 +284,7 @@ namespace Azure.Provisioning.ApiManagement
             _isOnline = DefineProperty<bool>(nameof(IsOnline), new string[] { "isOnline" }, isOutput: true);
             _apiRevisionDescription = DefineProperty<string>(nameof(ApiRevisionDescription), new string[] { "apiRevisionDescription" });
             _apiVersionDescription = DefineProperty<string>(nameof(ApiVersionDescription), new string[] { "apiVersionDescription" });
+            _apiVersionSetId = DefineProperty<string>(nameof(ApiVersionSetId), new string[] { "apiVersionSetId" });
             _isSubscriptionRequired = DefineProperty<bool>(nameof(IsSubscriptionRequired), new string[] { "subscriptionRequired" });
             _termsOfServiceLink = DefineProperty<string>(nameof(TermsOfServiceLink), new string[] { "termsOfServiceUrl" });
             _contact = DefineModelProperty<ApiContactInformation>(nameof(Contact), new string[] { "contact" });

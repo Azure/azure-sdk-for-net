@@ -15,6 +15,7 @@ namespace Azure.Provisioning.ApiManagement
     {
         private BicepValue<bool> _delegateRegistration;
         private BicepValue<bool> _delegateSubscription;
+        private BicepValue<string> _delegationUri;
         private BicepValue<string> _validationKey;
 
         /// <summary> Creates a new PortalConfigDelegationProperties. </summary>
@@ -52,6 +53,21 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the DelegationUri. </summary>
+        public BicepValue<string> DelegationUri
+        {
+            get
+            {
+                Initialize();
+                return _delegationUri;
+            }
+            set
+            {
+                Initialize();
+                _delegationUri.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the ValidationKey. </summary>
         public BicepValue<string> ValidationKey
         {
@@ -73,6 +89,7 @@ namespace Azure.Provisioning.ApiManagement
             base.DefineProvisionableProperties();
             _delegateRegistration = DefineProperty<bool>(nameof(DelegateRegistration), new string[] { "delegateRegistration" });
             _delegateSubscription = DefineProperty<bool>(nameof(DelegateSubscription), new string[] { "delegateSubscription" });
+            _delegationUri = DefineProperty<string>(nameof(DelegationUri), new string[] { "delegationUrl" });
             _validationKey = DefineProperty<string>(nameof(ValidationKey), new string[] { "validationKey" });
             DefineAdditionalProperties();
         }

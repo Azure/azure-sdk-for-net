@@ -261,6 +261,23 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the ApiVersionSetId. </summary>
+        public BicepValue<string> ApiVersionSetId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApiVersionSetId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiContractProperties();
+                }
+                Properties.ApiVersionSetId = value;
+            }
+        }
+
         /// <summary> Gets or sets the IsSubscriptionRequired. </summary>
         public BicepValue<bool> IsSubscriptionRequired
         {

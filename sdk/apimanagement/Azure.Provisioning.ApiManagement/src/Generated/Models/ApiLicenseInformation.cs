@@ -14,6 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class ApiLicenseInformation : ProvisionableConstruct
     {
         private BicepValue<string> _name;
+        private BicepValue<string> _uri;
 
         /// <summary> Creates a new ApiLicenseInformation. </summary>
         public ApiLicenseInformation()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the Uri. </summary>
+        public BicepValue<string> Uri
+        {
+            get
+            {
+                Initialize();
+                return _uri;
+            }
+            set
+            {
+                Initialize();
+                _uri.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ApiLicenseInformation. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" });
             DefineAdditionalProperties();
         }
 

@@ -147,6 +147,23 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the KeyVaultDetails. </summary>
+        public KeyVaultContractProperties KeyVaultDetails
+        {
+            get
+            {
+                return Properties is null ? default : Properties.KeyVaultDetails;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateContractProperties();
+                }
+                Properties.KeyVaultDetails = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ServiceWorkspaceCertificate. </summary>
         protected override void DefineProvisionableProperties()
         {

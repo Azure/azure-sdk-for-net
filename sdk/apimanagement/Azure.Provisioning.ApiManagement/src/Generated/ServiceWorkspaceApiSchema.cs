@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
@@ -95,6 +96,23 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the ContentType. </summary>
+        public BicepValue<string> ContentType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContentType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SchemaContractProperties();
+                }
+                Properties.ContentType = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<string> ProvisioningState
         {
@@ -105,6 +123,57 @@ namespace Azure.Provisioning.ApiManagement
                     Properties = new SchemaContractProperties();
                 }
                 return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the Value. </summary>
+        public BicepValue<string> Value
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Value;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SchemaContractProperties();
+                }
+                Properties.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Definitions. </summary>
+        public BicepValue<BinaryData> Definitions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Definitions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SchemaContractProperties();
+                }
+                Properties.Definitions = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Components. </summary>
+        public BicepValue<BinaryData> Components
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Components;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SchemaContractProperties();
+                }
+                Properties.Components = value;
             }
         }
 

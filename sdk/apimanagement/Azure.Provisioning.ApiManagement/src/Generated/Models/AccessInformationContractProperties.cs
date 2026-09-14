@@ -10,6 +10,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> Tenant access information contract of the API Management service. </summary>
     internal partial class AccessInformationContractProperties : ProvisionableConstruct
     {
         private BicepValue<string> _accessInfoType;

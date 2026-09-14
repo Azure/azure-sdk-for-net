@@ -14,10 +14,14 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> Description of an additional API Management resource location. </summary>
     public partial class AdditionalLocation : ProvisionableConstruct
     {
+        private BicepValue<string> _location;
         private ApiManagementServiceSkuProperties _sku;
         private BicepList<string> _zones;
+        private BicepList<string> _publicIPAddresses;
+        private BicepList<string> _privateIPAddresses;
         private BicepValue<ResourceIdentifier> _publicIPAddressId;
         private VirtualNetworkConfiguration _virtualNetworkConfiguration;
+        private BicepValue<string> _gatewayRegionalUri;
         private BicepValue<ApiManagementNatGatewayState> _natGatewayState;
         private BicepList<string> _outboundPublicIPAddresses;
         private BicepValue<bool> _disableGateway;
@@ -26,6 +30,21 @@ namespace Azure.Provisioning.ApiManagement
         /// <summary> Creates a new AdditionalLocation. </summary>
         public AdditionalLocation()
         {
+        }
+
+        /// <summary> Gets or sets the Location. </summary>
+        public BicepValue<string> Location
+        {
+            get
+            {
+                Initialize();
+                return _location;
+            }
+            set
+            {
+                Initialize();
+                _location.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Sku. </summary>
@@ -58,6 +77,26 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets the PublicIPAddresses. </summary>
+        public BicepList<string> PublicIPAddresses
+        {
+            get
+            {
+                Initialize();
+                return _publicIPAddresses;
+            }
+        }
+
+        /// <summary> Gets the PrivateIPAddresses. </summary>
+        public BicepList<string> PrivateIPAddresses
+        {
+            get
+            {
+                Initialize();
+                return _privateIPAddresses;
+            }
+        }
+
         /// <summary> Gets or sets the PublicIPAddressId. </summary>
         public BicepValue<ResourceIdentifier> PublicIPAddressId
         {
@@ -85,6 +124,16 @@ namespace Azure.Provisioning.ApiManagement
             {
                 Initialize();
                 AssignOrReplace(ref _virtualNetworkConfiguration, value);
+            }
+        }
+
+        /// <summary> Gets the GatewayRegionalUri. </summary>
+        public BicepValue<string> GatewayRegionalUri
+        {
+            get
+            {
+                Initialize();
+                return _gatewayRegionalUri;
             }
         }
 
@@ -142,10 +191,14 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _location = DefineProperty<string>(nameof(Location), new string[] { "location" }, isRequired: true);
             _sku = DefineModelProperty<ApiManagementServiceSkuProperties>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
+            _publicIPAddresses = DefineListProperty<string>(nameof(PublicIPAddresses), new string[] { "publicIPAddresses" }, isOutput: true);
+            _privateIPAddresses = DefineListProperty<string>(nameof(PrivateIPAddresses), new string[] { "privateIPAddresses" }, isOutput: true);
             _publicIPAddressId = DefineProperty<ResourceIdentifier>(nameof(PublicIPAddressId), new string[] { "publicIpAddressId" });
             _virtualNetworkConfiguration = DefineModelProperty<VirtualNetworkConfiguration>(nameof(VirtualNetworkConfiguration), new string[] { "virtualNetworkConfiguration" });
+            _gatewayRegionalUri = DefineProperty<string>(nameof(GatewayRegionalUri), new string[] { "gatewayRegionalUrl" }, isOutput: true);
             _natGatewayState = DefineProperty<ApiManagementNatGatewayState>(nameof(NatGatewayState), new string[] { "natGatewayState" });
             _outboundPublicIPAddresses = DefineListProperty<string>(nameof(OutboundPublicIPAddresses), new string[] { "outboundPublicIPAddresses" }, isOutput: true);
             _disableGateway = DefineProperty<bool>(nameof(DisableGateway), new string[] { "disableGateway" });

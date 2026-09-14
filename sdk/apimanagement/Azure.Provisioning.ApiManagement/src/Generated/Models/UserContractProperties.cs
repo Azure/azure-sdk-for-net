@@ -10,6 +10,7 @@ using Azure.Provisioning;
 
 namespace Azure.Provisioning.ApiManagement
 {
+    /// <summary> User profile. </summary>
     internal partial class UserContractProperties : UserEntityBaseParameters
     {
         private BicepValue<string> _firstName;

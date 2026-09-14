@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class ApiManagementPortalDelegationSetting : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
         private PortalDelegationSettingsProperties _properties;
         private ResourceReference<ApiManagementService> _parent;
@@ -36,6 +37,16 @@ namespace Azure.Provisioning.ApiManagement
             {
                 Initialize();
                 return _id;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -152,6 +163,7 @@ namespace Azure.Provisioning.ApiManagement
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "delegation");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PortalDelegationSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<ApiManagementService>(nameof(Parent), new string[] { "parent" }, isRequired: true);

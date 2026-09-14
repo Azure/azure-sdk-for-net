@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,12 +14,28 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> SSL certificate information. </summary>
     public partial class CertificateInformation : ProvisionableConstruct
     {
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _thumbprint;
         private BicepValue<string> _subject;
 
         /// <summary> Creates a new CertificateInformation. </summary>
         public CertificateInformation()
         {
+        }
+
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
+        {
+            get
+            {
+                Initialize();
+                return _expiresOn;
+            }
+            set
+            {
+                Initialize();
+                _expiresOn.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Thumbprint. </summary>
@@ -55,6 +72,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiry" }, isRequired: true, format: "O");
             _thumbprint = DefineProperty<string>(nameof(Thumbprint), new string[] { "thumbprint" }, isRequired: true);
             _subject = DefineProperty<string>(nameof(Subject), new string[] { "subject" }, isRequired: true);
             DefineAdditionalProperties();

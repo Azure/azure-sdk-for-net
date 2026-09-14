@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ApiManagement
@@ -12,6 +13,7 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> OAuth2 settings details. </summary>
     public partial class AuthorizationProviderOAuth2Settings : ProvisionableConstruct
     {
+        private BicepValue<string> _redirectUri;
         private AuthorizationProviderOAuth2GrantTypes _grantTypes;
         private AuthorizationProviderKeyVaultContract _keyVault;
         private AuthorizationProviderFederatedIdentityCredentialsProperties _federatedIdentityCredentialsProperties;
@@ -19,6 +21,21 @@ namespace Azure.Provisioning.ApiManagement
         /// <summary> Creates a new AuthorizationProviderOAuth2Settings. </summary>
         public AuthorizationProviderOAuth2Settings()
         {
+        }
+
+        /// <summary> Gets or sets the RedirectUri. </summary>
+        public BicepValue<string> RedirectUri
+        {
+            get
+            {
+                Initialize();
+                return _redirectUri;
+            }
+            set
+            {
+                Initialize();
+                _redirectUri.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the GrantTypes. </summary>
@@ -65,6 +82,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _redirectUri = DefineProperty<string>(nameof(RedirectUri), new string[] { "redirectUrl" });
             _grantTypes = DefineModelProperty<AuthorizationProviderOAuth2GrantTypes>(nameof(GrantTypes), new string[] { "grantTypes" });
             _keyVault = DefineModelProperty<AuthorizationProviderKeyVaultContract>(nameof(KeyVault), new string[] { "keyVault" });
             _federatedIdentityCredentialsProperties = DefineModelProperty<AuthorizationProviderFederatedIdentityCredentialsProperties>(nameof(FederatedIdentityCredentialsProperties), new string[] { "federatedIdentityCredentialsProperties" }, isOutput: true);

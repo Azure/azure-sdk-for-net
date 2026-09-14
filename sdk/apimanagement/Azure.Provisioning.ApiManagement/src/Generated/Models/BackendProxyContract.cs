@@ -13,12 +13,28 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
     public partial class BackendProxyContract : ProvisionableConstruct
     {
+        private BicepValue<string> _uri;
         private BicepValue<string> _username;
         private BicepValue<string> _password;
 
         /// <summary> Creates a new BackendProxyContract. </summary>
         public BackendProxyContract()
         {
+        }
+
+        /// <summary> Gets or sets the Uri. </summary>
+        public BicepValue<string> Uri
+        {
+            get
+            {
+                Initialize();
+                return _uri;
+            }
+            set
+            {
+                Initialize();
+                _uri.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Username. </summary>
@@ -55,6 +71,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _uri = DefineProperty<string>(nameof(Uri), new string[] { "url" }, isRequired: true);
             _username = DefineProperty<string>(nameof(Username), new string[] { "username" });
             _password = DefineProperty<string>(nameof(Password), new string[] { "password" });
             DefineAdditionalProperties();

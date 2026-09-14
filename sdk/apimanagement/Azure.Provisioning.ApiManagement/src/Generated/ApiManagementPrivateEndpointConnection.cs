@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ApiManagement
     /// <summary> A private endpoint connection resource. </summary>
     public partial class ApiManagementPrivateEndpointConnection : ProvisionableResource
     {
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
@@ -26,6 +27,16 @@ namespace Azure.Provisioning.ApiManagement
         /// <param name="resourceVersion"> The resource API version. </param>
         public ApiManagementPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/privateEndpointConnections", resourceVersion ?? "2025-09-01-preview")
         {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -143,6 +154,7 @@ namespace Azure.Provisioning.ApiManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });

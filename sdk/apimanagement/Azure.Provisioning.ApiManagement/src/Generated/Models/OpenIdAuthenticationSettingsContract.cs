@@ -14,6 +14,7 @@ namespace Azure.Provisioning.ApiManagement
     public partial class OpenIdAuthenticationSettingsContract : ProvisionableConstruct
     {
         private BicepValue<string> _openIdProviderId;
+        private BicepList<BearerTokenSendingMethods> _bearerTokenSendingMethods;
 
         /// <summary> Creates a new OpenIdAuthenticationSettingsContract. </summary>
         public OpenIdAuthenticationSettingsContract()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
+        /// <summary> Gets or sets the BearerTokenSendingMethods. </summary>
+        public BicepList<BearerTokenSendingMethods> BearerTokenSendingMethods
+        {
+            get
+            {
+                Initialize();
+                return _bearerTokenSendingMethods;
+            }
+            set
+            {
+                Initialize();
+                _bearerTokenSendingMethods.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for OpenIdAuthenticationSettingsContract. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _openIdProviderId = DefineProperty<string>(nameof(OpenIdProviderId), new string[] { "openidProviderId" });
+            _bearerTokenSendingMethods = DefineListProperty<BearerTokenSendingMethods>(nameof(BearerTokenSendingMethods), new string[] { "bearerTokenSendingMethods" });
             DefineAdditionalProperties();
         }
 
