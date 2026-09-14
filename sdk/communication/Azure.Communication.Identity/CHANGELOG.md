@@ -21,8 +21,6 @@
 - Removed `ServiceVersion.V2025_03_02_PREVIEW`. The previously released stable service API versions
   `V2021_03_07`, `V2022_06_01`, `V2022_10_01` and `V2023_10_01` remain available and unchanged.
 
-### Bugs Fixed
-
 ### Other Changes
 
 - `CommunicationUserIdentifierAndToken` now implements `IJsonModel<T>` and `IPersistableModel<T>`, and
