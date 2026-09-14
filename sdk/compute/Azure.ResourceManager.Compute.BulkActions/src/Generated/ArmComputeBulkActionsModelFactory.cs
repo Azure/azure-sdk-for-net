@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 extensionsTimeBudget,
                 scheduledEventsProfile,
                 userData,
-                capacityReservationGroupId is null ? default : new CapacityReservationProfile(new ComputeBulkActionsSubResourceInfo(capacityReservationGroupId, default), default),
+                capacityReservationGroupId is null ? default : new CapacityReservationProfile(capacityReservationGroupId is null ? default : new ComputeBulkActionsSubResourceInfo(capacityReservationGroupId, default), default),
                 galleryApplications is null ? default : new ApplicationProfile((galleryApplications ?? new ChangeTrackingList<VMGalleryApplication>()).ToList(), default),
                 (vmExtensions ?? new ChangeTrackingList<BulkActionVMExtension>()).ToList(),
                 default);
