@@ -89,7 +89,7 @@ eng/common/TestResources/New-TestResources.ps1 `
   -ServiceDirectory monitor `
   -SubscriptionId 'YOUR SUBSCRIPTION ID' `
   -ResourceGroupName 'YOUR DEDICATED RESOURCE GROUP NAME' `
-  -Location westus2 `
+  -Location westus `
   -ArmTemplateParameters @{
     enableMultiTenantExport = $true
     multiTenantLocation = 'eastus2'
