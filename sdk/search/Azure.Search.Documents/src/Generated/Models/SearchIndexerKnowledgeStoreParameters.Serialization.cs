@@ -131,7 +131,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     synthesizeGeneratedKeyName = prop.Value.GetBoolean();
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new SearchIndexerKnowledgeStoreParameters(synthesizeGeneratedKeyName, additionalProperties);
         }

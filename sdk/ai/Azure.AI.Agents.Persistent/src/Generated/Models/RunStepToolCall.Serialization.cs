@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepSharepointToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, and <see cref="RunStepConnectedAgentToolCall"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepAzureAISearchToolCall"/>, <see cref="RunStepAzureFunctionToolCall"/>, <see cref="RunStepBingCustomSearchToolCall"/>, <see cref="RunStepBingGroundingToolCall"/>, <see cref="RunStepBrowserAutomationToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="RunStepComputerUseToolCall"/>, <see cref="RunStepConnectedAgentToolCall"/>, <see cref="RunStepDeepResearchToolCall"/>, <see cref="RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="RunStepMcpToolCall"/>, <see cref="RunStepMicrosoftFabricToolCall"/>, <see cref="RunStepOpenAPIToolCall"/>, and <see cref="RunStepSharepointToolCall"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRunStepToolCall))]
     public abstract partial class RunStepToolCall : IJsonModel<RunStepToolCall>
@@ -131,36 +131,36 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "code_interpreter":
-                        return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
-                    case "file_search":
-                        return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
-                    case "bing_grounding":
-                        return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
                     case "azure_ai_search":
                         return RunStepAzureAISearchToolCall.DeserializeRunStepAzureAISearchToolCall(element, options);
-                    case "browser_automation":
-                        return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
-                    case "mcp":
-                        return RunStepMcpToolCall.DeserializeRunStepMcpToolCall(element, options);
-                    case "computer_use_preview":
-                        return RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
-                    case "sharepoint_grounding":
-                        return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
-                    case "fabric_dataagent":
-                        return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
-                    case "bing_custom_search":
-                        return RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
                     case "azure_function":
                         return RunStepAzureFunctionToolCall.DeserializeRunStepAzureFunctionToolCall(element, options);
-                    case "function":
-                        return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
-                    case "openapi":
-                        return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
-                    case "deep_research":
-                        return RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
+                    case "bing_custom_search":
+                        return RunStepBingCustomSearchToolCall.DeserializeRunStepBingCustomSearchToolCall(element, options);
+                    case "bing_grounding":
+                        return RunStepBingGroundingToolCall.DeserializeRunStepBingGroundingToolCall(element, options);
+                    case "browser_automation":
+                        return RunStepBrowserAutomationToolCall.DeserializeRunStepBrowserAutomationToolCall(element, options);
+                    case "code_interpreter":
+                        return RunStepCodeInterpreterToolCall.DeserializeRunStepCodeInterpreterToolCall(element, options);
+                    case "computer_use_preview":
+                        return RunStepComputerUseToolCall.DeserializeRunStepComputerUseToolCall(element, options);
                     case "connected_agent":
                         return RunStepConnectedAgentToolCall.DeserializeRunStepConnectedAgentToolCall(element, options);
+                    case "deep_research":
+                        return RunStepDeepResearchToolCall.DeserializeRunStepDeepResearchToolCall(element, options);
+                    case "file_search":
+                        return RunStepFileSearchToolCall.DeserializeRunStepFileSearchToolCall(element, options);
+                    case "function":
+                        return RunStepFunctionToolCall.DeserializeRunStepFunctionToolCall(element, options);
+                    case "mcp":
+                        return RunStepMcpToolCall.DeserializeRunStepMcpToolCall(element, options);
+                    case "fabric_dataagent":
+                        return RunStepMicrosoftFabricToolCall.DeserializeRunStepMicrosoftFabricToolCall(element, options);
+                    case "openapi":
+                        return RunStepOpenAPIToolCall.DeserializeRunStepOpenAPIToolCall(element, options);
+                    case "sharepoint_grounding":
+                        return RunStepSharepointToolCall.DeserializeRunStepSharepointToolCall(element, options);
                 }
             }
             return UnknownRunStepToolCall.DeserializeUnknownRunStepToolCall(element, options);
