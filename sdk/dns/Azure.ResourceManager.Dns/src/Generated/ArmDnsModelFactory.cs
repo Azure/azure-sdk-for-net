@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="signingKeys"> The list of signing keys. </param>
         /// <param name="eTag"> The etag of the zone. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<DnsSubResourceInfo> registrationVirtualNetworkReferences = default, IEnumerable<DnsSubResourceInfo> resolutionVirtualNetworkReferences = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<DnsSubResourceInfo> registrationVirtualNetworkReferences, IEnumerable<DnsSubResourceInfo> resolutionVirtualNetworkReferences, IEnumerable<DnsSigningKey> signingKeys, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <param name="targetResourceReferences"> A list of references to azure resources for which referencing dns records need to be queried. </param>
         /// <returns> A new <see cref="Models.DnsResourceReferenceContent"/> instance for mocking. </returns>
-        public static DnsResourceReferenceContent DnsResourceReferenceContent(IEnumerable<DnsSubResourceInfo> targetResourceReferences = default)
+        public static DnsResourceReferenceContent DnsResourceReferenceContent(IEnumerable<DnsSubResourceInfo> targetResourceReferences)
         {
             return new DnsResourceReferenceContent(targetResourceReferences is null ? default : new DnsResourceReferenceRequestProperties((targetResourceReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(), default), default);
         }

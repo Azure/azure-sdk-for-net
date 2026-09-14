@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         /// <param name="configId"> The configuration ID of the extension usage. It uniquely identifies a target the extension deploys to. </param>
         /// <param name="config"> The configuration used for deployment. The keys of this object should align with the extension config schema. </param>
         /// <returns> A new <see cref="Models.DeploymentExtension"/> instance for mocking. </returns>
-        public static DeploymentExtension DeploymentExtension(string name = default, string version = default, string configId = default, DeploymentExtensionConfig config = default)
+        public static DeploymentExtension DeploymentExtension(string name, string version, string configId, DeploymentExtensionConfig config)
         {
             return new DeploymentExtension(name, version, configId, config, default);
         }

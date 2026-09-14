@@ -8,6 +8,11 @@ description: |
 
 imports:
   - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+
+engine:
+  id: copilot
+  version: "1.0.83"
 
 on:
   issues:

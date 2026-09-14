@@ -103,27 +103,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal static void OtelToAzureMonitorTraceMultiTenant(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
         {
+            var collected = 0;
+            var rejected = 0;
+
             foreach (var activity in batchActivity)
             {
                 try
                 {
-                    var activityTagsProcessor = EnumerateActivityTags(activity, includeUnmappedTags: true, recognizeRoutingTags: true);
+                    var activityTagsProcessor = EnumerateActivityTags(activity, includeUnmappedTags: true, consumeMultiEndpointAttributes: true);
 
                     try
                     {
-                        if (!TenantRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint))
+                        if (!TenantRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
                         {
+                            rejected++;
+                            AzureMonitorExporterEventSource.Log.RoutedTelemetryRejected(routeBatch.Sequence, rejection, activity);
                             continue;
                         }
+
+                        collected++;
+                        AzureMonitorExporterEventSource.Log.RoutedTelemetryCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, activity);
 
                         var group = routeBatch.GetOrAdd(ingestionEndpoint);
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
-                        // process and would be filed as the tenant's own application. Note the
-                        // envelope below still carries the host's ai.cloud.role and roleInstance;
-                        // deciding what those should say for a routed tenant is still open.
+                        // process and would be filed as the tenant's own application.
+                        var tenantCloudRole = TenantRouting.GetTenantCloudRole(ref activityTagsProcessor.MappedTags);
                         var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        telemetryItem.SetTenantCloudRole(tenantCloudRole);
 
                         if (activity.Events.Any())
                         {
@@ -165,6 +173,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     AzureMonitorExporterEventSource.Log.FailedToConvertActivity(activity.Source.Name, activity.DisplayName, ex);
                 }
+            }
+
+            // Nothing to say about a batch that held no Activities.
+            if (collected != 0 || rejected != 0)
+            {
+                AzureMonitorExporterEventSource.Log.RoutedExportSummary(routeBatch.Sequence, collected, routeBatch.Count, rejected);
             }
         }
 
@@ -271,9 +285,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true, bool recognizeRoutingTags = false)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true, bool consumeMultiEndpointAttributes = false)
         {
-            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags, recognizeRoutingTags);
+            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags, consumeMultiEndpointAttributes);
 
             try
             {
