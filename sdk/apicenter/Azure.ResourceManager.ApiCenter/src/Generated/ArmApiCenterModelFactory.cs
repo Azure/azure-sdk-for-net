@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
-        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ApiCenterServiceProperties properties = default, ManagedServiceIdentity identity = default)
+        public static ApiCenterServiceData ApiCenterServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ApiCenterServiceProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

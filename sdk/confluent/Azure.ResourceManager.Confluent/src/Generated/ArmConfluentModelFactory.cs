@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="privateOfferIds"> Array of Private Offer Ids. </param>
         /// <param name="status"> SaaS Offer Status. </param>
         /// <returns> A new <see cref="Models.ConfluentOfferDetail"/> instance for mocking. </returns>
-        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId = default, string id = default, string planId = default, string planName = default, string termUnit = default, string termId = default, string privateOfferId = default, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
+        public static ConfluentOfferDetail ConfluentOfferDetail(string publisherId, string id, string planId, string planName, string termUnit, string termId, string privateOfferId, IEnumerable<string> privateOfferIds = default, ConfluentSaaSOfferStatus? status = default)
         {
             privateOfferIds ??= new ChangeTrackingList<string>();
 
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
         /// <returns> A new <see cref="Models.SCClusterSpecEntity"/> instance for mocking. </returns>
-        public static SCClusterSpecEntity SCClusterSpecEntity(string name = default, string availability = default, string cloud = default, string zone = default, ConfluentPackage? package = default, string region = default, string kafkaBootstrapEndpoint = default, string httpEndpoint = default, string apiEndpoint = default, string configKind = default, SCClusterNetworkEnvironmentEntity environment = default, SCClusterNetworkEnvironmentEntity network = default, SCClusterByokEntity byok = default)
+        public static SCClusterSpecEntity SCClusterSpecEntity(string name, string availability, string cloud, string zone, ConfluentPackage? package, string region, string kafkaBootstrapEndpoint, string httpEndpoint, string apiEndpoint, string configKind, SCClusterNetworkEnvironmentEntity environment, SCClusterNetworkEnvironmentEntity network, SCClusterByokEntity byok)
         {
             return new SCClusterSpecEntity(
                 name,

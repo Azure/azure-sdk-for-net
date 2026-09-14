@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isOfflineMigration"> Offline migration. </param>
         /// <param name="tableList"> List of tables to copy. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlDBProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails = default, DataMigrationSqlConnectionInformation targetSqlConnection = default, bool? isOfflineMigration = default, IEnumerable<string> tableList = default)
+        public static DatabaseMigrationSqlDBProperties DatabaseMigrationSqlDBProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationSqlDBMigrationStatusDetails migrationStatusDetails, DataMigrationSqlConnectionInformation targetSqlConnection, bool? isOfflineMigration, IEnumerable<string> tableList)
         {
             tableList ??= new ChangeTrackingList<string>();
 
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetDatabaseCollation"> Database collation to be used for the target database. </param>
         /// <param name="sqlServerInstanceId"> Optional property - Resource Id for the source Sql server instance. Validations are performed on this property to ensure that it follows the correct format. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default)
+        public static DatabaseMigrationProperties DatabaseMigrationProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId)
         {
             return new DatabaseMigrationProperties(
                 default,
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlMIProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlMIProperties DatabaseMigrationSqlMIProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
             return new DatabaseMigrationSqlMIProperties(
                 default,
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupConfiguration"> Backup configuration info. </param>
         /// <param name="offlineConfiguration"> Offline configuration. </param>
         /// <returns> A new <see cref="Models.DatabaseMigrationSqlVmProperties"/> instance for mocking. </returns>
-        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, DataMigrationSqlConnectionInformation sourceSqlConnection = default, string sourceDatabaseName = default, string sourceServerName = default, string targetDatabaseCollation = default, string sqlServerInstanceId = default, DataMigrationStatusDetails migrationStatusDetails = default, DataMigrationBackupConfiguration backupConfiguration = default, DataMigrationOfflineConfiguration offlineConfiguration = default)
+        public static DatabaseMigrationSqlVmProperties DatabaseMigrationSqlVmProperties(string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, DataMigrationSqlConnectionInformation sourceSqlConnection, string sourceDatabaseName, string sourceServerName, string targetDatabaseCollation, string sqlServerInstanceId, DataMigrationStatusDetails migrationStatusDetails, DataMigrationBackupConfiguration backupConfiguration, DataMigrationOfflineConfiguration offlineConfiguration)
         {
             return new DatabaseMigrationSqlVmProperties(
                 default,
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties"> Custom task properties. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
-        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DataMigrationProjectTaskProperties properties = default, ETag? eTag = default)
+        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectTaskProperties properties, ETag? eTag)
         {
             return new DataMigrationProjectTaskData(
                 id,
@@ -5242,7 +5242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="provisioningState"> The project's provisioning state. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectData"/> instance for mocking. </returns>
-        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationProjectSourcePlatform? sourcePlatform = default, DataMigrationAadApp azureAuthenticationInfo = default, DataMigrationProjectTargetPlatform? targetPlatform = default, DateTimeOffset? createdOn = default, ServerConnectionInfo sourceConnectionInfo = default, ServerConnectionInfo targetConnectionInfo = default, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo = default, DataMigrationProjectProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static DataMigrationProjectData DataMigrationProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationProjectSourcePlatform? sourcePlatform, DataMigrationAadApp azureAuthenticationInfo, DataMigrationProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ServerConnectionInfo sourceConnectionInfo, ServerConnectionInfo targetConnectionInfo, IEnumerable<DataMigrationProjectDatabaseInfo> databasesInfo, DataMigrationProjectProvisioningState? provisioningState, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5353,7 +5353,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
         /// <param name="sku"> Service SKU. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataMigrationServiceProvisioningState? provisioningState = default, string publicKey = default, string virtualSubnetId = default, string virtualNicId = default, string autoStopDelay = default, bool? shouldDeleteResourcesOnStop = default, ETag? eTag = default, string kind = default, DataMigrationServiceSku sku = default)
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, ETag? eTag, string kind, DataMigrationServiceSku sku)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -5475,7 +5475,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties"> Custom file properties. </param>
         /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <returns> A new <see cref="DataMigration.DataMigrationProjectFileData"/> instance for mocking. </returns>
-        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, DataMigrationProjectFileProperties properties = default, ETag? eTag = default)
+        public static DataMigrationProjectFileData DataMigrationProjectFileData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectFileProperties properties, ETag? eTag)
         {
             return new DataMigrationProjectFileData(
                 id,
