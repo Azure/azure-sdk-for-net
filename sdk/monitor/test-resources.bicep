@@ -8,6 +8,20 @@ param testApplicationOid string
 @description('The base resource name.')
 param baseName string = resourceGroup().name
 
+@description('Provision the additional region and query access for multi-tenant export live tests.')
+param enableMultiTenantExport bool = false
+
+@description('The additional Application Insights region; must differ from location for multi-tenant tests.')
+param multiTenantLocation string = location == 'eastus2' ? 'westus2' : 'eastus2'
+
+@allowed([
+  'User'
+  'ServicePrincipal'
+  'Group'
+])
+@description('The principal type of testApplicationOid for the opt-in workspace query role assignments.')
+param multiTenantPrincipalType string = 'ServicePrincipal'
+
 // VARIABLES
 var streamName = 'Custom-MyTableRawData'
 var tableName = 'MyTable_CL'
@@ -273,6 +287,64 @@ resource dataCollectionEndpoint2 'Microsoft.Insights/dataCollectionEndpoints@202
   }
 }
 
+resource multiTenantWorkspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = if (enableMultiTenantExport) {
+  name: '${baseName}-mt-logs'
+  location: multiTenantLocation
+  properties: {
+    sku: {
+      name: 'PerGB2018'
+    }
+    retentionInDays: 30
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+  }
+}
+
+resource multiTenantInsights 'Microsoft.Insights/components@2020-02-02' = if (enableMultiTenantExport) {
+  name: '${baseName}-mt-ai'
+  kind: 'other'
+  location: multiTenantLocation
+  properties: {
+    Application_Type: 'other'
+    WorkspaceResourceId: multiTenantWorkspace!.id
+    DisableLocalAuth: false
+    publicNetworkAccessForIngestion: 'Enabled'
+    publicNetworkAccessForQuery: 'Enabled'
+  }
+}
+
+var logAnalyticsReaderRoleId = '73c42c96-874c-492b-b04d-ab87d138a893'
+
+resource multiTenantPrimaryQueryAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (enableMultiTenantExport) {
+  name: guid(LogAnalyticsWorkspace1.id, testApplicationOid, logAnalyticsReaderRoleId)
+  scope: LogAnalyticsWorkspace1
+  properties: {
+    principalId: testApplicationOid
+    principalType: multiTenantPrincipalType
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', logAnalyticsReaderRoleId)
+  }
+}
+
+resource multiTenantSecondaryQueryAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (enableMultiTenantExport) {
+  name: guid(LogAnalyticsWorkspace2.id, testApplicationOid, logAnalyticsReaderRoleId)
+  scope: LogAnalyticsWorkspace2
+  properties: {
+    principalId: testApplicationOid
+    principalType: multiTenantPrincipalType
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', logAnalyticsReaderRoleId)
+  }
+}
+
+resource multiTenantRegionalQueryAccess 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (enableMultiTenantExport) {
+  name: guid(multiTenantWorkspace!.id, testApplicationOid, logAnalyticsReaderRoleId)
+  scope: multiTenantWorkspace
+  properties: {
+    principalId: testApplicationOid
+    principalType: multiTenantPrincipalType
+    roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', logAnalyticsReaderRoleId)
+  }
+}
+
 //STORAGE ACCOUNT FOR METRICSCLIENT
 @description('The base resource name.')
 param storageAccountName string = uniqueString(baseName, 'storage')
@@ -302,6 +374,27 @@ output WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace1.id, '2020-08-01').
 output SECONDARY_CONNECTION_STRING string = ApplicationInsightsResource2.properties.ConnectionString
 output SECONDARY_WORKSPACE_ID string = LogAnalyticsWorkspace2.properties.customerId
 output SECONDARY_WORKSPACE_KEY string = listKeys(LogAnalyticsWorkspace2.id, '2020-08-01').primarySharedKey
+
+output MONITOR_MULTI_TENANT_RESOURCES string = enableMultiTenantExport ? string([
+  {
+    connectionString: ApplicationInsightsResource1.properties.ConnectionString
+    workspaceId: LogAnalyticsWorkspace1.properties.customerId
+    resourceId: ApplicationInsightsResource1.id
+    region: ApplicationInsightsResource1.location
+  }
+  {
+    connectionString: ApplicationInsightsResource2.properties.ConnectionString
+    workspaceId: LogAnalyticsWorkspace2.properties.customerId
+    resourceId: ApplicationInsightsResource2.id
+    region: ApplicationInsightsResource2.location
+  }
+  {
+    connectionString: multiTenantInsights!.properties.ConnectionString
+    workspaceId: multiTenantWorkspace!.properties.customerId
+    resourceId: multiTenantInsights!.id
+    region: multiTenantInsights!.location
+  }
+]) : '[]'
 
 // VALUES NEEDED FOR AZURE.MONITOR.QUERY
 output WORKSPACE_PRIMARY_RESOURCE_ID string = LogAnalyticsWorkspace1.id

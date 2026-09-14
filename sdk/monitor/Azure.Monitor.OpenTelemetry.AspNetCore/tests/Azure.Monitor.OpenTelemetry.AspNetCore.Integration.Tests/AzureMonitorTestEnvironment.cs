@@ -22,5 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
         public string SecondaryConnectionString => GetRecordedVariable("SECONDARY_CONNECTION_STRING");
 
         public string SecondaryWorkspaceId => GetRecordedVariable("SECONDARY_WORKSPACE_ID");
+
+        public string MultiTenantResources => GetRecordedVariable("MONITOR_MULTI_TENANT_RESOURCES");
     }
 }
