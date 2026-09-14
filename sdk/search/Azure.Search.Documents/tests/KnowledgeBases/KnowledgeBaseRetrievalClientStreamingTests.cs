@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Tests
     public class KnowledgeBaseRetrievalClientStreamingTests
     {
         [Test]
-        public async Task RetrieveStreamProtocolReturnsGaResultAndPreservesRequest()
+        public async Task RetrieveStreamProtocolReturnsStreamingResultAndPreservesRequest()
         {
             const string content = """
                 event: future.event
