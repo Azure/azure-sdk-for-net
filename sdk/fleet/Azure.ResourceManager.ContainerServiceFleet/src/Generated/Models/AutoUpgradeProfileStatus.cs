@@ -29,13 +29,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="lastTriggerStatus"> The status of the last AutoUpgrade trigger. </param>
         /// <param name="lastTriggerError"> The error details of the last trigger. </param>
         /// <param name="lastTriggerUpgradeVersions"> The target Kubernetes version or node image versions of the last trigger. </param>
+        /// <param name="lastTriggerMessage"> Additional information about the last trigger attempt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoUpgradeProfileStatus(DateTimeOffset? lastTriggeredOn, AutoUpgradeLastTriggerStatus? lastTriggerStatus, ResponseError lastTriggerError, IReadOnlyList<string> lastTriggerUpgradeVersions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoUpgradeProfileStatus(DateTimeOffset? lastTriggeredOn, AutoUpgradeLastTriggerStatus? lastTriggerStatus, ResponseError lastTriggerError, IReadOnlyList<string> lastTriggerUpgradeVersions, string lastTriggerMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastTriggeredOn = lastTriggeredOn;
             LastTriggerStatus = lastTriggerStatus;
             LastTriggerError = lastTriggerError;
             LastTriggerUpgradeVersions = lastTriggerUpgradeVersions;
+            LastTriggerMessage = lastTriggerMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -50,5 +52,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> The target Kubernetes version or node image versions of the last trigger. </summary>
         public IReadOnlyList<string> LastTriggerUpgradeVersions { get; }
+
+        /// <summary> Additional information about the last trigger attempt. </summary>
+        public string LastTriggerMessage { get; }
     }
 }

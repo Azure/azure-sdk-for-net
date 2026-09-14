@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("verifyVmAgentHealth"u8);
                 writer.WriteBooleanValue(ShouldVerifyVmAgentHealth.Value);
             }
+            if (Optional.IsDefined(CapacityRecommendationParameters))
+            {
+                writer.WritePropertyName("capacityRecommendationParameters"u8);
+                writer.WriteObjectValue(CapacityRecommendationParameters, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             OptimizationPreference? optimizationPreference = default;
             BulkOperationRetryPolicy retryPolicy = default;
             bool? shouldVerifyVmAgentHealth = default;
+            BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -164,12 +170,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     shouldVerifyVmAgentHealth = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("capacityRecommendationParameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityRecommendationParameters = BulkActionsCapacityRecommendationParametersContent.DeserializeBulkActionsCapacityRecommendationParametersContent(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, additionalBinaryDataProperties);
+            return new BulkActionExecutionParameterDetail(optimizationPreference, retryPolicy, shouldVerifyVmAgentHealth, capacityRecommendationParameters, additionalBinaryDataProperties);
         }
     }
 }

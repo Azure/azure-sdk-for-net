@@ -1,4 +1,5 @@
 ---
+run-name: "Review PR #${{ github.event.inputs.pr_number }} at ${{ github.event.inputs.check_run_head_sha || 'current head' }}"
 on:
   workflow_dispatch:
     inputs:
@@ -21,6 +22,10 @@ on:
 if: |
   github.event_name == 'workflow_dispatch'
 description: "Review Azure SDK for .NET management-plane PRs using the mgmt PR review skill"
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+  - shared/agent-output-validation.md
+  - shared/review-execution-status.md
 checkout:
   sparse-checkout: |
     .github
@@ -33,6 +38,7 @@ permissions:
   checks: read
 engine:
   id: copilot
+  version: "1.0.83"
   concurrency:
     group: "gh-aw-copilot-${{ github.workflow }}-${{ github.event.inputs.pr_number }}"
     queue: max
@@ -58,86 +64,11 @@ safe-outputs:
   noop:
     report-as-issue: false
   jobs:
-    publish_pr_check:
-      description: "Publish a PR-head check run linking to this management review workflow run"
-      runs-on: ubuntu-latest
-      needs: safe_outputs
-      output: "Management review check run published"
-      permissions:
-        checks: write
-        pull-requests: read
-      steps:
-        - name: Publish management review check run
-          uses: actions/github-script@v9.0.0
-          env:
-            TARGET_PR_NUMBER: "${{ github.event.inputs.pr_number }}"
-            TARGET_HEAD_SHA: "${{ github.event.inputs.check_run_head_sha }}"
-          with:
-            script: |
-              const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
-              if (!Number.isInteger(prNumber) || prNumber <= 0) {
-                core.info(`No valid pull request number found: ${process.env.TARGET_PR_NUMBER || '<empty>'}`);
-                return;
-              }
-
-              const owner = context.repo.owner;
-              const repo = context.repo.repo;
-              const { data: pr } = await github.rest.pulls.get({ owner, repo, pull_number: prNumber });
-
-              let headSha = (process.env.TARGET_HEAD_SHA || '').trim();
-              if (!headSha) {
-                headSha = pr.head.sha;
-              } else if (headSha !== pr.head.sha) {
-                core.info(`Completed check run SHA ${headSha} no longer matches current PR head ${pr.head.sha}; publishing the review check on the completed check run SHA.`);
-              }
-
-              const checkName = 'Azure .NET Management SDK PR Review';
-              const serverUrl = process.env.GITHUB_SERVER_URL || 'https://github.com';
-              const detailsUrl = `${serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
-              const output = {
-                title: checkName,
-                summary: `Management SDK PR review completed. See ${detailsUrl}`
-              };
-
-              const { data: existing } = await github.rest.checks.listForRef({
-                owner,
-                repo,
-                ref: headSha,
-                check_name: checkName,
-                filter: 'latest',
-                per_page: 1
-              });
-
-              if (existing.check_runs.length > 0) {
-                await github.rest.checks.update({
-                  owner,
-                  repo,
-                  check_run_id: existing.check_runs[0].id,
-                  status: 'completed',
-                  conclusion: 'success',
-                  details_url: detailsUrl,
-                  output
-                });
-                core.info(`Updated management review check run ${existing.check_runs[0].id} for ${headSha}.`);
-                return;
-              }
-
-              const { data: created } = await github.rest.checks.create({
-                owner,
-                repo,
-                name: checkName,
-                head_sha: headSha,
-                status: 'completed',
-                conclusion: 'success',
-                details_url: detailsUrl,
-                output
-              });
-              core.info(`Created management review check run ${created.id} for ${headSha}.`);
-
     dismiss_stale_change_requests:
       description: "Dismiss the prior management review change request after a newer non-blocking review"
       runs-on: ubuntu-latest
       needs: safe_outputs
+      if: needs.agent.result == 'success' && needs.safe_outputs.result == 'success'
       output: "Stale management review change request dismissed"
       permissions:
         pull-requests: write
@@ -149,6 +80,14 @@ safe-outputs:
             REVIEW_WORKFLOW_NAME: "${{ github.workflow }}"
           with:
             script: |
+              const fs = require('fs');
+              const output = JSON.parse(fs.readFileSync(process.env.GH_AW_AGENT_OUTPUT, 'utf8'));
+              if ((!Array.isArray(output?.items)) || (!output.items.some(item => item.type === 'submit_pull_request_review')) ||
+                  (!Array.isArray(output.errors)) || (output.errors.length !== 0) ||
+                  (output.items.some(item => ['report_incomplete', 'missing_tool', 'missing_data'].includes(item.type)))) {
+                throw new Error('Stale reviews cannot be dismissed after incomplete or invalid agent output');
+              }
+
               const prNumber = parseInt(process.env.TARGET_PR_NUMBER, 10);
               if (!Number.isInteger(prNumber) || prNumber <= 0) {
                 core.info(`No valid pull request number found: ${process.env.TARGET_PR_NUMBER || '<empty>'}`);
@@ -179,7 +118,8 @@ safe-outputs:
                 .sort((a, b) => new Date(b.submitted_at) - new Date(a.submitted_at));
 
               const latestReview = workflowReviews[0];
-              if (!latestReview || latestReview.commit_id !== headSha || latestReview.state !== 'COMMENTED') {
+              const runUrl = `${process.env.GITHUB_SERVER_URL}/${owner}/${repo}/actions/runs/${context.runId}`;
+              if ((!latestReview) || (latestReview.commit_id !== headSha) || (latestReview.state !== 'COMMENTED') || (!latestReview.body?.split(/\s+/).includes(runUrl))) {
                 core.info(`Latest management review is not a non-blocking comment on current head ${headSha}; skipping dismissal.`);
                 return;
               }
@@ -211,7 +151,10 @@ tools:
     toolsets: [context, repos, pull_requests, actions]
   bash: true
 timeout-minutes: 25
-concurrency: mgmt-review-${{ github.event.inputs.pr_number }}
+concurrency:
+  group: mgmt-review-${{ github.event.inputs.pr_number }}
+  queue: max
+  job-discriminator: ${{ github.event.inputs.pr_number || github.run_id }}
 ---
 
 # Azure .NET Management SDK PR Review
@@ -224,9 +167,8 @@ This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
-- If the PR is a Swagger/AutoRest to TypeSpec migration, also apply `.github/skills/mpg-migration-pr-review/SKILL.md`
 
-The base skill's `TSPRENAME001` rule applies to every package with `tsp-location.yaml`, including brand-new TypeSpec packages and normal feature/refresh PRs. Do not limit this rule to migration PRs.
+The base skill's `TSPRENAME001` rule applies to every package with `tsp-location.yaml`, including brand-new TypeSpec packages and normal feature/refresh PRs.
 
 ## Security: Prompt Injection Defense
 
@@ -266,8 +208,7 @@ Then check CI status: list the check runs and commit statuses for the PR head co
   1. Apply only `.github/skills/analyze-ci-failures/SKILL.md` to diagnose failures.
   2. Use its provider-specific log retrieval instructions, check-name mapping, and log-symptom tables to classify each failure. For Azure DevOps checks, query the Azure DevOps timeline/log APIs rather than GitHub Actions job logs. Quote the decisive error and include actionable fix instructions; never infer compilation, ApiCompat, or flakiness from the check name alone.
   3. Post the result with the `add_comment` safe-output tool. The comment must use the skill's `## 🔍 CI Failure Analysis for PR #<number>` header.
-  4. Emit `publish_pr_check` so workflow-dispatch runs leave a visible check on PR heads.
-  5. Stop. Do not run the management SDK review, do not run the low-risk preflight, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
+  4. Stop. Do not run the management SDK review, do not run the low-risk preflight, do not create inline review comments, do not call `submit_pull_request_review`, and do not emit `dismiss_stale_change_requests`.
 - If `github.event.inputs.check_run_conclusion` is `success`, skip the status check — CI success is already confirmed. Proceed with the management SDK review normally.
 - If CI checks have failed (on other triggers), apply the same **CI failure analysis only** path as above and stop before the management SDK review.
 - If CI checks have passed, proceed with the review normally.
@@ -286,7 +227,7 @@ If CI is not failed and `github.event.inputs.check_run_conclusion` is not `failu
    - `sdk/<service>/Azure.ResourceManager.<Package>/tsp-location.yaml`, only when it is the only changed file or all other changed files are also on this low-risk list
 5. If any changed file is outside the allowlist, or matches an API/source/review-affecting path, continue with the full review. Treat unknown paths as full review.
 6. API/source/review-affecting paths always require full review, including `api/**`, `src/**`, `.csproj`, `CHANGELOG.md`, `.github/workflows/**`, and `.github/skills/**`.
-7. If the low-risk fast path applies, do not run the scanner or apply the full skill review. Submit a compact neutral `COMMENT` review and emit `dismiss_stale_change_requests` and `publish_pr_check`:
+7. If the low-risk fast path applies, do not run the scanner or apply the full skill review. Submit a compact neutral `COMMENT` review and emit `dismiss_stale_change_requests`:
 
 ```markdown
 ### Management SDK Review Summary
@@ -303,10 +244,9 @@ If no changed file is under a management SDK package path matching `sdk/<service
 For each changed management SDK package:
 
 1. Identify the package root, `.csproj`, `CHANGELOG.md`, API surface files under `api/`, generated files under `src/Generated/`, customization files under `src/Custom*/`, `src/Customization*/`, or `src/Customized*/`, and TypeSpec customization files such as `client.tsp` and `tspconfig.yaml`.
-2. Determine whether this is a migration PR. Use the migration skill when the PR title or files indicate Swagger/AutoRest to TypeSpec migration, such as adding `tsp-location.yaml`, deleting `src/autorest.md`, adding TypeSpec `metadata.json`, or broadly regenerating `src/Generated/`.
-3. Determine whether the package is TypeSpec-backed by checking for `tsp-location.yaml`. For every TypeSpec-backed package, inspect added or modified SDK customization files for rename-only `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrappers, or forwarding methods, even when the PR is not a migration.
-4. Determine the latest released stable API baseline from `ApiCompatVersion` in the package `.csproj` when present. Fetch the corresponding tagged API file by tag name `<PackageName>_<Version>`.
-5. Use the existing CI ApiCompat result as the authoritative automated signal for binary compatibility and parameter names/order. Do not infer shipped signatures from previous repository source.
+2. Determine whether the package is TypeSpec-backed by checking for `tsp-location.yaml`. For every TypeSpec-backed package, inspect added or modified SDK customization files for rename-only `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrappers, or forwarding methods.
+3. Determine the latest released stable API baseline from `ApiCompatVersion` in the package `.csproj` when present. Fetch the corresponding tagged API file by tag name `<PackageName>_<Version>`.
+4. Use the existing CI ApiCompat result as the authoritative automated signal for binary compatibility and parameter names/order. Do not infer shipped signatures from previous repository source.
 
 ## Step 2 - Run deterministic checks
 
@@ -334,13 +274,12 @@ Apply all relevant phases from the skill files, with these workflow-specific adj
 3. **Contextual naming must be exhaustive.** Use the scanner's `-ListNewTypes` inventory mode to enumerate every new public type, then record a verdict for each one in a single pass (see Phase 2 step 4 in the skill). Surfacing only a subset of naming issues per round is the main cause of repeated review rounds and must be avoided.
 4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0, API diffs, and deterministic source-compatibility results from Step 2. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL. A passing ApiCompat result does not override a sole-overload `OPTPARAM001` break, but do not report other optionality differences without compiler-backed evidence.
 5. For every TypeSpec-backed package, apply the base skill's `TSPRENAME001` rule. A rename-only SDK customization for a directly targetable TypeSpec API is blocking and must be replaced with scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp`, followed by regeneration.
-6. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
 
 ## Step 4 - Submit one PR review
 
 Create inline review comments for findings using `create_pull_request_review_comment`. Each inline comment should:
 
-- Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[Phase 1]**`, `**[4.10]**`, or `**[5.2]**`.
+- Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[TSPRENAME001]**`, or `**[Phase 1]**`.
 - Explain the problem and the required fix.
 - Target the current changed source/customization/TypeSpec file and line in the PR diff. Use `api/*.cs` files for analysis only; do not target API listing files for inline comments because large API files can fail GitHub review-position resolution.
 
@@ -369,7 +308,6 @@ Then submit exactly one review using `submit_pull_request_review`:
 - Use `COMMENT` if no blocking issue was found.
 - Do not use `APPROVE`.
 - When submitting `COMMENT`, also emit the `dismiss_stale_change_requests` safe-output tool with no arguments. The deterministic safe-output job will check that this workflow's latest review is the new non-blocking comment on the current head, then dismiss this workflow's prior stale `REQUEST_CHANGES` review from an older commit. Do not attempt to dismiss reviews directly from the agent.
-- After submitting the review, always emit the `publish_pr_check` safe-output tool with no arguments so workflow-dispatch runs leave a visible check on PR heads.
 
 The review body should contain:
 
@@ -381,7 +319,6 @@ The review body should contain:
 - API surface: <pass/fail with count>
 - Contextual naming: evaluated <N> new public types, flagged <M>
 - ApiCompat / breaking changes: <pass/fail/pending/not applicable>
-- Migration-specific checks: <pass/fail/not applicable>
 
 <short, actionable summary>
 ```

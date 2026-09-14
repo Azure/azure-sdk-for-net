@@ -229,14 +229,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var container = await CreateSqlContainer(null);
 
             CosmosDBBackupInformation backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
-            long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
+            long restoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableOn.Value.ToUnixTimeMilliseconds();
             Assert.True(restoreTime > 0);
 
             var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS, container.Data.Resource) { Options = new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 } };
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
-            long latestRestoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableTimestamp.Value.ToUnixTimeMilliseconds();
+            long latestRestoreTime = backupInfo.ContinuousBackupInformation.LatestRestorableOn.Value.ToUnixTimeMilliseconds();
             Assert.True(latestRestoreTime > 0);
             Assert.True(latestRestoreTime > restoreTime);
         }

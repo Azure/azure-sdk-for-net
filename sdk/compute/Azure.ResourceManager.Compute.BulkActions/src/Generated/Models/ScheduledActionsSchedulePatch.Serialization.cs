@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             IList<WeekDay> requestedWeekDays = default;
             IList<Month> requestedMonths = default;
             IList<int> requestedDaysOfTheMonth = default;
-            RecurringScheduledActionsExecutionParametersContent executionParameters = default;
-            RecurringScheduledActionsDeadlineType? deadlineType = default;
+            ScheduledActionsExecutionParametersContent executionParameters = default;
+            ScheduledActionsDeadlineType? deadlineType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    executionParameters = RecurringScheduledActionsExecutionParametersContent.DeserializeRecurringScheduledActionsExecutionParametersContent(prop.Value, options);
+                    executionParameters = ScheduledActionsExecutionParametersContent.DeserializeScheduledActionsExecutionParametersContent(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("deadlineType"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    deadlineType = new RecurringScheduledActionsDeadlineType(prop.Value.GetString());
+                    deadlineType = new ScheduledActionsDeadlineType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -22,6 +22,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new GenericRecoveryPoint. </summary>
         public GenericRecoveryPoint()
         {
+            ObjectType.Assign("GenericRecoveryPoint");
         }
 
         /// <summary> Gets the FriendlyName. </summary>
@@ -78,7 +79,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "GenericRecoveryPoint");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _recoveryPointType = DefineProperty<string>(nameof(RecoveryPointType), new string[] { "recoveryPointType" });
             _recoveryPointOn = DefineProperty<DateTimeOffset>(nameof(RecoveryPointOn), new string[] { "recoveryPointTime" }, format: "O");

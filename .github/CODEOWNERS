@@ -73,6 +73,12 @@
 # ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
+# PRLabel: %Tables
+/sdk/tables/                                                       @JonathanCrd @jsquire
+
+# AzureSdkOwners:                                                  @JonathanCrd
+# ServiceLabel: %Tables
+
 ####################
 # Client Libraries
 ####################
@@ -86,7 +92,6 @@
 /sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
 
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
-
 
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
@@ -126,9 +131,6 @@
 
 # ServiceLabel: %Azure Load Testing
 # ServiceOwners: @azure/testing-services
-
-# PRLabel: %Azure Projects
-/sdk/cloudmachine/    @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa
@@ -275,6 +277,9 @@
 # ServiceOwners: @thang-bit
 
 # PRLabel: %Device Update
+/sdk/deviceregistry/Azure.IoT.DeviceRegistry.SoftwareUpdate/    @devlie @wuqiten
+
+# PRLabel: %Device Update
 /sdk/deviceupdate/Azure.IoT.DeviceUpdate/    @devlie @wuqiten
 
 # ServiceLabel: %Device Update
@@ -326,7 +331,7 @@
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
-# ServiceOwners: @fabiocav
+# ServiceOwners: @fabiocav @mathewc @alrod
 
 # PRLabel: %HDInsight
 /sdk/hdinsight/    @aim-for-better
@@ -437,7 +442,7 @@
 /sdk/search/    @Azure/azure-sdk-write-search
 
 # ServiceLabel: %Search
-# ServiceOwners: @efrainretana @mattgotteiner
+# ServiceOwners: @efrainretana @lc48t @mattgotteiner
 
 # PRLabel: %Service Bus
 /sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
@@ -513,9 +518,9 @@
 # ServiceOwners: @wanyang7
 
 # PRLabel: %Tables
-/sdk/tables/    @jorgerangel-msft @jsquire
+/sdk/tables/    @JonathanCrd @jsquire
 
-# AzureSdkOwners: @jorgerangel-msft
+# AzureSdkOwners: @JonathanCrd @jsquire
 # ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
@@ -525,7 +530,7 @@
 # ServiceOwners: @rhurey @xitzhang @yulin-li
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
+/sdk/webpubsub/    @JialinXin @vicancy
 
 # PRLabel: %WebPubSub
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
@@ -668,9 +673,6 @@
 
 # ServiceLabel: %ARM - Templates %Mgmt
 # ServiceOwners:                                                   @armleads-azure
-
-# PRLabel: %Astronomer
-/sdk/astronomer/Azure.ResourceManager.Astro/                       @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %App Services %Mgmt
 /sdk/websites/Azure.ResourceManager.AppService/                    @antcp @AzureAppServiceCLI
@@ -865,7 +867,7 @@
 /sdk/selfhelp/Azure.ResourceManager.*/                             @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Service Fabric
-/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket
+/sdk/servicefabric/Azure.ResourceManager.*/                        @QingChenmsft @vaishnavk @juhacket @waldmannly @a-santamaria
 
 # ServiceLabel: %Service Fabric %Mgmt
 # ServiceOwners:                                                   @QingChenmsft @vaishnavk @juhacket

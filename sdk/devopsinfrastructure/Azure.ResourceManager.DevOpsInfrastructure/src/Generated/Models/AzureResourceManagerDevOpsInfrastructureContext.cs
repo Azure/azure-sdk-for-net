@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(DevOpsStateful))]
     [ModelReaderWriterBuildable(typeof(DevOpsStatelessAgentProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsVmSize))]
     [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
     [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ImageVersionProperties))]

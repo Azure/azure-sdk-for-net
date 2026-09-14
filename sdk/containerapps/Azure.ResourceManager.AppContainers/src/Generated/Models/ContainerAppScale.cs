@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppScale"/>. </summary>
         /// <param name="minReplicas"> Optional. Minimum number of container replicas. </param>
         /// <param name="maxReplicas"> Optional. Maximum number of container replicas. Defaults to 10 if not set. </param>
-        /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period. Defaults to 300 seconds if not set. </param>
-        /// <param name="pollingInterval"> Optional. KEDA Polling Interval. Defaults to 30 seconds if not set. </param>
+        /// <param name="cooldownPeriod"> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </param>
+        /// <param name="pollingInterval"> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </param>
         /// <param name="rules"> Scaling rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerAppScale(int? minReplicas, int? maxReplicas, int? cooldownPeriod, int? pollingInterval, IList<ContainerAppScaleRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         [WirePath("maxReplicas")]
         public int? MaxReplicas { get; set; }
 
-        /// <summary> Optional. KEDA Cooldown Period. Defaults to 300 seconds if not set. </summary>
+        /// <summary> Optional. KEDA Cooldown Period in seconds. Defaults to 300 seconds if not set. </summary>
         [WirePath("cooldownPeriod")]
         public int? CooldownPeriod { get; set; }
 
-        /// <summary> Optional. KEDA Polling Interval. Defaults to 30 seconds if not set. </summary>
+        /// <summary> Optional. KEDA Polling Interval in seconds. Defaults to 30 seconds if not set. </summary>
         [WirePath("pollingInterval")]
         public int? PollingInterval { get; set; }
 

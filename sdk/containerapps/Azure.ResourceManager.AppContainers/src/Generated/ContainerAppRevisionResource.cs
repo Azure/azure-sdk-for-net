@@ -462,10 +462,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <description> FunctionsExtension_InvokeFunctionsHost. </description>
         /// </item>
         /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// <item>
         /// <term> Resource. </term>
         /// <description> <see cref="ContainerAppRevisionResource"/>. </description>
         /// </item>
@@ -513,10 +509,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> FunctionsExtension_InvokeFunctionsHost. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -596,7 +588,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new ContainerAppsRevisionFunctionCollection(client, Id));
         }
 
-        /// <summary> Get a specific function of a Container App Revision. </summary>
+        /// <summary> Gets the details of a specific function in a Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
@@ -609,7 +601,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetContainerAppsRevisionFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a specific function of a Container App Revision. </summary>
+        /// <summary> Gets the details of a specific function in a Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>

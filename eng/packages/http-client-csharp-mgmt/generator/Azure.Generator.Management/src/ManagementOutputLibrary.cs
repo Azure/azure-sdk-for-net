@@ -438,7 +438,9 @@ namespace Azure.Generator.Management
             }
 
             // Always register a concrete return-type source for non-resource/list/primitive/dictionary fallback paths.
-            operationSources.TryAdd(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+            operationSources.TryAdd(
+                returnCSharpType,
+                new OperationSourceProvider(returnCSharpType, returnType is InputModelType { IsDynamicModel: true }));
         }
 
         internal bool IsResourceModelType(CSharpType type) => GetResourceDataTypes().ContainsKey(type);

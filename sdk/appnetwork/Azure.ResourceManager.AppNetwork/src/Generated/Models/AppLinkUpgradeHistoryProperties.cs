@@ -17,30 +17,30 @@ namespace Azure.ResourceManager.AppNetwork.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeHistoryProperties"/>. </summary>
-        /// <param name="startOn"> Start timestamp. </param>
+        /// <param name="startsOn"> Start timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
-        internal AppLinkUpgradeHistoryProperties(DateTimeOffset startOn, string initiatedBy, string fromVersion, string toVersion)
+        internal AppLinkUpgradeHistoryProperties(DateTimeOffset startsOn, string initiatedBy, string fromVersion, string toVersion)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             InitiatedBy = initiatedBy;
             FromVersion = fromVersion;
             ToVersion = toVersion;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppLinkUpgradeHistoryProperties"/>. </summary>
-        /// <param name="startOn"> Start timestamp. </param>
-        /// <param name="endOn"> End timestamp. </param>
+        /// <param name="startsOn"> Start timestamp. </param>
+        /// <param name="endsOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppLinkUpgradeHistoryProperties(DateTimeOffset startOn, DateTimeOffset? endOn, string initiatedBy, string fromVersion, string toVersion, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppLinkUpgradeHistoryProperties(DateTimeOffset startsOn, DateTimeOffset? endsOn, string initiatedBy, string fromVersion, string toVersion, AppLinkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             InitiatedBy = initiatedBy;
             FromVersion = fromVersion;
             ToVersion = toVersion;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Start timestamp. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> End timestamp. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Upgrade initiator. </summary>
         public string InitiatedBy { get; }

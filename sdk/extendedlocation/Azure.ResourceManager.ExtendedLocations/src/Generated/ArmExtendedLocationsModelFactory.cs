@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 default);
         }
 
+        /// <summary> This is optional input that contains the authentication that should be used to generate the namespace. </summary>
         /// <param name="customLocationPropertiesAuthenticationType"> The type of the Custom Locations authentication. </param>
         /// <param name="value"> The kubeconfig value. </param>
         /// <returns> A new <see cref="Models.CustomLocationAuthentication"/> instance for mocking. </returns>
@@ -123,6 +124,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 default);
         }
 
+        /// <summary> Metadata of the Resource Type. </summary>
         /// <param name="apiVersion"> Api Version of Resource Type. </param>
         /// <param name="resourceProviderNamespace"> Resource Provider Namespace of Resource Type. </param>
         /// <param name="resourceType"> Resource Type. </param>
@@ -132,6 +134,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new CustomLocationEnabledResourceTypeMetadata(apiVersion, resourceProviderNamespace, resourceType, default);
         }
 
+        /// <summary> The Find Target Resource Group operation request. </summary>
         /// <param name="labels"> Labels of the custom resource, this is a map of {key,value} pairs. </param>
         /// <returns> A new <see cref="Models.CustomLocationFindTargetResourceGroupProperties"/> instance for mocking. </returns>
         public static CustomLocationFindTargetResourceGroupProperties CustomLocationFindTargetResourceGroupProperties(IDictionary<string, string> labels = default)
@@ -141,6 +144,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new CustomLocationFindTargetResourceGroupProperties(labels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The Find Target Resource Group operation response. </summary>
         /// <param name="matchedResourceSyncRule"> The matching resource sync rule is the particular resource sync rule that matched the match expressions and labels and had lowest priority. This is the rule responsible for mapping the target resource to the target resource group. </param>
         /// <param name="targetResourceGroup"> The target resource group of matching resource sync rule. The labels from the request will be used to find out matching resource sync rule against the selector property of the resource sync rule. The one with highest priority will be returned if there are multiple matching rules. </param>
         /// <returns> A new <see cref="Models.CustomLocationFindTargetResourceGroupResult"/> instance for mocking. </returns>
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 default);
         }
 
+        /// <summary> A label selector is composed of two parts, matchLabels and matchExpressions. The first part, matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. The second part, matchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. All of the requirements, from both matchLabels and matchExpressions must all be satisfied in order to match. </summary>
         /// <param name="matchExpressions"> MatchExpressions is a list of resource selector requirements. Valid operators include In, NotIn, Exists, and DoesNotExist. The values set must be non-empty in the case of In and NotIn. The values set must be empty in the case of Exists and DoesNotExist. </param>
         /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is 'key', the operator is 'In', and the values array contains only 'value'. </param>
         /// <returns> A new <see cref="Models.ResourceSyncRulePropertiesSelector"/> instance for mocking. </returns>
@@ -186,6 +191,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new ResourceSyncRulePropertiesSelector((matchExpressions ?? new ChangeTrackingList<ResourceSyncRuleMatchExpression>()).ToList(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Resource Sync Rules matchExpression property definition. </summary>
         /// <param name="key"> Key is the label key that the selector applies to. </param>
         /// <param name="operator"> The Operator field represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> The label value. </param>
@@ -210,14 +216,14 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             return new ResourceSyncRulePatch(priority is null && provisioningState is null && selector is null && targetResourceGroup is null ? default : new ResourceSyncRuleProperties(priority, provisioningState, selector, targetResourceGroup, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExtendedLocations.CustomLocationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned, None. </param>
+        /// <summary> Custom Locations definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Identity for the resource. </param>
         /// <param name="authentication"> This is optional input that contains the authentication that should be used to generate the namespace. </param>
         /// <param name="clusterExtensionIds"> Contains the reference to the add-on that contains charts to deploy CRDs and operators. </param>
         /// <param name="displayName"> Display name for the Custom Locations location. </param>

@@ -26,6 +26,7 @@ namespace Azure.AI.Projects
             }
         };
         private readonly string _apiVersion;
+        private AgentInsightMonitors _cachedAgentInsightMonitors;
         private AIProjectConnectionsOperations _cachedAIProjectConnectionsOperations;
         private AIProjectDatasetsOperations _cachedAIProjectDatasetsOperations;
         private AIProjectIndexesOperations _cachedAIProjectIndexesOperations;

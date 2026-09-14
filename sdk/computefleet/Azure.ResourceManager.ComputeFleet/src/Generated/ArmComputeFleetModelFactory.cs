@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
     public static partial class ArmComputeFleetModelFactory
     {
 
+        /// <summary> An Compute Fleet resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -89,6 +90,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Configuration Options for Spot instances in Compute Fleet. </summary>
         /// <param name="capacity"> Total capacity to achieve. It is currently in terms of number of VMs. </param>
         /// <param name="minCapacity"> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </param>
         /// <param name="maxPricePerVm"> Price per hour of each Spot VM will never exceed this. </param>
@@ -113,6 +115,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Configuration Options for Regular instances in Compute Fleet. </summary>
         /// <param name="capacity"> Total capacity to achieve. It is currently in terms of number of VMs. </param>
         /// <param name="minCapacity"> Minimum capacity to achieve which cannot be updated. If we will not be able to "guarantee" minimum capacity, we will reject the request in the sync path itself. </param>
         /// <param name="allocationStrategy"> Allocation strategy to follow when determining the VM sizes distribution for Regular VMs. </param>
@@ -122,6 +125,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new RegularPriorityProfile(capacity, minCapacity, allocationStrategy, default);
         }
 
+        /// <summary> Specifications about a VM Size. This will also contain the corresponding rank and weight in future. </summary>
         /// <param name="name"> The Sku name (e.g. 'Standard_DS1_v2'). </param>
         /// <param name="rank">
         /// The rank of the VM size. This is used with 'RegularPriorityAllocationStrategy.Prioritized'
@@ -133,6 +137,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmSizeProfile(name, rank, default);
         }
 
+        /// <summary> VMAttributes that will be used to filter VMSizes which will be used to build Fleet. </summary>
         /// <param name="vCpuCount"> The range of vCpuCount specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiB"> The range of memory specified from Min to Max. Must be specified if VMAttributes are specified, either Min or Max is required if specified. </param>
         /// <param name="memoryInGiBPerVCpu"> The range of memory in GiB per vCPU specified from min to max. Optional parameter. Either Min or Max is required if specified. </param>
@@ -216,6 +221,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> While retrieving VMSizes from CRS, Min = 0 (uint.MinValue) if not specified, Max = 4294967295 (uint.MaxValue) if not specified. This allows to filter VMAttributes on all available VMSizes. </summary>
         /// <param name="min"> Min VMSize from CRS, Min = 0 (uint.MinValue) if not specified. </param>
         /// <param name="max"> Max VMSize from CRS, Max = 4294967295 (uint.MaxValue) if not specified. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmAttributeMinMaxInteger"/> instance for mocking. </returns>
@@ -224,6 +230,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmAttributeMinMaxInteger(min, max, default);
         }
 
+        /// <summary> VMAttributes using double values. </summary>
         /// <param name="min"> Minimum value. default 0. Double.MinValue(). </param>
         /// <param name="max"> Maximum value. Double.MaxValue(1.7976931348623157E+308). </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmAttributeMinMaxDouble"/> instance for mocking. </returns>
@@ -232,6 +239,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmAttributeMinMaxDouble(min, max, default);
         }
 
+        /// <summary> Represents the profile for a single additional location in the Fleet. The location and the virtualMachineProfileOverride (optional). </summary>
         /// <param name="location"> The ARM location name of the additional region. If LocationProfile is specified, then location is required. </param>
         /// <param name="virtualMachineProfileOverride">
         /// An override for computeProfile.baseVirtualMachineProfile specific to this region. 
@@ -328,6 +336,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Describes a virtual machine scale set OS profile. </summary>
         /// <param name="computerNamePrefix">
         /// Specifies the computer name prefix for all of the virtual machines in the scale
         /// set. Computer name prefixes must be 1 to 15 characters long.
@@ -447,6 +456,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary>
+        /// Specifies additional XML formatted information that can be included in the
+        /// Unattend.xml file, which is used by Windows Setup. Contents are defined by
+        /// setting name, component name, and the pass in which the content is applied.
+        /// </summary>
         /// <param name="passName"> The pass name. Currently, the only allowable value is OobeSystem. </param>
         /// <param name="componentName">
         /// The component name. Currently, the only allowable value is
@@ -467,6 +481,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new WindowsSetupAdditionalInformation(passName, componentName, settingName, content, default);
         }
 
+        /// <summary> Specifies settings related to VM Guest Patching on Windows. </summary>
         /// <param name="patchMode">
         /// Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual
         /// machines associated to virtual machine scale set with OrchestrationMode as
@@ -502,6 +517,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmGuestPatchSettings(patchMode, isHotPatchingEnabled, assessmentMode, automaticByPlatformSettings, default);
         }
 
+        /// <summary>
+        /// Specifies additional settings to be applied when patch mode AutomaticByPlatform
+        /// is selected in Windows patch settings.
+        /// </summary>
         /// <param name="rebootSetting">
         /// Specifies the reboot setting for all AutomaticByPlatform patch installation
         /// operations.
@@ -513,6 +532,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetWindowsVmGuestPatchAutomaticByPlatformSettings(rebootSetting, isBypassPlatformSafetyChecksOnUserScheduleEnabled, default);
         }
 
+        /// <summary> Describes Protocol and thumbprint of Windows Remote Management listener. </summary>
         /// <param name="protocol">
         /// Specifies the protocol of WinRM listener. Possible values are: <b>http,</b>
         /// <b>https.</b>
@@ -563,6 +583,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary>
+        /// Contains information about SSH certificate public key and the path on the Linux
+        /// VM where the public key is placed.
+        /// </summary>
         /// <param name="path">
         /// Specifies the full path on the created VM where ssh public key is stored. If
         /// the file already exists, the specified key is appended to the file. Example:
@@ -580,6 +604,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetSshPublicKey(path, keyData, default);
         }
 
+        /// <summary> Specifies settings related to VM Guest Patching on Linux. </summary>
         /// <param name="patchMode">
         /// Specifies the mode of VM Guest Patching to IaaS virtual machine or virtual
         /// machines associated to virtual machine scale set with OrchestrationMode as
@@ -605,6 +630,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetLinuxPatchSettings(patchMode, assessmentMode, automaticByPlatformSettings, default);
         }
 
+        /// <summary>
+        /// Specifies additional settings to be applied when patch mode AutomaticByPlatform
+        /// is selected in Linux patch settings.
+        /// </summary>
         /// <param name="rebootSetting">
         /// Specifies the reboot setting for all AutomaticByPlatform patch installation
         /// operations.
@@ -626,6 +655,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVaultSecretGroup(sourceVaultId is null ? default : new SubResource(sourceVaultId, default), (vaultCertificates ?? new ChangeTrackingList<ComputeFleetVaultCertificate>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Describes a single certificate reference in a Key Vault, and where the
+        /// certificate should reside on the VM.
+        /// </summary>
         /// <param name="certificateUri">
         /// This is the URL of a certificate that has been uploaded to Key Vault as a
         /// secret. For adding a secret to the Key Vault, see [Add a key or secret to the
@@ -656,6 +689,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVaultCertificate(certificateUri, certificateStore, default);
         }
 
+        /// <summary> Describes a virtual machine scale set storage profile. </summary>
         /// <param name="imageReference">
         /// Specifies information about the image to use. You can specify information about
         /// platform images, marketplace images, or virtual machine images. This element is
@@ -683,6 +717,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssStorageProfile(imageReference, osDisk, (dataDisks ?? new ChangeTrackingList<ComputeFleetVmssDataDisk>()).ToList(), diskControllerType, default);
         }
 
+        /// <summary>
+        /// Specifies information about the image to use. You can specify information about
+        /// platform images, marketplace images, or virtual machine images. This element is
+        /// required when you want to use a platform image, marketplace image, or virtual
+        /// machine image, but is not used in other creation operations. NOTE: Image
+        /// reference publisher and offer can only be set when you create the scale set.
+        /// </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="publisher"> The image publisher. </param>
         /// <param name="offer">
@@ -795,6 +836,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary>
+        /// Describes the parameters of ephemeral disk settings that can be specified for
+        /// operating system disk. <b>Note:</b> The ephemeral disk settings can only be
+        /// specified for managed disk.
+        /// </summary>
         /// <param name="option"> Specifies the ephemeral disk settings for operating system disk. </param>
         /// <param name="placement">
         /// Specifies the ephemeral disk placement for operating system disk. Possible
@@ -837,6 +883,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmDiskSecurityProfile(securityEncryptionType, diskEncryptionSetId is null ? default : new DiskEncryptionSetParameters(diskEncryptionSetId, default), default);
         }
 
+        /// <summary> Describes a virtual machine scale set data disk. </summary>
         /// <param name="name"> The disk name. </param>
         /// <param name="lun">
         /// Specifies the logical unit number of the data disk. This value is used to
@@ -910,6 +957,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssNetworkProfile(healthProbeId is null ? default : new ApiEntityReference(healthProbeId, default), (networkInterfaceConfigurations ?? new ChangeTrackingList<ComputeFleetVmssNetworkConfiguration>()).ToList(), networkApiVersion, default);
         }
 
+        /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
         /// <param name="name"> The network configuration name. </param>
         /// <param name="properties"> Describes a virtual machine scale set network profile's IP configuration. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssNetworkConfiguration"/> instance for mocking. </returns>
@@ -958,6 +1006,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
         /// <param name="name"> The IP configuration name. </param>
         /// <param name="properties">
         /// Describes a virtual machine scale set network profile's IP configuration
@@ -1020,6 +1069,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary>
+        /// Describes a virtual machines scale set IP Configuration's PublicIPAddress
+        /// configuration
+        /// </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="properties">
         /// Describes a virtual machines scale set IP Configuration's PublicIPAddress
@@ -1060,6 +1113,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Describes a virtual machines scale sets network configuration's DNS settings. </summary>
         /// <param name="domainNameLabel">
         /// The Domain name label.The concatenation of the domain name label and vm index
         /// will be the domain name labels of the PublicIPAddress resources that will be
@@ -1077,6 +1131,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssPublicIPAddressDnsSettings(domainNameLabel, domainNameLabelScope, default);
         }
 
+        /// <summary> Contains the IP tag associated with the public IP address. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmssIPTag"/> instance for mocking. </returns>
@@ -1085,6 +1140,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssIPTag(ipTagType, tag, default);
         }
 
+        /// <summary>
+        /// Describes the public IP Sku. It can only be set with OrchestrationMode as
+        /// Flexible.
+        /// </summary>
         /// <param name="name"> Specify public IP sku name. </param>
         /// <param name="tier"> Specify public IP sku tier. </param>
         /// <returns> A new <see cref="Models.ComputeFleetPublicIPAddressSku"/> instance for mocking. </returns>
@@ -1126,6 +1185,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary>
+        /// Specifies the security settings like secure boot and vTPM used while creating
+        /// the virtual machine. Minimum api-version: 2020-12-01.
+        /// </summary>
         /// <param name="isSecureBootEnabled">
         /// Specifies whether secure boot should be enabled on the virtual machine. Minimum
         /// api-version: 2020-12-01.
@@ -1140,6 +1203,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetUefiSettings(isSecureBootEnabled, isVTpmEnabled, default);
         }
 
+        /// <summary>
+        /// Specifies ProxyAgent settings while creating the virtual machine. Minimum
+        /// api-version: 2023-09-01.
+        /// </summary>
         /// <param name="isEnabled">
         /// Specifies whether ProxyAgent feature should be enabled on the virtual machine
         /// or virtual machine scale set.
@@ -1160,6 +1227,12 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetProxyAgentSettings(isEnabled, mode, keyIncarnationId, default);
         }
 
+        /// <summary>
+        /// Boot Diagnostics is a debugging feature which allows you to view Console Output
+        /// and Screenshot to diagnose VM status. You can easily view the output of your
+        /// console log. Azure also enables you to see a screenshot of the VM from the
+        /// hypervisor.
+        /// </summary>
         /// <param name="isEnabled"> Whether boot diagnostics should be enabled on the Virtual Machine. </param>
         /// <param name="storageUri">
         /// Uri of the storage account to use for placing the console output and
@@ -1172,6 +1245,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetBootDiagnostics(isEnabled, storageUri, default);
         }
 
+        /// <summary> Describes a virtual machine scale set extension profile. </summary>
         /// <param name="extensions"> The virtual machine scale set child extension resources. </param>
         /// <param name="extensionsTimeBudget">
         /// Specifies the time alloted for all extensions to start. The time duration
@@ -1187,6 +1261,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssExtensionProfile((extensions ?? new ChangeTrackingList<ComputeFleetVmssExtension>()).ToList(), extensionsTimeBudget, default);
         }
 
+        /// <summary> Describes a Virtual Machine Scale Set Extension. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="extensionType"> Resource type. </param>
@@ -1197,6 +1272,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmssExtension(id, name, extensionType, properties, default);
         }
 
+        /// <summary> Describes the properties of a Virtual Machine Scale Set Extension. </summary>
         /// <param name="forceUpdateTag">
         /// If a value is provided and is different from the previous value, the extension
         /// handler will be forced to update even if the extension configuration has not
@@ -1264,6 +1340,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetKeyVaultSecretReference(secretUri, sourceVaultId is null ? default : new SubResource(sourceVaultId, default), default);
         }
 
+        /// <summary> Specifies Scheduled Event related configurations. </summary>
         /// <param name="terminateNotificationProfile"> Specifies Terminate Scheduled Event related configurations. </param>
         /// <param name="osImageNotificationProfile"> Specifies OS Image Scheduled Event related configurations. </param>
         /// <returns> A new <see cref="Models.ComputeFleetScheduledEventsProfile"/> instance for mocking. </returns>
@@ -1272,6 +1349,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetScheduledEventsProfile(terminateNotificationProfile, osImageNotificationProfile, default);
         }
 
+        /// <summary> Specifies Terminate Scheduled Event related configurations. </summary>
         /// <param name="notBeforeTimeout">
         /// Configurable length of time a Virtual Machine being deleted will have to
         /// potentially approve the Terminate Scheduled Event before the event is auto
@@ -1285,6 +1363,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetTerminateNotificationProfile(notBeforeTimeout, isEnabled, default);
         }
 
+        /// <summary> Specifies OS Image Scheduled Event related configurations. </summary>
         /// <param name="notBeforeTimeout">
         /// Length of time a Virtual Machine being reimaged or having its OS upgraded will
         /// have to potentially approve the OS Image Scheduled Event before the event is
@@ -1298,6 +1377,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetOSImageNotificationProfile(notBeforeTimeout, isEnabled, default);
         }
 
+        /// <summary>
+        /// Specifies the required information to reference a compute gallery application
+        /// version
+        /// </summary>
         /// <param name="tags"> Optional, Specifies a passthrough value for more generic context. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
         /// <param name="packageReferenceId">
@@ -1329,6 +1412,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> Specifies VM Size Property settings on the virtual machine. </summary>
         /// <param name="vcpUsAvailable">
         /// Specifies the number of vCPUs available for the VM. When this property is not
         /// specified in the request body the default behavior is to set it to the value of
@@ -1350,6 +1434,10 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetVmSizeProperties(vcpUsAvailable, vcpUsPerCore, default);
         }
 
+        /// <summary>
+        /// Specifies the security posture to be used for all virtual machines in the scale
+        /// set. Minimum api-version: 2023-03-01
+        /// </summary>
         /// <param name="id">
         /// The security posture reference id in the form of
         /// /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest
@@ -1367,6 +1455,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetSecurityPostureReference(id, (excludeExtensions ?? new ChangeTrackingList<string>()).ToList(), isOverridable, default);
         }
 
+        /// <summary> Compute Profile to use for running user's workloads. </summary>
         /// <param name="baseVirtualMachineProfile"> Base Virtual Machine Profile Properties to be specified according to "specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/{computeApiVersion}/virtualMachineScaleSet.json#/definitions/VirtualMachineScaleSetVMProfile". </param>
         /// <param name="computeApiVersion">
         /// Specifies the Microsoft.Compute API version to use when creating underlying Virtual Machine scale sets and Virtual Machines.
@@ -1391,6 +1480,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetComputeProfile(baseVirtualMachineProfile, computeApiVersion, platformFaultDomainCount, additionalVirtualMachineCapabilities, default);
         }
 
+        /// <summary> AdditionalCapabilities for VM. </summary>
         /// <param name="isUltraSSDEnabled">
         /// The flag that enables or disables a capability to have one or more managed data disks with UltraSSD_LRS storage account type on the VM or VMSS.
         /// Managed disks with storage account type UltraSSD_LRS can be added to a virtual machine or virtual machine scale set only if this property is enabled.
@@ -1402,6 +1492,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new AdditionalCapabilities(isUltraSSDEnabled, isHibernationEnabled, default);
         }
 
+        /// <summary> ZoneAllocationPolicy for Compute Fleet. </summary>
         /// <param name="distributionStrategy"> Distribution strategy used for zone allocation policy. </param>
         /// <param name="zonePreferences"> Zone preferences, required when zone distribution strategy is Prioritized. </param>
         /// <returns> A new <see cref="Models.ComputeFleetZoneAllocationPolicy"/> instance for mocking. </returns>
@@ -1412,6 +1503,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetZoneAllocationPolicy(distributionStrategy, (zonePreferences ?? new ChangeTrackingList<ZonePreference>()).ToList(), default);
         }
 
+        /// <summary> Zone preferences for Compute Fleet zone allocation policy. </summary>
         /// <param name="zone"> Name of the zone. </param>
         /// <param name="rank">
         /// The rank of the zone. This is used with 'Prioritized' ZoneDistributionStrategy.
@@ -1424,6 +1516,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ZonePreference(zone, rank, default);
         }
 
+        /// <summary> Fleet Update Model. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Updatable managed service identity. </param>
         /// <param name="plan"> Updatable resource plan. </param>
@@ -1436,6 +1529,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, plan, properties, default);
         }
 
+        /// <summary> An AzureFleet's virtualMachineScaleSet. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1455,6 +1549,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> ApiError for Fleet. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
@@ -1474,6 +1569,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
+        /// <summary> API error base. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the particular error. </param>
         /// <param name="message"> The error message. </param>
@@ -1483,6 +1579,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetApiErrorInfo(code, target, message, default);
         }
 
+        /// <summary> Inner error details. </summary>
         /// <param name="exceptionType"> The exception type. </param>
         /// <param name="errorDetail"> The internal error message or exception dump. </param>
         /// <returns> A new <see cref="Models.ComputeFleetInnerError"/> instance for mocking. </returns>
@@ -1491,6 +1588,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             return new ComputeFleetInnerError(exceptionType, errorDetail, default);
         }
 
+        /// <summary> A Launch mode Fleet's virtual machine. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1516,13 +1614,13 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ComputeFleetProperties"/>. </summary>
+        /// <summary> Details of the Compute Fleet. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="spotPriorityProfile"> Configuration Options for Spot instances in Compute Fleet. </param>
         /// <param name="regularPriorityProfile"> Configuration Options for Regular instances in Compute Fleet. </param>
         /// <param name="vmSizesProfile"> List of VM sizes supported for Compute Fleet. </param>
         /// <param name="vmAttributes"> Attribute based Fleet. </param>
-        /// <param name="additionalLocationsLocationProfiles"> Represents the configuration for additional locations where Fleet resources may be deployed. </param>
+        /// <param name="additionalLocationsLocationProfiles"> The list of location profiles. </param>
         /// <param name="computeProfile"> Compute Profile to use for running user's workloads. </param>
         /// <param name="createdOn"> Specifies the time at which the Compute Fleet is created. </param>
         /// <param name="uniqueId"> Specifies the ID which uniquely identifies a Compute Fleet. </param>

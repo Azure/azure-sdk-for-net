@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
         public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IEnumerable<string>> expectedResults = default)
         {
-            return new SqlVulnerabilityAssessmentBaseline(ToStringListRows(expectedResults), new ChangeTrackingDictionary<string, BinaryData>());
+            return new SqlVulnerabilityAssessmentBaseline(ToStringListRows(expectedResults), default, new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VulnerabilityAssessmentRuleQueryCheck"/>. </summary>

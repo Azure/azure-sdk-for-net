@@ -22,6 +22,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new GenericProtectedItem. </summary>
         public GenericProtectedItem()
         {
+            ProtectedItemType.Assign("GenericProtectedItem");
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -118,7 +119,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "GenericProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _policyState = DefineProperty<string>(nameof(PolicyState), new string[] { "policyState" });
             _protectionState = DefineProperty<BackupProtectionState>(nameof(ProtectionState), new string[] { "protectionState" });

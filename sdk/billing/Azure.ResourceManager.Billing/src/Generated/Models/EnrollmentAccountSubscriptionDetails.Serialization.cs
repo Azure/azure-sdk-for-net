@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 throw new FormatException($"The model {nameof(EnrollmentAccountSubscriptionDetails)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountStartOn))
+            if (options.Format != "W" && Optional.IsDefined(EnrollmentAccountStartsOn))
             {
                 writer.WritePropertyName("enrollmentAccountStartDate"u8);
-                writer.WriteStringValue(EnrollmentAccountStartOn.Value, "O");
+                writer.WriteStringValue(EnrollmentAccountStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SubscriptionEnrollmentAccountStatus))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            DateTimeOffset? enrollmentAccountStartOn = default;
+            DateTimeOffset? enrollmentAccountStartsOn = default;
             SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    enrollmentAccountStartOn = prop.Value.GetDateTimeOffset("O");
+                    enrollmentAccountStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("subscriptionEnrollmentAccountStatus"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartOn, subscriptionEnrollmentAccountStatus, additionalBinaryDataProperties);
+            return new EnrollmentAccountSubscriptionDetails(enrollmentAccountStartsOn, subscriptionEnrollmentAccountStatus, additionalBinaryDataProperties);
         }
     }
 }

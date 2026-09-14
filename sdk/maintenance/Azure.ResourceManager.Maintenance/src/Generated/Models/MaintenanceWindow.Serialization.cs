@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? expiresOn = default;
             TimeSpan? duration = default;
             string timeZone = default;
             string recurEvery = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             return new MaintenanceWindow(
-                startOn,
-                expireOn,
+                startsOn,
+                expiresOn,
                 duration,
                 timeZone,
                 recurEvery,

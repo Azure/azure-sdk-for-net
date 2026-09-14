@@ -13,13 +13,13 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new OrganizationSharedBuiltInAuthorizationPolicy. </summary>
         public OrganizationSharedBuiltInAuthorizationPolicy()
         {
+            Type.Assign(BuiltInAuthorizationScheme.OrganizationScope);
         }
 
         /// <summary> Define all the provisionable properties for OrganizationSharedBuiltInAuthorizationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "OrganizationScope");
             DefineAdditionalProperties();
         }
 

@@ -230,7 +230,7 @@ namespace Azure.Provisioning.KeyVault
             _sku = DefineModelProperty<ManagedHsmSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<ManagedHsm>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ManagedHsm>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

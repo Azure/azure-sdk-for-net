@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class BatchDeploymentConfiguration : ProvisionableConstruct
     {
+        private BicepValue<BatchDeploymentConfigurationType> _deploymentConfigurationType;
+
         /// <summary> Creates a new BatchDeploymentConfiguration. </summary>
         public BatchDeploymentConfiguration()
         {
+        }
+
+        /// <summary> [Required] The type of the deployment. </summary>
+        internal BicepValue<BatchDeploymentConfigurationType> DeploymentConfigurationType
+        {
+            get
+            {
+                Initialize();
+                return _deploymentConfigurationType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BatchDeploymentConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _deploymentConfigurationType = DefineProperty<BatchDeploymentConfigurationType>(nameof(DeploymentConfigurationType), new string[] { "deploymentConfigurationType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
