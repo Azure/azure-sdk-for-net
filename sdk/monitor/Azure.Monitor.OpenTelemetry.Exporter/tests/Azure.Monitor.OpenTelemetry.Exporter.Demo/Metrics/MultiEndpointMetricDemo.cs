@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces;
 
 using OpenTelemetry;

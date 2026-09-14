@@ -39,6 +39,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private const string EndpointTag = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
         private const string CloudRoleTag = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
 
+        private const string TooLongInstrumentationKey = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+            + "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+
+        private const string TooLongEndpoint = "https://eastus-1.in.applicationinsights.azure.com/"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
         [Fact]
         public void EachDestinationBecomesItsOwnGroup()
         {
@@ -373,26 +399,54 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Measure(1, Ikey("ikey-a"), Endpoint(EastUs)),
                 Measure(1, Ikey("ikey-b"), Endpoint("not-a-uri")));
 
-            Assert.Equal(1, routeBatch.Count);
-            Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+            Assert.Single(Assert.Single(Groups(routeBatch)).TelemetryItems);
+
+            var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+            Assert.Equal("IngestionEndpointMalformed", dropped.Payload![2]);
         }
 
         /// <summary>
         /// Metric point order is aggregation-slot order, so reporting whichever failed first would
         /// tell a customer with a malformed endpoint to go and check stamping they already did.
+        /// Both orders are exercised, since pinning one would pin the very ordering the ranking
+        /// exists to make irrelevant.
         /// </summary>
-        [Fact]
-        public void AMisconfiguredDimensionOutranksAnAbsentOne()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void AMisconfiguredDimensionOutranksAnAbsentOne(bool absentFirst)
+        {
+            var absent = Measure(1, Endpoint(EastUs));
+            var malformed = Measure(1, Ikey("ikey-b"), Endpoint("not-a-uri"));
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(absentFirst ? new[] { absent, malformed } : new[] { malformed, absent });
+
+            var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
+            Assert.Equal("IngestionEndpointMalformed", dropped.Payload![2]);
+        }
+
+        /// <summary>
+        /// A value supplied and got wrong is a mistake to fix; one never supplied is the expected
+        /// steady state for host instruments. Ranking them the same way would put the firehose and
+        /// the actionable failure on equal footing.
+        /// </summary>
+        [Theory]
+        [InlineData(TooLongInstrumentationKey, EastUs, "InstrumentationKeyTooLong")]
+        [InlineData("ikey-a", TooLongEndpoint, "IngestionEndpointTooLong")]
+        public void AnOversizedDimensionOutranksAnAbsentOne(string instrumentationKey, string ingestionEndpoint, string expectedReason)
         {
             using var listener = new TestEventListener();
             listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
 
             Convert(
                 Measure(1, Endpoint(EastUs)),
-                Measure(1, Ikey("ikey-b"), Endpoint("not-a-uri")));
+                Measure(1, Ikey(instrumentationKey), Endpoint(ingestionEndpoint)));
 
             var dropped = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedInstrumentDropped"));
-            Assert.Equal("IngestionEndpointMalformed", dropped.Payload![2]);
+            Assert.Equal(expectedReason, dropped.Payload![2]);
         }
 
         /// <summary>
