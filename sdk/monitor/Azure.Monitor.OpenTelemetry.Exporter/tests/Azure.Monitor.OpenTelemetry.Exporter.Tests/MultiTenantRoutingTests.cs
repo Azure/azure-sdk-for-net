@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -32,6 +33,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private const string ActivitySourceName = nameof(MultiTenantRoutingTests);
         private const string EastUs = "https://eastus-1.in.applicationinsights.azure.com/";
         private const string WestUs = "https://westus-2.in.applicationinsights.azure.com/";
+
+        /// <summary>Past the 200 character bound the key is rejected rather than truncated.</summary>
+        private const string TooLongInstrumentationKey = "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789"
+            + "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+
+        /// <summary>Past the 2048 character bound the endpoint is rejected before it is parsed.</summary>
+        private const string TooLongEndpoint = "https://eastus-1.in.applicationinsights.azure.com/"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+            + "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/";
 
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
         private static readonly ActivityListener s_listener = CreateListener();
@@ -101,11 +129,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(CreateActivity("ikey-a", EastUs));
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role"));
 
             var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
         [Theory]
@@ -230,15 +259,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
         }
 
-        /// <summary>
-        /// Characterizes what a routed envelope currently says about identity when the host has a
-        /// real resource. The resource metric is withheld, but the role tags on the envelope are the
-        /// host's, so a tenant sees the relaying service's name and instance as its own application.
-        /// This is a recorded gap, not settled behaviour: the test exists so that changing it is a
-        /// deliberate act rather than an accident.
-        /// </summary>
         [Fact]
-        public void RoutedEnvelopesCarryTheHostsCloudRole()
+        public void RoutedEnvelopesCarryTheTenantCloudRoleAndHostRoleInstance()
         {
             var resource = ResourceBuilder.CreateDefault()
                 .AddAttributes(new Dictionary<string, object>
@@ -253,7 +275,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var routeBatch = new EndpointRouteBatch();
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(
-                CreateBatch(CreateActivity("ikey-a", EastUs)),
+                CreateBatch(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role")),
                 resource,
                 sampleRate: 100,
                 routeBatch);
@@ -261,8 +283,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
 
             Assert.Equal("ikey-a", telemetryItem.InstrumentationKey);
-            Assert.Equal("relay-host", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("tenant-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("relay-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Fact]
+        public void TenantCloudRoleIsResolvedPerEnvelopeWithinAnEndpointGroup()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-a"),
+                CreateActivity("ikey-b", EastUs, tenantCloudRole: "tenant-b"));
+
+            Assert.Equal(
+                new[] { "tenant-a", "tenant-b" },
+                routeBatch[0].TelemetryItems.Select(item => item.Tags[ContextTagKeys.AiCloudRole.ToString()]));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData(42)]
+        public void InvalidTenantCloudRoleUsesUnknownService(object? tenantCloudRole)
+        {
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, tenantCloudRole: tenantCloudRole));
+
+            Assert.Equal(
+                "unknown_service",
+                routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
+        }
+
+        [Fact]
+        public void TenantCloudRoleIsTrimmedAndTruncated()
+        {
+            var tenantCloudRole = new string('a', SchemaConstants.Tags_AiCloudRole_MaxLength + 1);
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, tenantCloudRole: $" {tenantCloudRole} "));
+
+            Assert.Equal(
+                tenantCloudRole.Substring(0, SchemaConstants.Tags_AiCloudRole_MaxLength),
+                routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
+        }
+
+        [Fact]
+        public void ActivityEventEnvelopesInheritTenantCloudRoleAndHostRoleInstance()
+        {
+            var resource = ResourceBuilder.CreateDefault()
+                .AddAttributes(new Dictionary<string, object>
+                {
+                    { "service.name", "relay-host" },
+                    { "service.instance.id", "relay-instance" },
+                })
+                .Build()
+                .CreateAzureMonitorResource("exporter-ikey");
+            var activity = s_activitySource.StartActivity("Test", ActivityKind.Server)!;
+            activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, "ikey-a");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, EastUs);
+            activity.SetTag(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, "tenant-role");
+            activity.AddEvent(new ActivityEvent("tenant-event"));
+            activity.AddEvent(new ActivityEvent(
+                SemanticConventions.AttributeExceptionEventName,
+                tags: new ActivityTagsCollection
+                {
+                    { SemanticConventions.AttributeExceptionType, "TenantException" },
+                    { SemanticConventions.AttributeExceptionMessage, "Tenant exception message" },
+                }));
+            activity.Stop();
+
+            var routeBatch = new EndpointRouteBatch();
+            TraceHelper.OtelToAzureMonitorTraceMultiTenant(CreateBatch(activity), resource, 100, routeBatch);
+
+            Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+            Assert.All(
+                routeBatch[0].TelemetryItems,
+                item =>
+                {
+                    Assert.Equal("tenant-role", item.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+                    Assert.Equal("relay-instance", item.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+                });
         }
 
         [Fact]
@@ -295,7 +393,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void SingleTenantPathKeepsRoutingTagsAsCustomDimensions()
         {
             var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
-                CreateBatch(CreateActivity("ikey-a", EastUs)),
+                CreateBatch(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role")),
                 null,
                 "exporter-ikey",
                 sampleRate: 100);
@@ -306,6 +404,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((RequestData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
         /// <summary>
@@ -503,13 +602,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// The non-negotiable constraint: routing changes where an envelope goes and nothing about
-        /// how it is built. Both sides use the same key, so this compares the conversion itself;
-        /// the key is covered by <c>RoutedTelemetryNeverCarriesTheExportersOwnInstrumentationKey</c>.
+        /// Apart from the explicitly tested tenant routing fields, routing must not change how an
+        /// envelope is built. Both paths receive the same role and instrumentation key here so this
+        /// compares the rest of the conversion.
         /// </summary>
         [Fact]
         public void RoutedConversionProducesTheSameEnvelopesAsSingleTenant()
         {
+            var resource = new AzureMonitorResource(
+                roleName: "unknown_service",
+                roleInstance: null,
+                serviceVersion: null,
+                monitorBaseData: null);
             var corpus = new Func<Activity>[]
             {
                 () => CreateActivity("ikey-a", EastUs, ActivityKind.Server),
@@ -521,11 +625,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // is the conversion itself rather than the tags one path consumes.
             var (singleTenantItems, _) = TraceHelper.OtelToAzureMonitorTrace(
                 CreateBatch(corpus.Select(create => StripRoutingTags(create())).ToArray()),
-                null,
+                resource,
                 "ikey-a",
                 sampleRate: 100);
 
-            var routeBatch = Convert(corpus.Select(create => create()).ToArray());
+            var routeBatch = new EndpointRouteBatch();
+            TraceHelper.OtelToAzureMonitorTraceMultiTenant(
+                CreateBatch(corpus.Select(create => create()).ToArray()),
+                resource,
+                sampleRate: 100,
+                routeBatch);
 
             var singleTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleTenantItems));
             var multiTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
@@ -608,9 +717,121 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Theory]
+        [InlineData(null, EastUs, "MissingInstrumentationKey")]
+        [InlineData("", EastUs, "MissingInstrumentationKey")]
+        [InlineData("   ", EastUs, "MissingInstrumentationKey")]
+        [InlineData("ikey-a", null, "MissingIngestionEndpoint")]
+        [InlineData("ikey-a", "", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "not-a-uri", "IngestionEndpointMalformed")]
+        [InlineData("ikey-a", "http://eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointNotHttps")]
+        [InlineData("ikey-a", "https://user:pass@eastus-1.in.applicationinsights.azure.com/", "IngestionEndpointHasCredentials")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/?a=b", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://eastus-1.in.applicationinsights.azure.com/#frag", "IngestionEndpointHasQueryOrFragment")]
+        [InlineData("ikey-a", "https://xn--\u00fc.in.applicationinsights.azure.com/", "IngestionEndpointHostInvalid")]
+        [InlineData(TooLongInstrumentationKey, EastUs, "InstrumentationKeyTooLong")]
+        [InlineData("ikey-a", TooLongEndpoint, "IngestionEndpointTooLong")]
+        public void ADroppedActivityReportsWhyItCouldNotBeRouted(string? instrumentationKey, string? ingestionEndpoint, string expectedReason)
+        {
+            var activity = CreateActivity(instrumentationKey, ingestionEndpoint);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(0, Convert(activity).Count);
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.Equal(expectedReason, rejected.Payload![1]);
+            Assert.Equal(activity.TraceId.ToHexString(), rejected.Payload[2]);
+            Assert.Equal(activity.SpanId.ToHexString(), rejected.Payload[3]);
+        }
+
+        /// <summary>
+        /// The endpoint that caused a rejection may carry credentials, so the reason has to stand on
+        /// its own without it.
+        /// </summary>
+        [Fact]
+        public void ARejectionNeverRepeatsTheEndpointThatCausedIt()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", "https://user:sekret@eastus-1.in.applicationinsights.azure.com/"));
+
+            var rejected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.DoesNotContain("sekret", string.Join("|", rejected.Payload!), StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void CollectedTelemetryIsReportedWithItsDestinationAndIdentity()
+        {
+            var activity = CreateActivity("ikey-a", EastUs);
+
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Assert.Equal(1, Convert(activity).Count);
+
+            var collected = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Equal(EastUs, collected.Payload![1]);
+            Assert.Equal("ikey-a", collected.Payload[2]);
+            Assert.Equal(activity.TraceId.ToHexString(), collected.Payload[3]);
+            Assert.Equal(activity.SpanId.ToHexString(), collected.Payload[4]);
+        }
+
+        /// <summary>Per-item records are the Verbose tier; nothing below it should pay for them.</summary>
+        [Fact]
+        public void PerItemRecordsAreNotWrittenBelowVerbose()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity(null, EastUs));
+
+            Assert.Empty(listener.Messages.Where(e => e.EventName == "RoutedTelemetryCollected" || e.EventName == "RoutedTelemetryRejected"));
+        }
+
+        /// <summary>
+        /// The per-item records are only useful if they can be tied to the export that produced them
+        /// and to its totals.
+        /// </summary>
+        [Fact]
+        public void OneExportReportsItsTotalsUnderASingleSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Verbose, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs), CreateActivity("ikey-b", WestUs), CreateActivity(null, EastUs));
+
+            var summary = Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedExportSummary"));
+            Assert.Equal(2, summary.Payload![1]);
+            Assert.Equal(2, summary.Payload[2]);
+            Assert.Equal(1, summary.Payload[3]);
+
+            Assert.Equal(2, listener.Messages.Count(e => e.EventName == "RoutedTelemetryCollected"));
+            Assert.Single(listener.Messages.Where(e => e.EventName == "RoutedTelemetryRejected"));
+            Assert.All(listener.Messages, e => Assert.Equal(summary.Payload[0], e.Payload![0]));
+        }
+
+        /// <summary>A shared sequence would tie unrelated exports together.</summary>
+        [Fact]
+        public void EachExportGetsItsOwnSequence()
+        {
+            using var listener = new TestEventListener();
+            listener.EnableEvents(AzureMonitorExporterEventSource.Log, EventLevel.Informational, EventKeywords.All);
+
+            Convert(CreateActivity("ikey-a", EastUs));
+            Convert(CreateActivity("ikey-a", EastUs));
+
+            var summaries = listener.Messages.Where(e => e.EventName == "RoutedExportSummary").ToArray();
+            Assert.Equal(2, summaries.Length);
+            Assert.NotEqual(summaries[0].Payload![0], summaries[1].Payload![0]);
+        }
+
         private static EndpointRouteBatch Convert(params Activity[] activities)
         {
             var routeBatch = new EndpointRouteBatch();
+            routeBatch.BeginExport();
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(CreateBatch(activities), null, sampleRate: 100, routeBatch);
             return routeBatch;
         }
@@ -624,7 +845,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server)
+        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? tenantCloudRole = null)
         {
             var activity = s_activitySource.StartActivity("Test", kind)!;
 
@@ -636,6 +857,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             if (ingestionEndpoint != null)
             {
                 activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+            }
+
+            if (tenantCloudRole != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, tenantCloudRole);
             }
 
             activity.Stop();

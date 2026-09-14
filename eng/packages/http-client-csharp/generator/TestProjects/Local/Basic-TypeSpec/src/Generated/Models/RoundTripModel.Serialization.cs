@@ -838,10 +838,18 @@ namespace BasicTypeSpec
 
             if (local.StartsWith("requiredModel"u8))
             {
+                if (RequiredModel == null)
+                {
+                    return false;
+                }
                 return RequiredModel.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("requiredModel"u8.Length)], out value);
             }
             if (local.StartsWith("modelWithRequiredNullable"u8))
             {
+                if (ModelWithRequiredNullable == null)
+                {
+                    return false;
+                }
                 return ModelWithRequiredNullable.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("modelWithRequiredNullable"u8.Length)], out value);
             }
             return false;
@@ -859,11 +867,19 @@ namespace BasicTypeSpec
 
             if (local.StartsWith("requiredModel"u8))
             {
+                if (RequiredModel == null)
+                {
+                    return false;
+                }
                 RequiredModel.Patch.Set([.. "$"u8, .. local.Slice("requiredModel"u8.Length)], value);
                 return true;
             }
             if (local.StartsWith("modelWithRequiredNullable"u8))
             {
+                if (ModelWithRequiredNullable == null)
+                {
+                    return false;
+                }
                 ModelWithRequiredNullable.Patch.Set([.. "$"u8, .. local.Slice("modelWithRequiredNullable"u8.Length)], value);
                 return true;
             }
