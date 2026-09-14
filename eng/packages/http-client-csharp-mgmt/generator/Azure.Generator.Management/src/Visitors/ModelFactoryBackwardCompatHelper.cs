@@ -622,10 +622,7 @@ namespace Azure.Generator.Management.Visitors
         /// <param name="constructorParameter">The model-typed constructor parameter to build an argument for.</param>
         /// <param name="visitedTypes">The current recursion stack used to avoid cycles in nested model graphs.</param>
         /// <param name="unavailableDirectParameterNames">Old parameter names that should not be reused by direct nested-name fallback.</param>
-        /// <param name="useNullGuard">
-        /// True when creating a top-level nested model argument, so the old overload keeps returning default when all flattened inputs are null.
-        /// False for recursive nested models, which are already inside a parent instance that decided whether to be created.
-        /// </param>
+        /// <param name="useNullGuard">Whether omission of all parameters mapped to this model should preserve a null model value.</param>
         /// <param name="argument">The reconstructed model argument and old parameters used by it.</param>
         private static bool TryBuildModelCompatibilityArgument(
             MethodProvider method,
@@ -679,8 +676,8 @@ namespace Azure.Generator.Management.Visitors
                 return false;
             }
 
-            // For top-level replacement arguments, preserve old all-null behavior by returning default instead of creating
-            // an empty nested model. Recursive replacements are embedded inside an already-created parent and skip this guard.
+            // Preserve omission independently for optional reconstructed models. Creating a parent does not imply
+            // that an optional child was supplied, while required children retain their existing construction behavior.
             var newInstance = New.Instance(constructorParameter.Type, nestedArguments);
             var condition = useNullGuard ? BuildAllNullCondition(matchedParameters) : null;
             var expression = condition is null
@@ -747,7 +744,13 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            return TryBuildModelCompatibilityArgument(method, nestedParameter, visitedTypes, unavailableDirectParameterNames, useNullGuard: false, out argument);
+            return TryBuildModelCompatibilityArgument(
+                method,
+                nestedParameter,
+                visitedTypes,
+                unavailableDirectParameterNames,
+                useNullGuard: nestedParameter.Property?.WireInfo?.IsRequired == false,
+                out argument);
         }
 
         /// <summary>
