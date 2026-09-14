@@ -66,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             options.Retry.MaxRetries = 0;
 
-            _connectionVars = InitializeConnectionVars(options, platform);
+            _connectionVars = InitializeConnectionVars(options, platform, multiEndpointEnabled);
 
             _transmissionStateManager = new TransmissionStateManager(_connectionVars.IngestionEndpoint);
 
@@ -87,7 +87,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _storageDirectory = storageDirectory;
 
-            _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
+            // Statsbeat picks its region from the configured ingestion endpoint and attributes every
+            // measurement to the configured key. With no connection string there is neither, and a
+            // routed destination cannot supply them: it is chosen per item, long after this runs.
+            _statsbeat = _connectionVars.IsRoutingOnly ? null : InitializeStatsbeat(options, _connectionVars, platform);
 
             if (_fileBlobProvider != null)
             {
@@ -104,6 +107,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         }
 
         internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform)
+            => InitializeConnectionVars(options, platform, multiEndpointEnabled: false);
+
+        internal static ConnectionVars InitializeConnectionVars(AzureMonitorExporterOptions options, IPlatform platform, bool multiEndpointEnabled)
         {
             if (options.ConnectionString == null)
             {
@@ -117,6 +123,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             else
             {
                 return ConnectionStringParser.GetValues(options.ConnectionString);
+            }
+
+            // Routing takes every destination from the telemetry, so a process that only routes has
+            // no component of its own to name. Without routing there is nowhere to send anything.
+            if (multiEndpointEnabled)
+            {
+                AzureMonitorExporterEventSource.Log.RoutingWithoutConnectionString();
+
+                return ConnectionVars.CreateRoutingOnly();
             }
 
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");

@@ -11,7 +11,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class StorageHelper
     {
-        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string instrumentationKey)
+        internal static string GetStorageDirectory(IPlatform platform, string? configuredStorageDirectory, string? instrumentationKey)
         {
             // get root directory
             var rootDirectory = configuredStorageDirectory
@@ -22,7 +22,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
             var userName = platform.GetEnvironmentUserName();
             var processName = platform.GetCurrentProcessName();
             var applicationDirectory = platform.GetApplicationBaseDirectory();
-            string subDirectory = HashHelper.GetSHA256Hash($"{instrumentationKey};{userName};{processName};{applicationDirectory}");
+
+            // Without a connection string there is no key to distinguish by. The remaining three
+            // already identify an application on a machine, and omitting the segment rather than
+            // substituting a placeholder keeps every existing directory name unchanged.
+            string seed = string.IsNullOrEmpty(instrumentationKey)
+                ? $"{userName};{processName};{applicationDirectory}"
+                : $"{instrumentationKey};{userName};{processName};{applicationDirectory}";
+
+            string subDirectory = HashHelper.GetSHA256Hash(seed);
 
             return Path.Combine(rootDirectory, subDirectory);
         }

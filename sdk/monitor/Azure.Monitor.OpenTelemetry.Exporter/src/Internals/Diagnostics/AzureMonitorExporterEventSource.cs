@@ -683,5 +683,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(76, Message = "Measurements from meter '{0}' instrument '{1}' were dropped because they could not be routed. Reason: {2}. Reported once per instrument per export; enable Verbose for the individual points.", Level = EventLevel.Informational)]
         public void RoutedInstrumentDropped(string meterName, string instrumentName, string reason) => WriteEvent(76, meterName, instrumentName, reason);
+
+        [Event(77, Message = "No connection string was configured. Multi-endpoint routing is enabled, so telemetry carrying valid routing attributes is still sent to the endpoint it names; everything else is dropped. SDK statistics are not collected, because they identify a component this process does not have.", Level = EventLevel.Informational)]
+        public void RoutingWithoutConnectionString() => WriteEvent(77);
     }
 }
