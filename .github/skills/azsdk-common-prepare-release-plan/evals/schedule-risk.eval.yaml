@@ -76,7 +76,6 @@ stimuli:
       - type: tool-calls
         config:
           required:
-            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
             - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
       - type: output-matches
         config:

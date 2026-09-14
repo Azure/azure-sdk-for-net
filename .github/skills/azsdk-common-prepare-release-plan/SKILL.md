@@ -50,24 +50,18 @@ DO NOT USE FOR: SDK code generation, pipeline troubleshooting, API review feedba
 
 **Steps**:
 
-1. **Get TypeSpec Project Path** — Ask the user for the relative TypeSpec project path (directory containing `tspconfig.yaml`, e.g. `specification/contosowidgetmanager/Contoso.WidgetManager`). Always use the relative path from the repo root, not an absolute path.
-2. **Check Existing** — Run `azure-sdk-mcp:azsdk_get_release_plan` with the relative `typeSpecProjectPath` to check if a release plan already exists.
-   - If a release plan exists with the **same API release type** the user requested: inform the user that a release plan already exists, show the Release Plan ID, status, and API release type. Suggest the user use the existing release plan. Do NOT create a new one.
-   - If a release plan exists but for a **different API release type**: inform the user about the existing plan and its API release type, then proceed to create a new release plan using `forceCreateReleasePlan: true` for the user's requested API release type. Do NOT attempt to update the existing release plan's API release type.
-   - If no release plan exists, proceed to step 3.
-3. **Gather Info** — Collect required details from the user. See [details](references/release-plan-details.md):
+1. **Identify TypeSpec Project** — Use the project path already provided or available in context; ask only if it is missing or ambiguous. Use the repo-relative directory containing `tspconfig.yaml`, e.g. `specification/contosowidgetmanager/Contoso.WidgetManager`.
+2. **Gather Missing Info** — Collect only missing details. See [details](references/release-plan-details.md):
    - Target release month/year (format: "Month YYYY", e.g. "June 2026"). Do NOT use formats like "2026-06" or "06/2026" — these are invalid.
    - API release type: Value must be one of the following: "Private Preview", "Public Preview", or "GA"
-   - SDK release type: Value must be "beta" or "stable" — always ask the user explicitly
    - Spec PR URL (optional)
    - Service Tree ID (GUID) — optional if previously created
    - Product Tree ID (GUID) — optional if previously created
-4. **Create** — Run `azure-sdk-mcp:azsdk_create_release_plan` with the collected parameters including `sdkReleaseType`. Use `forceCreateReleasePlan: true` only if an existing release plan was found for a different API release type.
+3. **Create or Reuse** — Call `azure-sdk-mcp:azsdk_create_release_plan` once with the requested API release type. The tool checks for existing plans and returns an existing plan instead of creating a duplicate. Do not add a separate lookup solely to prevent duplicates. Do not supply `forceCreateReleasePlan` or `sdkReleaseType`; these creation parameters have been removed.
+4. **Use the Result** — Show the returned Release Plan ID, dashboard link, status, and API release type. If the tool returned an existing plan, explicitly say that no new plan was created and use that plan. Do not retry creation, change identifiers or API release type to bypass reuse, or abandon/update the existing plan unless the user separately requests that action. If the returned plan differs from the user's intended release, explain the difference and ask how to proceed rather than silently modifying it.
 5. **Namespace** — For first management plane releases, link namespace approval issue using `azure-sdk-mcp:azsdk_link_namespace_approval_issue`.
 
-> **IMPORTANT**: Do NOT default the API release type value as the SDK release type. These are separate fields — always ask the user explicitly for the SDK release type.
->
-> **IMPORTANT**: Do NOT update an existing release plan to change its API release type. If a release plan exists for a different API release type, force-create a new one instead.
+> **IMPORTANT**: Never bypass the tool's duplicate checks. If an existing plan is already known, show it without another create call when it meets the request. A different API release type is not permission to force creation or change the existing plan; let the create tool decide whether to create or reuse for the requested type.
 
 **Tool**: `azure-sdk-mcp:azsdk_create_release_plan`
 

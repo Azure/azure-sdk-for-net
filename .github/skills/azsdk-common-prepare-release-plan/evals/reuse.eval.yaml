@@ -1,0 +1,109 @@
+name: azsdk-common-prepare-release-plan-reuse-eval
+description: Prevent duplicate creation and bypass attempts when release-plan tools return an existing plan
+type: capability
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-prepare-release-plan
+  type: ci-gate
+
+defaults:
+  runs: 1
+  timeout: "120s"
+  model: gpt-5.4
+  executor: copilot-sdk
+
+scoring:
+  threshold: 1.0
+
+stimuli:
+  # The backend, not a prompt-only pre-check, decides whether to reuse a plan.
+  - name: create-returns-existing-plan-without-retrying
+    environment:
+      skills: [..]
+    prompt: |
+      Create a Public Preview release plan for the TypeSpec project
+      specification/contosowidgetmanager/Contoso.ExistingRelease, targeting
+      December 2026. Its API version is 2026-09-01-preview. The service tree ID
+      is a7f2b8e4-9c1d-4a3e-b6f9-2d8e5a7c3b1f and the product tree ID is
+      f1a8c5d2-6e4b-4f7a-9c2d-8b5e1f3a6c9e. Use the Azure SDK MCP tools.
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
+              args:
+                typeSpecProjectPath: "^specification/contosowidgetmanager/Contoso\\.ExistingRelease$"
+                apiReleaseType: "^Public Preview$"
+              result: "No new release plan was created"
+          disallowed:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+            - name: "^azure-sdk-mcp-azsdk_(?:update_.*release_plan.*|abandon_release_plan|run_generate_sdk|link_.*release_plan)$"
+            - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
+              pattern: '"(?:forceCreateReleasePlan|sdkReleaseType)"\s*:'
+      - type: tool-call-count
+        config:
+          tools: ["^azure-sdk-mcp-azsdk_create_release_plan$"]
+          max: 1
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*50002)(?=.*(?:existing|reus))(?=.*(?:no new|not creat|was not creat))(?=.*releaseplan=50002)"
+
+  - name: lookup-finds-existing-plan-without-creation
+    environment:
+      skills: [..]
+    prompt: |
+      Get the existing Public Preview release plan for
+      specification/contosowidgetmanager/Contoso.ExistingRelease and show
+      its status and dashboard link. Use the Azure SDK MCP tools.
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+              args:
+                typeSpecProjectPath: "^specification/contosowidgetmanager/Contoso\\.ExistingRelease$"
+          disallowed:
+            - name: "^azure-sdk-mcp-azsdk_(?:create_release_plan|update_.*release_plan.*|abandon_release_plan|run_generate_sdk|link_.*release_plan)$"
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*50002)(?=.*(?:existing|found|reus))(?=.*releaseplan=50002)"
+
+  - name: different-returned-release-type-is-not-a-force-override
+    environment:
+      skills: [..]
+    prompt: |
+      Create a GA release plan for the TypeSpec project
+      specification/contosowidgetmanager/Contoso.ExistingRelease, targeting
+      December 2026. The service tree ID is
+      a7f2b8e4-9c1d-4a3e-b6f9-2d8e5a7c3b1f and the product tree ID is
+      f1a8c5d2-6e4b-4f7a-9c2d-8b5e1f3a6c9e. Use the Azure SDK MCP tools.
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
+              args:
+                typeSpecProjectPath: "^specification/contosowidgetmanager/Contoso\\.ExistingRelease$"
+                apiReleaseType: "^GA$"
+              result: "No new release plan was created"
+          disallowed:
+            - name: "^azure-sdk-mcp-azsdk_(?:update_.*release_plan.*|abandon_release_plan|run_generate_sdk|link_.*release_plan)$"
+            - name: "^azure-sdk-mcp-azsdk_create_release_plan$"
+              pattern: '"(?:forceCreateReleasePlan|sdkReleaseType)"\s*:'
+      - type: tool-call-count
+        config:
+          tools: ["^azure-sdk-mcp-azsdk_create_release_plan$"]
+          max: 1
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*50002)(?=.*Public Preview)(?=.*\\bGA\\b)(?=.*(?:does not match|doesn't match|not.*GA|mismatch|different|instead|however))"
