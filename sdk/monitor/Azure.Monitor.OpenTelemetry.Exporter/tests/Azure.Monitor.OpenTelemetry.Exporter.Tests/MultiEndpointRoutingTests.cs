@@ -251,7 +251,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     CreateActivity("ikey-b", EastUs)),
                 resource,
                 sampleRate: 100,
-                routeBatch);
+                routeBatch,
+                EndpointTrustPolicy.Unrestricted);
 
             Assert.Empty(routeBatch[0].TelemetryItems.Where(item => item.Data?.BaseType == "MetricData"));
 
@@ -278,7 +279,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateBatch(CreateActivity("ikey-a", EastUs, cloudRole: "app-role")),
                 resource,
                 sampleRate: 100,
-                routeBatch);
+                routeBatch,
+                EndpointTrustPolicy.Unrestricted);
 
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
 
@@ -351,7 +353,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var routeBatch = new EndpointRouteBatch();
-            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activity), resource, 100, routeBatch);
+            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activity), resource, 100, routeBatch, EndpointTrustPolicy.Unrestricted);
 
             Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
             Assert.All(
@@ -368,7 +370,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var routeBatch = new EndpointRouteBatch();
 
-            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-a", EastUs)), null, 100, routeBatch);
+            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-a", EastUs)), null, 100, routeBatch, EndpointTrustPolicy.Unrestricted);
             var firstGroup = routeBatch[0];
             var firstItems = firstGroup.TelemetryItems;
             routeBatch.Reset();
@@ -376,7 +378,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(0, routeBatch.Count);
             Assert.Empty(firstItems);
 
-            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-b", WestUs)), null, 100, routeBatch);
+            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(CreateActivity("ikey-b", WestUs)), null, 100, routeBatch, EndpointTrustPolicy.Unrestricted);
 
             Assert.Equal(1, routeBatch.Count);
             Assert.Same(firstGroup, routeBatch[0]);
@@ -408,12 +410,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// The credential is scoped to the exporter's own audience, and the bearer token policy sits
-        /// in the shared pipeline, so it would be attached to requests addressed to hosts named by
-        /// telemetry. The combination is refused rather than disclosing the token.
+        /// The credential is scoped to Azure Monitor in a cloud rather than to one component, so a
+        /// single token serves every destination. What it must not do is follow telemetry to a host
+        /// of the telemetry's choosing, which is what the trust policy bounds.
         /// </summary>
         [Fact]
-        public void MultiEndpointRefusesToStartWithEntraCredentials()
+        public void MultiEndpointStartsWithEntraCredentialsAndRestrictsDestinations()
         {
             var options = new AzureMonitorExporterOptions
             {
@@ -422,10 +424,144 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 DisableOfflineStorage = true,
             };
 
-            var exception = Assert.Throws<NotSupportedException>(
-                () => new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true));
+            using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
 
-            Assert.Contains("Entra", exception.Message, StringComparison.Ordinal);
+            Assert.True(transmitter.TrustPolicy.Enabled);
+        }
+
+        /// <summary>
+        /// Without a credential nothing is at stake in the destination, so the endpoint stays as
+        /// unrestricted as it was before Entra was supported.
+        /// </summary>
+        [Fact]
+        public void MultiEndpointWithoutCredentialsLeavesDestinationsUnrestricted()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint={EastUs}",
+                DisableOfflineStorage = true,
+            };
+
+            using var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
+
+            Assert.False(transmitter.TrustPolicy.Enabled);
+        }
+
+        [Theory]
+        [InlineData(WestUs)]
+        [InlineData("https://dc.services.visualstudio.com/")]
+        [InlineData("https://dc.applicationinsights.azure.cn/")]
+        [InlineData("https://westus-2.in.applicationinsights.azure.us/")]
+        [InlineData("https://ingestion.contoso-private.example/")] // the exporter's own endpoint
+        public void EntraTelemetryReachesATrustedEndpoint(string ingestionEndpoint)
+        {
+            var routeBatch = Convert(EntraTrustPolicy(), CreateActivity("ikey-a", ingestionEndpoint, useAadAuth: true));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.True(routeBatch[0].UseAadAuth);
+        }
+
+        /// <summary>
+        /// A host that is neither Azure Monitor ingestion nor the exporter's own endpoint would
+        /// receive a token minted for the exporter's audience, so the telemetry is dropped instead.
+        /// </summary>
+        [Theory]
+        [InlineData("https://attacker.example/")]
+        [InlineData("https://evilapplicationinsights.azure.com/")]      // suffix without the dot boundary
+        [InlineData("https://eastus-1.in.applicationinsights.azure.com:8443/")] // non-default port
+        [InlineData("https://localhost:9000/")]
+        public void EntraTelemetryIsDroppedForAnUntrustedEndpoint(string ingestionEndpoint)
+        {
+            var routeBatch = Convert(EntraTrustPolicy(), CreateActivity("ikey-a", ingestionEndpoint, useAadAuth: true));
+
+            Assert.Equal(0, routeBatch.Count);
+
+            Assert.Null(EndpointRouting.NormalizeEndpoint(ingestionEndpoint, EntraTrustPolicy(), useAadAuth: true, out var reason));
+            Assert.Equal(RoutingRejectionReason.IngestionEndpointNotTrusted, reason);
+        }
+
+        /// <summary>
+        /// Only a destination that will be sent the token is fenced in. Telemetry that did not opt in
+        /// carries no credential, so a private or proxied endpoint stays reachable.
+        /// </summary>
+        [Theory]
+        [InlineData("https://ingestion.contoso-other.example/")]
+        [InlineData("https://localhost:9000/")]
+        public void UnauthenticatedTelemetryIsNotFencedInByTheCredential(string ingestionEndpoint)
+        {
+            var routeBatch = Convert(EntraTrustPolicy(), CreateActivity("ikey-a", ingestionEndpoint));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.False(routeBatch[0].UseAadAuth);
+        }
+
+        /// <summary>
+        /// The header applies to a whole POST, so one endpoint serving a component that requires a
+        /// token and one that still accepts key auth has to become two requests.
+        /// </summary>
+        [Fact]
+        public void OneEndpointSplitsIntoAuthenticatedAndUnauthenticatedGroups()
+        {
+            var routeBatch = Convert(
+                EntraTrustPolicy(),
+                CreateActivity("ikey-auth", WestUs, useAadAuth: true),
+                CreateActivity("ikey-key-only", WestUs),
+                CreateActivity("ikey-auth-2", WestUs, useAadAuth: true));
+
+            Assert.Equal(2, routeBatch.Count);
+            Assert.All(new[] { routeBatch[0], routeBatch[1] }, group => Assert.Equal(WestUs, group.IngestionEndpoint));
+
+            var authenticated = Assert.Single(new[] { routeBatch[0], routeBatch[1] }.Where(group => group.UseAadAuth));
+            Assert.Equal(new[] { "ikey-auth", "ikey-auth-2" }, authenticated.TelemetryItems.Select(item => item.InstrumentationKey));
+
+            var unauthenticated = Assert.Single(new[] { routeBatch[0], routeBatch[1] }.Where(group => !group.UseAadAuth));
+            Assert.Equal(new[] { "ikey-key-only" }, unauthenticated.TelemetryItems.Select(item => item.InstrumentationKey));
+        }
+
+        /// <summary>
+        /// Without a credential the flag has nothing to act on, so honouring it would only split one
+        /// endpoint into two identical unauthenticated POSTs.
+        /// </summary>
+        [Fact]
+        public void TheFlagIsIgnoredWithoutACredential()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", WestUs, useAadAuth: true),
+                CreateActivity("ikey-b", WestUs));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.False(routeBatch[0].UseAadAuth);
+            Assert.Equal(2, routeBatch[0].TelemetryItems.Count);
+        }
+
+        [Theory]
+        [InlineData(null, false)]
+        [InlineData(true, true)]
+        [InlineData(false, false)]
+        [InlineData("true", true)]
+        [InlineData("True", true)]
+        [InlineData("false", false)]
+        [InlineData("yes", false)]
+        [InlineData(1, false)]
+        public void TheFlagIsOptInAndOnlyAnExplicitTrueCounts(object? useAadAuth, bool expected)
+        {
+            var routeBatch = Convert(EntraTrustPolicy(), CreateActivity("ikey-a", WestUs, useAadAuth: useAadAuth));
+
+            Assert.Equal(expected, routeBatch[0].UseAadAuth);
+        }
+
+        /// <summary>
+        /// Normalization is cached and trust is not, so a value first seen without a credential must
+        /// still be checked when one is in play.
+        /// </summary>
+        [Fact]
+        public void CachedNormalizationDoesNotCarryTrustAcrossPolicies()
+        {
+            const string Endpoint = "https://cache-probe.example/";
+
+            Assert.NotNull(EndpointRouting.NormalizeEndpoint(Endpoint));
+            Assert.Null(EndpointRouting.NormalizeEndpoint(Endpoint, EntraTrustPolicy(), useAadAuth: true, out var reason));
+            Assert.Equal(RoutingRejectionReason.IngestionEndpointNotTrusted, reason);
         }
 
         /// <summary>
@@ -634,7 +770,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 CreateBatch(corpus.Select(create => create()).ToArray()),
                 resource,
                 sampleRate: 100,
-                routeBatch);
+                routeBatch,
+                EndpointTrustPolicy.Unrestricted);
 
             var singleEndpoint = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleEndpointItems));
             var multiEndpoint = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
@@ -829,12 +966,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         private static EndpointRouteBatch Convert(params Activity[] activities)
+            => Convert(EndpointTrustPolicy.Unrestricted, activities);
+
+        private static EndpointRouteBatch Convert(EndpointTrustPolicy trustPolicy, params Activity[] activities)
         {
             var routeBatch = new EndpointRouteBatch();
             routeBatch.BeginExport();
-            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activities), null, sampleRate: 100, routeBatch);
+            TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(CreateBatch(activities), null, sampleRate: 100, routeBatch, trustPolicy);
             return routeBatch;
         }
+
+        private static EndpointTrustPolicy EntraTrustPolicy()
+            => new(enabled: true, new Uri("https://ingestion.contoso-private.example/"));
 
         private static (AzureMonitorTraceExporter Exporter, MockTransmitter Transmitter) CreateExporter(bool multiEndpointEnabled)
         {
@@ -845,7 +988,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? cloudRole = null)
+        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? cloudRole = null, object? useAadAuth = null)
         {
             var activity = s_activitySource.StartActivity("Test", kind)!;
 
@@ -862,6 +1005,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             if (cloudRole != null)
             {
                 activity.SetTag(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, cloudRole);
+            }
+
+            if (useAadAuth != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftUseAadAuth, useAadAuth);
             }
 
             activity.Stop();

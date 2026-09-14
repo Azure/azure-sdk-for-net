@@ -47,12 +47,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// ordinal scan is exact. At the handful of regions a process talks to, scanning beats
         /// hashing and allocates nothing.
         /// </remarks>
-        internal Group GetOrAdd(string ingestionEndpoint)
+        internal Group GetOrAdd(string ingestionEndpoint, bool useAadAuth)
         {
             for (int i = 0; i < _count; i++)
             {
                 var candidate = _groups[i]!;
-                if (string.Equals(candidate.IngestionEndpoint, ingestionEndpoint, StringComparison.Ordinal))
+                if (candidate.UseAadAuth == useAadAuth
+                    && string.Equals(candidate.IngestionEndpoint, ingestionEndpoint, StringComparison.Ordinal))
                 {
                     return candidate;
                 }
@@ -64,7 +65,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
 
             var group = _groups[_count] ??= new Group();
-            group.Open(ingestionEndpoint);
+            group.Open(ingestionEndpoint, useAadAuth);
             _count++;
 
             return group;
@@ -84,14 +85,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         {
             internal string IngestionEndpoint { get; private set; } = string.Empty;
 
+            /// <summary>
+            /// Part of the group's identity, not a property of the endpoint: one endpoint serves
+            /// components that require a token and components that still accept key-only auth, and
+            /// the two cannot share a POST because the header applies to the whole request.
+            /// </summary>
+            internal bool UseAadAuth { get; private set; }
+
             internal List<TelemetryItem> TelemetryItems { get; } = new();
 
-            internal void Open(string ingestionEndpoint)
+            internal void Open(string ingestionEndpoint, bool useAadAuth)
             {
                 // Self-clearing rather than relying on Close: a group that opened holding a previous
                 // export's items would POST one endpoint's telemetry to another endpoint.
                 Clear();
                 IngestionEndpoint = ingestionEndpoint;
+                UseAadAuth = useAadAuth;
             }
 
             internal void Close() => Clear();

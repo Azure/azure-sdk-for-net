@@ -59,6 +59,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return false;
         }
 
+        /// <summary>
+        /// Whether a host is one Azure Monitor ingestion answers on, for deciding what may be sent
+        /// an Entra ID token when the destination came from telemetry rather than configuration.
+        /// </summary>
+        internal static bool IsTrustedIngestionHost(string canonicalHost)
+        {
+            foreach (string suffix in s_allowedRedirectDomainSuffixes)
+            {
+                if (canonicalHost.EndsWith(suffix, StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         internal static bool IsTrustedLiveMetricsRedirect(Uri redirectUri)
         {
             if (!IsValidHttpsRedirect(redirectUri) || !redirectUri.IsDefaultPort)
@@ -66,20 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return false;
             }
 
-            if (!TryGetCanonicalHost(redirectUri, out var redirectHost))
-            {
-                return false;
-            }
-
-            foreach (string suffix in s_allowedRedirectDomainSuffixes)
-            {
-                if (redirectHost.EndsWith(suffix, StringComparison.Ordinal))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return TryGetCanonicalHost(redirectUri, out var redirectHost) && IsTrustedIngestionHost(redirectHost);
         }
 
         private static bool IsValidHttpsRedirect(Uri redirectUri) =>
@@ -91,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <see cref="Uri.IdnHost"/> throws on a malformed punycode label. A redirect target is
         /// chosen by whatever answered the request, so the input is not ours to trust.
         /// </remarks>
-        private static bool TryGetCanonicalHost(Uri uri, out string host)
+        internal static bool TryGetCanonicalHost(Uri uri, out string host)
         {
             try
             {

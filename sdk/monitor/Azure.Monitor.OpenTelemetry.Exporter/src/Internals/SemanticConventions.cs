@@ -255,6 +255,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         public const string AttributeMicrosoftMultiEndpointCloudRole = "microsoft.multi_endpoint_cloud_role";
 
+        /// <summary>
+        /// Routing attribute requesting that routed telemetry be sent with the exporter's Microsoft
+        /// Entra ID token. Opt-in: telemetry without it is sent unauthenticated.
+        /// </summary>
+        public const string AttributeMicrosoftUseAadAuth = "microsoft.use_aad_auth";
+
         // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
         public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
         public const string AttributeMicrosoftSessionId = "microsoft.session.id";

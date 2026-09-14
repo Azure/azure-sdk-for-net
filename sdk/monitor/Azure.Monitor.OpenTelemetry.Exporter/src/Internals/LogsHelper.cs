@@ -26,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private const string InstrumentationKeyAttributeName = SemanticConventions.AttributeMicrosoftInstrumentationKey;
         private const string IngestionEndpointAttributeName = SemanticConventions.AttributeMicrosoftIngestionEndpoint;
         private const string CloudRoleAttributeName = SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole;
+        private const string UseAadAuthAttributeName = SemanticConventions.AttributeMicrosoftUseAadAuth;
         private const string ClientIpAttributeName = "microsoft.client.ip";
         private const string EndUserPseudoIdAttributeName = "enduser.pseudo.id";
         private const string EndUserIdAttributeName = "enduser.id";
@@ -102,13 +103,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// was stamped with. A record whose routing attributes are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorLogsMultiEndpoint(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorLogsMultiEndpoint(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, EndpointRouteBatch routeBatch, EndpointTrustPolicy trustPolicy)
         {
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    if (!TryGetLogRoute(logRecord, out var instrumentationKey, out var ingestionEndpoint, out var cloudRole))
+                    if (!TryGetLogRoute(logRecord, trustPolicy, out var instrumentationKey, out var ingestionEndpoint, out var cloudRole, out var useAadAuth))
                     {
                         // Routing attributes are stamped upstream only on records meant to be routed;
                         // a record without them is not addressed to any endpoint, so drop it quietly
@@ -117,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         continue;
                     }
 
-                    var group = routeBatch.GetOrAdd(ingestionEndpoint);
+                    var group = routeBatch.GetOrAdd(ingestionEndpoint, useAadAuth);
 
                     // No schema counter on the routed path: IMultiEndpointTransmitter.Track carries none,
                     // matching the trace multi-endpoint conversion.
@@ -138,16 +139,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         internal static bool TryGetLogRoute(
             LogRecord logRecord,
+            EndpointTrustPolicy trustPolicy,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint,
-            [NotNullWhen(true)] out string? cloudRole)
+            [NotNullWhen(true)] out string? cloudRole,
+            out bool useAadAuth)
         {
             object? rawKey = null;
             object? rawEndpoint = null;
             object? rawCloudRole = null;
+            object? rawUseAadAuth = null;
             bool keySeen = false;
             bool endpointSeen = false;
             bool cloudRoleSeen = false;
+            bool useAadAuthSeen = false;
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
@@ -166,13 +171,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     rawCloudRole = item.Value;
                     cloudRoleSeen = true;
                 }
+                else if (!useAadAuthSeen && item.Key == UseAadAuthAttributeName)
+                {
+                    rawUseAadAuth = item.Value;
+                    useAadAuthSeen = true;
+                }
             }
 
             cloudRole = EndpointRouting.GetCloudRole(rawCloudRole as string);
 
+            // Honoured only when a credential exists to satisfy it; otherwise the flag would split
+            // one endpoint into two identical unauthenticated POSTs.
+            useAadAuth = trustPolicy.Enabled && EndpointRouting.GetUseAadAuth(rawUseAadAuth);
+
             // A non-string value stringifies unpredictably (e.g. "System.String[]" for an array), so
             // 'as string' drops it and routing fails, exactly as the trace path does.
-            return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, out instrumentationKey, out ingestionEndpoint);
+            return EndpointRouting.TryGetRoute(rawKey as string, rawEndpoint as string, trustPolicy, useAadAuth, out instrumentationKey, out ingestionEndpoint);
         }
 
         private static TelemetryItem BuildLogTelemetryItem(LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool consumeMultiEndpointAttributes, string? cloudRole)
@@ -279,6 +293,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
                     case CloudRoleAttributeName:
+                    case UseAadAuthAttributeName:
                         if (!consumeMultiEndpointAttributes)
                         {
                             goto default;
@@ -422,6 +437,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     case InstrumentationKeyAttributeName:
                     case IngestionEndpointAttributeName:
                     case CloudRoleAttributeName:
+                    case UseAadAuthAttributeName:
                         if (!consumeMultiEndpointAttributes)
                         {
                             goto default;

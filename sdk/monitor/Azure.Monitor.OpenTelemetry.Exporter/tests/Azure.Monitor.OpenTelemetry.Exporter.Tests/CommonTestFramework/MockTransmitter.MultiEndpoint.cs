@@ -18,6 +18,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public ExportResult MultiEndpointResult { get; set; } = ExportResult.Success;
 
+        public EndpointTrustPolicy TrustPolicy { get; set; } = EndpointTrustPolicy.Unrestricted;
+
         public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
         {
             lock (this.Sends)

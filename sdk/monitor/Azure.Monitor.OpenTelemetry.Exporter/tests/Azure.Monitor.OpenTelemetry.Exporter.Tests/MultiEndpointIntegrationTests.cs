@@ -10,12 +10,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
@@ -472,10 +476,112 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(control, Volatile.Read(ref measurements));
         }
 
+        /// <summary>
+        /// One identity holding the publisher role on every destination component that asked for it:
+        /// the same token is good at all of them, so each opted-in request carries it. A component
+        /// that did not opt in keeps ingesting on its instrumentation key alone.
+        /// </summary>
+        [Fact]
+        public void EveryRoutedRequestThatOptedInCarriesTheEntraToken()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, new StubCredential("routed-token"), out _);
+
+            var result = exporter.Export(CreateBatch(
+                CreateActivity("ikey-east", EastUs, useAadAuth: true),
+                CreateActivity("ikey-west", WestUs, useAadAuth: true),
+                CreateActivity("ikey-north", NorthEurope)));
+
+            Assert.Equal(ExportResult.Success, result);
+            Assert.Equal(3, ingestion.Requests.Count);
+
+            Assert.Equal("Bearer routed-token", ingestion.RequestTo(EastUs).Authorization);
+            Assert.Equal("Bearer routed-token", ingestion.RequestTo(WestUs).Authorization);
+            Assert.Null(ingestion.RequestTo(NorthEurope).Authorization);
+        }
+
+        /// <summary>
+        /// The header applies to the whole POST, so one endpoint carrying both kinds of component has
+        /// to become two requests.
+        /// </summary>
+        [Fact]
+        public void OneEndpointBecomesTwoRequestsWhenOnlySomeItemsOptIn()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, new StubCredential("routed-token"), out _);
+
+            Assert.Equal(ExportResult.Success, exporter.Export(CreateBatch(
+                CreateActivity("ikey-auth", EastUs, useAadAuth: true),
+                CreateActivity("ikey-key-only", EastUs))));
+
+            Assert.Equal(2, ingestion.Requests.Count);
+            Assert.All(ingestion.Requests, request => Assert.Equal(EastUs + "v2.1/track", request.Uri));
+
+            var authenticated = Assert.Single(ingestion.Requests.Where(request => request.Authorization != null));
+            Assert.Equal("Bearer routed-token", authenticated.Authorization);
+            Assert.Contains("ikey-auth", authenticated.Body, StringComparison.Ordinal);
+
+            var unauthenticated = Assert.Single(ingestion.Requests.Where(request => request.Authorization == null));
+            Assert.Contains("ikey-key-only", unauthenticated.Body, StringComparison.Ordinal);
+        }
+
+        [Fact]
+        public void RoutedRequestsCarryNoTokenWithoutACredential()
+        {
+            var ingestion = new MockIngestion();
+            using var exporter = CreateExporter(ingestion, out _);
+
+            exporter.Export(CreateBatch(CreateActivity("ikey-east", EastUs, useAadAuth: true)));
+
+            Assert.Null(ingestion.RequestTo(EastUs).Authorization);
+        }
+
+        /// <summary>
+        /// The last line of defence. Routing already drops untrusted destinations that opted in, so
+        /// nothing should reach the pipeline addressed to one, but if anything ever does the token
+        /// stays behind.
+        /// </summary>
+        [Theory]
+        [InlineData(EastUs + "v2.1/track", true, "Bearer guarded-token")]
+        [InlineData(EastUs + "v2.1/track", false, null)]
+        [InlineData("https://ingestion.contoso-private.example/v2.1/track", true, "Bearer guarded-token")] // the exporter's own endpoint
+        [InlineData("https://ingestion.contoso-private.example/v2.1/track", false, null)]
+        [InlineData("https://attacker.example/v2.1/track", true, null)]
+        [InlineData("https://evilapplicationinsights.azure.com/v2.1/track", true, null)]
+        public void TheTokenOnlyGoesToATrustedHostThatAskedForIt(string requestUri, bool useAadAuth, string? expectedAuthorization)
+        {
+            var transport = new MockTransport(_ => new MockResponse(200));
+
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri("https://ingestion.contoso-private.example/"));
+            var pipeline = HttpPipelineBuilder.Build(
+                new AzureMonitorExporterOptions { Transport = transport },
+                new MultiEndpointBearerTokenAuthenticationPolicy(new StubCredential("guarded-token"), AadHelper.DefaultAadScope, trustPolicy));
+
+            using var message = pipeline.CreateMessage();
+            message.Request.Method = RequestMethod.Post;
+            message.Request.Uri.Reset(new Uri(requestUri));
+
+            if (useAadAuth)
+            {
+                message.SetProperty(ApplicationInsightsRestClient.UseAadAuthProperty, true);
+            }
+
+            pipeline.Send(message, default);
+
+            transport.SingleRequest.Headers.TryGetValue("Authorization", out var authorization);
+            Assert.Equal(expectedAuthorization, authorization);
+        }
+
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, out string instrumentationKey)
-            => CreateExporter(ingestion, multiEndpointEnabled: true, out instrumentationKey);
+            => CreateExporter(ingestion, multiEndpointEnabled: true, credential: null, out instrumentationKey);
+
+        private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, TokenCredential credential, out string instrumentationKey)
+            => CreateExporter(ingestion, multiEndpointEnabled: true, credential, out instrumentationKey);
 
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiEndpointEnabled, out string instrumentationKey)
+            => CreateExporter(ingestion, multiEndpointEnabled, credential: null, out instrumentationKey);
+
+        private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiEndpointEnabled, TokenCredential? credential, out string instrumentationKey)
         {
             instrumentationKey = "00000000-0000-0000-0000-0000000000ff";
 
@@ -485,6 +591,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 Transport = ingestion.Transport,
                 DisableOfflineStorage = true,
                 EnableStatsbeat = false,
+                Credential = credential,
             };
 
             // Both halves must be told the gate is on. The two-argument transmitter constructor reads
@@ -498,7 +605,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint)
+        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, bool useAadAuth = false)
         {
             var activity = s_activitySource.StartActivity("IntegrationTest", ActivityKind.Server)!;
 
@@ -510,6 +617,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             if (ingestionEndpoint != null)
             {
                 activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+            }
+
+            if (useAadAuth)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftUseAadAuth, true);
             }
 
             activity.Stop();
@@ -575,7 +687,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             private MockResponse Respond(Request request)
             {
-                Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request)));
+                request.Headers.TryGetValue("Authorization", out var authorization);
+                Requests.Add(new CapturedRequest(request.Uri.ToString(), ReadBody(request), authorization));
 
                 if (!TryGetEndpoint(request, out var endpoint))
                 {
@@ -633,17 +746,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        private sealed class StubCredential : TokenCredential
+        {
+            private readonly string _token;
+
+            internal StubCredential(string token) => _token = token;
+
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new(_token, DateTimeOffset.UtcNow.AddHours(1));
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new(GetToken(requestContext, cancellationToken));
+        }
+
         private sealed class CapturedRequest
         {
-            internal CapturedRequest(string uri, string body)
+            internal CapturedRequest(string uri, string body, string? authorization)
             {
                 Uri = uri;
                 Body = body;
+                Authorization = authorization;
             }
 
             internal string Uri { get; }
 
             internal string Body { get; }
+
+            internal string? Authorization { get; }
         }
     }
 }

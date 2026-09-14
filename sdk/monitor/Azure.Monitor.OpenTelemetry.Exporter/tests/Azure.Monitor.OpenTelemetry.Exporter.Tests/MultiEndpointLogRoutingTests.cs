@@ -622,13 +622,67 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(new[] { "ikey-a" }, transmitter.Sends[0].TelemetryItems.Select(item => item.InstrumentationKey));
         }
 
+        /// <summary>
+        /// Logs share the routing core with traces, so the opt-in attribute fences their
+        /// destinations and splits their groups the same way.
+        /// </summary>
+        [Fact]
+        public void EntraDropsRecordsBoundForAnUntrustedEndpoint()
+        {
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, trustPolicy),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), UseAadAuth(true)),
+                Emit(Ikey("ikey-b"), Endpoint("https://attacker.example/"), UseAadAuth(true)));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.True(routeBatch[0].UseAadAuth);
+        }
+
+        [Fact]
+        public void OneEndpointSplitsIntoAuthenticatedAndUnauthenticatedGroupsForLogs()
+        {
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, trustPolicy),
+                Emit(Ikey("ikey-auth"), Endpoint(EastUs), UseAadAuth(true)),
+                Emit(Ikey("ikey-key-only"), Endpoint(EastUs)));
+
+            Assert.Equal(2, routeBatch.Count);
+            Assert.True(routeBatch[0].UseAadAuth);
+            Assert.False(routeBatch[1].UseAadAuth);
+        }
+
+        /// <summary>
+        /// Consumed for routing like the other routing attributes, so it must not surface as a
+        /// custom dimension on the routed path.
+        /// </summary>
+        [Fact]
+        public void TheAuthFlagIsNotEmittedAsACustomProperty()
+        {
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, trustPolicy),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), UseAadAuth(true)));
+
+            var properties = ((MessageData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftUseAadAuth, properties.Keys);
+        }
+
         private EndpointRouteBatch Convert(params Action<ILogger>[] emits)
             => Convert(resource: null, emits);
 
         private EndpointRouteBatch Convert(AzureMonitorResource? resource, params Action<ILogger>[] emits)
         {
             var routeBatch = new EndpointRouteBatch();
-            WithLiveBatch(batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource, routeBatch), emits);
+            WithLiveBatch(batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource, routeBatch, EndpointTrustPolicy.Unrestricted), emits);
             return routeBatch;
         }
 
@@ -701,6 +755,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static KeyValuePair<string, object?> CloudRole(object? value)
             => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);
+
+        private static KeyValuePair<string, object?> UseAadAuth(object? value)
+            => new(SemanticConventions.AttributeMicrosoftUseAadAuth, value);
 
         private static AzureMonitorResource CreateResource()
             => ResourceBuilder.CreateDefault()

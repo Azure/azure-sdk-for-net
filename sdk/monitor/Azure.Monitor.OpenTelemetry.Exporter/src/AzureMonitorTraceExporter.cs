@@ -108,7 +108,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(batch, TraceResource, _sampleRate, routeBatch);
+                TraceHelper.OtelToAzureMonitorTraceMultiEndpoint(batch, TraceResource, _sampleRate, routeBatch, _multiEndpointTransmitter!.TrustPolicy);
 
                 if (routeBatch.Count == 0)
                 {

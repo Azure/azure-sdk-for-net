@@ -19,5 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         IngestionEndpointHasCredentials,
         IngestionEndpointHasQueryOrFragment,
         IngestionEndpointHostInvalid,
+
+        /// <summary>
+        /// The exporter holds an Entra ID credential and the host is neither an Azure Monitor
+        /// ingestion host nor the endpoint from the exporter's own connection string.
+        /// </summary>
+        IngestionEndpointNotTrusted,
     }
 }

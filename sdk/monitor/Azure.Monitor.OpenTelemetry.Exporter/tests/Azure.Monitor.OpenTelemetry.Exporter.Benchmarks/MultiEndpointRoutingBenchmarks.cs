@@ -163,7 +163,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                 _routedBatch,
                 s_resource,
                 sampleRate: 100F,
-                _routeBatch);
+                _routeBatch,
+                EndpointTrustPolicy.Unrestricted);
 
             return _routeBatch.Count;
         }
@@ -175,7 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             for (int i = 0; i < BatchSize; i++)
             {
-                _routeBatch.GetOrAdd(_endpoints[i % EndpointCount]);
+                _routeBatch.GetOrAdd(_endpoints[i % EndpointCount], useAadAuth: false);
             }
 
             return _routeBatch.Count;

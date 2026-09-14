@@ -106,7 +106,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             try
             {
-                LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, LogResource, routeBatch);
+                LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, LogResource, routeBatch, _multiEndpointTransmitter!.TrustPolicy);
 
                 if (routeBatch.Count == 0)
                 {

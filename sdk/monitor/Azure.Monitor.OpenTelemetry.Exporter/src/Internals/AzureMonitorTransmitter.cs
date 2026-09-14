@@ -38,6 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         internal readonly MultiEndpointStorage? _multiEndpointStorage;
+        private readonly EndpointTrustPolicy _trustPolicy;
         private readonly bool _isAadEnabled;
         private readonly string? _storageDirectory;
         private readonly object _drainLock = new();
@@ -70,18 +71,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _transmissionStateManager = new TransmissionStateManager(_connectionVars.IngestionEndpoint);
 
-            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
+            _trustPolicy = CreateTrustPolicy(options, _connectionVars, multiEndpointEnabled);
 
-            // BearerTokenAuthenticationPolicy sits in the shared pipeline, so it would attach a token
-            // for the exporter's own audience to every routed request, including ones addressed to a
-            // host named by an Activity tag. Refuse the combination rather than disclose the token.
-            if (multiEndpointEnabled && _isAadEnabled)
-            {
-                _transmissionStateManager.Dispose();
-
-                throw new NotSupportedException(
-                    "Multi-endpoint routing cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting switch.");
-            }
+            _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, _trustPolicy, out _isAadEnabled);
 
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
 
@@ -122,18 +114,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             throw new InvalidOperationException("A connection string was not found. Please set your connection string.");
         }
 
-        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, out bool isAadEnabled)
+        private static EndpointTrustPolicy CreateTrustPolicy(AzureMonitorExporterOptions options, ConnectionVars connectionVars, bool multiEndpointEnabled)
+        {
+            if (!multiEndpointEnabled || options.Credential == null)
+            {
+                return EndpointTrustPolicy.Unrestricted;
+            }
+
+            Uri.TryCreate(connectionVars.IngestionEndpoint, UriKind.Absolute, out var ownIngestionEndpoint);
+
+            return new EndpointTrustPolicy(enabled: true, ownIngestionEndpoint);
+        }
+
+        private static ApplicationInsightsRestClient InitializeRestClient(AzureMonitorExporterOptions options, ConnectionVars connectionVars, EndpointTrustPolicy trustPolicy, out bool isAadEnabled)
         {
             HttpPipeline pipeline;
 
             if (options.Credential != null)
             {
                 var scope = AadHelper.GetScope(connectionVars.AadAudience);
-                var httpPipelinePolicy = new HttpPipelinePolicy[]
+                HttpPipelinePolicy[] httpPipelinePolicy;
+
+                if (trustPolicy.Enabled)
                 {
-                    new BearerTokenAuthenticationPolicy(options.Credential, scope),
-                    new IngestionRedirectPolicy()
-                };
+                    // Redirect first, so the address is final before the token is attached and each
+                    // redirect hop is authorized against the host that actually receives it.
+                    httpPipelinePolicy = new HttpPipelinePolicy[]
+                    {
+                        new IngestionRedirectPolicy(),
+                        new MultiEndpointBearerTokenAuthenticationPolicy(options.Credential, scope, trustPolicy)
+                    };
+
+                    AzureMonitorExporterEventSource.Log.MultiEndpointEntraAuthenticationEnabled(options.Credential.GetType().Name, scope);
+                }
+                else
+                {
+                    httpPipelinePolicy = new HttpPipelinePolicy[]
+                    {
+                        new BearerTokenAuthenticationPolicy(options.Credential, scope),
+                        new IngestionRedirectPolicy()
+                    };
+                }
 
                 isAadEnabled = true;
                 pipeline = HttpPipelineBuilder.Build(options, httpPipelinePolicy);
@@ -360,6 +381,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
+        public EndpointTrustPolicy TrustPolicy => _trustPolicy;
+
         public ExportResult Track(EndpointRouteBatch routeBatch, TelemetryItemOrigin origin, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested)
@@ -405,7 +428,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private async ValueTask<ExportResult> SendGroupAsync(EndpointRouteBatch.Group group, long exportSequence, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             var itemCount = group.TelemetryItems.Count;
-            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint);
+            var storage = _multiEndpointStorage?.TryGet(group.IngestionEndpoint, group.UseAadAuth);
 
             if (storage != null && (IsPersistOnly || storage.TransmissionStateManager.State != TransmissionState.Closed))
             {
@@ -426,8 +449,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 var stopwatch = networkSdkStats != null ? Stopwatch.StartNew() : null;
 
                 using var httpMessage = async
-                    ? await _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).ConfigureAwait(false)
-                    : _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, cancellationToken).Result;
+                    ? await _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, group.UseAadAuth, cancellationToken).ConfigureAwait(false)
+                    : _applicationInsightsRestClient.InternalTrackAsync(group.TelemetryItems, trackUri, group.UseAadAuth, cancellationToken).Result;
 
                 stopwatch?.Stop();
 

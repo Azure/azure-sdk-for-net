@@ -101,7 +101,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// stamped with. An Activity whose routing tags are missing or invalid is dropped rather
         /// than sent under the exporter's own connection string.
         /// </summary>
-        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch)
+        internal static void OtelToAzureMonitorTraceMultiEndpoint(Batch<Activity> batchActivity, AzureMonitorResource? azureMonitorResource, float sampleRate, EndpointRouteBatch routeBatch, EndpointTrustPolicy trustPolicy)
         {
             var collected = 0;
             var rejected = 0;
@@ -114,7 +114,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                     try
                     {
-                        if (!EndpointRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
+                        // Honoured only when a credential exists to satisfy it; otherwise the flag
+                        // would split one endpoint into two identical unauthenticated POSTs.
+                        var useAadAuth = trustPolicy.Enabled && EndpointRouting.GetUseAadAuth(ref activityTagsProcessor.MappedTags);
+
+                        if (!EndpointRouting.TryGetRoute(ref activityTagsProcessor.MappedTags, trustPolicy, useAadAuth, out var instrumentationKey, out var ingestionEndpoint, out var rejection))
                         {
                             rejected++;
                             AzureMonitorExporterEventSource.Log.RoutedTelemetryRejected(routeBatch.Sequence, rejection, activity);
@@ -124,7 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         collected++;
                         AzureMonitorExporterEventSource.Log.RoutedTelemetryCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, activity);
 
-                        var group = routeBatch.GetOrAdd(ingestionEndpoint);
+                        var group = routeBatch.GetOrAdd(ingestionEndpoint, useAadAuth);
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host

@@ -76,14 +76,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         private readonly string? _statsHost;
         private readonly string? _storageDirectory;
+
+        /// <summary>Fixed per partition: a blob outlives the telemetry that asked to be authenticated.</summary>
+        private readonly bool _useAadAuth;
         private TaskCompletionSource<bool>? _inFlightDrain;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null, bool useAadAuth = false)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
             _trackUri = trackUri;
+            _useAadAuth = useAadAuth;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
@@ -286,7 +290,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
             using var httpMessage = _trackUri == null
                 ? _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result
-                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, requestBudget.Token).Result;
+                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, _useAadAuth, requestBudget.Token).Result;
 
             stopwatch?.Stop();
 

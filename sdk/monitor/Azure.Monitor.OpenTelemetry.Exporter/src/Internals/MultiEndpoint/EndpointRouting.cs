@@ -34,13 +34,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </summary>
         private const int MaxCachedEndpoints = 256;
 
-        private static readonly ConcurrentDictionary<string, string> s_normalizedEndpoints = new(StringComparer.Ordinal);
+        private static readonly ConcurrentDictionary<string, NormalizedEndpoint> s_normalizedEndpoints = new(StringComparer.Ordinal);
 
         // Tracked separately because ConcurrentDictionary.Count locks the whole table.
         private static int s_cachedEndpointCount;
 
         internal static bool TryGetRoute(
             ref AzMonList mappedTags,
+            EndpointTrustPolicy trustPolicy,
+            bool useAadAuth,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint,
             out RoutingRejectionReason reason)
@@ -50,10 +52,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             return TryGetRoute(
                 mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string,
                 mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string,
+                trustPolicy,
+                useAadAuth,
                 out instrumentationKey,
                 out ingestionEndpoint,
                 out reason);
         }
+
+        /// <summary>
+        /// Whether the telemetry asked to be sent with the exporter's Entra ID token. Opt-in, so
+        /// anything other than an explicit true leaves the destination unauthenticated, which is how
+        /// a component that still accepts instrumentation key auth keeps working.
+        /// </summary>
+        internal static bool GetUseAadAuth(ref AzMonList mappedTags)
+            => GetUseAadAuth(mappedTags[SemanticSlot.MicrosoftUseAadAuth]);
+
+        internal static bool GetUseAadAuth(object? rawUseAadAuth)
+            => rawUseAadAuth switch
+            {
+                bool value => value,
+                string text => bool.TryParse(text, out var value) && value,
+                _ => false,
+            };
 
         /// <summary>
         /// Validates raw routing values and reduces them to the canonical instrumentation key and
@@ -69,13 +89,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         internal static bool TryGetRoute(
             string? rawInstrumentationKey,
             string? rawIngestionEndpoint,
+            EndpointTrustPolicy trustPolicy,
+            bool useAadAuth,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint)
-            => TryGetRoute(rawInstrumentationKey, rawIngestionEndpoint, out instrumentationKey, out ingestionEndpoint, out _);
+            => TryGetRoute(rawInstrumentationKey, rawIngestionEndpoint, trustPolicy, useAadAuth, out instrumentationKey, out ingestionEndpoint, out _);
 
         internal static bool TryGetRoute(
             string? rawInstrumentationKey,
             string? rawIngestionEndpoint,
+            EndpointTrustPolicy trustPolicy,
+            bool useAadAuth,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint,
             out RoutingRejectionReason reason)
@@ -102,7 +126,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return false;
             }
 
-            if ((ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint, out reason)) == null)
+            if ((ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint, trustPolicy, useAadAuth, out reason)) == null)
             {
                 instrumentationKey = null;
                 return false;
@@ -129,9 +153,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// target: a scheme other than HTTPS, or credentials, a query, or a fragment, all of which
         /// would corrupt the URI the REST client builds by appending the API path.
         /// </remarks>
-        internal static string? NormalizeEndpoint(string rawEndpoint) => NormalizeEndpoint(rawEndpoint, out _);
+        internal static string? NormalizeEndpoint(string rawEndpoint) => NormalizeEndpoint(rawEndpoint, EndpointTrustPolicy.Unrestricted, useAadAuth: false, out _);
 
-        internal static string? NormalizeEndpoint(string rawEndpoint, out RoutingRejectionReason reason)
+        internal static string? NormalizeEndpoint(string rawEndpoint, EndpointTrustPolicy trustPolicy, bool useAadAuth, out RoutingRejectionReason reason)
         {
             reason = RoutingRejectionReason.None;
 
@@ -143,7 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
             if (s_normalizedEndpoints.TryGetValue(rawEndpoint, out var cached))
             {
-                return cached;
+                return Authorize(cached, trustPolicy, useAadAuth, out reason);
             }
 
             if (!Uri.TryCreate(rawEndpoint, UriKind.Absolute, out var uri))
@@ -192,13 +216,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
+            var entry = new NormalizedEndpoint(normalized, canonicalHost, uri.IsDefaultPort);
+
             if (Volatile.Read(ref s_cachedEndpointCount) < MaxCachedEndpoints
-                && s_normalizedEndpoints.TryAdd(rawEndpoint, normalized))
+                && s_normalizedEndpoints.TryAdd(rawEndpoint, entry))
             {
                 Interlocked.Increment(ref s_cachedEndpointCount);
             }
 
-            return normalized;
+            return Authorize(entry, trustPolicy, useAadAuth, out reason);
+        }
+
+        /// <summary>
+        /// Applied after the cache, not before it: normalization is the same for every caller but
+        /// trust is not, so a value cached while no credential was in play must still be checked.
+        /// </summary>
+        /// <remarks>
+        /// Only a destination that will be sent the token is fenced in. A route that opted out
+        /// carries no credential, so it stays as unrestricted as it is without Entra ID configured.
+        /// </remarks>
+        private static string? Authorize(NormalizedEndpoint endpoint, EndpointTrustPolicy trustPolicy, bool useAadAuth, out RoutingRejectionReason reason)
+        {
+            if (!useAadAuth || trustPolicy.IsTrusted(endpoint.CanonicalHost, endpoint.IsDefaultPort))
+            {
+                reason = RoutingRejectionReason.None;
+                return endpoint.Value;
+            }
+
+            reason = RoutingRejectionReason.IngestionEndpointNotTrusted;
+            return null;
         }
 
         /// <remarks>
@@ -222,6 +268,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             }
 
             return canonicalHost.Length != 0;
+        }
+
+        /// <summary>
+        /// The canonical host is kept alongside the normalized endpoint because the trust check
+        /// needs it, and re-parsing the endpoint on every cache hit would undo the caching.
+        /// </summary>
+        private sealed class NormalizedEndpoint
+        {
+            internal NormalizedEndpoint(string value, string canonicalHost, bool isDefaultPort)
+            {
+                Value = value;
+                CanonicalHost = canonicalHost;
+                IsDefaultPort = isDefaultPort;
+            }
+
+            internal string Value { get; }
+
+            internal string CanonicalHost { get; }
+
+            internal bool IsDefaultPort { get; }
         }
     }
 }

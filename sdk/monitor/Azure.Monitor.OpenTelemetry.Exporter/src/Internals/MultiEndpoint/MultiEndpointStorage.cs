@@ -36,6 +36,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         internal const string RootDirectorySuffix = ".endpoints";
 
         /// <summary>
+        /// Distinguishes the authenticated partition for an endpoint from the unauthenticated one.
+        /// Not a valid URI character sequence, so it cannot collide with a real endpoint.
+        /// </summary>
+        private const string AadPartitionSuffix = " [aad]";
+
+        /// <summary>
         /// Bounds the number of endpoint partitions, each of which owns a directory, a drain timer,
         /// and a blob provider. A caller routing past this loses persistence for the excess
         /// endpoints rather than growing without limit.
@@ -475,7 +481,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// <see langword="null"/> when the partition cannot be created, in which case the caller
         /// transmits without a persistence fallback.
         /// </summary>
-        internal EndpointStorage? TryGet(string ingestionEndpoint)
+        /// <remarks>
+        /// Partitioned by auth mode as well as endpoint. A blob is re-POSTed from disk long after
+        /// the telemetry that produced it is gone, so the partition is the only place the intent to
+        /// authenticate can be kept.
+        /// </remarks>
+        internal EndpointStorage? TryGet(string ingestionEndpoint, bool useAadAuth = false)
         {
             // Checked first: Dispose empties the dictionary before tearing partitions down, so a
             // hit after this point cannot be on one that is already disposed.
@@ -484,14 +495,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                 return null;
             }
 
-            if (_partitions.TryGetValue(ingestionEndpoint, out var existing))
+            var partitionKey = useAadAuth ? ingestionEndpoint + AadPartitionSuffix : ingestionEndpoint;
+
+            if (_partitions.TryGetValue(partitionKey, out var existing))
             {
                 return existing;
             }
 
             lock (_createLock)
             {
-                if (_partitions.TryGetValue(ingestionEndpoint, out existing))
+                if (_partitions.TryGetValue(partitionKey, out existing))
                 {
                     return existing;
                 }
@@ -508,7 +521,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
                 try
                 {
-                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(ingestionEndpoint));
+                    var directory = Path.Combine(_rootDirectory, HashHelper.GetSHA256Hash(partitionKey));
 
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.
@@ -522,9 +535,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                         innerProvider,
                         blobProvider,
                         transmissionStateManager,
-                        new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri));
+                        new TransmitFromStorageHandler(_restClient, blobProvider, transmissionStateManager, _connectionVars, _isAadEnabled, _networkSdkStatsManager, directory, trackUri, useAadAuth));
 
-                    _partitions[ingestionEndpoint] = created;
+                    _partitions[partitionKey] = created;
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(_connectionVars.InstrumentationKey, directory);
 

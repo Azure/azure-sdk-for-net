@@ -125,9 +125,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// </summary>
         internal static Uri CreateTrackUri(string ingestionEndpoint) => new(new Uri(ingestionEndpoint), TrackPath);
 
-        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, Uri trackUri, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Marks a routed request as one that opted in to Entra ID authentication. Read by
+        /// <see cref="Internals.MultiEndpointBearerTokenAuthenticationPolicy"/>, which cannot infer
+        /// it: one endpoint serves both components that require a token and components that do not.
+        /// </summary>
+        internal const string UseAadAuthProperty = "azureMonitorUseAadAuth";
+
+        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, Uri trackUri, bool useAadAuth, CancellationToken cancellationToken = default)
         {
-            var message = CreateTrackRequest(body, trackUri);
+            var message = CreateTrackRequest(body, trackUri, useAadAuth);
 
             try
             {
@@ -147,13 +154,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return message;
         }
 
-        internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, Uri trackUri, CancellationToken cancellationToken = default)
+        internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, Uri trackUri, bool useAadAuth, CancellationToken cancellationToken = default)
         {
 #if DEBUG
             TelemetryDebugWriter.WriteTelemetryFromStorage(body, trackUri);
 #endif
 
-            var message = CreateRequest(RequestContent.Create(body), trackUri);
+            var message = CreateRequest(RequestContent.Create(body), trackUri, useAadAuth);
 
             try
             {
@@ -173,7 +180,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return message;
         }
 
-        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body, Uri trackUri)
+        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body, Uri trackUri, bool useAadAuth)
         {
             using var content = new NDJsonWriter();
             foreach (var item in body)
@@ -186,14 +193,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             TelemetryDebugWriter.WriteTelemetry(content, trackUri);
 #endif
 
-            return CreateRequest(RequestContent.Create(content.ToBytes()), trackUri);
+            return CreateRequest(RequestContent.Create(content.ToBytes()), trackUri, useAadAuth);
         }
 
-        private HttpMessage CreateRequest(RequestContent requestContent, Uri trackUri)
+        private HttpMessage CreateRequest(RequestContent requestContent, Uri trackUri, bool useAadAuth)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
+
+            if (useAadAuth)
+            {
+                message.SetProperty(UseAadAuthProperty, true);
+            }
 
             // A builder per request, because IngestionRedirectPolicy rewrites it and a shared one
             // would carry one endpoint's redirect onto another endpoint's request.
@@ -214,6 +226,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
+
+            // Unrouted: the destination is the connection string's own endpoint, which authenticates
+            // without waiting to be opted in by telemetry.
+            message.SetProperty(UseAadAuthProperty, true);
 
             // A builder per request. IngestionRedirectPolicy calls Reset on request.Uri, and a shared
             // instance would carry that rewrite into every later request permanently.

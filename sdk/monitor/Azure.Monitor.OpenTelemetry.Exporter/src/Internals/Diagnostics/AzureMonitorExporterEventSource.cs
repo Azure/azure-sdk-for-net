@@ -644,5 +644,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                 WriteEvent(72, exportSequence, itemCount, ingestionEndpoint, outcome, itemsAccepted, statusCode);
             }
         }
+
+        [Event(73, Message = "Multi-endpoint routing is using Microsoft Entra ID authentication. TokenCredential: {0} Scope: {1}. The same token is sent to every routed endpoint, so the identity must hold the Monitoring Metrics Publisher role on each destination component and every destination must be in the cloud the scope belongs to.", Level = EventLevel.Informational)]
+        public void MultiEndpointEntraAuthenticationEnabled(string credentialTypeName, string scope) => WriteEvent(73, credentialTypeName, scope);
+
+        [Event(74, Message = "Withheld the Microsoft Entra ID token from a request to '{0}'. The host is not an Azure Monitor ingestion endpoint and is not the endpoint from the exporter's own connection string, so the token was not disclosed to it.", Level = EventLevel.Warning)]
+        public void MultiEndpointTokenWithheld(string host) => WriteEvent(74, host);
     }
 }

@@ -80,6 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             [SemanticConventions.AttributeMicrosoftInstrumentationKey] = SemanticSlot.MicrosoftInstrumentationKey,
             [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = SemanticSlot.MicrosoftIngestionEndpoint,
             [SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole] = SemanticSlot.MicrosoftMultiEndpointCloudRole,
+            [SemanticConventions.AttributeMicrosoftUseAadAuth] = SemanticSlot.MicrosoftUseAadAuth,
         };
 
         /// <remarks>
