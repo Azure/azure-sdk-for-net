@@ -110,11 +110,11 @@ namespace Azure.Analytics.Defender.Easm
             string name = default;
             string displayName = default;
             DataConnectionContent? content = default;
-            DateTimeOffset? createdDate = default;
+            DateTimeOffset? createdOn = default;
             DataConnectionFrequency? frequency = default;
             int? frequencyOffset = default;
-            DateTimeOffset? updatedDate = default;
-            DateTimeOffset? userUpdatedAt = default;
+            DateTimeOffset? updatedOn = default;
+            DateTimeOffset? userUpdatedOn = default;
             bool? active = default;
             string inactiveMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    createdDate = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("frequency"u8))
@@ -182,7 +182,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    updatedDate = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("userUpdatedAt"u8))
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    userUpdatedAt = prop.Value.GetDateTimeOffset("O");
+                    userUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("active"u8))
@@ -219,11 +219,11 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 content,
-                createdDate,
+                createdOn,
                 frequency,
                 frequencyOffset,
-                updatedDate,
-                userUpdatedAt,
+                updatedOn,
+                userUpdatedOn,
                 active,
                 inactiveMessage,
                 additionalBinaryDataProperties);

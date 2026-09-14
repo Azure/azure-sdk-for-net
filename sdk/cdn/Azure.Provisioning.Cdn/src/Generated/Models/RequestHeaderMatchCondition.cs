@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new RequestHeaderMatchCondition. </summary>
         public RequestHeaderMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleRequestHeaderConditionParameters);
         }
 
         /// <summary> Gets or sets the Selector. </summary>
@@ -102,7 +103,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleRequestHeaderConditionParameters");
             _selector = DefineProperty<string>(nameof(Selector), new string[] { "selector" });
             _requestHeaderOperator = DefineProperty<RequestHeaderOperator>(nameof(RequestHeaderOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });

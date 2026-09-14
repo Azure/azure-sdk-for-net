@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateResult))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderPlacementScore))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderResourceSize))]
+    [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementCapacityLimit))]
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementData))]
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementDeploymentChoice))]
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementGenerateContent))]

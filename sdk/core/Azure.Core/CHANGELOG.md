@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Fixed `DefaultAzureCredential` taking up to a minute to continue past managed identity on hosts where IMDS is unavailable. Ordinary chained requests now use the short Azure.Core IMDS probe, while proof-of-possession capability discovery is bounded by the same initial IMDS timeout.
+- Managed identity mTLS proof-of-possession now requires a KeyGuard-backed host capability and enforces KeyGuard as the minimum binding strength during token acquisition. ([#62585](https://github.com/Azure/azure-sdk-for-net/issues/62585))
 
 ### Other Changes
 

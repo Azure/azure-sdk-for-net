@@ -14,6 +14,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> DraftAgentsV1Preview. </summary>
         DraftAgentsV1Preview,
         /// <summary> VoiceAgentsV1Preview. </summary>
-        VoiceAgentsV1Preview
+        VoiceAgentsV1Preview,
+        /// <summary> DigitalWorkerV1Preview. </summary>
+        DigitalWorkerV1Preview
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new DirectLineSpeechChannel. </summary>
         public DirectLineSpeechChannel()
         {
+            ChannelName.Assign("DirectLineSpeechChannel");
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "DirectLineSpeechChannel");
             _properties = DefineModelProperty<DirectLineSpeechChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

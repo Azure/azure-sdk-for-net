@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.BackupExpireOn;
+                return Properties is null ? default : Properties.BackupExpiresOn;
             }
         }
 

@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Initializes a new instance of <see cref="ValidateResult"/>. </summary>
         /// <param name="linkerName"> The linker name. </param>
         /// <param name="isConnectionAvailable"> A boolean value indicating whether the connection is available or not. </param>
-        /// <param name="reportStartOn"> The start time of the validation report. </param>
-        /// <param name="reportEndOn"> The end time of the validation report. </param>
+        /// <param name="reportStartsOn"> The start time of the validation report. </param>
+        /// <param name="reportEndsOn"> The end time of the validation report. </param>
         /// <param name="sourceId"> The resource id of the Linker source application. </param>
         /// <param name="targetId"> The resource Id of target service. </param>
         /// <param name="authType"> The authentication type. </param>
         /// <param name="validationDetail"> The detail of validation result. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidateResult(string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartOn, DateTimeOffset? reportEndOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IList<LinkerValidationResultItemInfo> validationDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidateResult(string linkerName, bool? isConnectionAvailable, DateTimeOffset? reportStartsOn, DateTimeOffset? reportEndsOn, ResourceIdentifier sourceId, ResourceIdentifier targetId, LinkerAuthType? authType, IList<LinkerValidationResultItemInfo> validationDetail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkerName = linkerName;
             IsConnectionAvailable = isConnectionAvailable;
-            ReportStartOn = reportStartOn;
-            ReportEndOn = reportEndOn;
+            ReportStartsOn = reportStartsOn;
+            ReportEndsOn = reportEndsOn;
             SourceId = sourceId;
             TargetId = targetId;
             AuthType = authType;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         public bool? IsConnectionAvailable { get; }
 
         /// <summary> The start time of the validation report. </summary>
-        public DateTimeOffset? ReportStartOn { get; }
+        public DateTimeOffset? ReportStartsOn { get; }
 
         /// <summary> The end time of the validation report. </summary>
-        public DateTimeOffset? ReportEndOn { get; }
+        public DateTimeOffset? ReportEndsOn { get; }
 
         /// <summary> The resource id of the Linker source application. </summary>
         public ResourceIdentifier SourceId { get; }

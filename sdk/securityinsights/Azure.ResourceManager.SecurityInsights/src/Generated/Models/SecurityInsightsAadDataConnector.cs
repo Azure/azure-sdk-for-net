@@ -60,5 +60,23 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
         }
+
+        /// <summary> The available data types for the connector. </summary>
+        [WirePath("properties.dataTypes")]
+        public SecurityInsightsAlertsDataTypeOfDataConnector DataTypes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataTypes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AadDataConnectorProperties();
+                }
+                Properties.DataTypes = value;
+            }
+        }
     }
 }

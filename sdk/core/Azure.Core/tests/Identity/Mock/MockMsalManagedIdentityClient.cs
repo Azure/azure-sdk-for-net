@@ -19,6 +19,10 @@ namespace Azure.Core.Tests.Identity.Mock
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
         public bool? LastIsTokenBindingAvailable { get; private set; }
+        public bool? FirstEnableMtlsPopForClientCreation { get; private set; }
+        public bool? LastEnableMtlsPopForClientCreation { get; private set; }
+        public bool OverrideAttestationSupport { get; set; }
+        public Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> AttestationSupport { get; set; }
 
         /// <summary>
         /// When set, this is invoked by <see cref="GetManagedIdentityCapabilitiesAsync"/> to produce the
@@ -44,11 +48,14 @@ namespace Azure.Core.Tests.Identity.Mock
             _azureManagedIdentityId = options.ManagedIdentityId;
         }
 
-        protected override ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool isTokenBindingAvailable, CancellationToken cancellationToken)
+        protected override ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, bool enableMtlsPop, CancellationToken cancellationToken)
         {
+            FirstEnableMtlsPopForClientCreation ??= enableMtlsPop;
+            LastEnableMtlsPopForClientCreation = enableMtlsPop;
+
             if (ClientAppFactory == null)
             {
-                return base.CreateClientCoreAsync(async, enableCae, isTokenBindingAvailable, cancellationToken);
+                return base.CreateClientCoreAsync(async, enableCae, enableMtlsPop, cancellationToken);
             }
 
             return new ValueTask<IManagedIdentityApplication>(ClientAppFactory(cancellationToken));
@@ -85,7 +92,10 @@ namespace Azure.Core.Tests.Identity.Mock
             return base.AcquireTokenForManagedIdentityAsyncCore(async, requestContext, isTokenBindingAvailable, cancellationToken);
         }
 
-        public override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        protected override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromClientAsync(
+            IManagedIdentityApplication client,
+            TokenRequestContext context,
+            CancellationToken cancellationToken)
         {
             if (GetManagedIdentityCapabilitiesAsyncFactory != null)
             {
@@ -114,6 +124,9 @@ namespace Azure.Core.Tests.Identity.Mock
             _detectedSource = capabilities.Source;
             return capabilities;
         }
+
+        protected override Func<AcquireTokenForManagedIdentityParameterBuilder, AcquireTokenForManagedIdentityParameterBuilder> ResolveAttestationSupport() =>
+            OverrideAttestationSupport ? AttestationSupport : base.ResolveAttestationSupport();
 
         /// <summary>
         /// Builds a <see cref="ManagedIdentityCapabilities"/> reporting the given <paramref name="source"/>.

@@ -18,6 +18,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesHostedAgentDeployment. </summary>
         public CognitiveServicesHostedAgentDeployment()
         {
+            DeploymentType.Assign(AgentDeploymentType.Hosted);
         }
 
         /// <summary> Gets or sets the MinReplicas. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("deploymentType", new string[] { "deploymentType" }, defaultValue: "Hosted");
             _minReplicas = DefineProperty<int>(nameof(MinReplicas), new string[] { "minReplicas" });
             _maxReplicas = DefineProperty<int>(nameof(MaxReplicas), new string[] { "maxReplicas" });
             DefineAdditionalProperties();

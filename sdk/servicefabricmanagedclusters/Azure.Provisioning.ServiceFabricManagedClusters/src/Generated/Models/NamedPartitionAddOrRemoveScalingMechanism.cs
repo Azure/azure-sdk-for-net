@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new NamedPartitionAddOrRemoveScalingMechanism. </summary>
         public NamedPartitionAddOrRemoveScalingMechanism()
         {
+            Kind.Assign(ServiceScalingMechanismKind.AddRemoveIncrementalNamedPartition);
         }
 
         /// <summary> Gets or sets the MinPartitionCount. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "AddRemoveIncrementalNamedPartition");
             _minPartitionCount = DefineProperty<int>(nameof(MinPartitionCount), new string[] { "minPartitionCount" }, isRequired: true);
             _maxPartitionCount = DefineProperty<int>(nameof(MaxPartitionCount), new string[] { "maxPartitionCount" }, isRequired: true);
             _scaleIncrement = DefineProperty<int>(nameof(ScaleIncrement), new string[] { "scaleIncrement" }, isRequired: true);

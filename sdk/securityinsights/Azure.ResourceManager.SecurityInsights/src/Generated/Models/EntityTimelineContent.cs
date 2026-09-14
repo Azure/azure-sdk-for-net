@@ -18,26 +18,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineContent"/>. </summary>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
-        public EntityTimelineContent(DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
+        public EntityTimelineContent(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
             Kinds = new ChangeTrackingList<EntityTimelineKind>();
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityTimelineContent"/>. </summary>
         /// <param name="kinds"> Array of timeline Item kinds. </param>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
         /// <param name="numberOfBucket"> The number of bucket for timeline queries aggregation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityTimelineContent(IList<EntityTimelineKind> kinds, DateTimeOffset startOn, DateTimeOffset endOn, int? numberOfBucket, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityTimelineContent(IList<EntityTimelineKind> kinds, DateTimeOffset startsOn, DateTimeOffset endsOn, int? numberOfBucket, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kinds = kinds;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             NumberOfBucket = numberOfBucket;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The start timeline date, so the results returned are after this date. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The end timeline date, so the results returned are before this date. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The number of bucket for timeline queries aggregation. </summary>
         [WirePath("numberOfBucket")]

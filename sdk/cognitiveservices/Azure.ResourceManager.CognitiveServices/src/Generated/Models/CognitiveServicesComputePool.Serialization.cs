@@ -81,8 +81,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            writer.WritePropertyName("vmPriority"u8);
-            writer.WriteStringValue(VmPriority.ToString());
+            if (Optional.IsDefined(VmPriority))
+            {
+                writer.WritePropertyName("vmPriority"u8);
+                writer.WriteStringValue(VmPriority.Value.ToString());
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WritePropertyName("nodeCount"u8);
@@ -130,7 +133,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             string name = default;
-            CognitiveServicesVmPriority vmPriority = default;
+            CognitiveServicesVmPriority? vmPriority = default;
             string instanceType = default;
             int nodeCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,6 +146,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("vmPriority"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     vmPriority = new CognitiveServicesVmPriority(prop.Value.GetString());
                     continue;
                 }

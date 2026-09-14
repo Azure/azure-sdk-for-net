@@ -284,18 +284,5 @@ namespace Azure.ResourceManager.Network
                 Properties.ProbeId = value;
             }
         }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                return Properties.AdditionalProperties;
-            }
-        }
     }
 }

@@ -485,6 +485,7 @@
       "$id": "57",
       "kind": "model",
       "name": "InnerModel",
+      "apiVersions": [],
       "namespace": "Type.Array",
       "crossLanguageDefinitionId": "Type.Array.InnerModel",
       "usage": "Input,Output,Json",
@@ -501,6 +502,7 @@
           "$id": "58",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Required string property",
           "type": {
@@ -528,6 +530,7 @@
           "$id": "60",
           "kind": "property",
           "name": "children",
+          "apiVersions": [],
           "serializedName": "children",
           "type": {
             "$id": "61",

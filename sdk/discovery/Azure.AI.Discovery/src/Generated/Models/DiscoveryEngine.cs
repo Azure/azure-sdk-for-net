@@ -29,22 +29,22 @@ namespace Azure.AI.Discovery
         /// <param name="discoveryEngineStatus"> The Discovery Engine status. </param>
         /// <param name="systemPrompt"> The system prompt. </param>
         /// <param name="configuration"> The Discovery Engine configuration. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryEngine(DiscoveryEngineStatus discoveryEngineStatus, string systemPrompt, IDictionary<string, BinaryData> configuration, DateTimeOffset? createdAt, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedAt, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryEngine(DiscoveryEngineStatus discoveryEngineStatus, string systemPrompt, IDictionary<string, BinaryData> configuration, DateTimeOffset? createdOn, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedOn, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiscoveryEngineStatus = discoveryEngineStatus;
             SystemPrompt = systemPrompt;
             Configuration = configuration;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -85,7 +85,7 @@ namespace Azure.AI.Discovery
         public IDictionary<string, BinaryData> Configuration { get; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The ID of the user who created this resource. </summary>
         public string CreatedBy { get; }
@@ -94,7 +94,7 @@ namespace Azure.AI.Discovery
         public DiscoveryActorType? CreatedByType { get; }
 
         /// <summary> The timestamp when the resource was last updated. </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The ID of the user who updated this resource. </summary>
         public string LastModifiedBy { get; }

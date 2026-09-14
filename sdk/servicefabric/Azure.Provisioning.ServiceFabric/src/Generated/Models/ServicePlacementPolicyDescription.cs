@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.ServiceFabric
     /// </summary>
     public partial class ServicePlacementPolicyDescription : ProvisionableConstruct
     {
+        private BicepValue<ServicePlacementPolicyType> _type;
+
         /// <summary> Creates a new ServicePlacementPolicyDescription. </summary>
         public ServicePlacementPolicyDescription()
         {
+        }
+
+        /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+        internal BicepValue<ServicePlacementPolicyType> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ServicePlacementPolicyDescription. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<ServicePlacementPolicyType>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

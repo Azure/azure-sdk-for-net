@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 systemId is null && description is null ? default : new AccountProperties(systemId, description, default));
         }
 
+        /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -124,6 +125,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 default);
         }
 
+        /// <summary> The encryption settings for a configuration store. </summary>
         /// <param name="keyVault"> Key vault properties. </param>
         /// <param name="state"> The state of onboarding, which only appears in the response. </param>
         /// <returns> A new <see cref="Models.EnterprisePolicyEncryptionProperties"/> instance for mocking. </returns>
@@ -132,6 +134,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             return new EnterprisePolicyEncryptionProperties(keyVault, state, default);
         }
 
+        /// <summary> Settings concerning key vault encryption for a configuration store. </summary>
         /// <param name="vaultUri"> Uri of KeyVault. </param>
         /// <param name="key"> Identity of the secret that includes name and version. </param>
         /// <returns> A new <see cref="Models.PowerPlatformKeyVaultProperties"/> instance for mocking. </returns>
@@ -140,6 +143,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             return new PowerPlatformKeyVaultProperties(vaultUri, key, default);
         }
 
+        /// <summary> Url and version of the KeyVault Secret. </summary>
         /// <param name="name"> The identifier of the key vault key used to encrypt data. </param>
         /// <param name="version"> The version of the identity which will be used to access key vault. </param>
         /// <returns> A new <see cref="Models.PowerPlatformKeyProperties"/> instance for mocking. </returns>
@@ -156,6 +160,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
             return new PowerPlatformVirtualNetworkProperties(id, subnetName is null ? default : new SubnetProperties(subnetName, default), default);
         }
 
+        /// <summary> The identity of the EnterprisePolicy. </summary>
         /// <param name="systemAssignedIdentityPrincipalId"> The principal id of EnterprisePolicy identity. </param>
         /// <param name="tenantId"> The tenant id associated with the EnterprisePolicy. </param>
         /// <param name="type"> The type of identity used for the EnterprisePolicy. Currently, the only supported type is 'SystemAssigned', which implicitly creates an identity. </param>
@@ -221,6 +226,7 @@ namespace Azure.ResourceManager.PowerPlatform.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>

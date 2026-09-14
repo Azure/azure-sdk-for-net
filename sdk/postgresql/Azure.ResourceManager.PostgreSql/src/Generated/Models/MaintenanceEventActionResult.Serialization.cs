@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(PlannedStartOn))
+            if (Optional.IsDefined(PlannedStartsOn))
             {
                 writer.WritePropertyName("plannedStartTime"u8);
-                writer.WriteStringValue(PlannedStartOn.Value, "O");
+                writer.WriteStringValue(PlannedStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(PlannedEndOn))
+            if (Optional.IsDefined(PlannedEndsOn))
             {
                 writer.WritePropertyName("plannedEndTime"u8);
-                writer.WriteStringValue(PlannedEndOn.Value, "O");
+                writer.WriteStringValue(PlannedEndsOn.Value, "O");
             }
             if (Optional.IsDefined(IsAppliedNow))
             {
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string maintenanceEventId = default;
             ResourceIdentifier serverId = default;
             MaintenanceEventStatus? status = default;
-            DateTimeOffset? plannedStartOn = default;
-            DateTimeOffset? plannedEndOn = default;
+            DateTimeOffset? plannedStartsOn = default;
+            DateTimeOffset? plannedEndsOn = default;
             bool? isAppliedNow = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    plannedStartOn = prop.Value.GetDateTimeOffset("O");
+                    plannedStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("plannedEndTime"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    plannedEndOn = prop.Value.GetDateTimeOffset("O");
+                    plannedEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("appliedNow"u8))
@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 maintenanceEventId,
                 serverId,
                 status,
-                plannedStartOn,
-                plannedEndOn,
+                plannedStartsOn,
+                plannedEndsOn,
                 isAppliedNow,
                 lastUpdatedOn,
                 additionalBinaryDataProperties);

@@ -18,6 +18,7 @@ using Azure.Identity;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using MtlsBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength;
 namespace Azure.Core.Tests.Identity
 {
     [NonParallelizable]
@@ -70,9 +71,9 @@ namespace Azure.Core.Tests.Identity
             bool isManagedIdentityPipeline = false,
             bool preserveTransport = true,
             Action<MockMsalManagedIdentityClient> configureMockMsal = null,
+            bool disableMtlsProofOfPossession = false,
             bool instrument = true,
-            TimeSpan? initialImdsConnectionTimeout = null,
-            bool disableMtlsProofOfPossession = false)
+            TimeSpan? initialImdsConnectionTimeout = null)
         {
             var pipeline = CredentialPipeline.GetInstance(options, isManagedIdentityPipeline);
             var clientOptions = new ManagedIdentityClientOptions
@@ -82,8 +83,8 @@ namespace Azure.Core.Tests.Identity
                 IsForceRefreshEnabled = isForceRefreshEnabled,
                 PreserveTransport = preserveTransport,
                 Options = options,
-                InitialImdsConnectionTimeout = initialImdsConnectionTimeout,
-                DisableMtlsProofOfPossession = disableMtlsProofOfPossession
+                DisableMtlsProofOfPossession = disableMtlsProofOfPossession,
+                InitialImdsConnectionTimeout = initialImdsConnectionTimeout
             };
             // Inject a mock MSAL client that:
             // 1. Uses the static GetManagedIdentitySource() for source detection (no network probe)
@@ -289,128 +290,6 @@ namespace Azure.Core.Tests.Identity
             Assert.Zero(capabilityCallCount);
         }
 
-        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59961
-        // When the MSAL-based managed identity source/capability detection fails (for example, because the
-        // IMDS endpoint is unreachable on a developer machine running in Visual Studio), a chained
-        // ManagedIdentityCredential must surface a CredentialUnavailableException so that DefaultAzureCredential
-        // continues to the next credential in the chain instead of aborting with an AuthenticationFailedException.
-        [NonParallelizable]
-        [Test]
-        public void ChainedManagedIdentitySourceDetectionFailureThrowsCredentialUnavailable()
-        {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
-            var probeFailure = new MsalClientException(
-                "managed_identity_request_failed",
-                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
-
-            var credential = BuildManagedIdentityCredential(
-                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = true },
-                ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
-
-            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
-            Assert.AreSame(probeFailure, ex.InnerException);
-        }
-
-        // Companion to the regression test above: a standalone (non-chained) ManagedIdentityCredential keeps
-        // surfacing AuthenticationFailedException when source/capability detection fails, preserving the
-        // documented single-credential behavior (only chained credentials downgrade to CredentialUnavailableException).
-        [NonParallelizable]
-        [Test]
-        public void StandaloneManagedIdentitySourceDetectionFailureThrowsAuthenticationFailed()
-        {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
-            var probeFailure = new MsalClientException(
-                "managed_identity_request_failed",
-                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
-
-            var credential = BuildManagedIdentityCredential(
-                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = false },
-                ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
-
-            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
-                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
-            Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
-        }
-
-        [NonParallelizable]
-        [Test]
-        public async Task ProofOfPossessionRequestUsesManagedIdentityCapabilities()
-        {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
-            int capabilityCallCount = 0;
-            MockMsalManagedIdentityClient mockMsal = null;
-            var credential = BuildManagedIdentityCredential(
-                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)) },
-                ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock =>
-                {
-                    mockMsal = mock;
-                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
-                    {
-                        capabilityCallCount++;
-                        return MockMsalManagedIdentityClient.CreateCapabilities(
-                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
-                            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
-                    };
-                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
-                },
-                instrument: false);
-
-            AccessToken token = await GetTokenAsync(
-                credential,
-                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
-
-            Assert.AreEqual(ExpectedToken, token.Token);
-            Assert.AreEqual(1, capabilityCallCount);
-            Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
-        }
-
-        [NonParallelizable]
-        [Test]
-        public async Task ChainedProofOfPossessionImdsSourceSkipsBearerProbe()
-        {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
-            int probeCallCount = 0;
-            MockMsalManagedIdentityClient mockMsal = null;
-            var credential = BuildManagedIdentityCredential(
-                new TokenCredentialOptions
-                {
-                    Transport = new MockTransport(_ =>
-                    {
-                        probeCallCount++;
-                        return CreateSuccessResponse(ExpectedToken);
-                    }),
-                    IsChainedCredential = true
-                },
-                ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock =>
-                {
-                    mockMsal = mock;
-                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
-                        MockMsalManagedIdentityClient.CreateCapabilities(
-                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds,
-                            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
-                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
-                },
-                instrument: false,
-                initialImdsConnectionTimeout: TimeSpan.FromSeconds(1));
-
-            AccessToken token = await GetTokenAsync(
-                credential,
-                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
-
-            Assert.AreEqual(ExpectedToken, token.Token);
-            Assert.Zero(probeCallCount);
-            Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
-        }
-
         [NonParallelizable]
         [Test]
         public void ChainedProofOfPossessionCapabilitiesTimeoutThrowsCredentialUnavailable()
@@ -511,9 +390,11 @@ namespace Azure.Core.Tests.Identity
                         return new ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities>(
                             MockMsalManagedIdentityClient.CreateCapabilities(
                                 Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
-                                Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software));
+                                MtlsBindingStrength.KeyGuard));
                     };
                     mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = builder => builder;
                 },
                 instrument: false,
                 initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
@@ -524,6 +405,39 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual(ExpectedToken, token.Token);
             Assert.IsFalse(capabilityTokenCanBeCanceled);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsDisabled()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            int capabilityCallCount = 0;
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)) },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                    {
+                        capabilityCallCount++;
+                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is disabled.");
+                    };
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                },
+                disableMtlsProofOfPossession: true,
+                instrument: false);
+
+            AccessToken token = await GetTokenAsync(
+                credential,
+                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.Zero(capabilityCallCount);
+            Assert.IsFalse(mockMsal.LastIsTokenBindingAvailable);
         }
 
         [NonParallelizable]
@@ -548,9 +462,11 @@ namespace Azure.Core.Tests.Identity
 
                         return MockMsalManagedIdentityClient.CreateCapabilities(
                             Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
-                            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
+                            MtlsBindingStrength.KeyGuard);
                     };
                     mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = builder => builder;
                 },
                 instrument: false,
                 initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
@@ -562,38 +478,6 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual(ExpectedToken, token.Token);
             Assert.AreEqual(2, capabilityCallCount);
-        }
-
-        [NonParallelizable]
-        [Test]
-        public async Task ProofOfPossessionRequestSkipsCapabilitiesWhenMtlsIsDisabled()
-        {
-            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
-
-            int capabilityCallCount = 0;
-            MockMsalManagedIdentityClient mockMsal = null;
-            var credential = BuildManagedIdentityCredential(
-                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)) },
-                ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock =>
-                {
-                    mockMsal = mock;
-                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
-                    {
-                        capabilityCallCount++;
-                        throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run when mTLS proof-of-possession is disabled.");
-                    };
-                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
-                },
-                disableMtlsProofOfPossession: true);
-
-            AccessToken token = await credential.GetTokenAsync(
-                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true),
-                default);
-
-            Assert.AreEqual(ExpectedToken, token.Token);
-            Assert.Zero(capabilityCallCount);
-            Assert.IsFalse(mockMsal.LastIsTokenBindingAvailable);
         }
 
         [NonParallelizable]
@@ -628,9 +512,10 @@ namespace Azure.Core.Tests.Identity
                     {
                         capabilityCallCount++;
                         throw new MsalClientException("managed_identity_request_failed", "Capability discovery should not run before token exchange.");
-                    });
+                    },
+                    instrument: false);
 
-                AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+                AccessToken token = await GetTokenAsync(credential, new TokenRequestContext(MockScopes.Default));
 
                 Assert.AreEqual(ExpectedToken, token.Token);
                 Assert.Zero(capabilityCallCount);
@@ -639,6 +524,54 @@ namespace Azure.Core.Tests.Identity
             {
                 File.Delete(tokenFilePath);
             }
+        }
+
+        // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/59961
+        // When the MSAL-based managed identity source/capability detection fails (for example, because the
+        // IMDS endpoint is unreachable on a developer machine running in Visual Studio), a chained
+        // ManagedIdentityCredential must surface a CredentialUnavailableException so that DefaultAzureCredential
+        // continues to the next credential in the chain instead of aborting with an AuthenticationFailedException.
+        [NonParallelizable]
+        [Test]
+        public void ChainedManagedIdentitySourceDetectionFailureThrowsCredentialUnavailable()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var probeFailure = new MsalClientException(
+                "managed_identity_request_failed",
+                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
+            Assert.AreSame(probeFailure, ex.InnerException);
+        }
+
+        // Companion to the regression test above: a standalone (non-chained) ManagedIdentityCredential keeps
+        // surfacing AuthenticationFailedException when source/capability detection fails, preserving the
+        // documented single-credential behavior (only chained credentials downgrade to CredentialUnavailableException).
+        [NonParallelizable]
+        [Test]
+        public void StandaloneManagedIdentitySourceDetectionFailureThrowsAuthenticationFailed()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var probeFailure = new MsalClientException(
+                "managed_identity_request_failed",
+                "All Managed Identity sources are unavailable. The Azure Instance Metadata Service (IMDS) that runs on VMs was not detected: IMDSv2: IMDSv2 probe failed. Exception: Retry failed after 6 tries.");
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = false },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesFactory = (_, _) => throw probeFailure);
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true), default));
+            Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
         }
 
         // Regression test for https://github.com/Azure/azure-sdk-for-net/issues/60650
@@ -660,7 +593,11 @@ namespace Azure.Core.Tests.Identity
             var credential = BuildManagedIdentityCredential(
                 new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = true },
                 ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock => mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw acquireFailure);
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) => MockMsalManagedIdentityClient.CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw acquireFailure;
+                });
 
             AccessToken probeToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
@@ -685,11 +622,156 @@ namespace Azure.Core.Tests.Identity
             var credential = BuildManagedIdentityCredential(
                 new TokenCredentialOptions { Transport = new MockTransport(_ => CreateSuccessResponse(ExpectedToken)), IsChainedCredential = false },
                 ManagedIdentityId.SystemAssigned,
-                configureMockMsal: mock => mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw acquireFailure);
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) => MockMsalManagedIdentityClient.CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => throw acquireFailure;
+                });
 
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default));
             Assert.IsNotInstanceOf<CredentialUnavailableException>(ex);
+        }
+
+        [TestCase(MtlsBindingStrength.None, false)]
+        [TestCase(MtlsBindingStrength.Software, false)]
+        [TestCase(MtlsBindingStrength.KeyGuard, true)]
+        [TestCase((MtlsBindingStrength)4, true)]
+        public async Task ManagedIdentityMtlsPopRequiresKeyGuard(MtlsBindingStrength maxSupportedBindingStrength, bool expectedTokenBindingAvailable)
+        {
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions(),
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                            maxSupportedBindingStrength);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                        AuthenticationResultFactory.Create(ExpectedToken);
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // ClientTestBase runs this through GetToken for the synchronous fixture.
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.AreEqual(expectedTokenBindingAvailable, mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [TestCase(false, false, true)]
+        [TestCase(true, true, true)]
+        [TestCase(true, false, false)]
+        public async Task KeyGuardBearerRequestsUseConfiguredTransport(
+            bool isProofOfPossessionEnabled,
+            bool disableMtlsProofOfPossession,
+            bool attestationSupportAvailable)
+        {
+            using var environment = new TestEnvVar(new()
+            {
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", "https://identity.endpoint/" },
+                { "IDENTITY_HEADER", "mock-identity-header" },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+            });
+            var mockTransport = new MockTransport(CreateSuccessResponse(ExpectedToken));
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = mockTransport },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.AppService,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = attestationSupportAvailable ? builder => builder : null;
+                },
+                disableMtlsProofOfPossession: disableMtlsProofOfPossession);
+            var context = new TokenRequestContext(
+                MockScopes.Default,
+                isProofOfPossessionEnabled: isProofOfPossessionEnabled);
+
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsFalse(mockMsal.FirstEnableMtlsPopForClientCreation);
+            Assert.IsFalse(mockMsal.LastEnableMtlsPopForClientCreation);
+            Assert.IsTrue(mockTransport.Requests.Any(request =>
+                request.Uri.ToString().StartsWith(EnvironmentVariables.IdentityEndpoint)));
+        }
+
+        [Test]
+        public async Task ChainedImdsRequestPreservesKeyGuardCapabilityAfterProbe()
+        {
+            using var environment = new TestEnvVar(new()
+            {
+                { "MSI_ENDPOINT", null },
+                { "MSI_SECRET", null },
+                { "IDENTITY_ENDPOINT", null },
+                { "IDENTITY_HEADER", null },
+                { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+            });
+            var mockTransport = new MockImdsManagedIdentityTransport(CreateSuccessResponse(ExpectedToken));
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = mockTransport, IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                        AuthenticationResultFactory.Create(ExpectedToken);
+                    mock.OverrideAttestationSupport = true;
+                    mock.AttestationSupport = builder => builder;
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            AccessToken token = await credential.GetTokenAsync(context, default);
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsTrue(mockMsal.FirstEnableMtlsPopForClientCreation);
+            Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [Test]
+        public void ManagedIdentityMinStrengthNotMetDoesNotFallback()
+        {
+            int acquisitionCount = 0;
+            var failure = new MsalClientException(MsalError.MinStrengthNotMet, "The host cannot satisfy the requested minimum binding strength.");
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions(),
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                            MtlsBindingStrength.KeyGuard);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) =>
+                    {
+                        acquisitionCount++;
+                        throw failure;
+                    };
+                });
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            // ClientTestBase runs this through GetToken for the synchronous fixture.
+            AuthenticationFailedException exception =
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(context, default));
+
+            Assert.AreSame(failure, exception.InnerException);
+            Assert.AreEqual(1, acquisitionCount);
         }
 
         [NonParallelizable]
@@ -753,7 +835,7 @@ namespace Azure.Core.Tests.Identity
 
             Assert.AreEqual(ExpectedToken, actualToken.Token);
             Assert.GreaterOrEqual(probeCountAfterFirstRequest, 1, "Expected at least one IMDS probe on first token request.");
-            Assert.LessOrEqual(probeCount - probeCountAfterFirstRequest, 1, "Expected no more than one additional IMDS request on the next token request.");
+            Assert.LessOrEqual(probeCount - probeCountAfterFirstRequest, 1, "Capabilities-first flow should add at most one additional probe on the next request.");
         }
 
         [NonParallelizable]

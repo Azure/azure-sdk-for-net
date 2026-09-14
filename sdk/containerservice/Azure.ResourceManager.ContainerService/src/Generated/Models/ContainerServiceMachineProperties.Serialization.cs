@@ -167,6 +167,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("localDNSProfile"u8);
                 writer.WriteObjectValue(LocalDnsProfile, options);
             }
+            if (Optional.IsDefined(CapacityReservation))
+            {
+                writer.WritePropertyName("capacityReservation"u8);
+                writer.WriteObjectValue(CapacityReservation, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -225,6 +230,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ETag? eTag = default;
             ContainerServiceMachineStatus status = default;
             LocalDnsProfile localDnsProfile = default;
+            CapacityReservation capacityReservation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -376,6 +382,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                     localDnsProfile = LocalDnsProfile.DeserializeLocalDnsProfile(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("capacityReservation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityReservation = CapacityReservation.DeserializeCapacityReservation(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -398,6 +413,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 eTag,
                 status,
                 localDnsProfile,
+                capacityReservation,
                 additionalBinaryDataProperties);
         }
     }

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Kusto
         private BicepList<string> _eventSystemProperties;
         private BicepValue<string> _sharedAccessPolicyName;
         private BicepValue<KustoDatabaseRouting> _databaseRouting;
-        private BicepValue<DateTimeOffset> _retrievalStartOn;
+        private BicepValue<DateTimeOffset> _retrievalStartsOn;
         private BicepValue<KustoProvisioningState> _provisioningState;
 
         /// <summary> Creates a new IotHubConnectionProperties. </summary>
@@ -151,18 +151,18 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets or sets the RetrievalStartOn. </summary>
-        public BicepValue<DateTimeOffset> RetrievalStartOn
+        /// <summary> Gets or sets the RetrievalStartsOn. </summary>
+        public BicepValue<DateTimeOffset> RetrievalStartsOn
         {
             get
             {
                 Initialize();
-                return _retrievalStartOn;
+                return _retrievalStartsOn;
             }
             set
             {
                 Initialize();
-                _retrievalStartOn.Assign(value);
+                _retrievalStartsOn.Assign(value);
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Kusto
             _eventSystemProperties = DefineListProperty<string>(nameof(EventSystemProperties), new string[] { "eventSystemProperties" });
             _sharedAccessPolicyName = DefineProperty<string>(nameof(SharedAccessPolicyName), new string[] { "sharedAccessPolicyName" }, isRequired: true);
             _databaseRouting = DefineProperty<KustoDatabaseRouting>(nameof(DatabaseRouting), new string[] { "databaseRouting" });
-            _retrievalStartOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartOn), new string[] { "retrievalStartDate" }, format: "O");
+            _retrievalStartsOn = DefineProperty<DateTimeOffset>(nameof(RetrievalStartsOn), new string[] { "retrievalStartDate" }, format: "O");
             _provisioningState = DefineProperty<KustoProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

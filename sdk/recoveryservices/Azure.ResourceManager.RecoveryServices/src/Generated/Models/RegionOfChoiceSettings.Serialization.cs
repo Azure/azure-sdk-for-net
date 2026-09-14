@@ -13,7 +13,10 @@ using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    /// <summary> Region of choice settings at the vault level. This setting allows customers to configure backups for data sources from a different region. </summary>
+    /// <summary>
+    /// Region of choice settings at vault level.
+    /// This setting allows customers to configure backups for datasources from different region.
+    /// </summary>
     internal partial class RegionOfChoiceSettings : IJsonModel<RegionOfChoiceSettings>
     {
         /// <param name="data"> The data to parse. </param>

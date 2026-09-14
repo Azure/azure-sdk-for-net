@@ -85,11 +85,16 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (SearchIndexerSkillset item in Skillsets)
+                foreach (SearchIndexerSkillset item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(OdataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(OdataNextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -133,7 +138,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            IReadOnlyList<SearchIndexerSkillset> skillsets = default;
+            IReadOnlyList<SearchIndexerSkillset> value = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +150,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item, options));
                     }
-                    skillsets = array;
+                    value = array;
+                    continue;
+                }
+                if (prop.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +163,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListSkillsetsResult(skillsets, additionalBinaryDataProperties);
+            return new ListSkillsetsResult(value, odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

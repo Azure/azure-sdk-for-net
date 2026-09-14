@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct DotNetComponentType : IEquatable<DotNetComponentType>
     {
         private readonly string _value;
-        /// <summary> AspireDashboard. </summary>
+        /// <summary> An Aspire dashboard component. </summary>
         private const string AspireDashboardValue = "AspireDashboard";
 
         /// <summary> Initializes a new instance of <see cref="DotNetComponentType"/>. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> AspireDashboard. </summary>
+        /// <summary> An Aspire dashboard component. </summary>
         public static DotNetComponentType AspireDashboard { get; } = new DotNetComponentType(AspireDashboardValue);
 
         /// <summary> Determines if two <see cref="DotNetComponentType"/> values are the same. </summary>

@@ -1,14 +1,26 @@
 # Release History
 
-## 1.0.0-beta.13 (Unreleased)
-
-### Features Added
+## 1.0.0 (2026-09-11)
 
 ### Breaking Changes
 
+- Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
+- Removed the obsolete `CreateEntry(WaitUntil, BinaryData, CancellationToken)` overloads and `CreateEntryOperation`; use the `CreateEntry` overloads with the optional `waitForCommit` parameter instead. Leaving it unset omits the query parameter for compatibility with older ledger deployments.
+- Removed the obsolete single-argument `RunTransparentStatementVerification` overload; use the static `VerifyTransparentStatement` method with verification options instead.
+- Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
+- Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.
+- Replaced the generated JWK/JWKS wire models with normalized, verification-oriented public types `CodeTransparencyVerificationKey` and `CodeTransparencyVerificationKeySet`, which store only public asymmetric key material. The `/jwks` (`GetPublicKeys`), COSE_Key_Set (`GetScittKeys`), and single-key (`GetScittKey`) operations now expose `CancellationToken` convenience overloads returning these normalized types, alongside the exact-wire `RequestContext` protocol overloads.
+- Added `CcfReceiptVerifier.Verify` overloads that accept a `CodeTransparencyVerificationKey`, a `string` key ID plus a caller-owned `ECDsa`, or a `CodeTransparencyVerificationKeySet`.
+- Replaced `CodeTransparencyOfflineKeys` and `OfflineKeysBehavior` with `CodeTransparencyTrustStore` and `CodeTransparencyKeyResolutionMode`, using an SDK-owned, versioned, public-only serialization format. `CodeTransparencyVerificationOptions.OfflineKeys`/`OfflineKeysBehavior` are now `TrustStore`/`KeyResolutionMode`.
+
 ### Bugs Fixed
 
+- Corrected P-521 receipt verification to use the standard JOSE curve name and COSE ES512 algorithm identifier.
+- Fixed public-key retrieval and `ToECDsa` on .NET Framework 4.6.2.
+
 ### Other Changes
+
+- Removed the unnecessary dependency on `Azure.Security.KeyVault.Keys`.
 
 ## 1.0.0-beta.12 (2026-07-31)
 
