@@ -60,7 +60,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedEnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> NetworkingOutboundVnetSubnetId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NetworkingOutboundVnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppRunningStatus> RunningStatus { get { throw null; } }
@@ -570,7 +570,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedEnvironmentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> NetworkingOutboundVnetSubnetId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NetworkingOutboundVnetSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<System.Net.IPAddress> OutboundIPAddressList { get { throw null; } }
         public Azure.Provisioning.AppContainers.ContainerApp Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppProvisioningState> ProvisioningState { get { throw null; } }

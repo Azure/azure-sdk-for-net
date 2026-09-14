@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </summary>
         [WirePath("properties.networking.outboundVnetSubnetId")]
-        public string NetworkingOutboundVnetSubnetId
+        public ResourceIdentifier NetworkingOutboundVnetSubnetId
         {
             get
             {

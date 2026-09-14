@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Networking configuration for a Container App. Only supported for Container Apps deployed into an Express managed environment. </summary>
     internal partial class ContainerAppNetworkingConfiguration : ProvisionableConstruct
     {
-        private BicepValue<string> _outboundVnetSubnetId;
+        private BicepValue<ResourceIdentifier> _outboundVnetSubnetId;
 
         /// <summary> Creates a new ContainerAppNetworkingConfiguration. </summary>
         public ContainerAppNetworkingConfiguration()
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OutboundVnetSubnetId. </summary>
-        public BicepValue<string> OutboundVnetSubnetId
+        public BicepValue<ResourceIdentifier> OutboundVnetSubnetId
         {
             get
             {
@@ -39,7 +40,7 @@ namespace Azure.Provisioning.AppContainers
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _outboundVnetSubnetId = DefineProperty<string>(nameof(OutboundVnetSubnetId), new string[] { "outboundVnetSubnetId" });
+            _outboundVnetSubnetId = DefineProperty<ResourceIdentifier>(nameof(OutboundVnetSubnetId), new string[] { "outboundVnetSubnetId" });
             DefineAdditionalProperties();
         }
 

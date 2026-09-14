@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppNetworkingConfiguration"/>. </summary>
         /// <param name="outboundVnetSubnetId"> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppNetworkingConfiguration(string outboundVnetSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppNetworkingConfiguration(ResourceIdentifier outboundVnetSubnetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OutboundVnetSubnetId = outboundVnetSubnetId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -33,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Resource ID of a subnet used for outbound (egress) traffic from this Container App. Only supported for Container Apps in an Express managed environment. Mutually exclusive with the environment-level VNet configuration and immutable after the Container App is created. </summary>
         [WirePath("outboundVnetSubnetId")]
-        public string OutboundVnetSubnetId { get; set; }
+        public ResourceIdentifier OutboundVnetSubnetId { get; set; }
     }
 }

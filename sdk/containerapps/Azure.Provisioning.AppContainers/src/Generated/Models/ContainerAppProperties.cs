@@ -207,7 +207,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the OutboundVnetSubnetId. </summary>
-        public BicepValue<string> NetworkingOutboundVnetSubnetId
+        public BicepValue<ResourceIdentifier> NetworkingOutboundVnetSubnetId
         {
             get
             {
