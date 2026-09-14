@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="protectionStatusErrorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
-        public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(DataProtectionBackupUserFacingError protectionStatusErrorDetails = default, BackupInstanceProtectionStatus? status = default)
+        public static BackupInstanceProtectionStatusDetails BackupInstanceProtectionStatusDetails(DataProtectionBackupUserFacingError protectionStatusErrorDetails, BackupInstanceProtectionStatus? status)
         {
             return new BackupInstanceProtectionStatusDetails(protectionStatusErrorDetails, status, default);
         }
@@ -1643,7 +1643,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="recoveryPointId"></param>
         /// <param name="recoverOn"></param>
         /// <returns> A new <see cref="Models.RestoreJobRecoveryPointDetails"/> instance for mocking. </returns>
-        public static RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId = default, DateTimeOffset? recoverOn = default)
+        public static RestoreJobRecoveryPointDetails RestoreJobRecoveryPointDetails(string recoveryPointId, DateTimeOffset? recoverOn)
         {
             return new RestoreJobRecoveryPointDetails(recoveryPointId, recoverOn, default);
         }
@@ -1672,7 +1672,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceName"> Name of resource for which warning is raised. </param>
         /// <param name="warningDetails"> Error details for the warning. </param>
         /// <returns> A new <see cref="Models.UserFacingWarningDetail"/> instance for mocking. </returns>
-        public static UserFacingWarningDetail UserFacingWarningDetail(string resourceName = default, DataProtectionBackupUserFacingError warningDetails = default)
+        public static UserFacingWarningDetail UserFacingWarningDetail(string resourceName, DataProtectionBackupUserFacingError warningDetails)
         {
             return new UserFacingWarningDetail(resourceName, warningDetails, default);
         }
@@ -2028,14 +2028,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, DataProtectionBackupCrossSubscriptionRestoreState? crossSubscriptionRestoreState)
         {
             return new DataProtectionBackupVaultProperties(
-                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(alertSettingsForAllJobFailures is null ? default : new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
                 (storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>()).ToList(),
                 isVaultProtectedByResourceGuard,
-                crossSubscriptionRestoreState is null ? default : new BackupVaultFeatureSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default, default),
+                crossSubscriptionRestoreState is null ? default : new BackupVaultFeatureSettings(crossSubscriptionRestoreState is null ? default : new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default, default),
                 default,
                 default,
                 default,
@@ -2058,7 +2058,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore)
         {
             return new DataProtectionBackupVaultProperties(
-                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(alertSettingsForAllJobFailures is null ? default : new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -2543,7 +2543,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? alertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, IEnumerable<AzureLocation> replicatedRegions)
         {
             return new DataProtectionBackupVaultProperties(
-                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(alertSettingsForAllJobFailures is null ? default : new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// For earlier API versions, defaults to the legacy offer.
         /// </param>
         /// <returns> A new <see cref="Models.DatadogMonitorProperties"/> instance for mocking. </returns>
-        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState = default, DatadogMonitoringStatus? monitoringStatus = default, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default, DatadogOrganizationProperties datadogOrganizationProperties = default, DatadogUserInfo userInfo = default, DatadogLiftrResourceCategory? liftrResourceCategory = default, int? liftrResourcePreference = default, ResourceIdentifier saaSResourceId = default, IEnumerable<DatadogSreAgentConfiguration> sreAgentConfiguration = default, DatadogMarketplaceOfferDetails marketplaceOfferDetails = default)
+        public static DatadogMonitorProperties DatadogMonitorProperties(DatadogProvisioningState? provisioningState, DatadogMonitoringStatus? monitoringStatus, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, DatadogOrganizationProperties datadogOrganizationProperties, DatadogUserInfo userInfo, DatadogLiftrResourceCategory? liftrResourceCategory, int? liftrResourcePreference, ResourceIdentifier saaSResourceId, IEnumerable<DatadogSreAgentConfiguration> sreAgentConfiguration = default, DatadogMarketplaceOfferDetails marketplaceOfferDetails = default)
         {
             sreAgentConfiguration ??= new ChangeTrackingList<DatadogSreAgentConfiguration>();
 
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <param name="offerId"> Offer Id of the Marketplace offer. </param>
         /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <returns> A new <see cref="Models.MarketplaceSaaSInfo"/> instance for mocking. </returns>
-        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId = default, string marketplaceName = default, string marketplaceStatus = default, string billedAzureSubscriptionId = default, string offerId = default, bool? isSubscribed = default)
+        public static MarketplaceSaaSInfo MarketplaceSaaSInfo(string marketplaceSubscriptionId, string marketplaceName, string marketplaceStatus, string billedAzureSubscriptionId, string offerId, bool? isSubscribed)
         {
             return new MarketplaceSaaSInfo(
                 marketplaceSubscriptionId,
