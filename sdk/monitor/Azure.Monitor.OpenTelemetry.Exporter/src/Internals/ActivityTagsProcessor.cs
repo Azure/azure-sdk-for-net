@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -49,7 +49,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         /// <param name="includeUnmappedTags">Whether to collect tags that match no semantic slot.</param>
         /// <param name="consumeMultiEndpointAttributes">
-        /// Only the multi-tenant conversion consumes the routing slots. Claiming them anywhere else
+        /// Only the multi-endpoint conversion consumes the routing slots. Claiming them anywhere else
         /// would take those attributes out of custom dimensions with nothing to emit them instead,
         /// silently dropping them from telemetry the feature is not even involved in.
         /// </param>
