@@ -10,7 +10,7 @@ using NUnit.Framework;
 #if NET
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
-    internal sealed class MultiTenantResource
+    internal sealed class MultiEndpointResource
     {
         public string ConnectionString { get; set; } = null!;
         public string WorkspaceId { get; set; } = null!;
@@ -34,12 +34,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             }
         }
 
-        internal static IReadOnlyList<MultiTenantResource> Parse(string configuration)
+        internal static IReadOnlyList<MultiEndpointResource> Parse(string configuration)
         {
-            var resources = JsonSerializer.Deserialize<MultiTenantResource[]>(configuration)!;
-            Assert.That(resources.Length, Is.GreaterThanOrEqualTo(3), "At least three tenant destinations are required.");
-            Assert.That(resources[0].Endpoint, Is.EqualTo(resources[1].Endpoint), "Tenants A/B must share an actual ingestion endpoint.");
-            Assert.That(resources[0].Endpoint, Is.Not.EqualTo(resources[2].Endpoint), "Tenant C must use another actual ingestion endpoint.");
+            var resources = JsonSerializer.Deserialize<MultiEndpointResource[]>(configuration)!;
+            Assert.That(resources.Length, Is.GreaterThanOrEqualTo(3), "At least three destinations are required.");
+            Assert.That(resources[0].Endpoint, Is.EqualTo(resources[1].Endpoint), "Destinations A/B must share an actual ingestion endpoint.");
+            Assert.That(resources[0].Endpoint, Is.Not.EqualTo(resources[2].Endpoint), "Destination C must use another actual ingestion endpoint.");
             return resources;
         }
     }

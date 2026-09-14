@@ -48,7 +48,7 @@ Before running these integration tests against Azure for the first time, you mus
   }
   ```
 
-  These tests start a local web application, send telemetry to Application Insights, and query Log Analytics to verify requests, dependencies, metrics, and logs. They cover `UseAzureMonitor`, two named exporters, and `UseAzureMonitorExporter`. This command does not select the separate multi-tenant test suite.
+  These tests start a local web application, send telemetry to Application Insights, and query Log Analytics to verify requests, dependencies, metrics, and logs. They cover `UseAzureMonitor`, two named exporters, and `UseAzureMonitorExporter`. This command does not select the separate multi-endpoint routing test suite.
 
   - Without an explicit mode, recorded tests default to **Playback**. A Playback pass does not validate your deployed Azure resources.
   - Queries retry every 30 seconds for up to 10 minutes per query while waiting for ingestion. Keep local port `9998` available and avoid concurrent runs of this suite.
@@ -64,9 +64,9 @@ Before running these integration tests against Azure for the first time, you mus
   - **Missing configuration or settings cannot be decrypted:** confirm provisioning completed and `sdk/monitor/test-resources.bicep.env` exists, and use the Windows account that created it. Do not paste its contents into logs or issue reports.
   - **No telemetry found:** check the selected resources, ingestion connectivity, and test output. Resource provisioning and ingestion can take several minutes.
 
-### Multi-tenant export live tests
+### Multi-endpoint routing live tests
 
-The multi-tenant fixture is live-only and must run in a separate process because
+The multi-endpoint fixture is live-only and must run in a separate process because
 its feature switch is cached. Provision the opt-in third Application Insights
 resource in another region:
 
@@ -77,12 +77,12 @@ eng/common/TestResources/New-TestResources.ps1 `
   -ResourceGroupName 'YOUR DEDICATED RESOURCE GROUP NAME' `
   -Location westus `
   -ArmTemplateParameters @{
-    enableMultiTenantExport = $true
-    multiTenantLocation = 'eastus2'
+    enableMultiEndpointRouting = $true
+    multiEndpointLocation = 'eastus2'
   }
 ```
 
-Then run only the multi-tenant fixture in a fresh process:
+Then run only the multi-endpoint fixture in a fresh process:
 
 ```powershell
 $previousMode = $env:AZURE_TEST_MODE
@@ -92,11 +92,11 @@ try {
   dotnet test sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests/Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests.csproj `
     --framework net8.0 `
     -p:UseProjectReferenceToAzureClients=true `
-    --filter "FullyQualifiedName~MultiTenantExportLiveTests" `
+    --filter "FullyQualifiedName~MultiEndpointRoutingLiveTests" `
     --logger "console;verbosity=normal" `
     --logger trx
 
-  if ($LASTEXITCODE -ne 0) { throw 'Multi-tenant live tests failed.' }
+  if ($LASTEXITCODE -ne 0) { throw 'Multi-endpoint routing live tests failed.' }
 }
 finally {
   $env:AZURE_TEST_MODE = $previousMode

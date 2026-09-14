@@ -21,24 +21,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 {
     [LiveOnly]
     [Explicit("Requires a fresh filtered Live test host.")]
-    public class MultiTenantExportLiveTests : BaseLiveTest
+    public class MultiEndpointRoutingLiveTests : BaseLiveTest
     {
         private const string TestServerPort = "9998";
         private const string TestServerUrl = $"http://localhost:{TestServerPort}/";
-        private const string TestLogCategoryName = "MultiTenantLiveTests";
-        private const string TestLogMessage = "Multi-tenant live test log";
-        private const string RecordAttribute = "multiTenantRecordId";
+        private const string TestLogCategoryName = "MultiEndpointRoutingLiveTests";
+        private const string TestLogMessage = "Multi-endpoint routing live test log";
+        private const string RecordAttribute = "multiEndpointRecordId";
 
-        public MultiTenantExportLiveTests(bool isAsync) : base(isAsync) { }
+        public MultiEndpointRoutingLiveTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         [SyncOnly]
         public async Task RoutesTracesAndLogsAcrossResourcesAndEndpoints()
         {
-            var resources = MultiTenantResource.Parse(TestEnvironment.MultiTenantResources);
+            var resources = MultiEndpointResource.Parse(TestEnvironment.MultiEndpointResources);
             var runId = Guid.NewGuid().ToString("N");
 
-            AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiTenantExport", true);
+            AppContext.SetSwitch("Azure.Monitor.OpenTelemetry.EnableMultiEndpointRouting", true);
 
             // SETUP WEBAPPLICATION WITH OPENTELEMETRY
             var builder = WebApplication.CreateBuilder();
@@ -53,16 +53,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
                 });
 
             using var app = builder.Build();
-            app.MapGet("/{tenant:int}", (int tenant, ILoggerFactory loggerFactory) =>
+            app.MapGet("/{destination:int}", (int destination, ILoggerFactory loggerFactory) =>
             {
-                var resource = resources[tenant];
-                var requestId = $"{runId}-request-{tenant}";
+                var resource = resources[destination];
+                var requestId = $"{runId}-request-{destination}";
                 foreach (var attribute in Attributes(resource, requestId))
                 {
                     Activity.Current!.SetTag(attribute.Key, attribute.Value);
                 }
 
-                var logId = $"{runId}-log-{tenant}";
+                var logId = $"{runId}-log-{destination}";
                 loggerFactory.CreateLogger(TestLogCategoryName).Log(
                     LogLevel.Information,
                     default,
@@ -77,9 +77,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
 
             // ACT
             using var httpClient = new HttpClient();
-            for (var tenant = 0; tenant < resources.Count; tenant++)
+            for (var destination = 0; destination < resources.Count; destination++)
             {
-                var response = await httpClient.GetStringAsync($"{TestServerUrl}{tenant}").ConfigureAwait(false);
+                var response = await httpClient.GetStringAsync($"{TestServerUrl}{destination}").ConfigureAwait(false);
                 Assert.True(response.Equals("Response from Test Server"), "If this assert fails, the in-process test server is not running.");
             }
 
@@ -98,24 +98,24 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             await VerifyTelemetry(resources, runId);
         }
 
-        private static Dictionary<string, object?> Attributes(MultiTenantResource resource, string recordId) => new()
+        private static Dictionary<string, object?> Attributes(MultiEndpointResource resource, string recordId) => new()
         {
             ["microsoft.instrumentation_key"] = resource.InstrumentationKey,
             ["microsoft.ingestion_endpoint"] = resource.Endpoint.AbsoluteUri,
             [RecordAttribute] = recordId
         };
 
-        private async Task VerifyTelemetry(IReadOnlyList<MultiTenantResource> resources, string runId)
+        private async Task VerifyTelemetry(IReadOnlyList<MultiEndpointResource> resources, string runId)
         {
-            for (var tenant = 0; tenant < resources.Count; tenant++)
+            for (var destination = 0; destination < resources.Count; destination++)
             {
-                var resource = resources[tenant];
-                await VerifyRecord(resource, "AppRequests", $"{runId}-request-{tenant}");
-                await VerifyRecord(resource, "AppTraces", $"{runId}-log-{tenant}");
+                var resource = resources[destination];
+                await VerifyRecord(resource, "AppRequests", $"{runId}-request-{destination}");
+                await VerifyRecord(resource, "AppTraces", $"{runId}-log-{destination}");
             }
         }
 
-        private async Task VerifyRecord(MultiTenantResource resource, string table, string recordId)
+        private async Task VerifyRecord(MultiEndpointResource resource, string table, string recordId)
         {
             var query = $"{table} | where tostring(Properties.{RecordAttribute}) == '{recordId}' | project ResourceId=_ResourceId";
             var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, recordId, query);
