@@ -354,6 +354,51 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
+        /// Statsbeat and Customer SDK Stats are the SDK's own telemetry, addressed to the exporter's
+        /// own connection string and carrying no routing dimensions. If they ever routed, every
+        /// measurement would be dropped while the export reported success, blinding us to the
+        /// feature being rolled out.
+        /// </summary>
+        /// <remarks>
+        /// Asserted on which path the export took rather than on the gate field, so replacing the
+        /// forced single-endpoint path with anything that routes fails here. Note the process-wide
+        /// switch is off during tests, so this cannot also prove the factory ignores it; that
+        /// guarantee rests on the factory passing the value literally.
+        /// </remarks>
+        [Fact]
+        public void InternalTelemetryTakesTheSingleEndpointPath()
+        {
+            var transmitter = new MockTransmitter(new List<TelemetryItem>());
+            using var exporter = AzureMonitorMetricExporter.CreateForInternalTelemetry(transmitter);
+
+            // Stamped as a routed measurement would be: routing would group and send it, the
+            // single-endpoint path sends it under the exporter's own key and keeps the dimensions.
+            Export(exporter, Measure(1, Ikey("ikey-a"), Endpoint(EastUs)));
+
+            Assert.Empty(transmitter.Sends);
+            Assert.Equal(1, transmitter.TrackAsyncCallCount);
+
+            var item = Assert.Single(transmitter.TelemetryItems);
+            Assert.Equal(transmitter.InstrumentationKey, item.InstrumentationKey);
+        }
+
+        /// <summary>
+        /// The measurements these exporters actually carry have no routing dimensions at all, which
+        /// is exactly what routing would drop.
+        /// </summary>
+        [Fact]
+        public void InternalTelemetryWithoutRoutingDimensionsIsStillSent()
+        {
+            var transmitter = new MockTransmitter(new List<TelemetryItem>());
+            using var exporter = AzureMonitorMetricExporter.CreateForInternalTelemetry(transmitter);
+
+            Export(exporter, Measure(1));
+
+            Assert.Empty(transmitter.Sends);
+            Assert.Single(transmitter.TelemetryItems);
+        }
+
+        /// <summary>
         /// Without this a customer can only learn which instruments routing is dropping by enabling
         /// Verbose, which also enables the per-collected-point event and buries the answer.
         /// </summary>

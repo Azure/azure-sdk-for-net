@@ -627,7 +627,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         // Guarded in the body: neither parameter list matches a typed WriteEvent overload, so the
         // call allocates an argument array whether or not anything is listening.
-        [Event(71, Message = "Export {0}: collected {1} telemetry items for {2} ingestion endpoints and dropped {3} that could not be routed.", Level = EventLevel.Informational)]
+        [Event(71, Message = "Export {0}: routed {1} Activities or metric points to {2} ingestion endpoints and dropped {3} that could not be routed. These count routing inputs, not envelopes - one Activity can produce several - so event 72 reports the item count actually sent to each endpoint.", Level = EventLevel.Informational)]
         public void RoutedExportSummary(long exportSequence, int collected, int endpointCount, int rejected)
         {
             if (IsEnabled(EventLevel.Informational))

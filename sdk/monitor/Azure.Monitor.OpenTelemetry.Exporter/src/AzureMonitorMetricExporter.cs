@@ -45,7 +45,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         /// feature being rolled out.
         /// </summary>
         internal static AzureMonitorMetricExporter CreateForInternalTelemetry(AzureMonitorExporterOptions options)
-            => new(TransmitterFactory.Instance.Get(options), multiEndpointEnabled: false);
+            => CreateForInternalTelemetry(TransmitterFactory.Instance.Get(options));
+
+        /// <remarks>
+        /// Takes the transmitter so a test can observe which path the exporter used without building
+        /// a real one.
+        /// </remarks>
+        internal static AzureMonitorMetricExporter CreateForInternalTelemetry(ITransmitter transmitter)
+            => new(transmitter, multiEndpointEnabled: false);
 
         /// <remarks>
         /// The gate is a constructor parameter so a test can exercise either path without mutating
