@@ -595,6 +595,23 @@ namespace Azure.Storage.Blobs
                 sessionOptions);
         }
 
+        /// <summary>
+        /// Creates a <see cref="SessionProvider"/> that mints sessions over the supplied
+        /// pipeline, so policies, transport, and retry settings configured by the caller
+        /// apply to Create Session requests.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected static SessionProvider CreateContainerSessionProvider(
+            Uri endpoint,
+            BlobClientOptions options,
+            HttpPipelinePolicy authentication,
+            HttpPipeline pipeline)
+        {
+            Uri serviceUri = ContainerSessionProvider.GetServiceEndpoint(endpoint);
+            return new ContainerSessionProvider(
+                () => CreateClient(serviceUri, options, authentication, pipeline));
+        }
+
         private ServiceRestClient BuildServiceRestClient(Uri uri)
             => new ServiceRestClient(
                 clientDiagnostics: _clientConfiguration.ClientDiagnostics,

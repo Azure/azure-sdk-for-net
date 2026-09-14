@@ -584,10 +584,10 @@ namespace Azure.Storage.Files.DataLake
             if (tokenCredential != null)
             {
                 HttpPipelinePolicy blobAuthentication = DataLakeServiceClient.BlobServiceClientInternals.CreateSessionPolicy(
-                    authentication,
                     _blobUri,
-                    tokenCredential,
                     DataLakeServiceClient.BlobServiceClientInternals.CreateBlobClientOptions(options, clientDiagnostics),
+                    authentication,
+                    dfsPipeline, // Sessions are created over the bearer-authenticated pipeline.
                     options.SessionOptions);
                 blobPipeline = options.Build(blobAuthentication);
             }

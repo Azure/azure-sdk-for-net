@@ -86,6 +86,26 @@ namespace Azure.Storage.Blobs.Models
                 LazyThreadSafetyMode.ExecutionAndPublication);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ContainerSessionProvider"/> class
+        /// around an already-configured <see cref="BlobServiceClient"/>.
+        /// <para>
+        /// Used by callers that have already built a pipeline carrying their policies,
+        /// transport, and retry settings, so Create Session requests honor the same configurations.
+        /// </para>
+        /// </summary>
+        internal ContainerSessionProvider(Func<BlobServiceClient> serviceClientFactory)
+        {
+            if (serviceClientFactory == null)
+            {
+                throw Errors.ArgumentNull(nameof(serviceClientFactory));
+            }
+
+            _serviceClient = new Lazy<BlobServiceClient>(
+                serviceClientFactory,
+                LazyThreadSafetyMode.ExecutionAndPublication);
+        }
+
         /// <inheritdoc />
         internal override ValueTask<SessionTokenInfo> GetSessionAsync(HttpMessage message, bool async)
             => GetOrCreateCache(GetContainerName(message)).GetAsync(async, message.CancellationToken);
@@ -141,7 +161,7 @@ namespace Azure.Storage.Blobs.Models
         /// Reduces <paramref name="uri"/> to the account's blob service endpoint, discarding
         /// container and blob path segments along with every query-string component.
         /// </summary>
-        private static Uri GetServiceEndpoint(Uri uri)
+        internal static Uri GetServiceEndpoint(Uri uri)
             => new BlobUriBuilder(uri)
             {
                 BlobContainerName = null,

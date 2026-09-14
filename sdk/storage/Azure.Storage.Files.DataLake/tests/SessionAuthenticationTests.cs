@@ -290,6 +290,204 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(0, countingPolicy.BearerGetCount, "Expected no Bearer GET requests for a PUT operation");
         }
 
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task FileClient_ReadContent_EnabledSession_ImplicitSessionProvider()
+        {
+            // Arrange — 2 files per file system
+            await using DisposingFileSystem testA = await GetNewFileSystem(service: GetServiceClient_OAuth());
+            await using DisposingFileSystem testB = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            var data = GetRandomBuffer(Size);
+            List<(string FileSystemName, string FileName)> files = new List<(string, string)>(4);
+            foreach (DisposingFileSystem test in new[] { testA, testB })
+            {
+                for (int i = 0; i < 2; i++)
+                {
+                    DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                    await file.CreateAsync();
+                    using (var stream = new MemoryStream(data))
+                    {
+                        await file.AppendAsync(stream, 0);
+                        await file.FlushAsync(data.Length);
+                    }
+                    files.Add((test.FileSystem.Name, file.Name));
+                }
+            }
+
+            // No SessionProvider — the client mints and caches sessions on its own.
+            var countingPolicy = new SessionAuthCountingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            Uri serviceUri = new Uri(TestConfigHierarchicalNamespace.BlobServiceEndpoint).ToHttps();
+            DataLakeServiceClient oauthServiceClient = InstrumentClient(
+                new DataLakeServiceClient(
+                    serviceUri,
+                    TestEnvironment.Credential,
+                    options));
+
+            // Act — read 2 files from file system A, then 2 from file system B
+            countingPolicy.Start();
+            foreach ((string fileSystemName, string fileName) in files)
+            {
+                DataLakeFileSystemClient fileSystemClient = InstrumentClient(
+                    oauthServiceClient.GetFileSystemClient(fileSystemName));
+                DataLakeFileClient oauthFileClient = InstrumentClient(
+                    fileSystemClient.GetFileClient(fileName));
+
+                Response<DataLakeFileReadResult> response = await oauthFileClient.ReadContentAsync();
+
+                // Assert — verify data was read correctly
+                Assert.IsNotNull(response.Value.Content);
+                Assert.AreEqual(data.Length, response.Value.Content.ToMemory().Length);
+            }
+
+            // Assert — one session minted per file system, all 4 reads use session auth,
+            // none fall back to Bearer. The implicitly created provider mints sessions over
+            // the client's own pipeline, so the counting policy observes those requests.
+            Assert.AreEqual(2, countingPolicy.CreateSessionCount,
+                "Expected one create session request per file system");
+            Assert.AreEqual(4, countingPolicy.GetSessionAuthCount,
+                "Expected all read requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+
+            // Assert — verify per-file system token sharing
+            // Ordering: [0]=A0, [1]=A1, [2]=B0, [3]=B1
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetSessionTokens;
+            Assert.AreEqual(4, sessionTokens.Count, "Expected exactly 4 session-authenticated read requests");
+
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "File system A requests should share the same session token");
+            Assert.AreEqual(sessionTokens[2], sessionTokens[3],
+                "File system B requests should share the same session token");
+            Assert.AreNotEqual(sessionTokens[0], sessionTokens[2],
+                "File system A and file system B should have different session tokens");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task FileClient_ReadContent_EnabledSession_ImplicitSessionProvider_FileClientCtor()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            await file.CreateAsync();
+
+            var data = GetRandomBuffer(Size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.AppendAsync(stream, 0);
+                await file.FlushAsync(data.Length);
+            }
+
+            // No SessionProvider — the file client builds one from its own (file-scoped) URI.
+            var countingPolicy = new SessionAuthCountingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            DataLakeFileClient oauthFileClient = InstrumentClient(
+                new DataLakeFileClient(
+                    file.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+            // Act — two reads through the same client, so the second must reuse the
+            // session cached by the first.
+            countingPolicy.Start();
+            Response<DataLakeFileReadResult> first = await oauthFileClient.ReadContentAsync();
+            Response<DataLakeFileReadResult> second = await oauthFileClient.ReadContentAsync();
+
+            // Assert
+            Assert.AreEqual(data.Length, first.Value.Content.ToMemory().Length);
+            Assert.AreEqual(data.Length, second.Value.Content.ToMemory().Length);
+
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected a single create session request shared by both reads");
+            Assert.AreEqual(2, countingPolicy.GetSessionAuthCount,
+                "Expected both read requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetSessionTokens;
+            Assert.AreEqual(2, sessionTokens.Count, "Expected exactly 2 session-authenticated read requests");
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Both reads should share the same cached session token");
+        }
+
+        [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
+        public async Task FileSystemClient_ReadContent_EnabledSession_ImplicitSessionProvider()
+        {
+            // Arrange — 2 files in the same file system
+            await using DisposingFileSystem test = await GetNewFileSystem(service: GetServiceClient_OAuth());
+
+            var data = GetRandomBuffer(Size);
+            List<string> fileNames = new List<string>(2);
+            for (int i = 0; i < 2; i++)
+            {
+                DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+                await file.CreateAsync();
+                using (var stream = new MemoryStream(data))
+                {
+                    await file.AppendAsync(stream, 0);
+                    await file.FlushAsync(data.Length);
+                }
+                fileNames.Add(file.Name);
+            }
+
+            // No SessionProvider — the file system client builds one from its own URI.
+            var countingPolicy = new SessionAuthCountingPolicy();
+            DataLakeClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+
+            DataLakeFileSystemClient oauthFileSystemClient = InstrumentClient(
+                new DataLakeFileSystemClient(
+                    test.FileSystem.Uri,
+                    TestEnvironment.Credential,
+                    options));
+
+            // Act — read both files through child clients of the same file system client,
+            // so they share one provider and therefore one cached session.
+            countingPolicy.Start();
+            foreach (string fileName in fileNames)
+            {
+                DataLakeFileClient oauthFileClient = InstrumentClient(
+                    oauthFileSystemClient.GetFileClient(fileName));
+
+                Response<DataLakeFileReadResult> response = await oauthFileClient.ReadContentAsync();
+
+                Assert.IsNotNull(response.Value.Content);
+                Assert.AreEqual(data.Length, response.Value.Content.ToMemory().Length);
+            }
+
+            // Assert
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount,
+                "Expected a single create session request for the file system");
+            Assert.AreEqual(2, countingPolicy.GetSessionAuthCount,
+                "Expected both read requests to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.BearerGetCount,
+                "Expected no GET requests to fall back to Bearer authorization");
+
+            IReadOnlyList<string> sessionTokens = countingPolicy.GetSessionTokens;
+            Assert.AreEqual(2, sessionTokens.Count, "Expected exactly 2 session-authenticated read requests");
+            Assert.AreEqual(sessionTokens[0], sessionTokens[1],
+                "Files in the same file system should share the same session token");
+        }
+
         /// <summary>
         /// <see cref="SessionOptions.AccountName"/> is optional; when omitted it is
         /// derived from the request URL at signing time.
