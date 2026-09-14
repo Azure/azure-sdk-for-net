@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationPrivateLinkScope : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -96,6 +97,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public KubernetesConfigurationPrivateLinkScopeProperties Properties
         {
             get

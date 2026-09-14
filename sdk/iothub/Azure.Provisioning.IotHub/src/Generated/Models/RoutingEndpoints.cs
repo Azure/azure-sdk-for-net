@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties related to the custom endpoints to which your IoT hub routes messages based on the routing rules. A maximum of 10 custom endpoints are allowed across all endpoint types for paid hubs and only 1 custom endpoint is allowed across all endpoint types for free hubs. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class RoutingEndpoints : ProvisionableConstruct
     {
         private BicepList<RoutingServiceBusQueueEndpointProperties> _serviceBusQueues;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ServiceBusQueues. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingServiceBusQueueEndpointProperties> ServiceBusQueues
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ServiceBusTopics. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingServiceBusTopicEndpointProperties> ServiceBusTopics
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EventHubs. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingEventHubProperties> EventHubs
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the StorageContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingStorageContainerProperties> StorageContainers
         {
             get
@@ -85,6 +91,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the CosmosDBSqlContainers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<RoutingCosmosDBSqlApiProperties> CosmosDBSqlContainers
         {
             get

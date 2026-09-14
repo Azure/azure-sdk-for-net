@@ -14,7 +14,8 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The private endpoint connection of an IotHub. </summary>
-    public partial class IotHubPrivateEndpointConnection : ProvisionableResource
+    [Experimental("AZPROVISION001")]
+    public partial class IotHubPrivateEndpointConnection1 : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +23,10 @@ namespace Azure.Provisioning.IotHub
         private IotHubPrivateEndpointConnectionProperties _properties;
         private ResourceReference<IotHubDescription> _parent;
 
-        /// <summary> Creates a new IotHubPrivateEndpointConnection. </summary>
+        /// <summary> Creates a new IotHubPrivateEndpointConnection1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public IotHubPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Devices/iotHubs/privateEndpointConnections", resourceVersion ?? "2026-03-01-preview")
+        public IotHubPrivateEndpointConnection1(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Devices/iotHubs/privateEndpointConnections", resourceVersion ?? "2026-03-01-preview")
         {
         }
 
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.IotHub
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _id;
             }
         }
@@ -44,12 +45,12 @@ namespace Azure.Provisioning.IotHub
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _name;
             }
             set
             {
-                Initialize();
+                this.Initialize();
                 _name.Assign(value);
             }
         }
@@ -59,23 +60,24 @@ namespace Azure.Provisioning.IotHub
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _systemData;
             }
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubPrivateEndpointConnectionProperties Properties
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _properties;
             }
             set
             {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                this.Initialize();
+                this.AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -84,39 +86,39 @@ namespace Azure.Provisioning.IotHub
         {
             get
             {
-                Initialize();
+                this.Initialize();
                 return _parent.Value;
             }
             set
             {
-                Initialize();
+                this.Initialize();
                 _parent.Value = value;
             }
         }
 
-        /// <summary> Define all the provisionable properties for IotHubPrivateEndpointConnection. </summary>
+        /// <summary> Define all the provisionable properties for IotHubPrivateEndpointConnection1. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<IotHubPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<IotHubDescription>(nameof(Parent), new string[] { "parent" }, isRequired: true);
-            DefineAdditionalProperties();
+            _id = this.DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = this.DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _systemData = this.DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = this.DefineModelProperty<IotHubPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
+            _parent = this.DefineResource<IotHubDescription>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            this.DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing IotHubPrivateEndpointConnection. </summary>
+        /// <summary> Creates a reference to an existing IotHubPrivateEndpointConnection1. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static IotHubPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static IotHubPrivateEndpointConnection1 FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            IotHubPrivateEndpointConnection result = new IotHubPrivateEndpointConnection(bicepIdentifier, resourceVersion);
+            IotHubPrivateEndpointConnection1 result = new IotHubPrivateEndpointConnection1(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for IotHubPrivateEndpointConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IotHubPrivateEndpointConnection1 that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

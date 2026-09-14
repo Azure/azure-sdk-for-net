@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The description of an X509 CA Certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubCertificateProperties : ProvisionableConstruct
     {
         private BicepValue<string> _subject;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Subject. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Subject
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the ExpiresOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
@@ -50,6 +54,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the ThumbprintString. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ThumbprintString
         {
             get
@@ -60,6 +65,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IsVerified. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsVerified
         {
             get
@@ -75,6 +81,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the CreatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreatedOn
         {
             get
@@ -85,6 +92,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the UpdatedOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> UpdatedOn
         {
             get
@@ -95,6 +103,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Certificate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Certificate
         {
             get
@@ -110,6 +119,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PolicyResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> PolicyResourceId
         {
             get

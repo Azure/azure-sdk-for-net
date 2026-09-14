@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class KubernetesConfigurationPrivateLinkScopeProperties : ProvisionableConstruct
     {
         private BicepValue<KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType> _publicNetworkAccess;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType> PublicNetworkAccess
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<KubernetesConfigurationPrivateLinkScopeProvisioningState> ProvisioningState
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets or sets the ClusterResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> ClusterResourceId
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the PrivateLinkScopeId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> PrivateLinkScopeId
         {
             get
@@ -77,6 +83,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<KubernetesConfigurationPrivateEndpointConnection> PrivateEndpointConnections
         {
             get

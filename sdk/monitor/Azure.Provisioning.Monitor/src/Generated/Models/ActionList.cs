@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A list of Activity Log Alert rule actions. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ActionList : ProvisionableConstruct
     {
         private BicepList<ActivityLogAlertActionGroup> _actionGroups;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ActivityLogAlertActionGroup> ActionGroups
         {
             get

@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The device streams properties of iothub. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class IotHubPropertiesDeviceStreams : ProvisionableConstruct
     {
         private BicepList<string> _streamingEndpoints;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the StreamingEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> StreamingEndpoints
         {
             get

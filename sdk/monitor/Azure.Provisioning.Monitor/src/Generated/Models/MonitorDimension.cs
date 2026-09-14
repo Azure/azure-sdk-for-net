@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> Dimension splitting and filtering definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorDimension : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Operator. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<MonitorDimensionOperator> Operator
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> Values
         {
             get

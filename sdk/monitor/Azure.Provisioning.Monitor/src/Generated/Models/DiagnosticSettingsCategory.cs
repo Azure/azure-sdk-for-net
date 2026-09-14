@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic settings Category. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DiagnosticSettingsCategory : ProvisionableConstruct
     {
         private BicepValue<CategoryType> _categoryType;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the CategoryType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<CategoryType> CategoryType
         {
             get
@@ -32,6 +35,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the CategoryGroups. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> CategoryGroups
         {
             get

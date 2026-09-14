@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -13,6 +14,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The Azure Automation Runbook notification receiver. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorAutomationRunbookReceiver : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _automationAccountId;
@@ -30,6 +32,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AutomationAccountId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> AutomationAccountId
         {
             get
@@ -45,6 +48,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the RunbookName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RunbookName
         {
             get
@@ -60,6 +64,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebhookResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> WebhookResourceId
         {
             get
@@ -75,6 +80,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IsGlobalRunbook. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsGlobalRunbook
         {
             get
@@ -90,6 +96,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -105,6 +112,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> ServiceUri
         {
             get
@@ -120,6 +128,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the UseCommonAlertSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseCommonAlertSchema
         {
             get
@@ -135,6 +144,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ManagedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentity
         {
             get

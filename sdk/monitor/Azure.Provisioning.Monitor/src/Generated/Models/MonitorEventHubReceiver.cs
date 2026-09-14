@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Event hub receiver. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MonitorEventHubReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -43,6 +46,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubNameSpace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubNameSpace
         {
             get
@@ -58,6 +62,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventHubName
         {
             get
@@ -73,6 +78,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the UseCommonAlertSchema. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> UseCommonAlertSchema
         {
             get
@@ -88,6 +94,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Guid> TenantId
         {
             get
@@ -103,6 +110,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the SubscriptionId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubscriptionId
         {
             get
@@ -118,6 +126,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ManagedIdentity. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedIdentity
         {
             get

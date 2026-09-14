@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The description of the IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubDescription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -100,6 +101,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubProperties Properties
         {
             get
@@ -115,6 +117,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -130,6 +133,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubSkuInfo Sku
         {
             get
@@ -145,6 +149,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get

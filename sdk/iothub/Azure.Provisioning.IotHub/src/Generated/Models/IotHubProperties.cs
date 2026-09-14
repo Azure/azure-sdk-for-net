@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of an IoT hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubProperties : ProvisionableConstruct
     {
         private BicepList<SharedAccessSignatureAuthorizationRule> _authorizationPolicies;
@@ -23,7 +25,7 @@ namespace Azure.Provisioning.IotHub
         private BicepList<IotHubIPFilterRule> _ipFilterRules;
         private IotHubNetworkRuleSetProperties _networkRuleSets;
         private BicepValue<string> _minTlsVersion;
-        private BicepList<IotHubPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<IotHubPrivateEndpointConnection1> _privateEndpointConnections;
         private BicepValue<string> _provisioningState;
         private BicepValue<string> _state;
         private BicepValue<string> _hostName;
@@ -52,6 +54,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the AuthorizationPolicies. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SharedAccessSignatureAuthorizationRule> AuthorizationPolicies
         {
             get
@@ -67,6 +70,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DisableLocalAuth. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableLocalAuth
         {
             get
@@ -82,6 +86,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DisableDeviceSas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableDeviceSas
         {
             get
@@ -97,6 +102,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DisableModuleSas. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DisableModuleSas
         {
             get
@@ -112,6 +118,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the RestrictOutboundNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RestrictOutboundNetworkAccess
         {
             get
@@ -127,6 +134,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the AllowedFqdns. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AllowedFqdns
         {
             get
@@ -142,6 +150,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -157,6 +166,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IPFilterRules. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IotHubIPFilterRule> IPFilterRules
         {
             get
@@ -172,6 +182,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the NetworkRuleSets. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubNetworkRuleSetProperties NetworkRuleSets
         {
             get
@@ -187,6 +198,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the MinTlsVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MinTlsVersion
         {
             get
@@ -202,7 +214,8 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
-        public BicepList<IotHubPrivateEndpointConnection> PrivateEndpointConnections
+        [Experimental("AZPROVISION001")]
+        public BicepList<IotHubPrivateEndpointConnection1> PrivateEndpointConnections
         {
             get
             {
@@ -217,6 +230,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -227,6 +241,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> State
         {
             get
@@ -237,6 +252,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the HostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> HostName
         {
             get
@@ -247,6 +263,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the DeviceHostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DeviceHostName
         {
             get
@@ -257,6 +274,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the ServiceHostName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ServiceHostName
         {
             get
@@ -267,6 +285,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EventHubEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<EventHubCompatibleEndpointProperties> EventHubEndpoints
         {
             get
@@ -282,6 +301,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Routing. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubRoutingProperties Routing
         {
             get
@@ -297,6 +317,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the StorageEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<IotHubStorageEndpointProperties> StorageEndpoints
         {
             get
@@ -312,6 +333,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the MessagingEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepDictionary<MessagingEndpointProperties> MessagingEndpoints
         {
             get
@@ -327,6 +349,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EnableFileUploadNotifications. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableFileUploadNotifications
         {
             get
@@ -342,6 +365,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the CloudToDevice. </summary>
+        [Experimental("AZPROVISION001")]
         public CloudToDeviceProperties CloudToDevice
         {
             get
@@ -357,6 +381,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Comments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Comments
         {
             get
@@ -372,6 +397,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DeviceStreams. </summary>
+        [Experimental("AZPROVISION001")]
         internal IotHubPropertiesDeviceStreams DeviceStreams
         {
             get
@@ -387,6 +413,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Features. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubCapability> Features
         {
             get
@@ -402,6 +429,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Encryption. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubEncryptionProperties Encryption
         {
             get
@@ -417,6 +445,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the Locations. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<IotHubLocationDescription> Locations
         {
             get
@@ -427,6 +456,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the EnableDataResidency. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> EnableDataResidency
         {
             get
@@ -442,6 +472,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the RootCertificate. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubRootCertificateProperties RootCertificate
         {
             get
@@ -457,6 +488,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the IPVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubIPVersion> IPVersion
         {
             get
@@ -472,6 +504,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the DeviceRegistry. </summary>
+        [Experimental("AZPROVISION001")]
         public IotHubDeviceRegistry DeviceRegistry
         {
             get
@@ -487,6 +520,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the IotHubDetails. </summary>
+        [Experimental("AZPROVISION001")]
         internal IotHubDetails IotHubDetails
         {
             get
@@ -497,6 +531,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the StreamingEndpoints. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> DeviceStreamsStreamingEndpoints
         {
             get
@@ -514,6 +549,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets the GatewayVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubGatewayVersion> IotHubDetailsGatewayVersion
         {
             get
@@ -536,7 +572,7 @@ namespace Azure.Provisioning.IotHub
             _ipFilterRules = DefineListProperty<IotHubIPFilterRule>(nameof(IPFilterRules), new string[] { "ipFilterRules" });
             _networkRuleSets = DefineModelProperty<IotHubNetworkRuleSetProperties>(nameof(NetworkRuleSets), new string[] { "networkRuleSets" });
             _minTlsVersion = DefineProperty<string>(nameof(MinTlsVersion), new string[] { "minTlsVersion" });
-            _privateEndpointConnections = DefineListProperty<IotHubPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
+            _privateEndpointConnections = DefineListProperty<IotHubPrivateEndpointConnection1>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _state = DefineProperty<string>(nameof(State), new string[] { "state" }, isOutput: true);
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" }, isOutput: true);

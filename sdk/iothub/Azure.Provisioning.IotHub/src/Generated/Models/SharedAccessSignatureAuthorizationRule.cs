@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The properties of an IoT hub shared access policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SharedAccessSignatureAuthorizationRule : ProvisionableConstruct
     {
         private BicepValue<string> _keyName;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the KeyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> KeyName
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the PrimaryKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PrimaryKey
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the SecondaryKey. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SecondaryKey
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.IotHub
         }
 
         /// <summary> Gets or sets the Rights. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<IotHubSharedAccessRight> Rights
         {
             get
