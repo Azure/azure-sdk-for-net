@@ -38,13 +38,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="observedOn"> The Unix timestamp (in seconds) for when the service observed the event. </param>
         /// <param name="occurredOn"> The Unix timestamp (in seconds) for when the event occurred according to the provider. </param>
         /// <param name="timestampSource"> The source of the event timestamp. </param>
-        /// <param name="reason"> A stable service-generated reason associated with the event. </param>
+        /// <param name="reason"> A stable service-generated reason associated with this lifecycle event, not necessarily the final outcome of the call. Additional string codes may be returned. </param>
         /// <param name="providerEventId"> The provider event identifier used for idempotency, when supplied. </param>
         /// <param name="providerSequence"> The provider event sequence, when supplied. </param>
         /// <param name="providerStatusCode"> The provider status code associated with the event. </param>
         /// <param name="providerSubCode"> The provider subcode associated with the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallLifecycleEvent(long sequence, TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, DateTimeOffset observedOn, DateTimeOffset? occurredOn, TelephonyCallTimestampSource timestampSource, string reason, string providerEventId, long? providerSequence, int? providerStatusCode, int? providerSubCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallLifecycleEvent(long sequence, TelephonyCallLifecycleEventName name, TelephonyCallLifecycleEventSource source, TelephonyCallLifecycleEventOutcome outcome, DateTimeOffset observedOn, DateTimeOffset? occurredOn, TelephonyCallTimestampSource timestampSource, TelephonyCallLifecycleEventReason? reason, string providerEventId, long? providerSequence, int? providerStatusCode, int? providerSubCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sequence = sequence;
             Name = name;
@@ -82,8 +82,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The source of the event timestamp. </summary>
         public TelephonyCallTimestampSource TimestampSource { get; }
 
-        /// <summary> A stable service-generated reason associated with the event. </summary>
-        public string Reason { get; }
+        /// <summary> A stable service-generated reason associated with this lifecycle event, not necessarily the final outcome of the call. Additional string codes may be returned. </summary>
+        public TelephonyCallLifecycleEventReason? Reason { get; }
 
         /// <summary> The provider event identifier used for idempotency, when supplied. </summary>
         public string ProviderEventId { get; }

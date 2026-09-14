@@ -17,28 +17,33 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyCampaignContent"/>. </summary>
         /// <param name="displayName"> A customer-visible name for the campaign. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate campaign calls. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/> or <paramref name="telephonyBindingId"/> is null. </exception>
-        public CreateTelephonyCampaignContent(string displayName, string telephonyBindingId)
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate campaign calls. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate campaign calls. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="connectionName"/> or <paramref name="source"/> is null. </exception>
+        public CreateTelephonyCampaignContent(string displayName, string connectionName, string source)
         {
             Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(telephonyBindingId, nameof(telephonyBindingId));
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(source, nameof(source));
 
             DisplayName = displayName;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyCampaignContent"/>. </summary>
         /// <param name="displayName"> A customer-visible name for the campaign. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate campaign calls. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate campaign calls. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate campaign calls. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="purpose"> An optional customer-declared purpose for campaign calls. </param>
         /// <param name="schedule"> When the published campaign becomes eligible to dispatch calls. </param>
         /// <param name="retryPolicy"> The provider-attempt retry policy inherited by every materialized call job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTelephonyCampaignContent(string displayName, string telephonyBindingId, string purpose, TelephonyCampaignSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateTelephonyCampaignContent(string displayName, string connectionName, string source, string purpose, TelephonyCampaignSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
             Purpose = purpose;
             Schedule = schedule;
             RetryPolicy = retryPolicy;
@@ -48,8 +53,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A customer-visible name for the campaign. </summary>
         public string DisplayName { get; }
 
-        /// <summary> The active agent telephony binding used to originate campaign calls. </summary>
-        public string TelephonyBindingId { get; }
+        /// <summary> The Foundry connection name in the current project used to originate campaign calls. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </summary>
+        public string ConnectionName { get; }
+
+        /// <summary> The caller identity used to originate campaign calls. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </summary>
+        public string Source { get; }
 
         /// <summary> An optional customer-declared purpose for campaign calls. </summary>
         public string Purpose { get; set; }

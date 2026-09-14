@@ -14,11 +14,11 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensionTelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        internal TeamsPhoneExtensionTelephonyBinding(string id, string connection, TelephonyBindingStatus status, Uri incomingCallUrl, string resourceAccountObjectId) : base(id, TelephonyProvider.TeamsPhoneExtension, connection, status, incomingCallUrl)
+        internal TeamsPhoneExtensionTelephonyBinding(string id, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl, string resourceAccountObjectId) : base(id, TelephonyProvider.TeamsPhoneExtension, connectionName, status, incomingCallUrl)
         {
             ResourceAccountObjectId = resourceAccountObjectId;
         }
@@ -26,14 +26,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TeamsPhoneExtensionTelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        internal TeamsPhoneExtensionTelephonyBinding(string id, TelephonyProvider provider, string connection, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(id, provider, connection, label, status, incomingCallUrl, additionalBinaryDataProperties)
+        internal TeamsPhoneExtensionTelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(id, provider, connectionName, label, status, incomingCallUrl, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
             ResourceAccountObjectId = resourceAccountObjectId;

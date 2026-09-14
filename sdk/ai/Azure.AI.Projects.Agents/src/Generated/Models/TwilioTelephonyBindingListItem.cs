@@ -14,11 +14,11 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Initializes a new instance of <see cref="TwilioTelephonyBindingListItem"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        internal TwilioTelephonyBindingListItem(string id, string connection, TelephonyBindingStatus status, Uri incomingCallUrl, string phoneNumber) : base(id, TelephonyProvider.Twilio, connection, status, incomingCallUrl)
+        internal TwilioTelephonyBindingListItem(string id, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl, string phoneNumber) : base(id, TelephonyProvider.Twilio, connectionName, status, incomingCallUrl)
         {
             PhoneNumber = phoneNumber;
         }
@@ -26,14 +26,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TwilioTelephonyBindingListItem"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="etag"> The entity tag to send in the `If-Match` header when updating or deleting this binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        internal TwilioTelephonyBindingListItem(string id, TelephonyProvider provider, string connection, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(id, provider, connection, label, status, incomingCallUrl, etag, additionalBinaryDataProperties)
+        internal TwilioTelephonyBindingListItem(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, string etag, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber) : base(id, provider, connectionName, label, status, incomingCallUrl, etag, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
         }

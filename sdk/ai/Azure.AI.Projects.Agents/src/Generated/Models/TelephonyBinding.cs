@@ -21,14 +21,14 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
-        private protected TelephonyBinding(string id, TelephonyProvider provider, string connection, TelephonyBindingStatus status, Uri incomingCallUrl)
+        private protected TelephonyBinding(string id, TelephonyProvider provider, string connectionName, TelephonyBindingStatus status, Uri incomingCallUrl)
         {
             Id = id;
             Provider = provider;
-            Connection = connection;
+            ConnectionName = connectionName;
             Status = status;
             IncomingCallUrl = incomingCallUrl;
         }
@@ -36,16 +36,16 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="TelephonyBinding"/>. </summary>
         /// <param name="id"> The service-generated binding identifier. </param>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> The optional display label for the binding. </param>
         /// <param name="status"> The lifecycle status. </param>
         /// <param name="incomingCallUrl"> The service-generated webhook URL to configure with the telephony provider. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyBinding(string id, TelephonyProvider provider, string connection, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyBinding(string id, TelephonyProvider provider, string connectionName, string label, TelephonyBindingStatus status, Uri incomingCallUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Provider = provider;
-            Connection = connection;
+            ConnectionName = connectionName;
             Label = label;
             Status = status;
             IncomingCallUrl = incomingCallUrl;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects.Agents
         internal TelephonyProvider Provider { get; set; }
 
         /// <summary> The Foundry connection name for the telephony provider. </summary>
-        public string Connection { get; }
+        public string ConnectionName { get; }
 
         /// <summary> The optional display label for the binding. </summary>
         public string Label { get; }

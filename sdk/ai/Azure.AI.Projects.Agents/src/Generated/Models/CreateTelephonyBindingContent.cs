@@ -20,22 +20,22 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingContent"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
-        private protected CreateTelephonyBindingContent(TelephonyProvider provider, string connection)
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
+        private protected CreateTelephonyBindingContent(TelephonyProvider provider, string connectionName)
         {
             Provider = provider;
-            Connection = connection;
+            ConnectionName = connectionName;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyBindingContent"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTelephonyBindingContent(TelephonyProvider provider, string connection, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateTelephonyBindingContent(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Provider = provider;
-            Connection = connection;
+            ConnectionName = connectionName;
             Label = label;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.AI.Projects.Agents
         internal TelephonyProvider Provider { get; set; }
 
         /// <summary> The Foundry connection name for the telephony provider. </summary>
-        public string Connection { get; }
+        public string ConnectionName { get; }
 
         /// <summary> An optional display label for the binding. </summary>
         public string Label { get; set; }

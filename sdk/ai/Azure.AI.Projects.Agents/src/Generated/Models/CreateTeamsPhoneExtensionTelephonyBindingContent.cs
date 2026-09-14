@@ -13,12 +13,12 @@ namespace Azure.AI.Projects.Agents
     public partial class CreateTeamsPhoneExtensionTelephonyBindingContent : CreateTelephonyBindingContent
     {
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/>. </summary>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connection"/> or <paramref name="resourceAccountObjectId"/> is null. </exception>
-        public CreateTeamsPhoneExtensionTelephonyBindingContent(string connection, string resourceAccountObjectId) : base(TelephonyProvider.TeamsPhoneExtension, connection)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> or <paramref name="resourceAccountObjectId"/> is null. </exception>
+        public CreateTeamsPhoneExtensionTelephonyBindingContent(string connectionName, string resourceAccountObjectId) : base(TelephonyProvider.TeamsPhoneExtension, connectionName)
         {
-            Argument.AssertNotNull(connection, nameof(connection));
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
             Argument.AssertNotNull(resourceAccountObjectId, nameof(resourceAccountObjectId));
 
             ResourceAccountObjectId = resourceAccountObjectId;
@@ -26,12 +26,12 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateTeamsPhoneExtensionTelephonyBindingContent"/>. </summary>
         /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connection"> The Foundry connection name for the telephony provider. </param>
+        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
         /// <param name="label"> An optional display label for the binding. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
         /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        internal CreateTeamsPhoneExtensionTelephonyBindingContent(TelephonyProvider provider, string connection, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(provider, connection, label, additionalBinaryDataProperties)
+        internal CreateTeamsPhoneExtensionTelephonyBindingContent(TelephonyProvider provider, string connectionName, string label, IDictionary<string, BinaryData> additionalBinaryDataProperties, string phoneNumber, string resourceAccountObjectId) : base(provider, connectionName, label, additionalBinaryDataProperties)
         {
             PhoneNumber = phoneNumber;
             ResourceAccountObjectId = resourceAccountObjectId;

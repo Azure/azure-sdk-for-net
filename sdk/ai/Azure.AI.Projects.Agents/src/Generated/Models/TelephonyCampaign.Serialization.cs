@@ -86,8 +86,10 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("display_name"u8);
             writer.WriteStringValue(DisplayName);
-            writer.WritePropertyName("telephony_binding_id"u8);
-            writer.WriteStringValue(TelephonyBindingId);
+            writer.WritePropertyName("connection_name"u8);
+            writer.WriteStringValue(ConnectionName);
+            writer.WritePropertyName("source"u8);
+            writer.WriteStringValue(Source);
             if (Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
@@ -179,7 +181,8 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string displayName = default;
-            string telephonyBindingId = default;
+            string connectionName = default;
+            string source = default;
             string purpose = default;
             TelephonyCampaignSchedule schedule = default;
             string id = default;
@@ -203,9 +206,14 @@ namespace Azure.AI.Projects.Agents
                     displayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("telephony_binding_id"u8))
+                if (prop.NameEquals("connection_name"u8))
                 {
-                    telephonyBindingId = prop.Value.GetString();
+                    connectionName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("source"u8))
+                {
+                    source = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("purpose"u8))
@@ -298,7 +306,8 @@ namespace Azure.AI.Projects.Agents
             }
             return new TelephonyCampaign(
                 displayName,
-                telephonyBindingId,
+                connectionName,
+                source,
                 purpose,
                 schedule,
                 id,

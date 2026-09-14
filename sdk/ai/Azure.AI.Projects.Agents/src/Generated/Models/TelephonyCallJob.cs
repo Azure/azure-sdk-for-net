@@ -18,7 +18,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="TelephonyCallJob"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate the call. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="id"> The service-generated call-job identifier. </param>
         /// <param name="agentName"> The name of the voice agent used at execution time. </param>
         /// <param name="status"> The current call-job lifecycle status. </param>
@@ -27,10 +28,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string telephonyBindingId, string id, string agentName, TelephonyCallJobStatus status, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn)
+        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string id, string agentName, TelephonyCallJobStatus status, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn)
         {
             Destination = destination;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
             Id = id;
             AgentName = agentName;
@@ -44,7 +46,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="TelephonyCallJob"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate the call. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
         /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
         /// <param name="schedule"> The optional execution window. </param>
@@ -56,15 +59,16 @@ namespace Azure.AI.Projects.Agents
         /// <param name="retryPolicy"> The frozen provider-attempt retry policy. </param>
         /// <param name="attemptCount"> The number of provider attempts created so far. </param>
         /// <param name="nextAttemptOn"> The Unix timestamp in seconds at which the next retry becomes eligible. </param>
-        /// <param name="terminalReason"> The stable reason for the terminal status, when available. </param>
+        /// <param name="terminalReason"> The stable service-generated reason for the overall outbound call job, which can span multiple provider attempts, when available. Interpret this with `status`: a queued job can retain a temporary dispatch-deferral reason. Additional string codes may be returned. </param>
         /// <param name="revision"> The monotonically increasing optimistic-concurrency revision. </param>
         /// <param name="createdOn"> The Unix timestamp in seconds when the call job was created. </param>
         /// <param name="updatedOn"> The Unix timestamp in seconds when the call job was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TelephonyCallJob(TelephonyOutboundDestination destination, string telephonyBindingId, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string @object, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, string terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TelephonyCallJob(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, string id, string @object, string agentName, TelephonyCallJobStatus status, TelephonyCallJobCancellation cancellation, TelephonyOutboundRetryPolicyResult retryPolicy, int attemptCount, DateTimeOffset? nextAttemptOn, TelephonyCallJobTerminalReason? terminalReason, long revision, DateTimeOffset createdOn, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
             Purpose = purpose;
             StructuredInputs = structuredInputs;
             Schedule = schedule;
@@ -86,8 +90,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The phone destination to call. </summary>
         public TelephonyOutboundDestination Destination { get; }
 
-        /// <summary> The active agent telephony binding used to originate the call. </summary>
-        public string TelephonyBindingId { get; }
+        /// <summary> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </summary>
+        public string ConnectionName { get; }
+
+        /// <summary> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </summary>
+        public string Source { get; }
 
         /// <summary> An optional customer-declared purpose for placing the call. </summary>
         public string Purpose { get; }
@@ -147,8 +154,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The Unix timestamp in seconds at which the next retry becomes eligible. </summary>
         public DateTimeOffset? NextAttemptOn { get; }
 
-        /// <summary> The stable reason for the terminal status, when available. </summary>
-        public string TerminalReason { get; }
+        /// <summary> The stable service-generated reason for the overall outbound call job, which can span multiple provider attempts, when available. Interpret this with `status`: a queued job can retain a temporary dispatch-deferral reason. Additional string codes may be returned. </summary>
+        public TelephonyCallJobTerminalReason? TerminalReason { get; }
 
         /// <summary> The monotonically increasing optimistic-concurrency revision. </summary>
         public long Revision { get; }

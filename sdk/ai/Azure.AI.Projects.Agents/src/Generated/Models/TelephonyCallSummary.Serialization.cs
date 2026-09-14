@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(EndReason))
             {
                 writer.WritePropertyName("end_reason"u8);
-                writer.WriteStringValue(EndReason);
+                writer.WriteStringValue(EndReason.Value.ToString());
             }
             if (Optional.IsDefined(ProviderStatusCode))
             {
@@ -200,7 +200,7 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset? agentSessionReadyOn = default;
             DateTimeOffset? endedOn = default;
             TimeSpan? durationMs = default;
-            string endReason = default;
+            TelephonyCallEndReason? endReason = default;
             int? providerStatusCode = default;
             int? providerSubCode = default;
             string providerMessage = default;
@@ -294,7 +294,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("end_reason"u8))
                 {
-                    endReason = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endReason = new TelephonyCallEndReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provider_status_code"u8))

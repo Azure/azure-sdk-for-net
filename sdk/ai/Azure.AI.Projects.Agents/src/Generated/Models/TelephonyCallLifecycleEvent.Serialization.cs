@@ -98,7 +98,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WriteStringValue(Reason.Value.ToString());
             }
             if (Optional.IsDefined(ProviderEventId))
             {
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset observedOn = default;
             DateTimeOffset? occurredOn = default;
             TelephonyCallTimestampSource timestampSource = default;
-            string reason = default;
+            TelephonyCallLifecycleEventReason? reason = default;
             string providerEventId = default;
             long? providerSequence = default;
             int? providerStatusCode = default;
@@ -218,7 +218,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("reason"u8))
                 {
-                    reason = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reason = new TelephonyCallLifecycleEventReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provider_event_id"u8))

@@ -82,8 +82,8 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Id);
             writer.WritePropertyName("provider"u8);
             writer.WriteStringValue(Provider.ToString());
-            writer.WritePropertyName("connection"u8);
-            writer.WriteStringValue(Connection);
+            writer.WritePropertyName("connection_name"u8);
+            writer.WriteStringValue(ConnectionName);
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);

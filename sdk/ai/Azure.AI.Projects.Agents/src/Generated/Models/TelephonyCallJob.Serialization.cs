@@ -86,8 +86,10 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("destination"u8);
             writer.WriteObjectValue(Destination, options);
-            writer.WritePropertyName("telephony_binding_id"u8);
-            writer.WriteStringValue(TelephonyBindingId);
+            writer.WritePropertyName("connection_name"u8);
+            writer.WriteStringValue(ConnectionName);
+            writer.WritePropertyName("source"u8);
+            writer.WriteStringValue(Source);
             if (Optional.IsDefined(Purpose))
             {
                 writer.WritePropertyName("purpose"u8);
@@ -146,7 +148,7 @@ namespace Azure.AI.Projects.Agents
             if (Optional.IsDefined(TerminalReason))
             {
                 writer.WritePropertyName("terminal_reason"u8);
-                writer.WriteStringValue(TerminalReason);
+                writer.WriteStringValue(TerminalReason.Value.ToString());
             }
             writer.WritePropertyName("revision"u8);
             writer.WriteNumberValue(Revision);
@@ -197,7 +199,8 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             TelephonyOutboundDestination destination = default;
-            string telephonyBindingId = default;
+            string connectionName = default;
+            string source = default;
             string purpose = default;
             IDictionary<string, BinaryData> structuredInputs = default;
             TelephonyCallJobSchedule schedule = default;
@@ -209,7 +212,7 @@ namespace Azure.AI.Projects.Agents
             TelephonyOutboundRetryPolicyResult retryPolicy = default;
             int attemptCount = default;
             DateTimeOffset? nextAttemptOn = default;
-            string terminalReason = default;
+            TelephonyCallJobTerminalReason? terminalReason = default;
             long revision = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset updatedOn = default;
@@ -221,9 +224,14 @@ namespace Azure.AI.Projects.Agents
                     destination = TelephonyOutboundDestination.DeserializeTelephonyOutboundDestination(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("telephony_binding_id"u8))
+                if (prop.NameEquals("connection_name"u8))
                 {
-                    telephonyBindingId = prop.Value.GetString();
+                    connectionName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("source"u8))
+                {
+                    source = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("purpose"u8))
@@ -311,7 +319,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("terminal_reason"u8))
                 {
-                    terminalReason = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    terminalReason = new TelephonyCallJobTerminalReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("revision"u8))
@@ -336,7 +348,8 @@ namespace Azure.AI.Projects.Agents
             }
             return new TelephonyCallJob(
                 destination,
-                telephonyBindingId,
+                connectionName,
+                source,
                 purpose,
                 structuredInputs ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 schedule,

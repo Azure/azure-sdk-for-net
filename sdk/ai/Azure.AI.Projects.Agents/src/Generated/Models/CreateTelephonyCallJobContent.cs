@@ -18,30 +18,35 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate the call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="destination"/> or <paramref name="telephonyBindingId"/> is null. </exception>
-        public CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string telephonyBindingId)
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="destination"/>, <paramref name="connectionName"/> or <paramref name="source"/> is null. </exception>
+        public CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string connectionName, string source)
         {
             Argument.AssertNotNull(destination, nameof(destination));
-            Argument.AssertNotNull(telephonyBindingId, nameof(telephonyBindingId));
+            Argument.AssertNotNull(connectionName, nameof(connectionName));
+            Argument.AssertNotNull(source, nameof(source));
 
             Destination = destination;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
             StructuredInputs = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateTelephonyCallJobContent"/>. </summary>
         /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="telephonyBindingId"> The active agent telephony binding used to originate the call. </param>
+        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </param>
+        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
         /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
         /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
         /// <param name="schedule"> The optional execution window. </param>
         /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string telephonyBindingId, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateTelephonyCallJobContent(TelephonyOutboundDestination destination, string connectionName, string source, string purpose, IDictionary<string, BinaryData> structuredInputs, TelephonyCallJobSchedule schedule, TelephonyOutboundRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Destination = destination;
-            TelephonyBindingId = telephonyBindingId;
+            ConnectionName = connectionName;
+            Source = source;
             Purpose = purpose;
             StructuredInputs = structuredInputs;
             Schedule = schedule;
@@ -52,8 +57,11 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The phone destination to call. </summary>
         public TelephonyOutboundDestination Destination { get; }
 
-        /// <summary> The active agent telephony binding used to originate the call. </summary>
-        public string TelephonyBindingId { get; }
+        /// <summary> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone Extension. No inbound telephony binding is required. </summary>
+        public string ConnectionName { get; }
+
+        /// <summary> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone Extension connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </summary>
+        public string Source { get; }
 
         /// <summary> An optional customer-declared purpose for placing the call. </summary>
         public string Purpose { get; set; }

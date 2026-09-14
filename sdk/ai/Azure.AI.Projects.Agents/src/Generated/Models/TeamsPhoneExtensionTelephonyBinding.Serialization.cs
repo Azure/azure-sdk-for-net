@@ -112,7 +112,7 @@ namespace Azure.AI.Projects.Agents
             }
             string id = default;
             TelephonyProvider provider = default;
-            string connection = default;
+            string connectionName = default;
             string label = default;
             TelephonyBindingStatus status = default;
             Uri incomingCallUrl = default;
@@ -131,9 +131,9 @@ namespace Azure.AI.Projects.Agents
                     provider = new TelephonyProvider(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("connection"u8))
+                if (prop.NameEquals("connection_name"u8))
                 {
-                    connection = prop.Value.GetString();
+                    connectionName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("label"u8))
@@ -169,7 +169,7 @@ namespace Azure.AI.Projects.Agents
             return new TeamsPhoneExtensionTelephonyBinding(
                 id,
                 provider,
-                connection,
+                connectionName,
                 label,
                 status,
                 incomingCallUrl,

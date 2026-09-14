@@ -106,7 +106,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             TelephonyProvider provider = default;
-            string connection = default;
+            string connectionName = default;
             string label = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string phoneNumber = default;
@@ -117,9 +117,9 @@ namespace Azure.AI.Projects.Agents
                     provider = new TelephonyProvider(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("connection"u8))
+                if (prop.NameEquals("connection_name"u8))
                 {
-                    connection = prop.Value.GetString();
+                    connectionName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("label"u8))
@@ -137,7 +137,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateTwilioTelephonyBindingContent(provider, connection, label, additionalBinaryDataProperties, phoneNumber);
+            return new CreateTwilioTelephonyBindingContent(provider, connectionName, label, additionalBinaryDataProperties, phoneNumber);
         }
     }
 }
