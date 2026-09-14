@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Describes the properties of an Transit Hub. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveTransitHubProperties : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveProvisioningState> _provisioningState;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -36,6 +39,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the State. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveTransitHubState> State
         {
             get
@@ -51,6 +55,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the TransitOption. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveTransitOptionProperties TransitOption
         {
             get
@@ -66,6 +71,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ResourceCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ResourceCollection
         {
             get
@@ -76,6 +82,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SecurityProvider. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveSecurityProvider> SecurityProvider
         {
             get

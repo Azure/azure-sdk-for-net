@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A reference to a another resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsSubResourceInfo : ProvisionableConstruct
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -22,6 +24,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> Id
         {
             get

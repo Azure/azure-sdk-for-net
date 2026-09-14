@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The session host configuration for updating agent, monitoring agent, and stack component. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostAgentUpdateProperties : ProvisionableConstruct
     {
         private BicepValue<SessionHostComponentUpdateType> _updateType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the UpdateType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostComponentUpdateType> UpdateType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DoesUseSessionHostLocalTime. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> DoesUseSessionHostLocalTime
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MaintenanceWindowTimeZone. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> MaintenanceWindowTimeZone
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the MaintenanceWindows. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<SessionHostMaintenanceWindowProperties> MaintenanceWindows
         {
             get

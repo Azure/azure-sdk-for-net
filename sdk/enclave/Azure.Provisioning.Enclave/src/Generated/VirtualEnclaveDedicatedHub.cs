@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> DedicatedHub Model Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveDedicatedHub : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -98,6 +99,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveDedicatedHubProperties Properties
         {
             get

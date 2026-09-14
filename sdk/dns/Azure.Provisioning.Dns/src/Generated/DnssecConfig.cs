@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Represents the DNSSEC configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnssecConfig : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -72,6 +73,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the ETag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ETag> ETag
         {
             get
@@ -102,6 +104,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProvisioningState
         {
             get
@@ -111,6 +114,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets the SigningKeys. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DnsSigningKey> SigningKeys
         {
             get

@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.Enclave
 {
     /// <summary></summary>
-    public enum CommunityPropertiesPolicyOverride
+    public enum CommunityResourcePolicyOverride
     {
         /// <summary> Enclave. </summary>
         Enclave = 0,

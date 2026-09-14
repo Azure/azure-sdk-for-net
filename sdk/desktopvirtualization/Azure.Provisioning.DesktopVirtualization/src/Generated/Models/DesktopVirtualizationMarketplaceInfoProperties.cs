@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Marketplace image information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationMarketplaceInfoProperties : ProvisionableConstruct
     {
         private BicepValue<string> _offer;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Offer. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Offer
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Publisher. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Publisher
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Sku. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Sku
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ExactVersion. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ExactVersion
         {
             get

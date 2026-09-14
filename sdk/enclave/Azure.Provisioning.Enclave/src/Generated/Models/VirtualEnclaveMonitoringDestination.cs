@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Monitoring destination configuration with multiple workspaces. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveMonitoringDestination : ProvisionableConstruct
     {
         private BicepValue<VirtualEnclaveMonitoringDestinationType> _destinationType;
@@ -24,6 +26,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DestinationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveMonitoringDestinationType> DestinationType
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CustomWorkspaceResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> CustomWorkspaceResourceId
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DiagnosticSettingsName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DiagnosticSettingsName
         {
             get

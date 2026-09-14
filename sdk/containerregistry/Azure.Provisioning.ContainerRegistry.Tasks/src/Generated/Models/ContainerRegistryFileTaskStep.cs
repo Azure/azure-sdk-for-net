@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of a task step. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryFileTaskStep : ContainerRegistryTaskStepProperties
     {
         private BicepValue<string> _taskFilePath;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the TaskFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> TaskFilePath
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ValuesFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ValuesFilePath
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Values. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskSetValue> Values
         {
             get

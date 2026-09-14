@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A CNAME record. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class DnsCnameRecordInfo : ProvisionableConstruct
     {
         private BicepValue<string> _cname;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Cname. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Cname
         {
             get

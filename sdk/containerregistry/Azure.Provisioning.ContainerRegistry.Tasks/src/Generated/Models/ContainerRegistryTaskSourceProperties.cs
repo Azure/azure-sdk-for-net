@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The properties of the source code repository. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskSourceProperties : ProvisionableConstruct
     {
         private BicepValue<ContainerRegistryTaskSourceControlType> _sourceControlType;
@@ -25,6 +27,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceControlType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskSourceControlType> SourceControlType
         {
             get
@@ -40,6 +43,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the RepositoryUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> RepositoryUri
         {
             get
@@ -55,6 +59,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Branch. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Branch
         {
             get
@@ -70,6 +75,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the SourceControlAuthProperties. </summary>
+        [Experimental("AZPROVISION001")]
         public ContainerRegistryTaskAuthInfo SourceControlAuthProperties
         {
             get

@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for UserSession properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class UserSessionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the UserPrincipalName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> UserPrincipalName
         {
             get
@@ -47,6 +51,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ApplicationType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualApplicationType> ApplicationType
         {
             get
@@ -57,6 +62,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the SessionState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<UserSessionState> SessionState
         {
             get
@@ -67,6 +73,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ActiveDirectoryUserName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ActiveDirectoryUserName
         {
             get
@@ -77,6 +84,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the CreateOn. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DateTimeOffset> CreateOn
         {
             get

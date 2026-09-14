@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The source trigger that caused a run. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskSourceTriggerDescriptor : ProvisionableConstruct
     {
         private BicepValue<string> _id;
@@ -28,6 +30,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the Id. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Id
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the EventType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> EventType
         {
             get
@@ -48,6 +52,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the CommitId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> CommitId
         {
             get
@@ -58,6 +63,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the PullRequestId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> PullRequestId
         {
             get
@@ -68,6 +74,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the RepositoryUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> RepositoryUri
         {
             get
@@ -78,6 +85,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the BranchName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> BranchName
         {
             get
@@ -88,6 +96,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProviderType. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ProviderType
         {
             get

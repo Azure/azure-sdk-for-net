@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Additional shortcut settings for a remote application. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class ShortcutsExtension : ProvisionableConstruct
     {
         private BicepValue<bool> _putShortcutOnDesktop;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PutShortcutOnDesktop. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> PutShortcutOnDesktop
         {
             get

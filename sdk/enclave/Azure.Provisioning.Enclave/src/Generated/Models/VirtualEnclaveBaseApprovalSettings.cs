@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Granular ApprovalSettings Properties for 2025-11-01-preview and later versions. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveBaseApprovalSettings : ProvisionableConstruct
     {
         private ApprovalSettingConfiguration _communityEndpointUpdate;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CommunityEndpointUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration CommunityEndpointUpdate
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveEndpointUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration EnclaveEndpointUpdate
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveCreation. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration EnclaveCreation
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ConnectionCreation. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration ConnectionCreation
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the ConnectionUpdate. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration ConnectionUpdate
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CommunityMaintenanceMode. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration CommunityMaintenanceMode
         {
             get
@@ -116,6 +124,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the EnclaveMaintenanceMode. </summary>
+        [Experimental("AZPROVISION001")]
         public ApprovalSettingConfiguration EnclaveMaintenanceMode
         {
             get
