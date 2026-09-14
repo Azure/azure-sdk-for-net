@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, Uri trackUri, CancellationToken cancellationToken = default)
         {
 #if DEBUG
-            TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+            TelemetryDebugWriter.WriteTelemetryFromStorage(body, trackUri);
 #endif
 
             var message = CreateRequest(RequestContent.Create(body), trackUri);
@@ -183,7 +183,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             }
 
 #if DEBUG
-            TelemetryDebugWriter.WriteTelemetry(content);
+            TelemetryDebugWriter.WriteTelemetry(content, trackUri);
 #endif
 
             return CreateRequest(RequestContent.Create(content.ToBytes()), trackUri);

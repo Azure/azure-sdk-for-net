@@ -72,6 +72,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         public IReadOnlyDictionary<string, int> GeneratedPerTenant => _routingProcessor.Counts;
 
+        public IReadOnlyDictionary<string, int> UnroutablePerReason => _routingProcessor.UnroutableCounts;
+
         public void GenerateTraces(int count)
         {
             for (int i = 0; i < count; i++)
@@ -224,17 +226,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
         /// <summary>
         /// Stamps each Activity with a randomly chosen tenant's routing tags, so one process feeds
-        /// all three components and every export batch spans several ingestion endpoints.
+        /// all three components and every export batch spans several ingestion endpoints. Every
+        /// tenth Activity is left unroutable instead, cycling through the ways routing can fail.
         /// </summary>
         private sealed class TenantRoutingProcessor : BaseProcessor<Activity>
         {
+            private const int UnroutableEvery = 10;
             private const string TenantCloudRoleAttributeName = "microsoft.multi_endpoint_cloud_role";
 
             private readonly IReadOnlyList<TenantRoute> _routes;
             private readonly string _runId;
             private readonly Random _random = new(Seed: 42);
             private readonly Dictionary<string, int> _counts = new(StringComparer.Ordinal);
+            private readonly Dictionary<string, int> _unroutableCounts = new(StringComparer.Ordinal);
             private readonly object _lock = new();
+            private int _sequence;
 
             internal TenantRoutingProcessor(IReadOnlyList<TenantRoute> routes, string runId)
             {
@@ -249,12 +255,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
             internal IReadOnlyDictionary<string, int> Counts => _counts;
 
+            /// <summary>Expected rejection reasons, to compare against what the event source reported.</summary>
+            internal IReadOnlyDictionary<string, int> UnroutableCounts => _unroutableCounts;
+
             public override void OnEnd(Activity data)
             {
                 TenantRoute route;
 
                 lock (_lock)
                 {
+                    var sequence = _sequence++;
+
+                    if (sequence % UnroutableEvery == 0)
+                    {
+                        var reason = MakeUnroutable(data, sequence / UnroutableEvery);
+                        _unroutableCounts[reason] = _unroutableCounts.TryGetValue(reason, out var seen) ? seen + 1 : 1;
+                        data.SetTag("demo.run_id", _runId);
+                        return;
+                    }
+
                     route = _routes[_random.Next(_routes.Count)];
                     _counts[route.Name]++;
                 }
@@ -266,6 +285,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
                 // Survives into customDimensions, so a query can count what actually arrived.
                 data.SetTag("demo.run_id", _runId);
                 data.SetTag("demo.tenant", route.Name);
+            }
+
+            /// <summary>Returns the rejection reason this Activity should produce.</summary>
+            private string MakeUnroutable(Activity data, int flavour)
+            {
+                switch (flavour % 4)
+                {
+                    case 0:
+                        return "MissingInstrumentationKey";
+
+                    case 1:
+                        data.SetTag("microsoft.ingestion_endpoint", _routes[0].IngestionEndpoint);
+                        return "MissingInstrumentationKey";
+
+                    case 2:
+                        data.SetTag("microsoft.instrumentation_key", _routes[0].InstrumentationKey);
+                        return "MissingIngestionEndpoint";
+
+                    default:
+                        data.SetTag("microsoft.instrumentation_key", _routes[0].InstrumentationKey);
+                        data.SetTag("microsoft.ingestion_endpoint", "http://not-https.example/");
+                        return "IngestionEndpointNotHttps";
+                }
             }
         }
     }

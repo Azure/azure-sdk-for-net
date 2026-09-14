@@ -42,7 +42,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         internal static bool TryGetRoute(
             ref AzMonList mappedTags,
             [NotNullWhen(true)] out string? instrumentationKey,
-            [NotNullWhen(true)] out string? ingestionEndpoint)
+            [NotNullWhen(true)] out string? ingestionEndpoint,
+            out RoutingRejectionReason reason)
         {
             // Only a string is accepted: ToString() on an array-valued tag yields "System.String[]",
             // which would become a tenant of its own.
@@ -50,7 +51,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string,
                 mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string,
                 out instrumentationKey,
-                out ingestionEndpoint);
+                out ingestionEndpoint,
+                out reason);
         }
 
         /// <summary>
@@ -69,19 +71,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             string? rawIngestionEndpoint,
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint)
+            => TryGetRoute(rawInstrumentationKey, rawIngestionEndpoint, out instrumentationKey, out ingestionEndpoint, out _);
+
+        internal static bool TryGetRoute(
+            string? rawInstrumentationKey,
+            string? rawIngestionEndpoint,
+            [NotNullWhen(true)] out string? instrumentationKey,
+            [NotNullWhen(true)] out string? ingestionEndpoint,
+            out RoutingRejectionReason reason)
         {
             ingestionEndpoint = null;
+            reason = RoutingRejectionReason.None;
 
             var trimmedKey = rawInstrumentationKey != null && rawInstrumentationKey.Length <= MaxInstrumentationKeyLength ? rawInstrumentationKey.Trim() : null;
             if (trimmedKey == null || trimmedKey.Length == 0)
             {
+                reason = rawInstrumentationKey != null && rawInstrumentationKey.Length > MaxInstrumentationKeyLength
+                    ? RoutingRejectionReason.InstrumentationKeyTooLong
+                    : RoutingRejectionReason.MissingInstrumentationKey;
                 instrumentationKey = null;
                 return false;
             }
 
             instrumentationKey = trimmedKey;
 
-            if (rawIngestionEndpoint == null || (ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint)) == null)
+            if (rawIngestionEndpoint == null)
+            {
+                reason = RoutingRejectionReason.MissingIngestionEndpoint;
+                instrumentationKey = null;
+                return false;
+            }
+
+            if ((ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint, out reason)) == null)
             {
                 instrumentationKey = null;
                 return false;
@@ -108,10 +129,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         /// target: a scheme other than HTTPS, or credentials, a query, or a fragment, all of which
         /// would corrupt the URI the REST client builds by appending the API path.
         /// </remarks>
-        internal static string? NormalizeEndpoint(string rawEndpoint)
+        internal static string? NormalizeEndpoint(string rawEndpoint) => NormalizeEndpoint(rawEndpoint, out _);
+
+        internal static string? NormalizeEndpoint(string rawEndpoint, out RoutingRejectionReason reason)
         {
+            reason = RoutingRejectionReason.None;
+
             if (rawEndpoint.Length > MaxEndpointLength)
             {
+                reason = RoutingRejectionReason.IngestionEndpointTooLong;
                 return null;
             }
 
@@ -120,15 +146,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return cached;
             }
 
-            if (!Uri.TryCreate(rawEndpoint, UriKind.Absolute, out var uri)
-                || !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal)
-                || uri.UserInfo.Length != 0
-                || uri.Query.Length != 0
-                || uri.Fragment.Length != 0
-                || !TryGetCanonicalHost(uri, out var canonicalHost))
+            if (!Uri.TryCreate(rawEndpoint, UriKind.Absolute, out var uri))
+            {
+                reason = RoutingRejectionReason.IngestionEndpointMalformed;
+                return null;
+            }
+
+            if (!string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.Ordinal))
+            {
+                reason = RoutingRejectionReason.IngestionEndpointNotHttps;
+                return null;
+            }
+
+            if (uri.UserInfo.Length != 0)
+            {
+                reason = RoutingRejectionReason.IngestionEndpointHasCredentials;
+                return null;
+            }
+
+            if (uri.Query.Length != 0 || uri.Fragment.Length != 0)
+            {
+                reason = RoutingRejectionReason.IngestionEndpointHasQueryOrFragment;
+                return null;
+            }
+
+            if (!TryGetCanonicalHost(uri, out var canonicalHost))
             {
                 // Rejections are deliberately not memoised. Caching them would let a misconfigured
                 // caller fill the cache with values that never work and crowd out the ones that do.
+                reason = RoutingRejectionReason.IngestionEndpointHostInvalid;
                 return null;
             }
 
@@ -142,6 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             // would fail far from here, after validation has already accepted the endpoint.
             if (!Uri.TryCreate(normalized, UriKind.Absolute, out _))
             {
+                reason = RoutingRejectionReason.IngestionEndpointHostInvalid;
                 return null;
             }
 
