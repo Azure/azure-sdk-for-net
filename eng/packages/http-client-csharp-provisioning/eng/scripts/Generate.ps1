@@ -44,8 +44,8 @@ foreach ($project in $provisioningTypespecProjects) {
     }
 
     Write-Host "Building $($project.Name)" -ForegroundColor Cyan
-    $testSolution = Get-ChildItem $project.OutputDirectory -Filter "*.slnx" | Select-Object -First 1
-    Invoke "dotnet build $($testSolution.FullName)"
+    $testCsproj = Get-ChildItem (Join-Path $project.OutputDirectory "src") -Filter "*.csproj" | Select-Object -First 1
+    Invoke "dotnet build $($testCsproj.FullName)"
 
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
