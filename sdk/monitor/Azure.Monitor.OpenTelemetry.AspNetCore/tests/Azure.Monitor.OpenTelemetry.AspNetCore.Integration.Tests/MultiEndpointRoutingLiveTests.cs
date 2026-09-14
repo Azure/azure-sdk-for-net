@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Logs.Models;
@@ -119,9 +120,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             var expectedRequestId = $"{runId}-request-{destination}";
             var expectedLogId = $"{runId}-log-{destination}";
             var query = $"union withsource=TableName AppRequests, AppTraces | where tostring(Properties.{RecordAttribute}) startswith '{runId}-' | project TableName, RecordId=tostring(Properties.{RecordAttribute}), ResourceId=_ResourceId";
-            var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, $"records for destination {destination}", query);
+            var result = await QueryClient.QueryTelemetryAsync(resource.WorkspaceId, $"records for destination {destination}", query, records =>
+                records.Rows.Any(row => row.GetString("TableName") == "AppRequests" && row.GetString("RecordId") == expectedRequestId) &&
+                records.Rows.Any(row => row.GetString("TableName") == "AppTraces" && row.GetString("RecordId") == expectedLogId));
             Assert.That(result, Is.Not.Null);
             Assert.That(result!.Rows.Count, Is.EqualTo(2));
+
             Assert.That(result.Rows, Has.Exactly(1).Matches<LogsTableRow>(row =>
                 row.GetString("TableName") == "AppRequests" &&
                 row.GetString("RecordId") == expectedRequestId &&
