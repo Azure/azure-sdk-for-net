@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network;
 
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private protected string _name;
+        private protected ETag _etag;
 
         /// <summary> Initializes a new instance of <see cref="NetworkChildResource"/>. </summary>
         public NetworkChildResource()
@@ -53,6 +55,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
-        public virtual string ETag { get; }
+        public string ETag { get; }
     }
 }

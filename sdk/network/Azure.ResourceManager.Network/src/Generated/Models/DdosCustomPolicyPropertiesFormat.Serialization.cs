@@ -100,9 +100,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("frontEndIpConfiguration"u8);
                 writer.WriteStartArray();
-                foreach (NetworkSubResource item in FrontEndIPConfiguration)
+                foreach (WritableSubResource item in FrontEndIPConfiguration)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IList<DdosDetectionRule> detectionRules = default;
-            IList<NetworkSubResource> frontEndIPConfiguration = default;
+            IList<WritableSubResource> frontEndIPConfiguration = default;
             IReadOnlyList<WritableSubResource> publicIPAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,10 +214,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<NetworkSubResource> array = new List<NetworkSubResource>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSubResource.DeserializeNetworkSubResource(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     frontEndIPConfiguration = array;
                     continue;
@@ -247,7 +259,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 detectionRules ?? new ChangeTrackingList<DdosDetectionRule>(),
-                frontEndIPConfiguration ?? new ChangeTrackingList<NetworkSubResource>(),
+                frontEndIPConfiguration ?? new ChangeTrackingList<WritableSubResource>(),
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
                 additionalBinaryDataProperties);
         }

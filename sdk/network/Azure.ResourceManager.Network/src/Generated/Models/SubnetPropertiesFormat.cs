@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -27,7 +28,7 @@ namespace Azure.ResourceManager.Network.Models
             PrivateEndpoints = new ChangeTrackingList<PrivateEndpointData>();
             IPConfigurations = new ChangeTrackingList<NetworkIPConfiguration>();
             IPConfigurationProfiles = new ChangeTrackingList<NetworkIPConfigurationProfile>();
-            IPAllocations = new ChangeTrackingList<NetworkSubResource>();
+            IPAllocations = new ChangeTrackingList<WritableSubResource>();
             ResourceNavigationLinks = new ChangeTrackingList<ResourceNavigationLink>();
             ServiceAssociationLinks = new ChangeTrackingList<ServiceAssociationLink>();
             Delegations = new ChangeTrackingList<ServiceDelegation>();
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools for allocating IP address prefixes. </param>
         /// <param name="serviceGateway"> Reference to an existing service gateway. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<NetworkSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubnetPropertiesFormat(string addressPrefix, IList<string> addressPrefixes, NetworkSecurityGroupData networkSecurityGroup, RouteTableData routeTable, NetworkSubResource natGateway, IList<ServiceEndpointProperties> serviceEndpoints, IList<ServiceEndpointPolicyData> serviceEndpointPolicies, IReadOnlyList<PrivateEndpointData> privateEndpoints, IReadOnlyList<NetworkIPConfiguration> ipConfigurations, IReadOnlyList<NetworkIPConfigurationProfile> ipConfigurationProfiles, IList<WritableSubResource> ipAllocations, IReadOnlyList<ResourceNavigationLink> resourceNavigationLinks, IReadOnlyList<ServiceAssociationLink> serviceAssociationLinks, IList<ServiceDelegation> delegations, string purpose, NetworkProvisioningState? provisioningState, VirtualNetworkPrivateEndpointNetworkPolicy? privateEndpointNetworkPolicies, VirtualNetworkPrivateLinkServiceNetworkPolicy? privateLinkServiceNetworkPolicies, IList<ApplicationGatewayIPConfiguration> applicationGatewayIPConfigurations, SharingScope? sharingScope, bool? defaultOutboundAccess, IList<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations, NetworkSubResource serviceGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressPrefix = addressPrefix;
             AddressPrefixes = addressPrefixes;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Array of IpAllocation which reference this subnet. </summary>
         [WirePath("ipAllocations")]
-        public IList<NetworkSubResource> IPAllocations { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IList<WritableSubResource> IPAllocations { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> An array of references to the external resources using subnet. </summary>
         [WirePath("resourceNavigationLinks")]

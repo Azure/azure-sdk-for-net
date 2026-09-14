@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the virtual network appliance resource. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkAppliancePropertiesFormat(double? bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkAppliancePropertiesFormat(string bandwidthInGbps, IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations, VirtualNetworkApplianceIpVersionType? privateIPAddressVersion, NetworkProvisioningState? provisioningState, Guid? resourceGuid, SubnetData subnet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BandwidthInGbps = bandwidthInGbps;
             IPConfigurations = ipConfigurations;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Bandwidth of the VirtualNetworkAppliance resource in Gbps. </summary>
         [WirePath("bandwidthInGbps")]
-        public double? BandwidthInGbps { get; set; }
+        public string BandwidthInGbps { get; set; }
 
         /// <summary> A list of IPConfigurations of the virtual network appliance. </summary>
         [WirePath("ipConfigurations")]

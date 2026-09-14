@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinkPropertiesFormat"/>. </summary>
         internal ServiceAssociationLinkPropertiesFormat()
         {
-            Locations = new ChangeTrackingList<string>();
+            Locations = new ChangeTrackingList<AzureLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceAssociationLinkPropertiesFormat"/>. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="allowDelete"> If true, the resource can be deleted. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAssociationLinkPropertiesFormat(string linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<string> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAssociationLinkPropertiesFormat(ResourceType? linkedResourceType, ResourceIdentifier link, NetworkProvisioningState? provisioningState, bool? allowDelete, IList<AzureLocation> locations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinkedResourceType = linkedResourceType;
             Link = link;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Resource type of the linked resource. </summary>
         [WirePath("linkedResourceType")]
-        public string LinkedResourceType { get; }
+        public ResourceType? LinkedResourceType { get; }
 
         /// <summary> Link to the external resource. </summary>
         [WirePath("link")]
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of locations. </summary>
         [WirePath("locations")]
-        public IList<string> Locations { get; } = new ChangeTrackingList<string>();
+        public IList<AzureLocation> Locations { get; } = new ChangeTrackingList<AzureLocation>();
     }
 }

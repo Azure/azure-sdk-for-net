@@ -13,33 +13,26 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Hub Item. </summary>
-    public partial class ConnectivityHub
+    public partial class ConnectivityHub : NetworkWritableResourceData
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
         public ConnectivityHub()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ConnectivityHub"/>. </summary>
-        /// <param name="resourceId"> Resource Id. </param>
-        /// <param name="resourceType"> Resource Type. </param>
+        /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectivityHub(ResourceIdentifier resourceId, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceId"> Resource Id. </param>
+        internal ConnectivityHub(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, ResourceIdentifier resourceId) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             ResourceId = resourceId;
-            ResourceType = resourceType;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource Id. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
-
-        /// <summary> Resource Type. </summary>
-        [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; set; }
     }
 }
