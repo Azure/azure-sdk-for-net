@@ -12,6 +12,8 @@ omitted_paths:
   - sdk/*/*/integration/*
   - sdk/*/*/tests/Samples/*
   - sdk/*/*/tests/samples/*
+  - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.MultiEndpoint.ConsoleDemo/README.md
+  - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/tests/Azure.Monitor.OpenTelemetry.AspNetCore.MultiEndpoint.Demo/README.md
   - sdk/*/*/samples/*
   - sdk/*/samples/*
   - sdk/*/swagger/*
