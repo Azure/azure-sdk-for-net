@@ -2206,9 +2206,16 @@ interface SitesByServiceGroup extends SiteOps<ServiceGroup> {}
     const serviceGroupResourcePattern =
       "/providers/Microsoft.Management/serviceGroups/{servicegroupName}/providers/Microsoft.ContosoProviderHub/sites/{siteName}";
     const normalizeServiceGroupScopes = (resource: ArmResourceSchema) => {
-      if (
-        resource.metadata.resourceIdPattern.path === serviceGroupResourcePattern
-      ) {
+      const resourceIdPattern = (
+        resource.metadata as {
+          resourceIdPattern: string | { path: string };
+        }
+      ).resourceIdPattern;
+      const resourceIdPath =
+        typeof resourceIdPattern === "string"
+          ? resourceIdPattern
+          : resourceIdPattern.path;
+      if (resourceIdPath === serviceGroupResourcePattern) {
         (resource.metadata as { scope: { kind: unknown } }).scope.kind =
           "<normalized>";
         for (const method of resource.metadata.methods) {

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

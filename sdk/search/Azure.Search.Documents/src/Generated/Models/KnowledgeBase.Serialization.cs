@@ -143,6 +143,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(RetrievalInstructions))
             {
                 writer.WritePropertyName("retrievalInstructions"u8);
@@ -157,6 +173,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 writer.WritePropertyName("corsOptions"u8);
                 writer.WriteObjectValue(CorsOptions, options);
+            }
+            if (Optional.IsDefined(RetrieveDefaults))
+            {
+                writer.WritePropertyName("retrieveDefaults"u8);
+                writer.WriteObjectValue(RetrieveDefaults, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -208,9 +229,11 @@ namespace Azure.Search.Documents.Indexes.Models
             ETag? eTag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             string description = default;
+            IDictionary<string, string> tags = default;
             string retrievalInstructions = default;
             string answerInstructions = default;
             CorsOptions corsOptions = default;
+            KnowledgeBaseRetrieveDefaults retrieveDefaults = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -285,6 +308,27 @@ namespace Azure.Search.Documents.Indexes.Models
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("retrievalInstructions"u8))
                 {
                     retrievalInstructions = prop.Value.GetString();
@@ -304,6 +348,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     corsOptions = CorsOptions.DeserializeCorsOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("retrieveDefaults"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrieveDefaults = KnowledgeBaseRetrieveDefaults.DeserializeKnowledgeBaseRetrieveDefaults(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -318,9 +371,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 eTag,
                 encryptionKey,
                 description,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 retrievalInstructions,
                 answerInstructions,
                 corsOptions,
+                retrieveDefaults,
                 additionalBinaryDataProperties);
         }
     }

@@ -14,51 +14,51 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> External Network native IPv6 prefix limit properties. </summary>
-    internal partial class NativeIpv6PrefixLimitProperties : IJsonModel<NativeIpv6PrefixLimitProperties>
+    internal partial class NativeIPv6PrefixLimitProperties : IJsonModel<NativeIPv6PrefixLimitProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NativeIpv6PrefixLimitProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual NativeIPv6PrefixLimitProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NativeIpv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNativeIpv6PrefixLimitProperties(document.RootElement, options);
+                        return DeserializeNativeIPv6PrefixLimitProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NativeIpv6PrefixLimitProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NativeIpv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NativeIpv6PrefixLimitProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NativeIpv6PrefixLimitProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<NativeIPv6PrefixLimitProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NativeIpv6PrefixLimitProperties IPersistableModel<NativeIpv6PrefixLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        NativeIPv6PrefixLimitProperties IPersistableModel<NativeIPv6PrefixLimitProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NativeIpv6PrefixLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NativeIPv6PrefixLimitProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NativeIpv6PrefixLimitProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NativeIPv6PrefixLimitProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NativeIpv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativeIpv6PrefixLimitProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(PrefixLimits))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NativeIpv6PrefixLimitProperties IJsonModel<NativeIpv6PrefixLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        NativeIPv6PrefixLimitProperties IJsonModel<NativeIPv6PrefixLimitProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NativeIpv6PrefixLimitProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual NativeIPv6PrefixLimitProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NativeIpv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NativeIPv6PrefixLimitProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativeIpv6PrefixLimitProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NativeIPv6PrefixLimitProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNativeIpv6PrefixLimitProperties(document.RootElement, options);
+            return DeserializeNativeIPv6PrefixLimitProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NativeIpv6PrefixLimitProperties DeserializeNativeIpv6PrefixLimitProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static NativeIPv6PrefixLimitProperties DeserializeNativeIPv6PrefixLimitProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NativeIpv6PrefixLimitProperties(prefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>(), additionalBinaryDataProperties);
+            return new NativeIPv6PrefixLimitProperties(prefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>(), additionalBinaryDataProperties);
         }
     }
 }

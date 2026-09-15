@@ -223,10 +223,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (Optional.IsDefined(DetailedFromWhoisOn))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
-                writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
+                writer.WriteStringValue(DetailedFromWhoisOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(RegistrarNames))
             {
@@ -411,7 +411,7 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedLong> registrarUpdatedAt = default;
             IList<ObservedLong> registrarExpiresAt = default;
             IList<SoaRecord> soaRecords = default;
-            DateTimeOffset? detailedFromWhoisAt = default;
+            DateTimeOffset? detailedFromWhoisOn = default;
             IList<ObservedString> registrarNames = default;
             IList<SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
@@ -645,7 +645,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    detailedFromWhoisAt = prop.Value.GetDateTimeOffset("O");
+                    detailedFromWhoisOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("registrarNames"u8))
@@ -851,7 +851,7 @@ namespace Azure.Analytics.Defender.Easm
                 registrarUpdatedAt ?? new ChangeTrackingList<ObservedLong>(),
                 registrarExpiresAt ?? new ChangeTrackingList<ObservedLong>(),
                 soaRecords ?? new ChangeTrackingList<SoaRecord>(),
-                detailedFromWhoisAt,
+                detailedFromWhoisOn,
                 registrarNames ?? new ChangeTrackingList<ObservedString>(),
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 firstSeen,

@@ -13,22 +13,22 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Ip entity property bag. </summary>
-    internal partial class IpEntityProperties : EntityCommonProperties
+    internal partial class IPEntityProperties : EntityCommonProperties
     {
-        /// <summary> Initializes a new instance of <see cref="IpEntityProperties"/>. </summary>
-        public IpEntityProperties()
+        /// <summary> Initializes a new instance of <see cref="IPEntityProperties"/>. </summary>
+        public IPEntityProperties()
         {
             ThreatIntelligence = new ChangeTrackingList<SecurityInsightsThreatIntelligence>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpEntityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPEntityProperties"/>. </summary>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="address"> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </param>
         /// <param name="location"> The geo-location context attached to the ip entity. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
-        internal IpEntityProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(additionalData, friendlyName, additionalBinaryDataProperties)
+        internal IPEntityProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(additionalData, friendlyName, additionalBinaryDataProperties)
         {
             Address = address;
             Location = location;

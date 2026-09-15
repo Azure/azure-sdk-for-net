@@ -15,29 +15,29 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary></summary>
-    internal partial class DbMigrateNetworkStatusOperationSource : IOperationSource<DbMigrateNetworkStatus>
+    internal partial class DBMigrateNetworkStatusOperationSource : IOperationSource<DBMigrateNetworkStatus>
     {
         /// <summary></summary>
-        internal DbMigrateNetworkStatusOperationSource()
+        internal DBMigrateNetworkStatusOperationSource()
         {
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        DbMigrateNetworkStatus IOperationSource<DbMigrateNetworkStatus>.CreateResult(Response response, CancellationToken cancellationToken)
+        DBMigrateNetworkStatus IOperationSource<DBMigrateNetworkStatus>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            return DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DBMigrateNetworkStatus.DeserializeDBMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The response from the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns></returns>
-        async ValueTask<DbMigrateNetworkStatus> IOperationSource<DbMigrateNetworkStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<DBMigrateNetworkStatus> IOperationSource<DBMigrateNetworkStatus>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            return DbMigrateNetworkStatus.DeserializeDbMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DBMigrateNetworkStatus.DeserializeDBMigrateNetworkStatus(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

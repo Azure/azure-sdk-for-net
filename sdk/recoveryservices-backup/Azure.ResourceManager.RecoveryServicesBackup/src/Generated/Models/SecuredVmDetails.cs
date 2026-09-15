@@ -12,26 +12,31 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Restore request parameters for Secured VMs. </summary>
-    internal partial class SecuredVMDetails
+    public partial class SecuredVmDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecuredVMDetails"/>. </summary>
-        public SecuredVMDetails()
+        /// <summary> Initializes a new instance of <see cref="SecuredVmDetails"/>. </summary>
+        public SecuredVmDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecuredVMDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecuredVmDetails"/>. </summary>
         /// <param name="securedVmOSDiskEncryptionSetId"> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </param>
+        /// <param name="dataDiskEncryptionSettings"> Data disk encryption settings for Secured VM. This will be used to provide Disk Encryption Set Id for each data disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecuredVMDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SecuredVmDetails(ResourceIdentifier securedVmOSDiskEncryptionSetId, DataDiskEncryptionSettings dataDiskEncryptionSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecuredVmOSDiskEncryptionSetId = securedVmOSDiskEncryptionSetId;
+            DataDiskEncryptionSettings = dataDiskEncryptionSettings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or Sets Disk Encryption Set Id for Secured VM OS Disk. </summary>
         public ResourceIdentifier SecuredVmOSDiskEncryptionSetId { get; set; }
+
+        /// <summary> Data disk encryption settings for Secured VM. This will be used to provide Disk Encryption Set Id for each data disk. </summary>
+        public DataDiskEncryptionSettings DataDiskEncryptionSettings { get; set; }
     }
 }

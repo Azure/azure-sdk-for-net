@@ -90,7 +90,7 @@ namespace Azure.Security.KeyVault.Secrets.Models
                 throw new FormatException($"The model {nameof(SecretRestoreParameters)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteBase64StringValue(SecretBundleBackup.ToArray(), "U");
+            writer.WriteBase64StringValue(SecretBundleBackup, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

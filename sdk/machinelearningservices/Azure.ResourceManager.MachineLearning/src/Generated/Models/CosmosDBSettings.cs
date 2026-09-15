@@ -11,21 +11,21 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The CosmosDbSettings. </summary>
-    internal partial class CosmosDbSettings
+    /// <summary> The CosmosDBSettings. </summary>
+    internal partial class CosmosDBSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
-        public CosmosDbSettings()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSettings"/>. </summary>
+        public CosmosDBSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSettings"/>. </summary>
         /// <param name="collectionsThroughput"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDbSettings(int? collectionsThroughput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBSettings(int? collectionsThroughput, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionsThroughput = collectionsThroughput;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

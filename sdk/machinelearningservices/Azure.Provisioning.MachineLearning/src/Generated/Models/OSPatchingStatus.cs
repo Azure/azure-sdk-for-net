@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Returns metadata about the os patching. </summary>
-    public partial class OsPatchingStatus : ProvisionableConstruct
+    public partial class OSPatchingStatus : ProvisionableConstruct
     {
         private BicepValue<PatchStatus> _patchStatus;
         private BicepValue<string> _latestPatchTime;
@@ -19,8 +19,8 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _scheduledRebootTime;
         private BicepList<MachineLearningError> _osPatchingErrors;
 
-        /// <summary> Creates a new OsPatchingStatus. </summary>
-        public OsPatchingStatus()
+        /// <summary> Creates a new OSPatchingStatus. </summary>
+        public OSPatchingStatus()
         {
         }
 
@@ -64,8 +64,8 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets the OsPatchingErrors. </summary>
-        public BicepList<MachineLearningError> OsPatchingErrors
+        /// <summary> Gets the OSPatchingErrors. </summary>
+        public BicepList<MachineLearningError> OSPatchingErrors
         {
             get
             {
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Define all the provisionable properties for OsPatchingStatus. </summary>
+        /// <summary> Define all the provisionable properties for OSPatchingStatus. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -82,11 +82,11 @@ namespace Azure.Provisioning.MachineLearning
             _latestPatchTime = DefineProperty<string>(nameof(LatestPatchTime), new string[] { "latestPatchTime" });
             _isRebootPending = DefineProperty<bool>(nameof(IsRebootPending), new string[] { "rebootPending" });
             _scheduledRebootTime = DefineProperty<string>(nameof(ScheduledRebootTime), new string[] { "scheduledRebootTime" });
-            _osPatchingErrors = DefineListProperty<MachineLearningError>(nameof(OsPatchingErrors), new string[] { "osPatchingErrors" });
+            _osPatchingErrors = DefineListProperty<MachineLearningError>(nameof(OSPatchingErrors), new string[] { "osPatchingErrors" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for OsPatchingStatus that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for OSPatchingStatus that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

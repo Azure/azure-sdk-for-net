@@ -1242,7 +1242,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new ContainerAppsFunctionCollection(client, Id));
         }
 
-        /// <summary> Get a specific function of a Container App from the latest Revision. </summary>
+        /// <summary> Gets the details of a specific function from the latest Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
@@ -1255,7 +1255,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetContainerAppsFunctions().GetAsync(functionName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a specific function of a Container App from the latest Revision. </summary>
+        /// <summary> Gets the details of a specific function from the latest Container App revision. </summary>
         /// <param name="functionName"> Name of the Function. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new LabelHistoryCollection(client, Id));
         }
 
-        /// <summary> Get the history of a label. </summary>
+        /// <summary> Gets the revision history associated with a Container App label. </summary>
         /// <param name="labelName"> Name of the label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetLabelHistories().GetAsync(labelName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get the history of a label. </summary>
+        /// <summary> Gets the revision history associated with a Container App label. </summary>
         /// <param name="labelName"> Name of the label. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>

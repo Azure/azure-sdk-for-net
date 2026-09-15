@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ScanStartsOn))
             {
                 writer.WritePropertyName("scanStartTime"u8);
-                writer.WriteStringValue(ScanStartOn.Value, "O");
+                writer.WriteStringValue(ScanStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ScanEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ScanEndsOn))
             {
                 writer.WritePropertyName("scanEndTime"u8);
-                writer.WriteStringValue(ScanEndOn.Value, "O");
+                writer.WriteStringValue(ScanEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TotalBlobsWalked))
             {
@@ -219,8 +219,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             AutoImportJobState? state = default;
             string statusCode = default;
             string statusMessage = default;
-            DateTimeOffset? scanStartOn = default;
-            DateTimeOffset? scanEndOn = default;
+            DateTimeOffset? scanStartsOn = default;
+            DateTimeOffset? scanEndsOn = default;
             long? totalBlobsWalked = default;
             long? rateOfBlobWalk = default;
             long? totalBlobsImported = default;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    scanStartOn = prop.Value.GetDateTimeOffset("O");
+                    scanStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scanEndTime"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    scanEndOn = prop.Value.GetDateTimeOffset("O");
+                    scanEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("totalBlobsWalked"u8))
@@ -420,8 +420,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                 state,
                 statusCode,
                 statusMessage,
-                scanStartOn,
-                scanEndOn,
+                scanStartsOn,
+                scanEndsOn,
                 totalBlobsWalked,
                 rateOfBlobWalk,
                 totalBlobsImported,

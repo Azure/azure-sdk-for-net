@@ -7,5 +7,7 @@ extends:
     ServiceDirectory: marketplace
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.Marketplace.Reviews
+      safeName: AzureResourceManagerMarketplaceReviews
     - name: Azure.ResourceManager.Marketplace
       safeName: AzureResourceManagerMarketplace

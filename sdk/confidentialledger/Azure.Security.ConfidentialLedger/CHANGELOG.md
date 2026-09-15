@@ -1,6 +1,6 @@
 # Release History
 
-## 2.0.0-beta.3 (Unreleased)
+## 2.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 2.0.0-beta.3 (2026-08-17)
+
+### Breaking Changes
+
+- Changed `ConfidentialLedgerClientOptions.EnableArchivedCollectionFallback` to default to `false`. Callers that require `GetCurrentLedgerEntry` and `GetCurrentLedgerEntryAsync` to search ledger history after a collection-specific 404 must now explicitly opt in by setting the option to `true`.
 
 ## 2.0.0-beta.2 (2026-08-13)
 

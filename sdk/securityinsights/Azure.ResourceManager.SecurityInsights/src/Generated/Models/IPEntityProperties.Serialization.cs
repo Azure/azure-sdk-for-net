@@ -15,51 +15,51 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Ip entity property bag. </summary>
-    internal partial class IpEntityProperties : EntityCommonProperties, IJsonModel<IpEntityProperties>
+    internal partial class IPEntityProperties : EntityCommonProperties, IJsonModel<IPEntityProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EntityCommonProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpEntityProperties(document.RootElement, options);
+                        return DeserializeIPEntityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpEntityProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPEntityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpEntityProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPEntityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpEntityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPEntityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpEntityProperties IPersistableModel<IpEntityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpEntityProperties)PersistableModelCreateCore(data, options);
+        IPEntityProperties IPersistableModel<IPEntityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (IPEntityProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpEntityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPEntityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpEntityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPEntityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpEntityProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPEntityProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Address))
@@ -100,24 +100,24 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpEntityProperties IJsonModel<IpEntityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IpEntityProperties)JsonModelCreateCore(ref reader, options);
+        IPEntityProperties IJsonModel<IPEntityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IPEntityProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EntityCommonProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpEntityProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPEntityProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpEntityProperties(document.RootElement, options);
+            return DeserializeIPEntityProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpEntityProperties DeserializeIpEntityProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPEntityProperties DeserializeIPEntityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpEntityProperties(
+            return new IPEntityProperties(
                 additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 friendlyName,
                 additionalBinaryDataProperties,

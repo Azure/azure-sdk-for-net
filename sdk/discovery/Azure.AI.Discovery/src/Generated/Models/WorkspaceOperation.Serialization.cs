@@ -87,11 +87,11 @@ namespace Azure.AI.Discovery
             writer.WritePropertyName("runtimeDetails"u8);
             writer.WriteStringValue(RuntimeDetails);
             writer.WritePropertyName("createdAt"u8);
-            writer.WriteStringValue(CreatedAt, "O");
-            if (Optional.IsDefined(CompletedAt))
+            writer.WriteStringValue(CreatedOn, "O");
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedAt"u8);
-                writer.WriteStringValue(CompletedAt.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -144,8 +144,8 @@ namespace Azure.AI.Discovery
             string nodepoolId = default;
             RunStatus status = default;
             string runtimeDetails = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset? completedAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset? completedOn = default;
             string createdBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.AI.Discovery
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))
@@ -181,7 +181,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    completedAt = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -199,8 +199,8 @@ namespace Azure.AI.Discovery
                 nodepoolId,
                 status,
                 runtimeDetails,
-                createdAt,
-                completedAt,
+                createdOn,
+                completedOn,
                 createdBy,
                 additionalBinaryDataProperties);
         }

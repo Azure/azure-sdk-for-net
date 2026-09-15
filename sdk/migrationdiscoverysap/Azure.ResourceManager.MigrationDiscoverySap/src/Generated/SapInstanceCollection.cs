@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
     /// </summary>
     public partial class SapInstanceCollection : ArmCollection, IEnumerable<SapInstanceResource>, IAsyncEnumerable<SapInstanceResource>
     {
-        private readonly ClientDiagnostics _sapInstanceClientDiagnostics;
-        private readonly SapInstancesRestOperations _sapInstanceRestClient;
+        private readonly ClientDiagnostics _sapInstancesClientDiagnostics;
+        private readonly SAPInstances _sapInstancesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SapInstanceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of SapInstanceCollection for mocking. </summary>
         protected SapInstanceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SapInstanceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapInstanceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SapInstanceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _sapInstanceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapInstanceResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SapInstanceResource.ResourceType, out string sapInstanceApiVersion);
-            _sapInstanceRestClient = new SapInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sapInstanceApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _sapInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapInstanceResource.ResourceType.Namespace, Diagnostics);
+            _sapInstancesRestClient = new SAPInstances(_sapInstancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapInstanceApiVersion ?? "2023-10-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != SapDiscoverySiteResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SapDiscoverySiteResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SapDiscoverySiteResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates the SAP Instance resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT operation on this resource by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<SapInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sapInstanceName, SapInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sapInstanceRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(new SapInstanceOperationSource(Client), _sapInstanceClientDiagnostics, Pipeline, _sapInstanceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                MigrationDiscoverySapArmOperation<SapInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(
+                    new SapInstanceResourceOperationSource(Client),
+                    _sapInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Creates the SAP Instance resource. &lt;br&gt;&lt;br&gt;This will be used by service only. PUT operation on this resource by end user will return a Bad Request error.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<SapInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string sapInstanceName, SapInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sapInstanceRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, data, cancellationToken);
-                var operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(new SapInstanceOperationSource(Client), _sapInstanceClientDiagnostics, Pipeline, _sapInstanceRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, SapInstanceData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                MigrationDiscoverySapArmOperation<SapInstanceResource> operation = new MigrationDiscoverySapArmOperation<SapInstanceResource>(
+                    new SapInstanceResourceOperationSource(Client),
+                    _sapInstancesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Gets the SAP Instance resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<SapInstanceResource>> GetAsync(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.Get");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = await _sapInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SapInstanceData> response = Response.FromValue(SapInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Gets the SAP Instance resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<SapInstanceResource> Get(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.Get");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.Get");
             scope.Start();
             try
             {
-                var response = _sapInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SapInstanceData> response = Response.FromValue(SapInstanceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,50 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Lists the SAP Instance resources for the given SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_ListBySapDiscoverySite</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_ListBySapDiscoverySite. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapInstanceRestClient.CreateListBySapDiscoverySiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapInstanceRestClient.CreateListBySapDiscoverySiteNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapInstanceResource(Client, SapInstanceData.DeserializeSapInstanceData(e)), _sapInstanceClientDiagnostics, Pipeline, "SapInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SapInstanceData, SapInstanceResource>(new SAPInstancesGetBySapDiscoverySiteAsyncCollectionResultOfT(
+                _sapInstancesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapInstanceCollection.GetAll"), data => new SapInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Lists the SAP Instance resources for the given SAP Migration discovery site resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_ListBySapDiscoverySite</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_ListBySapDiscoverySite. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +323,67 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// <returns> A collection of <see cref="SapInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _sapInstanceRestClient.CreateListBySapDiscoverySiteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sapInstanceRestClient.CreateListBySapDiscoverySiteNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapInstanceResource(Client, SapInstanceData.DeserializeSapInstanceData(e)), _sapInstanceClientDiagnostics, Pipeline, "SapInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SapInstanceData, SapInstanceResource>(new SAPInstancesGetBySapDiscoverySiteCollectionResultOfT(
+                _sapInstancesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "SapInstanceCollection.GetAll"), data => new SapInstanceResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.Exists");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _sapInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SapInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -346,36 +397,50 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.Exists");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _sapInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SapInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -389,38 +454,54 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<SapInstanceResource>> GetIfExistsAsync(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _sapInstanceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<SapInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SapInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -434,38 +515,54 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapDiscoverySites/{sapDiscoverySiteName}/sapInstances/{sapInstanceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapInstances_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPInstances_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapInstanceResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="sapInstanceName"> The name of SAP Instance resource for SAP Migration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sapInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<SapInstanceResource> GetIfExists(string sapInstanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sapInstanceName, nameof(sapInstanceName));
 
-            using var scope = _sapInstanceClientDiagnostics.CreateScope("SapInstanceCollection.GetIfExists");
+            using DiagnosticScope scope = _sapInstancesClientDiagnostics.CreateScope("SapInstanceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _sapInstanceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _sapInstancesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sapInstanceName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<SapInstanceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(SapInstanceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((SapInstanceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<SapInstanceResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new SapInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +582,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<SapInstanceResource> IAsyncEnumerable<SapInstanceResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

@@ -99,6 +99,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("alwaysQuerySource"u8);
                 writer.WriteBooleanValue(AlwaysQuerySource.Value);
             }
+            if (Optional.IsDefined(NeverQuerySource))
+            {
+                writer.WritePropertyName("neverQuerySource"u8);
+                writer.WriteBooleanValue(NeverQuerySource.Value);
+            }
             if (Optional.IsDefined(FailOnError))
             {
                 writer.WritePropertyName("failOnError"u8);
@@ -108,6 +113,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             {
                 writer.WritePropertyName("rerankerThreshold"u8);
                 writer.WriteNumberValue(RerankerThreshold.Value);
+            }
+            if (Optional.IsDefined(ResultsProcessing))
+            {
+                writer.WritePropertyName("resultsProcessing"u8);
+                writer.WriteStringValue(ResultsProcessing.Value.ToString());
             }
             if (Optional.IsDefined(MaxOutputDocuments))
             {

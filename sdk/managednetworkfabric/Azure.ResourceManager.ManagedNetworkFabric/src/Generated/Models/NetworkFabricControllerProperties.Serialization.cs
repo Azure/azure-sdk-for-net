@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IReadOnlyList<ResourceIdentifier> networkFabricIds = default;
             IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled = default;
             IReadOnlyList<ResourceIdentifier> tenantInternetGatewayIds = default;
-            string iPv4AddressSpace = default;
-            string iPv6AddressSpace = default;
+            string ipv4AddressSpace = default;
+            string ipv6AddressSpace = default;
             NetworkFabricControllerSKU? nfcSku = default;
             LastOperationProperties lastOperation = default;
             NetworkFabricProvisioningState? provisioningState = default;
@@ -347,12 +347,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4AddressSpace"u8))
                 {
-                    iPv4AddressSpace = prop.Value.GetString();
+                    ipv4AddressSpace = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6AddressSpace"u8))
                 {
-                    iPv6AddressSpace = prop.Value.GetString();
+                    ipv6AddressSpace = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("nfcSku"u8))
@@ -397,8 +397,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 isWorkloadManagementNetworkEnabled,
                 tenantInternetGatewayIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                iPv4AddressSpace,
-                iPv6AddressSpace,
+                ipv4AddressSpace,
+                ipv6AddressSpace,
                 nfcSku,
                 lastOperation,
                 provisioningState,

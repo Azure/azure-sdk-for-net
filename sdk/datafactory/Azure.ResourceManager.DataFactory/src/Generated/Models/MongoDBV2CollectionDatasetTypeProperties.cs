@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB database dataset properties. </summary>
-    internal partial class MongoDbV2CollectionDatasetTypeProperties
+    internal partial class MongoDBV2CollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbV2CollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2CollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
-        public MongoDbV2CollectionDatasetTypeProperties(DataFactoryElement<string> collection)
+        public MongoDBV2CollectionDatasetTypeProperties(DataFactoryElement<string> collection)
         {
             Argument.AssertNotNull(collection, nameof(collection));
 
             Collection = collection;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbV2CollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBV2CollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collection"> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDbV2CollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBV2CollectionDatasetTypeProperties(DataFactoryElement<string> collection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Collection = collection;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

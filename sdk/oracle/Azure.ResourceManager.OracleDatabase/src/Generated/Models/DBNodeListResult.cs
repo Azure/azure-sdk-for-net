@@ -13,23 +13,23 @@ using Azure.ResourceManager.OracleDatabase;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The response of a DbNode list operation. </summary>
-    internal partial class DbNodeListResult
+    internal partial class DBNodeListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DbNodeListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBNodeListResult"/>. </summary>
         /// <param name="value"> The DbNode items on this page. </param>
-        internal DbNodeListResult(IEnumerable<CloudVmClusterDBNodeData> value)
+        internal DBNodeListResult(IEnumerable<CloudVmClusterDBNodeData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DbNodeListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBNodeListResult"/>. </summary>
         /// <param name="value"> The DbNode items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbNodeListResult(IList<CloudVmClusterDBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DBNodeListResult(IList<CloudVmClusterDBNodeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

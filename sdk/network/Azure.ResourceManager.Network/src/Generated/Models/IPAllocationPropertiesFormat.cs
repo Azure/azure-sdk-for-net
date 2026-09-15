@@ -13,18 +13,18 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of the IpAllocation. </summary>
-    internal partial class IpAllocationPropertiesFormat
+    internal partial class IPAllocationPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpAllocationPropertiesFormat"/>. </summary>
-        public IpAllocationPropertiesFormat()
+        /// <summary> Initializes a new instance of <see cref="IPAllocationPropertiesFormat"/>. </summary>
+        public IPAllocationPropertiesFormat()
         {
             AllocationTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpAllocationPropertiesFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPAllocationPropertiesFormat"/>. </summary>
         /// <param name="subnet"> The Subnet that using the prefix of this IpAllocation resource. </param>
         /// <param name="virtualNetwork"> The VirtualNetwork that using the prefix of this IpAllocation resource. </param>
         /// <param name="ipAllocationType"> The type for the IpAllocation. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="ipamAllocationId"> The IPAM allocation ID. </param>
         /// <param name="allocationTags"> IpAllocation tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpAllocationPropertiesFormat(NetworkSubResource subnet, NetworkSubResource virtualNetwork, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPAllocationPropertiesFormat(NetworkSubResource subnet, NetworkSubResource virtualNetwork, NetworkIPAllocationType? ipAllocationType, string prefix, int? prefixLength, NetworkIPVersion? prefixType, string ipamAllocationId, IDictionary<string, string> allocationTags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Subnet = subnet;
             VirtualNetwork = virtualNetwork;

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabaseWatcherHealthValidationProperties"/>. </summary>
-        /// <param name="startOn"> The start time of health validation, in UTC. </param>
-        /// <param name="endOn"> The end time of health validation, in UTC. </param>
+        /// <param name="startsOn"> The start time of health validation, in UTC. </param>
+        /// <param name="endsOn"> The end time of health validation, in UTC. </param>
         /// <param name="status"> The current health validation status. </param>
         /// <param name="issues"> The list of issues found by health validation. </param>
         /// <param name="provisioningState"> The provisioning state of the health validation resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherHealthValidationProperties(DateTimeOffset startOn, DateTimeOffset endOn, DatabaseWatcherHealthValidationStatus status, IReadOnlyList<DatabaseWatcherHealthValidationIssue> issues, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseWatcherHealthValidationProperties(DateTimeOffset startsOn, DateTimeOffset endsOn, DatabaseWatcherHealthValidationStatus status, IReadOnlyList<DatabaseWatcherHealthValidationIssue> issues, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Issues = issues;
             ProvisioningState = provisioningState;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         }
 
         /// <summary> The start time of health validation, in UTC. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The end time of health validation, in UTC. </summary>
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> The current health validation status. </summary>
         public DatabaseWatcherHealthValidationStatus Status { get; }

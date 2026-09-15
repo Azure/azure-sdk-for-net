@@ -493,7 +493,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestProfileRunsRequest(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
+        internal HttpMessage CreateGetTestProfileRunsRequest(int? maxpagesize, DateTimeOffset? minStartsOn, DateTimeOffset? maxStartsOn, DateTimeOffset? minEndsOn, DateTimeOffset? maxEndsOn, DateTimeOffset? createdDateStartsOn, DateTimeOffset? createdDateEndsOn, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -506,29 +506,29 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
-            if (minStartDateTime != null)
+            if (minStartsOn != null)
             {
-                uri.AppendQuery("minStartDateTime", TypeFormatters.ConvertToString(minStartDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("minStartDateTime", TypeFormatters.ConvertToString(minStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (maxStartDateTime != null)
+            if (maxStartsOn != null)
             {
-                uri.AppendQuery("maxStartDateTime", TypeFormatters.ConvertToString(maxStartDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("maxStartDateTime", TypeFormatters.ConvertToString(maxStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (minEndDateTime != null)
+            if (minEndsOn != null)
             {
-                uri.AppendQuery("minEndDateTime", TypeFormatters.ConvertToString(minEndDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("minEndDateTime", TypeFormatters.ConvertToString(minEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (maxEndDateTime != null)
+            if (maxEndsOn != null)
             {
-                uri.AppendQuery("maxEndDateTime", TypeFormatters.ConvertToString(maxEndDateTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("maxEndDateTime", TypeFormatters.ConvertToString(maxEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateStartTime != null)
+            if (createdDateStartsOn != null)
             {
-                uri.AppendQuery("createdDateStartTime", TypeFormatters.ConvertToString(createdDateStartTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateStartTime", TypeFormatters.ConvertToString(createdDateStartsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (createdDateEndTime != null)
+            if (createdDateEndsOn != null)
             {
-                uri.AppendQuery("createdDateEndTime", TypeFormatters.ConvertToString(createdDateEndTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("createdDateEndTime", TypeFormatters.ConvertToString(createdDateEndsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (testProfileRunIds != null && !(testProfileRunIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
@@ -550,7 +550,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateNextGetTestProfileRunsRequest(Uri nextPage, int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
+        internal HttpMessage CreateNextGetTestProfileRunsRequest(Uri nextPage, int? maxpagesize, DateTimeOffset? minStartsOn, DateTimeOffset? maxStartsOn, DateTimeOffset? minEndsOn, DateTimeOffset? maxEndsOn, DateTimeOffset? createdDateStartsOn, DateTimeOffset? createdDateEndsOn, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

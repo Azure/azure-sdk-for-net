@@ -25,7 +25,7 @@ AzureAISearchToolIndex index = new()
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AzureAISearchQueryType.Simple
+    QueryType = AzureAISearchQueryKind.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -45,7 +45,7 @@ AzureAISearchToolIndex index = new()
     IndexName = "sample_index",
     TopK = 5,
     Filter = "category eq 'sleeping bag'",
-    QueryType = AzureAISearchQueryType.Simple
+    QueryType = AzureAISearchQueryKind.Simple
 };
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {

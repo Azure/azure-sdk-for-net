@@ -16,51 +16,51 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The IpGroups property information. </summary>
-    internal partial class IpGroupPropertiesFormat : IJsonModel<IpGroupPropertiesFormat>
+    internal partial class IPGroupPropertiesFormat : IJsonModel<IPGroupPropertiesFormat>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpGroupPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPGroupPropertiesFormat PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpGroupPropertiesFormat(document.RootElement, options);
+                        return DeserializeIPGroupPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpGroupPropertiesFormat)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPGroupPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpGroupPropertiesFormat)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPGroupPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpGroupPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPGroupPropertiesFormat>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpGroupPropertiesFormat IPersistableModel<IpGroupPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPGroupPropertiesFormat IPersistableModel<IPGroupPropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpGroupPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPGroupPropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpGroupPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPGroupPropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpGroupPropertiesFormat)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPGroupPropertiesFormat)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -145,24 +145,24 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpGroupPropertiesFormat IJsonModel<IpGroupPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPGroupPropertiesFormat IJsonModel<IPGroupPropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpGroupPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPGroupPropertiesFormat JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPGroupPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpGroupPropertiesFormat)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPGroupPropertiesFormat)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpGroupPropertiesFormat(document.RootElement, options);
+            return DeserializeIPGroupPropertiesFormat(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpGroupPropertiesFormat DeserializeIpGroupPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPGroupPropertiesFormat DeserializeIPGroupPropertiesFormat(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpGroupPropertiesFormat(provisioningState, ipAddresses ?? new ChangeTrackingList<string>(), firewalls ?? new ChangeTrackingList<WritableSubResource>(), firewallPolicies ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
+            return new IPGroupPropertiesFormat(provisioningState, ipAddresses ?? new ChangeTrackingList<string>(), firewalls ?? new ChangeTrackingList<WritableSubResource>(), firewallPolicies ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
         }
     }
 }

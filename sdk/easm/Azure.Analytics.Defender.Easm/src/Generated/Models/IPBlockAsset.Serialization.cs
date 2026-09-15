@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpBlockAsset. </summary>
-    public partial class IpBlockAsset : InventoryAsset, IJsonModel<IpBlockAsset>
+    /// <summary> The IPBlockAsset. </summary>
+    public partial class IPBlockAsset : InventoryAsset, IJsonModel<IPBlockAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpBlockAsset(document.RootElement, options);
+                        return DeserializeIPBlockAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPBlockAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpBlockAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPBlockAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpBlockAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPBlockAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpBlockAsset IPersistableModel<IpBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpBlockAsset)PersistableModelCreateCore(data, options);
+        IPBlockAsset IPersistableModel<IPBlockAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IPBlockAsset)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpBlockAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPBlockAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpBlockAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPBlockAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,16 +68,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPBlockAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(IpBlock))
+            if (Optional.IsDefined(IPBlock))
             {
                 writer.WritePropertyName("ipBlock"u8);
-                writer.WriteStringValue(IpBlock);
+                writer.WriteStringValue(IPBlock);
             }
             if (Optional.IsCollectionDefined(Asns))
             {
@@ -179,15 +179,15 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartIp))
+            if (Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIp"u8);
-                writer.WriteStringValue(StartIp);
+                writer.WriteStringValue(StartIP);
             }
-            if (Optional.IsDefined(EndIp))
+            if (Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIp"u8);
-                writer.WriteStringValue(EndIp);
+                writer.WriteStringValue(EndIP);
             }
             if (Optional.IsCollectionDefined(Reputations))
             {
@@ -199,10 +199,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (Optional.IsDefined(DetailedFromWhoisOn))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
-                writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
+                writer.WriteStringValue(DetailedFromWhoisOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Sources))
             {
@@ -329,38 +329,38 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Ipv4))
+            if (Optional.IsDefined(IPv4))
             {
                 writer.WritePropertyName("ipv4"u8);
-                writer.WriteBooleanValue(Ipv4.Value);
+                writer.WriteBooleanValue(IPv4.Value);
             }
-            if (Optional.IsDefined(Ipv6))
+            if (Optional.IsDefined(IPv6))
             {
                 writer.WritePropertyName("ipv6"u8);
-                writer.WriteBooleanValue(Ipv6.Value);
+                writer.WriteBooleanValue(IPv6.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpBlockAsset IJsonModel<IpBlockAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IpBlockAsset)JsonModelCreateCore(ref reader, options);
+        IPBlockAsset IJsonModel<IPBlockAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IPBlockAsset)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPBlockAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpBlockAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPBlockAsset)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpBlockAsset(document.RootElement, options);
+            return DeserializeIPBlockAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpBlockAsset DeserializeIpBlockAsset(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPBlockAsset DeserializeIPBlockAsset(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -378,10 +378,10 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedLong> registrarCreatedAt = default;
             IList<ObservedLong> registrarUpdatedAt = default;
             IList<ObservedString> netRanges = default;
-            string startIp = default;
-            string endIp = default;
+            string startIP = default;
+            string endIP = default;
             IList<ReputationDetails> reputations = default;
-            DateTimeOffset? detailedFromWhoisAt = default;
+            DateTimeOffset? detailedFromWhoisOn = default;
             IList<SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
@@ -547,12 +547,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("startIp"u8))
                 {
-                    startIp = prop.Value.GetString();
+                    startIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endIp"u8))
                 {
-                    endIp = prop.Value.GetString();
+                    endIP = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("reputations"u8))
@@ -575,7 +575,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    detailedFromWhoisAt = prop.Value.GetDateTimeOffset("O");
+                    detailedFromWhoisOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
@@ -782,7 +782,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpBlockAsset(
+            return new IPBlockAsset(
                 additionalBinaryDataProperties,
                 ipBlock,
                 asns ?? new ChangeTrackingList<ObservedLong>(),
@@ -795,10 +795,10 @@ namespace Azure.Analytics.Defender.Easm
                 registrarCreatedAt ?? new ChangeTrackingList<ObservedLong>(),
                 registrarUpdatedAt ?? new ChangeTrackingList<ObservedLong>(),
                 netRanges ?? new ChangeTrackingList<ObservedString>(),
-                startIp,
-                endIp,
+                startIP,
+                endIP,
                 reputations ?? new ChangeTrackingList<ReputationDetails>(),
-                detailedFromWhoisAt,
+                detailedFromWhoisOn,
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 firstSeen,
                 lastSeen,

@@ -14,51 +14,51 @@ using Azure.ResourceManager.MachineLearning;
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Returns metadata about the os patching. </summary>
-    public partial class OsPatchingStatus : IJsonModel<OsPatchingStatus>
+    public partial class OSPatchingStatus : IJsonModel<OSPatchingStatus>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OsPatchingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual OSPatchingStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OsPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOsPatchingStatus(document.RootElement, options);
+                        return DeserializeOSPatchingStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OsPatchingStatus)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OsPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OsPatchingStatus)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OsPatchingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<OSPatchingStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OsPatchingStatus IPersistableModel<OsPatchingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        OSPatchingStatus IPersistableModel<OSPatchingStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OsPatchingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OSPatchingStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OsPatchingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OSPatchingStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OsPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OsPatchingStatus)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(PatchStatus))
             {
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("scheduledRebootTime"u8);
                 writer.WriteStringValue(ScheduledRebootTime);
             }
-            if (Optional.IsCollectionDefined(OsPatchingErrors))
+            if (Optional.IsCollectionDefined(OSPatchingErrors))
             {
                 writer.WritePropertyName("osPatchingErrors"u8);
                 writer.WriteStartArray();
-                foreach (MachineLearningError item in OsPatchingErrors)
+                foreach (MachineLearningError item in OSPatchingErrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -123,24 +123,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OsPatchingStatus IJsonModel<OsPatchingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        OSPatchingStatus IJsonModel<OSPatchingStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual OsPatchingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual OSPatchingStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OsPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSPatchingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OsPatchingStatus)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(OSPatchingStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOsPatchingStatus(document.RootElement, options);
+            return DeserializeOSPatchingStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static OsPatchingStatus DeserializeOsPatchingStatus(JsonElement element, ModelReaderWriterOptions options)
+        internal static OSPatchingStatus DeserializeOSPatchingStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OsPatchingStatus(
+            return new OSPatchingStatus(
                 patchStatus,
                 latestPatchTime,
                 isRebootPending,

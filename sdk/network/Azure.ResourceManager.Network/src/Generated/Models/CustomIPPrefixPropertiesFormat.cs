@@ -13,19 +13,19 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Custom IP prefix properties. </summary>
-    internal partial class CustomIpPrefixPropertiesFormat
+    internal partial class CustomIPPrefixPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
-        public CustomIpPrefixPropertiesFormat()
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixPropertiesFormat"/>. </summary>
+        public CustomIPPrefixPropertiesFormat()
         {
             ChildCustomIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
             PublicIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomIPPrefixPropertiesFormat"/>. </summary>
         /// <param name="asn"> The ASN for CIDR advertising. Should be an integer as string. </param>
         /// <param name="cidr"> The prefix range in CIDR notation. Should include the start address and the prefix length. </param>
         /// <param name="signedMessage"> Signed message for WAN validation. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIPPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIPPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIPPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Cidr = cidr;

@@ -90,6 +90,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("enableAcceleratedNetworking"u8);
                 writer.WriteBooleanValue(EnableAcceleratedNetworking.Value);
             }
+            if (Optional.IsDefined(PublicIPAddressConfiguration))
+            {
+                writer.WritePropertyName("publicIPAddressConfiguration"u8);
+                writer.WriteObjectValue(PublicIPAddressConfiguration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +140,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             AgentPoolNetworkInterfaceType? @type = default;
             ResourceIdentifier vnetSubnetId = default;
             bool? enableAcceleratedNetworking = default;
+            AgentPoolNicPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -165,12 +171,21 @@ namespace Azure.ResourceManager.ContainerService.Models
                     enableAcceleratedNetworking = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("publicIPAddressConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicIPAddressConfiguration = AgentPoolNicPublicIPAddressConfiguration.DeserializeAgentPoolNicPublicIPAddressConfiguration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolNetworkInterface(@type, vnetSubnetId, enableAcceleratedNetworking, additionalBinaryDataProperties);
+            return new AgentPoolNetworkInterface(@type, vnetSubnetId, enableAcceleratedNetworking, publicIPAddressConfiguration, additionalBinaryDataProperties);
         }
     }
 }

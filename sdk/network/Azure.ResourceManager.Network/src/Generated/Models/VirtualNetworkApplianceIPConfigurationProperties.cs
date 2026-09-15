@@ -12,24 +12,24 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of virtual network appliance IP configuration. </summary>
-    internal partial class VirtualNetworkApplianceIpConfigurationProperties
+    internal partial class VirtualNetworkApplianceIPConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfigurationProperties"/>. </summary>
-        internal VirtualNetworkApplianceIpConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfigurationProperties"/>. </summary>
+        internal VirtualNetworkApplianceIPConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIpConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceIPConfigurationProperties"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkApplianceIpConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualNetworkApplianceIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;

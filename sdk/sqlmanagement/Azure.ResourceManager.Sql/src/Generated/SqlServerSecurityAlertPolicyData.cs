@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (SecurityAlertsPolicyState?)default : Properties.State;
             }
             set
             {

@@ -13,20 +13,20 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> DDoS protection settings for a frontend IP configuration. </summary>
-    internal partial class DdosFrontendIpConfigurationSettings
+    internal partial class DdosFrontendIPConfigurationSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DdosFrontendIpConfigurationSettings"/>. </summary>
-        public DdosFrontendIpConfigurationSettings()
+        /// <summary> Initializes a new instance of <see cref="DdosFrontendIPConfigurationSettings"/>. </summary>
+        public DdosFrontendIPConfigurationSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DdosFrontendIpConfigurationSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DdosFrontendIPConfigurationSettings"/>. </summary>
         /// <param name="ddosCustomPolicy"> The reference to the DDoS Custom Policy resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DdosFrontendIpConfigurationSettings(NetworkSubResource ddosCustomPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DdosFrontendIPConfigurationSettings(NetworkSubResource ddosCustomPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DdosCustomPolicy = ddosCustomPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpBlockAssetResource. </summary>
-    public partial class IpBlockAssetResource : AssetResource
+    /// <summary> The IPBlockAssetResource. </summary>
+    public partial class IPBlockAssetResource : AssetResource
     {
-        /// <summary> Initializes a new instance of <see cref="IpBlockAssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPBlockAssetResource"/>. </summary>
         /// <param name="asset"> asset. </param>
-        internal IpBlockAssetResource(IpBlockAsset asset) : base("ipBlock")
+        internal IPBlockAssetResource(IPBlockAsset asset) : base("ipBlock")
         {
             Asset = asset;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpBlockAssetResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPBlockAssetResource"/>. </summary>
         /// <param name="kind"> Discriminator property for AssetResource. </param>
         /// <param name="id"> The system generated unique id for the resource. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="uuid"> Global UUID for the asset. </param>
-        /// <param name="createdDate"> The date this asset was first added to this workspace. </param>
-        /// <param name="updatedDate"> The date this asset was last updated for this workspace. </param>
+        /// <param name="createdOn"> The date this asset was first added to this workspace. </param>
+        /// <param name="updatedOn"> The date this asset was last updated for this workspace. </param>
         /// <param name="state"></param>
         /// <param name="externalId"> An optional customer provided identifier for this asset. </param>
         /// <param name="labels"> Customer labels assigned to this asset. </param>
@@ -37,12 +37,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="reason"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="asset"> asset. </param>
-        internal IpBlockAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdDate, DateTimeOffset? updatedDate, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpBlockAsset asset) : base(kind, id, name, displayName, uuid, createdDate, updatedDate, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
+        internal IPBlockAssetResource(string kind, string id, string name, string displayName, Guid? uuid, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, AssetState? state, string externalId, IList<string> labels, bool? wildcard, string discoGroupName, IList<AuditTrailItem> auditTrail, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPBlockAsset asset) : base(kind, id, name, displayName, uuid, createdOn, updatedOn, state, externalId, labels, wildcard, discoGroupName, auditTrail, reason, additionalBinaryDataProperties)
         {
             Asset = asset;
         }
 
         /// <summary> asset. </summary>
-        public IpBlockAsset Asset { get; }
+        public IPBlockAsset Asset { get; }
     }
 }

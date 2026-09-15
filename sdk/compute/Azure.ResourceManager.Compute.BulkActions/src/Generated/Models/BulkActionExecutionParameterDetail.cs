@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="optimizationPreference"> Details that could optimize the user's request. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="shouldVerifyVmAgentHealth"> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </param>
+        /// <param name="capacityRecommendationParameters"> Capacity recommendation parameters for the request. When provided on an executeStart request, the service computes placement recommendations only if the VM fails to start due to an allocation failure; the recommendations for the desired sizes and locations are then surfaced in the operation's capacityRecommendation response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference, BulkOperationRetryPolicy retryPolicy, bool? shouldVerifyVmAgentHealth, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BulkActionExecutionParameterDetail(OptimizationPreference? optimizationPreference, BulkOperationRetryPolicy retryPolicy, bool? shouldVerifyVmAgentHealth, BulkActionsCapacityRecommendationParametersContent capacityRecommendationParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OptimizationPreference = optimizationPreference;
             RetryPolicy = retryPolicy;
             ShouldVerifyVmAgentHealth = shouldVerifyVmAgentHealth;
+            CapacityRecommendationParameters = capacityRecommendationParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> When true on an executeStart request, run a post-Start VM agent health check and engage the fallback chain if the guest agent does not report Ready. Ignored for non-Start operations. </summary>
         public bool? ShouldVerifyVmAgentHealth { get; set; }
+
+        /// <summary> Capacity recommendation parameters for the request. When provided on an executeStart request, the service computes placement recommendations only if the VM fails to start due to an allocation failure; the recommendations for the desired sizes and locations are then surfaced in the operation's capacityRecommendation response. </summary>
+        public BulkActionsCapacityRecommendationParametersContent CapacityRecommendationParameters { get; set; }
     }
 }

@@ -15,63 +15,63 @@ using Azure.ResourceManager.OracleDatabase;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The response of a DbSystemShape list operation. </summary>
-    internal partial class DbSystemShapeListResult : IJsonModel<DbSystemShapeListResult>
+    internal partial class DBSystemShapeListResult : IJsonModel<DBSystemShapeListResult>
     {
-        /// <summary> Initializes a new instance of <see cref="DbSystemShapeListResult"/> for deserialization. </summary>
-        internal DbSystemShapeListResult()
+        /// <summary> Initializes a new instance of <see cref="DBSystemShapeListResult"/> for deserialization. </summary>
+        internal DBSystemShapeListResult()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DbSystemShapeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DBSystemShapeListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DBSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDbSystemShapeListResult(document.RootElement, options);
+                        return DeserializeDBSystemShapeListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DBSystemShapeListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DBSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerOracleDatabaseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DBSystemShapeListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DbSystemShapeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DBSystemShapeListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DbSystemShapeListResult IPersistableModel<DbSystemShapeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DBSystemShapeListResult IPersistableModel<DBSystemShapeListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DbSystemShapeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DBSystemShapeListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DbSystemShapeListResult"/> from. </param>
-        internal static DbSystemShapeListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DBSystemShapeListResult"/> from. </param>
+        internal static DBSystemShapeListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDbSystemShapeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDBSystemShapeListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DbSystemShapeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DBSystemShapeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DBSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DBSystemShapeListResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DbSystemShapeListResult IJsonModel<DbSystemShapeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DBSystemShapeListResult IJsonModel<DBSystemShapeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DbSystemShapeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DBSystemShapeListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DbSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DBSystemShapeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DbSystemShapeListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DBSystemShapeListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDbSystemShapeListResult(document.RootElement, options);
+            return DeserializeDBSystemShapeListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DbSystemShapeListResult DeserializeDbSystemShapeListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static DBSystemShapeListResult DeserializeDBSystemShapeListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DbSystemShapeListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DBSystemShapeListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

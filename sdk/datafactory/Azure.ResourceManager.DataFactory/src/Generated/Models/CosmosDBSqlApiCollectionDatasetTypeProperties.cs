@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> CosmosDB (SQL API) Collection dataset properties. </summary>
-    internal partial class CosmosDbSqlApiCollectionDatasetTypeProperties
+    internal partial class CosmosDBSqlApiCollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbSqlApiCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlApiCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public CosmosDbSqlApiCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
+        public CosmosDBSqlApiCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
         {
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             CollectionName = collectionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDbSqlApiCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBSqlApiCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDbSqlApiCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBSqlApiCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionName = collectionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

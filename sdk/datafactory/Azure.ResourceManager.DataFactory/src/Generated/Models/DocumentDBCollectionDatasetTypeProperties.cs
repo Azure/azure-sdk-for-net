@@ -13,25 +13,25 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> DocumentDB Collection dataset properties. </summary>
-    internal partial class DocumentDbCollectionDatasetTypeProperties
+    internal partial class DocumentDBCollectionDatasetTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        public DocumentDbCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
+        public DocumentDBCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName)
         {
             Argument.AssertNotNull(collectionName, nameof(collectionName));
 
             CollectionName = collectionName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DocumentDbCollectionDatasetTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentDBCollectionDatasetTypeProperties"/>. </summary>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentDbCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentDBCollectionDatasetTypeProperties(DataFactoryElement<string> collectionName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CollectionName = collectionName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

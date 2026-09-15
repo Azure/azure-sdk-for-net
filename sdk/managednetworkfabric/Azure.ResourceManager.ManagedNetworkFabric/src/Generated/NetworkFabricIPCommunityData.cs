@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             Argument.AssertNotNull(ipCommunityRules, nameof(ipCommunityRules));
 
-            Properties = new IpCommunityProperties(ipCommunityRules);
+            Properties = new IPCommunityProperties(ipCommunityRules);
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricIPCommunityData"/>. </summary>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The IP Community Properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IpCommunityProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkFabricIPCommunityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IPCommunityProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP Community Properties. </summary>
-        internal IpCommunityProperties Properties { get; set; }
+        internal IPCommunityProperties Properties { get; set; }
 
         /// <summary> Switch configuration description. </summary>
         public string Annotation
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 if (Properties is null)
                 {
-                    Properties = new IpCommunityProperties();
+                    Properties = new IPCommunityProperties();
                 }
                 Properties.Annotation = value;
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 if (Properties is null)
                 {
-                    Properties = new IpCommunityProperties();
+                    Properties = new IPCommunityProperties();
                 }
                 return Properties.IPCommunityRules;
             }

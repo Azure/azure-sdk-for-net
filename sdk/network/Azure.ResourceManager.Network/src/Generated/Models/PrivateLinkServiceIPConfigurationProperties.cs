@@ -12,17 +12,17 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of private link service IP configuration. </summary>
-    internal partial class PrivateLinkServiceIpConfigurationProperties
+    internal partial class PrivateLinkServiceIPConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIpConfigurationProperties"/>. </summary>
-        public PrivateLinkServiceIpConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfigurationProperties"/>. </summary>
+        public PrivateLinkServiceIPConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIpConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServiceIPConfigurationProperties"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> The reference to the subnet resource. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the private link service IP configuration resource. </param>
         /// <param name="privateIPAddressVersion"> Whether the specific IP configuration is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkServiceIpConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PrivateLinkServiceIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, SubnetData subnet, bool? primary, NetworkProvisioningState? provisioningState, NetworkIPVersion? privateIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;

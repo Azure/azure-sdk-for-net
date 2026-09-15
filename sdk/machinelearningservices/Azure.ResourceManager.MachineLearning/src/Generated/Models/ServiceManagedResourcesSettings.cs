@@ -23,33 +23,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceManagedResourcesSettings"/>. </summary>
-        /// <param name="cosmosDb"></param>
+        /// <param name="cosmosDB"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceManagedResourcesSettings(CosmosDbSettings cosmosDb, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceManagedResourcesSettings(CosmosDBSettings cosmosDB, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CosmosDb = cosmosDb;
+            CosmosDB = cosmosDB;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the CosmosDb. </summary>
+        /// <summary> Gets or sets the CosmosDB. </summary>
         [WirePath("cosmosDb")]
-        internal CosmosDbSettings CosmosDb { get; set; }
+        internal CosmosDBSettings CosmosDB { get; set; }
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
         [WirePath("cosmosDb.collectionsThroughput")]
-        public int? CosmosDbCollectionsThroughput
+        public int? CosmosDBCollectionsThroughput
         {
             get
             {
-                return CosmosDb is null ? default : CosmosDb.CollectionsThroughput;
+                return CosmosDB is null ? default : CosmosDB.CollectionsThroughput;
             }
             set
             {
-                if (CosmosDb is null)
+                if (CosmosDB is null)
                 {
-                    CosmosDb = new CosmosDbSettings();
+                    CosmosDB = new CosmosDBSettings();
                 }
-                CosmosDb.CollectionsThroughput = value;
+                CosmosDB.CollectionsThroughput = value;
             }
         }
     }

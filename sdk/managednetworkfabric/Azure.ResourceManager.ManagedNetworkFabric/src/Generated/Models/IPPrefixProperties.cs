@@ -14,22 +14,22 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Prefix Properties defines the properties of the resource. </summary>
-    internal partial class IpPrefixProperties
+    internal partial class IPPrefixProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpPrefixProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixProperties"/>. </summary>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixRules"/> is null. </exception>
-        public IpPrefixProperties(IEnumerable<IPPrefixRule> ipPrefixRules)
+        public IPPrefixProperties(IEnumerable<IPPrefixRule> ipPrefixRules)
         {
             Argument.AssertNotNull(ipPrefixRules, nameof(ipPrefixRules));
 
             IPPrefixRules = ipPrefixRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpPrefixProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPPrefixProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpPrefixProperties(string annotation, ResourceIdentifier networkFabricId, IList<IPPrefixRule> ipPrefixRules, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPPrefixProperties(string annotation, ResourceIdentifier networkFabricId, IList<IPPrefixRule> ipPrefixRules, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             NetworkFabricId = networkFabricId;

@@ -13,24 +13,24 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of an application gateway private link IP configuration. </summary>
-    internal partial class ApplicationGatewayPrivateLinkIpConfigurationProperties
+    internal partial class ApplicationGatewayPrivateLinkIPConfigurationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfigurationProperties"/>. </summary>
-        public ApplicationGatewayPrivateLinkIpConfigurationProperties()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfigurationProperties"/>. </summary>
+        public ApplicationGatewayPrivateLinkIPConfigurationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIpConfigurationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayPrivateLinkIPConfigurationProperties"/>. </summary>
         /// <param name="privateIPAddress"> The private IP address of the IP configuration. </param>
         /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
         /// <param name="subnet"> Reference to the subnet resource. </param>
         /// <param name="primary"> Whether the ip configuration is primary or not. </param>
         /// <param name="provisioningState"> The provisioning state of the application gateway private link IP configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationGatewayPrivateLinkIpConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkSubResource subnet, bool? primary, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationGatewayPrivateLinkIPConfigurationProperties(string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, NetworkSubResource subnet, bool? primary, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;

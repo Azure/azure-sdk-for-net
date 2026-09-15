@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("clusterCodeVersion"u8);
                 writer.WriteStringValue(ClusterCodeVersion);
             }
-            if (Optional.IsDefined(VersionSupportExpireOn))
+            if (Optional.IsDefined(VersionSupportExpiresOn))
             {
                 writer.WritePropertyName("supportExpiryUtc"u8);
-                writer.WriteStringValue(VersionSupportExpireOn.Value, "O");
+                writer.WriteStringValue(VersionSupportExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(OSType))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 return null;
             }
             string clusterCodeVersion = default;
-            DateTimeOffset? versionSupportExpireOn = default;
+            DateTimeOffset? versionSupportExpiresOn = default;
             ServiceFabricManagedClusterOSType? osType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    versionSupportExpireOn = prop.Value.GetDateTimeOffset("O");
+                    versionSupportExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("osType"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterVersionDetails(clusterCodeVersion, versionSupportExpireOn, osType, additionalBinaryDataProperties);
+            return new ManagedClusterVersionDetails(clusterCodeVersion, versionSupportExpiresOn, osType, additionalBinaryDataProperties);
         }
     }
 }

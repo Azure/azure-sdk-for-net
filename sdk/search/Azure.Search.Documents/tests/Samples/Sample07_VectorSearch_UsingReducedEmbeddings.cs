@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                await indexClient.DeleteIndexAsync(indexName);
             }
         }
 
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Reduced_Vector_Search_Index
             string vectorSearchProfileName = "vector-profile";
             string vectorSearchHnswConfig = "hsnw-vector-config";
-            string deploymentName = "text-embedding-3-small";
+            string deploymentName = "text-embedding-3-large";
             int modelDimensions = 256; // Here's the reduced model dimensions
 
             string indexName = "hotel";
@@ -122,7 +122,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                                 ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                                 ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
                                 DeploymentName = deploymentName,
-                                ModelName = AzureOpenAIModelName.TextEmbedding3Small
+                                ModelName = AzureOpenAIModelName.TextEmbedding3Large
                             }
                         }
                     }
@@ -174,7 +174,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
             AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
-            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("my-text-embedding-3-small");
+            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-3-large");
 
             EmbeddingGenerationOptions embeddingsOptions = new EmbeddingGenerationOptions()
             {

@@ -12,17 +12,17 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Geodata information for a given IP address. </summary>
-    public partial class EnrichmentIpGeodata
+    public partial class EnrichmentIPGeodata
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentIpGeodata"/>. </summary>
-        internal EnrichmentIpGeodata()
+        /// <summary> Initializes a new instance of <see cref="EnrichmentIPGeodata"/>. </summary>
+        internal EnrichmentIPGeodata()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EnrichmentIpGeodata"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EnrichmentIPGeodata"/>. </summary>
         /// <param name="asn"> The autonomous system number associated with this IP address. </param>
         /// <param name="carrier"> The name of the carrier for this IP address. </param>
         /// <param name="city"> The city this IP address is located in. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="stateConfidenceFactor"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
         /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EnrichmentIpGeodata(string asn, string carrier, string city, int? cityConfidenceFactor, string continent, string country, int? countryConfidenceFactor, string ipAddr, string ipRoutingType, string latitude, string longitude, string organization, string organizationType, string region, string state, int? stateConfidenceFactor, string stateCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EnrichmentIPGeodata(string asn, string carrier, string city, int? cityConfidenceFactor, string continent, string country, int? countryConfidenceFactor, string ipAddr, string ipRoutingType, string latitude, string longitude, string organization, string organizationType, string region, string state, int? stateConfidenceFactor, string stateCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Carrier = carrier;
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Continent = continent;
             Country = country;
             CountryConfidenceFactor = countryConfidenceFactor;
-            IpAddr = ipAddr;
-            IpRoutingType = ipRoutingType;
+            IPAddr = ipAddr;
+            IPRoutingType = ipRoutingType;
             Latitude = latitude;
             Longitude = longitude;
             Organization = organization;
@@ -93,11 +93,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The dotted-decimal or colon-separated string representation of the IP address. </summary>
         [WirePath("ipAddr")]
-        public string IpAddr { get; }
+        public string IPAddr { get; }
 
         /// <summary> A description of the connection type of this IP address. </summary>
         [WirePath("ipRoutingType")]
-        public string IpRoutingType { get; }
+        public string IPRoutingType { get; }
 
         /// <summary> The latitude of this IP address. </summary>
         [WirePath("latitude")]

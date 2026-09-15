@@ -12,21 +12,21 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community patchable properties. </summary>
-    internal partial class IpCommunityPatchableProperties
+    internal partial class IPCommunityPatchableProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpCommunityPatchableProperties"/>. </summary>
-        public IpCommunityPatchableProperties()
+        /// <summary> Initializes a new instance of <see cref="IPCommunityPatchableProperties"/>. </summary>
+        public IPCommunityPatchableProperties()
         {
             IPCommunityRules = new ChangeTrackingList<IPCommunityRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpCommunityPatchableProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityPatchableProperties"/>. </summary>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpCommunityPatchableProperties(IList<IPCommunityRule> ipCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPCommunityPatchableProperties(IList<IPCommunityRule> ipCommunityRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPCommunityRules = ipCommunityRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

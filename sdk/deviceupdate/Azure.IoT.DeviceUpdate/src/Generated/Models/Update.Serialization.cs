@@ -143,9 +143,9 @@ namespace Azure.IoT.DeviceUpdate
             writer.WritePropertyName("manifestVersion"u8);
             writer.WriteStringValue(ManifestVersion);
             writer.WritePropertyName("importedDateTime"u8);
-            writer.WriteStringValue(ImportedDateTime, "O");
+            writer.WriteStringValue(ImportedOn, "O");
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -204,8 +204,8 @@ namespace Azure.IoT.DeviceUpdate
             IList<UpdateId> referencedBy = default;
             string scanResult = default;
             string manifestVersion = default;
-            DateTimeOffset importedDateTime = default;
-            DateTimeOffset createdDateTime = default;
+            DateTimeOffset importedOn = default;
+            DateTimeOffset createdOn = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -289,12 +289,12 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (prop.NameEquals("importedDateTime"u8))
                 {
-                    importedDateTime = prop.Value.GetDateTimeOffset("O");
+                    importedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -319,8 +319,8 @@ namespace Azure.IoT.DeviceUpdate
                 referencedBy ?? new ChangeTrackingList<UpdateId>(),
                 scanResult,
                 manifestVersion,
-                importedDateTime,
-                createdDateTime,
+                importedOn,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties);
         }

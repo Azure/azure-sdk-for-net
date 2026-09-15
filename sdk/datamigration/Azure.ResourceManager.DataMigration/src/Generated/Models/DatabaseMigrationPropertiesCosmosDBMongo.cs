@@ -13,15 +13,15 @@ using Azure.ResourceManager.DataMigration;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Database Migration Resource properties for CosmosDb for Mongo. </summary>
-    public partial class DatabaseMigrationPropertiesCosmosDbMongo : DatabaseMigrationBaseProperties
+    public partial class DatabaseMigrationPropertiesCosmosDBMongo : DatabaseMigrationBaseProperties
     {
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationPropertiesCosmosDbMongo"/>. </summary>
-        public DatabaseMigrationPropertiesCosmosDbMongo() : base(ResourceType.MongoToCosmosDbMongo)
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>. </summary>
+        public DatabaseMigrationPropertiesCosmosDBMongo() : base(ResourceType.MongoToCosmosDbMongo)
         {
             CollectionList = new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationPropertiesCosmosDbMongo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceMongoConnection"> Source Mongo connection details. </param>
         /// <param name="targetMongoConnection"> Target Cosmos DB Mongo connection details. </param>
         /// <param name="collectionList"> List of Mongo Collections to be migrated. </param>
-        internal DatabaseMigrationPropertiesCosmosDbMongo(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties, MongoConnectionInformation sourceMongoConnection, MongoConnectionInformation targetMongoConnection, IList<DataMigrationMongoMigrationCollectionInfo> collectionList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties)
+        internal DatabaseMigrationPropertiesCosmosDBMongo(ResourceType kind, string scope, DataMigrationProvisioningState? provisioningState, string migrationStatus, DateTimeOffset? startedOn, DateTimeOffset? endedOn, ResourceIdentifier migrationService, string migrationOperationId, SqlMigrationErrorInfo migrationFailureError, string provisioningError, IDictionary<string, BinaryData> additionalBinaryDataProperties, MongoConnectionInformation sourceMongoConnection, MongoConnectionInformation targetMongoConnection, IList<DataMigrationMongoMigrationCollectionInfo> collectionList) : base(kind, scope, provisioningState, migrationStatus, startedOn, endedOn, migrationService, migrationOperationId, migrationFailureError, provisioningError, additionalBinaryDataProperties)
         {
             SourceMongoConnection = sourceMongoConnection;
             TargetMongoConnection = targetMongoConnection;

@@ -12,52 +12,52 @@ using System.Text.Json;
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The IpAddressAsset. </summary>
-    public partial class IpAddressAsset : InventoryAsset, IJsonModel<IpAddressAsset>
+    /// <summary> The IPAddressAsset. </summary>
+    public partial class IPAddressAsset : InventoryAsset, IJsonModel<IPAddressAsset>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpAddressAsset(document.RootElement, options);
+                        return DeserializeIPAddressAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpAddressAsset)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPAddressAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpAddressAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPAddressAsset>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAddressAsset IPersistableModel<IpAddressAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IpAddressAsset)PersistableModelCreateCore(data, options);
+        IPAddressAsset IPersistableModel<IPAddressAsset>.Create(BinaryData data, ModelReaderWriterOptions options) => (IPAddressAsset)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpAddressAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPAddressAsset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpAddressAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPAddressAsset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,16 +68,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressAsset)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (Optional.IsCollectionDefined(Asns))
             {
@@ -169,11 +169,11 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpBlocks))
+            if (Optional.IsCollectionDefined(IPBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
-                foreach (IpBlock item in IpBlocks)
+                foreach (IPBlock item in IPBlocks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -284,38 +284,38 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Ipv4))
+            if (Optional.IsDefined(IPv4))
             {
                 writer.WritePropertyName("ipv4"u8);
-                writer.WriteBooleanValue(Ipv4.Value);
+                writer.WriteBooleanValue(IPv4.Value);
             }
-            if (Optional.IsDefined(Ipv6))
+            if (Optional.IsDefined(IPv6))
             {
                 writer.WritePropertyName("ipv6"u8);
-                writer.WriteBooleanValue(Ipv6.Value);
+                writer.WriteBooleanValue(IPv6.Value);
             }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpAddressAsset IJsonModel<IpAddressAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IpAddressAsset)JsonModelCreateCore(ref reader, options);
+        IPAddressAsset IJsonModel<IPAddressAsset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IPAddressAsset)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override InventoryAsset JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPAddressAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpAddressAsset)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPAddressAsset)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpAddressAsset(document.RootElement, options);
+            return DeserializeIPAddressAsset(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpAddressAsset DeserializeIpAddressAsset(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPAddressAsset DeserializeIPAddressAsset(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -332,7 +332,7 @@ namespace Azure.Analytics.Defender.Easm
             IList<CookieDetails> cookies = default;
             IList<SslCertAsset> sslCerts = default;
             IList<AssetService> services = default;
-            IList<IpBlock> ipBlocks = default;
+            IList<IPBlock> ipBlocks = default;
             IList<SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
@@ -486,10 +486,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<IpBlock> array = new List<IpBlock>();
+                    List<IPBlock> array = new List<IPBlock>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item, options));
+                        array.Add(IPBlock.DeserializeIPBlock(item, options));
                     }
                     ipBlocks = array;
                     continue;
@@ -670,7 +670,7 @@ namespace Azure.Analytics.Defender.Easm
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpAddressAsset(
+            return new IPAddressAsset(
                 additionalBinaryDataProperties,
                 ipAddress,
                 asns ?? new ChangeTrackingList<ObservedLong>(),
@@ -682,7 +682,7 @@ namespace Azure.Analytics.Defender.Easm
                 cookies ?? new ChangeTrackingList<CookieDetails>(),
                 sslCerts ?? new ChangeTrackingList<SslCertAsset>(),
                 services ?? new ChangeTrackingList<AssetService>(),
-                ipBlocks ?? new ChangeTrackingList<IpBlock>(),
+                ipBlocks ?? new ChangeTrackingList<IPBlock>(),
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 firstSeen,
                 lastSeen,

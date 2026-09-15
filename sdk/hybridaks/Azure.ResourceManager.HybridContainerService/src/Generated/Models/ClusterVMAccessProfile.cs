@@ -11,55 +11,26 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> The SSH restricted access profile for the VMs in the provisioned cluster. </summary>
-    internal partial class ClusterVmAccessProfile
+    internal partial class ClusterVMAccessProfile
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterVmAccessProfile"/>. </summary>
-        public ClusterVmAccessProfile()
+        /// <summary> Initializes a new instance of <see cref="ClusterVMAccessProfile"/>. </summary>
+        public ClusterVMAccessProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterVmAccessProfile"/>. </summary>
-        /// <param name="authorizedIPRanges"> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterVmAccessProfile(string authorizedIPRanges, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <summary> Initializes a new instance of <see cref="ClusterVMAccessProfile"/>. </summary>
+        /// <param name="clusterVmAccessAuthorizedIPRanges"> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterVMAccessProfile(string clusterVmAccessAuthorizedIPRanges, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            AuthorizedIPRanges = authorizedIPRanges;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ClusterVmAccessAuthorizedIPRanges = clusterVmAccessAuthorizedIPRanges;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </summary>
-        public string AuthorizedIPRanges { get; set; }
+        public string ClusterVmAccessAuthorizedIPRanges { get; set; }
     }
 }

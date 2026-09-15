@@ -6,44 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
     /// <summary>
-    /// A Class representing a ProvisionedCluster along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedClusterResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetProvisionedClusterResource method.
+    /// A class representing a ProvisionedCluster along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProvisionedClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
     /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetProvisionedCluster method.
     /// </summary>
     public partial class ProvisionedClusterResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ProvisionedClusterResource"/> instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The connectedClusterResourceUri. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri)
-        {
-            var resourceId = $"{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _provisionedClusterprovisionedClusterInstancesClientDiagnostics;
-        private readonly ProvisionedClusterInstancesRestOperations _provisionedClusterprovisionedClusterInstancesRestClient;
+        private readonly ClientDiagnostics _provisionedClustersClientDiagnostics;
+        private readonly ProvisionedClusters _provisionedClustersRestClient;
         private readonly ProvisionedClusterData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.HybridContainerService/provisionedClusterInstances";
 
-        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ProvisionedClusterResource for mocking. </summary>
         protected ProvisionedClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProvisionedClusterResource(ArmClient client, ProvisionedClusterData data) : this(client, data.Id)
@@ -52,284 +44,48 @@ namespace Azure.ResourceManager.HybridContainerService
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ProvisionedClusterResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProvisionedClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ProvisionedClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _provisionedClusterprovisionedClusterInstancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string provisionedClusterprovisionedClusterInstancesApiVersion);
-            _provisionedClusterprovisionedClusterInstancesRestClient = new ProvisionedClusterInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClusterprovisionedClusterInstancesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string provisionedClusterApiVersion);
+            _provisionedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridContainerService", ResourceType.Namespace, Diagnostics);
+            _provisionedClustersRestClient = new ProvisionedClusters(_provisionedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, provisionedClusterApiVersion ?? "2026-04-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ProvisionedClusterData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="connectedClusterResourceUri"> The connectedClusterResourceUri. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string connectedClusterResourceUri)
+        {
+            string resourceId = $"{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets an object representing a ProvisionedClusterUpgradeProfileResource along with the instance operations that can be performed on it in the ProvisionedCluster. </summary>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
-        public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile()
-        {
-            return new ProvisionedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
-        }
-
-        /// <summary> Gets an object representing a HybridIdentityMetadataResource along with the instance operations that can be performed on it in the ProvisionedCluster. </summary>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
-        public virtual HybridIdentityMetadataResource GetHybridIdentityMetadata()
-        {
-            return new HybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
-        }
-
-        /// <summary> Gets a collection of HybridContainerServiceAgentPoolResources in the ProvisionedCluster. </summary>
-        /// <returns> An object representing collection of HybridContainerServiceAgentPoolResources and their operations over a HybridContainerServiceAgentPoolResource. </returns>
-        public virtual HybridContainerServiceAgentPoolCollection GetHybridContainerServiceAgentPools()
-        {
-            return GetCachedClient(client => new HybridContainerServiceAgentPoolCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the specified agent pool in the provisioned cluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>agentPool_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> GetHybridContainerServiceAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
-        {
-            return await GetHybridContainerServiceAgentPools().GetAsync(agentPoolName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the specified agent pool in the provisioned cluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/{agentPoolName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>agentPool_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="HybridContainerServiceAgentPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<HybridContainerServiceAgentPoolResource> GetHybridContainerServiceAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
-        {
-            return GetHybridContainerServiceAgentPools().Get(agentPoolName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the provisioned cluster instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ProvisionedClusterResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.Get");
-            scope.Start();
-            try
             {
-                var response = await _provisionedClusterprovisionedClusterInstancesRestClient.GetAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets the provisioned cluster instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ProvisionedClusterResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _provisionedClusterprovisionedClusterInstancesRestClient.Get(Id.Parent, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the provisioned cluster instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _provisionedClusterprovisionedClusterInstancesRestClient.DeleteAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation(_provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateDeleteRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Deletes the provisioned cluster instance
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _provisionedClusterprovisionedClusterInstancesRestClient.Delete(Id.Parent, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation(_provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateDeleteRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
             }
         }
 
@@ -337,20 +93,20 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Creates or updates the provisioned cluster instance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,14 +118,27 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _provisionedClusterprovisionedClusterInstancesRestClient.CreateOrUpdateAsync(Id.Parent, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridContainerServiceArmOperation<ProvisionedClusterResource> operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(
+                    new ProvisionedClusterResourceOperationSource(Client),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -383,20 +152,20 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Creates or updates the provisioned cluster instance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,14 +177,27 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _provisionedClusterprovisionedClusterInstancesRestClient.CreateOrUpdate(Id.Parent, data, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(new ProvisionedClusterOperationSource(Client), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateCreateOrUpdateRequest(Id.Parent, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateCreateOrUpdateRequest(Id.Parent.ToString(), ProvisionedClusterData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridContainerServiceArmOperation<ProvisionedClusterResource> operation = new HybridContainerServiceArmOperation<ProvisionedClusterResource>(
+                    new ProvisionedClusterResourceOperationSource(Client),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -426,38 +208,141 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the user credentials of the provisioned cluster (can only be used within private network)
+        /// Gets the provisioned cluster instance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listUserKubeconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_ListUserKubeconfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ProvisionedClusterResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ProvisionedClusterData> response = Response.FromValue(ProvisionedClusterData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the provisioned cluster instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ProvisionedClusterResource> Get(CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.Get");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetRequest(Id.Parent.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ProvisionedClusterData> response = Response.FromValue(ProvisionedClusterData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ProvisionedClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes the provisioned cluster instance
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<HybridContainerServiceCredentialListResult>> GetUserKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = await _provisionedClusterprovisionedClusterInstancesRestClient.ListUserKubeconfigAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_provisionedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -468,38 +353,45 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the user credentials of the provisioned cluster (can only be used within private network)
+        /// Deletes the provisioned cluster instance
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listUserKubeconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_ListUserKubeconfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<HybridContainerServiceCredentialListResult> GetUserKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.Delete");
             scope.Start();
             try
             {
-                var response = _provisionedClusterprovisionedClusterInstancesRestClient.ListUserKubeconfig(Id.Parent, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListUserKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateDeleteRequest(Id.Parent.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridContainerServiceArmOperation operation = new HybridContainerServiceArmOperation(_provisionedClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -513,20 +405,20 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Lists the admin credentials of the provisioned cluster (can only be used within private network)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listAdminKubeconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listAdminKubeconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_ListAdminKubeconfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_ListAdminKubeconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,14 +426,27 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation<HybridContainerServiceCredentialListResult>> GetAdminKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
             scope.Start();
             try
             {
-                var response = await _provisionedClusterprovisionedClusterInstancesRestClient.ListAdminKubeconfigAsync(Id.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
+                    new HybridContainerServiceCredentialListResultOperationSource(),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -555,20 +460,20 @@ namespace Azure.ResourceManager.HybridContainerService
         /// Lists the admin credentials of the provisioned cluster (can only be used within private network)
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listAdminKubeconfig</description>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listAdminKubeconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>provisionedClusterInstances_ListAdminKubeconfig</description>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_ListAdminKubeconfig. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ProvisionedClusterResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -576,14 +481,27 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation<HybridContainerServiceCredentialListResult> GetAdminKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _provisionedClusterprovisionedClusterInstancesClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.GetAdminKubeconfig");
             scope.Start();
             try
             {
-                var response = _provisionedClusterprovisionedClusterInstancesRestClient.ListAdminKubeconfig(Id.Parent, cancellationToken);
-                var operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(new HybridContainerServiceCredentialListResultOperationSource(), _provisionedClusterprovisionedClusterInstancesClientDiagnostics, Pipeline, _provisionedClusterprovisionedClusterInstancesRestClient.CreateListAdminKubeconfigRequest(Id.Parent).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetAdminKubeconfigRequest(Id.Parent.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
+                    new HybridContainerServiceCredentialListResultOperationSource(),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -591,6 +509,163 @@ namespace Azure.ResourceManager.HybridContainerService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Lists the user credentials of the provisioned cluster (can only be used within private network)
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listUserKubeconfig. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_ListUserKubeconfig. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<HybridContainerServiceCredentialListResult>> GetUserKubeconfigAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
+                    new HybridContainerServiceCredentialListResultOperationSource(),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Lists the user credentials of the provisioned cluster (can only be used within private network)
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{connectedClusterResourceUri}/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/listUserKubeconfig. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ProvisionedClusters_ListUserKubeconfig. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-04-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ProvisionedClusterResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<HybridContainerServiceCredentialListResult> GetUserKubeconfig(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _provisionedClustersClientDiagnostics.CreateScope("ProvisionedClusterResource.GetUserKubeconfig");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _provisionedClustersRestClient.CreateGetUserKubeconfigRequest(Id.Parent.ToString(), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult> operation = new HybridContainerServiceArmOperation<HybridContainerServiceCredentialListResult>(
+                    new HybridContainerServiceCredentialListResultOperationSource(),
+                    _provisionedClustersClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource"/> along with the instance operations that can be performed on it in the <see cref="ProvisionedClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
+        public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfile()
+        {
+            return new ProvisionedClusterUpgradeProfileResource(Client, Id.AppendChildResource("upgradeProfiles", "default"));
+        }
+
+        /// <summary> Gets an object representing a <see cref="HybridIdentityMetadataResource"/> along with the instance operations that can be performed on it in the <see cref="ProvisionedClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
+        public virtual HybridIdentityMetadataResource GetHybridIdentityMetadata()
+        {
+            return new HybridIdentityMetadataResource(Client, Id.AppendChildResource("hybridIdentityMetadata", "default"));
+        }
+
+        /// <summary> Gets a collection of HybridContainerServiceAgentPools in the <see cref="ProvisionedClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HybridContainerServiceAgentPools and their operations over a HybridContainerServiceAgentPoolResource. </returns>
+        public virtual HybridContainerServiceAgentPoolCollection GetHybridContainerServiceAgentPools()
+        {
+            return GetCachedClient(client => new HybridContainerServiceAgentPoolCollection(client, Id));
+        }
+
+        /// <summary> Gets the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> GetHybridContainerServiceAgentPoolAsync(string agentPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+
+            return await GetHybridContainerServiceAgentPools().GetAsync(agentPoolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="agentPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HybridContainerServiceAgentPoolResource> GetHybridContainerServiceAgentPool(string agentPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
+
+            return GetHybridContainerServiceAgentPools().Get(agentPoolName, cancellationToken);
         }
     }
 }

@@ -13,23 +13,23 @@ using Azure.ResourceManager.OracleDatabase;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The response of a DbVersion list operation. </summary>
-    internal partial class DbVersionListResult
+    internal partial class DBVersionListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DbVersionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBVersionListResult"/>. </summary>
         /// <param name="value"> The DbVersion items on this page. </param>
-        internal DbVersionListResult(IEnumerable<OracleDBVersionData> value)
+        internal DBVersionListResult(IEnumerable<OracleDBVersionData> value)
         {
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DbVersionListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBVersionListResult"/>. </summary>
         /// <param name="value"> The DbVersion items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbVersionListResult(IList<OracleDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DBVersionListResult(IList<OracleDBVersionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;

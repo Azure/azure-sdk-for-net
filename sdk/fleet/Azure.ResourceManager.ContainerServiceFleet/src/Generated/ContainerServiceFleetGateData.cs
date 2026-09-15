@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.GateType;
+                return Properties is null ? (ContainerServiceFleetGateType?)default : Properties.GateType;
             }
             set
             {
@@ -89,6 +89,23 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     }
                     Properties.GateType = value.Value;
                 }
+            }
+        }
+
+        /// <summary> Details for ScheduledStart gate. </summary>
+        public ContainerServiceFleetScheduledStartProperties ScheduledStartProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ScheduledStartProperties;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new GateProperties();
+                }
+                Properties.ScheduledStartProperties = value;
             }
         }
 
@@ -114,7 +131,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.State;
+                return Properties is null ? (ContainerServiceFleetGateState?)default : Properties.State;
             }
             set
             {

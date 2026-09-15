@@ -12,22 +12,22 @@ using Azure.ResourceManager.DataMigration;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The response of a DatabaseMigrationCosmosDbMongo list operation. </summary>
-    internal partial class DatabaseMigrationCosmosDbMongoListResult
+    internal partial class DatabaseMigrationCosmosDBMongoListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationCosmosDbMongoListResult"/>. </summary>
-        internal DatabaseMigrationCosmosDbMongoListResult()
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationCosmosDBMongoListResult"/>. </summary>
+        internal DatabaseMigrationCosmosDBMongoListResult()
         {
-            Value = new ChangeTrackingList<DatabaseMigrationCosmosDbMongoData>();
+            Value = new ChangeTrackingList<DatabaseMigrationCosmosDBMongoData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationCosmosDbMongoListResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseMigrationCosmosDBMongoListResult"/>. </summary>
         /// <param name="value"> The DatabaseMigrationCosmosDbMongo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseMigrationCosmosDbMongoListResult(IReadOnlyList<DatabaseMigrationCosmosDbMongoData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseMigrationCosmosDBMongoListResult(IReadOnlyList<DatabaseMigrationCosmosDBMongoData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> The DatabaseMigrationCosmosDbMongo items on this page. </summary>
-        public IReadOnlyList<DatabaseMigrationCosmosDbMongoData> Value { get; }
+        public IReadOnlyList<DatabaseMigrationCosmosDBMongoData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

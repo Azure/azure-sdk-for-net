@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<IPAddress> iPv4Addresses = default;
-            IList<string> iPv6Addresses = default;
+            IList<IPAddress> ipv4Addresses = default;
+            IList<string> ipv6Addresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(IPAddress.Parse(item.GetString()));
                         }
                     }
-                    iPv4Addresses = array;
+                    ipv4Addresses = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Addresses"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             array.Add(item.GetString());
                         }
                     }
-                    iPv6Addresses = array;
+                    ipv6Addresses = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NeighborGroupDestinationPatch(iPv4Addresses ?? new ChangeTrackingList<IPAddress>(), iPv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new NeighborGroupDestinationPatch(ipv4Addresses ?? new ChangeTrackingList<IPAddress>(), ipv6Addresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

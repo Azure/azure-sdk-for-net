@@ -14,22 +14,22 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Community Properties defines the resource properties. </summary>
-    internal partial class IpCommunityProperties
+    internal partial class IPCommunityProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpCommunityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityProperties"/>. </summary>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityRules"/> is null. </exception>
-        public IpCommunityProperties(IEnumerable<IPCommunityRule> ipCommunityRules)
+        public IPCommunityProperties(IEnumerable<IPCommunityRule> ipCommunityRules)
         {
             Argument.AssertNotNull(ipCommunityRules, nameof(ipCommunityRules));
 
             IPCommunityRules = ipCommunityRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpCommunityProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityProperties"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpCommunityProperties(string annotation, ResourceIdentifier networkFabricId, IList<IPCommunityRule> ipCommunityRules, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPCommunityProperties(string annotation, ResourceIdentifier networkFabricId, IList<IPCommunityRule> ipCommunityRules, LastOperationProperties lastOperation, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Annotation = annotation;
             NetworkFabricId = networkFabricId;

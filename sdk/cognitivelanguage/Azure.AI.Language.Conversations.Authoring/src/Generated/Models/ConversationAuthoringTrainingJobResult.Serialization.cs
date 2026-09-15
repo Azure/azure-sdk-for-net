@@ -97,10 +97,10 @@ namespace Azure.AI.Language.Conversations.Authoring
                 writer.WritePropertyName("evaluationStatus"u8);
                 writer.WriteObjectValue(EvaluationStatus, options);
             }
-            if (Optional.IsDefined(EstimatedEndOn))
+            if (Optional.IsDefined(EstimatedEndsOn))
             {
                 writer.WritePropertyName("estimatedEndDateTime"u8);
-                writer.WriteStringValue(EstimatedEndOn.Value, "O");
+                writer.WriteStringValue(EstimatedEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,7 +150,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             ConversationAuthoringSubTrainingState trainingStatus = default;
             ConversationAuthoringSubTrainingState dataGenerationStatus = default;
             ConversationAuthoringSubTrainingState evaluationStatus = default;
-            DateTimeOffset? estimatedEndOn = default;
+            DateTimeOffset? estimatedEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     {
                         continue;
                     }
-                    estimatedEndOn = prop.Value.GetDateTimeOffset("O");
+                    estimatedEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,7 +213,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 trainingStatus,
                 dataGenerationStatus,
                 evaluationStatus,
-                estimatedEndOn,
+                estimatedEndsOn,
                 additionalBinaryDataProperties);
         }
 

@@ -102,10 +102,10 @@ namespace Azure.IoT.DeviceUpdate
                 writer.WritePropertyName("innererror"u8);
                 writer.WriteObjectValue(Innererror, options);
             }
-            if (Optional.IsDefined(OccurredDateTime))
+            if (Optional.IsDefined(OccurredOn))
             {
                 writer.WritePropertyName("occurredDateTime"u8);
-                writer.WriteStringValue(OccurredDateTime.Value, "O");
+                writer.WriteStringValue(OccurredOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -154,7 +154,7 @@ namespace Azure.IoT.DeviceUpdate
             string target = default;
             IList<Error> details = default;
             InnerError innererror = default;
-            DateTimeOffset? occurredDateTime = default;
+            DateTimeOffset? occurredOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -202,7 +202,7 @@ namespace Azure.IoT.DeviceUpdate
                     {
                         continue;
                     }
-                    occurredDateTime = prop.Value.GetDateTimeOffset("O");
+                    occurredOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -216,7 +216,7 @@ namespace Azure.IoT.DeviceUpdate
                 target,
                 details ?? new ChangeTrackingList<Error>(),
                 innererror,
-                occurredDateTime,
+                occurredOn,
                 additionalBinaryDataProperties);
         }
     }

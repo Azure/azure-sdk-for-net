@@ -13,16 +13,16 @@ using Azure.ResourceManager.DataFactory;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> MongoDB Atlas linked service properties. </summary>
-    internal partial class MongoDbAtlasLinkedServiceTypeProperties
+    internal partial class MongoDBAtlasLinkedServiceTypeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasLinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
-        public MongoDbAtlasLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
+        public MongoDBAtlasLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database)
         {
             Argument.AssertNotNull(connectionString, nameof(connectionString));
             Argument.AssertNotNull(database, nameof(database));
@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MongoDbAtlasLinkedServiceTypeProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBAtlasLinkedServiceTypeProperties"/>. </summary>
         /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <param name="driverVersion"> The driver version that you want to choose. Allowed value are v1 and v2. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MongoDbAtlasLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database, DataFactoryElement<string> driverVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MongoDBAtlasLinkedServiceTypeProperties(DataFactoryElement<string> connectionString, DataFactoryElement<string> database, DataFactoryElement<string> driverVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConnectionString = connectionString;
             Database = database;

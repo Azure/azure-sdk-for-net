@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct Status : IEquatable<Status>
     {
         private readonly string _value;
-        /// <summary> Succeeded. </summary>
+        /// <summary> The label operation completed successfully. </summary>
         private const string SucceededValue = "Succeeded";
-        /// <summary> Failed. </summary>
+        /// <summary> The label operation failed. </summary>
         private const string FailedValue = "Failed";
-        /// <summary> Starting. </summary>
+        /// <summary> The label operation is starting. </summary>
         private const string StartingValue = "Starting";
 
         /// <summary> Initializes a new instance of <see cref="Status"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> The label operation completed successfully. </summary>
         public static Status Succeeded { get; } = new Status(SucceededValue);
 
-        /// <summary> Failed. </summary>
+        /// <summary> The label operation failed. </summary>
         public static Status Failed { get; } = new Status(FailedValue);
 
-        /// <summary> Starting. </summary>
+        /// <summary> The label operation is starting. </summary>
         public static Status Starting { get; } = new Status(StartingValue);
 
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> The Linux operation systems profile. </summary>
-    internal partial class OsProfile
+    internal partial class OSProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OsProfile"/>. </summary>
-        public OsProfile()
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
+        public OSProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="OsProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSProfile"/>. </summary>
         /// <param name="linuxProfile"> The Linux OS profile. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OsProfile(HDInsightLinuxOSProfile linuxProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OSProfile(HDInsightLinuxOSProfile linuxProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LinuxProfile = linuxProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

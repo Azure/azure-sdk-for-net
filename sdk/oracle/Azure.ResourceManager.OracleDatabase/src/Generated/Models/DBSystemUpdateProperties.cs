@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.OracleDatabase.Models
 {
     /// <summary> The updatable properties of the DbSystem. </summary>
-    internal partial class DbSystemUpdateProperties
+    internal partial class DBSystemUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DbSystemUpdateProperties"/>. </summary>
-        public DbSystemUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="DBSystemUpdateProperties"/>. </summary>
+        public DBSystemUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DbSystemUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DBSystemUpdateProperties"/>. </summary>
         /// <param name="source"> The source of the database for creating a new database. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DbSystemUpdateProperties(DBSystemSourceType? source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DBSystemUpdateProperties(DBSystemSourceType? source, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Source = source;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

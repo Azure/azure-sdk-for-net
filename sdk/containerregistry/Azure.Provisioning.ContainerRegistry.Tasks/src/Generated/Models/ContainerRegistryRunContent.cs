@@ -16,6 +16,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// </summary>
     public partial class ContainerRegistryRunContent : ProvisionableConstruct
     {
+        private BicepValue<string> _type;
         private BicepValue<bool> _isArchiveEnabled;
         private BicepValue<string> _agentPoolName;
         private BicepValue<string> _logTemplate;
@@ -23,6 +24,16 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryRunContent. </summary>
         public ContainerRegistryRunContent()
         {
+        }
+
+        /// <summary> The type of the run request. </summary>
+        internal BicepValue<string> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Gets or sets the IsArchiveEnabled. </summary>
@@ -74,6 +85,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isRequired: true);
             _isArchiveEnabled = DefineProperty<bool>(nameof(IsArchiveEnabled), new string[] { "isArchiveEnabled" });
             _agentPoolName = DefineProperty<string>(nameof(AgentPoolName), new string[] { "agentPoolName" });
             _logTemplate = DefineProperty<string>(nameof(LogTemplate), new string[] { "logTemplate" });

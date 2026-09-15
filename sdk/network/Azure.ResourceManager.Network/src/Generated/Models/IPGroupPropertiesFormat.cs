@@ -13,26 +13,26 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The IpGroups property information. </summary>
-    internal partial class IpGroupPropertiesFormat
+    internal partial class IPGroupPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupPropertiesFormat"/>. </summary>
-        public IpGroupPropertiesFormat()
+        /// <summary> Initializes a new instance of <see cref="IPGroupPropertiesFormat"/>. </summary>
+        public IPGroupPropertiesFormat()
         {
             IPAddresses = new ChangeTrackingList<string>();
             Firewalls = new ChangeTrackingList<WritableSubResource>();
             FirewallPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IpGroupPropertiesFormat"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPGroupPropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the IpGroups resource. </param>
         /// <param name="ipAddresses"> IpAddresses/IpAddressPrefixes in the IpGroups resource. </param>
         /// <param name="firewalls"> List of references to Firewall resources that this IpGroups is associated with. </param>
         /// <param name="firewallPolicies"> List of references to Firewall Policies resources that this IpGroups is associated with. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpGroupPropertiesFormat(NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IPGroupPropertiesFormat(NetworkProvisioningState? provisioningState, IList<string> ipAddresses, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> firewallPolicies, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             IPAddresses = ipAddresses;

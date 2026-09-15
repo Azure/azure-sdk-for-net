@@ -15,58 +15,58 @@ using Azure.ResourceManager.DataMigration;
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The response of a DatabaseMigrationCosmosDbMongo list operation. </summary>
-    internal partial class DatabaseMigrationCosmosDbMongoListResult : IJsonModel<DatabaseMigrationCosmosDbMongoListResult>
+    internal partial class DatabaseMigrationCosmosDBMongoListResult : IJsonModel<DatabaseMigrationCosmosDBMongoListResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseMigrationCosmosDbMongoListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DatabaseMigrationCosmosDBMongoListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDatabaseMigrationCosmosDbMongoListResult(document.RootElement, options);
+                        return DeserializeDatabaseMigrationCosmosDBMongoListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDbMongoListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDBMongoListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDbMongoListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDBMongoListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationCosmosDbMongoListResult IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DatabaseMigrationCosmosDBMongoListResult IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatabaseMigrationCosmosDbMongoListResult"/> from. </param>
-        internal static DatabaseMigrationCosmosDbMongoListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DatabaseMigrationCosmosDBMongoListResult"/> from. </param>
+        internal static DatabaseMigrationCosmosDBMongoListResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDatabaseMigrationCosmosDbMongoListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeDatabaseMigrationCosmosDBMongoListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatabaseMigrationCosmosDbMongoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabaseMigrationCosmosDBMongoListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,16 +77,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDbMongoListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDBMongoListResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (DatabaseMigrationCosmosDbMongoData item in Value)
+                foreach (DatabaseMigrationCosmosDBMongoData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -116,40 +116,40 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationCosmosDbMongoListResult IJsonModel<DatabaseMigrationCosmosDbMongoListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DatabaseMigrationCosmosDBMongoListResult IJsonModel<DatabaseMigrationCosmosDBMongoListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DatabaseMigrationCosmosDbMongoListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DatabaseMigrationCosmosDBMongoListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDbMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationCosmosDBMongoListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDbMongoListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationCosmosDBMongoListResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDatabaseMigrationCosmosDbMongoListResult(document.RootElement, options);
+            return DeserializeDatabaseMigrationCosmosDBMongoListResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DatabaseMigrationCosmosDbMongoListResult DeserializeDatabaseMigrationCosmosDbMongoListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static DatabaseMigrationCosmosDBMongoListResult DeserializeDatabaseMigrationCosmosDBMongoListResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DatabaseMigrationCosmosDbMongoData> value = default;
+            IReadOnlyList<DatabaseMigrationCosmosDBMongoData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DatabaseMigrationCosmosDbMongoData> array = new List<DatabaseMigrationCosmosDbMongoData>();
+                    List<DatabaseMigrationCosmosDBMongoData> array = new List<DatabaseMigrationCosmosDBMongoData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseMigrationCosmosDbMongoData.DeserializeDatabaseMigrationCosmosDbMongoData(item, options));
+                        array.Add(DatabaseMigrationCosmosDBMongoData.DeserializeDatabaseMigrationCosmosDBMongoData(item, options));
                     }
                     value = array;
                     continue;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DatabaseMigrationCosmosDbMongoListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DatabaseMigrationCosmosDBMongoListResult(value, nextLink, additionalBinaryDataProperties);
         }
     }
 }

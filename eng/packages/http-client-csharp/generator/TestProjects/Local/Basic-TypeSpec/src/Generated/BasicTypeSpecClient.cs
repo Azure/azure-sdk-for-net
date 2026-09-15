@@ -2783,7 +2783,8 @@ namespace BasicTypeSpec
             {
                 using HttpMessage message = CreateReceiveJsonLinesRequest(context);
                 message.BufferResponse = false;
-                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false)));
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(message));
             }
             catch (Exception e)
             {
@@ -2801,7 +2802,8 @@ namespace BasicTypeSpec
         {
             using HttpMessage message = CreateReceiveJsonLinesRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
-            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false)), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(message), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
         }
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
@@ -2825,7 +2827,8 @@ namespace BasicTypeSpec
             {
                 using HttpMessage message = CreateReceiveSseRequest(context);
                 message.BufferResponse = false;
-                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false)), item => item.Data.ToString() == "[DONE]");
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
             }
             catch (Exception e)
             {
@@ -2843,7 +2846,8 @@ namespace BasicTypeSpec
         {
             using HttpMessage message = CreateReceiveSseRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
-            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false)), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(message), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
         }
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 

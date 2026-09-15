@@ -15,56 +15,56 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> IP Extended Community Properties defines the resource properties. </summary>
-    internal partial class IpExtendedCommunityProperties : IJsonModel<IpExtendedCommunityProperties>
+    internal partial class IPExtendedCommunityProperties : IJsonModel<IPExtendedCommunityProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="IpExtendedCommunityProperties"/> for deserialization. </summary>
-        internal IpExtendedCommunityProperties()
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityProperties"/> for deserialization. </summary>
+        internal IPExtendedCommunityProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpExtendedCommunityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IPExtendedCommunityProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeIpExtendedCommunityProperties(document.RootElement, options);
+                        return DeserializeIPExtendedCommunityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IpExtendedCommunityProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPExtendedCommunityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IpExtendedCommunityProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPExtendedCommunityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<IpExtendedCommunityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IPExtendedCommunityProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpExtendedCommunityProperties IPersistableModel<IpExtendedCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IPExtendedCommunityProperties IPersistableModel<IPExtendedCommunityProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<IpExtendedCommunityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IPExtendedCommunityProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<IpExtendedCommunityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IPExtendedCommunityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpExtendedCommunityProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IPExtendedCommunityProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Annotation))
             {
@@ -136,24 +136,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        IpExtendedCommunityProperties IJsonModel<IpExtendedCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IPExtendedCommunityProperties IJsonModel<IPExtendedCommunityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual IpExtendedCommunityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IPExtendedCommunityProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<IpExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IPExtendedCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IpExtendedCommunityProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IPExtendedCommunityProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIpExtendedCommunityProperties(document.RootElement, options);
+            return DeserializeIPExtendedCommunityProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static IpExtendedCommunityProperties DeserializeIpExtendedCommunityProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static IPExtendedCommunityProperties DeserializeIPExtendedCommunityProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new IpExtendedCommunityProperties(
+            return new IPExtendedCommunityProperties(
                 annotation,
                 ipExtendedCommunityRules,
                 networkFabricId,

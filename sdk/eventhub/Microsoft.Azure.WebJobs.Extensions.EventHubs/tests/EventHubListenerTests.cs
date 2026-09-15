@@ -849,5 +849,143 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
             });
             await eventProcessor.ProcessEventsAsync(partitionContext, events);
         }
+
+        /// <summary>
+        /// When BatchCheckpointFrequency > 1 and no new events arrive for longer than the idle
+        /// checkpoint interval, the idle callback should force a checkpoint.
+        /// </summary>
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task TryCheckpointOnIdleAsync_FiresAfterInterval(bool singleDispatch)
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var checkpoints = 0;
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = 5
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>())).Callback(() =>
+            {
+                checkpoints++;
+            }).Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            var loggerMock = new Mock<ILogger>();
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>())).ReturnsAsync(new FunctionResult(true));
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, loggerMock.Object, singleDispatch, default, default);
+
+            // Process 3 batches (less than frequency of 5), so no regular checkpoint occurs.
+            for (int i = 0; i < 3; i++)
+            {
+                List<EventData> events = new List<EventData>() { new EventData(new byte[0]) };
+                await eventProcessor.ProcessEventsAsync(partitionContext, events);
+            }
+
+            Assert.AreEqual(0, checkpoints, "No checkpoint should have occurred yet (3 < frequency 5).");
+
+            await eventProcessor.TryCheckpointOnIdleAsync(partitionContext, CancellationToken.None);
+            Assert.AreEqual(0, checkpoints, "Idle callback before the interval should not checkpoint.");
+
+            // Backdate _lastBatchProcessedTime to simulate the idle interval having passed.
+            // We use reflection since the field is private.
+            var field = typeof(EventHubListener.PartitionProcessor).GetField("_lastBatchProcessedTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.IsNotNull(field, "Expected private field '_lastBatchProcessedTime' not found.");
+            field.SetValue(eventProcessor, DateTimeOffset.UtcNow - EventHubListener.PartitionProcessor.IdleCheckpointInterval - TimeSpan.FromSeconds(1));
+
+            await eventProcessor.TryCheckpointOnIdleAsync(partitionContext, CancellationToken.None);
+            Assert.AreEqual(1, checkpoints, "Idle checkpoint should have fired after the interval elapsed.");
+
+            await eventProcessor.TryCheckpointOnIdleAsync(partitionContext, CancellationToken.None);
+            Assert.AreEqual(1, checkpoints, "Idle checkpoint should not repeat without newly processed events.");
+
+            eventProcessor.Dispose();
+        }
+
+        [Test]
+        public async Task TryCheckpointOnIdleAsync_MinimumBatchPartialDispatch_FiresAfterInterval()
+        {
+            var partitionContext = EventHubTests.GetPartitionContext();
+            var checkpoints = 0;
+            var options = new EventHubOptions
+            {
+                BatchCheckpointFrequency = 5,
+                MinEventBatchSize = 2,
+                MaxWaitTime = TimeSpan.Zero
+            };
+
+            var processor = new Mock<EventProcessorHost>(MockBehavior.Strict);
+            processor.Setup(p => p.CheckpointAsync(partitionContext.PartitionId, It.IsAny<EventData>(), It.IsAny<CancellationToken>()))
+                .Callback(() => checkpoints++)
+                .Returns(Task.CompletedTask);
+            processor.Setup(p => p.GetLastReadCheckpoint(It.IsAny<string>())).Returns(default(CheckpointInfo));
+            partitionContext.ProcessorHost = processor.Object;
+
+            var executor = new Mock<ITriggeredFunctionExecutor>(MockBehavior.Strict);
+            executor.Setup(p => p.TryExecuteAsync(It.IsAny<TriggeredFunctionData>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(new FunctionResult(true));
+            var eventProcessor = new EventHubListener.PartitionProcessor(options, executor.Object, Mock.Of<ILogger>(), false, default, default);
+
+            await eventProcessor.ProcessEventsAsync(
+                partitionContext,
+                new[] { new EventData(new byte[0]) });
+
+            var monitorField = typeof(EventHubListener.PartitionProcessor).GetField("_cachedEventsBackgroundTask", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.IsNotNull(monitorField, "Expected private field '_cachedEventsBackgroundTask' not found.");
+            await (Task)monitorField.GetValue(eventProcessor);
+
+            var field = typeof(EventHubListener.PartitionProcessor).GetField("_lastBatchProcessedTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            Assert.IsNotNull(field, "Expected private field '_lastBatchProcessedTime' not found.");
+            field.SetValue(eventProcessor, DateTimeOffset.UtcNow - EventHubListener.PartitionProcessor.IdleCheckpointInterval - TimeSpan.FromSeconds(1));
+
+            await eventProcessor.TryCheckpointOnIdleAsync(partitionContext, CancellationToken.None);
+
+            Assert.AreEqual(1, checkpoints);
+            eventProcessor.Dispose();
+        }
+
+        [Test]
+        public async Task OnProcessingEventBatchAsync_EmptyBatch_ChecksIdleCheckpoint()
+        {
+            var partition = new EventProcessorHostPartition("0");
+            var eventProcessor = new Mock<IEventProcessor>(MockBehavior.Strict);
+            eventProcessor.Setup(p => p.TryCheckpointOnIdleAsync(partition, It.IsAny<CancellationToken>()))
+                .Returns(Task.CompletedTask);
+            partition.EventProcessor = eventProcessor.Object;
+
+            var processorHost = new TestEventProcessorHost();
+            await processorHost.InvokeOnProcessingEventBatchAsync(Enumerable.Empty<EventData>(), partition, CancellationToken.None);
+
+            eventProcessor.Verify(p => p.TryCheckpointOnIdleAsync(partition, It.IsAny<CancellationToken>()), Times.Once);
+            eventProcessor.Verify(p => p.ProcessEventsAsync(partition, It.IsAny<IEnumerable<EventData>>()), Times.Never);
+        }
+
+        [Test]
+        public async Task OnProcessingEventBatchAsync_NonEmptyBatch_ProcessesEvents()
+        {
+            var partition = new EventProcessorHostPartition("0");
+            var events = new[] { new EventData(new byte[0]) };
+            var eventProcessor = new Mock<IEventProcessor>(MockBehavior.Strict);
+            eventProcessor.Setup(p => p.ProcessEventsAsync(partition, events))
+                .Returns(Task.CompletedTask);
+            partition.EventProcessor = eventProcessor.Object;
+
+            var processorHost = new TestEventProcessorHost();
+            await processorHost.InvokeOnProcessingEventBatchAsync(events, partition, CancellationToken.None);
+
+            eventProcessor.Verify(p => p.ProcessEventsAsync(partition, events), Times.Once);
+            eventProcessor.Verify(p => p.TryCheckpointOnIdleAsync(partition, It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        private class TestEventProcessorHost : EventProcessorHost
+        {
+            public Task InvokeOnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorHostPartition partition, CancellationToken cancellationToken)
+            {
+                return OnProcessingEventBatchAsync(events, partition, cancellationToken);
+            }
+        }
     }
 }

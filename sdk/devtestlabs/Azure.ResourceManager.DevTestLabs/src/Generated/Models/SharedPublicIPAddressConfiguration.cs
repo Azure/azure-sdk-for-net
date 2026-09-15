@@ -12,21 +12,21 @@ using Azure.ResourceManager.DevTestLabs;
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a virtual machine that determine how it is connected to a load balancer. </summary>
-    internal partial class SharedPublicIpAddressConfiguration
+    internal partial class SharedPublicIPAddressConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SharedPublicIpAddressConfiguration"/>. </summary>
-        public SharedPublicIpAddressConfiguration()
+        /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
+        public SharedPublicIPAddressConfiguration()
         {
             InboundNatRules = new ChangeTrackingList<DevTestLabInboundNatRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SharedPublicIpAddressConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SharedPublicIPAddressConfiguration"/>. </summary>
         /// <param name="inboundNatRules"> The incoming NAT rules. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SharedPublicIpAddressConfiguration(IList<DevTestLabInboundNatRule> inboundNatRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SharedPublicIPAddressConfiguration(IList<DevTestLabInboundNatRule> inboundNatRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             InboundNatRules = inboundNatRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
