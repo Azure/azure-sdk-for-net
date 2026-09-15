@@ -126,7 +126,12 @@ namespace Azure.Security.Attestation.Tests
                 ExpiresAt = DateTimeOffset.Now.Subtract(TimeSpan.FromSeconds(5)).ToUnixTimeSeconds(),
             };
 
-            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody));
+            X509Certificate2 fullCertificate = TestEnvironment.PolicyManagementCertificate;
+            AsymmetricAlgorithm privateKey = TestEnvironment.PolicyManagementKey;
+
+            // Signed token: an unsecured token would now fail validation regardless of expiry, so this test
+            // must use a signed token to isolate the time check.
+            var token = new AttestationToken(BinaryData.FromObjectAsJson(tokenBody), new AttestationTokenSigningKey(privateKey, fullCertificate));
             string serializedToken = token.Serialize();
 
             // This check should fail since the token expired 5 seconds ago.
