@@ -25,6 +25,7 @@ import type {
   CodeModelMutator,
   CSharpEmitterContext
 } from "./code-model-types.js";
+import { removeUnusedDecoratorArguments } from "./decorator-sanitizer.js";
 import { ArmProviderSchema } from "./resource-metadata.js";
 
 export type ManagementCodeModelTransformer = (
@@ -69,6 +70,7 @@ export async function emitManagementCodeModel(
     );
     setFlattenProperty(codeModel, sdkContext);
     setHasClientNameOverride(codeModel, sdkContext);
+    removeUnusedDecoratorArguments(codeModel);
     return transform?.(codeModel, sdkContext, armProviderSchema) ?? codeModel;
   }
 }
