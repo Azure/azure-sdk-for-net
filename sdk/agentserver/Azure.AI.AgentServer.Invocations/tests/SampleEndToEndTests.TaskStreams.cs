@@ -371,6 +371,8 @@ public partial class SampleEndToEndTests
             {
                 Store.FailQueueWrites = false;
                 Store.FailSuspensions = false;
+                Store.BeforeDelete = null;
+                Store.BeforePatch = null;
             }
             if (_env is not null)
             {
@@ -457,16 +459,28 @@ public partial class SampleEndToEndTests
         public bool FailQueueWrites { get; set; }
         public int SuspendFailures { get; private set; }
         public int QueueFailures { get; private set; }
+        public Func<CancellationToken, Task>? BeforeDelete { get; set; }
+        public Func<TaskPatchRequest, CancellationToken, Task>? BeforePatch { get; set; }
         public Task<TaskRecord> CreateAsync(TaskCreateRequest request, CancellationToken cancellationToken = default)
             => inner.CreateAsync(request, cancellationToken);
         public Task<TaskRecord?> GetAsync(string taskId, CancellationToken cancellationToken = default)
             => inner.GetAsync(taskId, cancellationToken);
         public Task<TaskListResult> ListAsync(TaskListQuery query, CancellationToken cancellationToken = default)
             => inner.ListAsync(query, cancellationToken);
-        public Task DeleteAsync(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
-            => inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
-        public Task<TaskRecord> PatchAsync(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(string taskId, string? ifMatch = null, bool force = false, bool cascade = false, CancellationToken cancellationToken = default)
         {
+            if (BeforeDelete is { } before)
+            {
+                await before(cancellationToken);
+            }
+            await inner.DeleteAsync(taskId, ifMatch, force, cascade, cancellationToken);
+        }
+        public async Task<TaskRecord> PatchAsync(string taskId, TaskPatchRequest patch, string? ifMatch, CancellationToken cancellationToken = default)
+        {
+            if (BeforePatch is { } before)
+            {
+                await before(patch, cancellationToken);
+            }
             if (FailSuspensions && patch.Status == "suspended")
             {
                 SuspendFailures++;
@@ -477,7 +491,7 @@ public partial class SampleEndToEndTests
                 QueueFailures++;
                 throw new IOException("Injected durable queue write failure.");
             }
-            return inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
+            return await inner.PatchAsync(taskId, patch, ifMatch, cancellationToken);
         }
     }
 }

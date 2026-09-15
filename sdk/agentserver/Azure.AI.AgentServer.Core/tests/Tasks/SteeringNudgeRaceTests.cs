@@ -18,7 +18,7 @@ public sealed class SteeringNudgeRaceTests
     [Test]
     public async Task SteeringNudgeReachesTheCurrentTurnAcrossAHandlerCtsSwap()
     {
-        // Models the HandlerCts replacement race: a steering nudge reads HandlerCts and begins
+        // Models the handler source replacement race: a steering nudge reads the source and begins
         // cancelling it, and a turn transition swaps in a NEW source while that cancel is in flight.
         // The nudge must still signal the source that is now current — otherwise it completes against
         // the superseded source and a blocking handler on the new turn never wakes to drain the
@@ -37,33 +37,40 @@ public sealed class SteeringNudgeRaceTests
         object activeRun = Activator.CreateInstance(
             activeRunType,
             "task-name",
-            runState,
-            (Action<Exception>)(_ => { }))!;
+            runState)!;
 
-        PropertyInfo handlerCts = activeRunType.GetProperty("HandlerCts")!;
+        MethodInfo setCurrent = activeRunType.GetMethod("SetCurrent")!;
         MethodInfo signalSteering = activeRunType.GetMethod("SignalSteeringAsync")!;
 
-        using var oldSource = new CancellationTokenSource();
-        using var currentSource = new CancellationTokenSource();
-        var cancellationEntered = new ManualResetEventSlim(false);
-        var allowCancellationToFinish = new ManualResetEventSlim(false);
+        var nextState = new TaskRunState<string>(
+            "t", "next", isQueued: true, new TaskStreamState(streams, "t", "next"));
+        CancellationTokenSource oldSource = runState.Cancellation.Source;
+        CancellationTokenSource currentSource = nextState.Cancellation.Source;
+        using var cancellationEntered = new ManualResetEventSlim(false);
+        using var allowCancellationToFinish = new ManualResetEventSlim(false);
 
         oldSource.Token.Register(() =>
         {
             cancellationEntered.Set();
-            allowCancellationToFinish.Wait();
+            Assert.That(allowCancellationToFinish.Wait(TimeSpan.FromSeconds(5)), Is.True);
         });
 
-        handlerCts.SetValue(activeRun, oldSource);
         var signalTask = (Task)signalSteering.Invoke(activeRun, null)!;
 
-        // The nudge is now paused inside the OLD source's cancellation callback. Swap in the new
-        // current source, then let the old cancellation finish.
-        Assert.That(cancellationEntered.Wait(TimeSpan.FromSeconds(5)), Is.True);
-        handlerCts.SetValue(activeRun, currentSource);
-        allowCancellationToFinish.Set();
-
-        await signalTask;
+        try
+        {
+            // Swap while the nudge's callback is in flight, just as a real turn transition does.
+            Assert.That(cancellationEntered.Wait(TimeSpan.FromSeconds(5)), Is.True);
+            setCurrent.Invoke(activeRun, new object[] { nextState });
+            runState.Cancellation.Retire();
+        }
+        finally
+        {
+            allowCancellationToFinish.Set();
+            await signalTask.WaitAsync(TimeSpan.FromSeconds(5));
+            runState.Cancellation.Retire();
+            nextState.Cancellation.Retire();
+        }
 
         Assert.That(currentSource.IsCancellationRequested, Is.True,
             "the steering nudge must reach the turn that is now current, not the superseded source");

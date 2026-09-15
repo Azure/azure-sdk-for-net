@@ -45,7 +45,10 @@ public class TaskRun<TOutput>
     /// </summary>
     public virtual Task<TOutput> Completion => State.ResultTask;
 
-    /// <summary>Requests cooperative cancellation of the run.</summary>
+    /// <summary>
+    /// Requests cooperative cancellation of this input, including after a queued input is promoted.
+    /// A completed or retired input is cancellation-inert; this never cancels a successor input.
+    /// </summary>
     /// <returns>A task that completes when cancellation has been requested.</returns>
     public virtual Task RequestCancellationAsync()
         => State.RequestCancellationAsync();

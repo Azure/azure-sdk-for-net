@@ -33,6 +33,19 @@
 
 ### Bugs Fixed
 
+- Multi-turn suspension now coordinates the empty-queue decision and execution
+  retirement with steering admission. Inputs waiting at that boundary are drained
+  or resumed with their own identity instead of being accepted and then erased.
+- Queued input acceptance now advances the last-input precondition atomically with
+  persistence. Active input identity is stored separately for recovery and stream
+  cleanup, and rejected appends cannot be promoted or restored by a stale queue snapshot.
+- Task deletion now coordinates stream closure with confirmed storage deletion and
+  producer unwind. Failed or cancelled deletes preserve recoverable streams without
+  undoing cancellation, including inputs being promoted or removed from the queue.
+- Concurrent first starts within one task engine now coordinate task creation before
+  routing subsequent multi-turn inputs to steering, preserving each input's own handle.
+  Recovery no longer mistakes an unpublished initial start for an abandoned task, and
+  duplicate creation by another engine reports a task-level conflict.
 - Task-bound streams now record their owning task and reject cross-task reuse of an
   explicit input id. File-backed replay persists the ownership beside the stream log so
   isolation is enforced after process restart.

@@ -43,7 +43,7 @@ internal sealed class TaskStreamState
             streamTask = _streamTask ??= CreateStreamAsync();
         }
 
-        AgentEventStream stream = await streamTask.WaitAsync(cancellationToken).ConfigureAwait(false);
+        AgentEventStream stream = await AwaitInitializationAsync(streamTask, cancellationToken).ConfigureAwait(false);
         bool close;
         lock (_gate)
         {
@@ -67,13 +67,56 @@ internal sealed class TaskStreamState
             streamTask = _streamTask;
         }
 
-        if (streamTask is null)
+        AgentEventStream? stream;
+        if (streamTask is not null)
         {
-            return;
+            stream = await AwaitInitializationAsync(streamTask, CancellationToken.None).ConfigureAwait(false);
+        }
+        else if (_registry is ITaskEventStreamRegistry taskRegistry)
+        {
+            stream = await taskRegistry.GetTaskStreamAsync(_taskId, _inputId, CancellationToken.None).ConfigureAwait(false);
+        }
+        else
+        {
+            try
+            {
+                stream = await _registry.GetAsync(_inputId, CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (AgentEventStreamNotFoundException)
+            {
+                return;
+            }
         }
 
-        AgentEventStream stream = await streamTask.ConfigureAwait(false);
-        await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+        if (stream is not null)
+        {
+            await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+        }
+    }
+
+    private async Task<AgentEventStream> AwaitInitializationAsync(
+        Task<AgentEventStream> initialization,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            return await initialization.WaitAsync(cancellationToken).ConfigureAwait(false);
+        }
+        catch
+        {
+            if (initialization.IsFaulted || initialization.IsCanceled)
+            {
+                lock (_gate)
+                {
+                    if (ReferenceEquals(_streamTask, initialization))
+                    {
+                        _streamTask = null;
+                    }
+                }
+            }
+
+            throw;
+        }
     }
 
     private async Task<AgentEventStream> CreateStreamAsync()

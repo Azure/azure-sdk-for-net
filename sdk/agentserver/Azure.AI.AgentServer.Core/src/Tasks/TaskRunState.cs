@@ -26,6 +26,7 @@ internal sealed class TaskRunState<TOutput>
         InputId = inputId;
         IsQueued = isQueued;
         StreamState = stream;
+        Cancel = Cancellation.RequestAsync;
     }
 
     public string TaskId { get; }
@@ -45,13 +46,23 @@ internal sealed class TaskRunState<TOutput>
     /// </summary>
     public int RecoveryCount { get; set; }
 
-    public Func<Task> Cancel { get; set; } = () => Task.CompletedTask;
+    public TaskRunCancellation Cancellation { get; } = new();
+
+    public Func<Task> Cancel { get; set; }
 
     public Task<TOutput> ResultTask => _completion.Task;
 
-    public void SetResult(TOutput result) => _completion.TrySetResult(result);
+    public void SetResult(TOutput result)
+    {
+        Cancellation.Retire();
+        _completion.TrySetResult(result);
+    }
 
-    public void SetException(Exception exception) => _completion.TrySetException(exception);
+    public void SetException(Exception exception)
+    {
+        Cancellation.Retire();
+        _completion.TrySetException(exception);
+    }
 
     public Task RequestCancellationAsync() => Cancel();
 

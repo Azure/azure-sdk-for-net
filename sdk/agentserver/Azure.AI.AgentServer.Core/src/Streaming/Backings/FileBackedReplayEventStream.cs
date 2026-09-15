@@ -38,6 +38,7 @@ internal sealed class FileBackedReplayEventStream :
     private readonly string _ownerPath;
     private FileStream? _lock;
     private FileStream? _data;
+    private long? _rollbackPosition;
     private int _evictionsSinceCompaction;
     private bool _disposed;
     private string? _taskId;
@@ -48,9 +49,23 @@ internal sealed class FileBackedReplayEventStream :
         TimeSpan? ttl,
         Action onDestroy,
         string? taskId = null)
+        : this(id, storageDirectory, ttl, onDestroy, taskId, existingOnly: false)
+    {
+    }
+
+    private FileBackedReplayEventStream(
+        string id,
+        string storageDirectory,
+        TimeSpan? ttl,
+        Action onDestroy,
+        string? taskId,
+        bool existingOnly)
         : base(id, ttl, onDestroy)
     {
-        Directory.CreateDirectory(storageDirectory);
+        if (!existingOnly)
+        {
+            Directory.CreateDirectory(storageDirectory);
+        }
         string stem = ToSafeFileStem(id);
         _filePath = Path.Combine(storageDirectory, stem + ".jsonl");
         _lockPath = Path.Combine(storageDirectory, stem + ".lock");
@@ -59,6 +74,11 @@ internal sealed class FileBackedReplayEventStream :
         AcquireWriterLock();
         try
         {
+            if (existingOnly && !File.Exists(_filePath))
+            {
+                throw new FileNotFoundException("The existing stream backing no longer exists.", _filePath);
+            }
+
             LoadTaskOwner();
             if (taskId is not null)
             {
@@ -73,7 +93,7 @@ internal sealed class FileBackedReplayEventStream :
             // only the redundant open/close syscalls per event are removed. The separate `_lock`
             // file keeps the single-writer guarantee independent of this data handle, so compaction
             // can freely close and reopen it across the atomic replace without releasing exclusivity.
-            _data = OpenAppendHandle();
+            _data = OpenAppendHandle(existingOnly);
         }
         catch
         {
@@ -84,8 +104,46 @@ internal sealed class FileBackedReplayEventStream :
         }
     }
 
-    private FileStream OpenAppendHandle()
-        => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+    private FileStream OpenAppendHandle(bool existingOnly = false)
+    {
+        var stream = new FileStream(
+            _filePath,
+            existingOnly ? FileMode.Open : FileMode.OpenOrCreate,
+            FileAccess.Write,
+            FileShare.Read);
+        try
+        {
+            stream.Seek(0, SeekOrigin.End);
+            return stream;
+        }
+        catch
+        {
+            stream.Dispose();
+            throw;
+        }
+    }
+
+    internal static FileBackedReplayEventStream? OpenExisting(
+        string id,
+        string storageDirectory,
+        TimeSpan? ttl,
+        Action onDestroy,
+        string taskId)
+    {
+        if (!Directory.Exists(storageDirectory))
+        {
+            return null;
+        }
+
+        try
+        {
+            return new FileBackedReplayEventStream(id, storageDirectory, ttl, onDestroy, taskId, existingOnly: true);
+        }
+        catch (FileNotFoundException)
+        {
+            return null;
+        }
+    }
 
     internal static bool Exists(string id, string storageDirectory)
         => File.Exists(Path.Combine(storageDirectory, ToSafeFileStem(id) + ".jsonl"));
@@ -183,8 +241,8 @@ internal sealed class FileBackedReplayEventStream :
 
     protected override void PersistEmitAndClose(SseItem<string> item, double emitTime)
     {
-        // Append the event line and the terminal sentinel in a single write+flush so a crash can
-        // never leave a durable event without its terminal marker (atomic emit-and-close).
+        // Append the event and terminal sentinel under one writer lock and flush before
+        // publication. Recovery must still handle a process stopping during the write.
         var terminalLine = new JsonObject { [TerminalKey] = true };
         AppendLines(EncodeItemLine(item, emitTime), terminalLine.ToJsonString());
     }
@@ -408,6 +466,7 @@ internal sealed class FileBackedReplayEventStream :
         try
         {
             File.Move(tempPath, _filePath, overwrite: true);
+            _rollbackPosition = null;
         }
         finally
         {
@@ -496,8 +555,7 @@ internal sealed class FileBackedReplayEventStream :
                 // Persist-before-fan-out durability: flush the OS buffer to disk so a crash after
                 // emit() returns cannot silently lose an event that a subscriber already observed.
                 // Write through the single long-lived append handle and fsync per event. Multiple
-                // lines are written under a single flush so an emit-and-close pair is an atomic
-                // durable unit.
+                // lines share one write and flush; a failed append is repaired before retry.
                 var sb = new StringBuilder();
                 foreach (string line in lines)
                 {
@@ -517,8 +575,20 @@ internal sealed class FileBackedReplayEventStream :
 
                 FileStream fs = _data
                     ?? throw new AgentEventStreamException($"The write handle for stream '{Id}' is not open.");
+                if (_rollbackPosition is { } position)
+                {
+                    // A failed append may have left bytes on disk. Repair its unacknowledged
+                    // tail under writer ownership before another append can follow it.
+                    fs.SetLength(position);
+                    fs.Position = position;
+                    fs.Flush(flushToDisk: true);
+                    _rollbackPosition = null;
+                }
+
+                _rollbackPosition = fs.Position;
                 fs.Write(bytes, 0, bytes.Length);
                 fs.Flush(flushToDisk: true);
+                _rollbackPosition = null;
             }
             catch (IOException ex)
             {
