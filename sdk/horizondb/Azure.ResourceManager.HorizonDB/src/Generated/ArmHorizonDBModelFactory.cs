@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public static partial class ArmHorizonDBModelFactory
     {
 
-        /// <summary> Represents the HorizonDB cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
-        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HorizonDBClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="administratorLogin"> The administrator login name. </param>
         /// <param name="administratorLoginPassword"> The administrator login password. </param>
         /// <param name="version"> The version of the HorizonDB cluster. </param>
@@ -133,6 +107,32 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBClusterMirroring((databaseNames ?? new ChangeTrackingList<string>()).ToList(), userAssignedIdentityId, default);
         }
 
+        /// <summary> Represents the HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBClusterData"/> instance for mocking. </returns>
+        public static HorizonDBClusterData HorizonDBClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBClusterProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HorizonDBClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> HorizonDB cluster for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -165,6 +165,26 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Properties of a HorizonDB pool. </summary>
+        /// <param name="location"> The location of the HorizonDB pool. </param>
+        /// <param name="state"> Current state of the pool. </param>
+        /// <param name="replicaCount"> Number of replicas in the pool. </param>
+        /// <param name="version"> The version of the HorizonDB pool. </param>
+        /// <param name="createMode"> The create mode for the pool. </param>
+        /// <param name="provisioningState"> The provisioning state of the pool. </param>
+        /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
+        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBPoolCreateMode? createMode = default, HorizonDBProvisioningState? provisioningState = default)
+        {
+            return new HorizonDBPoolProperties(
+                location,
+                state,
+                replicaCount,
+                version,
+                createMode,
+                provisioningState,
+                default);
+        }
+
         /// <summary> Represents the HorizonDB pool. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -187,22 +207,20 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <summary> Properties of a HorizonDB pool. </summary>
-        /// <param name="location"> The location of the HorizonDB pool. </param>
-        /// <param name="state"> Current state of the pool. </param>
-        /// <param name="replicaCount"> Number of replicas in the pool. </param>
-        /// <param name="version"> The version of the HorizonDB pool. </param>
-        /// <param name="createMode"> The create mode for the pool. </param>
-        /// <param name="provisioningState"> The provisioning state of the pool. </param>
-        /// <returns> A new <see cref="Models.HorizonDBPoolProperties"/> instance for mocking. </returns>
-        public static HorizonDBPoolProperties HorizonDBPoolProperties(AzureLocation? location = default, HorizonDBClusterState? state = default, int? replicaCount = default, string version = default, HorizonDBPoolCreateMode? createMode = default, HorizonDBProvisioningState? provisioningState = default)
+        /// <summary> Properties of a HorizonDB replica. </summary>
+        /// <param name="role"> Role of the replica. </param>
+        /// <param name="status"> Current status of the replica. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
+        /// <param name="availabilityZone"> The availability zone of the replica. </param>
+        /// <param name="provisioningState"> The provisioning state of the replica. </param>
+        /// <returns> A new <see cref="Models.HorizonDBReplicaProperties"/> instance for mocking. </returns>
+        public static HorizonDBReplicaProperties HorizonDBReplicaProperties(HorizonDBReplicaRole? role = default, HorizonDBClusterState? status = default, string fullyQualifiedDomainName = default, string availabilityZone = default, HorizonDBProvisioningState? provisioningState = default)
         {
-            return new HorizonDBPoolProperties(
-                location,
-                state,
-                replicaCount,
-                version,
-                createMode,
+            return new HorizonDBReplicaProperties(
+                role,
+                status,
+                fullyQualifiedDomainName,
+                availabilityZone,
                 provisioningState,
                 default);
         }
@@ -225,47 +243,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
-        /// <summary> Properties of a HorizonDB replica. </summary>
-        /// <param name="role"> Role of the replica. </param>
-        /// <param name="status"> Current status of the replica. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the replica. </param>
-        /// <param name="availabilityZone"> The availability zone of the replica. </param>
-        /// <param name="provisioningState"> The provisioning state of the replica. </param>
-        /// <returns> A new <see cref="Models.HorizonDBReplicaProperties"/> instance for mocking. </returns>
-        public static HorizonDBReplicaProperties HorizonDBReplicaProperties(HorizonDBReplicaRole? role = default, HorizonDBClusterState? status = default, string fullyQualifiedDomainName = default, string availabilityZone = default, HorizonDBProvisioningState? provisioningState = default)
-        {
-            return new HorizonDBReplicaProperties(
-                role,
-                status,
-                fullyQualifiedDomainName,
-                availabilityZone,
-                provisioningState,
-                default);
-        }
-
         /// <param name="horizonDBReplicaPropertiesForPatchUpdateRole"> Role of the replica. </param>
         /// <returns> A new <see cref="Models.HorizonDBReplicaPatch"/> instance for mocking. </returns>
         public static HorizonDBReplicaPatch HorizonDBReplicaPatch(HorizonDBReplicaRole? horizonDBReplicaPropertiesForPatchUpdateRole = default)
         {
             return new HorizonDBReplicaPatch(horizonDBReplicaPropertiesForPatchUpdateRole is null ? default : new HorizonDBReplicaPropertiesForPatchUpdate(horizonDBReplicaPropertiesForPatchUpdateRole, default), default);
-        }
-
-        /// <summary> Represents the HorizonDB firewall rule. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBFirewallRuleData"/> instance for mocking. </returns>
-        public static HorizonDBFirewallRuleData HorizonDBFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBFirewallRuleProperties properties = default)
-        {
-            return new HorizonDBFirewallRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Properties of a HorizonDB firewall rule. </summary>
@@ -279,16 +261,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBFirewallRuleProperties(startIPAddress, endIPAddress, description, provisioningState, default);
         }
 
-        /// <summary> A private endpoint connection resource. </summary>
+        /// <summary> Represents the HorizonDB firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The private endpoint connection properties. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HorizonDBPrivateEndpointConnectionData HorizonDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateEndpointConnectionProperties properties = default)
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBFirewallRuleData"/> instance for mocking. </returns>
+        public static HorizonDBFirewallRuleData HorizonDBFirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBFirewallRuleProperties properties = default)
         {
-            return new HorizonDBPrivateEndpointConnectionData(
+            return new HorizonDBFirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -319,16 +301,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
-        /// <summary> Represents the HorizonDB private link resource. </summary>
+        /// <summary> A private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static HorizonDBPrivateLinkResourceData HorizonDBPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateLinkResourceProperties properties = default)
+        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static HorizonDBPrivateEndpointConnectionData HorizonDBPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateEndpointConnectionProperties properties = default)
         {
-            return new HorizonDBPrivateLinkResourceData(
+            return new HorizonDBPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
@@ -350,26 +332,20 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Represents the HorizonDB parameter group. </summary>
+        /// <summary> Represents the HorizonDB private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBParameterGroupData"/> instance for mocking. </returns>
-        public static HorizonDBParameterGroupData HorizonDBParameterGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBParameterGroupProperties properties = default)
+        /// <returns> A new <see cref="HorizonDB.HorizonDBPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static HorizonDBPrivateLinkResourceData HorizonDBPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBPrivateLinkResourceProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HorizonDBParameterGroupData(
+            return new HorizonDBPrivateLinkResourceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 default);
         }
@@ -422,6 +398,30 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 default);
         }
 
+        /// <summary> Represents the HorizonDB parameter group. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBParameterGroupData"/> instance for mocking. </returns>
+        public static HorizonDBParameterGroupData HorizonDBParameterGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HorizonDBParameterGroupProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HorizonDBParameterGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> HorizonDB parameter group for update operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The properties that can be updated for a HorizonDB parameter group. </param>
@@ -455,24 +455,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new HorizonDBParameterGroupConnectionProperties(name, id, @type, default);
         }
 
-        /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HorizonDB.HorizonDBAdministratorData"/> instance for mocking. </returns>
-        public static HorizonDBAdministratorData HorizonDBAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBAdministratorProperties properties = default)
-        {
-            return new HorizonDBAdministratorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of a HorizonDB administrator. </summary>
         /// <param name="principalName"> The display name or UPN of the Entra ID principal. For users, typically the User Principal Name (e.g., admin@contoso.com). For groups, the group display name. For service principals, the application display name. </param>
         /// <param name="principalType"> The type of the Entra ID principal. </param>
@@ -488,6 +470,24 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 objectId,
                 tenantId,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Represents an Entra ID administrator configured on a HorizonDB cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HorizonDB.HorizonDBAdministratorData"/> instance for mocking. </returns>
+        public static HorizonDBAdministratorData HorizonDBAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HorizonDBAdministratorProperties properties = default)
+        {
+            return new HorizonDBAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

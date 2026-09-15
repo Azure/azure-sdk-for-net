@@ -18,30 +18,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
     public static partial class ArmInformaticaDataManagementModelFactory
     {
 
-        /// <summary> An Organization Resource by Informatica. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationData"/> instance for mocking. </returns>
-        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, InformaticaOrganizationProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new InformaticaOrganizationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="informaticaProperties"> Informatica Organization properties. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
@@ -136,6 +112,30 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 domain,
                 business,
                 numberOfEmployees,
+                default);
+        }
+
+        /// <summary> An Organization Resource by Informatica. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaOrganizationData"/> instance for mocking. </returns>
+        public static InformaticaOrganizationData InformaticaOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, InformaticaOrganizationProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new InformaticaOrganizationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
                 default);
         }
 
@@ -418,24 +418,6 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 default);
         }
 
-        /// <summary> A Serverless Runtime environment  resource by Informatica. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
-        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InformaticaServerlessRuntimeProperties properties = default)
-        {
-            return new InformaticaServerlessRuntimeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning State of the resource. </param>
         /// <param name="description"> description of the serverless runtime. </param>
         /// <param name="platform"> Platform type of the Serverless Runtime. </param>
@@ -498,6 +480,24 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
         public static ServerlessRuntimeTag ServerlessRuntimeTag(string name = default, string value = default)
         {
             return new ServerlessRuntimeTag(name, value, default);
+        }
+
+        /// <summary> A Serverless Runtime environment  resource by Informatica. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="InformaticaDataManagement.InformaticaServerlessRuntimeData"/> instance for mocking. </returns>
+        public static InformaticaServerlessRuntimeData InformaticaServerlessRuntimeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, InformaticaServerlessRuntimeProperties properties = default)
+        {
+            return new InformaticaServerlessRuntimeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The template for adding optional properties. </summary>

@@ -18,24 +18,6 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public static partial class ArmImpactReportingModelFactory
     {
 
-        /// <summary> Workload Impact properties. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.WorkloadImpactData"/> instance for mocking. </returns>
-        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadImpactProperties properties = default)
-        {
-            return new WorkloadImpactData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Workload impact properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="startsOn"> Time at which impact was observed . </param>
@@ -146,16 +128,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactClientIncidentDetails(clientIncidentId, clientIncidentSource, default);
         }
 
-        /// <summary> ImpactCategory resource. </summary>
+        /// <summary> Workload Impact properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.ImpactCategoryData"/> instance for mocking. </returns>
-        public static ImpactCategoryData ImpactCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactCategoryProperties properties = default)
+        /// <returns> A new <see cref="ImpactReporting.WorkloadImpactData"/> instance for mocking. </returns>
+        public static WorkloadImpactData WorkloadImpactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadImpactProperties properties = default)
         {
-            return new ImpactCategoryData(
+            return new WorkloadImpactData(
                 id,
                 name,
                 resourceType,
@@ -195,16 +177,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new RequiredImpactProperties(name, (allowedValues ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Insight resource. </summary>
+        /// <summary> ImpactCategory resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.ImpactInsightData"/> instance for mocking. </returns>
-        public static ImpactInsightData ImpactInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactInsightProperties properties = default)
+        /// <returns> A new <see cref="ImpactReporting.ImpactCategoryData"/> instance for mocking. </returns>
+        public static ImpactCategoryData ImpactCategoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactCategoryProperties properties = default)
         {
-            return new ImpactInsightData(
+            return new ImpactCategoryData(
                 id,
                 name,
                 resourceType,
@@ -263,16 +245,16 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactDetails(impactedResourceId, startsOn, endsOn, impactId, default);
         }
 
-        /// <summary> A connector is a resource that can be used to proactively report impacts against workloads in Azure to Microsoft. </summary>
+        /// <summary> Insight resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="ImpactReporting.ImpactConnectorData"/> instance for mocking. </returns>
-        public static ImpactConnectorData ImpactConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactConnectorProperties properties = default)
+        /// <returns> A new <see cref="ImpactReporting.ImpactInsightData"/> instance for mocking. </returns>
+        public static ImpactInsightData ImpactInsightData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactInsightProperties properties = default)
         {
-            return new ImpactConnectorData(
+            return new ImpactInsightData(
                 id,
                 name,
                 resourceType,
@@ -296,6 +278,24 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 tenantId,
                 connectorType,
                 lastRanOn,
+                default);
+        }
+
+        /// <summary> A connector is a resource that can be used to proactively report impacts against workloads in Azure to Microsoft. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="ImpactReporting.ImpactConnectorData"/> instance for mocking. </returns>
+        public static ImpactConnectorData ImpactConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ImpactConnectorProperties properties = default)
+        {
+            return new ImpactConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

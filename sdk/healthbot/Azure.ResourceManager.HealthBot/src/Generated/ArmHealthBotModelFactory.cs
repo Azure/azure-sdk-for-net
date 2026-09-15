@@ -19,6 +19,28 @@ namespace Azure.ResourceManager.HealthBot.Models
     public static partial class ArmHealthBotModelFactory
     {
 
+        /// <summary> The properties of a Azure Health Bot. The Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. </summary>
+        /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
+        /// <param name="botManagementPortalLink"> The link. </param>
+        /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
+        /// <param name="accessControlMethod"> The access control method for the Azure Health Bot resource. </param>
+        /// <returns> A new <see cref="Models.HealthBotProperties"/> instance for mocking. </returns>
+        public static HealthBotProperties HealthBotProperties(string provisioningState = default, Uri botManagementPortalLink = default, HealthBotKeyVaultProperties keyVaultProperties = default, string accessControlMethod = default)
+        {
+            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, default);
+        }
+
+        /// <summary> Properties of the key vault. </summary>
+        /// <param name="keyName"> The name of the key vault key. </param>
+        /// <param name="keyVersion"> The version of the key vault key. </param>
+        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
+        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
+        /// <returns> A new <see cref="Models.HealthBotKeyVaultProperties"/> instance for mocking. </returns>
+        public static HealthBotKeyVaultProperties HealthBotKeyVaultProperties(string keyName = default, string keyVersion = default, Uri keyVaultUri = default, string userIdentity = default)
+        {
+            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,28 +66,6 @@ namespace Azure.ResourceManager.HealthBot.Models
                 new HealthBotSku(skuName, default),
                 identity,
                 default);
-        }
-
-        /// <summary> The properties of a Azure Health Bot. The Health Bot Service is a cloud platform that empowers developers in Healthcare organizations to build and deploy their compliant, AI-powered virtual health assistants and health bots, that help them improve processes and reduce costs. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Azure Health Bot resource. </param>
-        /// <param name="botManagementPortalLink"> The link. </param>
-        /// <param name="keyVaultProperties"> KeyVault properties for the resource encryption. </param>
-        /// <param name="accessControlMethod"> The access control method for the Azure Health Bot resource. </param>
-        /// <returns> A new <see cref="Models.HealthBotProperties"/> instance for mocking. </returns>
-        public static HealthBotProperties HealthBotProperties(string provisioningState = default, Uri botManagementPortalLink = default, HealthBotKeyVaultProperties keyVaultProperties = default, string accessControlMethod = default)
-        {
-            return new HealthBotProperties(provisioningState, botManagementPortalLink, keyVaultProperties, accessControlMethod, default);
-        }
-
-        /// <summary> Properties of the key vault. </summary>
-        /// <param name="keyName"> The name of the key vault key. </param>
-        /// <param name="keyVersion"> The version of the key vault key. </param>
-        /// <param name="keyVaultUri"> The Uri of the key vault. </param>
-        /// <param name="userIdentity"> The user assigned identity (ARM resource id) that has access to the key. </param>
-        /// <returns> A new <see cref="Models.HealthBotKeyVaultProperties"/> instance for mocking. </returns>
-        public static HealthBotKeyVaultProperties HealthBotKeyVaultProperties(string keyName = default, string keyVersion = default, Uri keyVaultUri = default, string userIdentity = default)
-        {
-            return new HealthBotKeyVaultProperties(keyName, keyVersion, keyVaultUri, userIdentity, default);
         }
 
         /// <summary> The resource model definition representing SKU. </summary>

@@ -19,6 +19,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
     public static partial class ArmHybridConnectivityModelFactory
     {
 
+        /// <summary> Endpoint details. </summary>
+        /// <param name="endpointType"> The type of endpoint. </param>
+        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <returns> A new <see cref="Models.HybridConnectivityEndpointProperties"/> instance for mocking. </returns>
+        public static HybridConnectivityEndpointProperties HybridConnectivityEndpointProperties(HybridConnectivityEndpointType endpointType = default, ResourceIdentifier resourceId = default, string provisioningState = default)
+        {
+            return new HybridConnectivityEndpointProperties(endpointType, resourceId, provisioningState, default);
+        }
+
         /// <summary> The endpoint for the target resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -35,16 +45,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Endpoint details. </summary>
-        /// <param name="endpointType"> The type of endpoint. </param>
-        /// <param name="resourceId"> The resource Id of the connectivity endpoint (optional). </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <returns> A new <see cref="Models.HybridConnectivityEndpointProperties"/> instance for mocking. </returns>
-        public static HybridConnectivityEndpointProperties HybridConnectivityEndpointProperties(HybridConnectivityEndpointType endpointType = default, ResourceIdentifier resourceId = default, string provisioningState = default)
-        {
-            return new HybridConnectivityEndpointProperties(endpointType, resourceId, provisioningState, default);
         }
 
         /// <summary> The details of the service for which credentials needs to be returned. </summary>
@@ -187,6 +187,29 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new GenerateAwsTemplateResult(default);
         }
 
+        /// <summary> Properties of public cloud connectors. </summary>
+        /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
+        /// <param name="hostType"> Host cloud the public cloud connector. </param>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
+        /// <returns> A new <see cref="Models.PublicCloudConnectorProperties"/> instance for mocking. </returns>
+        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = default, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = default, string connectorPrimaryIdentifier = default)
+        {
+            return new PublicCloudConnectorProperties(awsCloudProfile, hostType, provisioningState, connectorPrimaryIdentifier, default);
+        }
+
+        /// <summary> cloud profile for AWS. </summary>
+        /// <param name="accountId"> Account id for the AWS account. </param>
+        /// <param name="excludedAccounts"> List of AWS accounts which need to be excluded. </param>
+        /// <param name="isOrganizationalAccount"> Boolean value that indicates whether the account is organizational or not. True represents organization account, whereas false represents a single account. </param>
+        /// <returns> A new <see cref="Models.AwsCloudProfile"/> instance for mocking. </returns>
+        public static AwsCloudProfile AwsCloudProfile(string accountId = default, IEnumerable<string> excludedAccounts = default, bool? isOrganizationalAccount = default)
+        {
+            excludedAccounts ??= new ChangeTrackingList<string>();
+
+            return new AwsCloudProfile(accountId, (excludedAccounts ?? new ChangeTrackingList<string>()).ToList(), isOrganizationalAccount, default);
+        }
+
         /// <summary> Public Cloud Connector. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -209,29 +232,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties of public cloud connectors. </summary>
-        /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
-        /// <param name="hostType"> Host cloud the public cloud connector. </param>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
-        /// <returns> A new <see cref="Models.PublicCloudConnectorProperties"/> instance for mocking. </returns>
-        public static PublicCloudConnectorProperties PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile = default, PublicCloudHostType hostType = default, PublicCloudResourceProvisioningState? provisioningState = default, string connectorPrimaryIdentifier = default)
-        {
-            return new PublicCloudConnectorProperties(awsCloudProfile, hostType, provisioningState, connectorPrimaryIdentifier, default);
-        }
-
-        /// <summary> cloud profile for AWS. </summary>
-        /// <param name="accountId"> Account id for the AWS account. </param>
-        /// <param name="excludedAccounts"> List of AWS accounts which need to be excluded. </param>
-        /// <param name="isOrganizationalAccount"> Boolean value that indicates whether the account is organizational or not. True represents organization account, whereas false represents a single account. </param>
-        /// <returns> A new <see cref="Models.AwsCloudProfile"/> instance for mocking. </returns>
-        public static AwsCloudProfile AwsCloudProfile(string accountId = default, IEnumerable<string> excludedAccounts = default, bool? isOrganizationalAccount = default)
-        {
-            excludedAccounts ??= new ChangeTrackingList<string>();
-
-            return new AwsCloudProfile(accountId, (excludedAccounts ?? new ChangeTrackingList<string>()).ToList(), isOrganizationalAccount, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -275,24 +275,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 default);
         }
 
-        /// <summary> Solution Configuration. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorSolutionConfigurationData"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionConfigurationData PublicCloudConnectorSolutionConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudConnectorSolutionConfigurationProperties properties = default)
-        {
-            return new PublicCloudConnectorSolutionConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Solution configuration resource. </summary>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="solutionType"> The type of the solution. </param>
@@ -310,6 +292,24 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 status,
                 statusDetails,
                 lastSyncedOn,
+                default);
+        }
+
+        /// <summary> Solution Configuration. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorSolutionConfigurationData"/> instance for mocking. </returns>
+        public static PublicCloudConnectorSolutionConfigurationData PublicCloudConnectorSolutionConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudConnectorSolutionConfigurationProperties properties = default)
+        {
+            return new PublicCloudConnectorSolutionConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -340,24 +340,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             return new SolutionConfigurationPropertiesUpdate(solutionType, solutionSettings, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HybridConnectivity.PublicCloudInventoryData"/> instance for mocking. </returns>
-        public static PublicCloudInventoryData PublicCloudInventoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudInventoryProperties properties = default)
-        {
-            return new PublicCloudInventoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Definition of inventory. </summary>
         /// <param name="cloudNativeType"> Gets or sets the cloud native resource type. </param>
         /// <param name="cloudNativeResourceId"> Gets or sets the cloud native resource name. </param>
@@ -384,10 +366,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorSolutionTypeData"/> instance for mocking. </returns>
-        public static PublicCloudConnectorSolutionTypeData PublicCloudConnectorSolutionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudConnectorSolutionTypeProperties properties = default)
+        /// <returns> A new <see cref="HybridConnectivity.PublicCloudInventoryData"/> instance for mocking. </returns>
+        public static PublicCloudInventoryData PublicCloudInventoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudInventoryProperties properties = default)
         {
-            return new PublicCloudConnectorSolutionTypeData(
+            return new PublicCloudInventoryData(
                 id,
                 name,
                 resourceType,
@@ -429,6 +411,24 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 description,
                 (allowedValues ?? new ChangeTrackingList<string>()).ToList(),
                 defaultValue,
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="HybridConnectivity.PublicCloudConnectorSolutionTypeData"/> instance for mocking. </returns>
+        public static PublicCloudConnectorSolutionTypeData PublicCloudConnectorSolutionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PublicCloudConnectorSolutionTypeProperties properties = default)
+        {
+            return new PublicCloudConnectorSolutionTypeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

@@ -13,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.IotHub.Models;
 
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary>
-    /// A class representing a IotHubPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubPrivateEndpointConnections method.
+    /// A class representing a IotHubPrivateEndpointConnection1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="IotHubPrivateEndpointConnection1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="IotHubDescriptionResource"/> using the GetIotHubPrivateEndpointConnection1s method.
     /// </summary>
-    public partial class IotHubPrivateEndpointConnectionResource : ArmResource
+    public partial class IotHubPrivateEndpointConnection1Resource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -29,28 +30,28 @@ namespace Azure.ResourceManager.IotHub
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Devices/iotHubs/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnectionResource for mocking. </summary>
-        protected IotHubPrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of IotHubPrivateEndpointConnection1Resource for mocking. </summary>
+        protected IotHubPrivateEndpointConnection1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnection1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal IotHubPrivateEndpointConnectionResource(ArmClient client, IotHubPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal IotHubPrivateEndpointConnection1Resource(ArmClient client, IotHubPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnection1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal IotHubPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal IotHubPrivateEndpointConnection1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string iotHubPrivateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string iotHubPrivateEndpointConnection1ApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotHub", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubPrivateEndpointConnectionApiVersion ?? "2026-05-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotHubPrivateEndpointConnection1ApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IotHubPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IotHubPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotHubPrivateEndpointConnection1Data>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Get");
             scope.Start();
             try
             {
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.IotHub
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<IotHubPrivateEndpointConnectionData> response = Response.FromValue(IotHubPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<IotHubPrivateEndpointConnection1Data> response = Response.FromValue(IotHubPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IotHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IotHubPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IotHubPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<IotHubPrivateEndpointConnection1Data> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Get");
             scope.Start();
             try
             {
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.IotHub
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<IotHubPrivateEndpointConnectionData> response = Response.FromValue(IotHubPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<IotHubPrivateEndpointConnection1Data> response = Response.FromValue(IotHubPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new IotHubPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -188,7 +189,105 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update a IotHubPrivateEndpointConnection.
+        /// Delete private endpoint connection with the specified name
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                IotHubArmOperation operation = new IotHubArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete private endpoint connection with the specified name
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/iotHubs/{resourceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                IotHubArmOperation operation = new IotHubArmOperation(_privateEndpointConnectionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a IotHubPrivateEndpointConnection1.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,7 +303,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IotHubPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -212,11 +311,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The private endpoint connection with updated properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IotHubPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IotHubPrivateEndpointConnection1Data>> UpdateAsync(WaitUntil waitUntil, IotHubPrivateEndpointConnection1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Update");
             scope.Start();
             try
             {
@@ -224,10 +323,10 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnection1Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
+                IotHubArmOperation<IotHubPrivateEndpointConnection1Data> operation = new IotHubArmOperation<IotHubPrivateEndpointConnection1Data>(
+                    new IotHubPrivateEndpointConnection1DataOperationSource(),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -247,7 +346,7 @@ namespace Azure.ResourceManager.IotHub
         }
 
         /// <summary>
-        /// Update a IotHubPrivateEndpointConnection.
+        /// Update a IotHubPrivateEndpointConnection1.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -263,7 +362,7 @@ namespace Azure.ResourceManager.IotHub
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="IotHubPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="IotHubPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,11 +370,11 @@ namespace Azure.ResourceManager.IotHub
         /// <param name="data"> The private endpoint connection with updated properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IotHubPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, IotHubPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IotHubPrivateEndpointConnection1Data> Update(WaitUntil waitUntil, IotHubPrivateEndpointConnection1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("IotHubPrivateEndpointConnection1Resource.Update");
             scope.Start();
             try
             {
@@ -283,10 +382,10 @@ namespace Azure.ResourceManager.IotHub
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotHubPrivateEndpointConnection1Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                IotHubArmOperation<IotHubPrivateEndpointConnectionResource> operation = new IotHubArmOperation<IotHubPrivateEndpointConnectionResource>(
-                    new IotHubPrivateEndpointConnectionResourceOperationSource(Client),
+                IotHubArmOperation<IotHubPrivateEndpointConnection1Data> operation = new IotHubArmOperation<IotHubPrivateEndpointConnection1Data>(
+                    new IotHubPrivateEndpointConnection1DataOperationSource(),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

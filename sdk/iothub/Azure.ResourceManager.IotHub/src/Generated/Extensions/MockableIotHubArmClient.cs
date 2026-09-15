@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.IotHub.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="IotHubPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="IotHubPrivateEndpointConnection1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotHubPrivateEndpointConnection1Resource"/> object. </returns>
+        public virtual IotHubPrivateEndpointConnection1Resource GetIotHubPrivateEndpointConnection1Resource(ResourceIdentifier id)
         {
-            IotHubPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new IotHubPrivateEndpointConnectionResource(Client, id);
+            IotHubPrivateEndpointConnection1Resource.ValidateResourceId(id);
+            return new IotHubPrivateEndpointConnection1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="IotHubDescriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

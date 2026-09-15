@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.IotHub
 {
     /// <summary></summary>
-    public partial class IotHubPrivateEndpointConnectionResource : IJsonModel<IotHubPrivateEndpointConnectionData>
+    public partial class IotHubPrivateEndpointConnection1Resource : IJsonModel<IotHubPrivateEndpointConnectionData>
     {
         private static IJsonModel<IotHubPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

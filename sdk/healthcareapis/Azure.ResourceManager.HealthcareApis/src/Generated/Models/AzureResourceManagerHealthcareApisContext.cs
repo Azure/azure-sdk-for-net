@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.HealthcareApis
     [ModelReaderWriterBuildable(typeof(HealthcareApisIotMappingProperties))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisNameAvailabilityContent))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisNameAvailabilityResult))]
+    [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateEndpointConnection1Data))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateLinkResourceData))]
     [ModelReaderWriterBuildable(typeof(HealthcareApisPrivateLinkResourceProperties))]
