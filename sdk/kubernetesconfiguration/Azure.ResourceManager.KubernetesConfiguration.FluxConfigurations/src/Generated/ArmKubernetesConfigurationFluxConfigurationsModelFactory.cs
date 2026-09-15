@@ -17,62 +17,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationFluxConfigurationsModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="scope"> Scope at which the operator will be installed. </param>
-        /// <param name="namespace"> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </param>
-        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
-        /// <param name="isSuspended"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
-        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
-        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
-        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
-        /// <param name="ociRepository"> Parameters to reconcile to the OCIRepository source kind type. </param>
-        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
-        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
-        /// <param name="statuses"> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </param>
-        /// <param name="repositoryPublicKey"> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </param>
-        /// <param name="sourceSyncedCommitId"> Branch and/or SHA of the source commit synced with the cluster. </param>
-        /// <param name="sourceUpdatedOn"> Datetime the fluxConfiguration synced its source on the cluster. </param>
-        /// <param name="statusUpdatedOn"> Datetime the fluxConfiguration synced its status on the cluster with Azure. </param>
-        /// <param name="isWaitForReconciliation"> Whether flux configuration deployment should wait for cluster to reconcile the kustomizations. </param>
-        /// <param name="reconciliationWaitDuration"> Maximum duration to wait for flux configuration reconciliation. E.g PT1H, PT5M, P1D. </param>
-        /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
-        /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
-        /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
-        /// <returns> A new <see cref="FluxConfigurations.FluxConfigurationData"/> instance for mocking. </returns>
-        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, FluxConfigurationsKustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
-        {
-            return new FluxConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scope is null && @namespace is null && sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null && statuses is null && repositoryPublicKey is null && sourceSyncedCommitId is null && sourceUpdatedOn is null && statusUpdatedOn is null && isWaitForReconciliation is null && reconciliationWaitDuration is null && complianceState is null && provisioningState is null && errorMessage is null ? default : new FluxConfigurationProperties(
-                    scope,
-                    @namespace,
-                    sourceKind,
-                    isSuspended,
-                    gitRepository,
-                    bucket,
-                    azureBlob,
-                    ociRepository,
-                    kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>(),
-                    configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
-                    (statuses ?? new ChangeTrackingList<FluxObjectStatus>()).ToList(),
-                    repositoryPublicKey,
-                    sourceSyncedCommitId,
-                    sourceUpdatedOn,
-                    statusUpdatedOn,
-                    isWaitForReconciliation,
-                    reconciliationWaitDuration,
-                    complianceState,
-                    provisioningState,
-                    errorMessage,
-                    default),
-                default);
-        }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
         /// <param name="uri"> The URL to sync for the flux configuration git repository. </param>
@@ -377,6 +321,63 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 failureCount,
                 installFailureCount,
                 upgradeFailureCount,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="scope"> Scope at which the operator will be installed. </param>
+        /// <param name="namespace"> The namespace to which this configuration is installed to. Maximum of 253 lower case alphanumeric characters, hyphen and period only. </param>
+        /// <param name="sourceKind"> Source Kind to pull the configuration data from. </param>
+        /// <param name="isSuspended"> Whether this configuration should suspend its reconciliation of its kustomizations and sources. </param>
+        /// <param name="gitRepository"> Parameters to reconcile to the GitRepository source kind type. </param>
+        /// <param name="bucket"> Parameters to reconcile to the Bucket source kind type. </param>
+        /// <param name="azureBlob"> Parameters to reconcile to the AzureBlob source kind type. </param>
+        /// <param name="ociRepository"> Parameters to reconcile to the OCIRepository source kind type. </param>
+        /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
+        /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
+        /// <param name="statuses"> Statuses of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects provisioned by the fluxConfiguration. </param>
+        /// <param name="repositoryPublicKey"> Public Key associated with this fluxConfiguration (either generated within the cluster or provided by the user). </param>
+        /// <param name="sourceSyncedCommitId"> Branch and/or SHA of the source commit synced with the cluster. </param>
+        /// <param name="sourceUpdatedOn"> Datetime the fluxConfiguration synced its source on the cluster. </param>
+        /// <param name="statusUpdatedOn"> Datetime the fluxConfiguration synced its status on the cluster with Azure. </param>
+        /// <param name="isWaitForReconciliation"> Whether flux configuration deployment should wait for cluster to reconcile the kustomizations. </param>
+        /// <param name="reconciliationWaitDuration"> Maximum duration to wait for flux configuration reconciliation. E.g PT1H, PT5M, P1D. </param>
+        /// <param name="complianceState"> Combined status of the Flux Kubernetes resources created by the fluxConfiguration or created by the managed objects. </param>
+        /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
+        /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
+        /// <returns> A new <see cref="FluxConfigurations.FluxConfigurationData"/> instance for mocking. </returns>
+        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, FluxConfigurationsKustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
+        {
+            return new FluxConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scope is null && @namespace is null && sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null && statuses is null && repositoryPublicKey is null && sourceSyncedCommitId is null && sourceUpdatedOn is null && statusUpdatedOn is null && isWaitForReconciliation is null && reconciliationWaitDuration is null && complianceState is null && provisioningState is null && errorMessage is null ? default : new FluxConfigurationProperties(
+                    scope,
+                    @namespace,
+                    sourceKind,
+                    isSuspended,
+                    gitRepository,
+                    bucket,
+                    azureBlob,
+                    ociRepository,
+                    kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>(),
+                    configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
+                    (statuses ?? new ChangeTrackingList<FluxObjectStatus>()).ToList(),
+                    repositoryPublicKey,
+                    sourceSyncedCommitId,
+                    sourceUpdatedOn,
+                    statusUpdatedOn,
+                    isWaitForReconciliation,
+                    reconciliationWaitDuration,
+                    complianceState,
+                    provisioningState,
+                    errorMessage,
+                    default),
                 default);
         }
 

@@ -19,34 +19,6 @@ namespace Azure.ResourceManager.IotOperations.Models
     public static partial class ArmIotOperationsModelFactory
     {
 
-        /// <summary> A Instance resource is a logical container for a set of child resources. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
-        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new IotOperationsInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                identity,
-                default);
-        }
-
         /// <param name="description"> Detailed description of the Instance. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="version"> The Azure IoT Operations version. </param>
@@ -91,6 +63,34 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsInstanceFeature(mode, settings ?? new ChangeTrackingDictionary<string, IotOperationsOperationalMode>(), default);
         }
 
+        /// <summary> A Instance resource is a logical container for a set of child resources. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Edge location of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="IotOperations.IotOperationsInstanceData"/> instance for mocking. </returns>
+        public static IotOperationsInstanceData IotOperationsInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IotOperationsInstanceProperties properties = default, IotOperationsExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IotOperationsInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                identity,
+                default);
+        }
+
         /// <summary> Extended location is an extension of Azure locations. They provide a way to use their Azure ARC enabled Kubernetes clusters as target locations for deploying Azure services instances. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> Type of ExtendedLocation. </param>
@@ -109,26 +109,6 @@ namespace Azure.ResourceManager.IotOperations.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new IotOperationsInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
-        }
-
-        /// <summary> Instance broker resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerData"/> instance for mocking. </returns>
-        public static IotOperationsBrokerData IotOperationsBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
-        {
-            return new IotOperationsBrokerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <param name="advanced"> Advanced settings of Broker. </param>
@@ -543,10 +523,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerListenerData"/> instance for mocking. </returns>
-        public static IotOperationsBrokerListenerData IotOperationsBrokerListenerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerListenerProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerData"/> instance for mocking. </returns>
+        public static IotOperationsBrokerData IotOperationsBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsBrokerListenerData(
+            return new IotOperationsBrokerData(
                 id,
                 name,
                 resourceType,
@@ -647,17 +627,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new SanForCert((dns ?? new ChangeTrackingList<string>()).ToList(), (ip ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Instance broker authentication resource. </summary>
+        /// <summary> Instance broker resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerAuthenticationData"/> instance for mocking. </returns>
-        public static IotOperationsBrokerAuthenticationData IotOperationsBrokerAuthenticationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerAuthenticationProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerListenerData"/> instance for mocking. </returns>
+        public static IotOperationsBrokerListenerData IotOperationsBrokerListenerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerListenerProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsBrokerAuthenticationData(
+            return new IotOperationsBrokerListenerData(
                 id,
                 name,
                 resourceType,
@@ -724,17 +704,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthenticatorMethodX509Attributes(attributes ?? new ChangeTrackingDictionary<string, string>(), subject, default);
         }
 
-        /// <summary> Instance broker authorizations resource. </summary>
+        /// <summary> Instance broker authentication resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerAuthorizationData"/> instance for mocking. </returns>
-        public static IotOperationsBrokerAuthorizationData IotOperationsBrokerAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerAuthorizationProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerAuthenticationData"/> instance for mocking. </returns>
+        public static IotOperationsBrokerAuthenticationData IotOperationsBrokerAuthenticationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerAuthenticationProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsBrokerAuthorizationData(
+            return new IotOperationsBrokerAuthenticationData(
                 id,
                 name,
                 resourceType,
@@ -817,17 +797,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new StateStoreResourceRule(keyType, (keys ?? new ChangeTrackingList<string>()).ToList(), @method, default);
         }
 
-        /// <summary> Instance dataflowProfile resource. </summary>
+        /// <summary> Instance broker authorizations resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowProfileData"/> instance for mocking. </returns>
-        public static IotOperationsDataflowProfileData IotOperationsDataflowProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowProfileProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsBrokerAuthorizationData"/> instance for mocking. </returns>
+        public static IotOperationsBrokerAuthorizationData IotOperationsBrokerAuthorizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsBrokerAuthorizationProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsDataflowProfileData(
+            return new IotOperationsBrokerAuthorizationData(
                 id,
                 name,
                 resourceType,
@@ -862,17 +842,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowProfileDiagnostics(logsLevel is null ? default : new DiagnosticsLogs(logsLevel, default), metricsPrometheusPort is null ? default : new IotOperationsMetrics(metricsPrometheusPort, default), default);
         }
 
-        /// <summary> Instance dataflowProfile dataflow resource. </summary>
+        /// <summary> Instance dataflowProfile resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowData"/> instance for mocking. </returns>
-        public static IotOperationsDataflowData IotOperationsDataflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowProfileData"/> instance for mocking. </returns>
+        public static IotOperationsDataflowProfileData IotOperationsDataflowProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowProfileProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsDataflowData(
+            return new IotOperationsDataflowProfileData(
                 id,
                 name,
                 resourceType,
@@ -1065,17 +1045,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowDestinationAddOrReplaceHeaderAction(default, default, key, value);
         }
 
-        /// <summary> Instance dataflowEndpoint resource. </summary>
+        /// <summary> Instance dataflowProfile dataflow resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowEndpointData"/> instance for mocking. </returns>
-        public static IotOperationsDataflowEndpointData IotOperationsDataflowEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowEndpointProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowData"/> instance for mocking. </returns>
+        public static IotOperationsDataflowData IotOperationsDataflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsDataflowEndpointData(
+            return new IotOperationsDataflowData(
                 id,
                 name,
                 resourceType,
@@ -1390,10 +1370,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowGraphData"/> instance for mocking. </returns>
-        public static IotOperationsDataflowGraphData IotOperationsDataflowGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowGraphProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowEndpointData"/> instance for mocking. </returns>
+        public static IotOperationsDataflowEndpointData IotOperationsDataflowEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowEndpointProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsDataflowGraphData(
+            return new IotOperationsDataflowEndpointData(
                 id,
                 name,
                 resourceType,
@@ -1575,17 +1555,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphConnectionSchemaSettings(serializationFormat, schemaRef, default);
         }
 
-        /// <summary> RegistryEndpoint resource. </summary>
+        /// <summary> Instance dataflowEndpoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsRegistryEndpointData"/> instance for mocking. </returns>
-        public static IotOperationsRegistryEndpointData IotOperationsRegistryEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsRegistryEndpointProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsDataflowGraphData"/> instance for mocking. </returns>
+        public static IotOperationsDataflowGraphData IotOperationsDataflowGraphData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsDataflowGraphProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsRegistryEndpointData(
+            return new IotOperationsDataflowGraphData(
                 id,
                 name,
                 resourceType,
@@ -1701,17 +1681,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointTrustedSigningKeyConfigMap(default, default, configMapRef);
         }
 
-        /// <summary> AkriConnectorTemplate resource. </summary>
+        /// <summary> RegistryEndpoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorTemplateData"/> instance for mocking. </returns>
-        public static IotOperationsAkriConnectorTemplateData IotOperationsAkriConnectorTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsAkriConnectorTemplateProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsRegistryEndpointData"/> instance for mocking. </returns>
+        public static IotOperationsRegistryEndpointData IotOperationsRegistryEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsRegistryEndpointProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsAkriConnectorTemplateData(
+            return new IotOperationsRegistryEndpointData(
                 id,
                 name,
                 resourceType,
@@ -2075,17 +2055,17 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsServiceAccountAuthentication(default, default, serviceAccountTokenAudience is null ? default : new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience, default));
         }
 
-        /// <summary> AkriConnector resource. </summary>
+        /// <summary> AkriConnectorTemplate resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> Edge location of the resource. </param>
-        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorData"/> instance for mocking. </returns>
-        public static IotOperationsAkriConnectorData IotOperationsAkriConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsAkriConnectorProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorTemplateData"/> instance for mocking. </returns>
+        public static IotOperationsAkriConnectorTemplateData IotOperationsAkriConnectorTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsAkriConnectorTemplateProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
         {
-            return new IotOperationsAkriConnectorData(
+            return new IotOperationsAkriConnectorTemplateData(
                 id,
                 name,
                 resourceType,
@@ -2116,6 +2096,34 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorAllocatedDevice(deviceInboundEndpointName, deviceName, default);
         }
 
+        /// <summary> AkriConnector resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> Edge location of the resource. </param>
+        /// <returns> A new <see cref="IotOperations.IotOperationsAkriConnectorData"/> instance for mocking. </returns>
+        public static IotOperationsAkriConnectorData IotOperationsAkriConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotOperationsAkriConnectorProperties properties = default, IotOperationsExtendedLocation extendedLocation = default)
+        {
+            return new IotOperationsAkriConnectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="statusHealthState"> The health state of the AkriService. </param>
+        /// <returns> A new <see cref="Models.AkriServiceProperties"/> instance for mocking. </returns>
+        public static AkriServiceProperties AkriServiceProperties(IotOperationsProvisioningState? provisioningState = default, IotOperationsResourceHealthStatus statusHealthState = default)
+        {
+            return new AkriServiceProperties(provisioningState, statusHealthState is null ? default : new AkriServiceStatus(statusHealthState, default), default);
+        }
+
         /// <summary> AkriService resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -2134,14 +2142,6 @@ namespace Azure.ResourceManager.IotOperations.Models
                 properties,
                 extendedLocation,
                 default);
-        }
-
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="statusHealthState"> The health state of the AkriService. </param>
-        /// <returns> A new <see cref="Models.AkriServiceProperties"/> instance for mocking. </returns>
-        public static AkriServiceProperties AkriServiceProperties(IotOperationsProvisioningState? provisioningState = default, IotOperationsResourceHealthStatus statusHealthState = default)
-        {
-            return new AkriServiceProperties(provisioningState, statusHealthState is null ? default : new AkriServiceStatus(statusHealthState, default), default);
         }
 
         /// <summary> Broker Resource properties. </summary>

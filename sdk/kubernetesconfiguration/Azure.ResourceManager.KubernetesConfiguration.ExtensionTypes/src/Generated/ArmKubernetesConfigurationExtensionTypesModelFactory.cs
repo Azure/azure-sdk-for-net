@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesConfigurationExtensionTypesModelFactory
     {
-        /// <summary> The Extension Type object. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationExtensionTypeData KubernetesConfigurationExtensionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeProperties properties = default)
-        {
-            return new KubernetesConfigurationExtensionTypeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The KubernetesConfigurationExtensionTypeProperties. </summary>
         /// <param name="isSystemExtension"> Is this Extension Type a system extension. </param>
         /// <param name="isManagedIdentityRequired"> Should an identity for this cluster resource be created. </param>
@@ -96,16 +78,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
                 default);
         }
 
-        /// <summary> The Extension Type Version object. </summary>
+        /// <summary> The Extension Type object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeVersionForReleaseTrainData"/> instance for mocking. </returns>
-        public static KubernetesConfigurationExtensionTypeVersionForReleaseTrainData KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties properties = default)
+        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeData KubernetesConfigurationExtensionTypeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeProperties properties = default)
         {
-            return new KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(
+            return new KubernetesConfigurationExtensionTypeData(
                 id,
                 name,
                 resourceType,
@@ -152,6 +134,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
             unsupportedVersions ??= new ChangeTrackingList<string>();
 
             return new KubernetesConfigurationExtensionTypeVersionUnsupportedKubernetesMatrixItem((distributions ?? new ChangeTrackingList<string>()).ToList(), (unsupportedVersions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> The Extension Type Version object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="ExtensionTypes.KubernetesConfigurationExtensionTypeVersionForReleaseTrainData"/> instance for mocking. </returns>
+        public static KubernetesConfigurationExtensionTypeVersionForReleaseTrainData KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KubernetesConfigurationExtensionTypeVersionForReleaseTrainProperties properties = default)
+        {
+            return new KubernetesConfigurationExtensionTypeVersionForReleaseTrainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
     }
 }
