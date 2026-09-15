@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public static partial class ArmDatabaseWatcherModelFactory
     {
 
-        /// <summary> The DatabaseWatcherProviderHub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherData"/> instance for mocking. </returns>
-        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabaseWatcherProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DatabaseWatcherData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> The RP specific properties of the resource. </summary>
         /// <param name="datastore"> The data store for collected monitoring data. </param>
         /// <param name="status"> The monitoring collection status of the watcher. </param>
@@ -77,6 +51,32 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 default);
         }
 
+        /// <summary> The DatabaseWatcherProviderHub resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherData"/> instance for mocking. </returns>
+        public static DatabaseWatcherData DatabaseWatcherData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabaseWatcherProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatabaseWatcherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the Watcher. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -96,24 +96,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public static DatabaseWatcherUpdateProperties DatabaseWatcherUpdateProperties(DatabaseWatcherDatastore datastore = default, ResourceIdentifier defaultAlertRuleIdentityResourceId = default)
         {
             return new DatabaseWatcherUpdateProperties(datastore, defaultAlertRuleIdentityResourceId, default);
-        }
-
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/> instance for mocking. </returns>
-        public static DatabaseWatcherAlertRuleData DatabaseWatcherAlertRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherAlertRuleProperties properties = default)
-        {
-            return new DatabaseWatcherAlertRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> The generic properties of the alert rule proxy resource. </summary>
@@ -142,10 +124,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherHealthValidationProperties properties = default)
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherAlertRuleData"/> instance for mocking. </returns>
+        public static DatabaseWatcherAlertRuleData DatabaseWatcherAlertRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherAlertRuleProperties properties = default)
         {
-            return new DatabaseWatcherHealthValidationData(
+            return new DatabaseWatcherAlertRuleData(
                 id,
                 name,
                 resourceType,
@@ -202,10 +184,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherTargetData"/> instance for mocking. </returns>
-        public static DatabaseWatcherTargetData DatabaseWatcherTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherTargetProperties properties = default)
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherHealthValidationData"/> instance for mocking. </returns>
+        public static DatabaseWatcherHealthValidationData DatabaseWatcherHealthValidationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherHealthValidationProperties properties = default)
         {
-            return new DatabaseWatcherTargetData(
+            return new DatabaseWatcherHealthValidationData(
                 id,
                 name,
                 resourceType,
@@ -318,10 +300,10 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DatabaseWatcherSharedPrivateLinkResourceData DatabaseWatcherSharedPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherSharedPrivateLinkResourceProperties properties = default)
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherTargetData"/> instance for mocking. </returns>
+        public static DatabaseWatcherTargetData DatabaseWatcherTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherTargetProperties properties = default)
         {
-            return new DatabaseWatcherSharedPrivateLinkResourceData(
+            return new DatabaseWatcherTargetData(
                 id,
                 name,
                 resourceType,
@@ -347,6 +329,24 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 dnsZone,
                 status,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DatabaseWatcher.DatabaseWatcherSharedPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static DatabaseWatcherSharedPrivateLinkResourceData DatabaseWatcherSharedPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatabaseWatcherSharedPrivateLinkResourceProperties properties = default)
+        {
+            return new DatabaseWatcherSharedPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

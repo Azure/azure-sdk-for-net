@@ -20,22 +20,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDataBoxEdgeModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="networkAdapters"> The network adapter list on the device. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceNetworkSettingsData DataBoxEdgeDeviceNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DataBoxEdgeNetworkAdapter> networkAdapters = default)
-        {
-            return new DataBoxEdgeDeviceNetworkSettingsData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                networkAdapters is null ? default : new NetworkSettingsProperties((networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>()).ToList(), default),
-                default);
-        }
 
         /// <summary> Represents the networkAdapter on a device. </summary>
         /// <param name="adapterId"> Instance ID of network adapter. </param>
@@ -104,6 +88,53 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeIPv6Config DataBoxEdgeIPv6Config(string ipAddress = default, int? prefixLength = default, string gateway = default)
         {
             return new DataBoxEdgeIPv6Config(ipAddress, prefixLength, gateway, default);
+        }
+
+        /// <summary> Fields for tracking resource move. </summary>
+        /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
+        /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeResourceMoveDetails"/> instance for mocking. </returns>
+        public static DataBoxEdgeResourceMoveDetails DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress = default, DateTimeOffset? operationInProgressLockTimeoutInUtc = default)
+        {
+            return new DataBoxEdgeResourceMoveDetails(operationInProgress, operationInProgressLockTimeoutInUtc, default);
+        }
+
+        /// <param name="registrationId"> Edge Subscription Registration ID. </param>
+        /// <param name="id"> ARM ID of the subscription. </param>
+        /// <param name="state"></param>
+        /// <param name="registrationDate"></param>
+        /// <param name="subscriptionId"></param>
+        /// <param name="tenantId"> Gets the TenantId. </param>
+        /// <param name="locationPlacementId"> Gets the LocationPlacementId. </param>
+        /// <param name="quotaId"> Gets the QuotaId. </param>
+        /// <param name="serializedDetails"> Gets the SerializedDetails. </param>
+        /// <param name="registeredFeatures"> Gets the RegisteredFeatures. </param>
+        /// <returns> A new <see cref="Models.EdgeProfileSubscription"/> instance for mocking. </returns>
+        public static EdgeProfileSubscription EdgeProfileSubscription(Guid? registrationId = default, ResourceIdentifier id = default, DataBoxEdgeSubscriptionState? state = default, string registrationDate = default, string subscriptionId = default, Guid? tenantId = default, string locationPlacementId = default, string quotaId = default, string serializedDetails = default, IEnumerable<SubscriptionRegisteredFeatures> registeredFeatures = default)
+        {
+            return new EdgeProfileSubscription(
+                registrationId,
+                id,
+                state,
+                registrationDate,
+                subscriptionId,
+                tenantId is null && locationPlacementId is null && quotaId is null && serializedDetails is null && registeredFeatures is null ? default : new SubscriptionProperties(
+                    tenantId,
+                    locationPlacementId,
+                    quotaId,
+                    serializedDetails,
+                    (registeredFeatures ?? new ChangeTrackingList<SubscriptionRegisteredFeatures>()).ToList(),
+                    default),
+                default);
+        }
+
+        /// <summary> The SubscriptionRegisteredFeatures. </summary>
+        /// <param name="name"></param>
+        /// <param name="state"></param>
+        /// <returns> A new <see cref="Models.SubscriptionRegisteredFeatures"/> instance for mocking. </returns>
+        public static SubscriptionRegisteredFeatures SubscriptionRegisteredFeatures(string name = default, string state = default)
+        {
+            return new SubscriptionRegisteredFeatures(name, state, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -175,53 +206,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Fields for tracking resource move. </summary>
-        /// <param name="operationInProgress"> Denotes whether move operation is in progress. </param>
-        /// <param name="operationInProgressLockTimeoutInUtc"> Denotes the timeout of the operation to finish. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeResourceMoveDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeResourceMoveDetails DataBoxEdgeResourceMoveDetails(DataBoxEdgeResourceMoveStatus? operationInProgress = default, DateTimeOffset? operationInProgressLockTimeoutInUtc = default)
-        {
-            return new DataBoxEdgeResourceMoveDetails(operationInProgress, operationInProgressLockTimeoutInUtc, default);
-        }
-
-        /// <param name="registrationId"> Edge Subscription Registration ID. </param>
-        /// <param name="id"> ARM ID of the subscription. </param>
-        /// <param name="state"></param>
-        /// <param name="registrationDate"></param>
-        /// <param name="subscriptionId"></param>
-        /// <param name="tenantId"> Gets the TenantId. </param>
-        /// <param name="locationPlacementId"> Gets the LocationPlacementId. </param>
-        /// <param name="quotaId"> Gets the QuotaId. </param>
-        /// <param name="serializedDetails"> Gets the SerializedDetails. </param>
-        /// <param name="registeredFeatures"> Gets the RegisteredFeatures. </param>
-        /// <returns> A new <see cref="Models.EdgeProfileSubscription"/> instance for mocking. </returns>
-        public static EdgeProfileSubscription EdgeProfileSubscription(Guid? registrationId = default, ResourceIdentifier id = default, DataBoxEdgeSubscriptionState? state = default, string registrationDate = default, string subscriptionId = default, Guid? tenantId = default, string locationPlacementId = default, string quotaId = default, string serializedDetails = default, IEnumerable<SubscriptionRegisteredFeatures> registeredFeatures = default)
-        {
-            return new EdgeProfileSubscription(
-                registrationId,
-                id,
-                state,
-                registrationDate,
-                subscriptionId,
-                tenantId is null && locationPlacementId is null && quotaId is null && serializedDetails is null && registeredFeatures is null ? default : new SubscriptionProperties(
-                    tenantId,
-                    locationPlacementId,
-                    quotaId,
-                    serializedDetails,
-                    (registeredFeatures ?? new ChangeTrackingList<SubscriptionRegisteredFeatures>()).ToList(),
-                    default),
-                default);
-        }
-
-        /// <summary> The SubscriptionRegisteredFeatures. </summary>
-        /// <param name="name"></param>
-        /// <param name="state"></param>
-        /// <returns> A new <see cref="Models.SubscriptionRegisteredFeatures"/> instance for mocking. </returns>
-        public static SubscriptionRegisteredFeatures SubscriptionRegisteredFeatures(string name = default, string state = default)
-        {
-            return new SubscriptionRegisteredFeatures(name, state, default);
-        }
-
         /// <summary> The SKU type. </summary>
         /// <param name="name"> SKU name. </param>
         /// <param name="tier"> The SKU tier. This is based on the SKU name. </param>
@@ -229,6 +213,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeSku DataBoxEdgeSku(DataBoxEdgeSkuName? name = default, DataBoxEdgeSkuTier? tier = default)
         {
             return new DataBoxEdgeSku(name, tier, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="networkAdapters"> The network adapter list on the device. </param>
+        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceNetworkSettingsData"/> instance for mocking. </returns>
+        public static DataBoxEdgeDeviceNetworkSettingsData DataBoxEdgeDeviceNetworkSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DataBoxEdgeNetworkAdapter> networkAdapters = default)
+        {
+            return new DataBoxEdgeDeviceNetworkSettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                networkAdapters is null ? default : new NetworkSettingsProperties((networkAdapters ?? new ChangeTrackingList<DataBoxEdgeNetworkAdapter>()).ToList(), default),
+                default);
         }
 
         /// <param name="tags"> The tags attached to the Data Box Edge/Gateway resource. </param>
@@ -392,6 +393,32 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
+        /// <summary> Update Specific attributes. </summary>
+        /// <param name="updateTitle"> Title of the Update. </param>
+        /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
+        /// <param name="updateType"> Type of the Update. </param>
+        /// <param name="targetVersion"> Target Version number. </param>
+        /// <param name="friendlyVersionNumber"> Friendly Version Number. </param>
+        /// <param name="estimatedInstallTimeInMins"> Estimated Install Time for the update. </param>
+        /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
+        /// <param name="installationImpact"> Impact of Installing an updateType. </param>
+        /// <param name="status"> Status of the update. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeUpdateDetails"/> instance for mocking. </returns>
+        public static DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle = default, double? updateSizeInBytes = default, DataBoxEdgeUpdateType? updateType = default, string targetVersion = default, string friendlyVersionNumber = default, int? estimatedInstallTimeInMins = default, InstallRebootBehavior? rebootBehavior = default, InstallationImpact? installationImpact = default, DataBoxEdgeUpdateStatus? status = default)
+        {
+            return new DataBoxEdgeUpdateDetails(
+                updateTitle,
+                updateSizeInBytes,
+                updateType,
+                targetVersion,
+                friendlyVersionNumber,
+                estimatedInstallTimeInMins,
+                rebootBehavior,
+                installationImpact,
+                status,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -459,30 +486,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Update Specific attributes. </summary>
-        /// <param name="updateTitle"> Title of the Update. </param>
-        /// <param name="updateSizeInBytes"> Size of the update(In Bytes). </param>
-        /// <param name="updateType"> Type of the Update. </param>
-        /// <param name="targetVersion"> Target Version number. </param>
-        /// <param name="friendlyVersionNumber"> Friendly Version Number. </param>
-        /// <param name="estimatedInstallTimeInMins"> Estimated Install Time for the update. </param>
-        /// <param name="rebootBehavior"> Indicates if updates are available and at least one of the updates needs a reboot. </param>
-        /// <param name="installationImpact"> Impact of Installing an updateType. </param>
-        /// <param name="status"> Status of the update. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeUpdateDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeUpdateDetails DataBoxEdgeUpdateDetails(string updateTitle = default, double? updateSizeInBytes = default, DataBoxEdgeUpdateType? updateType = default, string targetVersion = default, string friendlyVersionNumber = default, int? estimatedInstallTimeInMins = default, InstallRebootBehavior? rebootBehavior = default, InstallationImpact? installationImpact = default, DataBoxEdgeUpdateStatus? status = default)
+        /// <summary> Error details for the alert. </summary>
+        /// <param name="errorCode"> Error code. </param>
+        /// <param name="errorMessage"> Error Message. </param>
+        /// <param name="occurrences"> Number of occurrences. </param>
+        /// <returns> A new <see cref="Models.DataBoxEdgeAlertErrorDetails"/> instance for mocking. </returns>
+        public static DataBoxEdgeAlertErrorDetails DataBoxEdgeAlertErrorDetails(string errorCode = default, string errorMessage = default, int? occurrences = default)
         {
-            return new DataBoxEdgeUpdateDetails(
-                updateTitle,
-                updateSizeInBytes,
-                updateType,
-                targetVersion,
-                friendlyVersionNumber,
-                estimatedInstallTimeInMins,
-                rebootBehavior,
-                installationImpact,
-                status,
-                default);
+            return new DataBoxEdgeAlertErrorDetails(errorCode, errorMessage, occurrences, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -516,14 +527,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Error details for the alert. </summary>
-        /// <param name="errorCode"> Error code. </param>
-        /// <param name="errorMessage"> Error Message. </param>
-        /// <param name="occurrences"> Number of occurrences. </param>
-        /// <returns> A new <see cref="Models.DataBoxEdgeAlertErrorDetails"/> instance for mocking. </returns>
-        public static DataBoxEdgeAlertErrorDetails DataBoxEdgeAlertErrorDetails(string errorCode = default, string errorMessage = default, int? occurrences = default)
+        /// <summary> RemoteApplicationType for which remote support settings is being modified. </summary>
+        /// <param name="remoteApplicationType"> Remote application type. </param>
+        /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
+        /// <param name="expireOn"> Expiration time stamp. </param>
+        /// <returns> A new <see cref="Models.EdgeRemoteSupportSettings"/> instance for mocking. </returns>
+        public static EdgeRemoteSupportSettings EdgeRemoteSupportSettings(EdgeRemoteApplicationType? remoteApplicationType = default, EdgeRemoteApplicationAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default)
         {
-            return new DataBoxEdgeAlertErrorDetails(errorCode, errorMessage, occurrences, default);
+            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expireOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -543,14 +554,34 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> RemoteApplicationType for which remote support settings is being modified. </summary>
-        /// <param name="remoteApplicationType"> Remote application type. </param>
-        /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
-        /// <param name="expireOn"> Expiration time stamp. </param>
-        /// <returns> A new <see cref="Models.EdgeRemoteSupportSettings"/> instance for mocking. </returns>
-        public static EdgeRemoteSupportSettings EdgeRemoteSupportSettings(EdgeRemoteApplicationType? remoteApplicationType = default, EdgeRemoteApplicationAccessLevel? accessLevel = default, DateTimeOffset? expireOn = default)
+        /// <summary> Details about the download progress of update. </summary>
+        /// <param name="downloadPhase"> The download phase. </param>
+        /// <param name="percentComplete"> Percentage of completion. </param>
+        /// <param name="totalBytesToDownload"> Total bytes to download. </param>
+        /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
+        /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
+        /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
+        /// <returns> A new <see cref="Models.UpdateDownloadProgress"/> instance for mocking. </returns>
+        public static UpdateDownloadProgress UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase = default, int? percentComplete = default, double? totalBytesToDownload = default, double? totalBytesDownloaded = default, int? numberOfUpdatesToDownload = default, int? numberOfUpdatesDownloaded = default)
         {
-            return new EdgeRemoteSupportSettings(remoteApplicationType, accessLevel, expireOn, default);
+            return new UpdateDownloadProgress(
+                downloadPhase,
+                percentComplete,
+                totalBytesToDownload,
+                totalBytesDownloaded,
+                numberOfUpdatesToDownload,
+                numberOfUpdatesDownloaded,
+                default);
+        }
+
+        /// <summary> Progress details during installation of updates. </summary>
+        /// <param name="percentComplete"> Percentage completed. </param>
+        /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
+        /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
+        /// <returns> A new <see cref="Models.UpdateInstallProgress"/> instance for mocking. </returns>
+        public static UpdateInstallProgress UpdateInstallProgress(int? percentComplete = default, int? numberOfUpdatesToInstall = default, int? numberOfUpdatesInstalled = default)
+        {
+            return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -596,36 +627,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <summary> Details about the download progress of update. </summary>
-        /// <param name="downloadPhase"> The download phase. </param>
-        /// <param name="percentComplete"> Percentage of completion. </param>
-        /// <param name="totalBytesToDownload"> Total bytes to download. </param>
-        /// <param name="totalBytesDownloaded"> Total bytes downloaded. </param>
-        /// <param name="numberOfUpdatesToDownload"> Number of updates to download. </param>
-        /// <param name="numberOfUpdatesDownloaded"> Number of updates downloaded. </param>
-        /// <returns> A new <see cref="Models.UpdateDownloadProgress"/> instance for mocking. </returns>
-        public static UpdateDownloadProgress UpdateDownloadProgress(DataBoxEdgeDownloadPhase? downloadPhase = default, int? percentComplete = default, double? totalBytesToDownload = default, double? totalBytesDownloaded = default, int? numberOfUpdatesToDownload = default, int? numberOfUpdatesDownloaded = default)
-        {
-            return new UpdateDownloadProgress(
-                downloadPhase,
-                percentComplete,
-                totalBytesToDownload,
-                totalBytesDownloaded,
-                numberOfUpdatesToDownload,
-                numberOfUpdatesDownloaded,
-                default);
-        }
-
-        /// <summary> Progress details during installation of updates. </summary>
-        /// <param name="percentComplete"> Percentage completed. </param>
-        /// <param name="numberOfUpdatesToInstall"> Number of updates to install. </param>
-        /// <param name="numberOfUpdatesInstalled"> Number of updates installed. </param>
-        /// <returns> A new <see cref="Models.UpdateInstallProgress"/> instance for mocking. </returns>
-        public static UpdateInstallProgress UpdateInstallProgress(int? percentComplete = default, int? numberOfUpdatesToInstall = default, int? numberOfUpdatesInstalled = default)
-        {
-            return new UpdateInstallProgress(percentComplete, numberOfUpdatesToInstall, numberOfUpdatesInstalled, default);
-        }
-
         /// <summary> The job error information containing the list of job errors. </summary>
         /// <param name="errorDetails"> The error details. </param>
         /// <param name="code"> The code intended for programmatic access. </param>
@@ -648,43 +649,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             recommendations ??= new ChangeTrackingList<string>();
 
             return new DataBoxEdgeJobErrorItem((recommendations ?? new ChangeTrackingList<string>()).ToList(), code, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="orderId"> It specify the order resource id. </param>
-        /// <param name="contactInformation"> The contact details. </param>
-        /// <param name="shippingAddress"> The shipping address. </param>
-        /// <param name="currentStatus"> Current status of the order. </param>
-        /// <param name="orderHistory"> List of status changes in the order. </param>
-        /// <param name="serialNumber"> Serial number of the device. </param>
-        /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
-        /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
-        /// <param name="shipmentType"> ShipmentType of the order. </param>
-        /// <param name="kind"> It specify the order api version. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeOrderData"/> instance for mocking. </returns>
-        public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string orderId = default, DataBoxEdgeContactDetails contactInformation = default, DataBoxEdgeShippingAddress shippingAddress = default, DataBoxEdgeOrderStatus currentStatus = default, IEnumerable<DataBoxEdgeOrderStatus> orderHistory = default, string serialNumber = default, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo = default, DataBoxEdgeShipmentType? shipmentType = default, string kind = default)
-        {
-            return new DataBoxEdgeOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                orderId is null && contactInformation is null && shippingAddress is null && currentStatus is null && orderHistory is null && serialNumber is null && deliveryTrackingInfo is null && returnTrackingInfo is null && shipmentType is null ? default : new OrderProperties(
-                    orderId,
-                    contactInformation,
-                    shippingAddress,
-                    currentStatus,
-                    (orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>()).ToList(),
-                    serialNumber,
-                    (deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
-                    (returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
-                    shipmentType,
-                    default),
-                kind,
-                default);
         }
 
         /// <summary> Contains all the contact details of the customer. </summary>
@@ -754,6 +718,43 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeTrackingInfo DataBoxEdgeTrackingInfo(string serialNumber = default, string carrierName = default, string trackingId = default, Uri trackingUri = default)
         {
             return new DataBoxEdgeTrackingInfo(serialNumber, carrierName, trackingId, trackingUri, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="orderId"> It specify the order resource id. </param>
+        /// <param name="contactInformation"> The contact details. </param>
+        /// <param name="shippingAddress"> The shipping address. </param>
+        /// <param name="currentStatus"> Current status of the order. </param>
+        /// <param name="orderHistory"> List of status changes in the order. </param>
+        /// <param name="serialNumber"> Serial number of the device. </param>
+        /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
+        /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
+        /// <param name="shipmentType"> ShipmentType of the order. </param>
+        /// <param name="kind"> It specify the order api version. </param>
+        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeOrderData"/> instance for mocking. </returns>
+        public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string orderId = default, DataBoxEdgeContactDetails contactInformation = default, DataBoxEdgeShippingAddress shippingAddress = default, DataBoxEdgeOrderStatus currentStatus = default, IEnumerable<DataBoxEdgeOrderStatus> orderHistory = default, string serialNumber = default, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo = default, DataBoxEdgeShipmentType? shipmentType = default, string kind = default)
+        {
+            return new DataBoxEdgeOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                orderId is null && contactInformation is null && shippingAddress is null && currentStatus is null && orderHistory is null && serialNumber is null && deliveryTrackingInfo is null && returnTrackingInfo is null && shipmentType is null ? default : new OrderProperties(
+                    orderId,
+                    contactInformation,
+                    shippingAddress,
+                    currentStatus,
+                    (orderHistory ?? new ChangeTrackingList<DataBoxEdgeOrderStatus>()).ToList(),
+                    serialNumber,
+                    (deliveryTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
+                    (returnTrackingInfo ?? new ChangeTrackingList<DataBoxEdgeTrackingInfo>()).ToList(),
+                    shipmentType,
+                    default),
+                kind,
+                default);
         }
 
         /// <param name="authCode"> DCAccess Code for the Self Managed shipment. </param>
@@ -1323,26 +1324,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="timeStamp"> Timestamp of request in UTC. </param>
-        /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
-        /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
-        /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
-        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData"/> instance for mocking. </returns>
-        public static DataBoxEdgeDeviceCapacityInfoData DataBoxEdgeDeviceCapacityInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeStamp = default, EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default, IDictionary<string, HostCapacity> nodeCapacityInfos = default)
-        {
-            return new DataBoxEdgeDeviceCapacityInfoData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                timeStamp is null && clusterStorageCapacityInfo is null && clusterComputeCapacityInfo is null && nodeCapacityInfos is null ? default : new DeviceCapacityInfoProperties(timeStamp, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), default),
-                default);
-        }
-
         /// <summary> Cluster Storage Data. </summary>
         /// <param name="clusterTotalStorageInMB"> Total storage on the cluster in MB. </param>
         /// <param name="clusterFreeStorageInMB"> The available or free storage on the cluster in MB. </param>
@@ -1476,16 +1457,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metricConfigurations"> The metrics configuration details. </param>
-        /// <returns> A new <see cref="DataBoxEdge.MonitoringMetricConfigurationData"/> instance for mocking. </returns>
-        public static MonitoringMetricConfigurationData MonitoringMetricConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations = default)
+        /// <param name="timeStamp"> Timestamp of request in UTC. </param>
+        /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
+        /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
+        /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
+        /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceCapacityInfoData"/> instance for mocking. </returns>
+        public static DataBoxEdgeDeviceCapacityInfoData DataBoxEdgeDeviceCapacityInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? timeStamp = default, EdgeClusterStorageViewInfo clusterStorageCapacityInfo = default, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo = default, IDictionary<string, HostCapacity> nodeCapacityInfos = default)
         {
-            return new MonitoringMetricConfigurationData(
+            return new DataBoxEdgeDeviceCapacityInfoData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                metricConfigurations is null ? default : new MonitoringMetricConfigurationProperties((metricConfigurations ?? new ChangeTrackingList<DataBoxEdgeMetricConfiguration>()).ToList(), default),
+                timeStamp is null && clusterStorageCapacityInfo is null && clusterComputeCapacityInfo is null && nodeCapacityInfos is null ? default : new DeviceCapacityInfoProperties(timeStamp, clusterStorageCapacityInfo, clusterComputeCapacityInfo, nodeCapacityInfos ?? new ChangeTrackingDictionary<string, HostCapacity>(), default),
                 default);
         }
 
@@ -1533,6 +1517,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public static DataBoxEdgeMetricDimension DataBoxEdgeMetricDimension(string sourceType = default, string sourceName = default)
         {
             return new DataBoxEdgeMetricDimension(sourceType, sourceName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="metricConfigurations"> The metrics configuration details. </param>
+        /// <returns> A new <see cref="DataBoxEdge.MonitoringMetricConfigurationData"/> instance for mocking. </returns>
+        public static MonitoringMetricConfigurationData MonitoringMetricConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DataBoxEdgeMetricConfiguration> metricConfigurations = default)
+        {
+            return new MonitoringMetricConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metricConfigurations is null ? default : new MonitoringMetricConfigurationProperties((metricConfigurations ?? new ChangeTrackingList<DataBoxEdgeMetricConfiguration>()).ToList(), default),
+                default);
         }
 
         /// <summary> The Sku information. </summary>

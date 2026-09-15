@@ -19,26 +19,6 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
     public static partial class ArmContainerServiceSafeguardsModelFactory
     {
 
-        /// <summary> Deployment Safeguards. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="ContainerServiceSafeguards.DeploymentSafeguardData"/> instance for mocking. </returns>
-        public static DeploymentSafeguardData DeploymentSafeguardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentSafeguardsProperties properties = default, ETag? eTag = default)
-        {
-            return new DeploymentSafeguardData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                default);
-        }
-
         /// <summary> DeploymentSafeguards Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="level"> The deployment safeguards level. Possible values are Warn and Enforce. </param>
@@ -57,6 +37,26 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Models
                 (excludedNamespaces ?? new ChangeTrackingList<string>()).ToList(),
                 (systemExcludedNamespaces ?? new ChangeTrackingList<string>()).ToList(),
                 podSecurityStandardsLevel,
+                default);
+        }
+
+        /// <summary> Deployment Safeguards. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceSafeguards.DeploymentSafeguardData"/> instance for mocking. </returns>
+        public static DeploymentSafeguardData DeploymentSafeguardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeploymentSafeguardsProperties properties = default, ETag? eTag = default)
+        {
+            return new DeploymentSafeguardData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
                 default);
         }
     }

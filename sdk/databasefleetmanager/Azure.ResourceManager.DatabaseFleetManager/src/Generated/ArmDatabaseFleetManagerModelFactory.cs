@@ -18,24 +18,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
     public static partial class ArmDatabaseFleetManagerModelFactory
     {
 
-        /// <summary> A fleet database. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Fleet database properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetDatabaseData"/> instance for mocking. </returns>
-        public static FleetDatabaseData FleetDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetDatabaseProperties properties = default)
-        {
-            return new FleetDatabaseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Fleet database properties. </summary>
         /// <param name="originalDatabaseId"> Resource identifier for the underlying database resource. </param>
         /// <param name="provisioningState"> Database state. </param>
@@ -112,40 +94,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseFleetManagerTransparentDataEncryption(keyUri, (keys ?? new ChangeTrackingList<string>()).ToList(), enableAutoRotation, default);
         }
 
-        /// <summary> A database change tier definition. </summary>
-        /// <param name="targetTierName"> A target tier name. </param>
-        /// <returns> A new <see cref="Models.DatabaseChangeTierContent"/> instance for mocking. </returns>
-        public static DatabaseChangeTierContent DatabaseChangeTierContent(string targetTierName = default)
-        {
-            return new DatabaseChangeTierContent(targetTierName, default);
-        }
-
-        /// <summary> A database rename definition. </summary>
-        /// <param name="newName"> New database name. </param>
-        /// <returns> A new <see cref="Models.DatabaseRenameContent"/> instance for mocking. </returns>
-        public static DatabaseRenameContent DatabaseRenameContent(string newName = default)
-        {
-            return new DatabaseRenameContent(newName, default);
-        }
-
-        /// <summary> A fleetspace. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A Fleetspace properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetspaceData"/> instance for mocking. </returns>
-        public static DatabaseFleetspaceData DatabaseFleetspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetspaceProperties properties = default)
-        {
-            return new DatabaseFleetspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> A Fleetspace properties. </summary>
         /// <param name="provisioningState"> Fleetspace state. </param>
         /// <param name="capacityMax"> Maximum number of vCores database fleet manager is allowed to provision in the fleetspace. </param>
@@ -172,6 +120,91 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 tenantId,
                 principalType,
                 default);
+        }
+
+        /// <summary> The Database Fleet properties. </summary>
+        /// <param name="description"> Fleet description. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <returns> A new <see cref="Models.FleetProperties"/> instance for mocking. </returns>
+        public static FleetProperties FleetProperties(string description = default, AzureProvisioningState? provisioningState = default)
+        {
+            return new FleetProperties(description, provisioningState, default);
+        }
+
+        /// <summary> A Database Fleet. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The fleet properties. </param>
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetData"/> instance for mocking. </returns>
+        public static DatabaseFleetData DatabaseFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatabaseFleetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> A fleetspace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A Fleetspace properties. </param>
+        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetspaceData"/> instance for mocking. </returns>
+        public static DatabaseFleetspaceData DatabaseFleetspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetspaceProperties properties = default)
+        {
+            return new DatabaseFleetspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> A fleet database. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Fleet database properties. </param>
+        /// <returns> A new <see cref="DatabaseFleetManager.FleetDatabaseData"/> instance for mocking. </returns>
+        public static FleetDatabaseData FleetDatabaseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetDatabaseProperties properties = default)
+        {
+            return new FleetDatabaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> A database change tier definition. </summary>
+        /// <param name="targetTierName"> A target tier name. </param>
+        /// <returns> A new <see cref="Models.DatabaseChangeTierContent"/> instance for mocking. </returns>
+        public static DatabaseChangeTierContent DatabaseChangeTierContent(string targetTierName = default)
+        {
+            return new DatabaseChangeTierContent(targetTierName, default);
+        }
+
+        /// <summary> A database rename definition. </summary>
+        /// <param name="newName"> New database name. </param>
+        /// <returns> A new <see cref="Models.DatabaseRenameContent"/> instance for mocking. </returns>
+        public static DatabaseRenameContent DatabaseRenameContent(string newName = default)
+        {
+            return new DatabaseRenameContent(newName, default);
         }
 
         /// <summary> Server registration definition. </summary>
@@ -204,39 +237,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DestinationTierOverride(resourceType, tierName, resourceName, default);
         }
 
-        /// <summary> A Database Fleet. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The fleet properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.DatabaseFleetData"/> instance for mocking. </returns>
-        public static DatabaseFleetData DatabaseFleetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FleetProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DatabaseFleetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> The Database Fleet properties. </summary>
-        /// <param name="description"> Fleet description. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <returns> A new <see cref="Models.FleetProperties"/> instance for mocking. </returns>
-        public static FleetProperties FleetProperties(string description = default, AzureProvisioningState? provisioningState = default)
-        {
-            return new FleetProperties(description, provisioningState, default);
-        }
-
         /// <summary> An update to a Database Fleet. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The Database Fleet properties. </param>
@@ -246,24 +246,6 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DatabaseFleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <summary> A firewall rule. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A Firewall rule properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FirewallRuleData"/> instance for mocking. </returns>
-        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FirewallRuleProperties properties = default)
-        {
-            return new FirewallRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> A Firewall rule properties. </summary>
@@ -276,16 +258,16 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, default);
         }
 
-        /// <summary> A SQL Database Fleet tier. </summary>
+        /// <summary> A firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A Fleet tier properties. </param>
-        /// <returns> A new <see cref="DatabaseFleetManager.FleetTierData"/> instance for mocking. </returns>
-        public static FleetTierData FleetTierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetTierProperties properties = default)
+        /// <param name="properties"> A Firewall rule properties. </param>
+        /// <returns> A new <see cref="DatabaseFleetManager.FirewallRuleData"/> instance for mocking. </returns>
+        public static FirewallRuleData FirewallRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FirewallRuleProperties properties = default)
         {
-            return new FleetTierData(
+            return new FirewallRuleData(
                 id,
                 name,
                 resourceType,
@@ -325,6 +307,24 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 databaseCapacityMax,
                 databaseSizeGbMax,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> A SQL Database Fleet tier. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A Fleet tier properties. </param>
+        /// <returns> A new <see cref="DatabaseFleetManager.FleetTierData"/> instance for mocking. </returns>
+        public static FleetTierData FleetTierData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FleetTierProperties properties = default)
+        {
+            return new FleetTierData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }
