@@ -5,11 +5,13 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> The Docker build step. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryDockerBuildStep : ContainerRegistryTaskStepProperties
     {
         private BicepList<string> _imageNames;
@@ -26,6 +28,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the ImageNames. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ImageNames
         {
             get
@@ -41,6 +44,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsPushEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsPushEnabled
         {
             get
@@ -56,6 +60,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsCacheDisabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCacheDisabled
         {
             get
@@ -71,6 +76,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the DockerFilePath. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DockerFilePath
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Target. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Target
         {
             get
@@ -101,6 +108,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Arguments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ContainerRegistryTaskArgument> Arguments
         {
             get

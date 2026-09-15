@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> An NS record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsNSRecordInfo : ProvisionableConstruct
     {
         private BicepValue<string> _dnsNSDomainName;
@@ -21,6 +23,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the DnsNSDomainName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> DnsNSDomainName
         {
             get

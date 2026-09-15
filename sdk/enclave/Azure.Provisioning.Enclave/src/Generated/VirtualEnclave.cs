@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Virtual Enclave Model Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclave : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -98,6 +99,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Properties. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveProperties Properties
         {
             get
@@ -113,6 +115,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the Identity. </summary>
+        [Experimental("AZPROVISION001")]
         public ManagedServiceIdentity Identity
         {
             get

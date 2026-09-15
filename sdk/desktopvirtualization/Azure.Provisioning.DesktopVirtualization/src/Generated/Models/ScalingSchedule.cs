@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> A ScalingPlanPooledSchedule. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScalingSchedule : ProvisionableConstruct
     {
         private BicepValue<string> _name;
@@ -40,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Name. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Name
         {
             get
@@ -55,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DaysOfWeek. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ScalingScheduleDaysOfWeekItem> DaysOfWeek
         {
             get
@@ -70,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ScalingMethod. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationScalingMethodType> ScalingMethod
         {
             get
@@ -85,6 +90,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CreateDelete. </summary>
+        [Experimental("AZPROVISION001")]
         public DesktopVirtualizationCreateDeleteProperties CreateDelete
         {
             get
@@ -100,6 +106,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime RampUpStartTime
         {
             get
@@ -115,6 +122,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpLoadBalancingAlgorithm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostLoadBalancingAlgorithm> RampUpLoadBalancingAlgorithm
         {
             get
@@ -130,6 +138,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpMinimumHostsPct. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpMinimumHostsPct
         {
             get
@@ -145,6 +154,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampUpCapacityThresholdPct. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampUpCapacityThresholdPct
         {
             get
@@ -160,6 +170,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime PeakStartTime
         {
             get
@@ -175,6 +186,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PeakLoadBalancingAlgorithm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostLoadBalancingAlgorithm> PeakLoadBalancingAlgorithm
         {
             get
@@ -190,6 +202,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime RampDownStartTime
         {
             get
@@ -205,6 +218,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownLoadBalancingAlgorithm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostLoadBalancingAlgorithm> RampDownLoadBalancingAlgorithm
         {
             get
@@ -220,6 +234,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownMinimumHostsPct. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownMinimumHostsPct
         {
             get
@@ -235,6 +250,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownCapacityThresholdPct. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownCapacityThresholdPct
         {
             get
@@ -250,6 +266,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownForceLogoffUsers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> RampDownForceLogoffUsers
         {
             get
@@ -265,6 +282,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownStopHostsWhen. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationStopHostsWhen> RampDownStopHostsWhen
         {
             get
@@ -280,6 +298,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownWaitTimeMinutes. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> RampDownWaitTimeMinutes
         {
             get
@@ -295,6 +314,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the RampDownNotificationMessage. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> RampDownNotificationMessage
         {
             get
@@ -310,6 +330,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakStartTime. </summary>
+        [Experimental("AZPROVISION001")]
         public ScalingActionTime OffPeakStartTime
         {
             get
@@ -325,6 +346,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OffPeakLoadBalancingAlgorithm. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<SessionHostLoadBalancingAlgorithm> OffPeakLoadBalancingAlgorithm
         {
             get

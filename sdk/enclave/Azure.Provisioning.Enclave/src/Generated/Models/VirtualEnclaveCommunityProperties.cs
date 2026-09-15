@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Community Resource Properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveCommunityProperties : ProvisionableConstruct
     {
         private BicepValue<string> _addressSpace;
@@ -21,7 +23,7 @@ namespace Azure.Provisioning.Enclave
         private BicepValue<string> _managedResourceGroupName;
         private ManagedOnBehalfOfConfiguration _managedOnBehalfOfConfiguration;
         private BicepList<VirtualEnclaveGovernedService> _governedServiceList;
-        private BicepValue<CommunityPropertiesPolicyOverride> _policyOverride;
+        private BicepValue<CommunityResourcePolicyOverride> _policyOverride;
         private BicepList<VirtualEnclaveRoleAssignmentItem> _communityRoleAssignments;
         private BicepValue<VirtualEnclaveFirewallSku> _firewallSku;
         private VirtualEnclaveBaseApprovalSettings _granularApprovalSettings;
@@ -36,6 +38,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the AddressSpace. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AddressSpace
         {
             get
@@ -51,6 +54,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the DnsServers. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> DnsServers
         {
             get
@@ -66,6 +70,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveProvisioningState> ProvisioningState
         {
             get
@@ -76,6 +81,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ResourceCollection. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<ResourceIdentifier> ResourceCollection
         {
             get
@@ -86,6 +92,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedResourceGroupName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ManagedResourceGroupName
         {
             get
@@ -96,6 +103,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the ManagedOnBehalfOfConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration
         {
             get
@@ -106,6 +114,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the GovernedServiceList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveGovernedService> GovernedServiceList
         {
             get
@@ -121,7 +130,8 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the PolicyOverride. </summary>
-        public BicepValue<CommunityPropertiesPolicyOverride> PolicyOverride
+        [Experimental("AZPROVISION001")]
+        public BicepValue<CommunityResourcePolicyOverride> PolicyOverride
         {
             get
             {
@@ -136,6 +146,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the CommunityRoleAssignments. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveRoleAssignmentItem> CommunityRoleAssignments
         {
             get
@@ -151,6 +162,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the FirewallSku. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<VirtualEnclaveFirewallSku> FirewallSku
         {
             get
@@ -166,6 +178,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the GranularApprovalSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveBaseApprovalSettings GranularApprovalSettings
         {
             get
@@ -181,6 +194,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MaintenanceModeConfiguration. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration
         {
             get
@@ -196,6 +210,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the DedicatedHubList. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<VirtualEnclaveDedicatedHub> DedicatedHubList
         {
             get
@@ -206,6 +221,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the MonitoringSettings. </summary>
+        [Experimental("AZPROVISION001")]
         public VirtualEnclaveMonitoringSettings MonitoringSettings
         {
             get
@@ -221,6 +237,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the AddressSpaces. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> AddressSpaces
         {
             get
@@ -255,7 +272,7 @@ namespace Azure.Provisioning.Enclave
             _managedResourceGroupName = DefineProperty<string>(nameof(ManagedResourceGroupName), new string[] { "managedResourceGroupName" }, isOutput: true);
             _managedOnBehalfOfConfiguration = DefineModelProperty<ManagedOnBehalfOfConfiguration>(nameof(ManagedOnBehalfOfConfiguration), new string[] { "managedOnBehalfOfConfiguration" }, isOutput: true);
             _governedServiceList = DefineListProperty<VirtualEnclaveGovernedService>(nameof(GovernedServiceList), new string[] { "governedServiceList" });
-            _policyOverride = DefineProperty<CommunityPropertiesPolicyOverride>(nameof(PolicyOverride), new string[] { "policyOverride" });
+            _policyOverride = DefineProperty<CommunityResourcePolicyOverride>(nameof(PolicyOverride), new string[] { "policyOverride" });
             _communityRoleAssignments = DefineListProperty<VirtualEnclaveRoleAssignmentItem>(nameof(CommunityRoleAssignments), new string[] { "communityRoleAssignments" });
             _firewallSku = DefineProperty<VirtualEnclaveFirewallSku>(nameof(FirewallSku), new string[] { "firewallSku" });
             _granularApprovalSettings = DefineModelProperty<VirtualEnclaveBaseApprovalSettings>(nameof(GranularApprovalSettings), new string[] { "approvalSettings" });

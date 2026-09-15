@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Credentials kept in the keyvault. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationKeyVaultCredentialsProperties : ProvisionableConstruct
     {
         private BicepValue<Uri> _usernameKeyVaultSecretUri;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the UsernameKeyVaultSecretUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> UsernameKeyVaultSecretUri
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PasswordKeyVaultSecretUri. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<Uri> PasswordKeyVaultSecretUri
         {
             get

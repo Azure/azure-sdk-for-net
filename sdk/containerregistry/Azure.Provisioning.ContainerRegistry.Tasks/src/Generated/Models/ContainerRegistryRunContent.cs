@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,6 +15,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The request parameters for scheduling a run.
     /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/>, <see cref="ContainerRegistryTaskRunContent"/>, and <see cref="ContainerRegistryEncodedTaskRunContent"/>.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryRunContent : ProvisionableConstruct
     {
         private BicepValue<string> _type;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> The type of the run request. </summary>
+        [Experimental("AZPROVISION001")]
         internal BicepValue<string> Type
         {
             get
@@ -37,6 +40,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the IsArchiveEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsArchiveEnabled
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the AgentPoolName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AgentPoolName
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the LogTemplate. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> LogTemplate
         {
             get

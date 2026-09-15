@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The agentpool that has the ARM resource and properties.
     /// The agentpool will have all information to create an agent pool.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryAgentPool : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
@@ -115,6 +116,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Count. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Count
         {
             get
@@ -132,6 +134,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the Tier. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Tier
         {
             get
@@ -149,6 +152,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the OS. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskOS> OS
         {
             get
@@ -166,6 +170,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets or sets the VirtualNetworkSubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> VirtualNetworkSubnetResourceId
         {
             get
@@ -183,6 +188,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ContainerRegistryTaskProvisioningState> ProvisioningState
         {
             get

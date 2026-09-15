@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> The configuration for session host provisioning operations. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SessionHostProvisioningConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isDrainModeEnabled;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsDrainModeEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsDrainModeEnabled
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the InstanceCount. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> InstanceCount
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the CanaryPolicy. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationCanaryPolicy> CanaryPolicy
         {
             get

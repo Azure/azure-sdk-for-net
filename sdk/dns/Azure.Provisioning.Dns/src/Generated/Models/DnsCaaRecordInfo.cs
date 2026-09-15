@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Dns
 {
     /// <summary> A CAA record. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsCaaRecordInfo : ProvisionableConstruct
     {
         private BicepValue<int> _flags;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Flags. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> Flags
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Tag. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Tag
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the Value. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Value
         {
             get

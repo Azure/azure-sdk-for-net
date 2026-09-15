@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for Workspace properties. </summary>
+    [Experimental("AZPROVISION001")]
     internal partial class WorkspaceProperties : ProvisionableConstruct
     {
         private BicepValue<string> _objectId;
@@ -29,6 +31,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the ObjectId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> ObjectId
         {
             get
@@ -39,6 +42,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Description. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> Description
         {
             get
@@ -54,6 +58,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> FriendlyName
         {
             get
@@ -69,6 +74,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the ApplicationGroupReferences. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<string> ApplicationGroupReferences
         {
             get
@@ -84,6 +90,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the IsCloudPCResource. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsCloudPCResource
         {
             get
@@ -94,6 +101,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationPublicNetworkAccess> PublicNetworkAccess
         {
             get
@@ -109,6 +117,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepList<DesktopVirtualizationPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
@@ -119,6 +128,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the OboTenantId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> OboTenantId
         {
             get
@@ -134,6 +144,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the DeploymentScope. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationDeploymentScope> DeploymentScope
         {
             get

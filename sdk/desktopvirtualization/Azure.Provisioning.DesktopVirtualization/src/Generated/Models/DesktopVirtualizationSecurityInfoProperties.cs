@@ -5,12 +5,14 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Security Information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DesktopVirtualizationSecurityInfoProperties : ProvisionableConstruct
     {
         private BicepValue<DesktopVirtualizationVirtualMachineSecurityType> _type;
@@ -23,6 +25,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the Type. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<DesktopVirtualizationVirtualMachineSecurityType> Type
         {
             get
@@ -38,6 +41,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsSecureBootEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsSecureBootEnabled
         {
             get
@@ -53,6 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         }
 
         /// <summary> Gets or sets the IsVTpmEnabled. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<bool> IsVTpmEnabled
         {
             get

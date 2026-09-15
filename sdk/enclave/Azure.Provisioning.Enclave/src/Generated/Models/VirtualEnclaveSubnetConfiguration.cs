@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
@@ -12,6 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Enclave
 {
     /// <summary> Subnet Configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualEnclaveSubnetConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _subnetName;
@@ -27,6 +29,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SubnetName. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubnetName
         {
             get
@@ -42,6 +45,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the SubnetResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> SubnetResourceId
         {
             get
@@ -52,6 +56,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the NetworkPrefixSize. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<int> NetworkPrefixSize
         {
             get
@@ -67,6 +72,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets or sets the SubnetDelegation. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> SubnetDelegation
         {
             get
@@ -82,6 +88,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the AddressPrefix. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<string> AddressPrefix
         {
             get
@@ -92,6 +99,7 @@ namespace Azure.Provisioning.Enclave
         }
 
         /// <summary> Gets the NetworkSecurityGroupResourceId. </summary>
+        [Experimental("AZPROVISION001")]
         public BicepValue<ResourceIdentifier> NetworkSecurityGroupResourceId
         {
             get
