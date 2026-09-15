@@ -28,6 +28,16 @@ namespace Azure.ResourceManager.Peering.Models
             return new CheckPeeringServiceProviderAvailabilityContent(peeringServiceLocation, peeringServiceProvider, default);
         }
 
+        /// <summary> The contact detail class. </summary>
+        /// <param name="role"> The role of the contact. </param>
+        /// <param name="email"> The e-mail address of the contact. </param>
+        /// <param name="phone"> The phone number of the contact. </param>
+        /// <returns> A new <see cref="Models.PeerAsnContactDetail"/> instance for mocking. </returns>
+        public static PeerAsnContactDetail PeerAsnContactDetail(PeeringRole? role = default, string email = default, string phone = default)
+        {
+            return new PeerAsnContactDetail(role, email, phone, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,53 +62,6 @@ namespace Azure.ResourceManager.Peering.Models
                     validationState,
                     errorMessage,
                     default),
-                default);
-        }
-
-        /// <summary> The contact detail class. </summary>
-        /// <param name="role"> The role of the contact. </param>
-        /// <param name="email"> The e-mail address of the contact. </param>
-        /// <param name="phone"> The phone number of the contact. </param>
-        /// <returns> A new <see cref="Models.PeerAsnContactDetail"/> instance for mocking. </returns>
-        public static PeerAsnContactDetail PeerAsnContactDetail(PeeringRole? role = default, string email = default, string phone = default)
-        {
-            return new PeerAsnContactDetail(role, email, phone, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="direct"> The properties that define a direct peering. </param>
-        /// <param name="exchange"> The properties that define an exchange peering. </param>
-        /// <param name="connectivityProbes"> The connectivity probes associated with the peering. </param>
-        /// <param name="peeringLocation"> The location of the peering. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
-        /// <param name="kind"> The kind of the peering. </param>
-        /// <returns> A new <see cref="Peering.PeeringData"/> instance for mocking. </returns>
-        public static PeeringData PeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DirectPeeringProperties direct = default, ExchangePeeringProperties exchange = default, IEnumerable<PeeringConnectivityProbe> connectivityProbes = default, string peeringLocation = default, PeeringProvisioningState? provisioningState = default, PeeringSku sku = default, PeeringKind kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PeeringData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                direct is null && exchange is null && connectivityProbes is null && peeringLocation is null && provisioningState is null ? default : new PeeringProperties(
-                    direct,
-                    exchange,
-                    (connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>()).ToList(),
-                    peeringLocation,
-                    provisioningState,
-                    default),
-                sku,
-                kind,
                 default);
         }
 
@@ -223,6 +186,43 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, (prefixesToAccesslist ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="direct"> The properties that define a direct peering. </param>
+        /// <param name="exchange"> The properties that define an exchange peering. </param>
+        /// <param name="connectivityProbes"> The connectivity probes associated with the peering. </param>
+        /// <param name="peeringLocation"> The location of the peering. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="sku"> The SKU that defines the tier and kind of the peering. </param>
+        /// <param name="kind"> The kind of the peering. </param>
+        /// <returns> A new <see cref="Peering.PeeringData"/> instance for mocking. </returns>
+        public static PeeringData PeeringData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DirectPeeringProperties direct = default, ExchangePeeringProperties exchange = default, IEnumerable<PeeringConnectivityProbe> connectivityProbes = default, string peeringLocation = default, PeeringProvisioningState? provisioningState = default, PeeringSku sku = default, PeeringKind kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PeeringData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                direct is null && exchange is null && connectivityProbes is null && peeringLocation is null && provisioningState is null ? default : new PeeringProperties(
+                    direct,
+                    exchange,
+                    (connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>()).ToList(),
+                    peeringLocation,
+                    provisioningState,
+                    default),
+                sku,
+                kind,
+                default);
+        }
+
         /// <summary> The SKU that defines the tier and kind of the peering. </summary>
         /// <param name="name"> The name of the peering SKU. </param>
         /// <param name="tier"> The tier of the peering SKU. </param>
@@ -244,35 +244,16 @@ namespace Azure.ResourceManager.Peering.Models
             return new PeeringResourceTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="sourceAgent"> The Connection Monitor test source agent. </param>
-        /// <param name="destination"> The Connection Monitor test destination. </param>
-        /// <param name="destinationPort"> The Connection Monitor test destination port. </param>
-        /// <param name="testFrequencyInSec"> The Connection Monitor test frequency in seconds. </param>
-        /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
-        /// <param name="path"> The path representing the Connection Monitor test. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="Peering.ConnectionMonitorTestData"/> instance for mocking. </returns>
-        public static ConnectionMonitorTestData ConnectionMonitorTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sourceAgent = default, string destination = default, int? destinationPort = default, int? testFrequencyInSec = default, bool? isTestSuccessful = default, IEnumerable<string> path = default, PeeringProvisioningState? provisioningState = default)
+        /// <summary> The properties that define a Log Analytics Workspace. </summary>
+        /// <param name="workspaceId"> The Workspace ID. </param>
+        /// <param name="key"> The Workspace Key. </param>
+        /// <param name="connectedAgents"> The list of connected agents. </param>
+        /// <returns> A new <see cref="Models.PeeringLogAnalyticsWorkspaceProperties"/> instance for mocking. </returns>
+        public static PeeringLogAnalyticsWorkspaceProperties PeeringLogAnalyticsWorkspaceProperties(string workspaceId = default, string key = default, IEnumerable<string> connectedAgents = default)
         {
-            return new ConnectionMonitorTestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                sourceAgent is null && destination is null && destinationPort is null && testFrequencyInSec is null && isTestSuccessful is null && path is null && provisioningState is null ? default : new ConnectionMonitorTestProperties(
-                    sourceAgent,
-                    destination,
-                    destinationPort,
-                    testFrequencyInSec,
-                    isTestSuccessful,
-                    (path ?? new ChangeTrackingList<string>()).ToList(),
-                    provisioningState,
-                    default),
-                default);
+            connectedAgents ??= new ChangeTrackingList<string>();
+
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, (connectedAgents ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -312,16 +293,35 @@ namespace Azure.ResourceManager.Peering.Models
                 default);
         }
 
-        /// <summary> The properties that define a Log Analytics Workspace. </summary>
-        /// <param name="workspaceId"> The Workspace ID. </param>
-        /// <param name="key"> The Workspace Key. </param>
-        /// <param name="connectedAgents"> The list of connected agents. </param>
-        /// <returns> A new <see cref="Models.PeeringLogAnalyticsWorkspaceProperties"/> instance for mocking. </returns>
-        public static PeeringLogAnalyticsWorkspaceProperties PeeringLogAnalyticsWorkspaceProperties(string workspaceId = default, string key = default, IEnumerable<string> connectedAgents = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sourceAgent"> The Connection Monitor test source agent. </param>
+        /// <param name="destination"> The Connection Monitor test destination. </param>
+        /// <param name="destinationPort"> The Connection Monitor test destination port. </param>
+        /// <param name="testFrequencyInSec"> The Connection Monitor test frequency in seconds. </param>
+        /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
+        /// <param name="path"> The path representing the Connection Monitor test. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Peering.ConnectionMonitorTestData"/> instance for mocking. </returns>
+        public static ConnectionMonitorTestData ConnectionMonitorTestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string sourceAgent = default, string destination = default, int? destinationPort = default, int? testFrequencyInSec = default, bool? isTestSuccessful = default, IEnumerable<string> path = default, PeeringProvisioningState? provisioningState = default)
         {
-            connectedAgents ??= new ChangeTrackingList<string>();
-
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, (connectedAgents ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ConnectionMonitorTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sourceAgent is null && destination is null && destinationPort is null && testFrequencyInSec is null && isTestSuccessful is null && path is null && provisioningState is null ? default : new ConnectionMonitorTestProperties(
+                    sourceAgent,
+                    destination,
+                    destinationPort,
+                    testFrequencyInSec,
+                    isTestSuccessful,
+                    (path ?? new ChangeTrackingList<string>()).ToList(),
+                    provisioningState,
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -402,6 +402,24 @@ namespace Azure.ResourceManager.Peering.Models
                 default);
         }
 
+        /// <summary> The details of the event associated with a prefix. </summary>
+        /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
+        /// <param name="eventType"> The type of the event associated with a prefix. </param>
+        /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
+        /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
+        /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
+        /// <returns> A new <see cref="Models.PeeringServicePrefixEvent"/> instance for mocking. </returns>
+        public static PeeringServicePrefixEvent PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp = default, string eventType = default, string eventSummary = default, string eventLevel = default, string eventDescription = default)
+        {
+            return new PeeringServicePrefixEvent(
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -430,24 +448,6 @@ namespace Azure.ResourceManager.Peering.Models
                     peeringServicePrefixKey,
                     provisioningState,
                     default),
-                default);
-        }
-
-        /// <summary> The details of the event associated with a prefix. </summary>
-        /// <param name="eventTimestamp"> The timestamp of the event associated with a prefix. </param>
-        /// <param name="eventType"> The type of the event associated with a prefix. </param>
-        /// <param name="eventSummary"> The summary of the event associated with a prefix. </param>
-        /// <param name="eventLevel"> The level of the event associated with a prefix. </param>
-        /// <param name="eventDescription"> The description of the event associated with a prefix. </param>
-        /// <returns> A new <see cref="Models.PeeringServicePrefixEvent"/> instance for mocking. </returns>
-        public static PeeringServicePrefixEvent PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp = default, string eventType = default, string eventSummary = default, string eventLevel = default, string eventDescription = default)
-        {
-            return new PeeringServicePrefixEvent(
-                eventTimestamp,
-                eventType,
-                eventSummary,
-                eventLevel,
-                eventDescription,
                 default);
         }
 

@@ -257,24 +257,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new ConfigureExascaleCloudExadataInfrastructureDetails(totalStorageInGbs, default);
         }
 
-        /// <summary> DbServer resource model. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleDBServerData"/> instance for mocking. </returns>
-        public static OracleDBServerData OracleDBServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBServerProperties properties = default)
-        {
-            return new OracleDBServerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> DbServer resource properties. </summary>
         /// <param name="dbServerOcid"> Db server name. </param>
         /// <param name="displayName"> The name for the Db Server. </param>
@@ -339,6 +321,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static DBServerPatchingDetails DBServerPatchingDetails(int? estimatedPatchDuration = default, DBServerPatchingStatus? patchingStatus = default, DateTimeOffset? patchingEndedOn = default, DateTimeOffset? patchingStartedOn = default)
         {
             return new DBServerPatchingDetails(estimatedPatchDuration, patchingStatus, patchingEndedOn, patchingStartedOn, default);
+        }
+
+        /// <summary> DbServer resource model. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.OracleDBServerData"/> instance for mocking. </returns>
+        public static OracleDBServerData OracleDBServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBServerProperties properties = default)
+        {
+            return new OracleDBServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> CloudVmCluster resource definition. </summary>
@@ -629,24 +629,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
-        /// <summary> Virtual IP resource belonging to a vm cluster resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/> instance for mocking. </returns>
-        public static CloudVmClusterVirtualNetworkAddressData CloudVmClusterVirtualNetworkAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterVirtualNetworkAddressProperties properties = default)
-        {
-            return new CloudVmClusterVirtualNetworkAddressData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> virtualNetworkAddress resource properties. </summary>
         /// <param name="ipAddress"> Virtual network Address address. </param>
         /// <param name="vipVmOcid"> Virtual Machine OCID. </param>
@@ -668,6 +650,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 provisioningState,
                 lifecycleState,
                 assignedOn,
+                default);
+        }
+
+        /// <summary> Virtual IP resource belonging to a vm cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterVirtualNetworkAddressData"/> instance for mocking. </returns>
+        public static CloudVmClusterVirtualNetworkAddressData CloudVmClusterVirtualNetworkAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterVirtualNetworkAddressProperties properties = default)
+        {
+            return new CloudVmClusterVirtualNetworkAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -816,24 +816,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new OracleAzureSubscriptionsContent((azureSubscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> The DbNode resource belonging to vmCluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterDBNodeData"/> instance for mocking. </returns>
-        public static CloudVmClusterDBNodeData CloudVmClusterDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterDBNodeProperties properties = default)
-        {
-            return new CloudVmClusterDBNodeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of DbNodeResource. </summary>
         /// <param name="dbNodeOcid"> DbNode OCID. </param>
         /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
@@ -888,6 +870,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
+        /// <summary> The DbNode resource belonging to vmCluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.CloudVmClusterDBNodeData"/> instance for mocking. </returns>
+        public static CloudVmClusterDBNodeData CloudVmClusterDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CloudVmClusterDBNodeProperties properties = default)
+        {
+            return new CloudVmClusterDBNodeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> DbNode action object. </summary>
         /// <param name="action"> Db action. </param>
         /// <returns> A new <see cref="Models.DBNodeAction"/> instance for mocking. </returns>
@@ -938,24 +938,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         public static OracleGIMinorVersionProperties OracleGIMinorVersionProperties(string version = default, string gridImageOcid = default)
         {
             return new OracleGIMinorVersionProperties(version, gridImageOcid, default);
-        }
-
-        /// <summary> DbSystemShape resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleDBSystemShapeData"/> instance for mocking. </returns>
-        public static OracleDBSystemShapeData OracleDBSystemShapeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBSystemShapeProperties properties = default)
-        {
-            return new OracleDBSystemShapeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> DbSystemShape resource model. </summary>
@@ -1018,16 +1000,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
-        /// <summary> DnsPrivateView resource definition. </summary>
+        /// <summary> DbSystemShape resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateViewData"/> instance for mocking. </returns>
-        public static OracleDnsPrivateViewData OracleDnsPrivateViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateViewProperties properties = default)
+        /// <returns> A new <see cref="OracleDatabase.OracleDBSystemShapeData"/> instance for mocking. </returns>
+        public static OracleDBSystemShapeData OracleDBSystemShapeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBSystemShapeProperties properties = default)
         {
-            return new OracleDnsPrivateViewData(
+            return new OracleDBSystemShapeData(
                 id,
                 name,
                 resourceType,
@@ -1060,16 +1042,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
-        /// <summary> DnsPrivateZone resource definition. </summary>
+        /// <summary> DnsPrivateView resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateZoneData"/> instance for mocking. </returns>
-        public static OracleDnsPrivateZoneData OracleDnsPrivateZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateZoneProperties properties = default)
+        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateViewData"/> instance for mocking. </returns>
+        public static OracleDnsPrivateViewData OracleDnsPrivateViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateViewProperties properties = default)
         {
-            return new OracleDnsPrivateZoneData(
+            return new OracleDnsPrivateViewData(
                 id,
                 name,
                 resourceType,
@@ -1106,16 +1088,16 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
-        /// <summary> FlexComponent Resource Definition. </summary>
+        /// <summary> DnsPrivateZone resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleFlexComponentData"/> instance for mocking. </returns>
-        public static OracleFlexComponentData OracleFlexComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleFlexComponentProperties properties = default)
+        /// <returns> A new <see cref="OracleDatabase.OracleDnsPrivateZoneData"/> instance for mocking. </returns>
+        public static OracleDnsPrivateZoneData OracleDnsPrivateZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDnsPrivateZoneProperties properties = default)
         {
-            return new OracleFlexComponentData(
+            return new OracleDnsPrivateZoneData(
                 id,
                 name,
                 resourceType,
@@ -1149,6 +1131,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 computeModel,
                 hardwareType,
                 descriptionSummary,
+                default);
+        }
+
+        /// <summary> FlexComponent Resource Definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.OracleFlexComponentData"/> instance for mocking. </returns>
+        public static OracleFlexComponentData OracleFlexComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleFlexComponentProperties properties = default)
+        {
+            return new OracleFlexComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -2329,24 +2329,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new AutonomousDatabaseLifecycleAction(action, default);
         }
 
-        /// <summary> AutonomousDatabaseBackup resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseBackupData"/> instance for mocking. </returns>
-        public static AutonomousDatabaseBackupData AutonomousDatabaseBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutonomousDatabaseBackupProperties properties = default)
-        {
-            return new AutonomousDatabaseBackupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> AutonomousDatabaseBackup resource model. </summary>
         /// <param name="databaseOcid"> The OCID of the Autonomous Database. </param>
         /// <param name="databaseSizeInTbs"> The size of the database in terabytes at the time the backup was taken. </param>
@@ -2384,6 +2366,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 timeEnded,
                 backupType,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> AutonomousDatabaseBackup resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.AutonomousDatabaseBackupData"/> instance for mocking. </returns>
+        public static AutonomousDatabaseBackupData AutonomousDatabaseBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutonomousDatabaseBackupProperties properties = default)
+        {
+            return new AutonomousDatabaseBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -2511,24 +2511,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new DBNodeDetails(dbNodeId, default);
         }
 
-        /// <summary> The DbNode resource belonging to ExadbVmCluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.ExascaleDBNodeData"/> instance for mocking. </returns>
-        public static ExascaleDBNodeData ExascaleDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExascaleDBNodeProperties properties = default)
-        {
-            return new ExascaleDBNodeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of DbNodeResource. </summary>
         /// <param name="ocid"> DbNode OCID. </param>
         /// <param name="additionalDetails"> Additional information about the planned maintenance. </param>
@@ -2563,12 +2545,47 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 default);
         }
 
+        /// <summary> The DbNode resource belonging to ExadbVmCluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.ExascaleDBNodeData"/> instance for mocking. </returns>
+        public static ExascaleDBNodeData ExascaleDBNodeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExascaleDBNodeProperties properties = default)
+        {
+            return new ExascaleDBNodeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> ExascaleDbNode action response. </summary>
         /// <param name="provisioningState"> ExascaleDbNode provisioning state. </param>
         /// <returns> A new <see cref="Models.ExascaleDBNodeActionResult"/> instance for mocking. </returns>
         public static ExascaleDBNodeActionResult ExascaleDBNodeActionResult(OracleDatabaseProvisioningState? provisioningState = default)
         {
             return new ExascaleDBNodeActionResult(provisioningState, default);
+        }
+
+        /// <summary> Create exadata Database Storage Details model. </summary>
+        /// <param name="totalSizeInGbs"> Total Capacity. </param>
+        /// <returns> A new <see cref="Models.ExascaleDBStorageInputDetails"/> instance for mocking. </returns>
+        public static ExascaleDBStorageInputDetails ExascaleDBStorageInputDetails(int totalSizeInGbs = default)
+        {
+            return new ExascaleDBStorageInputDetails(totalSizeInGbs, default);
+        }
+
+        /// <summary> Exadata Database Storage Details. </summary>
+        /// <param name="availableSizeInGbs"> Available Capacity. </param>
+        /// <param name="totalSizeInGbs"> Total Capacity. </param>
+        /// <returns> A new <see cref="Models.ExascaleDBStorageDetails"/> instance for mocking. </returns>
+        public static ExascaleDBStorageDetails ExascaleDBStorageDetails(int? availableSizeInGbs = default, int? totalSizeInGbs = default)
+        {
+            return new ExascaleDBStorageDetails(availableSizeInGbs, totalSizeInGbs, default);
         }
 
         /// <summary> ExascaleDbStorageVault resource definition. </summary>
@@ -2596,23 +2613,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 properties,
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
-        }
-
-        /// <summary> Create exadata Database Storage Details model. </summary>
-        /// <param name="totalSizeInGbs"> Total Capacity. </param>
-        /// <returns> A new <see cref="Models.ExascaleDBStorageInputDetails"/> instance for mocking. </returns>
-        public static ExascaleDBStorageInputDetails ExascaleDBStorageInputDetails(int totalSizeInGbs = default)
-        {
-            return new ExascaleDBStorageInputDetails(totalSizeInGbs, default);
-        }
-
-        /// <summary> Exadata Database Storage Details. </summary>
-        /// <param name="availableSizeInGbs"> Available Capacity. </param>
-        /// <param name="totalSizeInGbs"> Total Capacity. </param>
-        /// <returns> A new <see cref="Models.ExascaleDBStorageDetails"/> instance for mocking. </returns>
-        public static ExascaleDBStorageDetails ExascaleDBStorageDetails(int? availableSizeInGbs = default, int? totalSizeInGbs = default)
-        {
-            return new ExascaleDBStorageDetails(availableSizeInGbs, totalSizeInGbs, default);
         }
 
         /// <summary> The type used for updating tags in ExascaleDbStorageVault resources. </summary>
@@ -2962,24 +2962,6 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             return new OracleDBSystemPatch((zones ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), dbSystemUpdateSource is null ? default : new DBSystemUpdateProperties(dbSystemUpdateSource, default), default);
         }
 
-        /// <summary> Oracle Database DbVersion resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="OracleDatabase.OracleDBVersionData"/> instance for mocking. </returns>
-        public static OracleDBVersionData OracleDBVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBVersionProperties properties = default)
-        {
-            return new OracleDBVersionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> DbVersion resource model. </summary>
         /// <param name="version"> A valid Oracle Database version. </param>
         /// <param name="isLatestForMajorVersion"> True if this version of the Oracle Database software is the latest version for a release. </param>
@@ -2995,6 +2977,24 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 isPreviewDbVersion,
                 isUpgradeSupported,
                 doesSupportPluggableDatabase,
+                default);
+        }
+
+        /// <summary> Oracle Database DbVersion resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="OracleDatabase.OracleDBVersionData"/> instance for mocking. </returns>
+        public static OracleDBVersionData OracleDBVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OracleDBVersionProperties properties = default)
+        {
+            return new OracleDBVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

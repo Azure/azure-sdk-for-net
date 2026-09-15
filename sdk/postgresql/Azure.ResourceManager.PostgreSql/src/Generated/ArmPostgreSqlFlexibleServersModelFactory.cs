@@ -176,95 +176,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlMigrationAdminCredentials(sourceServerPassword, targetServerPassword, default);
         }
 
-        /// <summary> Availability of a migration name. </summary>
-        /// <param name="name"> Name of the migration to check for validity and availability. </param>
-        /// <param name="resourceType"> Type of resource. </param>
-        /// <param name="isNameAvailable"> Indicates if the migration name is available. </param>
-        /// <param name="reason"> Migration name availability reason. </param>
-        /// <param name="message"> Migration name availability message. </param>
-        /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
-        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = default, ResourceType resourceType = default, bool? isNameAvailable = default, PostgreSqlMigrationNameUnavailableReason? reason = default, string message = default)
-        {
-            return new PostgreSqlCheckMigrationNameAvailabilityContent(
-                name,
-                resourceType,
-                isNameAvailable,
-                reason,
-                message,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
-        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
-        /// <param name="version"> Major version of PostgreSQL database engine. </param>
-        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
-        /// <param name="state"> Possible states of a server. </param>
-        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
-        /// <param name="storage"> Storage properties of a server. </param>
-        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
-        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
-        /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
-        /// <param name="highAvailability"> High availability properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
-        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
-        /// <param name="availabilityZone"> Availability zone of a server. </param>
-        /// <param name="replicationRole"> Role of the server in a replication set. </param>
-        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
-        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
-        /// <param name="createMode"> Creation mode of a new server. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
-        /// <param name="cluster"> Cluster properties of a server. </param>
-        /// <param name="sku"> Compute tier and size of a server. </param>
-        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlFlexibleServerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
-                    administratorLogin,
-                    administratorLoginPassword,
-                    version,
-                    minorVersion,
-                    state,
-                    fullyQualifiedDomainName,
-                    storage,
-                    authConfig,
-                    dataEncryption,
-                    backup,
-                    network,
-                    highAvailability,
-                    maintenanceWindow,
-                    sourceServerResourceId,
-                    pointInTimeUtc,
-                    availabilityZone,
-                    replicationRole,
-                    replicaCapacity,
-                    replica,
-                    createMode,
-                    (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
-                    cluster,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
         /// <summary> Storage properties of a server. </summary>
         /// <param name="storageSizeInGB"> Size of storage assigned to a server. </param>
         /// <param name="autoGrow"> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </param>
@@ -389,6 +300,77 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerClusterProperties(clusterSize, defaultDatabaseName, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="administratorLogin"> Name of the login designated as the first password based administrator assigned to your instance of PostgreSQL. Must be specified the first time that you enable password based authentication on a server. Once set to a given value, it cannot be changed for the rest of the life of a server. If you disable password based authentication on a server which had it enabled, this password based role isn't deleted. </param>
+        /// <param name="administratorLoginPassword"> Password assigned to the administrator login. As long as password authentication is enabled, this password can be changed at any time. </param>
+        /// <param name="version"> Major version of PostgreSQL database engine. </param>
+        /// <param name="minorVersion"> Minor version of PostgreSQL database engine. </param>
+        /// <param name="state"> Possible states of a server. </param>
+        /// <param name="fullyQualifiedDomainName"> Fully qualified domain name of a server. </param>
+        /// <param name="storage"> Storage properties of a server. </param>
+        /// <param name="authConfig"> Authentication configuration properties of a server. </param>
+        /// <param name="dataEncryption"> Data encryption properties of a server. </param>
+        /// <param name="backup"> Backup properties of a server. </param>
+        /// <param name="network"> Network properties of a server. Only required if you want your server to be integrated into a virtual network provided by customer. </param>
+        /// <param name="highAvailability"> High availability properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
+        /// <param name="sourceServerResourceId"> Identifier of the server to be used as the source of the new server. Required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', 'Replica', or 'ReviveDropped'. This property is returned only when the target server is a read replica. </param>
+        /// <param name="pointInTimeUtc"> Creation time (in ISO8601 format) of the backup which you want to restore in the new server. It's required when 'createMode' is 'PointInTimeRestore', 'GeoRestore', or 'ReviveDropped'. </param>
+        /// <param name="availabilityZone"> Availability zone of a server. </param>
+        /// <param name="replicationRole"> Role of the server in a replication set. </param>
+        /// <param name="replicaCapacity"> Maximum number of read replicas allowed for a server. </param>
+        /// <param name="replica"> Read replica properties of a server. Required only in case that you want to promote a server. </param>
+        /// <param name="createMode"> Creation mode of a new server. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified server. </param>
+        /// <param name="cluster"> Cluster properties of a server. </param>
+        /// <param name="sku"> Compute tier and size of a server. </param>
+        /// <param name="identity"> User assigned managed identities assigned to the server. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerData PostgreSqlFlexibleServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string administratorLogin, string administratorLoginPassword, PostgreSqlFlexibleServerVersion? version, string minorVersion, PostgreSqlFlexibleServerState? state, string fullyQualifiedDomainName, PostgreSqlFlexibleServerStorage storage, PostgreSqlFlexibleServerAuthConfig authConfig, PostgreSqlFlexibleServerDataEncryption dataEncryption, PostgreSqlFlexibleServerBackupProperties backup, PostgreSqlFlexibleServerNetwork network, PostgreSqlFlexibleServerHighAvailability highAvailability, PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow, ResourceIdentifier sourceServerResourceId, DateTimeOffset? pointInTimeUtc, string availabilityZone, PostgreSqlFlexibleServerReplicationRole? replicationRole, int? replicaCapacity, PostgreSqlFlexibleServersReplica replica, PostgreSqlFlexibleServerCreateMode? createMode, IEnumerable<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections, PostgreSqlFlexibleServerClusterProperties cluster, PostgreSqlFlexibleServerSku sku, PostgreSqlFlexibleServerUserAssignedIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new PostgreSqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin is null && administratorLoginPassword is null && version is null && minorVersion is null && state is null && fullyQualifiedDomainName is null && storage is null && authConfig is null && dataEncryption is null && backup is null && network is null && highAvailability is null && maintenanceWindow is null && sourceServerResourceId is null && pointInTimeUtc is null && availabilityZone is null && replicationRole is null && replicaCapacity is null && replica is null && createMode is null && privateEndpointConnections is null && cluster is null ? default : new ServerProperties(
+                    administratorLogin,
+                    administratorLoginPassword,
+                    version,
+                    minorVersion,
+                    state,
+                    fullyQualifiedDomainName,
+                    storage,
+                    authConfig,
+                    dataEncryption,
+                    backup,
+                    network,
+                    highAvailability,
+                    maintenanceWindow,
+                    sourceServerResourceId,
+                    pointInTimeUtc,
+                    availabilityZone,
+                    replicationRole,
+                    replicaCapacity,
+                    replica,
+                    createMode,
+                    (privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
+                    cluster,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
         /// <summary> Compute information of a server. </summary>
         /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
         /// <param name="tier"> Tier of the compute assigned to a server. </param>
@@ -409,6 +391,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
             return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), principalId, identityType, tenantId, default);
+        }
+
+        /// <summary> Availability of a migration name. </summary>
+        /// <param name="name"> Name of the migration to check for validity and availability. </param>
+        /// <param name="resourceType"> Type of resource. </param>
+        /// <param name="isNameAvailable"> Indicates if the migration name is available. </param>
+        /// <param name="reason"> Migration name availability reason. </param>
+        /// <param name="message"> Migration name availability message. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/> instance for mocking. </returns>
+        public static PostgreSqlCheckMigrationNameAvailabilityContent PostgreSqlCheckMigrationNameAvailabilityContent(string name = default, ResourceType resourceType = default, bool? isNameAvailable = default, PostgreSqlMigrationNameUnavailableReason? reason = default, string message = default)
+        {
+            return new PostgreSqlCheckMigrationNameAvailabilityContent(
+                name,
+                resourceType,
+                isNameAvailable,
+                reason,
+                message,
+                default);
         }
 
         /// <param name="sku"> Compute tier and size of a server. </param>
@@ -588,24 +588,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default);
         }
 
-        /// <summary> Maintenance event resource for a PostgreSQL flexible server. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.MaintenanceEventData"/> instance for mocking. </returns>
-        public static MaintenanceEventData MaintenanceEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventProperties properties = default)
-        {
-            return new MaintenanceEventData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of a maintenance event resource. </summary>
         /// <param name="maintenanceEventId"> A service-generated identifier for this maintenance event, assigned by the platform (e.g., 'YL1T-HFG'). The format is not contractual and clients should not attempt to parse or construct this value. </param>
         /// <param name="maintenanceType"> The maintenance type (e.g., 'PlannedMaintenance'). </param>
@@ -638,6 +620,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 default);
         }
 
+        /// <summary> Maintenance event resource for a PostgreSQL flexible server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MaintenanceEventData"/> instance for mocking. </returns>
+        public static MaintenanceEventData MaintenanceEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MaintenanceEventProperties properties = default)
+        {
+            return new MaintenanceEventData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Parameters to reschedule a maintenance event. </summary>
         /// <param name="postponeToOn"> New start time in RFC3339 format. </param>
         /// <returns> A new <see cref="Models.MaintenanceEventRescheduleContent"/> instance for mocking. </returns>
@@ -665,24 +665,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 plannedEndsOn,
                 isAppliedNow,
                 lastUpdatedOn,
-                default);
-        }
-
-        /// <summary> Major version upgrade precheck resource for a PostgreSQL flexible server. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="FlexibleServers.MajorVersionUpgradePrecheckData"/> instance for mocking. </returns>
-        public static MajorVersionUpgradePrecheckData MajorVersionUpgradePrecheckData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MajorVersionUpgradePrecheckProperties properties = default)
-        {
-            return new MajorVersionUpgradePrecheckData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -751,6 +733,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 errorCode,
                 errorMessage,
                 policyDescription,
+                default);
+        }
+
+        /// <summary> Major version upgrade precheck resource for a PostgreSQL flexible server. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FlexibleServers.MajorVersionUpgradePrecheckData"/> instance for mocking. </returns>
+        public static MajorVersionUpgradePrecheckData MajorVersionUpgradePrecheckData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MajorVersionUpgradePrecheckProperties properties = default)
+        {
+            return new MajorVersionUpgradePrecheckData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

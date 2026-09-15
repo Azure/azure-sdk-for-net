@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
     public static partial class ArmPortalServicesCopilotModelFactory
     {
 
+        /// <summary> The Copilot Settings properties. </summary>
+        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
+        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
+        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
+        {
+            return new PortalServicesCopilotSettingsProperties(isAccessControlEnabled, provisioningState, default);
+        }
+
         /// <summary> The copilot settings tenant resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -33,15 +42,6 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> The Copilot Settings properties. </summary>
-        /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>
-        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
-        /// <returns> A new <see cref="Models.PortalServicesCopilotSettingsProperties"/> instance for mocking. </returns>
-        public static PortalServicesCopilotSettingsProperties PortalServicesCopilotSettingsProperties(bool isAccessControlEnabled = default, PortalServicesResourceProvisioningState? provisioningState = default)
-        {
-            return new PortalServicesCopilotSettingsProperties(isAccessControlEnabled, provisioningState, default);
         }
 
         /// <param name="isAccessControlEnabled"> Boolean indicating if role-based access control is enabled for copilot in this tenant. </param>

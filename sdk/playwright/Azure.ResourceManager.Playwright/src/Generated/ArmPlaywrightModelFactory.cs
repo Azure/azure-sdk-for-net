@@ -18,6 +18,28 @@ namespace Azure.ResourceManager.Playwright.Models
     public static partial class ArmPlaywrightModelFactory
     {
 
+        /// <summary> Playwright workspace resource properties. </summary>
+        /// <param name="provisioningState"> The status of the last resource operation. </param>
+        /// <param name="dataplaneUri"> The workspace data plane service API URI. </param>
+        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
+        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
+        /// <param name="workspaceId"> The workspace ID in GUID format. </param>
+        /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
+        /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
+        /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, PlaywrightEnablementStatus? reporting, Uri storageUri = default)
+        {
+            return new PlaywrightWorkspaceProperties(
+                provisioningState,
+                dataplaneUri,
+                regionalAffinity,
+                localAuth,
+                workspaceId,
+                reporting,
+                storageUri,
+                default);
+        }
+
         /// <summary> Playwright workspace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -41,28 +63,6 @@ namespace Azure.ResourceManager.Playwright.Models
                 location,
                 properties,
                 identity,
-                default);
-        }
-
-        /// <summary> Playwright workspace resource properties. </summary>
-        /// <param name="provisioningState"> The status of the last resource operation. </param>
-        /// <param name="dataplaneUri"> The workspace data plane service API URI. </param>
-        /// <param name="regionalAffinity"> Controls the connection region for client workers to cloud-hosted browsers. When enabled, workers connect to browsers in the closest Azure region for lower latency. When disabled, workers connect to browsers in the Azure region where the workspace was created. </param>
-        /// <param name="localAuth"> Enables the workspace to use local authentication through service access tokens for operations. </param>
-        /// <param name="workspaceId"> The workspace ID in GUID format. </param>
-        /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
-        /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
-        /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState, Uri dataplaneUri, PlaywrightEnablementStatus? regionalAffinity, PlaywrightEnablementStatus? localAuth, string workspaceId, PlaywrightEnablementStatus? reporting, Uri storageUri = default)
-        {
-            return new PlaywrightWorkspaceProperties(
-                provisioningState,
-                dataplaneUri,
-                regionalAffinity,
-                localAuth,
-                workspaceId,
-                reporting,
-                storageUri,
                 default);
         }
 
@@ -108,24 +108,6 @@ namespace Azure.ResourceManager.Playwright.Models
             return new PlaywrightNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Subscription-level location-based Playwright quota resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Playwright.PlaywrightQuotaData"/> instance for mocking. </returns>
-        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
-        {
-            return new PlaywrightQuotaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Subscription-level location-based Playwright quota resource properties. </summary>
         /// <param name="freeTrial"> The subscription-level location-based Playwright quota free trial properties. </param>
         /// <param name="provisioningState"> The status of the last resource operation. </param>
@@ -144,16 +126,16 @@ namespace Azure.ResourceManager.Playwright.Models
             return new PlaywrightFreeTrialProperties(workspaceId, state, default);
         }
 
-        /// <summary> Playwright workspace quota resource. </summary>
+        /// <summary> Subscription-level location-based Playwright quota resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceQuotaData"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceQuotaData PlaywrightWorkspaceQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightWorkspaceQuotaProperties properties = default)
+        /// <returns> A new <see cref="Playwright.PlaywrightQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightQuotaData PlaywrightQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
         {
-            return new PlaywrightWorkspaceQuotaData(
+            return new PlaywrightQuotaData(
                 id,
                 name,
                 resourceType,
@@ -186,6 +168,24 @@ namespace Azure.ResourceManager.Playwright.Models
                 allocatedValue,
                 usedValue,
                 percentageUsed,
+                default);
+        }
+
+        /// <summary> Playwright workspace quota resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Playwright.PlaywrightWorkspaceQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightWorkspaceQuotaData PlaywrightWorkspaceQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightWorkspaceQuotaProperties properties = default)
+        {
+            return new PlaywrightWorkspaceQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
