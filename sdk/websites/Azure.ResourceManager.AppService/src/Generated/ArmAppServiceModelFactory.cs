@@ -1462,7 +1462,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             alwaysReady ??= new ChangeTrackingList<FunctionAppAlwaysReadyConfig>();
 
-            return new FunctionAppScaleAndConcurrency((alwaysReady ?? new ChangeTrackingList<FunctionAppAlwaysReadyConfig>()).ToList(), functionAppMaximumInstanceCount, functionAppInstanceMemoryMB, triggersConcurrentHttpPerInstanceConcurrency is null ? default : new FunctionsScaleAndConcurrencyTriggers(new FunctionsScaleAndConcurrencyTriggersHttp(triggersConcurrentHttpPerInstanceConcurrency, default), default), default);
+            return new FunctionAppScaleAndConcurrency((alwaysReady ?? new ChangeTrackingList<FunctionAppAlwaysReadyConfig>()).ToList(), functionAppMaximumInstanceCount, functionAppInstanceMemoryMB, triggersConcurrentHttpPerInstanceConcurrency is null ? default : new FunctionsScaleAndConcurrencyTriggers(triggersConcurrentHttpPerInstanceConcurrency is null ? default : new FunctionsScaleAndConcurrencyTriggersHttp(triggersConcurrentHttpPerInstanceConcurrency, default), default), default);
         }
 
         /// <summary> Sets the number of 'Always Ready' instances for a function group or a specific function. </summary>
@@ -1856,7 +1856,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isCustomMode,
                     (registryAdapters ?? new ChangeTrackingList<RegistryAdapter>()).ToList(),
                     (installScripts ?? new ChangeTrackingList<InstallScript>()).ToList(),
-                    new ServerFarmNetworkSettings(virtualNetworkSubnetId, default),
+                    virtualNetworkSubnetId is null ? default : new ServerFarmNetworkSettings(virtualNetworkSubnetId, default),
                     (storageMounts ?? new ChangeTrackingList<StorageMount>()).ToList(),
                     rdpEnabled,
                     default),
@@ -2138,7 +2138,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -3343,7 +3343,7 @@ namespace Azure.ResourceManager.AppService.Models
                     managedPipelineMode,
                     (virtualApplications ?? new ChangeTrackingList<VirtualApplication>()).ToList(),
                     loadBalancing,
-                    new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
+                    experimentsRampUpRules is null ? default : new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
                     limits,
                     isAutoHealEnabled,
                     autoHealRules,
@@ -3353,8 +3353,8 @@ namespace Azure.ResourceManager.AppService.Models
                     vnetPrivatePortsCount,
                     cors,
                     push,
-                    new AppServiceApiDefinitionInfo(apiDefinitionUriStringValue, default),
-                    new ApiManagementConfig(apiManagementConfigId, default),
+                    apiDefinitionUriStringValue is null ? default : new AppServiceApiDefinitionInfo(apiDefinitionUriStringValue, default),
+                    apiManagementConfigId is null ? default : new ApiManagementConfig(apiManagementConfigId, default),
                     autoSwapSlotName,
                     isLocalMySqlEnabled,
                     managedServiceIdentityId,
@@ -4025,7 +4025,7 @@ namespace Azure.ResourceManager.AppService.Models
                     (metrics ?? new ChangeTrackingList<DiagnosticMetricSet>()).ToList(),
                     (abnormalTimePeriods ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>()).ToList(),
                     (data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>()).ToList(),
-                    new DetectorMetadata(dataSource, default),
+                    dataSource is null ? default : new DetectorMetadata(dataSource, default),
                     default),
                 kind,
                 default);
@@ -4833,7 +4833,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -5886,7 +5886,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                applicationLogs is null && httpLogs is null && isFailedRequestsTracingEnabled is null && isDetailedErrorMessagesEnabled is null ? default : new SiteLogsConfigProperties(applicationLogs, httpLogs, new WebAppEnabledConfig(isFailedRequestsTracingEnabled, default), new WebAppEnabledConfig(isDetailedErrorMessagesEnabled, default), default),
+                applicationLogs is null && httpLogs is null && isFailedRequestsTracingEnabled is null && isDetailedErrorMessagesEnabled is null ? default : new SiteLogsConfigProperties(applicationLogs, httpLogs, isFailedRequestsTracingEnabled is null ? default : new WebAppEnabledConfig(isFailedRequestsTracingEnabled, default), isDetailedErrorMessagesEnabled is null ? default : new WebAppEnabledConfig(isDetailedErrorMessagesEnabled, default), default),
                 kind,
                 default);
         }
@@ -7032,7 +7032,7 @@ namespace Azure.ResourceManager.AppService.Models
                     code,
                     error,
                     correlationId,
-                    new Correlation(correlationClientTrackingId, default),
+                    correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                     workflow,
                     trigger,
                     outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputContent>(),
@@ -7541,7 +7541,7 @@ namespace Azure.ResourceManager.AppService.Models
                     code,
                     error,
                     trackingId,
-                    new Correlation(correlationClientTrackingId, default),
+                    correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                     inputsLink,
                     outputsLink,
                     isFired,
@@ -8463,7 +8463,7 @@ namespace Azure.ResourceManager.AppService.Models
                     managedPipelineMode,
                     (virtualApplications ?? new ChangeTrackingList<VirtualApplication>()).ToList(),
                     loadBalancing,
-                    new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
+                    experimentsRampUpRules is null ? default : new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
                     limits,
                     isAutoHealEnabled,
                     autoHealRules,
@@ -8474,7 +8474,7 @@ namespace Azure.ResourceManager.AppService.Models
                     cors,
                     push,
                     default,
-                    new ApiManagementConfig(apiManagementConfigId, default),
+                    apiManagementConfigId is null ? default : new ApiManagementConfig(apiManagementConfigId, default),
                     autoSwapSlotName,
                     isLocalMySqlEnabled,
                     managedServiceIdentityId,
@@ -8645,7 +8645,7 @@ namespace Azure.ResourceManager.AppService.Models
                     managedPipelineMode,
                     (virtualApplications ?? new ChangeTrackingList<VirtualApplication>()).ToList(),
                     loadBalancing,
-                    new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
+                    experimentsRampUpRules is null ? default : new RoutingRuleExperiments((experimentsRampUpRules ?? new ChangeTrackingList<RampUpRule>()).ToList(), default),
                     limits,
                     isAutoHealEnabled,
                     autoHealRules,
@@ -8656,7 +8656,7 @@ namespace Azure.ResourceManager.AppService.Models
                     cors,
                     push,
                     default,
-                    new ApiManagementConfig(apiManagementConfigId, default),
+                    apiManagementConfigId is null ? default : new ApiManagementConfig(apiManagementConfigId, default),
                     autoSwapSlotName,
                     isLocalMySqlEnabled,
                     managedServiceIdentityId,
@@ -9305,7 +9305,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -10026,7 +10026,7 @@ namespace Azure.ResourceManager.AppService.Models
                     isCustomMode,
                     (registryAdapters ?? new ChangeTrackingList<RegistryAdapter>()).ToList(),
                     (installScripts ?? new ChangeTrackingList<InstallScript>()).ToList(),
-                    new ServerFarmNetworkSettings(virtualNetworkSubnetId, default),
+                    virtualNetworkSubnetId is null ? default : new ServerFarmNetworkSettings(virtualNetworkSubnetId, default),
                     (storageMounts ?? new ChangeTrackingList<StorageMount>()).ToList(),
                     rdpEnabled,
                     default),
@@ -10283,7 +10283,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -10482,7 +10482,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
+                provisioningState is null && privateEndpointId is null && privateLinkServiceConnectionState is null && ipAddresses is null ? default : new RemotePrivateEndpointConnectionARMResourceProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, (ipAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(), default),
                 kind,
                 default);
         }
@@ -11059,7 +11059,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                applicationLogs is null && httpLogs is null && isFailedRequestsTracingEnabled is null && isDetailedErrorMessagesEnabled is null ? default : new SiteLogsConfigProperties(applicationLogs, httpLogs, new WebAppEnabledConfig(isFailedRequestsTracingEnabled, default), new WebAppEnabledConfig(isDetailedErrorMessagesEnabled, default), default),
+                applicationLogs is null && httpLogs is null && isFailedRequestsTracingEnabled is null && isDetailedErrorMessagesEnabled is null ? default : new SiteLogsConfigProperties(applicationLogs, httpLogs, isFailedRequestsTracingEnabled is null ? default : new WebAppEnabledConfig(isFailedRequestsTracingEnabled, default), isDetailedErrorMessagesEnabled is null ? default : new WebAppEnabledConfig(isDetailedErrorMessagesEnabled, default), default),
                 kind,
                 default);
         }
@@ -11342,7 +11342,7 @@ namespace Azure.ResourceManager.AppService.Models
                     code,
                     error,
                     correlationId,
-                    new Correlation(correlationClientTrackingId, default),
+                    correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                     workflow,
                     trigger,
                     outputs ?? new ChangeTrackingDictionary<string, WorkflowOutputContent>(),
@@ -11385,7 +11385,7 @@ namespace Azure.ResourceManager.AppService.Models
                     code,
                     error,
                     trackingId,
-                    new Correlation(correlationClientTrackingId, default),
+                    correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                     inputsLink,
                     outputsLink,
                     isFired,

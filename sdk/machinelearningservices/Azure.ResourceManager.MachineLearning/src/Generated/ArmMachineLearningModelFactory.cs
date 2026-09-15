@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState,
                     publicNetworkAccess,
                     serverlessComputeSettings,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                    serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                     serviceProvisionedResourceGroup,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
                     storageAccount,
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default), sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 primaryUserAssignedIdentity,
                 publicNetworkAccessType,
                 serverlessComputeSettings,
-                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
+                serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(serviceManagedResourcesCosmosDBCollectionsThroughput is null ? default : new CosmosDBSettings(serviceManagedResourcesCosmosDBCollectionsThroughput, default), default),
                 systemDatastoresAuthMode,
                 isV1LegacyMode,
                 default);
@@ -812,8 +812,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && managedResourceGroupAssignedIdentities is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
                     discoveryUri,
                     intellectualPropertyPublisher,
-                    new ArmResourceId(managedResourceId, default),
-                    new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
+                    managedResourceGroupAssignedIdentities is null ? default : new ManagedResourceGroupSettings((managedResourceGroupAssignedIdentities ?? new ChangeTrackingList<ManagedResourceGroupAssignedIdentities>()).ToList(), default),
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),
                     publicNetworkAccess,
@@ -7012,7 +7012,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <returns> A new <see cref="Models.MachineLearningComputePatch"/> instance for mocking. </returns>
         public static MachineLearningComputePatch MachineLearningComputePatch(AmlComputeScaleSettings scaleSettings = default)
         {
-            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(new ScaleSettingsInformation(scaleSettings, default), default), default);
+            return new MachineLearningComputePatch(scaleSettings is null ? default : new ClusterUpdateProperties(scaleSettings is null ? default : new ScaleSettingsInformation(scaleSettings, default), default), default);
         }
 
         /// <summary> Compute node information related to a AmlCompute. </summary>
@@ -8044,9 +8044,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     discoveryUri,
                     enableDataIsolation,
                     default,
-                    new MachineLearningEncryptionProperty(
+                    primaryUserAssignedIdentity is null ? default : new MachineLearningEncryptionProperty(
                         default,
-                        new IdentityForCmk(primaryUserAssignedIdentity, default),
+                        primaryUserAssignedIdentity is null ? default : new IdentityForCmk(primaryUserAssignedIdentity, default),
                         default,
                         default,
                         default,
@@ -8068,7 +8068,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     provisioningState,
                     default,
                     serverlessComputeSettings,
-                    new ServiceManagedResourcesSettings(new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
+                    cosmosDbCollectionsThroughput is null ? default : new ServiceManagedResourcesSettings(cosmosDbCollectionsThroughput is null ? default : new CosmosDBSettings(cosmosDbCollectionsThroughput, default), default),
                     serviceProvisionedResourceGroup,
                     (sharedPrivateLinkResources ?? new ChangeTrackingList<MachineLearningSharedPrivateLinkResource>()).ToList(),
                     storageAccount,
@@ -8988,7 +8988,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 discoveryUri is null && intellectualPropertyPublisher is null && managedResourceId is null && mlFlowRegistryUri is null && registryPrivateEndpointConnections is null && publicNetworkAccess is null && regionDetails is null ? default : new RegistryProperties(
                     discoveryUri,
                     intellectualPropertyPublisher,
-                    new ArmResourceId(managedResourceId, default),
+                    managedResourceId is null ? default : new ArmResourceId(managedResourceId, default),
                     default,
                     mlFlowRegistryUri,
                     (registryPrivateEndpointConnections ?? new ChangeTrackingList<RegistryPrivateEndpointConnection>()).ToList(),

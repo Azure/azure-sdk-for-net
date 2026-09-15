@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default));
+                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default));
         }
 
         /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'. </summary>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default));
+                awsCloudExcludedAccounts is null ? default : new PublicCloudConnectorPropertiesUpdate(awsCloudExcludedAccounts is null ? default : new AwsCloudProfileUpdate((awsCloudExcludedAccounts ?? new ChangeTrackingList<string>()).ToList(), default), default));
         }
     }
 }

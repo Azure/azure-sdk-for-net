@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity,
                     triggerOperator,
                     triggerThreshold,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     (sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>()).ToList(),
                     default));
         }
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     (subTechniques ?? new ChangeTrackingList<string>()).ToList(),
                     version,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     (sentinelEntitiesMappings ?? new ChangeTrackingList<SentinelEntityMapping>()).ToList(),
                     default));
         }
@@ -2706,7 +2706,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
+                tenantId is null && dataTypes is null && filteredProvidersAlerts is null ? default : new MtpDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes, filteredProvidersAlerts is null ? default : new MtpFilteredProviders((filteredProvidersAlerts ?? new ChangeTrackingList<MtpProvider>()).ToList(), default)));
         }
 
         /// <param name="incidentsState"> Describe whether this data type connection is enabled or not. </param>
@@ -4792,7 +4792,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     title,
                     content,
                     description,
-                    new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
+                    query is null ? default : new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
                     inputEntityType,
                     (requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>()).ToList(),
                     entitiesFilter ?? new ChangeTrackingDictionary<string, IList<string>>(),
@@ -4875,7 +4875,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     title,
                     content,
                     description,
-                    new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
+                    query is null ? default : new ActivityEntityQueriesPropertiesQueryDefinitions(query, default),
                     inputEntityType,
                     (requiredInputFieldsSets ?? new ChangeTrackingList<IList<string>>()).ToList(),
                     entitiesFilter ?? new ChangeTrackingDictionary<string, IList<string>>(),
@@ -7126,7 +7126,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     incidentUri,
                     default,
                     default,
-                    new TeamInformation(
+                    createdOn is null && description is null ? default : new TeamInformation(
                         default,
                         default,
                         createdOn,
@@ -7365,7 +7365,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     severity,
                     triggerOperator,
                     triggerThreshold,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -7439,7 +7439,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     default,
                     version,
-                    new EventGroupingSettings(eventGroupingAggregationKind, default),
+                    eventGroupingAggregationKind is null ? default : new EventGroupingSettings(eventGroupingAggregationKind, default),
                     customDetails ?? new ChangeTrackingDictionary<string, string>(),
                     (entityMappings ?? new ChangeTrackingList<SecurityInsightsAlertRuleEntityMapping>()).ToList(),
                     alertDetailsOverride,
@@ -7467,7 +7467,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AadDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents AATP (Azure Advanced Threat Protection) data connector. </summary>
@@ -7490,7 +7490,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new AatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents ASC (Azure Security Center) data connector. </summary>
@@ -7513,7 +7513,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
+                alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
         }
 
         /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector. </summary>
@@ -7536,7 +7536,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 etag,
                 default,
-                tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
+                tenantId is null && alertsState is null ? default : new MdatpDataConnectorProperties(tenantId.GetValueOrDefault(), alertsState is null ? default : new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default));
         }
 
         /// <summary> Represents an IoT device entity. </summary>

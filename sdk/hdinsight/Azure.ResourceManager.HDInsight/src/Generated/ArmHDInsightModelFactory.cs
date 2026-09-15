@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 isPrimary,
                 privateIPAddress,
                 privateIPAllocationMethod,
-                new ResourceId(subnetId, default),
+                subnetId is null ? default : new ResourceId(subnetId, default),
                 default), default);
         }
 
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && linkIdentifier is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, linkIdentifier, provisioningState, default),
+                privateEndpointId is null && connectionState is null && linkIdentifier is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, linkIdentifier, provisioningState, default),
                 default);
         }
 
@@ -1249,7 +1249,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && linkIdentifier is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, linkIdentifier, provisioningState, default),
+                privateEndpointId is null && connectionState is null && linkIdentifier is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), connectionState, linkIdentifier, provisioningState, default),
                 default);
         }
 
