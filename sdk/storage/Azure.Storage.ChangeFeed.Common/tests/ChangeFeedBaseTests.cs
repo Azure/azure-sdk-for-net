@@ -126,6 +126,138 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
+        /// When <c>IncludeNonFinalizedEvents == false</c> and no user end time is supplied, the
+        /// read must be bounded (exclusive) at the finalized watermark: events whose
+        /// <c>EventTime</c> is at or after <c>LastConsumable</c> live in the same boundary segment
+        /// bucket but must not be returned.
+        /// </summary>
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedFalse_NoEndTime_BoundsAtLastConsumableExclusive()
+        {
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+
+            List<TestEvent> rows = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-before-1", EventTime = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-before-2", EventTime = bucket.AddSeconds(20) },
+                new TestEvent { Id = "evt-at-watermark", EventTime = lastConsumable },
+                new TestEvent { Id = "evt-after", EventTime = bucket.AddSeconds(40) },
+            };
+
+            ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
+                bucket,
+                rows,
+                lastConsumable,
+                endTime: null,
+                includeNonFinalizedEvents: false);
+
+            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
+
+            Assert.AreEqual(2, page.Values.Count);
+            Assert.AreEqual("evt-before-1", page.Values[0].Id);
+            Assert.AreEqual("evt-before-2", page.Values[1].Id);
+        }
+
+        /// <summary>
+        /// When <c>IncludeNonFinalizedEvents == true</c>, the finalized watermark must not cap the
+        /// read: events at or after <c>LastConsumable</c> are returned (only the user-supplied end
+        /// time, here none, bounds the read).
+        /// </summary>
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedTrue_ReadsPastLastConsumable()
+        {
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+
+            List<TestEvent> rows = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-before", EventTime = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-at-watermark", EventTime = lastConsumable },
+                new TestEvent { Id = "evt-after", EventTime = bucket.AddSeconds(40) },
+            };
+
+            ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
+                bucket,
+                rows,
+                lastConsumable,
+                endTime: null,
+                includeNonFinalizedEvents: true);
+
+            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
+
+            Assert.AreEqual(3, page.Values.Count);
+            Assert.AreEqual("evt-before", page.Values[0].Id);
+            Assert.AreEqual("evt-at-watermark", page.Values[1].Id);
+            Assert.AreEqual("evt-after", page.Values[2].Id);
+        }
+
+        /// <summary>
+        /// When <c>IncludeNonFinalizedEvents == false</c> and the user supplies an end time earlier
+        /// than <c>LastConsumable</c>, the earlier user end time wins (min semantics) and is applied
+        /// exclusively.
+        /// </summary>
+        [Test]
+        public async Task GetPage_IncludeNonFinalizedFalse_UserEndTimeEarlierThanWatermark_UserEndTimeWins()
+        {
+            DateTimeOffset bucket = new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero);
+            DateTimeOffset lastConsumable = bucket.AddSeconds(30);
+            DateTimeOffset userEndTime = bucket.AddSeconds(15);
+
+            List<TestEvent> rows = new List<TestEvent>
+            {
+                new TestEvent { Id = "evt-before-end", EventTime = bucket.AddSeconds(10) },
+                new TestEvent { Id = "evt-at-end", EventTime = userEndTime },
+                new TestEvent { Id = "evt-after-end", EventTime = bucket.AddSeconds(20) },
+            };
+
+            ChangeFeedBase<TestEvent> changeFeed = BuildBoundedFeed(
+                bucket,
+                rows,
+                lastConsumable,
+                endTime: userEndTime,
+                includeNonFinalizedEvents: false);
+
+            Page<TestEvent> page = await changeFeed.GetPage(IsAsync, pageSize: 10);
+
+            Assert.AreEqual(1, page.Values.Count);
+            Assert.AreEqual("evt-before-end", page.Values[0].Id);
+        }
+
+        /// <summary>
+        /// Builds a <see cref="ChangeFeedBase{TEvent}"/> over a single in-memory segment with the
+        /// supplied watermark / end time / non-finalized settings, used to exercise the finalized
+        /// event-level cap.
+        /// </summary>
+        private ChangeFeedBase<TestEvent> BuildBoundedFeed(
+            DateTimeOffset bucket,
+            List<TestEvent> rows,
+            DateTimeOffset lastConsumable,
+            DateTimeOffset? endTime,
+            bool includeNonFinalizedEvents)
+        {
+            string manifestPath = $"idx/segments/{bucket:yyyy/MM/dd}/{bucket:HHmm}/meta.json";
+            SegmentBase<TestEvent> segment = BuildSegmentWithEvents(manifestPath, bucket, rows);
+
+            Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Loose);
+            containerClient.Setup(c => c.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
+
+            return new ChangeFeedBase<TestEvent>(
+                containerClient: containerClient.Object,
+                segmentFactory: segmentFactory.Object,
+                years: new Queue<string>(),
+                segments: new Queue<string>(),
+                currentSegment: segment,
+                lastConsumable: lastConsumable,
+                startTime: null,
+                endTime: endTime,
+                config: CreateTestConfig(),
+                includeNonFinalizedEvents: includeNonFinalizedEvents,
+                disableEventTimeFilter: false);
+        }
+
+        /// <summary>
         /// Builds a <see cref="ChangeFeedBase{TEvent}"/> over a single in-memory segment whose
         /// bucket <c>DateTime</c>, <c>startTime</c>, and <c>endTime</c> all equal
         /// <paramref name="window"/> — the degenerate same-minute window the snapshot reader hits.

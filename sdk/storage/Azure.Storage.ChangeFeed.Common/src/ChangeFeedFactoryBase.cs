@@ -209,7 +209,10 @@ namespace Azure.Storage.ChangeFeed.Common
             if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
 
             // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
-            // last consumable watermark — pass the user's endTime through directly.
+            // last consumable watermark — pass the user's endTime through directly. When it is
+            // false, cap enumeration at min(lastConsumable, endTime). The event-level finalized
+            // cap (EventTime < lastConsumable) is applied inside ChangeFeedBase, which also
+            // receives lastConsumable, so the cursor can still persist the user's endTime.
             DateTimeOffset? effectiveEndTime = _includeNonFinalizedEvents
                 ? endTime
                 : ChangeFeedExtensionsBase.MinDateTime(lastConsumable, endTime);
