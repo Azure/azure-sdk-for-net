@@ -4,8 +4,6 @@
 
 ### Features Added
 
-- `ManagedIdentityCredentialOptions.DisableMtlsProofOfPossession`, forwarded to Azure.Core, is no longer experimental and no longer requires `AZID0004` suppression.
-
 ### Breaking Changes
 
 ### Bugs Fixed
