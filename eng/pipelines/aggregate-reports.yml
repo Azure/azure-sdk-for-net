@@ -160,13 +160,14 @@ stages:
           - template: /eng/pipelines/templates/steps/install-dotnet.yml
 
           - task: PowerShell@2
-            displayName: Download Latest Dev Packages
+            displayName: Download Latest Dev Packages and Symbols
             inputs:
               pwsh: true
               filePath: 'eng/scripts/DownloadDevPackages.ps1'
               arguments: >
                 -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
                 -NupkgFilesDestination 'nupkgFiles'
+                -SymbolsDestination 'symbols'
 
           - task: AzureCLI@2
             displayName: Azure CLI Login
@@ -192,6 +193,7 @@ stages:
             displayName: 'Run APIScan'
             inputs:
               softwareFolder: $(Build.ArtifactStagingDirectory)
+              symbolsFolder: 'SRV*$(Build.ArtifactStagingDirectory)/symbols'
               # SoftwareName cannot change as it is used for looking up baselining data
               softwareName: 'Azure SDK Libraries'
               softwareVersionNum: '$(OfficialBuildId)'

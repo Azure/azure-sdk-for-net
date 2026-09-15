@@ -6,6 +6,8 @@ param (
   # Install-Package requires a v2 nuget feed.
   [string] $NugetSource = "https://pkgs.dev.azure.com/azure-sdk/public/_packaging/azure-sdk-for-net/nuget/v2",
   [string] $FeedId = "azure-sdk-for-net",
+  [string] $SymbolsDestination,
+  [string] $SymbolServer = "http://symweb",
   [ValidateRange(1, 2147483647)]
   [int] $ThrottleLimit = [Math]::Max(8, [Environment]::ProcessorCount * 2)
 )
@@ -67,6 +69,38 @@ $packageDownloads | ForEach-Object -Parallel {
     }
   }
 } -ThrottleLimit $ThrottleLimit
+
+if ($SymbolsDestination) {
+  $symbolsPath = Join-Path $WorkingDirectory $SymbolsDestination
+  New-Item -Path $symbolsPath -ItemType Directory -Force | Out-Null
+
+  $dotnetSymbolToolsPath = Join-Path ([IO.Path]::GetTempPath()) "dotnet-symbol-$PID"
+  try {
+    & dotnet tool install dotnet-symbol --tool-path $dotnetSymbolToolsPath --verbosity minimal
+    if ($LASTEXITCODE -ne 0) {
+      throw "Failed to install dotnet-symbol. Exit code: $LASTEXITCODE"
+    }
+
+    $dotnetSymbolExecutable = if ($IsWindows) { "dotnet-symbol.exe" } else { "dotnet-symbol" }
+    $dotnetSymbolPath = Join-Path $dotnetSymbolToolsPath $dotnetSymbolExecutable
+    & $dotnetSymbolPath `
+      --symbols `
+      --server-path $SymbolServer `
+      --cache-directory $symbolsPath `
+      --recurse-subdirectories `
+      (Join-Path $nugetPackagesPath "*.dll")
+
+    if ($LASTEXITCODE -ne 0) {
+      throw "Failed to download symbols from $SymbolServer. Exit code: $LASTEXITCODE"
+    }
+  }
+  finally {
+    Remove-Item -Path $dotnetSymbolToolsPath -Recurse -Force -ErrorAction SilentlyContinue
+  }
+
+  $symbolCount = @(Get-ChildItem -Path $symbolsPath -Filter *.pdb -Recurse).Count
+  Write-Host "Downloaded $symbolCount symbol files"
+}
 
 $nupkgDirPath = Join-Path $WorkingDirectory $NupkgFilesDestination
 New-Item -Path $WorkingDirectory -Type "directory" -Name $NupkgFilesDestination
