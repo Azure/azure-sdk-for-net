@@ -30,28 +30,25 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
-        public void GetReadmeContentPromptsForServiceDescription()
+        public void GetReadmeContentProvidesDefaultDescription()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
             string content = scaffolding.TestGetReadmeContent("Azure.Test.Package");
 
-            Assert.That(content, Does.Contain("TODO: Replace this paragraph before publishing Azure.Test.Package."));
-            Assert.That(content, Does.Contain("Introduce the Azure service"));
-            Assert.That(content, Does.Contain("main scenarios"));
-            Assert.That(content, Does.Contain("link to the service documentation"));
+            Assert.That(content, Does.Contain("The Azure.Test.Package client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics."));
+            Assert.That(content, Does.Not.Contain("TODO"));
             Assert.That(content, Does.Not.Contain("rich experience"));
         }
 
         [Test]
-        public void GetSourceProjectFileContentPromptsForServiceDescription()
+        public void GetSourceProjectFileContentProvidesDefaultDescription()
         {
             var scaffolding = new TestableNewAzureProjectScaffolding();
             var project = XDocument.Parse(scaffolding.TestGetSourceProjectFileContent());
             string? description = project.Root?.Element("PropertyGroup")?.Element("Description")?.Value;
 
-            Assert.That(description, Does.Contain($"TODO: Replace this text before publishing {AzureClientGenerator.Instance.Configuration.PackageName}."));
-            Assert.That(description, Does.Contain("Describe the Azure service"));
-            Assert.That(description, Does.Contain("main scenarios"));
+            Assert.That(description, Is.EqualTo($"The {AzureClientGenerator.Instance.Configuration.PackageName} client library provides access to Azure services from .NET applications, with support for authentication, retries, and diagnostics."));
+            Assert.That(description, Does.Not.Contain("TODO"));
             Assert.That(description, Does.Not.Contain("rich experience"));
         }
 

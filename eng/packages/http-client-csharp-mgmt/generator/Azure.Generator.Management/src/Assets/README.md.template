@@ -1,6 +1,6 @@
 # {packageName} management client library for .NET
 
-TODO: Replace this paragraph before publishing {packageName}. Introduce the Azure service whose resources this library manages, describe the supported resource management scenarios, and link to the service documentation.
+The {packageName} library provides .NET APIs for provisioning and managing Azure resources through Azure Resource Manager.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
