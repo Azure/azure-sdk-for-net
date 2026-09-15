@@ -35,6 +35,18 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [Test]
+        public void GetReadmeContentProvidesDefaultDescription()
+        {
+            var scaffolding = new TestableNewManagementProjectScaffolding();
+            string content = scaffolding.TestGetReadmeContent("Azure.ResourceManager.Test");
+
+            Assert.That(content, Does.Contain("The Azure.ResourceManager.Test library provides .NET APIs for provisioning and managing Azure resources through Azure Resource Manager."));
+            Assert.That(content, Does.Not.Contain("TODO"));
+            Assert.That(content, Does.Not.Contain("{packageName}"));
+            Assert.That(content, Does.Not.Contain("This library supports managing Microsoft Azure resources."));
+        }
+
+        [Test]
         public void GetReadmeContentUsesCorrectGrammar()
         {
             var scaffolding = new TestableNewManagementProjectScaffolding();
