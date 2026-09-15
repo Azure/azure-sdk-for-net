@@ -8,7 +8,7 @@
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary></summary>
-    public enum VmConfigurationAssignmentPropertiesComplianceStatus
+    public enum VmConfigurationAssignmentComplianceStatus
     {
         /// <summary> Compliant. </summary>
         Compliant,

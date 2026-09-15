@@ -8,7 +8,7 @@
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary></summary>
-    public enum HcrpConfigurationAssignmentPropertiesMachineComplianceStatus
+    public enum HcrpConfigurationAssignmentMachineComplianceStatus
     {
         /// <summary> Compliant. </summary>
         Compliant,

@@ -26,7 +26,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="complianceStatus"> The compliance status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmConfigurationAssignmentProperties(string configurationName, VmConfigurationAssignmentPropertiesComplianceStatus? complianceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmConfigurationAssignmentProperties(string configurationName, VmConfigurationAssignmentComplianceStatus? complianceStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationName = configurationName;
             ComplianceStatus = complianceStatus;
@@ -39,6 +39,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> The compliance status. </summary>
         [WirePath("complianceStatus")]
-        public VmConfigurationAssignmentPropertiesComplianceStatus? ComplianceStatus { get; }
+        public VmConfigurationAssignmentComplianceStatus? ComplianceStatus { get; }
     }
 }

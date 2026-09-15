@@ -127,7 +127,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             string configurationName = default;
-            HcrpConfigurationAssignmentPropertiesMachineComplianceStatus? machineComplianceStatus = default;
+            HcrpConfigurationAssignmentMachineComplianceStatus? machineComplianceStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    machineComplianceStatus = prop.Value.GetString().ToHcrpConfigurationAssignmentPropertiesMachineComplianceStatus();
+                    machineComplianceStatus = prop.Value.GetString().ToHcrpConfigurationAssignmentMachineComplianceStatus();
                     continue;
                 }
                 if (options.Format != "W")
