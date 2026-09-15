@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Search.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SearchPrivateEndpointConnection1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SearchPrivateEndpointConnection1Resource"/> object. </returns>
+        public virtual SearchPrivateEndpointConnection1Resource GetSearchPrivateEndpointConnection1Resource(ResourceIdentifier id)
         {
-            SearchPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new SearchPrivateEndpointConnectionResource(Client, id);
+            SearchPrivateEndpointConnection1Resource.ValidateResourceId(id);
+            return new SearchPrivateEndpointConnection1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="SharedSearchServicePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>

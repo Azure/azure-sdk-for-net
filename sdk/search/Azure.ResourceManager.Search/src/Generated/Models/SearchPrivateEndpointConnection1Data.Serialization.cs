@@ -10,58 +10,76 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Search.Models;
+using Azure.ResourceManager.Search;
 
-namespace Azure.ResourceManager.Search
+namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Describes an existing private endpoint connection to the Azure AI Search service. </summary>
-    public partial class SearchPrivateEndpointConnectionData : ResourceData, IJsonModel<SearchPrivateEndpointConnectionData>
+    public partial class SearchPrivateEndpointConnection1Data : ResourceData, IJsonModel<SearchPrivateEndpointConnection1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchPrivateEndpointConnection1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchPrivateEndpointConnectionData IPersistableModel<SearchPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        SearchPrivateEndpointConnection1Data IPersistableModel<SearchPrivateEndpointConnection1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnection1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchPrivateEndpointConnection1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="searchPrivateEndpointConnection1Data"> The <see cref="SearchPrivateEndpointConnection1Data"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SearchPrivateEndpointConnection1Data searchPrivateEndpointConnection1Data)
+        {
+            if (searchPrivateEndpointConnection1Data == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(searchPrivateEndpointConnection1Data, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchPrivateEndpointConnection1Data"/> from. </param>
+        internal static SearchPrivateEndpointConnection1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchPrivateEndpointConnection1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +90,10 @@ namespace Azure.ResourceManager.Search
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +120,24 @@ namespace Azure.ResourceManager.Search
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchPrivateEndpointConnectionData IJsonModel<SearchPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        SearchPrivateEndpointConnection1Data IJsonModel<SearchPrivateEndpointConnection1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnection1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchPrivateEndpointConnectionData DeserializeSearchPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchPrivateEndpointConnection1Data DeserializeSearchPrivateEndpointConnection1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +197,7 @@ namespace Azure.ResourceManager.Search
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchPrivateEndpointConnectionData(
+            return new SearchPrivateEndpointConnection1Data(
                 id,
                 name,
                 resourceType,

@@ -20,103 +20,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     public static partial class ArmServiceFabricModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="addOnFeatures"> The list of add-on features to enable in the cluster. </param>
-        /// <param name="availableClusterVersions"> The Service Fabric runtime versions available for this cluster. </param>
-        /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
-        /// <param name="certificate"> The certificate to use for securing the cluster. The certificate provided will be used for node to node security within the cluster, SSL certificate for cluster management endpoint and default admin client. </param>
-        /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
-        /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. </param>
-        /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when <b>upgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
-        /// <param name="clusterEndpoint"> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </param>
-        /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
-        /// <param name="clusterState">
-        /// The current state of the cluster.
-        /// <list type="bullet"><item><description>WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.</description></item><item><description>Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.</description></item><item><description>BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.</description></item><item><description>UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.</description></item><item><description>UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.</description></item><item><description>UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'.</description></item><item><description>EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.</description></item><item><description>UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.</description></item><item><description>AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.</description></item><item><description>Ready - Indicates that the cluster is in a stable state.</description></item></list>
-        /// </param>
-        /// <param name="diagnosticsStorageAccountConfig"> The storage account information for storing Service Fabric diagnostic logs. </param>
-        /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
-        /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
-        /// <param name="managementEndpoint"> The http management endpoint of the cluster. </param>
-        /// <param name="nodeTypes"> The list of node types in the cluster. </param>
-        /// <param name="provisioningState"> The provisioning state of the cluster resource. </param>
-        /// <param name="reliabilityLevel">
-        /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// <list type="bullet"><item><description>None - Run the System services with a target replica set count of 1. This should only be used for test clusters.</description></item><item><description>Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.</description></item><item><description>Silver - Run the System services with a target replica set count of 5.</description></item><item><description>Gold - Run the System services with a target replica set count of 7.</description></item><item><description>Platinum - Run the System services with a target replica set count of 9.</description></item></list>
-        /// </param>
-        /// <param name="reverseProxyCertificate"> The server certificate used by reverse proxy. </param>
-        /// <param name="reverseProxyCertificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
-        /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
-        /// <param name="upgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
-        /// <param name="vmImage"> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </param>
-        /// <param name="serviceFabricZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
-        /// <param name="vmssZonalUpgradeMode"> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </param>
-        /// <param name="isInfrastructureServiceManagerEnabled"> Indicates if infrastructure service manager is enabled. </param>
-        /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </param>
-        /// <param name="upgradePauseStartOn"> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
-        /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
-        /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
-        /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
-        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
-        /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricClusterData"/> instance for mocking. </returns>
-        public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<ClusterAddOnFeature> addOnFeatures, IEnumerable<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IEnumerable<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IEnumerable<ClusterNotification> notifications, bool? isHttpGatewayExclusiveAuthModeEnabled, long? maxUnusedVersionsToKeep, ETag? eTag)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && maxUnusedVersionsToKeep is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && isHttpGatewayExclusiveAuthModeEnabled is null ? default : new ClusterProperties(
-                    (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
-                    (availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>()).ToList(),
-                    azureActiveDirectory,
-                    certificate,
-                    certificateCommonNames,
-                    (clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>()).ToList(),
-                    (clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>()).ToList(),
-                    clusterCodeVersion,
-                    clusterEndpoint,
-                    clusterId,
-                    clusterState,
-                    diagnosticsStorageAccountConfig,
-                    isEventStoreServiceEnabled,
-                    (fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>()).ToList(),
-                    managementEndpoint,
-                    (nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>()).ToList(),
-                    provisioningState,
-                    reliabilityLevel,
-                    reverseProxyCertificate,
-                    reverseProxyCertificateCommonNames,
-                    upgradeDescription,
-                    upgradeMode,
-                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
-                    vmImage,
-                    serviceFabricZonalUpgradeMode,
-                    vmssZonalUpgradeMode,
-                    isInfrastructureServiceManagerEnabled,
-                    upgradeWave,
-                    upgradePauseStartOn,
-                    upgradePauseEndOn,
-                    isWaveUpgradePaused,
-                    (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
-                    isHttpGatewayExclusiveAuthModeEnabled,
-                    default),
-                eTag,
-                default);
-        }
-
         /// <summary> The detail of the Service Fabric runtime version result. </summary>
         /// <param name="codeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="supportExpireOn"> The date of expiry of support of the version. </param>
@@ -421,6 +324,103 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             return new ClusterNotificationTarget(notificationChannel, (receivers ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="addOnFeatures"> The list of add-on features to enable in the cluster. </param>
+        /// <param name="availableClusterVersions"> The Service Fabric runtime versions available for this cluster. </param>
+        /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
+        /// <param name="certificate"> The certificate to use for securing the cluster. The certificate provided will be used for node to node security within the cluster, SSL certificate for cluster management endpoint and default admin client. </param>
+        /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
+        /// <param name="clientCertificateCommonNames"> The list of client certificates referenced by common name that are allowed to manage the cluster. </param>
+        /// <param name="clientCertificateThumbprints"> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property can only by set the user when <b>upgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](https://learn.microsoft.com/rest/api/servicefabric/cluster-versions/list). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
+        /// <param name="clusterEndpoint"> The Azure Resource Provider endpoint. A system service in the cluster connects to this  endpoint. </param>
+        /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
+        /// <param name="clusterState">
+        /// The current state of the cluster.
+        /// <list type="bullet"><item><description>WaitingForNodes - Indicates that the cluster resource is created and the resource provider is waiting for Service Fabric VM extension to boot up and report to it.</description></item><item><description>Deploying - Indicates that the Service Fabric runtime is being installed on the VMs. Cluster resource will be in this state until the cluster boots up and system services are up.</description></item><item><description>BaselineUpgrade - Indicates that the cluster is upgrading to establishes the cluster version. This upgrade is automatically initiated when the cluster boots up for the first time.</description></item><item><description>UpdatingUserConfiguration - Indicates that the cluster is being upgraded with the user provided configuration.</description></item><item><description>UpdatingUserCertificate - Indicates that the cluster is being upgraded with the user provided certificate.</description></item><item><description>UpdatingInfrastructure - Indicates that the cluster is being upgraded with the latest Service Fabric runtime version. This happens only when the <b>upgradeMode</b> is set to 'Automatic'.</description></item><item><description>EnforcingClusterVersion - Indicates that cluster is on a different version than expected and the cluster is being upgraded to the expected version.</description></item><item><description>UpgradeServiceUnreachable - Indicates that the system service in the cluster is no longer polling the Resource Provider. Clusters in this state cannot be managed by the Resource Provider.</description></item><item><description>AutoScale - Indicates that the ReliabilityLevel of the cluster is being adjusted.</description></item><item><description>Ready - Indicates that the cluster is in a stable state.</description></item></list>
+        /// </param>
+        /// <param name="diagnosticsStorageAccountConfig"> The storage account information for storing Service Fabric diagnostic logs. </param>
+        /// <param name="isEventStoreServiceEnabled"> Indicates if the event store service is enabled. </param>
+        /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
+        /// <param name="managementEndpoint"> The http management endpoint of the cluster. </param>
+        /// <param name="nodeTypes"> The list of node types in the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster resource. </param>
+        /// <param name="reliabilityLevel">
+        /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
+        /// <list type="bullet"><item><description>None - Run the System services with a target replica set count of 1. This should only be used for test clusters.</description></item><item><description>Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.</description></item><item><description>Silver - Run the System services with a target replica set count of 5.</description></item><item><description>Gold - Run the System services with a target replica set count of 7.</description></item><item><description>Platinum - Run the System services with a target replica set count of 9.</description></item></list>
+        /// </param>
+        /// <param name="reverseProxyCertificate"> The server certificate used by reverse proxy. </param>
+        /// <param name="reverseProxyCertificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
+        /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
+        /// <param name="upgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
+        /// <param name="vmImage"> The VM image VMSS has been configured with. Generic names such as Windows or Linux can be used. </param>
+        /// <param name="serviceFabricZonalUpgradeMode"> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </param>
+        /// <param name="vmssZonalUpgradeMode"> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </param>
+        /// <param name="isInfrastructureServiceManagerEnabled"> Indicates if infrastructure service manager is enabled. </param>
+        /// <param name="upgradeWave"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>upgradeMode</b> is set to 'Automatic'. </param>
+        /// <param name="upgradePauseStartOn"> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
+        /// <param name="upgradePauseEndOn"> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </param>
+        /// <param name="isWaveUpgradePaused"> Boolean to pause automatic runtime version upgrades to the cluster. </param>
+        /// <param name="notifications"> Indicates a list of notification channels for cluster events. </param>
+        /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthEndpointPort must be defined. </param>
+        /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricClusterData"/> instance for mocking. </returns>
+        public static ServiceFabricClusterData ServiceFabricClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<ClusterAddOnFeature> addOnFeatures, IEnumerable<ClusterVersionDetails> availableClusterVersions, ClusterAadSetting azureActiveDirectory, ClusterCertificateDescription certificate, ClusterServerCertificateCommonNames certificateCommonNames, IEnumerable<ClusterClientCertificateCommonName> clientCertificateCommonNames, IEnumerable<ClusterClientCertificateThumbprint> clientCertificateThumbprints, string clusterCodeVersion, Uri clusterEndpoint, Guid? clusterId, ServiceFabricClusterState? clusterState, DiagnosticsStorageAccountConfig diagnosticsStorageAccountConfig, bool? isEventStoreServiceEnabled, IEnumerable<SettingsSectionDescription> fabricSettings, Uri managementEndpoint, IEnumerable<ClusterNodeTypeDescription> nodeTypes, ServiceFabricProvisioningState? provisioningState, ClusterReliabilityLevel? reliabilityLevel, ClusterCertificateDescription reverseProxyCertificate, ClusterServerCertificateCommonNames reverseProxyCertificateCommonNames, ClusterUpgradePolicy upgradeDescription, ClusterUpgradeMode? upgradeMode, string vmImage, SfZonalUpgradeMode? serviceFabricZonalUpgradeMode, VmssZonalUpgradeMode? vmssZonalUpgradeMode, bool? isInfrastructureServiceManagerEnabled, ClusterUpgradeCadence? upgradeWave, DateTimeOffset? upgradePauseStartOn, DateTimeOffset? upgradePauseEndOn, bool? isWaveUpgradePaused, IEnumerable<ClusterNotification> notifications, bool? isHttpGatewayExclusiveAuthModeEnabled, long? maxUnusedVersionsToKeep, ETag? eTag)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceFabricClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                addOnFeatures is null && availableClusterVersions is null && azureActiveDirectory is null && certificate is null && certificateCommonNames is null && clientCertificateCommonNames is null && clientCertificateThumbprints is null && clusterCodeVersion is null && clusterEndpoint is null && clusterId is null && clusterState is null && diagnosticsStorageAccountConfig is null && isEventStoreServiceEnabled is null && fabricSettings is null && managementEndpoint is null && nodeTypes is null && provisioningState is null && reliabilityLevel is null && reverseProxyCertificate is null && reverseProxyCertificateCommonNames is null && upgradeDescription is null && upgradeMode is null && maxUnusedVersionsToKeep is null && vmImage is null && serviceFabricZonalUpgradeMode is null && vmssZonalUpgradeMode is null && isInfrastructureServiceManagerEnabled is null && upgradeWave is null && upgradePauseStartOn is null && upgradePauseEndOn is null && isWaveUpgradePaused is null && notifications is null && isHttpGatewayExclusiveAuthModeEnabled is null ? default : new ClusterProperties(
+                    (addOnFeatures ?? new ChangeTrackingList<ClusterAddOnFeature>()).ToList(),
+                    (availableClusterVersions ?? new ChangeTrackingList<ClusterVersionDetails>()).ToList(),
+                    azureActiveDirectory,
+                    certificate,
+                    certificateCommonNames,
+                    (clientCertificateCommonNames ?? new ChangeTrackingList<ClusterClientCertificateCommonName>()).ToList(),
+                    (clientCertificateThumbprints ?? new ChangeTrackingList<ClusterClientCertificateThumbprint>()).ToList(),
+                    clusterCodeVersion,
+                    clusterEndpoint,
+                    clusterId,
+                    clusterState,
+                    diagnosticsStorageAccountConfig,
+                    isEventStoreServiceEnabled,
+                    (fabricSettings ?? new ChangeTrackingList<SettingsSectionDescription>()).ToList(),
+                    managementEndpoint,
+                    (nodeTypes ?? new ChangeTrackingList<ClusterNodeTypeDescription>()).ToList(),
+                    provisioningState,
+                    reliabilityLevel,
+                    reverseProxyCertificate,
+                    reverseProxyCertificateCommonNames,
+                    upgradeDescription,
+                    upgradeMode,
+                    new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.GetValueOrDefault(), default),
+                    vmImage,
+                    serviceFabricZonalUpgradeMode,
+                    vmssZonalUpgradeMode,
+                    isInfrastructureServiceManagerEnabled,
+                    upgradeWave,
+                    upgradePauseStartOn,
+                    upgradePauseEndOn,
+                    isWaveUpgradePaused,
+                    (notifications ?? new ChangeTrackingList<ClusterNotification>()).ToList(),
+                    isHttpGatewayExclusiveAuthModeEnabled,
+                    default),
+                eTag,
+                default);
+        }
+
         /// <param name="addOnFeatures"> The list of add-on features to enable in the cluster. </param>
         /// <param name="certificate"> The certificate to use for securing the cluster. The certificate provided will be used for  node to node security within the cluster, SSL certificate for cluster management endpoint and default  admin client. </param>
         /// <param name="certificateCommonNames"> Describes a list of server certificates referenced by common name that are used to secure the cluster. </param>
@@ -567,53 +567,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
-        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
-        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="minimumNodes"> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </param>
-        /// <param name="maximumNodes"> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </param>
-        /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
-        /// <param name="metrics"> List of application capacity metric description. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
-        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
-        /// <param name="typeName"> The application type name as defined in the application manifest. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
-        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? eTag, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
-                    typeVersion,
-                    parameters ?? new ChangeTrackingDictionary<string, string>(),
-                    upgradePolicy,
-                    minimumNodes,
-                    maximumNodes,
-                    removeApplicationCapacity,
-                    (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
-                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
-                    default,
-                    provisioningState,
-                    typeName),
-                eTag,
-                identity,
-                default);
-        }
-
         /// <summary> Describes the policy for a monitored application upgrade. </summary>
         /// <param name="upgradeReplicaSetCheckTimeout"> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </param>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
@@ -732,6 +685,53 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
         /// <param name="metrics"> List of application capacity metric description. </param>
         /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
+        /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
+        /// <param name="typeName"> The application type name as defined in the application manifest. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricApplicationData"/> instance for mocking. </returns>
+        public static ServiceFabricApplicationData ServiceFabricApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities, string provisioningState, string typeName, ETag? eTag, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceFabricApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                typeVersion is null && parameters is null && upgradePolicy is null && minimumNodes is null && maximumNodes is null && removeApplicationCapacity is null && metrics is null && managedIdentities is null && provisioningState is null && typeName is null ? default : new ApplicationResourceProperties(
+                    typeVersion,
+                    parameters ?? new ChangeTrackingDictionary<string, string>(),
+                    upgradePolicy,
+                    minimumNodes,
+                    maximumNodes,
+                    removeApplicationCapacity,
+                    (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
+                    (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
+                    default,
+                    provisioningState,
+                    typeName),
+                eTag,
+                identity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="typeVersion"> The version of the application type as defined in the application manifest. </param>
+        /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
+        /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
+        /// <param name="minimumNodes"> The minimum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. If this property is set to zero, no capacity will be reserved. The value of this property cannot be more than the value of the MaximumNodes property. </param>
+        /// <param name="maximumNodes"> The maximum number of nodes where Service Fabric will reserve capacity for this application. Note that this does not mean that the services of this application will be placed on all of those nodes. By default, the value of this property is zero and it means that the services can be placed on any node. </param>
+        /// <param name="removeApplicationCapacity"> Remove the current application capacity settings. </param>
+        /// <param name="metrics"> List of application capacity metric description. </param>
+        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <returns> A new <see cref="Models.ServiceFabricApplicationPatch"/> instance for mocking. </returns>
         public static ServiceFabricApplicationPatch ServiceFabricApplicationPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string typeVersion, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, long? minimumNodes, long? maximumNodes, bool? removeApplicationCapacity, IEnumerable<ApplicationMetricDescription> metrics, IEnumerable<ApplicationUserAssignedIdentity> managedIdentities)
         {
@@ -754,32 +754,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     (metrics ?? new ChangeTrackingList<ApplicationMetricDescription>()).ToList(),
                     (managedIdentities ?? new ChangeTrackingList<ApplicationUserAssignedIdentity>()).ToList(),
                     default),
-                default);
-        }
-
-        /// <summary> The service resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The service resource properties. </param>
-        /// <param name="eTag"> Azure resource etag. </param>
-        /// <returns> A new <see cref="ServiceFabric.ServiceFabricServiceData"/> instance for mocking. </returns>
-        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceResourceProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceFabricServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
                 default);
         }
 
@@ -1018,6 +992,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 instanceCloseDelayDuration,
                 minInstanceCount,
                 minInstancePercentage);
+        }
+
+        /// <summary> The service resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The service resource properties. </param>
+        /// <param name="eTag"> Azure resource etag. </param>
+        /// <returns> A new <see cref="ServiceFabric.ServiceFabricServiceData"/> instance for mocking. </returns>
+        public static ServiceFabricServiceData ServiceFabricServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceResourceProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceFabricServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
         }
 
         /// <summary> The service resource for patch operations. </summary>

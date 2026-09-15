@@ -1367,11 +1367,11 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        /// <summary> Gets a collection of SearchPrivateEndpointConnections in the <see cref="SearchServiceResource"/>. </summary>
-        /// <returns> An object representing collection of SearchPrivateEndpointConnections and their operations over a SearchPrivateEndpointConnectionResource. </returns>
-        public virtual SearchPrivateEndpointConnectionCollection GetSearchPrivateEndpointConnections()
+        /// <summary> Gets a collection of SearchPrivateEndpointConnection1s in the <see cref="SearchServiceResource"/>. </summary>
+        /// <returns> An object representing collection of SearchPrivateEndpointConnection1s and their operations over a SearchPrivateEndpointConnection1Resource. </returns>
+        public virtual SearchPrivateEndpointConnection1Collection GetSearchPrivateEndpointConnection1s()
         {
-            return GetCachedClient(client => new SearchPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new SearchPrivateEndpointConnection1Collection(client, Id));
         }
 
         /// <summary> Gets the details of the private endpoint connection to the search service in the given resource group. </summary>
@@ -1381,11 +1381,11 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetSearchPrivateEndpointConnectionAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchPrivateEndpointConnection1Data>> GetSearchPrivateEndpointConnection1Async(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetSearchPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetSearchPrivateEndpointConnection1s().GetAsync(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the private endpoint connection to the search service in the given resource group. </summary>
@@ -1395,11 +1395,11 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SearchPrivateEndpointConnectionResource> GetSearchPrivateEndpointConnection(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchPrivateEndpointConnection1Data> GetSearchPrivateEndpointConnection1(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetSearchPrivateEndpointConnections().Get(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
+            return GetSearchPrivateEndpointConnection1s().Get(privateEndpointConnectionName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary> Gets a collection of SharedSearchServicePrivateLinkResources in the <see cref="SearchServiceResource"/>. </summary>

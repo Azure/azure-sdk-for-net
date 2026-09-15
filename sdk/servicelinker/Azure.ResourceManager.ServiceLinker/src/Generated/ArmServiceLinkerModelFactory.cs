@@ -19,26 +19,6 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public static partial class ArmServiceLinkerModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="parameters"> The parameters of the dryrun. </param>
-        /// <param name="prerequisiteResults"> the result of the dryrun. </param>
-        /// <param name="operationPreviews"> the preview of the operations for creation. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <returns> A new <see cref="ServiceLinker.LinkerDryrunData"/> instance for mocking. </returns>
-        public static LinkerDryrunData LinkerDryrunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DryrunContent parameters = default, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = default, IEnumerable<DryrunOperationPreview> operationPreviews = default, string provisioningState = default)
-        {
-            return new LinkerDryrunData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                parameters is null && prerequisiteResults is null && operationPreviews is null && provisioningState is null ? default : new DryrunProperties(parameters, (prerequisiteResults ?? new ChangeTrackingList<DryrunPrerequisiteResult>()).ToList(), (operationPreviews ?? new ChangeTrackingList<DryrunOperationPreview>()).ToList(), provisioningState, default),
-                default);
-        }
-
         /// <summary>
         /// The parameters of the dryrun
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateOrUpdateDryrunContent"/>.
@@ -491,6 +471,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 description,
                 action,
                 scope,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="parameters"> The parameters of the dryrun. </param>
+        /// <param name="prerequisiteResults"> the result of the dryrun. </param>
+        /// <param name="operationPreviews"> the preview of the operations for creation. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <returns> A new <see cref="ServiceLinker.LinkerDryrunData"/> instance for mocking. </returns>
+        public static LinkerDryrunData LinkerDryrunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DryrunContent parameters = default, IEnumerable<DryrunPrerequisiteResult> prerequisiteResults = default, IEnumerable<DryrunOperationPreview> operationPreviews = default, string provisioningState = default)
+        {
+            return new LinkerDryrunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                parameters is null && prerequisiteResults is null && operationPreviews is null && provisioningState is null ? default : new DryrunProperties(parameters, (prerequisiteResults ?? new ChangeTrackingList<DryrunPrerequisiteResult>()).ToList(), (operationPreviews ?? new ChangeTrackingList<DryrunOperationPreview>()).ToList(), provisioningState, default),
                 default);
         }
 

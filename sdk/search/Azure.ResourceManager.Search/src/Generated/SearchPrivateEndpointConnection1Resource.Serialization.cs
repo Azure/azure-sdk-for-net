@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Search
 {
     /// <summary></summary>
-    public partial class SearchPrivateEndpointConnectionResource : IJsonModel<SearchPrivateEndpointConnectionData>
+    public partial class SearchPrivateEndpointConnection1Resource : IJsonModel<SearchPrivateEndpointConnectionData>
     {
         private static IJsonModel<SearchPrivateEndpointConnectionData> s_dataDeserializationInstance;
 

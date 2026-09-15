@@ -19,6 +19,149 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public static partial class ArmServiceBusModelFactory
     {
 
+        /// <summary> Properties to configure Encryption. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
+        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
+        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
+        /// <returns> A new <see cref="Models.ServiceBusEncryption"/> instance for mocking. </returns>
+        public static ServiceBusEncryption ServiceBusEncryption(IEnumerable<ServiceBusKeyVaultProperties> keyVaultProperties = default, ServiceBusEncryptionKeySource? keySource = default, bool? requireInfrastructureEncryption = default)
+        {
+            keyVaultProperties ??= new ChangeTrackingList<ServiceBusKeyVaultProperties>();
+
+            return new ServiceBusEncryption((keyVaultProperties ?? new ChangeTrackingList<ServiceBusKeyVaultProperties>()).ToList(), keySource, requireInfrastructureEncryption, default);
+        }
+
+        /// <param name="keyName"> Name of the Key from KeyVault. </param>
+        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
+        /// <param name="keyVersion"> Version of KeyVault. </param>
+        /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
+        /// <returns> A new <see cref="Models.ServiceBusKeyVaultProperties"/> instance for mocking. </returns>
+        public static ServiceBusKeyVaultProperties ServiceBusKeyVaultProperties(string keyName = default, Uri keyVaultUri = default, string keyVersion = default, string userAssignedIdentity = default)
+        {
+            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity is null ? default : new UserAssignedIdentityProperties(userAssignedIdentity, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="connectionState"> Details about the state of the connection. </param>
+        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusPrivateLinkServiceConnectionState connectionState = default, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
+        {
+            return new ServiceBusPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                location,
+                default);
+        }
+
+        /// <summary> ConnectionState information. </summary>
+        /// <param name="status"> Status of the connection. </param>
+        /// <param name="description"> Description of the connection state. </param>
+        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
+        public static ServiceBusPrivateLinkServiceConnectionState ServiceBusPrivateLinkServiceConnectionState(ServiceBusPrivateLinkConnectionStatus? status = default, string description = default)
+        {
+            return new ServiceBusPrivateLinkServiceConnectionState(status, description, default);
+        }
+
+        /// <summary> GeoDR Replication properties. </summary>
+        /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
+        /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
+        /// <returns> A new <see cref="Models.GeoDataReplicationProperties"/> instance for mocking. </returns>
+        public static GeoDataReplicationProperties GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds = default, IEnumerable<ServiceBusNamespaceReplicaLocation> locations = default)
+        {
+            locations ??= new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>();
+
+            return new GeoDataReplicationProperties(maxReplicationLagDurationInSeconds, (locations ?? new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>()).ToList(), default);
+        }
+
+        /// <summary> Namespace replication properties. </summary>
+        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
+        /// <param name="roleType"> GeoDR Role Types. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNamespaceReplicaLocation"/> instance for mocking. </returns>
+        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default)
+        {
+            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
+        /// <param name="provisioningState"> Provisioning state of the namespace. </param>
+        /// <param name="status"> Status of the namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="isZoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
+        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
+        /// <param name="alternateName"> Alternate name for namespace. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
+        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
+        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
+        /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
+        /// <param name="sku"> Properties of SKU. </param>
+        /// <param name="identity"> Properties of BYOK Identity description. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
+        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusIPAddressType? ipAddressType = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceBusNamespaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new SBNamespaceProperties(
+                    minimumTlsVersion,
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    isZoneRedundant,
+                    encryption,
+                    (privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>()).ToList(),
+                    disableLocalAuth,
+                    alternateName,
+                    publicNetworkAccess,
+                    premiumMessagingPartitions,
+                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
+                    geoDataReplication,
+                    ipAddressType,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <summary> SKU of the namespace. </summary>
+        /// <param name="name"> Name of this SKU. </param>
+        /// <param name="tier"> The billing tier of this particular SKU. </param>
+        /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
+        /// <returns> A new <see cref="Models.ServiceBusSku"/> instance for mocking. </returns>
+        public static ServiceBusSku ServiceBusSku(ServiceBusSkuName name = default, ServiceBusSkuTier? tier = default, int? capacity = default)
+        {
+            return new ServiceBusSku(name, tier, capacity, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -123,6 +266,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusRegenerateAccessKeyContent(keyType, key, default);
         }
 
+        /// <summary> Message Count Details. </summary>
+        /// <param name="activeMessageCount"> Number of active messages in the queue, topic, or subscription. </param>
+        /// <param name="deadLetterMessageCount"> Number of messages that are dead lettered. </param>
+        /// <param name="scheduledMessageCount"> Number of scheduled messages. </param>
+        /// <param name="transferMessageCount"> Number of messages transferred to another queue, topic, or subscription. </param>
+        /// <param name="transferDeadLetterMessageCount"> Number of messages transferred into dead letters. </param>
+        /// <returns> A new <see cref="Models.MessageCountDetails"/> instance for mocking. </returns>
+        public static MessageCountDetails MessageCountDetails(long? activeMessageCount = default, long? deadLetterMessageCount = default, long? scheduledMessageCount = default, long? transferMessageCount = default, long? transferDeadLetterMessageCount = default)
+        {
+            return new MessageCountDetails(
+                activeMessageCount,
+                deadLetterMessageCount,
+                scheduledMessageCount,
+                transferMessageCount,
+                transferDeadLetterMessageCount,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -188,24 +349,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Message Count Details. </summary>
-        /// <param name="activeMessageCount"> Number of active messages in the queue, topic, or subscription. </param>
-        /// <param name="deadLetterMessageCount"> Number of messages that are dead lettered. </param>
-        /// <param name="scheduledMessageCount"> Number of scheduled messages. </param>
-        /// <param name="transferMessageCount"> Number of messages transferred to another queue, topic, or subscription. </param>
-        /// <param name="transferDeadLetterMessageCount"> Number of messages transferred into dead letters. </param>
-        /// <returns> A new <see cref="Models.MessageCountDetails"/> instance for mocking. </returns>
-        public static MessageCountDetails MessageCountDetails(long? activeMessageCount = default, long? deadLetterMessageCount = default, long? scheduledMessageCount = default, long? transferMessageCount = default, long? transferDeadLetterMessageCount = default)
-        {
-            return new MessageCountDetails(
-                activeMessageCount,
-                deadLetterMessageCount,
-                scheduledMessageCount,
-                transferMessageCount,
-                transferDeadLetterMessageCount,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -256,73 +399,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     enablePartitioning,
                     enableExpress,
                     userMetadata,
-                    default),
-                location,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="connectionState"> Details about the state of the connection. </param>
-        /// <param name="provisioningState"> Provisioning state of the Private Endpoint Connection. </param>
-        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusPrivateLinkServiceConnectionState connectionState = default, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default)
-        {
-            return new ServiceBusPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
-                location,
-                default);
-        }
-
-        /// <summary> ConnectionState information. </summary>
-        /// <param name="status"> Status of the connection. </param>
-        /// <param name="description"> Description of the connection state. </param>
-        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkServiceConnectionState"/> instance for mocking. </returns>
-        public static ServiceBusPrivateLinkServiceConnectionState ServiceBusPrivateLinkServiceConnectionState(ServiceBusPrivateLinkConnectionStatus? status = default, string description = default)
-        {
-            return new ServiceBusPrivateLinkServiceConnectionState(status, description, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
-        /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
-        /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
-        /// <param name="resourceAssociation"> Information about resource association. </param>
-        /// <param name="profile"> Information about current network profile. </param>
-        /// <param name="isBackingResource"> True if the ServiceBus namespace is backed by another Azure resource and not visible to end users. </param>
-        /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
-        /// <param name="parentAssociationName"> Source Resource Association name. </param>
-        /// <param name="sourceResourceId"> ARM Id of source resource. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static ServiceBusNetworkSecurityPerimeterConfigurationData ServiceBusNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ServiceBusNspConfigurationProvisioningIssue> provisioningIssues = default, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = default, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default, bool? isBackingResource = default, IEnumerable<string> applicableFeatures = default, string parentAssociationName = default, ResourceIdentifier sourceResourceId = default, string location = default)
-        {
-            return new ServiceBusNetworkSecurityPerimeterConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null && isBackingResource is null && applicableFeatures is null && parentAssociationName is null && sourceResourceId is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
-                    provisioningState,
-                    (provisioningIssues ?? new ChangeTrackingList<ServiceBusNspConfigurationProvisioningIssue>()).ToList(),
-                    networkSecurityPerimeter,
-                    resourceAssociation,
-                    profile,
-                    isBackingResource,
-                    (applicableFeatures ?? new ChangeTrackingList<string>()).ToList(),
-                    parentAssociationName,
-                    sourceResourceId,
                     default),
                 location,
                 default);
@@ -423,6 +499,43 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
+        /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
+        /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
+        /// <param name="resourceAssociation"> Information about resource association. </param>
+        /// <param name="profile"> Information about current network profile. </param>
+        /// <param name="isBackingResource"> True if the ServiceBus namespace is backed by another Azure resource and not visible to end users. </param>
+        /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
+        /// <param name="parentAssociationName"> Source Resource Association name. </param>
+        /// <param name="sourceResourceId"> ARM Id of source resource. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static ServiceBusNetworkSecurityPerimeterConfigurationData ServiceBusNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<ServiceBusNspConfigurationProvisioningIssue> provisioningIssues = default, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = default, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default, bool? isBackingResource = default, IEnumerable<string> applicableFeatures = default, string parentAssociationName = default, ResourceIdentifier sourceResourceId = default, string location = default)
+        {
+            return new ServiceBusNetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null && isBackingResource is null && applicableFeatures is null && parentAssociationName is null && sourceResourceId is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
+                    provisioningState,
+                    (provisioningIssues ?? new ChangeTrackingList<ServiceBusNspConfigurationProvisioningIssue>()).ToList(),
+                    networkSecurityPerimeter,
+                    resourceAssociation,
+                    profile,
+                    isBackingResource,
+                    (applicableFeatures ?? new ChangeTrackingList<string>()).ToList(),
+                    parentAssociationName,
+                    sourceResourceId,
+                    default),
+                location,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of Migration ConfigurationProvisioning state of Migration Configuration. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="targetServiceBusNamespace"> Existing premium Namespace ARM Id name which has no entities, will be used for migration. </param>
@@ -444,28 +557,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     postMigrationName,
                     migrationState,
                     default),
-                location,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
-        /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
-        /// <param name="sqlFilter"> Properties of sqlFilter. </param>
-        /// <param name="correlationFilter"> Properties of correlationFilter. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusRuleData"/> instance for mocking. </returns>
-        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusFilterAction action = default, ServiceBusFilterType? filterType = default, ServiceBusSqlFilter sqlFilter = default, ServiceBusCorrelationFilter correlationFilter = default, AzureLocation? location = default)
-        {
-            return new ServiceBusRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                action is null && filterType is null && sqlFilter is null && correlationFilter is null ? default : new Ruleproperties(action, filterType, sqlFilter, correlationFilter, default),
                 location,
                 default);
         }
@@ -520,237 +611,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
-        /// <param name="provisioningState"> Provisioning state of the namespace. </param>
-        /// <param name="status"> Status of the namespace. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="isZoneRedundant"> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </param>
-        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        /// <param name="alternateName"> Alternate name for namespace. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
-        /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
-        /// <param name="ipAddressType"> The IP address type for the namespace. Determines whether the namespace supports IPv4 only or both IPv4 and IPv6 (dual stack). </param>
-        /// <param name="platformCapabilitiesConfidentialComputeMode"> Setting to Enable or Disable Confidential Compute. </param>
-        /// <param name="sku"> Properties of SKU. </param>
-        /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ServiceBusMinimumTlsVersion? minimumTlsVersion = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, bool? isZoneRedundant = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusPublicNetworkAccess? publicNetworkAccess = default, int? premiumMessagingPartitions = default, GeoDataReplicationProperties geoDataReplication = default, ServiceBusIPAddressType? ipAddressType = default, ServiceBusConfidentialComputeMode? platformCapabilitiesConfidentialComputeMode = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
+        /// <summary> Properties specific to client affine subscriptions. </summary>
+        /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
+        /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
+        /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>
+        /// <returns> A new <see cref="Models.ServiceBusClientAffineProperties"/> instance for mocking. </returns>
+        public static ServiceBusClientAffineProperties ServiceBusClientAffineProperties(string clientId = default, bool? isDurable = default, bool? isShared = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceBusNamespaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                minimumTlsVersion is null && provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && isZoneRedundant is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null && publicNetworkAccess is null && premiumMessagingPartitions is null && platformCapabilitiesConfidentialComputeMode is null && geoDataReplication is null && ipAddressType is null ? default : new SBNamespaceProperties(
-                    minimumTlsVersion,
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    metricId,
-                    isZoneRedundant,
-                    encryption,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>()).ToList(),
-                    disableLocalAuth,
-                    alternateName,
-                    publicNetworkAccess,
-                    premiumMessagingPartitions,
-                    new PlatformCapabilities(new ConfidentialCompute(platformCapabilitiesConfidentialComputeMode, default), default),
-                    geoDataReplication,
-                    ipAddressType,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
-        /// <summary> Properties to configure Encryption. </summary>
-        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
-        /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>
-        /// <returns> A new <see cref="Models.ServiceBusEncryption"/> instance for mocking. </returns>
-        public static ServiceBusEncryption ServiceBusEncryption(IEnumerable<ServiceBusKeyVaultProperties> keyVaultProperties = default, ServiceBusEncryptionKeySource? keySource = default, bool? requireInfrastructureEncryption = default)
-        {
-            keyVaultProperties ??= new ChangeTrackingList<ServiceBusKeyVaultProperties>();
-
-            return new ServiceBusEncryption((keyVaultProperties ?? new ChangeTrackingList<ServiceBusKeyVaultProperties>()).ToList(), keySource, requireInfrastructureEncryption, default);
-        }
-
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="keyVersion"> Version of KeyVault. </param>
-        /// <param name="userAssignedIdentity"> ARM ID of user Identity selected for encryption. </param>
-        /// <returns> A new <see cref="Models.ServiceBusKeyVaultProperties"/> instance for mocking. </returns>
-        public static ServiceBusKeyVaultProperties ServiceBusKeyVaultProperties(string keyName = default, Uri keyVaultUri = default, string keyVersion = default, string userAssignedIdentity = default)
-        {
-            return new ServiceBusKeyVaultProperties(keyName, keyVaultUri, keyVersion, userAssignedIdentity is null ? default : new UserAssignedIdentityProperties(userAssignedIdentity, default), default);
-        }
-
-        /// <summary> GeoDR Replication properties. </summary>
-        /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
-        /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
-        /// <returns> A new <see cref="Models.GeoDataReplicationProperties"/> instance for mocking. </returns>
-        public static GeoDataReplicationProperties GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds = default, IEnumerable<ServiceBusNamespaceReplicaLocation> locations = default)
-        {
-            locations ??= new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>();
-
-            return new GeoDataReplicationProperties(maxReplicationLagDurationInSeconds, (locations ?? new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>()).ToList(), default);
-        }
-
-        /// <summary> Namespace replication properties. </summary>
-        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
-        /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceReplicaLocation ServiceBusNamespaceReplicaLocation(string locationName = default, GeoDRRoleType? roleType = default)
-        {
-            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, default);
-        }
-
-        /// <summary> SKU of the namespace. </summary>
-        /// <param name="name"> Name of this SKU. </param>
-        /// <param name="tier"> The billing tier of this particular SKU. </param>
-        /// <param name="capacity"> Messaging units for your service bus premium namespace. Valid capacities are {1, 2, 4, 8, 16} multiples of your properties.premiumMessagingPartitions setting. For example, If properties.premiumMessagingPartitions is 1 then possible capacity values are 1, 2, 4, 8, and 16. If properties.premiumMessagingPartitions is 4 then possible capacity values are 4, 8, 16, 32 and 64. </param>
-        /// <returns> A new <see cref="Models.ServiceBusSku"/> instance for mocking. </returns>
-        public static ServiceBusSku ServiceBusSku(ServiceBusSkuName name = default, ServiceBusSkuTier? tier = default, int? capacity = default)
-        {
-            return new ServiceBusSku(name, tier, capacity, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the namespace. </param>
-        /// <param name="status"> Status of the namespace. </param>
-        /// <param name="createdOn"> The time the namespace was created. </param>
-        /// <param name="updatedOn"> The time the namespace was updated. </param>
-        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
-        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
-        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
-        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
-        /// <param name="alternateName"> Alternate name for namespace. </param>
-        /// <param name="sku"> Properties of SKU. </param>
-        /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNamespacePatch"/> instance for mocking. </returns>
-        public static ServiceBusNamespacePatch ServiceBusNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ServiceBusNamespacePatch(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null ? default : new SBNamespaceUpdateProperties(
-                    provisioningState,
-                    status,
-                    createdOn,
-                    updatedOn,
-                    serviceBusEndpoint,
-                    metricId,
-                    encryption,
-                    (privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>()).ToList(),
-                    disableLocalAuth,
-                    alternateName,
-                    default),
-                sku,
-                identity,
-                default);
-        }
-
-        /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
-        /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNamespaceFailOver"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? isForced = default)
-        {
-            return new ServiceBusNamespaceFailOver(primaryLocation is null && isForced is null ? default : new ServiceBusFailOverDetail(primaryLocation, isForced, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
-        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
-        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
-        /// <param name="ipRules"> List of IpRules. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isTrustedServiceAccessEnabled = default, ServiceBusNetworkRuleSetDefaultAction? defaultAction = default, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules = default, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default, AzureLocation? location = default)
-        {
-            return new ServiceBusNetworkRuleSetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                isTrustedServiceAccessEnabled is null && defaultAction is null && virtualNetworkRules is null && ipRules is null && publicNetworkAccess is null ? default : new NetworkRuleSetProperties(
-                    isTrustedServiceAccessEnabled,
-                    defaultAction,
-                    (virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>()).ToList(),
-                    (ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>()).ToList(),
-                    publicNetworkAccess,
-                    default),
-                location,
-                default);
-        }
-
-        /// <param name="subnetId"> Resource ID of Virtual Network Subnet. </param>
-        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetVirtualNetworkRules ServiceBusNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = default, bool? ignoreMissingVnetServiceEndpoint = default)
-        {
-            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnetId is null ? default : new Subnet(subnetId, default), ignoreMissingVnetServiceEndpoint, default);
-        }
-
-        /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
-        /// <param name="ipMask"> IP Mask. </param>
-        /// <param name="action"> The IP Filter Action. </param>
-        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetIPRules"/> instance for mocking. </returns>
-        public static ServiceBusNetworkRuleSetIPRules ServiceBusNetworkRuleSetIPRules(string ipMask = default, ServiceBusNetworkRuleIPAction? action = default)
-        {
-            return new ServiceBusNetworkRuleSetIPRules(ipMask, action, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> Gets or sets the GroupId. </param>
-        /// <param name="requiredMembers"> Required Members. </param>
-        /// <param name="requiredZoneNames"> Required Zone Names. </param>
-        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
-        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            return new ServiceBusPrivateLinkResource(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ServiceBusPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
+            return new ServiceBusClientAffineProperties(clientId, isDurable, isShared, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -812,14 +680,146 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 default);
         }
 
-        /// <summary> Properties specific to client affine subscriptions. </summary>
-        /// <param name="clientId"> Indicates the Client ID of the application that created the client-affine subscription. </param>
-        /// <param name="isDurable"> For client-affine subscriptions, this value indicates whether the subscription is durable or not. </param>
-        /// <param name="isShared"> For client-affine subscriptions, this value indicates whether the subscription is shared or not. </param>
-        /// <returns> A new <see cref="Models.ServiceBusClientAffineProperties"/> instance for mocking. </returns>
-        public static ServiceBusClientAffineProperties ServiceBusClientAffineProperties(string clientId = default, bool? isDurable = default, bool? isShared = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="action"> Represents the filter actions which are allowed for the transformation of a message that have been matched by a filter expression. </param>
+        /// <param name="filterType"> Filter type that is evaluated against a BrokeredMessage. </param>
+        /// <param name="sqlFilter"> Properties of sqlFilter. </param>
+        /// <param name="correlationFilter"> Properties of correlationFilter. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusRuleData"/> instance for mocking. </returns>
+        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceBusFilterAction action = default, ServiceBusFilterType? filterType = default, ServiceBusSqlFilter sqlFilter = default, ServiceBusCorrelationFilter correlationFilter = default, AzureLocation? location = default)
         {
-            return new ServiceBusClientAffineProperties(clientId, isDurable, isShared, default);
+            return new ServiceBusRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                action is null && filterType is null && sqlFilter is null && correlationFilter is null ? default : new Ruleproperties(action, filterType, sqlFilter, correlationFilter, default),
+                location,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the namespace. </param>
+        /// <param name="status"> Status of the namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="encryption"> Properties of BYOK Encryption description. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="disableLocalAuth"> This property disables SAS authentication for the Service Bus namespace. </param>
+        /// <param name="alternateName"> Alternate name for namespace. </param>
+        /// <param name="sku"> Properties of SKU. </param>
+        /// <param name="identity"> Properties of BYOK Identity description. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNamespacePatch"/> instance for mocking. </returns>
+        public static ServiceBusNamespacePatch ServiceBusNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, ServiceBusEncryption encryption = default, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = default, bool? disableLocalAuth = default, string alternateName = default, ServiceBusSku sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ServiceBusNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && encryption is null && privateEndpointConnections is null && disableLocalAuth is null && alternateName is null ? default : new SBNamespaceUpdateProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    encryption,
+                    (privateEndpointConnections ?? new ChangeTrackingList<ServiceBusPrivateEndpointConnectionData>()).ToList(),
+                    disableLocalAuth,
+                    alternateName,
+                    default),
+                sku,
+                identity,
+                default);
+        }
+
+        /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
+        /// <param name="isForced"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNamespaceFailOver"/> instance for mocking. </returns>
+        public static ServiceBusNamespaceFailOver ServiceBusNamespaceFailOver(string primaryLocation = default, bool? isForced = default)
+        {
+            return new ServiceBusNamespaceFailOver(primaryLocation is null && isForced is null ? default : new ServiceBusFailOverDetail(primaryLocation, isForced, default), default);
+        }
+
+        /// <param name="subnetId"> Resource ID of Virtual Network Subnet. </param>
+        /// <param name="ignoreMissingVnetServiceEndpoint"> Value that indicates whether to ignore missing VNet Service Endpoint. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetVirtualNetworkRules"/> instance for mocking. </returns>
+        public static ServiceBusNetworkRuleSetVirtualNetworkRules ServiceBusNetworkRuleSetVirtualNetworkRules(ResourceIdentifier subnetId = default, bool? ignoreMissingVnetServiceEndpoint = default)
+        {
+            return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnetId is null ? default : new Subnet(subnetId, default), ignoreMissingVnetServiceEndpoint, default);
+        }
+
+        /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
+        /// <param name="ipMask"> IP Mask. </param>
+        /// <param name="action"> The IP Filter Action. </param>
+        /// <returns> A new <see cref="Models.ServiceBusNetworkRuleSetIPRules"/> instance for mocking. </returns>
+        public static ServiceBusNetworkRuleSetIPRules ServiceBusNetworkRuleSetIPRules(string ipMask = default, ServiceBusNetworkRuleIPAction? action = default)
+        {
+            return new ServiceBusNetworkRuleSetIPRules(ipMask, action, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isTrustedServiceAccessEnabled"> Value that indicates whether Trusted Service Access is Enabled or not. </param>
+        /// <param name="defaultAction"> Default Action for Network Rule Set. </param>
+        /// <param name="virtualNetworkRules"> List VirtualNetwork Rules. </param>
+        /// <param name="ipRules"> List of IpRules. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/> instance for mocking. </returns>
+        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isTrustedServiceAccessEnabled = default, ServiceBusNetworkRuleSetDefaultAction? defaultAction = default, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = default, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules = default, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default, AzureLocation? location = default)
+        {
+            return new ServiceBusNetworkRuleSetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isTrustedServiceAccessEnabled is null && defaultAction is null && virtualNetworkRules is null && ipRules is null && publicNetworkAccess is null ? default : new NetworkRuleSetProperties(
+                    isTrustedServiceAccessEnabled,
+                    defaultAction,
+                    (virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>()).ToList(),
+                    (ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>()).ToList(),
+                    publicNetworkAccess,
+                    default),
+                location,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> Gets or sets the GroupId. </param>
+        /// <param name="requiredMembers"> Required Members. </param>
+        /// <param name="requiredZoneNames"> Required Zone Names. </param>
+        /// <returns> A new <see cref="Models.ServiceBusPrivateLinkResource"/> instance for mocking. </returns>
+        public static ServiceBusPrivateLinkResource ServiceBusPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new ServiceBusPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new ServiceBusPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <summary> Description of a namespace resource. </summary>
