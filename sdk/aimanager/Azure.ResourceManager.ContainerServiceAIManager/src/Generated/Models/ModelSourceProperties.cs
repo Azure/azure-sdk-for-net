@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
@@ -28,13 +29,15 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="sourceType"> Model source type. Constrains the legal authentication kinds. Immutable after creation. </param>
         /// <param name="description"> An optional, free-form description of the source. </param>
         /// <param name="credential"> Credential the platform uses to authenticate to the source. Optional for public sources (e.g. ungated Hugging Face models). </param>
+        /// <param name="microsoftFoundry"> Microsoft Foundry project reference. Required when `sourceType` is `MicrosoftFoundry`; must be omitted otherwise. Immutable after creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState, ModelSourceType sourceType, string description, CredentialValue credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState, ModelSourceType sourceType, string description, CredentialValue credential, MicrosoftFoundrySource microsoftFoundry, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SourceType = sourceType;
             Description = description;
             Credential = credential;
+            MicrosoftFoundry = microsoftFoundry;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,22 +51,21 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public string Description { get; set; }
 
         /// <summary> Credential the platform uses to authenticate to the source. Optional for public sources (e.g. ungated Hugging Face models). </summary>
-        internal CredentialValue Credential { get; set; }
+        public CredentialValue Credential { get; set; }
 
-        /// <summary> The access token, password, or other secret value. </summary>
-        public string CredentialInlineValue
+        /// <summary> Microsoft Foundry project reference. Required when `sourceType` is `MicrosoftFoundry`; must be omitted otherwise. Immutable after creation. </summary>
+        internal MicrosoftFoundrySource MicrosoftFoundry { get; set; }
+
+        /// <summary> The ARM resource id of the Foundry project. The scope on which the referenced managed identity must hold the `Foundry User` role. The account and endpoint host are derived from this id. </summary>
+        public ResourceIdentifier MicrosoftFoundryProjectResourceId
         {
             get
             {
-                return Credential is null ? default : Credential.InlineValue;
+                return MicrosoftFoundry is null ? default : MicrosoftFoundry.ProjectResourceId;
             }
             set
             {
-                if (Credential is null)
-                {
-                    Credential = new CredentialValue();
-                }
-                Credential.InlineValue = value;
+                MicrosoftFoundry = new MicrosoftFoundrySource(value);
             }
         }
     }

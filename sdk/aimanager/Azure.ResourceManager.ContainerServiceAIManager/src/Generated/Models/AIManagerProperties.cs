@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
@@ -25,12 +26,14 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="deletePolicy"> Delete options of the AI Manager. Defaults to `Delete` if not specified. </param>
         /// <param name="managedResourceGroupName"> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </param>
+        /// <param name="clusterResourceId"> The Azure resource ID of an existing AKS cluster to attach (bring-your-own). When omitted, AI Manager provisions and manages its own underlying cluster. The referenced cluster must be in the same region as this AI Manager, but may reside in a different subscription within the same Microsoft Entra tenant. This property is immutable after creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIManagerProperties(AIManagerProvisioningState? provisioningState, AIManagerDeletePolicy? deletePolicy, string managedResourceGroupName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIManagerProperties(AIManagerProvisioningState? provisioningState, AIManagerDeletePolicy? deletePolicy, string managedResourceGroupName, ResourceIdentifier clusterResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeletePolicy = deletePolicy;
             ManagedResourceGroupName = managedResourceGroupName;
+            ClusterResourceId = clusterResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +45,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </summary>
         public string ManagedResourceGroupName { get; }
+
+        /// <summary> The Azure resource ID of an existing AKS cluster to attach (bring-your-own). When omitted, AI Manager provisions and manages its own underlying cluster. The referenced cluster must be in the same region as this AI Manager, but may reside in a different subscription within the same Microsoft Entra tenant. This property is immutable after creation. </summary>
+        public ResourceIdentifier ClusterResourceId { get; set; }
     }
 }

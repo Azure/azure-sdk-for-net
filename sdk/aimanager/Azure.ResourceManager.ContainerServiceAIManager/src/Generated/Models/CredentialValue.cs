@@ -7,17 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary>
-    /// A credential value. Exactly one variant must be set.
-    /// In the current API version, only the `inline` variant is supported. Future
-    /// API versions are expected to add additional credential kinds (for example,
-    /// managed identity and Key Vault secret references) as sibling variants on
-    /// this model.
-    /// </summary>
-    internal partial class CredentialValue
+    /// <summary> A credential value used for accessing gated or private models. </summary>
+    public partial class CredentialValue
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -29,15 +24,30 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Initializes a new instance of <see cref="CredentialValue"/>. </summary>
         /// <param name="inline"> An inline credential containing a secret value supplied in the request payload. </param>
+        /// <param name="managedIdentity">
+        ///   A user-assigned managed identity the platform authenticates as. Required for `MicrosoftFoundry` sources and
+        ///   the user must grant the `Foundry User` role (role definition id 53ca6127-db72-4b80-b1b0-d745d6d5456d) on the Foundry project.
+        ///   See https://aka.ms/aks/aim-modelsource for more details.
+        ///   The platform federates this identity to an in-cluster puller ServiceAccount (Workload Identity) at deployment time.
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialValue(InlineCredential inline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CredentialValue(InlineCredential inline, ManagedIdentityCredential managedIdentity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inline = inline;
+            ManagedIdentity = managedIdentity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> An inline credential containing a secret value supplied in the request payload. </summary>
         internal InlineCredential Inline { get; set; }
+
+        /// <summary>
+        ///   A user-assigned managed identity the platform authenticates as. Required for `MicrosoftFoundry` sources and
+        ///   the user must grant the `Foundry User` role (role definition id 53ca6127-db72-4b80-b1b0-d745d6d5456d) on the Foundry project.
+        ///   See https://aka.ms/aks/aim-modelsource for more details.
+        ///   The platform federates this identity to an in-cluster puller ServiceAccount (Workload Identity) at deployment time.
+        /// </summary>
+        internal ManagedIdentityCredential ManagedIdentity { get; set; }
 
         /// <summary> The access token, password, or other secret value. </summary>
         public string InlineValue
@@ -49,6 +59,19 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             set
             {
                 Inline = new InlineCredential(value);
+            }
+        }
+
+        /// <summary> The Azure resource id of the user-assigned managed identity to authenticate with. Only user-assigned identities are supported. </summary>
+        public ResourceIdentifier ManagedIdentityResourceId
+        {
+            get
+            {
+                return ManagedIdentity is null ? default : ManagedIdentity.ResourceId;
+            }
+            set
+            {
+                ManagedIdentity = new ManagedIdentityCredential(value);
             }
         }
     }

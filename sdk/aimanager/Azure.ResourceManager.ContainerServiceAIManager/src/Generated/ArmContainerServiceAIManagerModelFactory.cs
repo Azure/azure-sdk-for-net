@@ -51,10 +51,11 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="deletePolicy"> Delete options of the AI Manager. Defaults to `Delete` if not specified. </param>
         /// <param name="managedResourceGroupName"> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </param>
+        /// <param name="clusterResourceId"> The Azure resource ID of an existing AKS cluster to attach (bring-your-own). When omitted, AI Manager provisions and manages its own underlying cluster. The referenced cluster must be in the same region as this AI Manager, but may reside in a different subscription within the same Microsoft Entra tenant. This property is immutable after creation. </param>
         /// <returns> A new <see cref="Models.AIManagerProperties"/> instance for mocking. </returns>
-        public static AIManagerProperties AIManagerProperties(AIManagerProvisioningState? provisioningState = default, AIManagerDeletePolicy? deletePolicy = default, string managedResourceGroupName = default)
+        public static AIManagerProperties AIManagerProperties(AIManagerProvisioningState? provisioningState = default, AIManagerDeletePolicy? deletePolicy = default, string managedResourceGroupName = default, ResourceIdentifier clusterResourceId = default)
         {
-            return new AIManagerProperties(provisioningState, deletePolicy, managedResourceGroupName, default);
+            return new AIManagerProperties(provisioningState, deletePolicy, managedResourceGroupName, clusterResourceId, default);
         }
 
         /// <summary> The AI Manager resource patch model. </summary>
@@ -169,13 +170,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             return new AIModelSpec(license, isRestricted, maxContextLength, default);
         }
 
-        /// <summary> Request body for the AI model `calculateCost` action. </summary>
-        /// <returns> A new <see cref="Models.CalculateCostContent"/> instance for mocking. </returns>
-        public static CalculateCostContent CalculateCostContent()
-        {
-            return new CalculateCostContent(default);
-        }
-
         /// <summary> Response body for the AI model `calculateCost` action. </summary>
         /// <param name="currency"> ISO 4217 currency code, e.g. "USD". </param>
         /// <param name="plans"> Ranked list of GPU SKU pricing plans. Feasible plans first, ordered by `totalHourlyPrice` ascending; infeasible plans last. </param>
@@ -227,7 +221,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             return new AIModelServingPerformanceEstimation(relativeLatencyScore, relativeThroughputScore, default);
         }
 
-        /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an ARM error envelope. </summary>
+        /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an Azure Resource Manager error envelope. </summary>
         /// <param name="code"> Machine-readable reason code. </param>
         /// <param name="message"> Human-readable message accompanying `code`. </param>
         /// <returns> A new <see cref="Models.AIModelInfeasibilityReason"/> instance for mocking. </returns>
@@ -259,11 +253,26 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="sourceType"> Model source type. Constrains the legal authentication kinds. Immutable after creation. </param>
         /// <param name="description"> An optional, free-form description of the source. </param>
-        /// <param name="credentialInlineValue"> The access token, password, or other secret value. </param>
+        /// <param name="credential"> Credential the platform uses to authenticate to the source. Optional for public sources (e.g. ungated Hugging Face models). </param>
+        /// <param name="microsoftFoundryProjectResourceId"> The ARM resource id of the Foundry project. The scope on which the referenced managed identity must hold the `Foundry User` role. The account and endpoint host are derived from this id. </param>
         /// <returns> A new <see cref="Models.ModelSourceProperties"/> instance for mocking. </returns>
-        public static ModelSourceProperties ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState = default, ModelSourceType sourceType = default, string description = default, string credentialInlineValue = default)
+        public static ModelSourceProperties ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState = default, ModelSourceType sourceType = default, string description = default, CredentialValue credential = default, ResourceIdentifier microsoftFoundryProjectResourceId = default)
         {
-            return new ModelSourceProperties(provisioningState, sourceType, description, credentialInlineValue is null ? default : new CredentialValue(new InlineCredential(credentialInlineValue, default), default), default);
+            return new ModelSourceProperties(
+                provisioningState,
+                sourceType,
+                description,
+                credential,
+                microsoftFoundryProjectResourceId is null ? default : new MicrosoftFoundrySource(microsoftFoundryProjectResourceId, default),
+                default);
+        }
+
+        /// <param name="inlineValue"> The access token, password, or other secret value. </param>
+        /// <param name="managedIdentityResourceId"> The Azure resource id of the user-assigned managed identity to authenticate with. Only user-assigned identities are supported. </param>
+        /// <returns> A new <see cref="Models.CredentialValue"/> instance for mocking. </returns>
+        public static CredentialValue CredentialValue(string inlineValue = default, ResourceIdentifier managedIdentityResourceId = default)
+        {
+            return new CredentialValue(inlineValue is null ? default : new InlineCredential(inlineValue, default), managedIdentityResourceId is null ? default : new ManagedIdentityCredential(managedIdentityResourceId, default), default);
         }
 
         /// <summary>
@@ -293,8 +302,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         }
 
         /// <param name="provisioningState"> The status of the last reconciliation. </param>
-        /// <param name="modelResourceId"> Full ARM resource id of the model to deploy. Phase 1 accepts an `AIModel` resource id only. Immutable after creation. </param>
-        /// <param name="modelSourceResourceId"> Full ARM resource id of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </param>
+        /// <param name="modelResourceId"> Full Azure resource ID of the model to deploy. Immutable after creation. </param>
+        /// <param name="modelSourceResourceId"> Full Azure resource ID of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </param>
         /// <param name="performanceMode"> Runtime performance mode. </param>
         /// <param name="vmSize"> Azure VM SKU used to host the deployment, e.g. "Standard_NC96ads_A100_v4". Immutable after creation. </param>
         /// <param name="scale"> Scaling configuration for the deployment. Provide either `manual` (fixed replica count) or `autoscale` (autoscaling between min/max replicas), but not both. </param>
@@ -356,6 +365,76 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 peakTokensPerMinute,
                 estimatedProvisionTimeSeconds,
                 default);
+        }
+
+        /// <summary>
+        /// A custom AI model registered by the user and scoped to a specific
+        /// AIManager.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="ContainerServiceAIManager.CustomAIModelData"/> instance for mocking. </returns>
+        public static CustomAIModelData CustomAIModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomAIModelProperties properties = default, ETag? eTag = default)
+        {
+            return new CustomAIModelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> Custom AI model properties. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="modelId">
+        /// The model identifier, interpreted per the referenced ModelSource type.
+        /// For `HuggingFace` sources this is the upstream `&lt;org&gt;/&lt;repo&gt;` id, e.g.
+        /// `meta-llama/Llama-2-7b-chat`. For `MicrosoftFoundry` sources this is
+        /// `modelName/version`, e.g. `private-llama/1`. Immutable after creation.
+        /// </param>
+        /// <param name="baseModel"> The base model this custom model was trained from (id + config.json). Immutable after creation. </param>
+        /// <param name="modelSourceResourceId"> Azure resource id of the ModelSource to use when pulling artifacts. Used to determine model location and access. Immutable after creation. </param>
+        /// <param name="description"> Optional. Free-form description of the model. Mutable. </param>
+        /// <param name="spec"> Read-only. Platform-resolved specification of the model. </param>
+        /// <returns> A new <see cref="Models.CustomAIModelProperties"/> instance for mocking. </returns>
+        public static CustomAIModelProperties CustomAIModelProperties(CustomAIModelProvisioningState? provisioningState = default, string modelId = default, BaseModelReference baseModel = default, ResourceIdentifier modelSourceResourceId = default, string description = default, CustomAIModelSpec spec = default)
+        {
+            return new CustomAIModelProperties(
+                provisioningState,
+                modelId,
+                baseModel,
+                modelSourceResourceId,
+                description,
+                spec,
+                default);
+        }
+
+        /// <summary> The base model a custom model was trained from. A HuggingFace repository supplied by the user because the platform may lack access to private source repositories. </summary>
+        /// <param name="id"> The HuggingFace `&lt;org&gt;/&lt;repo&gt;` id of the base model, e.g. `meta-llama/Llama-2-7b-chat`. Immutable after creation. </param>
+        /// <param name="totalWeightSizeBytes"> The total size of the model weights in bytes. eg `28000000000`. Required if the base model is not publicly accessible on HuggingFace. </param>
+        /// <param name="config"> The verbatim `config.json` of the base model, supplied by the user. Required if the base model is not publicly accessible on HuggingFace.  For more information on CustomAIModel configuration see https://aka.ms/aks/aim-customaimodel. </param>
+        /// <returns> A new <see cref="Models.BaseModelReference"/> instance for mocking. </returns>
+        public static BaseModelReference BaseModelReference(string id = default, long? totalWeightSizeBytes = default, IDictionary<string, BinaryData> config = default)
+        {
+            config ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new BaseModelReference(id, totalWeightSizeBytes, config ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
+        }
+
+        /// <summary> Platform-resolved specification of a custom model. Extends `ModelSpec` with custom model-specific metadata. All fields are read-only. Reserved so custom-model-specific fields can be added without changing the SDK surface. </summary>
+        /// <param name="license"> The license of the model, when known. SPDX license identifier, e.g. `mit`, `apache-2.0`. </param>
+        /// <param name="isRestricted"> Whether access to the model is restricted and requires credential. </param>
+        /// <param name="maxContextLength"> The maximum context length supported by the model, in tokens. </param>
+        /// <returns> A new <see cref="Models.CustomAIModelSpec"/> instance for mocking. </returns>
+        public static CustomAIModelSpec CustomAIModelSpec(string license = default, bool isRestricted = default, int maxContextLength = default)
+        {
+            return new CustomAIModelSpec(license, isRestricted, maxContextLength, default);
         }
     }
 }

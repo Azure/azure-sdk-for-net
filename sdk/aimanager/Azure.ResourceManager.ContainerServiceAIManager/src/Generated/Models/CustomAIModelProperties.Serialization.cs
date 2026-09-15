@@ -9,61 +9,62 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> Model source properties. </summary>
-    public partial class ModelSourceProperties : IJsonModel<ModelSourceProperties>
+    /// <summary> Custom AI model properties. </summary>
+    public partial class CustomAIModelProperties : IJsonModel<CustomAIModelProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ModelSourceProperties"/> for deserialization. </summary>
-        internal ModelSourceProperties()
+        /// <summary> Initializes a new instance of <see cref="CustomAIModelProperties"/> for deserialization. </summary>
+        internal CustomAIModelProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ModelSourceProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomAIModelProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeModelSourceProperties(document.RootElement, options);
+                        return DeserializeCustomAIModelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelSourceProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAIModelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ModelSourceProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAIModelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ModelSourceProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomAIModelProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ModelSourceProperties IPersistableModel<ModelSourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomAIModelProperties IPersistableModel<CustomAIModelProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ModelSourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomAIModelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ModelSourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomAIModelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,32 +75,31 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelSourceProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAIModelProperties)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WritePropertyName("sourceType"u8);
-            writer.WriteStringValue(SourceType.ToString());
+            writer.WritePropertyName("modelId"u8);
+            writer.WriteStringValue(ModelId);
+            writer.WritePropertyName("baseModel"u8);
+            writer.WriteObjectValue(BaseModel, options);
+            writer.WritePropertyName("modelSourceResourceId"u8);
+            writer.WriteStringValue(ModelSourceResourceId);
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(Credential))
+            if (options.Format != "W" && Optional.IsDefined(Spec))
             {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential, options);
-            }
-            if (Optional.IsDefined(MicrosoftFoundry))
-            {
-                writer.WritePropertyName("microsoftFoundry"u8);
-                writer.WriteObjectValue(MicrosoftFoundry, options);
+                writer.WritePropertyName("spec"u8);
+                writer.WriteObjectValue(Spec, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -120,34 +120,35 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ModelSourceProperties IJsonModel<ModelSourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomAIModelProperties IJsonModel<CustomAIModelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ModelSourceProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomAIModelProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ModelSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelSourceProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAIModelProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeModelSourceProperties(document.RootElement, options);
+            return DeserializeCustomAIModelProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ModelSourceProperties DeserializeModelSourceProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomAIModelProperties DeserializeCustomAIModelProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ContainerServiceAIManagerProvisioningState? provisioningState = default;
-            ModelSourceType sourceType = default;
+            CustomAIModelProvisioningState? provisioningState = default;
+            string modelId = default;
+            BaseModelReference baseModel = default;
+            ResourceIdentifier modelSourceResourceId = default;
             string description = default;
-            CredentialValue credential = default;
-            MicrosoftFoundrySource microsoftFoundry = default;
+            CustomAIModelSpec spec = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,12 +158,22 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ContainerServiceAIManagerProvisioningState(prop.Value.GetString());
+                    provisioningState = new CustomAIModelProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("sourceType"u8))
+                if (prop.NameEquals("modelId"u8))
                 {
-                    sourceType = new ModelSourceType(prop.Value.GetString());
+                    modelId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("baseModel"u8))
+                {
+                    baseModel = BaseModelReference.DeserializeBaseModelReference(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("modelSourceResourceId"u8))
+                {
+                    modelSourceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -170,22 +181,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     description = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("credential"u8))
+                if (prop.NameEquals("spec"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    credential = CredentialValue.DeserializeCredentialValue(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("microsoftFoundry"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    microsoftFoundry = MicrosoftFoundrySource.DeserializeMicrosoftFoundrySource(prop.Value, options);
+                    spec = CustomAIModelSpec.DeserializeCustomAIModelSpec(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -193,12 +195,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ModelSourceProperties(
+            return new CustomAIModelProperties(
                 provisioningState,
-                sourceType,
+                modelId,
+                baseModel,
+                modelSourceResourceId,
                 description,
-                credential,
-                microsoftFoundry,
+                spec,
                 additionalBinaryDataProperties);
         }
     }

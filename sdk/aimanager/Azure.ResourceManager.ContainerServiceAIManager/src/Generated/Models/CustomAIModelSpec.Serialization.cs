@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> A credential value used for accessing gated or private models. </summary>
-    public partial class CredentialValue : IJsonModel<CredentialValue>
+    /// <summary> Platform-resolved specification of a custom model. Extends `ModelSpec` with custom model-specific metadata. All fields are read-only. Reserved so custom-model-specific fields can be added without changing the SDK surface. </summary>
+    public partial class CustomAIModelSpec : IJsonModel<CustomAIModelSpec>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CustomAIModelSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCredentialValue(document.RootElement, options);
+                        return DeserializeCustomAIModelSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialValue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAIModelSpec)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialValue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomAIModelSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CredentialValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CustomAIModelSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialValue IPersistableModel<CredentialValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CustomAIModelSpec IPersistableModel<CustomAIModelSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CredentialValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CustomAIModelSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CredentialValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CustomAIModelSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialValue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAIModelSpec)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Inline))
+            if (options.Format != "W" && Optional.IsDefined(License))
             {
-                writer.WritePropertyName("inline"u8);
-                writer.WriteObjectValue(Inline, options);
+                writer.WritePropertyName("license"u8);
+                writer.WriteStringValue(License);
             }
-            if (Optional.IsDefined(ManagedIdentity))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity, options);
+                writer.WritePropertyName("isRestricted"u8);
+                writer.WriteBooleanValue(IsRestricted);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("maxContextLength"u8);
+                writer.WriteNumberValue(MaxContextLength);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,48 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialValue IJsonModel<CredentialValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CustomAIModelSpec IJsonModel<CustomAIModelSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CustomAIModelSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CustomAIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialValue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomAIModelSpec)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialValue(document.RootElement, options);
+            return DeserializeCustomAIModelSpec(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CredentialValue DeserializeCredentialValue(JsonElement element, ModelReaderWriterOptions options)
+        internal static CustomAIModelSpec DeserializeCustomAIModelSpec(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InlineCredential inline = default;
-            ManagedIdentityCredential managedIdentity = default;
+            string license = default;
+            bool isRestricted = default;
+            int maxContextLength = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("inline"u8))
+                if (prop.NameEquals("license"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inline = InlineCredential.DeserializeInlineCredential(prop.Value, options);
+                    license = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("managedIdentity"u8))
+                if (prop.NameEquals("isRestricted"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managedIdentity = ManagedIdentityCredential.DeserializeManagedIdentityCredential(prop.Value, options);
+                    isRestricted = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("maxContextLength"u8))
+                {
+                    maxContextLength = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +157,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialValue(inline, managedIdentity, additionalBinaryDataProperties);
+            return new CustomAIModelSpec(license, isRestricted, maxContextLength, additionalBinaryDataProperties);
         }
     }
 }

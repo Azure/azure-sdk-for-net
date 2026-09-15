@@ -9,56 +9,62 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> A credential value used for accessing gated or private models. </summary>
-    public partial class CredentialValue : IJsonModel<CredentialValue>
+    /// <summary> A credential backed by a user-owned user-assigned managed identity. The platform authenticates to the model source as this identity via Workload Identity; no secret is stored. </summary>
+    internal partial class ManagedIdentityCredential : IJsonModel<ManagedIdentityCredential>
     {
+        /// <summary> Initializes a new instance of <see cref="ManagedIdentityCredential"/> for deserialization. </summary>
+        internal ManagedIdentityCredential()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ManagedIdentityCredential PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCredentialValue(document.RootElement, options);
+                        return DeserializeManagedIdentityCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialValue)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialValue)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CredentialValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ManagedIdentityCredential>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialValue IPersistableModel<CredentialValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ManagedIdentityCredential IPersistableModel<ManagedIdentityCredential>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CredentialValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedIdentityCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CredentialValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedIdentityCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,21 +75,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialValue)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Inline))
-            {
-                writer.WritePropertyName("inline"u8);
-                writer.WriteObjectValue(Inline, options);
-            }
-            if (Optional.IsDefined(ManagedIdentity))
-            {
-                writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity, options);
-            }
+            writer.WritePropertyName("resourceId"u8);
+            writer.WriteStringValue(ResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -103,50 +101,36 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialValue IJsonModel<CredentialValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ManagedIdentityCredential IJsonModel<ManagedIdentityCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ManagedIdentityCredential JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialValue>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ManagedIdentityCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialValue)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIdentityCredential)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialValue(document.RootElement, options);
+            return DeserializeManagedIdentityCredential(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CredentialValue DeserializeCredentialValue(JsonElement element, ModelReaderWriterOptions options)
+        internal static ManagedIdentityCredential DeserializeManagedIdentityCredential(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InlineCredential inline = default;
-            ManagedIdentityCredential managedIdentity = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("inline"u8))
+                if (prop.NameEquals("resourceId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inline = InlineCredential.DeserializeInlineCredential(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("managedIdentity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managedIdentity = ManagedIdentityCredential.DeserializeManagedIdentityCredential(prop.Value, options);
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +138,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialValue(inline, managedIdentity, additionalBinaryDataProperties);
+            return new ManagedIdentityCredential(resourceId, additionalBinaryDataProperties);
         }
     }
 }

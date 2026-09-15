@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         {
             TryGetApiVersion(ResourceType, out string aiManagerApiVersion);
             _aiManagersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", ResourceType.Namespace, Diagnostics);
-            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiManagerApiVersion ?? "2026-05-02-preview");
+            _aiManagersRestClient = new AIManagers(_aiManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiManagerApiVersion ?? "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -829,6 +829,39 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             Argument.AssertNotNullOrEmpty(modelSourceName, nameof(modelSourceName));
 
             return GetModelSources().Get(modelSourceName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CustomAIModels in the <see cref="AIManagerResource"/>. </summary>
+        /// <returns> An object representing collection of CustomAIModels and their operations over a CustomAIModelResource. </returns>
+        public virtual CustomAIModelCollection GetCustomAIModels()
+        {
+            return GetCachedClient(client => new CustomAIModelCollection(client, Id));
+        }
+
+        /// <summary> Get a CustomAIModel. </summary>
+        /// <param name="customAIModelName"> The name of the custom AI model resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAIModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customAIModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CustomAIModelResource>> GetCustomAIModelAsync(string customAIModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customAIModelName, nameof(customAIModelName));
+
+            return await GetCustomAIModels().GetAsync(customAIModelName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a CustomAIModel. </summary>
+        /// <param name="customAIModelName"> The name of the custom AI model resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAIModelName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customAIModelName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CustomAIModelResource> GetCustomAIModel(string customAIModelName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customAIModelName, nameof(customAIModelName));
+
+            return GetCustomAIModels().Get(customAIModelName, cancellationToken);
         }
     }
 }

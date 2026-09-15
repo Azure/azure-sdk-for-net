@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         {
             get
             {
-                return Manual is null ? default : Manual.Replicas;
+                return Manual is null ? (int?)default : Manual.Replicas;
             }
             set
             {

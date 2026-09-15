@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             TryGetApiVersion(AIModelResource.ResourceType, out string aiModelApiVersion);
             _location = location;
             _aiModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", AIModelResource.ResourceType.Namespace, Diagnostics);
-            _aiModelsRestClient = new AIModels(_aiModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiModelApiVersion ?? "2026-05-02-preview");
+            _aiModelsRestClient = new AIModels(_aiModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiModelApiVersion ?? "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

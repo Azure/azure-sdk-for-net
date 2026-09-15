@@ -111,6 +111,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.AIManagerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerCredentialResults> GetCredential(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerCredentialResults>> GetCredentialAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> GetCustomAIModel(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> GetCustomAIModelAsync(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelCollection GetCustomAIModels() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.ModelSourceResource> GetModelSource(string modelSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.ModelSourceResource>> GetModelSourceAsync(string modelSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.ModelSourceCollection GetModelSources() { throw null; }
@@ -161,8 +164,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         protected AIModelResource() { }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.AIModelData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult> CalculateCost(Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult>> CalculateCostAsync(Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult> CalculateCost(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult>> CalculateCostAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string aiModelName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.AIModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.AIModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -191,8 +194,62 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.AIModelResource>> GetAIModelAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string aiModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.AIModelResource GetAIModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.AIModelCollection GetAIModels(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource GetCustomAIModelResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentResource GetModelDeploymentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.ModelSourceResource GetModelSourceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class CustomAIModelCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>, System.Collections.IEnumerable
+    {
+        protected CustomAIModelCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string customAIModelName, Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string customAIModelName, Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> Get(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> GetAsync(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> GetIfExists(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> GetIfExistsAsync(string customAIModelName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class CustomAIModelData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>
+    {
+        public CustomAIModelData() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties Properties { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomAIModelResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected CustomAIModelResource() { }
+        public virtual Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult> CalculateCost(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult>> CalculateCostAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string aiManagerName, string customAIModelName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, Azure.ETag? ifMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData data, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ModelDeploymentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentResource>, System.Collections.IEnumerable
     {
@@ -305,6 +362,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         public virtual Azure.ResourceManager.ContainerServiceAIManager.AIManagerNamespaceResource GetAIManagerNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.AIManagerResource GetAIManagerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.AIModelResource GetAIModelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelResource GetCustomAIModelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentResource GetModelDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerServiceAIManager.ModelSourceResource GetModelSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -445,6 +503,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     public partial class AIManagerProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProperties>
     {
         public AIManagerProperties() { }
+        public Azure.Core.ResourceIdentifier ClusterResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerDeletePolicy? DeletePolicy { get { throw null; } set { } }
         public string ManagedResourceGroupName { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProvisioningState? ProvisioningState { get { throw null; } }
@@ -568,35 +627,42 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public static Azure.ResourceManager.ContainerServiceAIManager.AIManagerNamespaceData AIManagerNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerNamespaceProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerNamespaceProperties AIManagerNamespaceProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerNamespaceProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerNamespaceProvisioningState?), System.Collections.Generic.IDictionary<string, string> labels = null, System.Collections.Generic.IDictionary<string, string> annotations = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerPatch AIManagerPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProperties AIManagerProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProvisioningState?), Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerDeletePolicy? deletePolicy = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerDeletePolicy?), string managedResourceGroupName = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProperties AIManagerProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerProvisioningState?), Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerDeletePolicy? deletePolicy = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIManagerDeletePolicy?), string managedResourceGroupName = null, Azure.Core.ResourceIdentifier clusterResourceId = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.AIModelData AIModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibilityReason AIModelInfeasibilityReason(Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibleCode code = default(Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibleCode), string message = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelProperties AIModelProperties(string modelId = null, string description = null, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelSpec spec = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation AIModelServingPerformanceEstimation(float relativeLatencyScore = 0f, float relativeThroughputScore = 0f) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelSpec AIModelSpec(string license = null, bool isRestricted = false, int maxContextLength = 0) { throw null; }
-        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent CalculateCostContent() { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference BaseModelReference(string id = null, long? totalWeightSizeBytes = default(long?), System.Collections.Generic.IDictionary<string, System.BinaryData> config = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan CalculateCostPlan(string vmSize = null, string quantization = null, int vmsPerReplica = 0, int maxAvailableReplicas = 0, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelServingPerformanceEstimation servingPerformanceEstimation = null, double vmHourlyPrice = 0, double? totalHourlyPrice = default(double?), System.DateTimeOffset? priceAsOfOn = default(System.DateTimeOffset?), bool isFeasible = false, Azure.ResourceManager.ContainerServiceAIManager.Models.AIModelInfeasibilityReason infeasibilityReason = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostResult CalculateCostResult(string currency = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan> plans = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue CredentialValue(string inlineValue = null, Azure.Core.ResourceIdentifier managedIdentityResourceId = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.CustomAIModelData CustomAIModelData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties CustomAIModelProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState?), string modelId = null, Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference baseModel = null, Azure.Core.ResourceIdentifier modelSourceResourceId = null, string description = null, Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec spec = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec CustomAIModelSpec(string license = null, bool isRestricted = false, int maxContextLength = 0) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentAutoscaleProfile ModelDeploymentAutoscaleProfile(int minReplicas = 0, int? maxReplicas = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.ModelDeploymentData ModelDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentProperties ModelDeploymentProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentProvisioningState?), Azure.Core.ResourceIdentifier modelResourceId = null, Azure.Core.ResourceIdentifier modelSourceResourceId = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentPerformanceMode? performanceMode = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentPerformanceMode?), string vmSize = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentScalingProfile scale = null, System.Collections.Generic.IDictionary<string, string> overridesValues = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentStatus status = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentScalingProfile ModelDeploymentScalingProfile(int? manualReplicas = default(int?), Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentAutoscaleProfile autoscale = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentStatus ModelDeploymentStatus(System.Uri endpoint = null, string engine = null, string engineVersion = null, int? maxModelLen = default(int?), string quantization = null, int? desiredReplicas = default(int?), int? currentReplicas = default(int?), int? peakTokensPerMinute = default(int?), int? estimatedProvisionTimeSeconds = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.ModelSourceData ModelSourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
-        public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties ModelSourceProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState?), Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType sourceType = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType), string description = null, string credentialInlineValue = null) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties ModelSourceProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState?), Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType sourceType = default(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType), string description = null, Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue credential = null, Azure.Core.ResourceIdentifier microsoftFoundryProjectResourceId = null) { throw null; }
     }
-    public partial class CalculateCostContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>
+    public partial class BaseModelReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>
     {
-        public CalculateCostContent() { }
-        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public BaseModelReference(string id) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> Config { get { throw null; } }
+        public string Id { get { throw null; } set { } }
+        public long? TotalWeightSizeBytes { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CalculateCostPlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CalculateCostPlan>
     {
@@ -653,6 +719,77 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public static implicit operator Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState left, Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class CredentialValue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>
+    {
+        public CredentialValue() { }
+        public string InlineValue { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ManagedIdentityResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomAIModelProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>
+    {
+        public CustomAIModelProperties(string modelId, Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference baseModel, Azure.Core.ResourceIdentifier modelSourceResourceId) { }
+        public Azure.ResourceManager.ContainerServiceAIManager.Models.BaseModelReference BaseModel { get { throw null; } set { } }
+        public string Description { get { throw null; } set { } }
+        public string ModelId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ModelSourceResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec Spec { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CustomAIModelProvisioningState : System.IEquatable<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CustomAIModelProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState left, Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState left, Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CustomAIModelSpec : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>
+    {
+        internal CustomAIModelSpec() { }
+        public bool IsRestricted { get { throw null; } }
+        public string License { get { throw null; } }
+        public int MaxContextLength { get { throw null; } }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.CustomAIModelSpec>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ModelDeploymentAutoscaleProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentAutoscaleProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.ModelDeploymentAutoscaleProfile>
     {
@@ -769,8 +906,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     public partial class ModelSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties>
     {
         public ModelSourceProperties(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType sourceType) { }
-        public string CredentialInlineValue { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerServiceAIManager.Models.CredentialValue Credential { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier MicrosoftFoundryProjectResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.ContainerServiceAIManagerProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType SourceType { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -790,6 +928,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         private readonly int _dummyPrimitive;
         public ModelSourceType(string value) { throw null; }
         public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType HuggingFace { get { throw null; } }
+        public static Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType MicrosoftFoundry { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerServiceAIManager.Models.ModelSourceType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

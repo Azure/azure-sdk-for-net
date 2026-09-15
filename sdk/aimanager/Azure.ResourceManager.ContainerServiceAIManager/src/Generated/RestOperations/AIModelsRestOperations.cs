@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             return message;
         }
 
-        internal HttpMessage CreateCalculateCostRequest(Guid subscriptionId, AzureLocation location, string aiModelName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCalculateCostRequest(Guid subscriptionId, AzureLocation location, string aiModelName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -133,9 +133,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
-            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
             return message;
         }
     }

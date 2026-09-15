@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ModelDeploymentProperties"/>. </summary>
-        /// <param name="modelResourceId"> Full ARM resource id of the model to deploy. Phase 1 accepts an `AIModel` resource id only. Immutable after creation. </param>
+        /// <param name="modelResourceId"> Full Azure resource ID of the model to deploy. Immutable after creation. </param>
         /// <param name="vmSize"> Azure VM SKU used to host the deployment, e.g. "Standard_NC96ads_A100_v4". Immutable after creation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelResourceId"/> or <paramref name="vmSize"/> is null. </exception>
         public ModelDeploymentProperties(ResourceIdentifier modelResourceId, string vmSize)
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> Initializes a new instance of <see cref="ModelDeploymentProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last reconciliation. </param>
-        /// <param name="modelResourceId"> Full ARM resource id of the model to deploy. Phase 1 accepts an `AIModel` resource id only. Immutable after creation. </param>
-        /// <param name="modelSourceResourceId"> Full ARM resource id of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </param>
+        /// <param name="modelResourceId"> Full Azure resource ID of the model to deploy. Immutable after creation. </param>
+        /// <param name="modelSourceResourceId"> Full Azure resource ID of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </param>
         /// <param name="performanceMode"> Runtime performance mode. </param>
         /// <param name="vmSize"> Azure VM SKU used to host the deployment, e.g. "Standard_NC96ads_A100_v4". Immutable after creation. </param>
         /// <param name="scale"> Scaling configuration for the deployment. Provide either `manual` (fixed replica count) or `autoscale` (autoscaling between min/max replicas), but not both. </param>
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <summary> The status of the last reconciliation. </summary>
         public ModelDeploymentProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Full ARM resource id of the model to deploy. Phase 1 accepts an `AIModel` resource id only. Immutable after creation. </summary>
+        /// <summary> Full Azure resource ID of the model to deploy. Immutable after creation. </summary>
         public ResourceIdentifier ModelResourceId { get; set; }
 
-        /// <summary> Full ARM resource id of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </summary>
+        /// <summary> Full Azure resource ID of a `ModelSource` to use when pulling artifacts for this deployment. Immutable after creation. </summary>
         public ResourceIdentifier ModelSourceResourceId { get; set; }
 
         /// <summary> Runtime performance mode. </summary>

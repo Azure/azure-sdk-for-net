@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
 
         private ClientDiagnostics AIManagersClientDiagnostics => _aiManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AIManagers AIManagersRestClient => _aiManagersRestClient ??= new AIManagers(AIManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-02-preview");
+        private AIManagers AIManagersRestClient => _aiManagersRestClient ??= new AIManagers(AIManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-02-preview");
 
         /// <summary> Gets a collection of AIModels in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

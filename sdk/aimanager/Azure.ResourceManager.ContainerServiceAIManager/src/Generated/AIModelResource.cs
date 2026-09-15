@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         {
             TryGetApiVersion(ResourceType, out string aiModelApiVersion);
             _aiModelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager", ResourceType.Namespace, Diagnostics);
-            _aiModelsRestClient = new AIModels(_aiModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiModelApiVersion ?? "2026-05-02-preview");
+            _aiModelsRestClient = new AIModels(_aiModelsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, aiModelApiVersion ?? "2026-09-02-preview");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -209,13 +209,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CalculateCostResult>> CalculateCostAsync(CalculateCostContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculateCostResult>> CalculateCostAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _aiModelsClientDiagnostics.CreateScope("AIModelResource.CalculateCost");
             scope.Start();
             try
@@ -224,7 +220,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostContent.ToRequestContent(content), context);
+                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -253,7 +249,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-09-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,13 +257,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CalculateCostResult> CalculateCost(CalculateCostContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CalculateCostResult> CalculateCost(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             using DiagnosticScope scope = _aiModelsClientDiagnostics.CreateScope("AIModelResource.CalculateCost");
             scope.Start();
             try
@@ -276,7 +268,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostContent.ToRequestContent(content), context);
+                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)

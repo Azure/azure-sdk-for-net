@@ -14,62 +14,66 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> Request body for the AI model `calculateCost` action. </summary>
-    public partial class CalculateCostContent : IJsonModel<CalculateCostContent>
+    /// <summary>
+    /// Reference to a Microsoft Foundry project that backs a `MicrosoftFoundry`
+    /// ModelSource. Only the project Azure id is required; the Foundry account and its
+    /// data-plane endpoint (`*.services.ai.azure.com`) are resolved by the platform
+    /// from the project (the account is the project's parent resource).
+    /// Authentication uses the user-assigned managed identity referenced in the
+    /// ModelSource `credential.managedIdentity`, which the user must grant the
+    /// `Foundry User` role (role definition id 53ca6127-db72-4b80-b1b0-d745d6d5456d)
+    /// on this project. See https://aka.ms/aks/aim-modelsource for more details.
+    /// </summary>
+    internal partial class MicrosoftFoundrySource : IJsonModel<MicrosoftFoundrySource>
     {
+        /// <summary> Initializes a new instance of <see cref="MicrosoftFoundrySource"/> for deserialization. </summary>
+        internal MicrosoftFoundrySource()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MicrosoftFoundrySource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFoundrySource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCalculateCostContent(document.RootElement, options);
+                        return DeserializeMicrosoftFoundrySource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftFoundrySource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFoundrySource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MicrosoftFoundrySource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CalculateCostContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MicrosoftFoundrySource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostContent IPersistableModel<CalculateCostContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MicrosoftFoundrySource IPersistableModel<MicrosoftFoundrySource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CalculateCostContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="calculateCostContent"> The <see cref="CalculateCostContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CalculateCostContent calculateCostContent)
-        {
-            if (calculateCostContent == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(calculateCostContent, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<MicrosoftFoundrySource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CalculateCostContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MicrosoftFoundrySource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,11 +84,13 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFoundrySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftFoundrySource)} does not support writing '{format}' format.");
             }
+            writer.WritePropertyName("projectResourceId"u8);
+            writer.WriteStringValue(ProjectResourceId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -104,38 +110,44 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostContent IJsonModel<CalculateCostContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MicrosoftFoundrySource IJsonModel<MicrosoftFoundrySource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MicrosoftFoundrySource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MicrosoftFoundrySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MicrosoftFoundrySource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCalculateCostContent(document.RootElement, options);
+            return DeserializeMicrosoftFoundrySource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CalculateCostContent DeserializeCalculateCostContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MicrosoftFoundrySource DeserializeMicrosoftFoundrySource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ResourceIdentifier projectResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("projectResourceId"u8))
+                {
+                    projectResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CalculateCostContent(additionalBinaryDataProperties);
+            return new MicrosoftFoundrySource(projectResourceId, additionalBinaryDataProperties);
         }
     }
 }

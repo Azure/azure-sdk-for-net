@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an ARM error envelope. </summary>
+    /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an Azure Resource Manager error envelope. </summary>
     public partial class AIModelInfeasibilityReason
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

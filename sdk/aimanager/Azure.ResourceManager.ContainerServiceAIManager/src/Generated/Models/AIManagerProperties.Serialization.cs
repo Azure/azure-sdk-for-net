@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
@@ -89,6 +90,11 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
+            if (Optional.IsDefined(ClusterResourceId))
+            {
+                writer.WritePropertyName("clusterResourceId"u8);
+                writer.WriteStringValue(ClusterResourceId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +140,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             AIManagerProvisioningState? provisioningState = default;
             AIManagerDeletePolicy? deletePolicy = default;
             string managedResourceGroupName = default;
+            ResourceIdentifier clusterResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +167,21 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     managedResourceGroupName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("clusterResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AIManagerProperties(provisioningState, deletePolicy, managedResourceGroupName, additionalBinaryDataProperties);
+            return new AIManagerProperties(provisioningState, deletePolicy, managedResourceGroupName, clusterResourceId, additionalBinaryDataProperties);
         }
     }
 }

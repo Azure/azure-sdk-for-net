@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         private readonly string _value;
         /// <summary> A Hugging Face model registry. </summary>
         private const string HuggingFaceValue = "HuggingFace";
+        /// <summary> A Microsoft Foundry project. Tenant-private models produced by internal training pipelines. Authenticated via a user-assigned managed identity (referenced in the credential and granted the `Foundry User` role on the project). </summary>
+        private const string MicrosoftFoundryValue = "MicrosoftFoundry";
 
         /// <summary> Initializes a new instance of <see cref="ModelSourceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +32,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <summary> A Hugging Face model registry. </summary>
         public static ModelSourceType HuggingFace { get; } = new ModelSourceType(HuggingFaceValue);
+
+        /// <summary> A Microsoft Foundry project. Tenant-private models produced by internal training pipelines. Authenticated via a user-assigned managed identity (referenced in the credential and granted the `Foundry User` role on the project). </summary>
+        public static ModelSourceType MicrosoftFoundry { get; } = new ModelSourceType(MicrosoftFoundryValue);
 
         /// <summary> Determines if two <see cref="ModelSourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

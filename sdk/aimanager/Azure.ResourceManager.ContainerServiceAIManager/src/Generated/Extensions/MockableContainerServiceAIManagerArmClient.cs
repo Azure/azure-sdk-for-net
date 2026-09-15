@@ -70,5 +70,14 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
             ModelDeploymentResource.ValidateResourceId(id);
             return new ModelDeploymentResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="CustomAIModelResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CustomAIModelResource"/> object. </returns>
+        public virtual CustomAIModelResource GetCustomAIModelResource(ResourceIdentifier id)
+        {
+            CustomAIModelResource.ValidateResourceId(id);
+            return new CustomAIModelResource(Client, id);
+        }
     }
 }
