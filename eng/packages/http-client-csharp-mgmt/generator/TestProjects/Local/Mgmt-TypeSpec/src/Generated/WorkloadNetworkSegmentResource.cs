@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -195,8 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a Segment.
-        /// Uses
+        /// Updates the WorkloadNetworkSegment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -204,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Update. </description>
+        /// <description> WorkloadNetworkSegments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -217,9 +217,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<WorkloadNetworkSegmentResource>> UpdateAsync(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -232,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -240,7 +241,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.AzureAsyncOperation,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -256,8 +257,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a Segment.
-        /// Uses
+        /// Updates the WorkloadNetworkSegment.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -265,7 +265,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> WorkloadNetworkSegments_Update. </description>
+        /// <description> WorkloadNetworkSegments_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -278,9 +278,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<WorkloadNetworkSegmentResource> Update(WaitUntil waitUntil, WorkloadNetworkSegmentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -293,7 +294,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateUpdateSegmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
+                HttpMessage message = _workloadNetworkSegmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, WorkloadNetworkSegmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<WorkloadNetworkSegmentResource> operation = new TestsArmOperation<WorkloadNetworkSegmentResource>(
                     new WorkloadNetworkSegmentResourceOperationSource(Client),
@@ -301,7 +302,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.AzureAsyncOperation,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {

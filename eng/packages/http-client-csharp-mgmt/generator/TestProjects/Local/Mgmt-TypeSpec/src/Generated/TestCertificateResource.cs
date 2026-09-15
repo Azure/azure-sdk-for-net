@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -395,7 +396,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a TestCertificate.
+        /// Updates the TestCertificate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -419,6 +420,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<TestCertificateResource>> UpdateAsync(WaitUntil waitUntil, TestCertificateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -455,7 +457,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a TestCertificate.
+        /// Updates the TestCertificate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -479,6 +481,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="content"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<TestCertificateResource> Update(WaitUntil waitUntil, TestCertificateCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));

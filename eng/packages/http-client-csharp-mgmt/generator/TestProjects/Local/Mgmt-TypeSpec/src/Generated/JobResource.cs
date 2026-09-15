@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -314,7 +315,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a JobResource.
+        /// Updates the JobResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -339,6 +340,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<JobResource>> UpdateAsync(WaitUntil waitUntil, JobResourceData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -375,7 +377,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a JobResource.
+        /// Updates the JobResource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -400,6 +402,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="matchConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<JobResource> Update(WaitUntil waitUntil, JobResourceData data, MatchConditions matchConditions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

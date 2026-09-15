@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -722,7 +723,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a Zoo.
+        /// Updates the Zoo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -746,6 +747,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<ZooResource>> UpdateAsync(WaitUntil waitUntil, ZooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -782,7 +784,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a Zoo.
+        /// Updates the Zoo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -806,6 +808,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<ZooResource> Update(WaitUntil waitUntil, ZooData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));

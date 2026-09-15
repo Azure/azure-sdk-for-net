@@ -436,6 +436,7 @@ namespace Azure.Generator.Management.Providers
         protected override MethodProvider[] BuildMethods()
         {
             var operationMethods = new List<MethodProvider>();
+            var hasPatchUpdate = _resourceServiceMethods.Any(method => method.Kind == ResourceOperationKind.Update);
 
             foreach (var resourceMethod in _resourceServiceMethods)
             {
@@ -467,11 +468,12 @@ namespace Azure.Generator.Management.Providers
                 if (isUpdateOperation)
                 {
                     var parameterMappings = _operationContext.BuildParameterMapping(new RequestPathPattern(method.Operation.Path));
-                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, true, methodKind, isFakeLro);
-                    AddOperationMethodIfNotDuplicate(operationMethods, updateAsyncMethodProvider);
+                    var isCompatibilityOverload = methodKind == ResourceOperationKind.Create && hasPatchUpdate;
+                    var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, true, methodKind, isFakeLro, isCompatibilityOverload: isCompatibilityOverload);
+                    AddOrReplaceOperationMethod(operationMethods, updateAsyncMethodProvider, preferCandidate: isCompatibilityOverload);
 
-                    var updateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, false, methodKind, isFakeLro);
-                    AddOperationMethodIfNotDuplicate(operationMethods, updateMethodProvider);
+                    var updateMethodProvider = new UpdateOperationMethodProvider(this, parameterMappings, restClientInfo, method, false, methodKind, isFakeLro, isCompatibilityOverload: isCompatibilityOverload);
+                    AddOrReplaceOperationMethod(operationMethods, updateMethodProvider, preferCandidate: isCompatibilityOverload);
                 }
                 else
                 {
@@ -531,11 +533,18 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private static void AddOperationMethodIfNotDuplicate(List<MethodProvider> methods, MethodProvider candidate)
+        private static void AddOrReplaceOperationMethod(List<MethodProvider> methods, MethodProvider candidate, bool preferCandidate)
         {
-            if (!methods.Any(method => HasSameSignature(method, candidate)))
+            var existingIndex = methods.FindIndex(method => HasSameSignature(method, candidate));
+            if (existingIndex < 0)
             {
                 methods.Add(candidate);
+            }
+            else if (preferCandidate)
+            {
+                // When PUT and PATCH produce the same public signature, preserve the PUT behavior
+                // exposed by prior management SDKs rather than silently changing the method to PATCH.
+                methods[existingIndex] = candidate;
             }
         }
 
