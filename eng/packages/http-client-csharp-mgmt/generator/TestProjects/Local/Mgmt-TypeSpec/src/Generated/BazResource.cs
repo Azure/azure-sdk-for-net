@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -190,7 +189,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Updates the Baz.
+        /// Update a Baz
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -198,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bazs_CreateOrUpdate. </description>
+        /// <description> Bazs_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -211,10 +210,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<ArmOperation<BazResource>> UpdateAsync(WaitUntil waitUntil, BazData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -227,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
+                HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazResourceOperationSource(Client),
@@ -235,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -251,7 +249,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Updates the Baz.
+        /// Update a Baz
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -259,7 +257,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Bazs_CreateOrUpdate. </description>
+        /// <description> Bazs_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -272,10 +270,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual ArmOperation<BazResource> Update(WaitUntil waitUntil, BazData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -288,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bazsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
+                HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazResourceOperationSource(Client),
@@ -296,7 +293,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.AzureAsyncOperation,
+                    OperationFinalStateVia.Location,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {

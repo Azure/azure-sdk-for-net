@@ -362,21 +362,21 @@ namespace Azure.Generator.Management.Tests.Providers
         }
 
         [TestCase]
-        public void Verify_PutUpdateWinsWhenPutAndPatchSignaturesCollide()
+        public void Verify_PatchUpdateWinsWhenPutAndPatchSignaturesCollide()
         {
             var (client, models) = InputResourceData.ClientWithResource(updatesAreLongRunning: true);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
             var resourceProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ResourceClientProvider>().Single();
 
             var syncUpdate = resourceProvider.Methods.Single(m => m.Signature.Name == "Update");
-            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateCreateTestRequest"));
-            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateUpdateRequest"));
-            Assert.That(HasEditorBrowsableAttribute(syncUpdate), Is.True);
+            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateUpdateRequest"));
+            Assert.That(syncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateCreateTestRequest"));
+            Assert.That(HasEditorBrowsableAttribute(syncUpdate), Is.False);
 
             var asyncUpdate = resourceProvider.Methods.Single(m => m.Signature.Name == "UpdateAsync");
-            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateCreateTestRequest"));
-            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateUpdateRequest"));
-            Assert.That(HasEditorBrowsableAttribute(asyncUpdate), Is.True);
+            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Contain("CreateUpdateRequest"));
+            Assert.That(asyncUpdate.BodyStatements?.ToDisplayString(), Does.Not.Contain("CreateCreateTestRequest"));
+            Assert.That(HasEditorBrowsableAttribute(asyncUpdate), Is.False);
         }
 
         private static bool HasEditorBrowsableAttribute(MethodProvider method)
