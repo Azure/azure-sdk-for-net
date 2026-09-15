@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,7 +17,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _azureBlobStorageSasUrlSettingName;
         private BicepValue<string> _blobContainerUri;
         private BicepValue<string> _clientId;
-        private BicepValue<string> _managedIdentityResourceId;
+        private BicepValue<ResourceIdentifier> _managedIdentityResourceId;
 
         /// <summary> Creates a new BlobStorageTokenStore. </summary>
         public BlobStorageTokenStore()
@@ -69,7 +70,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets or sets the ManagedIdentityResourceId. </summary>
-        public BicepValue<string> ManagedIdentityResourceId
+        public BicepValue<ResourceIdentifier> ManagedIdentityResourceId
         {
             get
             {
@@ -90,7 +91,7 @@ namespace Azure.Provisioning.AppContainers
             _azureBlobStorageSasUrlSettingName = DefineProperty<string>(nameof(AzureBlobStorageSasUrlSettingName), new string[] { "sasUrlSettingName" });
             _blobContainerUri = DefineProperty<string>(nameof(BlobContainerUri), new string[] { "blobContainerUri" });
             _clientId = DefineProperty<string>(nameof(ClientId), new string[] { "clientId" });
-            _managedIdentityResourceId = DefineProperty<string>(nameof(ManagedIdentityResourceId), new string[] { "managedIdentityResourceId" });
+            _managedIdentityResourceId = DefineProperty<ResourceIdentifier>(nameof(ManagedIdentityResourceId), new string[] { "managedIdentityResourceId" });
             DefineAdditionalProperties();
         }
 
