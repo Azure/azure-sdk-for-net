@@ -13,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a DataReplicationJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationJobResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationJobs method.
+    /// A class representing a DataReplicationJob1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationJob1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationVaultResource"/> using the GetDataReplicationJob1s method.
     /// </summary>
-    public partial class DataReplicationJobResource : ArmResource
+    public partial class DataReplicationJob1Resource : ArmResource
     {
         private readonly ClientDiagnostics _jobClientDiagnostics;
         private readonly Job _jobRestClient;
@@ -29,28 +30,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/jobs";
 
-        /// <summary> Initializes a new instance of DataReplicationJobResource for mocking. </summary>
-        protected DataReplicationJobResource()
+        /// <summary> Initializes a new instance of DataReplicationJob1Resource for mocking. </summary>
+        protected DataReplicationJob1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationJob1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DataReplicationJobResource(ArmClient client, DataReplicationJobData data) : this(client, data.Id)
+        internal DataReplicationJob1Resource(ArmClient client, DataReplicationJobData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationJob1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataReplicationJobResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataReplicationJob1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataReplicationJobApiVersion);
+            TryGetApiVersion(ResourceType, out string dataReplicationJob1ApiVersion);
             _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJob1ApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationJobResource"/>. </description>
+        /// <description> <see cref="DataReplicationJob1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DataReplicationJobResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationJob1Data>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobResource.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Resource.Get");
             scope.Start();
             try
             {
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 };
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                Response<DataReplicationJob1Data> response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DataReplicationJobResource"/>. </description>
+        /// <description> <see cref="DataReplicationJob1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DataReplicationJobResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationJob1Data> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobResource.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Resource.Get");
             scope.Start();
             try
             {
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 };
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                Response<DataReplicationJob1Data> response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {

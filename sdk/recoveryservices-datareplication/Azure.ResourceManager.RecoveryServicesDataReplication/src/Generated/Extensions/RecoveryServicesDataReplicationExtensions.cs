@@ -129,21 +129,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataReplicationJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="DataReplicationJob1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationArmClient.GetDataReplicationJobResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRecoveryServicesDataReplicationArmClient.GetDataReplicationJob1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataReplicationJobResource"/> object. </returns>
-        public static DataReplicationJobResource GetDataReplicationJobResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DataReplicationJob1Resource"/> object. </returns>
+        public static DataReplicationJob1Resource GetDataReplicationJob1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationJobResource(id);
+            return GetMockableRecoveryServicesDataReplicationArmClient(client).GetDataReplicationJob1Resource(id);
         }
 
         /// <summary>

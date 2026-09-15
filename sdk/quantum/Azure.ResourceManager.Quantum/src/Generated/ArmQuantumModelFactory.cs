@@ -37,32 +37,6 @@ namespace Azure.ResourceManager.Quantum.Models
             return new WorkspaceNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <summary> The resource proxy definition object for Quantum Workspace. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new QuantumWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="providers"> List of Providers selected for this Workspace. </param>
         /// <param name="usable"> Whether the current workspace is ready to accept Jobs. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
@@ -127,6 +101,32 @@ namespace Azure.ResourceManager.Quantum.Models
         public static MoboBrokerInfo MoboBrokerInfo(ResourceIdentifier id = default)
         {
             return new MoboBrokerInfo(id, default);
+        }
+
+        /// <summary> The resource proxy definition object for Quantum Workspace. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Gets or sets the properties. Define quantum workspace's specific properties. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, QuantumWorkspaceProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new QuantumWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
         }
 
         /// <summary> The type used for updating tags in QuantumWorkspace resources. </summary>

@@ -64,53 +64,6 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftPlatformWorkloadIdentityRole(operatorName, roleDefinitionName, roleDefinitionId, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The cluster provisioning state. </param>
-        /// <param name="clusterProfile"> The cluster profile. </param>
-        /// <param name="servicePrincipalProfile"> The cluster service principal profile. </param>
-        /// <param name="platformWorkloadIdentityProfile"> The workload identity profile. </param>
-        /// <param name="networkProfile"> The cluster network profile. </param>
-        /// <param name="masterProfile"> The cluster master profile. </param>
-        /// <param name="workerProfiles"> The cluster worker profiles. </param>
-        /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
-        /// <param name="apiServerProfile"> The cluster API server profile. </param>
-        /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
-        /// <param name="consoleUri"> The URL to access the cluster console. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShift.OpenShiftClusterData"/> instance for mocking. </returns>
-        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OpenShiftClusterProvisioningState? provisioningState = default, OpenShiftClusterProfile clusterProfile = default, OpenShiftServicePrincipalProfile servicePrincipalProfile = default, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = default, OpenShiftNetworkProfile networkProfile = default, OpenShiftMasterProfile masterProfile = default, IEnumerable<OpenShiftWorkerProfile> workerProfiles = default, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = default, OpenShiftApiServerProfile apiServerProfile = default, IEnumerable<OpenShiftIngressProfile> ingressProfiles = default, Uri consoleUri = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new OpenShiftClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && clusterProfile is null && consoleUri is null && servicePrincipalProfile is null && platformWorkloadIdentityProfile is null && networkProfile is null && masterProfile is null && workerProfiles is null && workerProfilesStatus is null && apiServerProfile is null && ingressProfiles is null ? default : new OpenShiftClusterProperties(
-                    provisioningState,
-                    clusterProfile,
-                    consoleUri is null ? default : new OpenShiftConsoleProfile(consoleUri, default),
-                    servicePrincipalProfile,
-                    platformWorkloadIdentityProfile,
-                    networkProfile,
-                    masterProfile,
-                    (workerProfiles ?? new ChangeTrackingList<OpenShiftWorkerProfile>()).ToList(),
-                    (workerProfilesStatus ?? new ChangeTrackingList<OpenShiftWorkerProfile>()).ToList(),
-                    apiServerProfile,
-                    (ingressProfiles ?? new ChangeTrackingList<OpenShiftIngressProfile>()).ToList(),
-                    default),
-                identity,
-                default);
-        }
-
         /// <summary> ClusterProfile represents a cluster profile. </summary>
         /// <param name="pullSecret"> The pull secret for the cluster. </param>
         /// <param name="domain"> The domain for the cluster. </param>
@@ -248,6 +201,53 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
         public static OpenShiftIngressProfile OpenShiftIngressProfile(string name = default, OpenShiftVisibility? visibility = default, IPAddress ip = default)
         {
             return new OpenShiftIngressProfile(name, visibility, ip, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The cluster provisioning state. </param>
+        /// <param name="clusterProfile"> The cluster profile. </param>
+        /// <param name="servicePrincipalProfile"> The cluster service principal profile. </param>
+        /// <param name="platformWorkloadIdentityProfile"> The workload identity profile. </param>
+        /// <param name="networkProfile"> The cluster network profile. </param>
+        /// <param name="masterProfile"> The cluster master profile. </param>
+        /// <param name="workerProfiles"> The cluster worker profiles. </param>
+        /// <param name="workerProfilesStatus"> The cluster worker profiles status. </param>
+        /// <param name="apiServerProfile"> The cluster API server profile. </param>
+        /// <param name="ingressProfiles"> The cluster ingress profiles. </param>
+        /// <param name="consoleUri"> The URL to access the cluster console. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="RedHatOpenShift.OpenShiftClusterData"/> instance for mocking. </returns>
+        public static OpenShiftClusterData OpenShiftClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, OpenShiftClusterProvisioningState? provisioningState = default, OpenShiftClusterProfile clusterProfile = default, OpenShiftServicePrincipalProfile servicePrincipalProfile = default, OpenShiftPlatformWorkloadIdentityProfile platformWorkloadIdentityProfile = default, OpenShiftNetworkProfile networkProfile = default, OpenShiftMasterProfile masterProfile = default, IEnumerable<OpenShiftWorkerProfile> workerProfiles = default, IEnumerable<OpenShiftWorkerProfile> workerProfilesStatus = default, OpenShiftApiServerProfile apiServerProfile = default, IEnumerable<OpenShiftIngressProfile> ingressProfiles = default, Uri consoleUri = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new OpenShiftClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && clusterProfile is null && consoleUri is null && servicePrincipalProfile is null && platformWorkloadIdentityProfile is null && networkProfile is null && masterProfile is null && workerProfiles is null && workerProfilesStatus is null && apiServerProfile is null && ingressProfiles is null ? default : new OpenShiftClusterProperties(
+                    provisioningState,
+                    clusterProfile,
+                    consoleUri is null ? default : new OpenShiftConsoleProfile(consoleUri, default),
+                    servicePrincipalProfile,
+                    platformWorkloadIdentityProfile,
+                    networkProfile,
+                    masterProfile,
+                    (workerProfiles ?? new ChangeTrackingList<OpenShiftWorkerProfile>()).ToList(),
+                    (workerProfilesStatus ?? new ChangeTrackingList<OpenShiftWorkerProfile>()).ToList(),
+                    apiServerProfile,
+                    (ingressProfiles ?? new ChangeTrackingList<OpenShiftIngressProfile>()).ToList(),
+                    default),
+                identity,
+                default);
         }
 
         /// <param name="tags"> The resource tags. </param>

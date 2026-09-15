@@ -582,23 +582,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new OperationsDisplayDefinition(provider, resource, operation, description, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="operationsContentContents"> Operations content. </param>
-        /// <returns> A new <see cref="Models.OperationsPutContent"/> instance for mocking. </returns>
-        public static OperationsPutContent OperationsPutContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
-        {
-            return new OperationsPutContent(
-                id,
-                name,
-                resourceType,
-                systemData,
-                operationsContentContents is null ? default : new OperationsContentProperties((operationsContentContents ?? new ChangeTrackingList<LocalizedOperationDefinition>()).ToList(), default),
-                default);
-        }
-
         /// <summary> The LocalizedOperationDefinition. </summary>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
@@ -658,97 +641,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 sv,
                 zhHans,
                 zhHant,
-                default);
-        }
-
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the rollout. </param>
-        /// <returns> A new <see cref="ProviderHub.CustomRolloutData"/> instance for mocking. </returns>
-        public static CustomRolloutData CustomRolloutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomRolloutProperties properties = default)
-        {
-            return new CustomRolloutData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> The CustomRolloutProperties. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
-        /// <param name="specification"> The specification. </param>
-        /// <param name="status"> The status. </param>
-        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
-        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState = default, CustomRolloutSpecification specification = default, CustomRolloutStatus status = default)
-        {
-            return new CustomRolloutProperties(provisioningState, specification, status, default);
-        }
-
-        /// <param name="autoProvisionConfig"> The auto provisioning configuration. </param>
-        /// <param name="canaryRegions"> Gets the Regions. </param>
-        /// <param name="releaseScopes"> The list of ARM regions scoped for the release. </param>
-        /// <param name="refreshSubscriptionRegistration"> Whether refreshing subscription registration is enabled or disabled. </param>
-        /// <param name="skipReleaseScopeValidation"> Whether release scope validation should be skipped. </param>
-        /// <param name="providerRegistration"> The provider registration. </param>
-        /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
-        /// <returns> A new <see cref="Models.CustomRolloutSpecification"/> instance for mocking. </returns>
-        public static CustomRolloutSpecification CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig = default, IEnumerable<AzureLocation> canaryRegions = default, IEnumerable<string> releaseScopes = default, bool? refreshSubscriptionRegistration = default, bool? skipReleaseScopeValidation = default, ProviderRegistrationData providerRegistration = default, IEnumerable<ResourceTypeRegistrationData> resourceTypeRegistrations = default)
-        {
-            releaseScopes ??= new ChangeTrackingList<string>();
-            resourceTypeRegistrations ??= new ChangeTrackingList<ResourceTypeRegistrationData>();
-
-            return new CustomRolloutSpecification(
-                autoProvisionConfig,
-                canaryRegions is null ? default : new TrafficRegions((canaryRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default),
-                (releaseScopes ?? new ChangeTrackingList<string>()).ToList(),
-                refreshSubscriptionRegistration,
-                skipReleaseScopeValidation,
-                providerRegistration,
-                (resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>()).ToList(),
-                default);
-        }
-
-        /// <summary> The auto provisioning configuration. </summary>
-        /// <param name="isStorageEnabled"></param>
-        /// <param name="isResourceGraphEnabled"></param>
-        /// <returns> A new <see cref="Models.CustomRolloutAutoProvisionConfig"/> instance for mocking. </returns>
-        public static CustomRolloutAutoProvisionConfig CustomRolloutAutoProvisionConfig(bool? isStorageEnabled = default, bool? isResourceGraphEnabled = default)
-        {
-            return new CustomRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
-        }
-
-        /// <summary> The TrafficRegions. </summary>
-        /// <param name="regions"></param>
-        /// <returns> A new <see cref="Models.TrafficRegions"/> instance for mocking. </returns>
-        public static TrafficRegions TrafficRegions(IEnumerable<AzureLocation> regions = default)
-        {
-            regions ??= new ChangeTrackingList<AzureLocation>();
-
-            return new TrafficRegions((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
-        }
-
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
-        /// <param name="kind"> Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
-        /// <returns> A new <see cref="ProviderHub.ProviderRegistrationData"/> instance for mocking. </returns>
-        public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProviderRegistrationProperties properties = default, ProviderRegistrationKind? kind = default)
-        {
-            return new ProviderRegistrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                kind,
                 default);
         }
 
@@ -843,6 +735,96 @@ namespace Azure.ResourceManager.ProviderHub.Models
         public static ProviderEndpointInformation ProviderEndpointInformation(string endpoint = default, ProviderNotificationEndpointType? endpointType = default, string schemaVersion = default)
         {
             return new ProviderEndpointInformation(endpoint, endpointType, schemaVersion, default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <param name="kind"> Provider registration kind. This Metadata is also used by portal/tooling/etc to render different UX experiences for resources of the same type. </param>
+        /// <returns> A new <see cref="ProviderHub.ProviderRegistrationData"/> instance for mocking. </returns>
+        public static ProviderRegistrationData ProviderRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProviderRegistrationProperties properties = default, ProviderRegistrationKind? kind = default)
+        {
+            return new ProviderRegistrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="operationsContentContents"> Operations content. </param>
+        /// <returns> A new <see cref="Models.OperationsPutContent"/> instance for mocking. </returns>
+        public static OperationsPutContent OperationsPutContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LocalizedOperationDefinition> operationsContentContents = default)
+        {
+            return new OperationsPutContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationsContentContents is null ? default : new OperationsContentProperties((operationsContentContents ?? new ChangeTrackingList<LocalizedOperationDefinition>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> The CustomRolloutProperties. </summary>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="specification"> The specification. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.CustomRolloutProperties"/> instance for mocking. </returns>
+        public static CustomRolloutProperties CustomRolloutProperties(ProviderHubProvisioningState? provisioningState = default, CustomRolloutSpecification specification = default, CustomRolloutStatus status = default)
+        {
+            return new CustomRolloutProperties(provisioningState, specification, status, default);
+        }
+
+        /// <param name="autoProvisionConfig"> The auto provisioning configuration. </param>
+        /// <param name="canaryRegions"> Gets the Regions. </param>
+        /// <param name="releaseScopes"> The list of ARM regions scoped for the release. </param>
+        /// <param name="refreshSubscriptionRegistration"> Whether refreshing subscription registration is enabled or disabled. </param>
+        /// <param name="skipReleaseScopeValidation"> Whether release scope validation should be skipped. </param>
+        /// <param name="providerRegistration"> The provider registration. </param>
+        /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
+        /// <returns> A new <see cref="Models.CustomRolloutSpecification"/> instance for mocking. </returns>
+        public static CustomRolloutSpecification CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig = default, IEnumerable<AzureLocation> canaryRegions = default, IEnumerable<string> releaseScopes = default, bool? refreshSubscriptionRegistration = default, bool? skipReleaseScopeValidation = default, ProviderRegistrationData providerRegistration = default, IEnumerable<ResourceTypeRegistrationData> resourceTypeRegistrations = default)
+        {
+            releaseScopes ??= new ChangeTrackingList<string>();
+            resourceTypeRegistrations ??= new ChangeTrackingList<ResourceTypeRegistrationData>();
+
+            return new CustomRolloutSpecification(
+                autoProvisionConfig,
+                canaryRegions is null ? default : new TrafficRegions((canaryRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default),
+                (releaseScopes ?? new ChangeTrackingList<string>()).ToList(),
+                refreshSubscriptionRegistration,
+                skipReleaseScopeValidation,
+                providerRegistration,
+                (resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>()).ToList(),
+                default);
+        }
+
+        /// <summary> The auto provisioning configuration. </summary>
+        /// <param name="isStorageEnabled"></param>
+        /// <param name="isResourceGraphEnabled"></param>
+        /// <returns> A new <see cref="Models.CustomRolloutAutoProvisionConfig"/> instance for mocking. </returns>
+        public static CustomRolloutAutoProvisionConfig CustomRolloutAutoProvisionConfig(bool? isStorageEnabled = default, bool? isResourceGraphEnabled = default)
+        {
+            return new CustomRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
+        }
+
+        /// <summary> The TrafficRegions. </summary>
+        /// <param name="regions"></param>
+        /// <returns> A new <see cref="Models.TrafficRegions"/> instance for mocking. </returns>
+        public static TrafficRegions TrafficRegions(IEnumerable<AzureLocation> regions = default)
+        {
+            regions ??= new ChangeTrackingList<AzureLocation>();
+
+            return new TrafficRegions((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
@@ -1329,10 +1311,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties of the rollout. </param>
-        /// <returns> A new <see cref="ProviderHub.DefaultRolloutData"/> instance for mocking. </returns>
-        public static DefaultRolloutData DefaultRolloutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefaultRolloutProperties properties = default)
+        /// <returns> A new <see cref="ProviderHub.CustomRolloutData"/> instance for mocking. </returns>
+        public static CustomRolloutData CustomRolloutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CustomRolloutProperties properties = default)
         {
-            return new DefaultRolloutData(
+            return new CustomRolloutData(
                 id,
                 name,
                 resourceType,
@@ -1447,6 +1429,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new RolloutStatusBase((completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the rollout. </param>
+        /// <returns> A new <see cref="ProviderHub.DefaultRolloutData"/> instance for mocking. </returns>
+        public static DefaultRolloutData DefaultRolloutData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefaultRolloutProperties properties = default)
+        {
+            return new DefaultRolloutData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> The ProviderFrontloadPayload. </summary>
         /// <param name="properties"> Properties of the frontload payload. </param>
         /// <returns> A new <see cref="Models.ProviderFrontloadPayload"/> instance for mocking. </returns>
@@ -1534,24 +1534,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="ProviderHub.NotificationRegistrationData"/> instance for mocking. </returns>
-        public static NotificationRegistrationData NotificationRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NotificationRegistrationProperties properties = default)
-        {
-            return new NotificationRegistrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The NotificationRegistrationProperties. </summary>
         /// <param name="notificationMode"> The notification mode. </param>
         /// <param name="messageScope"> The message scope. </param>
@@ -1590,10 +1572,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="ProviderHub.ResourceTypeSkuData"/> instance for mocking. </returns>
-        public static ResourceTypeSkuData ResourceTypeSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceTypeSkuProperties properties = default)
+        /// <returns> A new <see cref="ProviderHub.NotificationRegistrationData"/> instance for mocking. </returns>
+        public static NotificationRegistrationData NotificationRegistrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NotificationRegistrationProperties properties = default)
         {
-            return new ResourceTypeSkuData(
+            return new NotificationRegistrationData(
                 id,
                 name,
                 resourceType,
@@ -1722,10 +1704,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
-        /// <returns> A new <see cref="ProviderHub.ProviderAuthorizedApplicationData"/> instance for mocking. </returns>
-        public static ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProviderAuthorizedApplicationProperties properties = default)
+        /// <returns> A new <see cref="ProviderHub.ResourceTypeSkuData"/> instance for mocking. </returns>
+        public static ResourceTypeSkuData ResourceTypeSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceTypeSkuProperties properties = default)
         {
-            return new ProviderAuthorizedApplicationData(
+            return new ResourceTypeSkuData(
                 id,
                 name,
                 resourceType,
@@ -1764,6 +1746,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
             resourceTypes ??= new ChangeTrackingList<string>();
 
             return new ApplicationDataAuthorization(role, (resourceTypes ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="ProviderHub.ProviderAuthorizedApplicationData"/> instance for mocking. </returns>
+        public static ProviderAuthorizedApplicationData ProviderAuthorizedApplicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProviderAuthorizedApplicationProperties properties = default)
+        {
+            return new ProviderAuthorizedApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

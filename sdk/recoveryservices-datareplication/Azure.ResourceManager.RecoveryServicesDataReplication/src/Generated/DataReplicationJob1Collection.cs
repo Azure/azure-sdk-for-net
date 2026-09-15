@@ -15,32 +15,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataReplicationJobResource"/> and their operations.
-    /// Each <see cref="DataReplicationJobResource"/> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource"/>.
-    /// To get a <see cref="DataReplicationJobCollection"/> instance call the GetDataReplicationJobs method from an instance of <see cref="DataReplicationVaultResource"/>.
+    /// A class representing a collection of <see cref="DataReplicationJob1Resource"/> and their operations.
+    /// Each <see cref="DataReplicationJob1Resource"/> in the collection will belong to the same instance of <see cref="DataReplicationVaultResource"/>.
+    /// To get a <see cref="DataReplicationJob1Collection"/> instance call the GetDataReplicationJob1s method from an instance of <see cref="DataReplicationVaultResource"/>.
     /// </summary>
-    public partial class DataReplicationJobCollection : ArmCollection, IEnumerable<DataReplicationJobResource>, IAsyncEnumerable<DataReplicationJobResource>
+    public partial class DataReplicationJob1Collection : ArmCollection, IEnumerable<DataReplicationJob1Resource>, IAsyncEnumerable<DataReplicationJob1Resource>
     {
         private readonly ClientDiagnostics _jobClientDiagnostics;
         private readonly Job _jobRestClient;
 
-        /// <summary> Initializes a new instance of DataReplicationJobCollection for mocking. </summary>
-        protected DataReplicationJobCollection()
+        /// <summary> Initializes a new instance of DataReplicationJob1Collection for mocking. </summary>
+        protected DataReplicationJob1Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataReplicationJobCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationJob1Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DataReplicationJobCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal DataReplicationJob1Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DataReplicationJobResource.ResourceType, out string dataReplicationJobApiVersion);
-            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJobResource.ResourceType.Namespace, Diagnostics);
-            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJobApiVersion ?? "2024-09-01");
+            TryGetApiVersion(DataReplicationJob1Resource.ResourceType, out string dataReplicationJob1ApiVersion);
+            _jobClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", DataReplicationJob1Resource.ResourceType.Namespace, Diagnostics);
+            _jobRestClient = new Job(_jobClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationJob1ApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -75,11 +76,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DataReplicationJobResource>> GetAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationJob1Data>> GetAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.Get");
             scope.Start();
             try
             {
@@ -89,12 +90,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 };
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                Response<DataReplicationJob1Data> response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -124,11 +125,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DataReplicationJobResource> Get(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationJob1Data> Get(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Get");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.Get");
             scope.Start();
             try
             {
@@ -138,12 +139,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 };
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DataReplicationJobData> response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                Response<DataReplicationJob1Data> response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -173,14 +174,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DataReplicationJobResource> GetAllAsync(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationJob1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataReplicationJob1Resource> GetAllAsync(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DataReplicationJobData, DataReplicationJob1Resource>(new JobGetAllAsyncCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -189,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 continuationToken,
                 pageSize,
                 context,
-                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
+                "DataReplicationJob1Collection.GetAll"), data => new DataReplicationJob1Resource(Client, data));
         }
 
         /// <summary>
@@ -213,14 +214,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="continuationToken"> Continuation token. </param>
         /// <param name="pageSize"> Page size. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationJobResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DataReplicationJobResource> GetAll(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataReplicationJob1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataReplicationJob1Resource> GetAll(string odataOptions = default, string continuationToken = default, int? pageSize = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DataReplicationJobData, DataReplicationJobResource>(new JobGetAllCollectionResultOfT(
+            return new PageableWrapper<DataReplicationJobData, DataReplicationJob1Resource>(new JobGetAllCollectionResultOfT(
                 _jobRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 continuationToken,
                 pageSize,
                 context,
-                "DataReplicationJobCollection.GetAll"), data => new DataReplicationJobResource(Client, data));
+                "DataReplicationJob1Collection.GetAll"), data => new DataReplicationJob1Resource(Client, data));
         }
 
         /// <summary>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.Exists");
             scope.Start();
             try
             {
@@ -268,14 +269,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DataReplicationJobData> response = default;
+                Response<DataReplicationJob1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                        response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DataReplicationJobData)null, result);
+                        response = Response.FromValue((DataReplicationJob1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.Exists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.Exists");
             scope.Start();
             try
             {
@@ -325,14 +326,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DataReplicationJobData> response = default;
+                Response<DataReplicationJob1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                        response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DataReplicationJobData)null, result);
+                        response = Response.FromValue((DataReplicationJob1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -367,11 +368,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DataReplicationJobResource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<DataReplicationJob1Resource>> GetIfExistsAsync(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -382,23 +383,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<DataReplicationJobData> response = default;
+                Response<DataReplicationJob1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                        response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DataReplicationJobData)null, result);
+                        response = Response.FromValue((DataReplicationJob1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DataReplicationJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataReplicationJob1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataReplicationJob1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -428,11 +429,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DataReplicationJobResource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<DataReplicationJob1Resource> GetIfExists(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJobCollection.GetIfExists");
+            using DiagnosticScope scope = _jobClientDiagnostics.CreateScope("DataReplicationJob1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -443,23 +444,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 HttpMessage message = _jobRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, jobName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<DataReplicationJobData> response = default;
+                Response<DataReplicationJob1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(DataReplicationJobData.FromResponse(result), result);
+                        response = Response.FromValue(DataReplicationJob1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((DataReplicationJobData)null, result);
+                        response = Response.FromValue((DataReplicationJob1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<DataReplicationJobResource>(response.GetRawResponse());
+                    return new NoValueResponse<DataReplicationJob1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new DataReplicationJobResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new DataReplicationJob1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
-        IEnumerator<DataReplicationJobResource> IEnumerable<DataReplicationJobResource>.GetEnumerator()
+        IEnumerator<DataReplicationJob1Resource> IEnumerable<DataReplicationJob1Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -479,7 +480,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<DataReplicationJobResource> IAsyncEnumerable<DataReplicationJobResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<DataReplicationJob1Resource> IAsyncEnumerable<DataReplicationJob1Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

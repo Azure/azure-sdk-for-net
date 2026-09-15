@@ -745,11 +745,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetDataReplicationEvents().Get(eventName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataReplicationJobs in the <see cref="DataReplicationVaultResource"/>. </summary>
-        /// <returns> An object representing collection of DataReplicationJobs and their operations over a DataReplicationJobResource. </returns>
-        public virtual DataReplicationJobCollection GetDataReplicationJobs()
+        /// <summary> Gets a collection of DataReplicationJob1s in the <see cref="DataReplicationVaultResource"/>. </summary>
+        /// <returns> An object representing collection of DataReplicationJob1s and their operations over a DataReplicationJob1Resource. </returns>
+        public virtual DataReplicationJob1Collection GetDataReplicationJob1s()
         {
-            return GetCachedClient(client => new DataReplicationJobCollection(client, Id));
+            return GetCachedClient(client => new DataReplicationJob1Collection(client, Id));
         }
 
         /// <summary> Gets the details of the job. </summary>
@@ -758,11 +758,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationJobResource>> GetDataReplicationJobAsync(string jobName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationJob1Data>> GetDataReplicationJob1Async(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return await GetDataReplicationJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetDataReplicationJob1s().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of the job. </summary>
@@ -771,11 +771,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataReplicationJobResource> GetDataReplicationJob(string jobName, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationJob1Data> GetDataReplicationJob1(string jobName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
-            return GetDataReplicationJobs().Get(jobName, cancellationToken);
+            return GetDataReplicationJob1s().Get(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataReplicationPolicies in the <see cref="DataReplicationVaultResource"/>. </summary>
