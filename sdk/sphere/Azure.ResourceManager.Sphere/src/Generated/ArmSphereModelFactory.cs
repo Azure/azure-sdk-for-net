@@ -123,12 +123,22 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
-        /// <summary> Request of the action to list device groups for a catalog. </summary>
-        /// <param name="deviceGroupName"> Device Group name. </param>
-        /// <returns> A new <see cref="Models.ListSphereDeviceGroupsContent"/> instance for mocking. </returns>
-        public static ListSphereDeviceGroupsContent ListSphereDeviceGroupsContent(string deviceGroupName = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> Description of the product. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Sphere.SphereProductData"/> instance for mocking. </returns>
+        public static SphereProductData SphereProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, SphereProvisioningState? provisioningState = default)
         {
-            return new ListSphereDeviceGroupsContent(deviceGroupName, default);
+            return new SphereProductData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && provisioningState is null ? default : new ProductProperties(description, provisioningState, default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -160,6 +170,14 @@ namespace Azure.ResourceManager.Sphere.Models
                     provisioningState,
                     default),
                 default);
+        }
+
+        /// <summary> Request of the action to list device groups for a catalog. </summary>
+        /// <param name="deviceGroupName"> Device Group name. </param>
+        /// <returns> A new <see cref="Models.ListSphereDeviceGroupsContent"/> instance for mocking. </returns>
+        public static ListSphereDeviceGroupsContent ListSphereDeviceGroupsContent(string deviceGroupName = default)
+        {
+            return new ListSphereDeviceGroupsContent(deviceGroupName, default);
         }
 
         /// <summary> Device insight report. </summary>
@@ -217,6 +235,28 @@ namespace Azure.ResourceManager.Sphere.Models
                 default);
         }
 
+        /// <summary> The properties of certificate. </summary>
+        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
+        /// <param name="status"> The certificate status. </param>
+        /// <param name="subject"> The certificate subject. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="expiryUtc"> The certificate expiry date. </param>
+        /// <param name="notBeforeUtc"> The certificate not before date. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.SphereCertificateProperties"/> instance for mocking. </returns>
+        public static SphereCertificateProperties SphereCertificateProperties(string certificate = default, SphereCertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, SphereProvisioningState? provisioningState = default)
+        {
+            return new SphereCertificateProperties(
+                certificate,
+                status,
+                subject,
+                thumbprint,
+                expiryUtc,
+                notBeforeUtc,
+                provisioningState,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -245,28 +285,6 @@ namespace Azure.ResourceManager.Sphere.Models
                     notBeforeUtc,
                     provisioningState,
                     default),
-                default);
-        }
-
-        /// <summary> The properties of certificate. </summary>
-        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
-        /// <param name="status"> The certificate status. </param>
-        /// <param name="subject"> The certificate subject. </param>
-        /// <param name="thumbprint"> The certificate thumbprint. </param>
-        /// <param name="expiryUtc"> The certificate expiry date. </param>
-        /// <param name="notBeforeUtc"> The certificate not before date. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.SphereCertificateProperties"/> instance for mocking. </returns>
-        public static SphereCertificateProperties SphereCertificateProperties(string certificate = default, SphereCertificateStatus? status = default, string subject = default, string thumbprint = default, DateTimeOffset? expiryUtc = default, DateTimeOffset? notBeforeUtc = default, SphereProvisioningState? provisioningState = default)
-        {
-            return new SphereCertificateProperties(
-                certificate,
-                status,
-                subject,
-                thumbprint,
-                expiryUtc,
-                notBeforeUtc,
-                provisioningState,
                 default);
         }
 
@@ -305,24 +323,6 @@ namespace Azure.ResourceManager.Sphere.Models
                 expiryUtc,
                 notBeforeUtc,
                 provisioningState,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> Description of the product. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Sphere.SphereProductData"/> instance for mocking. </returns>
-        public static SphereProductData SphereProductData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, SphereProvisioningState? provisioningState = default)
-        {
-            return new SphereProductData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && provisioningState is null ? default : new ProductProperties(description, provisioningState, default),
                 default);
         }
 

@@ -45,27 +45,6 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new RequiredAmlFileSystemSubnetsSize(filesystemSubnetSize, default);
         }
 
-        /// <summary>
-        /// A rebalance job instance. Rebalances OST data across storage targets after a cluster expansion.
-        /// Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of the rebalance job. </param>
-        /// <returns> A new <see cref="StorageCache.StorageCacheRebalanceJobData"/> instance for mocking. </returns>
-        public static StorageCacheRebalanceJobData StorageCacheRebalanceJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageCacheRebalanceJobProperties properties = default)
-        {
-            return new StorageCacheRebalanceJobData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the rebalance job. </summary>
         /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
         /// <param name="adminStatus"> The current administrative status of the rebalance job. 'Active' indicates the job is running normally; 'Cancel' indicates cancellation has been requested. </param>
@@ -115,11 +94,123 @@ namespace Azure.ResourceManager.StorageCache.Models
                 default);
         }
 
-        /// <param name="rebalanceJobUpdateAdminStatus"> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </param>
-        /// <returns> A new <see cref="Models.StorageCacheRebalanceJobPatch"/> instance for mocking. </returns>
-        public static StorageCacheRebalanceJobPatch StorageCacheRebalanceJobPatch(StorageCacheRebalanceJobAdminStatus? rebalanceJobUpdateAdminStatus = default)
+        /// <summary> An indication of AML file system health. Gives more information about health than just that related to provisioning. </summary>
+        /// <param name="state"> List of AML file system health states. </param>
+        /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
+        /// <param name="statusDescription"> Describes the health state. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
+        public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = default, string statusCode = default, string statusDescription = default)
         {
-            return new StorageCacheRebalanceJobPatch(rebalanceJobUpdateAdminStatus is null ? default : new RebalanceJobUpdateProperties(rebalanceJobUpdateAdminStatus, default), default);
+            return new AmlFileSystemHealth(state, statusCode, statusDescription, default);
+        }
+
+        /// <summary> AML file system client information. </summary>
+        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
+        /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
+        /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
+        /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
+        public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = default, string mountCommand = default, string lustreVersion = default, AmlFileSystemContainerStorageInterface containerStorageInterface = default)
+        {
+            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, default);
+        }
+
+        /// <summary> AML file system container storage interface information. </summary>
+        /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
+        /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
+        /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
+        public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = default, string persistentVolume = default, string storageClass = default)
+        {
+            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, default);
+        }
+
+        /// <param name="keyUri"> The URL referencing a key encryption key in key vault. </param>
+        /// <param name="sourceVaultId"> Resource Id. </param>
+        /// <returns> A new <see cref="Models.StorageCacheEncryptionKeyVaultKeyReference"/> instance for mocking. </returns>
+        public static StorageCacheEncryptionKeyVaultKeyReference StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri = default, ResourceIdentifier sourceVaultId = default)
+        {
+            return new StorageCacheEncryptionKeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new KeyVaultKeyReferenceSourceVault(sourceVaultId, default), default);
+        }
+
+        /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
+        /// <param name="dayOfWeek"> Day of the week on which the maintenance window will occur. </param>
+        /// <param name="timeOfDayUTC"> The time of day (in UTC) to start the maintenance window. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesMaintenanceWindow"/> instance for mocking. </returns>
+        public static AmlFileSystemPropertiesMaintenanceWindow AmlFileSystemPropertiesMaintenanceWindow(MaintenanceDayOfWeekType? dayOfWeek = default, string timeOfDayUTC = default)
+        {
+            return new AmlFileSystemPropertiesMaintenanceWindow(dayOfWeek, timeOfDayUTC, default);
+        }
+
+        /// <summary> Hydration and archive settings and status. </summary>
+        /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
+        /// <param name="archiveStatus"> Archive status. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesHsm"/> instance for mocking. </returns>
+        public static AmlFileSystemPropertiesHsm AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings = default, IEnumerable<AmlFileSystemArchive> archiveStatus = default)
+        {
+            archiveStatus ??= new ChangeTrackingList<AmlFileSystemArchive>();
+
+            return new AmlFileSystemPropertiesHsm(settings, (archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>()).ToList(), default);
+        }
+
+        /// <summary> AML file system HSM settings. </summary>
+        /// <param name="container"> Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider must have permission to create SAS tokens on the storage account. </param>
+        /// <param name="loggingContainer"> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </param>
+        /// <param name="importPrefix"> Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This is only used during initial creation of the AML file system. It automatically creates an import job resource that can be deleted. </param>
+        /// <param name="importPrefixesInitial"> Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value. It automatically creates an import job resource that can be deleted. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemHsmSettings"/> instance for mocking. </returns>
+        public static AmlFileSystemHsmSettings AmlFileSystemHsmSettings(string container = default, string loggingContainer = default, string importPrefix = default, IEnumerable<string> importPrefixesInitial = default)
+        {
+            importPrefixesInitial ??= new ChangeTrackingList<string>();
+
+            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, (importPrefixesInitial ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Information about the AML file system archive. </summary>
+        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
+        /// <param name="status"> The status of the archive. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
+        public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = default, AmlFileSystemArchiveStatus status = default)
+        {
+            return new AmlFileSystemArchive(filesystemPath, status, default);
+        }
+
+        /// <summary> The status of the archive. </summary>
+        /// <param name="state"> The state of the archive operation. </param>
+        /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
+        /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
+        /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
+        /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
+        /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
+        public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = default, DateTimeOffset? lastCompletionOn = default, DateTimeOffset? lastStartedOn = default, int? percentComplete = default, string errorCode = default, string errorMessage = default)
+        {
+            return new AmlFileSystemArchiveStatus(
+                state,
+                lastCompletionOn,
+                lastStartedOn,
+                percentComplete,
+                errorCode,
+                errorMessage,
+                default);
+        }
+
+        /// <summary> AML file system squash settings. </summary>
+        /// <param name="mode"> Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems. </param>
+        /// <param name="noSquashNidLists"> Semicolon separated NID IP Address list(s) to be added to the TrustedSystems. </param>
+        /// <param name="squashUID"> User ID to squash to. </param>
+        /// <param name="squashGID"> Group ID to squash to. </param>
+        /// <param name="status"> AML file system squash status. </param>
+        /// <returns> A new <see cref="Models.AmlFileSystemRootSquashSettings"/> instance for mocking. </returns>
+        public static AmlFileSystemRootSquashSettings AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode = default, string noSquashNidLists = default, long? squashUID = default, long? squashGID = default, string status = default)
+        {
+            return new AmlFileSystemRootSquashSettings(
+                mode,
+                noSquashNidLists,
+                squashUID,
+                squashGID,
+                status,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -128,53 +219,80 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
-        /// <param name="health"> Health of the cache. </param>
-        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="subnet"> Subnet used for the cache. </param>
-        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
-        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
-        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
-        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
-        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
-        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
-        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
-        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
-        /// <param name="securityAccessPolicies"> NFS access policies defined for this cache. </param>
-        /// <param name="identity"> The identity of the cache, if configured. </param>
-        /// <param name="skuName"> SKU name for this cache. </param>
-        /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
-        public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, ManagedServiceIdentity identity = default, string skuName = default)
+        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
+        /// <param name="currentStorageCapacityTiB"> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </param>
+        /// <param name="clusterUuid"> The unique identifier of the AML file system cluster. </param>
+        /// <param name="health"> Health of the AML file system. </param>
+        /// <param name="provisioningState"> ARM provisioning state. </param>
+        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
+        /// <param name="clientInfo"> Client information for the AML file system. </param>
+        /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
+        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
+        /// <param name="hsm"> Hydration and archive settings and status. </param>
+        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
+        /// <param name="keyEncryptionKey"> Specifies the location of the encryption key in Key Vault. </param>
+        /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
+        /// <param name="skuName"> SKU name for this resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
+        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
 
-            return new StorageCacheData(
+            return new AmlFileSystemData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
-                    cacheSizeGB,
+                storageCapacityTiB is null && currentStorageCapacityTiB is null && clusterUuid is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
+                    storageCapacityTiB.GetValueOrDefault(),
+                    currentStorageCapacityTiB,
+                    clusterUuid,
                     health,
-                    (mountAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
                     provisioningState,
-                    subnet,
-                    upgradeStatus,
-                    upgradeSettings,
-                    networkSettings,
-                    encryptionSettings,
-                    new StorageCacheSecuritySettings((securityAccessPolicies ?? new ChangeTrackingList<NfsAccessPolicy>()).ToList(), default),
-                    directoryServicesSettings,
-                    (zones ?? new ChangeTrackingList<string>()).ToList(),
-                    (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
-                    (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
+                    filesystemSubnet,
+                    clientInfo,
+                    throughputProvisionedMBps,
+                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
+                    maintenanceWindow,
+                    hsm,
+                    rootSquashSettings,
                     default),
                 identity,
-                skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
+                skuName is null ? default : new StorageCacheSkuName(skuName, default),
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
                 default);
+        }
+
+        /// <summary>
+        /// A rebalance job instance. Rebalances OST data across storage targets after a cluster expansion.
+        /// Follows Azure Resource Manager standards: https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/resource-api-reference.md
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the rebalance job. </param>
+        /// <returns> A new <see cref="StorageCache.StorageCacheRebalanceJobData"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobData StorageCacheRebalanceJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageCacheRebalanceJobProperties properties = default)
+        {
+            return new StorageCacheRebalanceJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="rebalanceJobUpdateAdminStatus"> The administrative status of the rebalance job. Passing in a value of 'Cancel' will cancel the current active rebalance job. </param>
+        /// <returns> A new <see cref="Models.StorageCacheRebalanceJobPatch"/> instance for mocking. </returns>
+        public static StorageCacheRebalanceJobPatch StorageCacheRebalanceJobPatch(StorageCacheRebalanceJobAdminStatus? rebalanceJobUpdateAdminStatus = default)
+        {
+            return new StorageCacheRebalanceJobPatch(rebalanceJobUpdateAdminStatus is null ? default : new RebalanceJobUpdateProperties(rebalanceJobUpdateAdminStatus, default), default);
         }
 
         /// <summary> An indication of cache health. Gives more information about health than just that related to provisioning. </summary>
@@ -253,14 +371,6 @@ namespace Azure.ResourceManager.StorageCache.Models
         public static StorageCacheEncryptionSettings StorageCacheEncryptionSettings(StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, bool? enableRotationToLatestKeyVersion = default)
         {
             return new StorageCacheEncryptionSettings(keyEncryptionKey, enableRotationToLatestKeyVersion, default);
-        }
-
-        /// <param name="keyUri"> The URL referencing a key encryption key in key vault. </param>
-        /// <param name="sourceVaultId"> Resource Id. </param>
-        /// <returns> A new <see cref="Models.StorageCacheEncryptionKeyVaultKeyReference"/> instance for mocking. </returns>
-        public static StorageCacheEncryptionKeyVaultKeyReference StorageCacheEncryptionKeyVaultKeyReference(Uri keyUri = default, ResourceIdentifier sourceVaultId = default)
-        {
-            return new StorageCacheEncryptionKeyVaultKeyReference(keyUri, sourceVaultId is null ? default : new KeyVaultKeyReferenceSourceVault(sourceVaultId, default), default);
         }
 
         /// <summary> A set of rules describing access policies applied to NFSv3 clients of the cache. </summary>
@@ -410,49 +520,67 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageTargetSpaceAllocation(name, allocationPercentage, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="cacheSizeGB"> The size of this Cache, in GB. </param>
+        /// <param name="health"> Health of the cache. </param>
+        /// <param name="mountAddresses"> Array of IPv4 addresses that can be used by clients mounting this cache. </param>
+        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
+        /// <param name="subnet"> Subnet used for the cache. </param>
+        /// <param name="upgradeStatus"> Upgrade status of the cache. </param>
+        /// <param name="upgradeSettings"> Upgrade settings of the cache. </param>
+        /// <param name="networkSettings"> Specifies network settings of the cache. </param>
+        /// <param name="encryptionSettings"> Specifies encryption settings of the cache. </param>
+        /// <param name="directoryServicesSettings"> Specifies Directory Services settings of the cache. </param>
+        /// <param name="zones"> Availability zones for resources. This field should only contain a single element in the array. </param>
+        /// <param name="primingJobs"> Specifies the priming jobs defined in the cache. </param>
+        /// <param name="spaceAllocation"> Specifies the space allocation percentage for each storage target in the cache. </param>
+        /// <param name="securityAccessPolicies"> NFS access policies defined for this cache. </param>
+        /// <param name="identity"> The identity of the cache, if configured. </param>
+        /// <param name="skuName"> SKU name for this cache. </param>
+        /// <returns> A new <see cref="StorageCache.StorageCacheData"/> instance for mocking. </returns>
+        public static StorageCacheData StorageCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, int? cacheSizeGB = default, StorageCacheHealth health = default, IEnumerable<IPAddress> mountAddresses = default, StorageCacheProvisioningStateType? provisioningState = default, ResourceIdentifier subnet = default, StorageCacheUpgradeStatus upgradeStatus = default, StorageCacheUpgradeSettings upgradeSettings = default, StorageCacheNetworkSettings networkSettings = default, StorageCacheEncryptionSettings encryptionSettings = default, StorageCacheDirectorySettings directoryServicesSettings = default, IEnumerable<string> zones = default, IEnumerable<PrimingJob> primingJobs = default, IEnumerable<StorageTargetSpaceAllocation> spaceAllocation = default, IEnumerable<NfsAccessPolicy> securityAccessPolicies = default, ManagedServiceIdentity identity = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageCacheData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                cacheSizeGB is null && health is null && mountAddresses is null && provisioningState is null && subnet is null && upgradeStatus is null && upgradeSettings is null && networkSettings is null && encryptionSettings is null && securityAccessPolicies is null && directoryServicesSettings is null && zones is null && primingJobs is null && spaceAllocation is null ? default : new CacheProperties(
+                    cacheSizeGB,
+                    health,
+                    (mountAddresses ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                    provisioningState,
+                    subnet,
+                    upgradeStatus,
+                    upgradeSettings,
+                    networkSettings,
+                    encryptionSettings,
+                    new StorageCacheSecuritySettings((securityAccessPolicies ?? new ChangeTrackingList<NfsAccessPolicy>()).ToList(), default),
+                    directoryServicesSettings,
+                    (zones ?? new ChangeTrackingList<string>()).ToList(),
+                    (primingJobs ?? new ChangeTrackingList<PrimingJob>()).ToList(),
+                    (spaceAllocation ?? new ChangeTrackingList<StorageTargetSpaceAllocation>()).ToList(),
+                    default),
+                identity,
+                skuName is null ? default : new StorageCacheSkuInfo(skuName, default),
+                default);
+        }
+
         /// <summary> Object containing the priming job ID. </summary>
         /// <param name="primingJobId"> The unique identifier of the priming job. </param>
         /// <returns> A new <see cref="Models.PrimingJobContent"/> instance for mocking. </returns>
         public static PrimingJobContent PrimingJobContent(string primingJobId = default)
         {
             return new PrimingJobContent(primingJobId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
-        /// <param name="targetType"> Type of the Storage Target. </param>
-        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
-        /// <param name="state"> Storage target operational state. </param>
-        /// <param name="nfs3"> Properties when targetType is nfs3. </param>
-        /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
-        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
-        /// <param name="clfsTarget"> Resource ID of storage container. </param>
-        /// <param name="unknownAttributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
-        /// <param name="location"> Region name string. </param>
-        /// <returns> A new <see cref="StorageCache.StorageTargetData"/> instance for mocking. </returns>
-        public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, AzureLocation? location = default)
-        {
-            return new StorageTargetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
-                    (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
-                    targetType.GetValueOrDefault(),
-                    provisioningState,
-                    state,
-                    nfs3,
-                    new ClfsTarget(clfsTarget, default),
-                    new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
-                    blobNfs,
-                    allocationPercentage,
-                    default),
-                location,
-                default);
         }
 
         /// <summary> A namespace junction. </summary>
@@ -492,164 +620,36 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="storageCapacityTiB"> The size of the AML file system, in TiB. This might be rounded up. </param>
-        /// <param name="currentStorageCapacityTiB"> The current storage capacity of the AML file system, in TiB. This reflects the actual capacity including any expansions. </param>
-        /// <param name="clusterUuid"> The unique identifier of the AML file system cluster. </param>
-        /// <param name="health"> Health of the AML file system. </param>
-        /// <param name="provisioningState"> ARM provisioning state. </param>
-        /// <param name="filesystemSubnet"> Subnet used for managing the AML file system and for client-facing operations. This subnet should have at least a /24 subnet mask within the VNET's address space. </param>
-        /// <param name="clientInfo"> Client information for the AML file system. </param>
-        /// <param name="throughputProvisionedMBps"> Throughput provisioned in MB per sec, calculated as storageCapacityTiB * per-unit storage throughput. </param>
-        /// <param name="maintenanceWindow"> Start time of a 30-minute weekly maintenance window. </param>
-        /// <param name="hsm"> Hydration and archive settings and status. </param>
-        /// <param name="rootSquashSettings"> Specifies root squash settings of the AML file system. </param>
-        /// <param name="keyEncryptionKey"> Specifies the location of the encryption key in Key Vault. </param>
-        /// <param name="identity"> The managed identity used by the AML file system, if configured. </param>
-        /// <param name="skuName"> SKU name for this resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="StorageCache.AmlFileSystemData"/> instance for mocking. </returns>
-        public static AmlFileSystemData AmlFileSystemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, float? storageCapacityTiB = default, float? currentStorageCapacityTiB = default, Guid? clusterUuid = default, AmlFileSystemHealth health = default, AmlFileSystemProvisioningStateType? provisioningState = default, string filesystemSubnet = default, AmlFileSystemClientInfo clientInfo = default, int? throughputProvisionedMBps = default, AmlFileSystemPropertiesMaintenanceWindow maintenanceWindow = default, AmlFileSystemPropertiesHsm hsm = default, AmlFileSystemRootSquashSettings rootSquashSettings = default, StorageCacheEncryptionKeyVaultKeyReference keyEncryptionKey = default, ManagedServiceIdentity identity = default, string skuName = default, IEnumerable<string> zones = default)
+        /// <param name="junctions"> List of cache namespace junctions to target for namespace associations. </param>
+        /// <param name="targetType"> Type of the Storage Target. </param>
+        /// <param name="provisioningState"> ARM provisioning state, see https://github.com/Azure/azure-resource-manager-rpc/blob/master/v1.0/Addendum.md#provisioningstate-property. </param>
+        /// <param name="state"> Storage target operational state. </param>
+        /// <param name="nfs3"> Properties when targetType is nfs3. </param>
+        /// <param name="blobNfs"> Properties when targetType is blobNfs. </param>
+        /// <param name="allocationPercentage"> The percentage of cache space allocated for this storage target. </param>
+        /// <param name="clfsTarget"> Resource ID of storage container. </param>
+        /// <param name="unknownAttributes"> Dictionary of string-&gt;string pairs containing information about the Storage Target. </param>
+        /// <param name="location"> Region name string. </param>
+        /// <returns> A new <see cref="StorageCache.StorageTargetData"/> instance for mocking. </returns>
+        public static StorageTargetData StorageTargetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<NamespaceJunction> junctions = default, StorageTargetType? targetType = default, StorageCacheProvisioningStateType? provisioningState = default, StorageTargetOperationalStateType? state = default, Nfs3Target nfs3 = default, BlobNfsTarget blobNfs = default, int? allocationPercentage = default, ResourceIdentifier clfsTarget = default, IDictionary<string, string> unknownAttributes = default, AzureLocation? location = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new AmlFileSystemData(
+            return new StorageTargetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                storageCapacityTiB is null && currentStorageCapacityTiB is null && clusterUuid is null && health is null && provisioningState is null && filesystemSubnet is null && clientInfo is null && throughputProvisionedMBps is null && keyEncryptionKey is null && maintenanceWindow is null && hsm is null && rootSquashSettings is null ? default : new AmlFilesystemProperties(
-                    storageCapacityTiB.GetValueOrDefault(),
-                    currentStorageCapacityTiB,
-                    clusterUuid,
-                    health,
+                junctions is null && targetType is null && provisioningState is null && state is null && nfs3 is null && clfsTarget is null && unknownAttributes is null && blobNfs is null && allocationPercentage is null ? default : new StorageTargetProperties(
+                    (junctions ?? new ChangeTrackingList<NamespaceJunction>()).ToList(),
+                    targetType.GetValueOrDefault(),
                     provisioningState,
-                    filesystemSubnet,
-                    clientInfo,
-                    throughputProvisionedMBps,
-                    new AmlFileSystemEncryptionSettings(keyEncryptionKey, default),
-                    maintenanceWindow,
-                    hsm,
-                    rootSquashSettings,
+                    state,
+                    nfs3,
+                    new ClfsTarget(clfsTarget, default),
+                    new UnknownTarget(unknownAttributes ?? new ChangeTrackingDictionary<string, string>(), default),
+                    blobNfs,
+                    allocationPercentage,
                     default),
-                identity,
-                skuName is null ? default : new StorageCacheSkuName(skuName, default),
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
-        }
-
-        /// <summary> An indication of AML file system health. Gives more information about health than just that related to provisioning. </summary>
-        /// <param name="state"> List of AML file system health states. </param>
-        /// <param name="statusCode"> Server-defined error code for the AML file system health. </param>
-        /// <param name="statusDescription"> Describes the health state. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemHealth"/> instance for mocking. </returns>
-        public static AmlFileSystemHealth AmlFileSystemHealth(AmlFileSystemHealthStateType? state = default, string statusCode = default, string statusDescription = default)
-        {
-            return new AmlFileSystemHealth(state, statusCode, statusDescription, default);
-        }
-
-        /// <summary> AML file system client information. </summary>
-        /// <param name="mgsAddress"> The IPv4 address used by clients to mount the AML file system's Lustre Management Service (MGS). </param>
-        /// <param name="mountCommand"> Recommended command to mount the AML file system. </param>
-        /// <param name="lustreVersion"> The version of Lustre running in the AML file system. </param>
-        /// <param name="containerStorageInterface"> Container Storage Interface information for the AML file system. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemClientInfo"/> instance for mocking. </returns>
-        public static AmlFileSystemClientInfo AmlFileSystemClientInfo(string mgsAddress = default, string mountCommand = default, string lustreVersion = default, AmlFileSystemContainerStorageInterface containerStorageInterface = default)
-        {
-            return new AmlFileSystemClientInfo(mgsAddress, mountCommand, lustreVersion, containerStorageInterface, default);
-        }
-
-        /// <summary> AML file system container storage interface information. </summary>
-        /// <param name="persistentVolumeClaim"> Recommended AKS Persistent Volume Claim for the CSI driver, in Base64 encoded YAML. </param>
-        /// <param name="persistentVolume"> Recommended AKS Persistent Volume for the CSI driver, in Base64 encoded YAML. </param>
-        /// <param name="storageClass"> Recommended AKS Storage Class for the CSI driver, in Base64 encoded YAML. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemContainerStorageInterface"/> instance for mocking. </returns>
-        public static AmlFileSystemContainerStorageInterface AmlFileSystemContainerStorageInterface(string persistentVolumeClaim = default, string persistentVolume = default, string storageClass = default)
-        {
-            return new AmlFileSystemContainerStorageInterface(persistentVolumeClaim, persistentVolume, storageClass, default);
-        }
-
-        /// <summary> Start time of a 30-minute weekly maintenance window. </summary>
-        /// <param name="dayOfWeek"> Day of the week on which the maintenance window will occur. </param>
-        /// <param name="timeOfDayUTC"> The time of day (in UTC) to start the maintenance window. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesMaintenanceWindow"/> instance for mocking. </returns>
-        public static AmlFileSystemPropertiesMaintenanceWindow AmlFileSystemPropertiesMaintenanceWindow(MaintenanceDayOfWeekType? dayOfWeek = default, string timeOfDayUTC = default)
-        {
-            return new AmlFileSystemPropertiesMaintenanceWindow(dayOfWeek, timeOfDayUTC, default);
-        }
-
-        /// <summary> Hydration and archive settings and status. </summary>
-        /// <param name="settings"> Specifies HSM settings of the AML file system. </param>
-        /// <param name="archiveStatus"> Archive status. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemPropertiesHsm"/> instance for mocking. </returns>
-        public static AmlFileSystemPropertiesHsm AmlFileSystemPropertiesHsm(AmlFileSystemHsmSettings settings = default, IEnumerable<AmlFileSystemArchive> archiveStatus = default)
-        {
-            archiveStatus ??= new ChangeTrackingList<AmlFileSystemArchive>();
-
-            return new AmlFileSystemPropertiesHsm(settings, (archiveStatus ?? new ChangeTrackingList<AmlFileSystemArchive>()).ToList(), default);
-        }
-
-        /// <summary> AML file system HSM settings. </summary>
-        /// <param name="container"> Resource ID of storage container used for hydrating the namespace and archiving from the namespace. The resource provider must have permission to create SAS tokens on the storage account. </param>
-        /// <param name="loggingContainer"> Resource ID of storage container used for logging events and errors.  Must be a separate container in the same storage account as the hydration and archive container. The resource provider must have permission to create SAS tokens on the storage account. </param>
-        /// <param name="importPrefix"> Only blobs in the non-logging container that start with this path/prefix get imported into the cluster namespace. This is only used during initial creation of the AML file system. It automatically creates an import job resource that can be deleted. </param>
-        /// <param name="importPrefixesInitial"> Only blobs in the non-logging container that start with one of the paths/prefixes in this array get imported into the cluster namespace. This is only used during initial creation of the AML file system and has '/' as the default value. It automatically creates an import job resource that can be deleted. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemHsmSettings"/> instance for mocking. </returns>
-        public static AmlFileSystemHsmSettings AmlFileSystemHsmSettings(string container = default, string loggingContainer = default, string importPrefix = default, IEnumerable<string> importPrefixesInitial = default)
-        {
-            importPrefixesInitial ??= new ChangeTrackingList<string>();
-
-            return new AmlFileSystemHsmSettings(container, loggingContainer, importPrefix, (importPrefixesInitial ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <summary> Information about the AML file system archive. </summary>
-        /// <param name="filesystemPath"> Lustre file system path to archive relative to the file system root.  Specify '/' to archive all modified data. </param>
-        /// <param name="status"> The status of the archive. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemArchive"/> instance for mocking. </returns>
-        public static AmlFileSystemArchive AmlFileSystemArchive(string filesystemPath = default, AmlFileSystemArchiveStatus status = default)
-        {
-            return new AmlFileSystemArchive(filesystemPath, status, default);
-        }
-
-        /// <summary> The status of the archive. </summary>
-        /// <param name="state"> The state of the archive operation. </param>
-        /// <param name="lastCompletionOn"> The time of the last completed archive operation. </param>
-        /// <param name="lastStartedOn"> The time the latest archive operation started. </param>
-        /// <param name="percentComplete"> The completion percentage of the archive operation. </param>
-        /// <param name="errorCode"> Server-defined error code for the archive operation. </param>
-        /// <param name="errorMessage"> Server-defined error message for the archive operation. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemArchiveStatus"/> instance for mocking. </returns>
-        public static AmlFileSystemArchiveStatus AmlFileSystemArchiveStatus(ArchiveStatusType? state = default, DateTimeOffset? lastCompletionOn = default, DateTimeOffset? lastStartedOn = default, int? percentComplete = default, string errorCode = default, string errorMessage = default)
-        {
-            return new AmlFileSystemArchiveStatus(
-                state,
-                lastCompletionOn,
-                lastStartedOn,
-                percentComplete,
-                errorCode,
-                errorMessage,
-                default);
-        }
-
-        /// <summary> AML file system squash settings. </summary>
-        /// <param name="mode"> Squash mode of the AML file system. 'All': User and Group IDs on files will be squashed to the provided values for all users on non-trusted systems. 'RootOnly': User and Group IDs on files will be squashed to provided values for solely the root user on non-trusted systems. 'None': No squashing of User and Group IDs is performed for any users on any systems. </param>
-        /// <param name="noSquashNidLists"> Semicolon separated NID IP Address list(s) to be added to the TrustedSystems. </param>
-        /// <param name="squashUID"> User ID to squash to. </param>
-        /// <param name="squashGID"> Group ID to squash to. </param>
-        /// <param name="status"> AML file system squash status. </param>
-        /// <returns> A new <see cref="Models.AmlFileSystemRootSquashSettings"/> instance for mocking. </returns>
-        public static AmlFileSystemRootSquashSettings AmlFileSystemRootSquashSettings(AmlFileSystemSquashMode? mode = default, string noSquashNidLists = default, long? squashUID = default, long? squashGID = default, string status = default)
-        {
-            return new AmlFileSystemRootSquashSettings(
-                mode,
-                noSquashNidLists,
-                squashUID,
-                squashGID,
-                status,
+                location,
                 default);
         }
 
@@ -825,6 +825,40 @@ namespace Azure.ResourceManager.StorageCache.Models
             return new StorageCacheImportJobPatch(tags ?? new ChangeTrackingDictionary<string, string>(), adminStatus is null ? default : new ImportJobUpdateProperties(adminStatus, default), default);
         }
 
+        /// <summary> The storage account blob change feed status of the auto import job. </summary>
+        /// <param name="importedFiles"> Number of files imported during auto import. </param>
+        /// <param name="importedDirectories"> Number of directories imported during auto import. </param>
+        /// <param name="importedSymlinks"> Number of symlinks imported during auto import. </param>
+        /// <param name="preexistingFiles"> Number of preexisting files during auto import. </param>
+        /// <param name="preexistingDirectories"> Number of preexisting directories during auto import. </param>
+        /// <param name="preexistingSymlinks"> Number of preexisting symlinks during auto import. </param>
+        /// <param name="totalBlobsImported"> Total number of blobs imported during auto import. </param>
+        /// <param name="rateOfBlobImport"> Rate of blob import per second during auto import. </param>
+        /// <param name="totalErrors"> Total errors encountered during auto import. </param>
+        /// <param name="totalConflicts"> Total conflicts encountered during auto import. </param>
+        /// <param name="deletions"> Number of deletions during auto import. </param>
+        /// <param name="lastChangeFeedEventConsumedOn"> Date and time of the last Change Feed event consumed. </param>
+        /// <param name="lastTimeFullySynchronized"> Date and time when last fully synchronized. </param>
+        /// <returns> A new <see cref="Models.AutoImportJobPropertiesStatusBlobSyncEvents"/> instance for mocking. </returns>
+        public static AutoImportJobPropertiesStatusBlobSyncEvents AutoImportJobPropertiesStatusBlobSyncEvents(long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? totalBlobsImported = default, long? rateOfBlobImport = default, long? totalErrors = default, long? totalConflicts = default, long? deletions = default, DateTimeOffset? lastChangeFeedEventConsumedOn = default, DateTimeOffset? lastTimeFullySynchronized = default)
+        {
+            return new AutoImportJobPropertiesStatusBlobSyncEvents(
+                importedFiles,
+                importedDirectories,
+                importedSymlinks,
+                preexistingFiles,
+                preexistingDirectories,
+                preexistingSymlinks,
+                totalBlobsImported,
+                rateOfBlobImport,
+                totalErrors,
+                totalConflicts,
+                deletions,
+                lastChangeFeedEventConsumedOn,
+                lastTimeFullySynchronized,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -899,40 +933,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                         lastCompletionTimeUTC,
                         default),
                     default),
-                default);
-        }
-
-        /// <summary> The storage account blob change feed status of the auto import job. </summary>
-        /// <param name="importedFiles"> Number of files imported during auto import. </param>
-        /// <param name="importedDirectories"> Number of directories imported during auto import. </param>
-        /// <param name="importedSymlinks"> Number of symlinks imported during auto import. </param>
-        /// <param name="preexistingFiles"> Number of preexisting files during auto import. </param>
-        /// <param name="preexistingDirectories"> Number of preexisting directories during auto import. </param>
-        /// <param name="preexistingSymlinks"> Number of preexisting symlinks during auto import. </param>
-        /// <param name="totalBlobsImported"> Total number of blobs imported during auto import. </param>
-        /// <param name="rateOfBlobImport"> Rate of blob import per second during auto import. </param>
-        /// <param name="totalErrors"> Total errors encountered during auto import. </param>
-        /// <param name="totalConflicts"> Total conflicts encountered during auto import. </param>
-        /// <param name="deletions"> Number of deletions during auto import. </param>
-        /// <param name="lastChangeFeedEventConsumedOn"> Date and time of the last Change Feed event consumed. </param>
-        /// <param name="lastTimeFullySynchronized"> Date and time when last fully synchronized. </param>
-        /// <returns> A new <see cref="Models.AutoImportJobPropertiesStatusBlobSyncEvents"/> instance for mocking. </returns>
-        public static AutoImportJobPropertiesStatusBlobSyncEvents AutoImportJobPropertiesStatusBlobSyncEvents(long? importedFiles = default, long? importedDirectories = default, long? importedSymlinks = default, long? preexistingFiles = default, long? preexistingDirectories = default, long? preexistingSymlinks = default, long? totalBlobsImported = default, long? rateOfBlobImport = default, long? totalErrors = default, long? totalConflicts = default, long? deletions = default, DateTimeOffset? lastChangeFeedEventConsumedOn = default, DateTimeOffset? lastTimeFullySynchronized = default)
-        {
-            return new AutoImportJobPropertiesStatusBlobSyncEvents(
-                importedFiles,
-                importedDirectories,
-                importedSymlinks,
-                preexistingFiles,
-                preexistingDirectories,
-                preexistingSymlinks,
-                totalBlobsImported,
-                rateOfBlobImport,
-                totalErrors,
-                totalConflicts,
-                deletions,
-                lastChangeFeedEventConsumedOn,
-                lastTimeFullySynchronized,
                 default);
         }
 

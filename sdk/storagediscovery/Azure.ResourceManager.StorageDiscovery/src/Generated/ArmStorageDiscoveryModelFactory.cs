@@ -17,30 +17,6 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmStorageDiscoveryModelFactory
     {
-        /// <summary> A Storage Discovery Workspace resource. This resource configures the collection of storage account metrics. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StorageDiscovery.StorageDiscoveryWorkspaceData"/> instance for mocking. </returns>
-        public static StorageDiscoveryWorkspaceData StorageDiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageDiscoveryWorkspaceProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageDiscoveryWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Storage Discovery Workspace Properties. </summary>
         /// <param name="sku"> The storage discovery sku. </param>
         /// <param name="description"> The description of the storage discovery workspace. </param>
@@ -75,6 +51,30 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new StorageDiscoveryScope(displayName, (resourceTypes ?? new ChangeTrackingList<StorageDiscoveryResourceKind>()).ToList(), (tagKeysOnly ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> A Storage Discovery Workspace resource. This resource configures the collection of storage account metrics. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StorageDiscovery.StorageDiscoveryWorkspaceData"/> instance for mocking. </returns>
+        public static StorageDiscoveryWorkspaceData StorageDiscoveryWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StorageDiscoveryWorkspaceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageDiscoveryWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> The template for adding updateable properties. </summary>

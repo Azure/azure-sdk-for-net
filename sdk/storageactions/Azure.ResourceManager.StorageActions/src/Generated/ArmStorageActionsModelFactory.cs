@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.StorageActions.Models
     public static partial class ArmStorageActionsModelFactory
     {
 
-        /// <summary> Represents Storage Task. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="identity"> The managed service identity of the resource. </param>
-        /// <param name="properties"> Properties of the storage task. </param>
-        /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
-        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StorageTaskData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                identity,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the storage task. </summary>
         /// <param name="taskVersion"> Storage task version. </param>
         /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
@@ -94,6 +68,32 @@ namespace Azure.ResourceManager.StorageActions.Models
             parameters ??= new ChangeTrackingDictionary<string, string>();
 
             return new StorageTaskOperationInfo(name, parameters ?? new ChangeTrackingDictionary<string, string>(), onSuccess, onFailure, default);
+        }
+
+        /// <summary> Represents Storage Task. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> The managed service identity of the resource. </param>
+        /// <param name="properties"> Properties of the storage task. </param>
+        /// <returns> A new <see cref="StorageActions.StorageTaskData"/> instance for mocking. </returns>
+        public static StorageTaskData StorageTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, StorageTaskProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                identity,
+                properties,
+                default);
         }
 
         /// <summary> Parameters of the storage task update request. </summary>
