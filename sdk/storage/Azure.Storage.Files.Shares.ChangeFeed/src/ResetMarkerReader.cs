@@ -76,15 +76,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         {
             if (string.IsNullOrEmpty(markerPath))
             {
-                throw new InvalidOperationException(
-                    "Reset marker pointer did not include a target marker path.");
+                throw ShareChangeFeedErrors.MissingResetMarkerPath();
             }
 
             if (!markerPath.StartsWith(Constants.FilesChangeFeed.ResetEventPrefix, StringComparison.Ordinal))
             {
-                throw new InvalidOperationException(
-                    $"Reset marker path '{markerPath}' does not begin with the expected prefix " +
-                    $"'{Constants.FilesChangeFeed.ResetEventPrefix}'.");
+                throw ShareChangeFeedErrors.ResetMarkerPathBadPrefix(markerPath, Constants.FilesChangeFeed.ResetEventPrefix);
             }
 
             BlobClient blobClient = containerClient.GetBlobClient(markerPath);
@@ -103,10 +100,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                throw new InvalidOperationException(
-                    $"Reset marker pointer references '{markerPath}' but that per-event blob was not found. " +
-                    "The reset marker set may still be publishing.",
-                    ex);
+                throw ShareChangeFeedErrors.PerEventResetMarkerNotFound(markerPath, ex);
             }
 
             return await ParsePerEventAsync(result, markerPath, async, cancellationToken).ConfigureAwait(false);
@@ -121,9 +115,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetMarker perEvent)
         {
             if (pointer == null)
-                throw new ArgumentNullException(nameof(pointer));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(pointer));
             if (perEvent == null)
-                throw new ArgumentNullException(nameof(perEvent));
+                throw ShareChangeFeedErrors.ArgumentNull(nameof(perEvent));
 
             return new ShareChangeFeedResetEvent(pointer, perEvent);
         }
@@ -206,66 +200,62 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private static string RequireString(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Reset marker at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.ResetMarkerMissingField(path, field);
             string s = value.GetString();
             if (s == null)
-                throw new FormatException($"Reset marker at '{path}' field '{field}' is null.");
+                throw ShareChangeFeedErrors.ResetMarkerFieldNull(path, field);
             return s;
         }
 
         private static int RequireInt32(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Reset marker at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.ResetMarkerMissingField(path, field);
             try
             {
                 return value.GetInt32();
             }
             catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
             {
-                throw new FormatException(
-                    $"Reset marker at '{path}' field '{field}' is not a valid Int32.",
-                    ex);
+                throw ShareChangeFeedErrors.ResetMarkerFieldNotValidType(path, field, "Int32", ex);
             }
         }
 
         private static long RequireInt64(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Reset marker at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.ResetMarkerMissingField(path, field);
             try
             {
                 return value.GetInt64();
             }
             catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
             {
-                throw new FormatException(
-                    $"Reset marker at '{path}' field '{field}' is not a valid Int64.",
-                    ex);
+                throw ShareChangeFeedErrors.ResetMarkerFieldNotValidType(path, field, "Int64", ex);
             }
         }
 
         private static Guid RequireGuid(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Reset marker at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.ResetMarkerMissingField(path, field);
             string s = value.GetString();
             if (s == null)
-                throw new FormatException($"Reset marker at '{path}' field '{field}' is null.");
+                throw ShareChangeFeedErrors.ResetMarkerFieldNull(path, field);
             if (!Guid.TryParse(s, out Guid guid))
-                throw new FormatException($"Reset marker at '{path}' field '{field}' is not a valid GUID: '{s}'.");
+                throw ShareChangeFeedErrors.ResetMarkerFieldNotValidValue(path, field, "GUID", s);
             return guid;
         }
 
         private static DateTimeOffset RequireDateTimeOffset(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Reset marker at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.ResetMarkerMissingField(path, field);
             string s = value.GetString();
             if (s == null)
-                throw new FormatException($"Reset marker at '{path}' field '{field}' is null.");
+                throw ShareChangeFeedErrors.ResetMarkerFieldNull(path, field);
             if (!DateTimeOffset.TryParse(s, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal, out DateTimeOffset ts))
-                throw new FormatException($"Reset marker at '{path}' field '{field}' is not a valid DateTimeOffset: '{s}'.");
+                throw ShareChangeFeedErrors.ResetMarkerFieldNotValidValue(path, field, "DateTimeOffset", s);
             return ts;
         }
     }

@@ -69,10 +69,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.BlobNotFound)
             {
-                throw new ArgumentException(
-                    $"Snapshot metadata not found for timestamp '{snapshotTimestamp}' (path: {path}). " +
-                    $"Verify that a share snapshot was taken at this time and that the change feed has finished publishing its metadata.",
-                    ex);
+                throw ShareChangeFeedErrors.SnapshotMetadataNotFound(snapshotTimestamp, path, ex);
             }
 
             return await ParseSnapshotMetadataAsync(result, path, async, cancellationToken).ConfigureAwait(false);
@@ -160,42 +157,38 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private static DateTimeOffset RequireDateTimeOffset(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.SnapshotFieldMissing(path, field);
             try
             {
                 return value.GetDateTimeOffset();
             }
             catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
             {
-                throw new FormatException(
-                    $"Snapshot metadata at '{path}' field '{field}' is not a valid DateTimeOffset.",
-                    ex);
+                throw ShareChangeFeedErrors.SnapshotFieldNotValidType(path, field, "DateTimeOffset", ex);
             }
         }
 
         private static long RequireInt64(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.SnapshotFieldMissing(path, field);
             try
             {
                 return value.GetInt64();
             }
             catch (Exception ex) when (ex is FormatException || ex is InvalidOperationException)
             {
-                throw new FormatException(
-                    $"Snapshot metadata at '{path}' field '{field}' is not a valid Int64.",
-                    ex);
+                throw ShareChangeFeedErrors.SnapshotFieldNotValidType(path, field, "Int64", ex);
             }
         }
 
         private static string RequireString(JsonElement root, string field, string path)
         {
             if (!root.TryGetProperty(field, out JsonElement value))
-                throw new FormatException($"Snapshot metadata at '{path}' is missing required field '{field}'.");
+                throw ShareChangeFeedErrors.SnapshotFieldMissing(path, field);
             string s = value.GetString();
             if (s == null)
-                throw new FormatException($"Snapshot metadata at '{path}' field '{field}' is null.");
+                throw ShareChangeFeedErrors.SnapshotFieldNull(path, field);
             return s;
         }
     }

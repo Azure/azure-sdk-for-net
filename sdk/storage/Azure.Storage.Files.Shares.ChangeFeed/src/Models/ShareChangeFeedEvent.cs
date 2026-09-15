@@ -71,9 +71,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             }
             catch (FormatException ex)
             {
-                throw new FormatException(
-                    $"Change feed event field '{Constants.FilesChangeFeed.Event.EventTime}' is not a valid DateTimeOffset: '{eventTime}'.",
-                    ex);
+                throw ShareChangeFeedErrors.EventFieldNotValidDateTimeOffset(
+                    Constants.FilesChangeFeed.Event.EventTime, eventTime, ex);
             }
 
             Id = RequireString(record, Constants.FilesChangeFeed.Event.Id);
@@ -84,33 +83,33 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         private static string RequireString(Dictionary<string, object> record, string key)
         {
             if (!record.TryGetValue(key, out object value))
-                throw new FormatException($"Change feed event is missing required field '{key}'.");
+                throw ShareChangeFeedErrors.EventMissingField(key);
             if (value is null)
-                throw new FormatException($"Change feed event field '{key}' is null.");
+                throw ShareChangeFeedErrors.EventFieldNull(key);
             if (value is not string s)
-                throw new FormatException($"Change feed event field '{key}' must be a string but was {value.GetType().Name}.");
+                throw ShareChangeFeedErrors.EventFieldWrongType(key, "string", value.GetType().Name);
             return s;
         }
 
         private static long RequireLong(Dictionary<string, object> record, string key)
         {
             if (!record.TryGetValue(key, out object value))
-                throw new FormatException($"Change feed event is missing required field '{key}'.");
+                throw ShareChangeFeedErrors.EventMissingField(key);
             if (value is null)
-                throw new FormatException($"Change feed event field '{key}' is null.");
+                throw ShareChangeFeedErrors.EventFieldNull(key);
             if (value is not long l)
-                throw new FormatException($"Change feed event field '{key}' must be a long but was {value.GetType().Name}.");
+                throw ShareChangeFeedErrors.EventFieldWrongType(key, "long", value.GetType().Name);
             return l;
         }
 
         private static Dictionary<string, object> RequireDict(Dictionary<string, object> record, string key)
         {
             if (!record.TryGetValue(key, out object value))
-                throw new FormatException($"Change feed event is missing required field '{key}'.");
+                throw ShareChangeFeedErrors.EventMissingField(key);
             if (value is null)
-                throw new FormatException($"Change feed event field '{key}' is null.");
+                throw ShareChangeFeedErrors.EventFieldNull(key);
             if (value is not Dictionary<string, object> d)
-                throw new FormatException($"Change feed event field '{key}' must be a record but was {value.GetType().Name}.");
+                throw ShareChangeFeedErrors.EventFieldWrongType(key, "record", value.GetType().Name);
             return d;
         }
 

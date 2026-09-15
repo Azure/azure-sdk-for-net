@@ -112,18 +112,12 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 if (beginSnapshot != null
                     && !string.Equals(beginSnapshot, cursor.BeginSnapshot, StringComparison.Ordinal))
                 {
-                    throw new ArgumentException(
-                        "Begin snapshot supplied to the pageable does not match the snapshot " +
-                        "embedded in the continuation token.",
-                        nameof(continuation));
+                    throw ShareChangeFeedErrors.BeginSnapshotDoesNotMatchCursor(nameof(continuation));
                 }
                 if (endSnapshot != null
                     && !string.Equals(endSnapshot, cursor.EndSnapshot, StringComparison.Ordinal))
                 {
-                    throw new ArgumentException(
-                        "End snapshot supplied to the pageable does not match the snapshot " +
-                        "embedded in the continuation token.",
-                        nameof(continuation));
+                    throw ShareChangeFeedErrors.EndSnapshotDoesNotMatchCursor(nameof(continuation));
                 }
 
                 effectiveBegin = cursor.BeginSnapshot;

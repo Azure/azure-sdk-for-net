@@ -44,7 +44,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             int? pageSizeHint = null)
         {
             if (continuationToken != null)
-                throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChangesAsync(string) instead.");
+                throw ShareChangeFeedErrors.ContinuationNotSupportedOnPageable("ShareChangeFeedClient.GetChangesAsync(string)");
 
             (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = await _client.ResolveContainerAsync(
                 async: true,

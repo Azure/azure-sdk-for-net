@@ -27,7 +27,8 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     internal class ShareChangeFeedCursor
     {
         /// <summary>
-        /// Schema version of the envelope. Pinned at <c>1</c> today; bump and gate in
+        /// Schema version of the envelope. Pinned at
+        /// <see cref="Constants.FilesChangeFeed.CursorSchemaVersion"/> today; bump and gate in
         /// <see cref="ShareChangeFeedCursorSerializer.Validate"/> when the shape changes.
         /// </summary>
         public int CursorVersion { get; set; }
@@ -104,7 +105,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset? rangeEnd = null,
             bool isBatched = false)
         {
-            CursorVersion = 1;
+            CursorVersion = Constants.FilesChangeFeed.CursorSchemaVersion;
             UrlHost = urlHost;
             InnerCursor = innerCursor;
             LastSeenResetId = lastSeenResetId;

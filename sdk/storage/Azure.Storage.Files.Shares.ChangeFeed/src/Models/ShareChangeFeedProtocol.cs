@@ -19,7 +19,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         /// Initializes a new <see cref="ShareChangeFeedProtocol"/> with a custom string value.
         /// </summary>
         /// <param name="value">The protocol string.</param>
-        public ShareChangeFeedProtocol(string value) { _value = value ?? throw new ArgumentNullException(nameof(value)); }
+        public ShareChangeFeedProtocol(string value) { _value = value ?? throw ShareChangeFeedErrors.ArgumentNull(nameof(value)); }
 
         /// <summary> The operation was performed via the SMB protocol. </summary>
         public static ShareChangeFeedProtocol Smb { get; } = new ShareChangeFeedProtocol("SMB");
