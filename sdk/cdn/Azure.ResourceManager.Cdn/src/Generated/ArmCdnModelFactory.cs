@@ -78,6 +78,28 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ValidateProbeResult(isValid, errorCode, message, default);
         }
 
+        /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
+        /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
+        /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Azure Front Door profile logs. </param>
+        /// <returns> A new <see cref="Models.ProfileLogScrubbing"/> instance for mocking. </returns>
+        public static ProfileLogScrubbing ProfileLogScrubbing(ProfileScrubbingState? state = default, IEnumerable<ProfileScrubbingRules> scrubbingRules = default)
+        {
+            scrubbingRules ??= new ChangeTrackingList<ProfileScrubbingRules>();
+
+            return new ProfileLogScrubbing(state, (scrubbingRules ?? new ChangeTrackingList<ProfileScrubbingRules>()).ToList(), default);
+        }
+
+        /// <summary> Defines the contents of the log scrubbing rules. </summary>
+        /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
+        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
+        /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>
+        /// <param name="state"> Defines the state of a log scrubbing rule. Default value is enabled. </param>
+        /// <returns> A new <see cref="Models.ProfileScrubbingRules"/> instance for mocking. </returns>
+        public static ProfileScrubbingRules ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable = default, ScrubbingRuleEntryMatchOperator selectorMatchOperator = default, string selector = default, ScrubbingRuleEntryState? state = default)
+        {
+            return new ProfileScrubbingRules(matchVariable, selectorMatchOperator, selector, state, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -117,28 +139,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 kind,
                 identity,
                 default);
-        }
-
-        /// <summary> Defines rules that scrub sensitive fields in the Azure Front Door profile logs. </summary>
-        /// <param name="state"> State of the log scrubbing config. Default value is Enabled. </param>
-        /// <param name="scrubbingRules"> List of log scrubbing rules applied to the Azure Front Door profile logs. </param>
-        /// <returns> A new <see cref="Models.ProfileLogScrubbing"/> instance for mocking. </returns>
-        public static ProfileLogScrubbing ProfileLogScrubbing(ProfileScrubbingState? state = default, IEnumerable<ProfileScrubbingRules> scrubbingRules = default)
-        {
-            scrubbingRules ??= new ChangeTrackingList<ProfileScrubbingRules>();
-
-            return new ProfileLogScrubbing(state, (scrubbingRules ?? new ChangeTrackingList<ProfileScrubbingRules>()).ToList(), default);
-        }
-
-        /// <summary> Defines the contents of the log scrubbing rules. </summary>
-        /// <param name="matchVariable"> The variable to be scrubbed from the logs. </param>
-        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this rule applies to. </param>
-        /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this rule applies to. </param>
-        /// <param name="state"> Defines the state of a log scrubbing rule. Default value is enabled. </param>
-        /// <returns> A new <see cref="Models.ProfileScrubbingRules"/> instance for mocking. </returns>
-        public static ProfileScrubbingRules ProfileScrubbingRules(ScrubbingRuleEntryMatchVariable matchVariable = default, ScrubbingRuleEntryMatchOperator selectorMatchOperator = default, string selector = default, ScrubbingRuleEntryState? state = default)
-        {
-            return new ProfileScrubbingRules(matchVariable, selectorMatchOperator, selector, state, default);
         }
 
         /// <summary>
@@ -384,39 +384,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ValidateCustomDomainResult(isCustomDomainValid, reason, message, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
-        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
-        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
-        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
-        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
-        /// <param name="authentication"> Authentication settings for origin in origin group. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorOriginGroupData"/> instance for mocking. </returns>
-        public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string profileName = default, LoadBalancingSettings loadBalancingSettings = default, HealthProbeSettings healthProbeSettings = default, int? trafficRestorationTimeInMinutes = default, EnabledState? sessionAffinityState = default, OriginAuthenticationProperties authentication = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
-        {
-            return new FrontDoorOriginGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                profileName is null && loadBalancingSettings is null && healthProbeSettings is null && trafficRestorationTimeInMinutes is null && sessionAffinityState is null && authentication is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginGroupProperties(
-                    profileName,
-                    loadBalancingSettings,
-                    healthProbeSettings,
-                    trafficRestorationTimeInMinutes,
-                    sessionAffinityState,
-                    authentication,
-                    provisioningState,
-                    deploymentStatus,
-                    default),
-                default);
-        }
-
         /// <summary> The JSON object that contains the properties of the origin group. </summary>
         /// <param name="profileName"> The name of the profile which holds the origin group. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
@@ -471,6 +438,39 @@ namespace Azure.ResourceManager.Cdn.Models
             return new OriginAuthenticationProperties(authenticationType, userAssignedIdentityId is null ? default : new CdnResourceReference(userAssignedIdentityId, default), scope, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="profileName"> The name of the profile which holds the origin group. </param>
+        /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
+        /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
+        /// <param name="trafficRestorationTimeInMinutes"> Time in minutes to shift the traffic to the endpoint gradually when an unhealthy endpoint comes healthy or a new endpoint is added. Default is 10 mins. This property is currently not supported. </param>
+        /// <param name="sessionAffinityState"> Whether to allow session affinity on this host. Valid options are 'Enabled' or 'Disabled'. </param>
+        /// <param name="authentication"> Authentication settings for origin in origin group. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorOriginGroupData"/> instance for mocking. </returns>
+        public static FrontDoorOriginGroupData FrontDoorOriginGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string profileName = default, LoadBalancingSettings loadBalancingSettings = default, HealthProbeSettings healthProbeSettings = default, int? trafficRestorationTimeInMinutes = default, EnabledState? sessionAffinityState = default, OriginAuthenticationProperties authentication = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        {
+            return new FrontDoorOriginGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                profileName is null && loadBalancingSettings is null && healthProbeSettings is null && trafficRestorationTimeInMinutes is null && sessionAffinityState is null && authentication is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginGroupProperties(
+                    profileName,
+                    loadBalancingSettings,
+                    healthProbeSettings,
+                    trafficRestorationTimeInMinutes,
+                    sessionAffinityState,
+                    authentication,
+                    provisioningState,
+                    deploymentStatus,
+                    default),
+                default);
+        }
+
         /// <param name="profileName"> The name of the profile which holds the origin group. </param>
         /// <param name="loadBalancingSettings"> Load balancing settings for a backend pool. </param>
         /// <param name="healthProbeSettings"> Health probe settings to the origin that is used to determine the health of the origin. </param>
@@ -488,51 +488,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 sessionAffinityState,
                 authentication,
                 default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
-        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
-        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
-        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
-        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
-        /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
-        /// <param name="originCapacityResource"> Origin capacity settings for an origin. </param>
-        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
-        /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="originId"> Resource ID. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
-        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, FrontDoorOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, ResourceIdentifier originId)
-        {
-            return new FrontDoorOriginData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && originCapacityResource is null && enabledState is null && enforceCertificateNameCheck is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginProperties(
-                    originGroupName,
-                    new CdnResourceReference(originId, default),
-                    hostName,
-                    httpPort,
-                    httpsPort,
-                    originHostHeader,
-                    priority,
-                    weight,
-                    sharedPrivateLinkResource,
-                    originCapacityResource,
-                    enabledState,
-                    enforceCertificateNameCheck,
-                    provisioningState,
-                    deploymentStatus,
-                    default),
-                default);
         }
 
         /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
@@ -598,6 +553,51 @@ namespace Azure.ResourceManager.Cdn.Models
             return new FrontDoorOriginCapacitySettings(enabled, region, originRequestRateThreshold, originIngressRateThreshold, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
+        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
+        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
+        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
+        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
+        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
+        /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
+        /// <param name="originCapacityResource"> Origin capacity settings for an origin. </param>
+        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
+        /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <param name="originId"> Resource ID. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorOriginData"/> instance for mocking. </returns>
+        public static FrontDoorOriginData FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, FrontDoorOriginCapacitySettings originCapacityResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, ResourceIdentifier originId)
+        {
+            return new FrontDoorOriginData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                originGroupName is null && originId is null && hostName is null && httpPort is null && httpsPort is null && originHostHeader is null && priority is null && weight is null && sharedPrivateLinkResource is null && originCapacityResource is null && enabledState is null && enforceCertificateNameCheck is null && provisioningState is null && deploymentStatus is null ? default : new FrontDoorOriginProperties(
+                    originGroupName,
+                    new CdnResourceReference(originId, default),
+                    hostName,
+                    httpPort,
+                    httpsPort,
+                    originHostHeader,
+                    priority,
+                    weight,
+                    sharedPrivateLinkResource,
+                    originCapacityResource,
+                    enabledState,
+                    enforceCertificateNameCheck,
+                    provisioningState,
+                    deploymentStatus,
+                    default),
+                default);
+        }
+
         /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
         /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
@@ -627,53 +627,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 enabledState,
                 enforceCertificateNameCheck,
                 default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
-        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
-        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
-        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
-        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
-        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
-        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
-        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
-        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="originGroupId"> Resource ID. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
-        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, ResourceIdentifier originGroupId)
-        {
-            return new FrontDoorRouteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
-                    endpointName,
-                    (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
-                    new CdnResourceReference(originGroupId, default),
-                    originPath,
-                    (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
-                    (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
-                    cacheConfiguration,
-                    forwardingProtocol,
-                    linkToDefaultDomain,
-                    httpsRedirect,
-                    enabledState,
-                    grpcState,
-                    provisioningState,
-                    deploymentStatus,
-                    default),
-                default);
         }
 
         /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
@@ -748,6 +701,53 @@ namespace Azure.ResourceManager.Cdn.Models
             return new RouteCacheCompressionSettings((contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(), isCompressionEnabled, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
+        /// <param name="customDomains"> Domains referenced by this endpoint. </param>
+        /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="ruleSets"> rule sets referenced by this endpoint. </param>
+        /// <param name="supportedProtocols"> List of supported protocols for this route. </param>
+        /// <param name="patternsToMatch"> The route patterns of the rule. </param>
+        /// <param name="cacheConfiguration"> The caching configuration for this route. To disable caching, do not provide a cacheConfiguration object. </param>
+        /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
+        /// <param name="linkToDefaultDomain"> whether this route will be linked to the default endpoint domain. </param>
+        /// <param name="httpsRedirect"> Whether to automatically redirect HTTP traffic to HTTPS traffic. Note that this is a easy way to set up this rule and it will be the first rule that gets executed. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="grpcState"> Whether or not gRPC is enabled on this route. Permitted values are 'Enabled' or 'Disabled'. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <param name="originGroupId"> Resource ID. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorRouteData"/> instance for mocking. </returns>
+        public static FrontDoorRouteData FrontDoorRouteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string endpointName, IEnumerable<FrontDoorActivatedResourceInfo> customDomains, string originPath, IEnumerable<WritableSubResource> ruleSets, IEnumerable<FrontDoorEndpointProtocol> supportedProtocols, IEnumerable<string> patternsToMatch, FrontDoorRouteCacheConfiguration cacheConfiguration, ForwardingProtocol? forwardingProtocol, LinkToDefaultDomain? linkToDefaultDomain, HttpsRedirect? httpsRedirect, EnabledState? enabledState, FrontDoorRouteGrpcState? grpcState, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, ResourceIdentifier originGroupId)
+        {
+            return new FrontDoorRouteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                endpointName is null && customDomains is null && originGroupId is null && originPath is null && ruleSets is null && supportedProtocols is null && patternsToMatch is null && cacheConfiguration is null && forwardingProtocol is null && linkToDefaultDomain is null && httpsRedirect is null && enabledState is null && grpcState is null && provisioningState is null && deploymentStatus is null ? default : new CdnRouteProperties(
+                    endpointName,
+                    (customDomains ?? new ChangeTrackingList<FrontDoorActivatedResourceInfo>()).ToList(),
+                    new CdnResourceReference(originGroupId, default),
+                    originPath,
+                    (ruleSets ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (supportedProtocols ?? new ChangeTrackingList<FrontDoorEndpointProtocol>()).ToList(),
+                    (patternsToMatch ?? new ChangeTrackingList<string>()).ToList(),
+                    cacheConfiguration,
+                    forwardingProtocol,
+                    linkToDefaultDomain,
+                    httpsRedirect,
+                    enabledState,
+                    grpcState,
+                    provisioningState,
+                    deploymentStatus,
+                    default),
+                default);
+        }
+
         /// <param name="endpointName"> The name of the endpoint which holds the route. </param>
         /// <param name="customDomains"> Domains referenced by this endpoint. </param>
         /// <param name="originPath"> A directory path on the origin that AzureFrontDoor can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
@@ -781,25 +781,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorRuleSetData"/> instance for mocking. </returns>
-        public static FrontDoorRuleSetData FrontDoorRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default)
-        {
-            return new FrontDoorRuleSetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && deploymentStatus is null && profileName is null ? default : new CdnRuleSetProperties(provisioningState, deploymentStatus, default, profileName),
-                default);
-        }
-
         /// <summary> The JSON object that contains the properties of the Rule Set to create. </summary>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
@@ -823,30 +804,18 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
-        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
-        /// <param name="conditions"> A list of conditions that must be matched for the actions to be executed. </param>
-        /// <param name="actions"> A list of actions that are executed when all the conditions of a rule are satisfied. </param>
-        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorRuleData"/> instance for mocking. </returns>
-        public static FrontDoorRuleData FrontDoorRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ruleSetName = default, int? order = default, IEnumerable<DeliveryRuleCondition> conditions = default, IEnumerable<DeliveryRuleAction> actions = default, MatchProcessingBehavior? matchProcessingBehavior = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        /// <param name="profileName"> The name of the profile which holds the rule set. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorRuleSetData"/> instance for mocking. </returns>
+        public static FrontDoorRuleSetData FrontDoorRuleSetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default)
         {
-            return new FrontDoorRuleData(
+            return new FrontDoorRuleSetData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ruleSetName is null && order is null && conditions is null && actions is null && matchProcessingBehavior is null && provisioningState is null && deploymentStatus is null ? default : new CdnRuleProperties(
-                    ruleSetName,
-                    order,
-                    (conditions ?? new ChangeTrackingList<DeliveryRuleCondition>()).ToList(),
-                    (actions ?? new ChangeTrackingList<DeliveryRuleAction>()).ToList(),
-                    matchProcessingBehavior,
-                    provisioningState,
-                    deploymentStatus,
-                    default),
+                provisioningState is null && deploymentStatus is null && profileName is null ? default : new CdnRuleSetProperties(provisioningState, deploymentStatus, default, profileName),
                 default);
         }
 
@@ -1687,6 +1656,37 @@ namespace Azure.ResourceManager.Cdn.Models
             return new DeliveryRuleRouteConfigurationOverrideAction(default, default, properties);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
+        /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
+        /// <param name="conditions"> A list of conditions that must be matched for the actions to be executed. </param>
+        /// <param name="actions"> A list of actions that are executed when all the conditions of a rule are satisfied. </param>
+        /// <param name="matchProcessingBehavior"> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorRuleData"/> instance for mocking. </returns>
+        public static FrontDoorRuleData FrontDoorRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ruleSetName = default, int? order = default, IEnumerable<DeliveryRuleCondition> conditions = default, IEnumerable<DeliveryRuleAction> actions = default, MatchProcessingBehavior? matchProcessingBehavior = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default)
+        {
+            return new FrontDoorRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ruleSetName is null && order is null && conditions is null && actions is null && matchProcessingBehavior is null && provisioningState is null && deploymentStatus is null ? default : new CdnRuleProperties(
+                    ruleSetName,
+                    order,
+                    (conditions ?? new ChangeTrackingList<DeliveryRuleCondition>()).ToList(),
+                    (actions ?? new ChangeTrackingList<DeliveryRuleAction>()).ToList(),
+                    matchProcessingBehavior,
+                    provisioningState,
+                    deploymentStatus,
+                    default),
+                default);
+        }
+
         /// <param name="ruleSetName"> The name of the rule set containing the rule. </param>
         /// <param name="order"> The order in which the rules are applied for the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser order will be applied before a rule with a greater order. Rule with order 0 is a special rule. It does not require any condition and actions listed in it will always be applied. </param>
         /// <param name="conditions"> A list of conditions that must be matched for the actions to be executed. </param>
@@ -1702,26 +1702,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 (actions ?? new ChangeTrackingList<DeliveryRuleAction>()).ToList(),
                 matchProcessingBehavior,
                 default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="profileName"> The name of the profile which holds the security policy. </param>
-        /// <param name="properties"> object which contains security policy parameters. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
-        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
-        {
-            return new FrontDoorSecurityPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecurityPolicyProperties(provisioningState, deploymentStatus, default, profileName, properties),
-                default);
         }
 
         /// <summary>
@@ -1983,31 +1963,31 @@ namespace Azure.ResourceManager.Cdn.Models
             return new SecurityPolicyWebApplicationFirewall(default, default, wafPolicyId is null ? default : new CdnResourceReference(wafPolicyId, default), (associations ?? new ChangeTrackingList<SecurityPolicyWebApplicationFirewallAssociation>()).ToList());
         }
 
-        /// <param name="properties"> object which contains security policy parameters. </param>
-        /// <returns> A new <see cref="Models.FrontDoorSecurityPolicyPatch"/> instance for mocking. </returns>
-        public static FrontDoorSecurityPolicyPatch FrontDoorSecurityPolicyPatch(SecurityPolicyProperties properties = default)
-        {
-            return new FrontDoorSecurityPolicyPatch(properties is null ? default : new SecurityPolicyUpdateProperties(properties, default), default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="profileName"> The name of the profile which holds the secret. </param>
-        /// <param name="properties"> object which contains secret parameters. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
-        public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
+        /// <param name="profileName"> The name of the profile which holds the security policy. </param>
+        /// <param name="properties"> object which contains security policy parameters. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorSecurityPolicyData"/> instance for mocking. </returns>
+        public static FrontDoorSecurityPolicyData FrontDoorSecurityPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, SecurityPolicyProperties properties = default)
         {
-            return new FrontDoorSecretData(
+            return new FrontDoorSecurityPolicyData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecretProperties(provisioningState, deploymentStatus, default, profileName, properties),
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecurityPolicyProperties(provisioningState, deploymentStatus, default, profileName, properties),
                 default);
+        }
+
+        /// <param name="properties"> object which contains security policy parameters. </param>
+        /// <returns> A new <see cref="Models.FrontDoorSecurityPolicyPatch"/> instance for mocking. </returns>
+        public static FrontDoorSecurityPolicyPatch FrontDoorSecurityPolicyPatch(SecurityPolicyProperties properties = default)
+        {
+            return new FrontDoorSecurityPolicyPatch(properties is null ? default : new SecurityPolicyUpdateProperties(properties, default), default);
         }
 
         /// <summary>
@@ -2100,6 +2080,26 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <param name="profileName"> The name of the profile which holds the secret. </param>
+        /// <param name="properties"> object which contains secret parameters. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorSecretData"/> instance for mocking. </returns>
+        public static FrontDoorSecretData FrontDoorSecretData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FrontDoorProvisioningState? provisioningState = default, FrontDoorDeploymentStatus? deploymentStatus = default, string profileName = default, FrontDoorSecretProperties properties = default)
+        {
+            return new FrontDoorSecretData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && deploymentStatus is null && profileName is null && properties is null ? default : new CdnSecretProperties(provisioningState, deploymentStatus, default, profileName, properties),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="keyReferences"> Names of UrlSigningKey type secret objects. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
@@ -2123,6 +2123,15 @@ namespace Azure.ResourceManager.Cdn.Models
             keyReferences ??= new ChangeTrackingList<CdnResourceReference>();
 
             return new CdnKeyGroupPatch((keyReferences ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), default);
+        }
+
+        /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
+        /// <param name="preview"> Deployment status of preview stage. </param>
+        /// <param name="production"> Deployment status of production stage. </param>
+        /// <returns> A new <see cref="Models.CdnDeploymentStages"/> instance for mocking. </returns>
+        public static CdnDeploymentStages CdnDeploymentStages(CdnDeploymentRolloutStatus? preview = default, CdnDeploymentRolloutStatus? production = default)
+        {
+            return new CdnDeploymentStages(preview, production, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2154,15 +2163,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     stages,
                     default),
                 default);
-        }
-
-        /// <summary> The preview and production deployment status of the deployment version under the profile. </summary>
-        /// <param name="preview"> Deployment status of preview stage. </param>
-        /// <param name="production"> Deployment status of production stage. </param>
-        /// <returns> A new <see cref="Models.CdnDeploymentStages"/> instance for mocking. </returns>
-        public static CdnDeploymentStages CdnDeploymentStages(CdnDeploymentRolloutStatus? preview = default, CdnDeploymentRolloutStatus? production = default)
-        {
-            return new CdnDeploymentStages(preview, production, default);
         }
 
         /// <param name="description"> Gets or sets the Description. </param>
@@ -2316,69 +2316,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new SecurityPolicyPropertiesWithEmbeddedWafPolicy(provisioningState, deploymentStatus, default, profileName, parameters);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="originPath"> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
-        /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
-        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </param>
-        /// <param name="isHttpAllowed"> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
-        /// <param name="isHttpsAllowed"> Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
-        /// <param name="queryStringCachingBehavior"> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </param>
-        /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
-        /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
-        /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
-        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
-        /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
-        /// <param name="defaultOriginGroupId"> Resource ID. </param>
-        /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
-        /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
-        /// <param name="origins"> The source of the content being delivered via CDN. </param>
-        /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
-        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
-        /// <param name="resourceState"> Resource status of the endpoint. </param>
-        /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
-        /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
-        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IEnumerable<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IEnumerable<GeoFilter> geoFilters, IEnumerable<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, ResourceIdentifier defaultOriginGroupId, ResourceIdentifier webApplicationFirewallPolicyLinkId, string hostName, IEnumerable<DeepCreatedOrigin> origins, IEnumerable<DeepCreatedOriginGroup> originGroups, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CdnEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && defaultOriginGroupId is null && uriSigningKeys is null && deliveryPolicy is null && webApplicationFirewallPolicyLinkId is null && hostName is null && origins is null && originGroups is null && deepCreatedCustomDomains is null && resourceState is null && provisioningState is null ? default : new EndpointProperties(
-                    originPath,
-                    (contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(),
-                    originHostHeader,
-                    isCompressionEnabled,
-                    isHttpAllowed,
-                    isHttpsAllowed,
-                    queryStringCachingBehavior,
-                    optimizationType,
-                    probePath,
-                    (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
-                    new CdnResourceReference(defaultOriginGroupId, default),
-                    (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
-                    deliveryPolicy,
-                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
-                    default,
-                    hostName,
-                    (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
-                    (originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>()).ToList(),
-                    (deepCreatedCustomDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>()).ToList(),
-                    resourceState,
-                    provisioningState),
-                default);
-        }
-
         /// <param name="name"> Origin name which must be unique within the endpoint. </param>
         /// <param name="hostName"> The address of the origin. It can be a domain name, IPv4 address, or IPv6 address. This should be unique across all origins in an endpoint. </param>
         /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
@@ -2516,6 +2453,69 @@ namespace Azure.ResourceManager.Cdn.Models
             actions ??= new ChangeTrackingList<DeliveryRuleAction>();
 
             return new DeliveryRule(name, order, (conditions ?? new ChangeTrackingList<DeliveryRuleCondition>()).ToList(), (actions ?? new ChangeTrackingList<DeliveryRuleAction>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="originPath"> A directory path on the origin that CDN can use to retrieve content from, e.g. contoso.cloudapp.net/originpath. </param>
+        /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
+        /// <param name="originHostHeader"> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </param>
+        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </param>
+        /// <param name="isHttpAllowed"> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
+        /// <param name="isHttpsAllowed"> Indicates whether HTTPS traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </param>
+        /// <param name="queryStringCachingBehavior"> Defines how CDN caches requests that include query strings. You can ignore any query strings when caching, bypass caching to prevent requests that contain query strings from being cached, or cache every request with a unique URL. </param>
+        /// <param name="optimizationType"> Specifies what scenario the customer wants this CDN endpoint to optimize for, e.g. Download, Media services. With this information, CDN can apply scenario driven optimization. </param>
+        /// <param name="probePath"> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </param>
+        /// <param name="geoFilters"> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </param>
+        /// <param name="uriSigningKeys"> List of keys used to validate the signed URL hashes. </param>
+        /// <param name="deliveryPolicy"> A policy that specifies the delivery rules to be used for an endpoint. </param>
+        /// <param name="defaultOriginGroupId"> Resource ID. </param>
+        /// <param name="webApplicationFirewallPolicyLinkId"> Resource ID. </param>
+        /// <param name="hostName"> The host name of the endpoint structured as {endpointName}.{DNSZone}, e.g. contoso.azureedge.net. </param>
+        /// <param name="origins"> The source of the content being delivered via CDN. </param>
+        /// <param name="originGroups"> The origin groups comprising of origins that are used for load balancing the traffic based on availability. </param>
+        /// <param name="deepCreatedCustomDomains"> The custom domains under the endpoint. </param>
+        /// <param name="resourceState"> Resource status of the endpoint. </param>
+        /// <param name="provisioningState"> Provisioning status of the endpoint. </param>
+        /// <returns> A new <see cref="Cdn.CdnEndpointData"/> instance for mocking. </returns>
+        public static CdnEndpointData CdnEndpointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string originPath, IEnumerable<string> contentTypesToCompress, string originHostHeader, bool? isCompressionEnabled, bool? isHttpAllowed, bool? isHttpsAllowed, QueryStringCachingBehavior? queryStringCachingBehavior, OptimizationType? optimizationType, string probePath, IEnumerable<GeoFilter> geoFilters, IEnumerable<UriSigningKey> uriSigningKeys, EndpointDeliveryPolicy deliveryPolicy, ResourceIdentifier defaultOriginGroupId, ResourceIdentifier webApplicationFirewallPolicyLinkId, string hostName, IEnumerable<DeepCreatedOrigin> origins, IEnumerable<DeepCreatedOriginGroup> originGroups, IEnumerable<DeepCreatedCustomDomain> deepCreatedCustomDomains, EndpointResourceState? resourceState, CdnEndpointProvisioningState? provisioningState)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CdnEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                originPath is null && contentTypesToCompress is null && originHostHeader is null && isCompressionEnabled is null && isHttpAllowed is null && isHttpsAllowed is null && queryStringCachingBehavior is null && optimizationType is null && probePath is null && geoFilters is null && defaultOriginGroupId is null && uriSigningKeys is null && deliveryPolicy is null && webApplicationFirewallPolicyLinkId is null && hostName is null && origins is null && originGroups is null && deepCreatedCustomDomains is null && resourceState is null && provisioningState is null ? default : new EndpointProperties(
+                    originPath,
+                    (contentTypesToCompress ?? new ChangeTrackingList<string>()).ToList(),
+                    originHostHeader,
+                    isCompressionEnabled,
+                    isHttpAllowed,
+                    isHttpsAllowed,
+                    queryStringCachingBehavior,
+                    optimizationType,
+                    probePath,
+                    (geoFilters ?? new ChangeTrackingList<GeoFilter>()).ToList(),
+                    new CdnResourceReference(defaultOriginGroupId, default),
+                    (uriSigningKeys ?? new ChangeTrackingList<UriSigningKey>()).ToList(),
+                    deliveryPolicy,
+                    new EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink(webApplicationFirewallPolicyLinkId, default),
+                    default,
+                    hostName,
+                    (origins ?? new ChangeTrackingList<DeepCreatedOrigin>()).ToList(),
+                    (originGroups ?? new ChangeTrackingList<DeepCreatedOriginGroup>()).ToList(),
+                    (deepCreatedCustomDomains ?? new ChangeTrackingList<DeepCreatedCustomDomain>()).ToList(),
+                    resourceState,
+                    provisioningState),
+                default);
         }
 
         /// <param name="tags"> Endpoint tags. </param>
@@ -2689,37 +2689,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CdnOriginGroupPatch(healthProbeSettings is null && origins is null && trafficRestorationTimeToHealedOrNewEndpointsInMinutes is null && responseBasedOriginErrorDetectionSettings is null ? default : new OriginGroupUpdatePropertiesParameters(healthProbeSettings, (origins ?? new ChangeTrackingList<WritableSubResource>()).ToList(), trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
-        /// <param name="resourceState"> Resource status of the custom domain. </param>
-        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
-        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
-        /// <param name="customDomainHttpsContent"> Certificate parameters for securing custom HTTPS. </param>
-        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
-        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
-        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
-        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hostName = default, CustomDomainResourceState? resourceState = default, CustomHttpsProvisioningState? customHttpsProvisioningState = default, CustomHttpsAvailabilityState? customHttpsAvailabilityState = default, CustomDomainHttpsContent customDomainHttpsContent = default, string validationData = default, CustomHttpsProvisioningState? provisioningState = default)
-        {
-            return new CdnCustomDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                hostName is null && resourceState is null && customHttpsProvisioningState is null && customHttpsAvailabilityState is null && customDomainHttpsContent is null && validationData is null && provisioningState is null ? default : new CustomDomainProperties(
-                    hostName,
-                    resourceState,
-                    customHttpsProvisioningState,
-                    customHttpsAvailabilityState,
-                    customDomainHttpsContent,
-                    validationData,
-                    provisioningState,
-                    default),
-                default);
-        }
-
         /// <summary>
         /// The JSON object that contains the properties to secure a custom domain.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CdnManagedHttpsContent"/> and <see cref="Models.UserManagedHttpsContent"/>.
@@ -2795,6 +2764,37 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UserManagedHttpsContent(default, protocolType, minimumTlsVersion, default, certificateSourceParameters);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
+        /// <param name="resourceState"> Resource status of the custom domain. </param>
+        /// <param name="customHttpsProvisioningState"> Provisioning status of the custom domain. </param>
+        /// <param name="customHttpsAvailabilityState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
+        /// <param name="customDomainHttpsContent"> Certificate parameters for securing custom HTTPS. </param>
+        /// <param name="validationData"> Special validation or data may be required when delivering CDN to some regions due to local compliance reasons. E.g. ICP license number of a custom domain is required to deliver content in China. </param>
+        /// <param name="provisioningState"> Provisioning status of Custom Https of the custom domain. </param>
+        /// <returns> A new <see cref="Cdn.CdnCustomDomainData"/> instance for mocking. </returns>
+        public static CdnCustomDomainData CdnCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string hostName = default, CustomDomainResourceState? resourceState = default, CustomHttpsProvisioningState? customHttpsProvisioningState = default, CustomHttpsAvailabilityState? customHttpsAvailabilityState = default, CustomDomainHttpsContent customDomainHttpsContent = default, string validationData = default, CustomHttpsProvisioningState? provisioningState = default)
+        {
+            return new CdnCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                hostName is null && resourceState is null && customHttpsProvisioningState is null && customHttpsAvailabilityState is null && customDomainHttpsContent is null && validationData is null && provisioningState is null ? default : new CustomDomainProperties(
+                    hostName,
+                    resourceState,
+                    customHttpsProvisioningState,
+                    customHttpsAvailabilityState,
+                    customDomainHttpsContent,
+                    validationData,
+                    provisioningState,
+                    default),
+                default);
+        }
+
         /// <param name="hostName"> The host name of the custom domain. Must be a domain name. </param>
         /// <returns> A new <see cref="Models.CdnCustomDomainCreateOrUpdateContent"/> instance for mocking. </returns>
         public static CdnCustomDomainCreateOrUpdateContent CdnCustomDomainCreateOrUpdateContent(string hostName = default)
@@ -2828,6 +2828,15 @@ namespace Azure.ResourceManager.Cdn.Models
             return new CdnProfileAgentPatch(customDomains is null ? default : new ProfileAgentUpdateProperties((customDomains ?? new ChangeTrackingList<CdnResourceReference>()).ToList(), default), default);
         }
 
+        /// <summary> Defines a path configuration for a web agent. </summary>
+        /// <param name="type"> The type of the path. </param>
+        /// <param name="path"> The actual path value. </param>
+        /// <returns> A new <see cref="Models.CdnWebAgentPath"/> instance for mocking. </returns>
+        public static CdnWebAgentPath CdnWebAgentPath(CdnWebAgentPathType @type = default, string path = default)
+        {
+            return new CdnWebAgentPath(@type, path, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2859,15 +2868,6 @@ namespace Azure.ResourceManager.Cdn.Models
                     provisioningState,
                     default),
                 default);
-        }
-
-        /// <summary> Defines a path configuration for a web agent. </summary>
-        /// <param name="type"> The type of the path. </param>
-        /// <param name="path"> The actual path value. </param>
-        /// <returns> A new <see cref="Models.CdnWebAgentPath"/> instance for mocking. </returns>
-        public static CdnWebAgentPath CdnWebAgentPath(CdnWebAgentPathType @type = default, string path = default)
-        {
-            return new CdnWebAgentPath(@type, path, default);
         }
 
         /// <param name="tags"> Web agent tags. </param>
@@ -2918,45 +2918,6 @@ namespace Azure.ResourceManager.Cdn.Models
         public static CdnWebAgentKnowledgeSourcePatch CdnWebAgentKnowledgeSourcePatch(string description = default, string uri = default, WebAgentKnowledgeSourceUpdateFrequency? updateFrequency = default)
         {
             return new CdnWebAgentKnowledgeSourcePatch(description is null && uri is null && updateFrequency is null ? default : new KnowledgeSourcePropertiesUpdateParameters(description, uri, updateFrequency, default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
-        /// <param name="mtlsSettings"> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
-        /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
-        /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
-        /// <param name="extendedProperties"> Key-Value pair representing migration properties for domains. </param>
-        /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
-        /// <param name="dnsZoneId"> Resource ID. </param>
-        /// <param name="preValidatedCustomDomainResourceId"> Resource ID. </param>
-        /// <returns> A new <see cref="Cdn.FrontDoorCustomDomainData"/> instance for mocking. </returns>
-        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsSettings mtlsSettings, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId)
-        {
-            return new FrontDoorCustomDomainData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                profileName is null && tlsSettings is null && mtlsSettings is null && dnsZoneId is null && preValidatedCustomDomainResourceId is null && provisioningState is null && deploymentStatus is null && domainValidationState is null && hostName is null && extendedProperties is null && validationProperties is null ? default : new FrontDoorCustomDomainProperties(
-                    profileName,
-                    tlsSettings,
-                    mtlsSettings,
-                    new CdnResourceReference(dnsZoneId, default),
-                    new CdnResourceReference(preValidatedCustomDomainResourceId, default),
-                    provisioningState,
-                    deploymentStatus,
-                    domainValidationState,
-                    hostName,
-                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    validationProperties,
-                    default),
-                default);
         }
 
         /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
@@ -3046,6 +3007,45 @@ namespace Azure.ResourceManager.Cdn.Models
         public static DomainValidationProperties DomainValidationProperties(string validationToken = default, DateTimeOffset? expiresOn = default)
         {
             return new DomainValidationProperties(validationToken, expiresOn, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="profileName"> The name of the profile which holds the domain. </param>
+        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
+        /// <param name="mtlsSettings"> The configuration specifying how to enable mutual TLS for the domain, including specifying allowed FQDNs and which server certificate(s) to use. </param>
+        /// <param name="provisioningState"> Provisioning status. </param>
+        /// <param name="deploymentStatus"> Gets the DeploymentStatus. </param>
+        /// <param name="domainValidationState"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. DCV stands for DomainControlValidation. </param>
+        /// <param name="hostName"> The host name of the domain. Must be a domain name. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing migration properties for domains. </param>
+        /// <param name="validationProperties"> Values the customer needs to validate domain ownership. </param>
+        /// <param name="dnsZoneId"> Resource ID. </param>
+        /// <param name="preValidatedCustomDomainResourceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Cdn.FrontDoorCustomDomainData"/> instance for mocking. </returns>
+        public static FrontDoorCustomDomainData FrontDoorCustomDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string profileName, FrontDoorCustomDomainHttpsContent tlsSettings, FrontDoorCustomDomainMtlsSettings mtlsSettings, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, DomainValidationState? domainValidationState, string hostName, IDictionary<string, string> extendedProperties, DomainValidationProperties validationProperties, ResourceIdentifier dnsZoneId, ResourceIdentifier preValidatedCustomDomainResourceId)
+        {
+            return new FrontDoorCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                profileName is null && tlsSettings is null && mtlsSettings is null && dnsZoneId is null && preValidatedCustomDomainResourceId is null && provisioningState is null && deploymentStatus is null && domainValidationState is null && hostName is null && extendedProperties is null && validationProperties is null ? default : new FrontDoorCustomDomainProperties(
+                    profileName,
+                    tlsSettings,
+                    mtlsSettings,
+                    new CdnResourceReference(dnsZoneId, default),
+                    new CdnResourceReference(preValidatedCustomDomainResourceId, default),
+                    provisioningState,
+                    deploymentStatus,
+                    domainValidationState,
+                    hostName,
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    validationProperties,
+                    default),
+                default);
         }
 
         /// <param name="profileName"> The name of the profile which holds the domain. </param>
@@ -3355,49 +3355,6 @@ namespace Azure.ResourceManager.Cdn.Models
             return new ComponentsKpo1PjSchemasWafrankingsresponsePropertiesDataItemsPropertiesMetricsItems(metric, value, percentage, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="policySettings"> Describes  policySettings for policy. </param>
-        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
-        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
-        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
-        /// <param name="resourceState"> Resource status of the policy. </param>
-        /// <param name="rateLimitRules"> List of rules. </param>
-        /// <param name="customRules"> List of rules. </param>
-        /// <param name="managedRuleSets"> List of rule sets. </param>
-        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="skuName"> Name of the pricing tier. </param>
-        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
-        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WafPolicySettings policySettings, IEnumerable<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, ETag? eTag, CdnSkuName? skuName)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CdnWebApplicationFirewallPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
-                    policySettings,
-                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
-                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
-                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
-                    (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
-                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    provisioningState,
-                    resourceState,
-                    default),
-                eTag,
-                skuName is null ? default : new CdnSku(skuName, default),
-                default);
-        }
-
         /// <summary> Defines contents of a web application firewall global configuration. </summary>
         /// <param name="enabledState"> describes if the policy is in enabled state or disabled state. </param>
         /// <param name="mode"> Describes if it is in detection mode or prevention mode at policy level. </param>
@@ -3515,6 +3472,49 @@ namespace Azure.ResourceManager.Cdn.Models
         public static ManagedRuleOverrideSetting ManagedRuleOverrideSetting(string ruleId = default, ManagedRuleSetupState? enabledState = default, OverrideActionType? action = default)
         {
             return new ManagedRuleOverrideSetting(ruleId, enabledState, action, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="policySettings"> Describes  policySettings for policy. </param>
+        /// <param name="endpointLinks"> Describes Azure CDN endpoints associated with this Web Application Firewall policy. </param>
+        /// <param name="extendedProperties"> Key-Value pair representing additional properties for Web Application Firewall policy. </param>
+        /// <param name="provisioningState"> Provisioning state of the WebApplicationFirewallPolicy. </param>
+        /// <param name="resourceState"> Resource status of the policy. </param>
+        /// <param name="rateLimitRules"> List of rules. </param>
+        /// <param name="customRules"> List of rules. </param>
+        /// <param name="managedRuleSets"> List of rule sets. </param>
+        /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="skuName"> Name of the pricing tier. </param>
+        /// <returns> A new <see cref="Cdn.CdnWebApplicationFirewallPolicyData"/> instance for mocking. </returns>
+        public static CdnWebApplicationFirewallPolicyData CdnWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WafPolicySettings policySettings, IEnumerable<SubResource> endpointLinks, IDictionary<string, string> extendedProperties, WebApplicationFirewallPolicyProvisioningState? provisioningState, PolicyResourceState? resourceState, IEnumerable<RateLimitRule> rateLimitRules, IEnumerable<CustomRule> customRules, IEnumerable<WafPolicyManagedRuleSet> managedRuleSets, ETag? eTag, CdnSkuName? skuName)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CdnWebApplicationFirewallPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                policySettings is null && rateLimitRules is null && customRules is null && managedRuleSets is null && endpointLinks is null && extendedProperties is null && provisioningState is null && resourceState is null ? default : new CdnWebApplicationFirewallPolicyProperties(
+                    policySettings,
+                    new RateLimitRuleList((rateLimitRules ?? new ChangeTrackingList<RateLimitRule>()).ToList(), default),
+                    new CustomRuleList((customRules ?? new ChangeTrackingList<CustomRule>()).ToList(), default),
+                    new ManagedRuleSetList((managedRuleSets ?? new ChangeTrackingList<WafPolicyManagedRuleSet>()).ToList(), default),
+                    (endpointLinks ?? new ChangeTrackingList<SubResource>()).ToList(),
+                    extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    provisioningState,
+                    resourceState,
+                    default),
+                eTag,
+                skuName is null ? default : new CdnSku(skuName, default),
+                default);
         }
 
         /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>

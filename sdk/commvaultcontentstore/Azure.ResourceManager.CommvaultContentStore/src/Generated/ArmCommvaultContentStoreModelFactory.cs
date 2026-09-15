@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public static partial class ArmCommvaultContentStoreModelFactory
     {
 
-        /// <summary> A Commvault Cloud Account Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.CloudAccountData"/> instance for mocking. </returns>
-        public static CloudAccountData CloudAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudAccountProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CloudAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> Properties specific to Commvault Cloud Account resource. </summary>
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
@@ -123,6 +97,32 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new CommvaultEntityInfo(id, displayName, entityType, default);
         }
 
+        /// <summary> A Commvault Cloud Account Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="CommvaultContentStore.CloudAccountData"/> instance for mocking. </returns>
+        public static CloudAccountData CloudAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CloudAccountProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CloudAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the CloudAccount. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -187,24 +187,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 default);
         }
 
-        /// <summary> A Commvault Storage Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.CommvaultStorageData"/> instance for mocking. </returns>
-        public static CommvaultStorageData CommvaultStorageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommvaultStorageProperties properties = default)
-        {
-            return new CommvaultStorageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of Commvault Storage. </summary>
         /// <param name="location"> Location of the Commvault Storage. </param>
         /// <param name="storageType"> The type of Commvault Storage. </param>
@@ -223,16 +205,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 default);
         }
 
-        /// <summary> A Commvault Plan Resource. </summary>
+        /// <summary> A Commvault Storage Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.CommvaultPlanData"/> instance for mocking. </returns>
-        public static CommvaultPlanData CommvaultPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommvaultPlanProperties properties = default)
+        /// <returns> A new <see cref="CommvaultContentStore.CommvaultStorageData"/> instance for mocking. </returns>
+        public static CommvaultStorageData CommvaultStorageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommvaultStorageProperties properties = default)
         {
-            return new CommvaultPlanData(
+            return new CommvaultStorageData(
                 id,
                 name,
                 resourceType,
@@ -333,10 +315,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.ProtectionGroupData"/> instance for mocking. </returns>
-        public static ProtectionGroupData ProtectionGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectionGroupProperties properties = default)
+        /// <returns> A new <see cref="CommvaultContentStore.CommvaultPlanData"/> instance for mocking. </returns>
+        public static CommvaultPlanData CommvaultPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, CommvaultPlanProperties properties = default)
         {
-            return new ProtectionGroupData(
+            return new CommvaultPlanData(
                 id,
                 name,
                 resourceType,
@@ -398,6 +380,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static ProtectionGroupRule ProtectionGroupRule(ProtectionGroupRuleProperty @property = default, CommvaultMatchOperator @operator = default, string value = default)
         {
             return new ProtectionGroupRule(@property, @operator, value, default);
+        }
+
+        /// <summary> A Commvault Plan Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CommvaultContentStore.ProtectionGroupData"/> instance for mocking. </returns>
+        public static ProtectionGroupData ProtectionGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectionGroupProperties properties = default)
+        {
+            return new ProtectionGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The properties of StopBackupProtectionGroupRequest. </summary>
@@ -519,24 +519,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new BackupProtectionGroupResult(taskId, (jobIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.ProtectedItemData"/> instance for mocking. </returns>
-        public static ProtectedItemData ProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectedItemProperties properties = default)
-        {
-            return new ProtectedItemData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of Commvault Protected Item. </summary>
         /// <param name="resourceName"> The Name of the commvault protected item. </param>
         /// <param name="lastBackUpTime"> The Commvault Protected Item backup time. </param>
@@ -552,6 +534,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 resourceGroup,
                 location,
                 vmGuid,
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CommvaultContentStore.ProtectedItemData"/> instance for mocking. </returns>
+        public static ProtectedItemData ProtectedItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ProtectedItemProperties properties = default)
+        {
+            return new ProtectedItemData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -583,24 +583,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new CountProtectedItemsResult(count, default);
         }
 
-        /// <summary> A Commvault Role Mapping Resource. Singleton per Cloud Account - maps Entra security groups to Commvault roles for RBAC enforcement. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="CommvaultContentStore.RoleMappingData"/> instance for mocking. </returns>
-        public static RoleMappingData RoleMappingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RoleMappingProperties properties = default)
-        {
-            return new RoleMappingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> The properties of Commvault Role Mapping. </summary>
         /// <param name="roles"> The list of role assignments mapping roles to Entra entities (users and groups). </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -621,6 +603,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             entities ??= new ChangeTrackingList<CommvaultEntityInfo>();
 
             return new CommvaultRoleAssignment(roleName, (entities ?? new ChangeTrackingList<CommvaultEntityInfo>()).ToList(), default);
+        }
+
+        /// <summary> A Commvault Role Mapping Resource. Singleton per Cloud Account - maps Entra security groups to Commvault roles for RBAC enforcement. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="CommvaultContentStore.RoleMappingData"/> instance for mocking. </returns>
+        public static RoleMappingData RoleMappingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RoleMappingProperties properties = default)
+        {
+            return new RoleMappingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
     }
 }

@@ -149,45 +149,6 @@ namespace Azure.ResourceManager.Communication.Models
             return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="dataLocation"> The location where the Domains resource data is stored at rest. </param>
-        /// <param name="fromSenderDomain"> P2 sender domain that is displayed to the email recipients [RFC 5322]. </param>
-        /// <param name="mailFromSenderDomain"> P1 sender domain that is present on the email envelope [RFC 5321]. </param>
-        /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
-        /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
-        /// <param name="verificationRecords"> List of DnsRecord. </param>
-        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        /// <returns> A new <see cref="Communication.CommunicationDomainResourceData"/> instance for mocking. </returns>
-        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DomainProvisioningState? provisioningState = default, string dataLocation = default, string fromSenderDomain = default, string mailFromSenderDomain = default, DomainManagement? domainManagement = default, DomainPropertiesVerificationStates verificationStates = default, DomainPropertiesVerificationRecords verificationRecords = default, UserEngagementTracking? userEngagementTracking = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommunicationDomainResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && dataLocation is null && fromSenderDomain is null && mailFromSenderDomain is null && domainManagement is null && verificationStates is null && verificationRecords is null && userEngagementTracking is null ? default : new DomainProperties(
-                    provisioningState,
-                    dataLocation,
-                    fromSenderDomain,
-                    mailFromSenderDomain,
-                    domainManagement.GetValueOrDefault(),
-                    verificationStates,
-                    verificationRecords,
-                    userEngagementTracking,
-                    default),
-                default);
-        }
-
         /// <summary> List of VerificationStatusRecord. </summary>
         /// <param name="domain"> A class that represents a VerificationStatus record. </param>
         /// <param name="spf"> A class that represents a VerificationStatus record. </param>
@@ -244,24 +205,6 @@ namespace Azure.ResourceManager.Communication.Models
             return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds, default);
         }
 
-        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
-        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
-        /// <returns> A new <see cref="Models.CommunicationDomainResourcePatch"/> instance for mocking. </returns>
-        public static CommunicationDomainResourcePatch CommunicationDomainResourcePatch(IDictionary<string, string> tags = default, UserEngagementTracking? userEngagementTracking = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CommunicationDomainResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, userEngagementTracking is null ? default : new UpdateDomainProperties(userEngagementTracking, default));
-        }
-
-        /// <summary> Input parameter for verification APIs. </summary>
-        /// <param name="verificationType"> Type of verification. </param>
-        /// <returns> A new <see cref="Models.DomainsRecordVerificationContent"/> instance for mocking. </returns>
-        public static DomainsRecordVerificationContent DomainsRecordVerificationContent(DomainRecordVerificationType verificationType = default)
-        {
-            return new DomainsRecordVerificationContent(verificationType, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -284,6 +227,63 @@ namespace Azure.ResourceManager.Communication.Models
                 location,
                 provisioningState is null && dataLocation is null ? default : new EmailServiceProperties(provisioningState, dataLocation, default),
                 default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="dataLocation"> The location where the Domains resource data is stored at rest. </param>
+        /// <param name="fromSenderDomain"> P2 sender domain that is displayed to the email recipients [RFC 5322]. </param>
+        /// <param name="mailFromSenderDomain"> P1 sender domain that is present on the email envelope [RFC 5321]. </param>
+        /// <param name="domainManagement"> Describes how a Domains resource is being managed. </param>
+        /// <param name="verificationStates"> List of VerificationStatusRecord. </param>
+        /// <param name="verificationRecords"> List of DnsRecord. </param>
+        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
+        /// <returns> A new <see cref="Communication.CommunicationDomainResourceData"/> instance for mocking. </returns>
+        public static CommunicationDomainResourceData CommunicationDomainResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DomainProvisioningState? provisioningState = default, string dataLocation = default, string fromSenderDomain = default, string mailFromSenderDomain = default, DomainManagement? domainManagement = default, DomainPropertiesVerificationStates verificationStates = default, DomainPropertiesVerificationRecords verificationRecords = default, UserEngagementTracking? userEngagementTracking = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommunicationDomainResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && dataLocation is null && fromSenderDomain is null && mailFromSenderDomain is null && domainManagement is null && verificationStates is null && verificationRecords is null && userEngagementTracking is null ? default : new DomainProperties(
+                    provisioningState,
+                    dataLocation,
+                    fromSenderDomain,
+                    mailFromSenderDomain,
+                    domainManagement.GetValueOrDefault(),
+                    verificationStates,
+                    verificationRecords,
+                    userEngagementTracking,
+                    default),
+                default);
+        }
+
+        /// <param name="tags"> Tags of the service which is a list of key value pairs that describe the resource. </param>
+        /// <param name="userEngagementTracking"> Describes whether user engagement tracking is enabled or disabled. </param>
+        /// <returns> A new <see cref="Models.CommunicationDomainResourcePatch"/> instance for mocking. </returns>
+        public static CommunicationDomainResourcePatch CommunicationDomainResourcePatch(IDictionary<string, string> tags = default, UserEngagementTracking? userEngagementTracking = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CommunicationDomainResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, userEngagementTracking is null ? default : new UpdateDomainProperties(userEngagementTracking, default));
+        }
+
+        /// <summary> Input parameter for verification APIs. </summary>
+        /// <param name="verificationType"> Type of verification. </param>
+        /// <returns> A new <see cref="Models.DomainsRecordVerificationContent"/> instance for mocking. </returns>
+        public static DomainsRecordVerificationContent DomainsRecordVerificationContent(DomainRecordVerificationType verificationType = default)
+        {
+            return new DomainsRecordVerificationContent(verificationType, default);
         }
 
         /// <summary> A class representing update parameters for EmailService resource. </summary>

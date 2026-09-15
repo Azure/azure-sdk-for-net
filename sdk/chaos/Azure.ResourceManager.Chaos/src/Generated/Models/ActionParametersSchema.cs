@@ -10,20 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
-    /// <summary> The ActionPropertiesParametersSchema. </summary>
-    public partial class ActionPropertiesParametersSchema
+    /// <summary> The ActionParametersSchema. </summary>
+    public partial class ActionParametersSchema
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ActionPropertiesParametersSchema"/>. </summary>
-        internal ActionPropertiesParametersSchema()
+        /// <summary> Initializes a new instance of <see cref="ActionParametersSchema"/>. </summary>
+        internal ActionParametersSchema()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionPropertiesParametersSchema"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionParametersSchema"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ActionPropertiesParametersSchema(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ActionParametersSchema(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
