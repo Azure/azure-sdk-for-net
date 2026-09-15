@@ -9,7 +9,6 @@ using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -30,13 +29,47 @@ public static class ResponsesServerServiceCollectionExtensions
 
     /// <summary>
     /// Registers the Responses API server SDK services into the dependency injection container.
+    /// <para>
+    /// This overload targets local / non-hosted scenarios (in-memory or file-backed storage), which
+    /// require no Azure credential or endpoint. In a hosted Foundry environment the Foundry
+    /// credential and endpoint must bind from configuration so response storage and resilient-task
+    /// storage cannot diverge; register via
+    /// <see cref="ResponsesServerHostExtensions.AddResponsesServer(Microsoft.Extensions.Hosting.IHostApplicationBuilder, string)"/>
+    /// instead. Calling this overload in a hosted environment throws.
+    /// </para>
     /// </summary>
     /// <param name="services">The service collection to add services to.</param>
     /// <param name="configure">Optional callback to configure <see cref="ResponsesServerOptions"/>.</param>
     /// <returns>The service collection for chaining.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown when called in a hosted Foundry environment; use the
+    /// <see cref="Microsoft.Extensions.Hosting.IHostApplicationBuilder"/> overload there.
+    /// </exception>
     public static IServiceCollection AddResponsesServer(
         this IServiceCollection services,
         Action<ResponsesServerOptions>? configure = null)
+    {
+        if (FoundryEnvironment.IsHosted)
+        {
+            throw new InvalidOperationException(
+                "AddResponsesServer(IServiceCollection) cannot be used in a hosted Foundry environment: " +
+                "the Foundry response-storage and resilient-task-storage identities must bind from the same " +
+                "configuration section so they cannot diverge. Register via " +
+                "AddResponsesServer(IHostApplicationBuilder host, string sectionName) instead.");
+        }
+
+        return services.AddResponsesServerCore(configure, hostedStorage: null);
+    }
+
+    /// <summary>
+    /// Shared registration core. <paramref name="hostedStorage"/> carries the single Foundry
+    /// credential and storage endpoint (bound from configuration) used for BOTH response storage
+    /// and resilient-task storage; it is <see langword="null"/> for local / non-hosted registration.
+    /// </summary>
+    internal static IServiceCollection AddResponsesServerCore(
+        this IServiceCollection services,
+        Action<ResponsesServerOptions>? configure,
+        ResponsesHostedStorage? hostedStorage)
     {
         if (configure is not null)
         {
@@ -49,21 +82,6 @@ public static class ResponsesServerServiceCollectionExtensions
 
         // Register InMemoryProviderOptions with defaults
         services.Configure<InMemoryProviderOptions>(_ => { });
-
-        // PostConfigure: apply environment variable overrides for SDK-level options
-        services.PostConfigure<ResponsesServerOptions>(options =>
-        {
-            if (options.DefaultFetchHistoryCount == ResponsesServerOptions.DefaultFetchHistoryCountValue)
-            {
-                var envValue = Environment.GetEnvironmentVariable(
-                    "DEFAULT_FETCH_HISTORY_ITEM_COUNT");
-                if (!string.IsNullOrEmpty(envValue)
-                    && int.TryParse(envValue, out var count) && count > 0)
-                {
-                    options.DefaultFetchHistoryCount = count;
-                }
-            }
-        });
 
         services.TryAddSingleton(TimeProvider.System);
 
@@ -82,18 +100,21 @@ public static class ResponsesServerServiceCollectionExtensions
         // SSE streaming is composed on the Core event-stream primitive (registered via
         // AddAgentEventStreams below), not a pluggable Responses stream provider.
 
-        // Auto-detect hosted environment: when FoundryEnvironment.IsHosted is true,
-        // meaning the .NET hosting environment is not Development and
-        // FOUNDRY_PROJECT_ENDPOINT, FOUNDRY_AGENT_NAME, and FOUNDRY_AGENT_VERSION are all configured,
-        // use FoundryStorageProvider for persistence; otherwise use in-memory.
-        if (FoundryEnvironment.IsHosted)
+        var taskOptions = new ResponsesResilientTaskOptions();
+        services.AddHostedService(serviceProvider =>
         {
-            // Response storage and resilient task storage must authenticate with the SAME identity.
-            // Register a default only when the consumer has not supplied one. Both the response
-            // pipeline and Core hosted task store resolve the final TokenCredential from the built
-            // provider, so instance/factory registrations before or after this call compose equally.
-            services.AddResilientTaskCredentialDefault(
-                _ => new DefaultAzureCredential());
+            taskOptions.Initialize(
+                serviceProvider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value);
+            return taskOptions;
+        });
+
+        if (hostedStorage is not null)
+        {
+            // Response storage and resilient task storage authenticate with the SAME identity: the
+            // one credential bound from the configuration section (carried on hostedStorage), captured
+            // in the pipeline closure below and passed to Core's AddResilientTasks. No credential is
+            // published into the container and no ambient DefaultAzureCredential is created.
+            TokenCredential credential = hostedStorage.Credential;
 
             // Build the Azure.Core HttpPipeline with BearerTokenAuthenticationPolicy.
             // This automatically provides: retry, request ID, user-agent telemetry,
@@ -104,7 +125,6 @@ public static class ResponsesServerServiceCollectionExtensions
             // attempt (including retries) is logged with correlation headers.
             services.TryAddSingleton(sp =>
             {
-                var credential = sp.GetRequiredService<TokenCredential>();
                 var logger = sp.GetRequiredService<ILoggerFactory>().CreateLogger<FoundryStorageLoggingPolicy>();
                 var options = new FoundryStorageClientOptions();
 
@@ -121,10 +141,10 @@ public static class ResponsesServerServiceCollectionExtensions
                     new BearerTokenAuthenticationPolicy(credential, FoundryStorageScope));
             });
 
+            Uri storageBaseUri = hostedStorage.StorageBaseUri;
             services.TryAddSingleton<ResponsesProvider>(sp =>
             {
                 var pipeline = sp.GetRequiredService<HttpPipeline>();
-                var storageBaseUri = ResolveStorageBaseUri();
                 return new FoundryStorageProvider(pipeline, storageBaseUri);
             });
         }
@@ -159,7 +179,7 @@ public static class ResponsesServerServiceCollectionExtensions
                 .GetRequiredService<IOptions<InMemoryProviderOptions>>()
                 .Value.EventStreamTtl;
             var streamOptions = new AgentEventStreamOptions();
-            if (responseOptions.ResilientBackground && !FoundryEnvironment.IsHosted)
+            if (responseOptions.ResilientBackground && hostedStorage is null)
             {
                 streamOptions.UseFileBackedReplay(
                     storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
@@ -191,26 +211,27 @@ public static class ResponsesServerServiceCollectionExtensions
         // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
         // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
         // (see the useDurableStreams gate above) — this registration does not change that.
-        // Core invokes a resilient-task body as (ctx, ct) and does not inject DI into it. Capture the
-        // root provider at host startup so the handler can open a per-turn scope — including on the
-        // recovery path, which runs under the Core recovery scan with no request scope. Registered
-        // before AddResilientTasks so the provider is captured ahead of the Core recovery engine.
-        var taskRootProvider = new ResponsesResilientTaskRootProvider();
-        services.AddHostedService(sp =>
+        if (hostedStorage is not null)
         {
-            taskRootProvider.Attach(sp);
-            return taskRootProvider;
-        });
+            // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
+            // services on first use. Hosted composition attaches its credential and endpoint to
+            // that shared environment whether consumer tasks were registered before or after this call.
+            services.AddResilientTasks(
+                hostedStorage.Credential,
+                hostedStorage.ProjectEndpoint);
+        }
 
-        services.AddResilientTask<ResponseTaskInput, ResponseTaskOutput>(
-            ResponsesResilientTaskHandler.OneShotTaskName,
-            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
-        services.AddResilientMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
+        services.AddResilientTask<
+            ResponseTaskInput,
+            ResponseTaskOutput,
+            ResponsesResilientTaskHandler>(
+            ResponsesResilientTaskHandler.OneShotTaskName);
+        services.AddResilientMultiTurnTask<
+            ResponseTaskInput,
+            ResponseTaskOutput,
+            ResponsesResilientTaskHandler>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
-            isSteerable: () => taskRootProvider.Require()
-                .GetRequiredService<IOptions<ResponsesServerOptions>>()
-                .Value.SteerableConversations);
+            isSteerable: taskOptions.IsSteerable);
 
         services.AddScoped<ResponseOrchestrator>();
         services.AddScoped<ResponseEndpointHandler>();
@@ -223,37 +244,56 @@ public static class ResponsesServerServiceCollectionExtensions
     }
 
     /// <summary>
-    /// Resolves the Foundry storage base URI from the project endpoint environment variable.
+    /// Resolves the Foundry storage base URI from the project endpoint.
     /// </summary>
-    internal static Uri ResolveStorageBaseUri()
+    /// <param name="endpoint">The Foundry project endpoint.</param>
+    /// <param name="isDevelopment">
+    /// Whether the host environment is Development. Resolved from
+    /// <see cref="Microsoft.Extensions.Hosting.IHostEnvironment"/> by the caller rather than read
+    /// from environment variables directly, so any configuration source that sets the environment is
+    /// honored. HTTPS is required outside Development.
+    /// </param>
+    internal static Uri ResolveStorageBaseUri(Uri? endpoint, bool isDevelopment)
     {
-        var endpoint = FoundryEnvironment.ProjectEndpoint;
-
-        if (string.IsNullOrWhiteSpace(endpoint))
+        if (endpoint is null)
         {
             throw new InvalidOperationException(
-                "FoundryEnvironment.ProjectEndpoint is required. " +
-                "In hosted environments, the Azure AI Foundry platform must set the FOUNDRY_PROJECT_ENDPOINT variable.");
-        }
-
-        if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var uri))
-        {
-            throw new InvalidOperationException(
-                "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
+                "A Foundry project endpoint is required for hosted storage. " +
+                "Set the 'Endpoint' value on the bound ResponsesServerSettings section " +
+                "(the Azure AI Foundry platform provides this in hosted environments).");
         }
 
         // Require HTTPS in non-development environments.
-        var hostingEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
-            ?? Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
-        bool isDevelopment = string.Equals(hostingEnv, "Development", StringComparison.OrdinalIgnoreCase);
-
         if (!isDevelopment
-            && !string.Equals(uri.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
+            && !string.Equals(endpoint.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase))
         {
             throw new InvalidOperationException(
-                "FoundryEnvironment.ProjectEndpoint must use the HTTPS scheme.");
+                "The Foundry project endpoint must use the HTTPS scheme.");
         }
 
-        return new Uri(uri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
+        return new Uri(endpoint.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/storage/");
     }
+}
+
+/// <summary>
+/// Carries the single Foundry identity and storage endpoint — bound from one configuration section —
+/// shared by response storage and resilient-task storage so the two cannot diverge.
+/// </summary>
+internal sealed class ResponsesHostedStorage
+{
+    public ResponsesHostedStorage(
+        TokenCredential credential,
+        Uri projectEndpoint,
+        Uri storageBaseUri)
+    {
+        Credential = credential;
+        ProjectEndpoint = projectEndpoint;
+        StorageBaseUri = storageBaseUri;
+    }
+
+    public TokenCredential Credential { get; }
+
+    public Uri ProjectEndpoint { get; }
+
+    public Uri StorageBaseUri { get; }
 }
