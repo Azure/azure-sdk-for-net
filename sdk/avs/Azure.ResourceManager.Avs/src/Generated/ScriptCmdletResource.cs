@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Avs
         {
             TryGetApiVersion(ResourceType, out string scriptCmdletApiVersion);
             _scriptCmdletsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", ResourceType.Namespace, Diagnostics);
-            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scriptCmdletApiVersion ?? "2025-09-01");
+            _scriptCmdletsRestClient = new ScriptCmdlets(_scriptCmdletsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scriptCmdletApiVersion ?? "2026-03-01");
             ValidateResourceId(id);
         }
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2026-03-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
