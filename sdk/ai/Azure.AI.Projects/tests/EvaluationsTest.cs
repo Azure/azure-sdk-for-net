@@ -22,6 +22,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable AAIP001
+#pragma warning disable AAIP002
 
 public class EvaluationsTest : ProjectsClientTestBase
 {
@@ -926,6 +927,41 @@ public class EvaluationsTest : ProjectsClientTestBase
         var compareResult = (EvaluationComparisonInsightResult)compareInsight.Result;
         Assert.That(compareResult.Comparisons, Is.Not.Null.And.Not.Empty);
         Assert.That(compareResult.Method, Is.Not.Null.And.Not.Empty);
+    }
+
+    [Test]
+    [SyncOnly]
+    public void TestAzureAIAgentTargetSerialization()
+    {
+        AzureAISearchTool tool = new(
+            new AzureAISearchToolOptions(indexes: [new AzureAISearchToolIndex()
+            {
+                ProjectConnectionId = "some/connection/id",
+                IndexName = "sample_index",
+                TopK = 5,
+                Filter = "category eq 'sleeping bag'",
+                QueryType = AzureAISearchQueryKind.Simple
+            }
+            ]));
+        AzureAIAgentTarget target = new(name: "TheAgent")
+        {
+            Version = "42",
+            Tools = {tool}
+        };
+        BinaryData targetJson = ModelReaderWriter.Write(target, ModelReaderWriterOptions.Json);
+        AzureAIAgentTarget targetRehydrated = ModelReaderWriter.Read<AzureAIAgentTarget>(targetJson, ModelReaderWriterOptions.Json);
+        Assert.That(targetRehydrated.Name, Is.EqualTo(target.Name));
+        Assert.That(targetRehydrated.Version, Is.EqualTo(target.Version));
+        Assert.That(targetRehydrated.Tools, Has.Count.EqualTo(1));
+        Assert.That(targetRehydrated.Tools[0], Is.InstanceOf<AzureAISearchTool>());
+        AzureAISearchTool toolRehydrated = targetRehydrated.Tools[0] as AzureAISearchTool;
+        Assert.That(toolRehydrated.AzureAISearch, Is.Not.Null);
+        Assert.That(toolRehydrated.AzureAISearch.Indexes, Has.Count.EqualTo(1));
+        Assert.That(toolRehydrated.AzureAISearch.Indexes[0].IndexName, Is.EqualTo("sample_index"));
+        Assert.That(toolRehydrated.AzureAISearch.Indexes[0].ProjectConnectionId, Is.EqualTo("some/connection/id"));
+        Assert.That(toolRehydrated.AzureAISearch.Indexes[0].TopK, Is.EqualTo(5));
+        Assert.That(toolRehydrated.AzureAISearch.Indexes[0].Filter, Is.EqualTo("category eq 'sleeping bag'"));
+        Assert.That(toolRehydrated.AzureAISearch.Indexes[0].QueryType, Is.EqualTo(AzureAISearchQueryKind.Simple));
     }
 
     #region Helpers

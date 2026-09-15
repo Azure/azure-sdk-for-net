@@ -175,11 +175,6 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-azure-resource-manager-service-group": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/resource-manager/service-group -g AzureStubGenerator",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-azure-special-headers-client-request-id": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/azure/special-headers/client-request-id -g AzureStubGenerator",
       "commandName": "Executable",
@@ -357,6 +352,11 @@
     },
     "http-resiliency-srv-driven-v2": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/resiliency/srv-driven/v2 -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-response-body-or-no-content": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/response/body-or-no-content -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             TryGetApiVersion(ResourceType, out string containerServiceFleetManagedNamespaceApiVersion);
             _fleetManagedNamespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerServiceFleet", ResourceType.Namespace, Diagnostics);
-            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-06-01");
+            _fleetManagedNamespacesRestClient = new FleetManagedNamespaces(_fleetManagedNamespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceFleetManagedNamespaceApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                     Pipeline,
                     message.Request,
                     response,
-                    OperationFinalStateVia.Location,
+                    OperationFinalStateVia.OriginalUri,
                     true);
                 if (waitUntil == WaitUntil.Completed)
                 {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

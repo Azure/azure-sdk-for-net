@@ -25,6 +25,7 @@ using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
+using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -92,7 +93,7 @@ public class AgentsTests : AgentsTestBase
         int agentLimit = 10;
         AsyncCollectionResult<ProjectsAgentRecord> agents = projectClient.AgentAdministrationClient.GetAgentsAsync(limit: agentLimit, order: "asc");
 
-        List<string> ids = [.. (await agents.ToEnumerableAsync()).Select(x => x.Id)];
+        List<string> ids = await agents.Select(x => x.Id).ToListAsync();
         if (ids.Count < agentLimit)
         {
             for (int i = ids.Count; i < agentLimit; i++)
@@ -736,10 +737,10 @@ public class AgentsTests : AgentsTestBase
         MemoryStore store = await projectClient.MemoryStores.CreateMemoryStoreAsync(name: MEMORY_STORE_NAME, definition: memoryDefinitions, description: "Test memory store.");
         // Create an empty scope and make sure we cannot find anything.
         string scope = MEMORY_STORE_SCOPE;
-        global::Azure.AI.Projects.Memory.MemorySearchOptions opts = new(scope)
+        MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
-            ResultOptions = new global::Azure.AI.Projects.Memory.MemorySearchResultOptions()
+            ResultOptions = new MemorySearchResultOptions()
             {
                 MaxMemories = 1,
             }
@@ -797,6 +798,43 @@ public class AgentsTests : AgentsTestBase
         Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
     }
 
+    [Test]
+    [SyncOnly]
+    public void TestMemorySearchOptionsDeserizlization()
+    {
+        BinaryData json = BinaryData.FromObjectAsJson(
+            new
+            {
+                scope="Samle_scope",
+                items = new[] {
+                    new {
+                        type="message",
+                        role="user",
+                        id="42",
+                        status="completed",
+                        content= new[] {
+                            new
+                            {
+                                type = "input_text",
+                                test = "test item"
+                            }
+                        }
+                    }
+                },
+                options = new
+                {
+                    max_memories=10
+                }
+            }
+        );
+        MemorySearchOptions options = ModelReaderWriter.Read<MemorySearchOptions>(json, ModelReaderWriterOptions.Json, AzureAIProjectsContext.Default);
+        Assert.That(options.Scope, Is.EqualTo("Samle_scope"));
+        Assert.That(options.Items, Has.Count.EqualTo(1));
+        Assert.That(options.Items[0].Id, Is.EqualTo("42"));
+        Assert.That(options.ResultOptions, Is.Not.Null);
+        Assert.That(options.ResultOptions.MaxMemories, Is.EqualTo(10));
+    }
+
     [RecordedTest]
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
@@ -819,6 +857,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
     [TestCase(ToolType.WorkIQTool)]
+    [TestCase(ToolType.WebIQ)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -921,6 +960,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.A2ASpecialConnection)]
     [TestCase(ToolType.AzureFunction)]
     [TestCase(ToolType.WorkIQTool)]
+    [TestCase(ToolType.WebIQ)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();

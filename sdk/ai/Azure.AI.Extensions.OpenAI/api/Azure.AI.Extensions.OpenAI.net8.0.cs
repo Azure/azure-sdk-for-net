@@ -796,6 +796,8 @@ namespace Azure.AI.Extensions.OpenAI
         public static Azure.AI.Extensions.OpenAI.ToolProjectConnection ToolProjectConnection(string projectConnectionId = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.UserProfileMemoryItem UserProfileMemoryItem(string memoryId = null, System.DateTimeOffset updatedOn = default(System.DateTimeOffset), string scope = null, string content = null) { throw null; }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+        public static Azure.AI.Extensions.OpenAI.WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = null, string serverLabel = null, Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice requireApproval = null) { throw null; }
         public static Azure.AI.Extensions.OpenAI.WebSearchConfiguration WebSearchConfiguration(string projectConnectionId = null, string instanceName = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
         public static Azure.AI.Extensions.OpenAI.WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = null) { throw null; }
@@ -1459,6 +1461,7 @@ namespace Azure.AI.Extensions.OpenAI
         public static OpenAI.Responses.ResponseToolKind get_OpenAPI() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_SharePointGroundingPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_ToolboxSearchPreview() { throw null; }
+        public static OpenAI.Responses.ResponseToolKind get_WebIQPreview() { throw null; }
         public static OpenAI.Responses.ResponseToolKind get_WorkIQPreview() { throw null; }
         public sealed partial class <G>$E0CE0E82775707DA8AF18B421221DEF9
         {
@@ -1478,6 +1481,7 @@ namespace Azure.AI.Extensions.OpenAI
             public static OpenAI.Responses.ResponseToolKind OpenAPI { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind SharePointGroundingPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind ToolboxSearchPreview { get { throw null; } }
+            public static OpenAI.Responses.ResponseToolKind WebIQPreview { get { throw null; } }
             public static OpenAI.Responses.ResponseToolKind WorkIQPreview { get { throw null; } }
             public static partial class <M>$E0CE0E82775707DA8AF18B421221DEF9
             {
@@ -1615,6 +1619,40 @@ namespace Azure.AI.Extensions.OpenAI
         Azure.AI.Extensions.OpenAI.UserProfileMemoryItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.UserProfileMemoryItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
+    public partial class WebIQPreviewTool : OpenAI.Responses.ResponseTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>
+    {
+        public WebIQPreviewTool(string projectConnectionId) : base (default(OpenAI.Responses.ResponseToolKind)) { }
+        public string ProjectConnectionId { get { throw null; } set { } }
+        public Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice RequireApproval { get { throw null; } set { } }
+        public string ServerLabel { get { throw null; } set { } }
+        protected override OpenAI.Responses.ResponseTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override OpenAI.Responses.ResponseTool PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Extensions.OpenAI.WebIQPreviewTool System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.WebIQPreviewTool System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class WebIQPreviewToolRequireApprovalChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>
+    {
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        public WebIQPreviewToolRequireApprovalChoice(OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy) { }
+        public WebIQPreviewToolRequireApprovalChoice(string approvalChoice) { }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        public OpenAI.Responses.McpToolCallApprovalPolicy ApprovalPolicy { get { throw null; } }
+        public string ApprovalString { get { throw null; } }
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        public static implicit operator Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice (OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy) { throw null; }
+        public static implicit operator Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice (string approvalChoice) { throw null; }
+        Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebSearchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebSearchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebSearchConfiguration>
     {

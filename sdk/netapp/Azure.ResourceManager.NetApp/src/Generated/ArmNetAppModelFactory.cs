@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -584,13 +584,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isEnabled is null ? default : new SnapshotPolicyProperties(
-                    default,
-                    default,
-                    default,
-                    default,
+                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
+                    hourlySchedule,
+                    dailySchedule,
+                    weeklySchedule,
+                    monthlySchedule,
                     isEnabled,
-                    default,
+                    provisioningState,
                     default),
                 eTag,
                 default);
@@ -715,13 +715,13 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                backupPolicyId is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
+                backupPolicyId is null && provisioningState is null && dailyBackupsToKeep is null && weeklyBackupsToKeep is null && monthlyBackupsToKeep is null && volumesAssigned is null && isEnabled is null && volumeBackups is null ? default : new BackupPolicyProperties(
                     backupPolicyId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    provisioningState,
+                    dailyBackupsToKeep,
+                    weeklyBackupsToKeep,
+                    monthlyBackupsToKeep,
+                    volumesAssigned,
                     isEnabled,
                     (volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>()).ToList(),
                     default),
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="certificateName"> The name of the bucket server certificate stored in the Azure Key Vault. </param>
         /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <returns> A new <see cref="Models.CertificateKeyVaultDetails"/> instance for mocking. </returns>
-        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri = default, string certificateName = default, ResourceIdentifier userAssignedIdentity = default)
+        public static CertificateKeyVaultDetails CertificateKeyVaultDetails(Uri certificateKeyVaultUri, string certificateName, ResourceIdentifier userAssignedIdentity)
         {
             return new CertificateKeyVaultDetails(certificateKeyVaultUri, certificateName, userAssignedIdentity, default);
         }
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </param>
         /// <param name="userAssignedIdentity"> Optional resource ID of the managed identity that has access to the Azure Key Vault (AKV) secret. If a value is provided, it is used to find a matching entry in the account's collection of user-assigned managed identities. If no match is found, an exception is thrown. If no value is provided, the system-assigned managed identity is used. </param>
         /// <returns> A new <see cref="Models.CredentialsKeyVaultDetails"/> instance for mocking. </returns>
-        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        public static CredentialsKeyVaultDetails CredentialsKeyVaultDetails(Uri credentialsKeyVaultUri, string secretName, ResourceIdentifier userAssignedIdentity)
         {
             return new CredentialsKeyVaultDetails(credentialsKeyVaultUri, secretName, userAssignedIdentity, default);
         }
@@ -1857,7 +1857,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ActiveDirectoryConfigProperties properties = default, ManagedServiceIdentity identity = default)
+        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ActiveDirectoryConfigProperties properties, ManagedServiceIdentity identity)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2071,7 +2071,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
         /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
         /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain = default, IEnumerable<IPAddress> ldapServers = default, SecureLdapType? secureLdapType = default, string serverCACertificate = default, string certificateCNHost = default, IEnumerable<IPAddress> dnsServers = default, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
+        public static LdapConfiguration LdapConfiguration(string domain, IEnumerable<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IEnumerable<IPAddress> dnsServers, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
         {
             ldapServers ??= new ChangeTrackingList<IPAddress>();
             dnsServers ??= new ChangeTrackingList<IPAddress>();
@@ -2116,7 +2116,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="entraIdConfig"> Entra ID configuration for the account. </param>
         /// <param name="ldapConfiguration"> LDAP Configuration for the account. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = default, NetAppAccountEncryption encryption = default, string nfsV4IdDomain = default, EntraIdConfigPatch entraIdConfig = default, LdapConfigurationPatch ldapConfiguration = default)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, string nfsV4IdDomain, EntraIdConfigPatch entraIdConfig, LdapConfigurationPatch ldapConfiguration)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2263,17 +2263,17 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                poolId is null && isCoolAccessEnabled is null ? default : new PoolProperties(
+                new PoolProperties(
                     poolId,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
-                    default,
+                    size,
+                    serviceLevel,
+                    provisioningState,
+                    totalThroughputMibps,
+                    utilizedThroughputMibps,
+                    customThroughputMibpsInt,
+                    qosType,
                     isCoolAccessEnabled,
-                    default,
+                    encryptionType,
                     default),
                 eTag,
                 default);
@@ -2545,7 +2545,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -2613,7 +2613,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serviceLevel is null && usageThreshold is null && exportRules is null && protocolTypes is null && throughputMibps is null && dataProtection is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && unixPermissions is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && isSnapshotDirectoryVisible is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null ? default : new VolumePatchProperties(
                     serviceLevel,
                     usageThreshold,
-                    new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new VolumePatchPropertiesExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     throughputMibps,
                     dataProtection,
@@ -2722,12 +2722,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null && breakthroughMode is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -2883,12 +2883,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null && breakthroughMode is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3144,12 +3144,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3304,12 +3304,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -3803,12 +3803,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && acceptGrowCapacityPoolForShortTermCloneSplit is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null && inheritedSizeInBytes is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4031,12 +4031,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && coolAccessTieringPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4251,12 +4251,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4403,12 +4403,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,
@@ -4556,12 +4556,12 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 (zones ?? new ChangeTrackingList<string>()).ToList(),
-                fileSystemId is null && creationToken is null && serviceLevel is null && exportRules is null && protocolTypes is null && provisioningState is null && snapshotId is null && deleteBaseSnapshot is null && backupId is null && baremetalTenantId is null && subnetId is null && networkFeatures is null && effectiveNetworkFeatures is null && networkSiblingSetId is null && storageToNetworkProximity is null && mountTargets is null && volumeType is null && dataProtection is null && isRestoring is null && isSnapshotDirectoryVisible is null && isKerberosEnabled is null && securityStyle is null && isSmbEncryptionEnabled is null && smbAccessBasedEnumeration is null && smbNonBrowsable is null && isSmbContinuouslyAvailable is null && throughputMibps is null && actualThroughputMibps is null && encryptionKeySource is null && keyVaultPrivateEndpointResourceId is null && isLdapEnabled is null && isCoolAccessEnabled is null && coolnessPeriod is null && coolAccessRetrievalPolicy is null && unixPermissions is null && cloneProgress is null && fileAccessLogs is null && avsDataStore is null && dataStoreResourceId is null && isDefaultQuotaEnabled is null && defaultUserQuotaInKiBs is null && defaultGroupQuotaInKiBs is null && maximumNumberOfFiles is null && volumeGroupName is null && capacityPoolResourceId is null && proximityPlacementGroupId is null && t2Network is null && volumeSpecName is null && isEncrypted is null && placementRules is null && enableSubvolumes is null && provisionedAvailabilityZone is null && isLargeVolume is null && originatingResourceId is null ? default : new VolumeProperties(
+                new VolumeProperties(
                     fileSystemId,
                     creationToken,
                     serviceLevel,
                     usageThreshold,
-                    new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
+                    exportRules is null ? default : new NetAppVolumeExportPolicy((exportRules ?? new ChangeTrackingList<NetAppVolumeExportPolicyRule>()).ToList(), default),
                     (protocolTypes ?? new ChangeTrackingList<string>()).ToList(),
                     provisioningState,
                     snapshotId,

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sql
         {
             get
             {
-                return Properties is null ? default : Properties.ServerConfigurationOptionValue;
+                return Properties is null ? (int?)default : Properties.ServerConfigurationOptionValue;
             }
             set
             {

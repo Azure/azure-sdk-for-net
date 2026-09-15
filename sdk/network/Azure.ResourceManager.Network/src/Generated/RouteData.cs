@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.NextHopType;
+                return Properties is null ? (RouteNextHopType?)default : Properties.NextHopType;
             }
             set
             {
