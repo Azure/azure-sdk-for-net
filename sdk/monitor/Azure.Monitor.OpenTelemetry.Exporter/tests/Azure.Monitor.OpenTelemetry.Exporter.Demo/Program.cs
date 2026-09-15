@@ -31,6 +31,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         /// </summary>
         private const string RouteConnectionStringsVariable = "MULTIENDPOINT_ROUTE_CONNECTION_STRINGS";
 
+        /// <summary>
+        /// The exporter falls back to this on its own, so a 'nohost' run would report that it has no
+        /// connection string while quietly having one.
+        /// </summary>
+        private static bool CanRunWithoutAHost()
+        {
+            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")))
+            {
+                return true;
+            }
+
+            Console.WriteLine("APPLICATIONINSIGHTS_CONNECTION_STRING is set, so the exporter would pick it up and");
+            Console.WriteLine("this run would not exercise the unconfigured path. Clear it and run again.");
+            return false;
+        }
+
         public static void Main(string[] args)
         {
             if (args.Length > 0 && string.Equals(args[0], "multiendpoint", StringComparison.OrdinalIgnoreCase))
@@ -85,6 +101,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         private static void RunMultiEndpointDemo(int activityCount, bool faultEndpoints, bool noHost)
         {
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
             var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 
@@ -153,6 +174,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         private static void RunMultiEndpointMetricDemo(int measurementCount, bool faultEndpoints, bool noHost)
         {
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
             var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 
@@ -221,6 +247,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
         private static void RunMultiEndpointLogDemo(int logCount, bool faultEndpoints, bool noHost)
         {
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
             var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 

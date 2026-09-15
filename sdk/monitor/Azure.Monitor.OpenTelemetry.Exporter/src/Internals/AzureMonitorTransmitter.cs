@@ -174,6 +174,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
+                    // Dropping a connection string moves this directory, stranding whatever the prior
+                    // configuration persisted, exactly as changing an instrumentation key does today.
                     storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: configuredStorageDirectory,

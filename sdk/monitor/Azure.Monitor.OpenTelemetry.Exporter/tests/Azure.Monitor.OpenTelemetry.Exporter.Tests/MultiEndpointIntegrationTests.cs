@@ -20,6 +20,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 using TestEventListener = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.TestEventListener;
+using MockPlatform = Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework.MockPlatform;
 
 using OpenTelemetry;
 
@@ -546,10 +547,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 EnableStatsbeat = false,
             };
 
-            return new AzureMonitorTraceExporter(
-                options,
-                new AzureMonitorTransmitter(options, DefaultPlatform.Instance, multiEndpointEnabled: true),
-                multiEndpointEnabled: true);
+            // MockPlatform, not DefaultPlatform: the latter snapshots the real environment, so an
+            // ambient APPLICATIONINSIGHTS_CONNECTION_STRING would quietly configure the transmitter
+            // and turn these tests back into the configured case they exist to be distinct from.
+            var transmitter = new AzureMonitorTransmitter(options, new MockPlatform(), multiEndpointEnabled: true);
+
+            Assert.Equal(string.Empty, transmitter.InstrumentationKey);
+
+            return new AzureMonitorTraceExporter(options, transmitter, multiEndpointEnabled: true);
         }
 
         private static AzureMonitorTraceExporter CreateExporter(MockIngestion ingestion, bool multiEndpointEnabled, out string instrumentationKey)
