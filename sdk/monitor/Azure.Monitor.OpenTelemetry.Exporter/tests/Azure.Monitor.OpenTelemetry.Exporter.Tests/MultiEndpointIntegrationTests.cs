@@ -552,7 +552,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             var transport = new MockTransport(_ => new MockResponse(200));
 
-            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri("https://ingestion.contoso-private.example/"));
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri("https://ingestion.contoso-private.example/"), aadAudience: null);
             var pipeline = HttpPipelineBuilder.Build(
                 new AzureMonitorExporterOptions { Transport = transport },
                 new MultiEndpointBearerTokenAuthenticationPolicy(new StubCredential("guarded-token"), AadHelper.DefaultAadScope, trustPolicy));

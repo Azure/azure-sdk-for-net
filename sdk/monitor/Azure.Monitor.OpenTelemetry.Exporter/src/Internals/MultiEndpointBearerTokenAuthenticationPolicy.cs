@@ -58,8 +58,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return true;
             }
 
-            // Skipping authorization is not enough on its own: a redirect hop can re-enter this
-            // policy on a request an earlier hop already put a header on.
+            // Defence only: with this policy outside the redirect policy and retries disabled it
+            // runs once per message, so there is normally no header here to remove.
             message.Request.Headers.Remove(HttpHeader.Names.Authorization);
 
             if (optedIn && report)

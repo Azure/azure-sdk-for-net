@@ -494,15 +494,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         {
             var storage = OpenPartition(ingestionEndpoint, useAadAuth);
 
-            // An earlier run, or this endpoint before it opted in, may have left blobs under the
-            // other auth mode. Nothing else opens that partition, so without this its drain timer
-            // never starts and the telemetry is lost to eviction rather than transmitted.
-            if (_siblingProbed.TryAdd(ingestionEndpoint, 0) && Directory.Exists(GetPartitionDirectory(ingestionEndpoint, !useAadAuth)))
-            {
-                OpenPartition(ingestionEndpoint, !useAadAuth);
-            }
+            ReopenSiblingWithBacklog(ingestionEndpoint, useAadAuth);
 
             return storage;
+        }
+
+        /// <summary>
+        /// An earlier run, or this endpoint before its auth mode changed, may have left blobs under
+        /// the other mode. Nothing else opens that partition, so without this its drain timer never
+        /// starts and the telemetry is evicted rather than transmitted.
+        /// </summary>
+        /// <remarks>
+        /// Only worth doing while a credential exists: without one the authenticated partition would
+        /// be re-POSTed with no token and rejected until it aged out.
+        /// </remarks>
+        private void ReopenSiblingWithBacklog(string ingestionEndpoint, bool useAadAuth)
+        {
+            if (!_isAadEnabled || _disposed || _siblingProbed.ContainsKey(ingestionEndpoint))
+            {
+                return;
+            }
+
+            bool hasBacklog;
+
+            try
+            {
+                var directory = GetPartitionDirectory(ingestionEndpoint, !useAadAuth);
+
+                // Existence is not enough: an empty directory would hold a partition slot for the
+                // life of the process with nothing to deliver.
+                hasBacklog = Directory.Exists(directory) && Directory.EnumerateFiles(directory, "*.blob").Any();
+            }
+            catch (Exception)
+            {
+                // Transient IO, so leave it unprobed and look again on the next export.
+                return;
+            }
+
+            // Recorded only once there is nothing left to do, so a failed open is retried.
+            if (!hasBacklog || OpenPartition(ingestionEndpoint, !useAadAuth) != null)
+            {
+                _siblingProbed.TryAdd(ingestionEndpoint, 0);
+            }
         }
 
         private string GetPartitionDirectory(string ingestionEndpoint, bool useAadAuth)
@@ -548,7 +581,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     // A backstop only. The shared budget is enforced by BudgetedBlobProvider, which is
                     // the only handle handed out, because this cap cannot see across partitions.
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
-                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, ingestionEndpoint);
+                    var blobProvider = new BudgetedBlobProvider(this, innerProvider, partitionKey);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
                     var transmissionStateManager = new TransmissionStateManager(ingestionEndpoint);
 
@@ -564,8 +597,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(_connectionVars.InstrumentationKey, directory);
 
                     // The directory is a one-way hash, so without this there is no way to tell which
-                    // endpoint a partition on disk belongs to.
-                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(ingestionEndpoint, directory);
+                    // endpoint a partition on disk belongs to. The key names the auth mode too,
+                    // because one endpoint can own two of them.
+                    AzureMonitorExporterEventSource.Log.MultiEndpointPartitionCreated(partitionKey, directory);
 
                     return created;
                 }

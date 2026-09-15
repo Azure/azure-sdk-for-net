@@ -509,12 +509,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void AnUntrustedEndpointIsNotMemoised()
         {
-            const string Endpoint = "https://never-trusted.example/";
+            var endpoint = $"https://never-trusted-{Guid.NewGuid():N}.example/";
 
-            Assert.Null(EndpointRouting.NormalizeEndpoint(Endpoint, EntraTrustPolicy(), useAadAuth: true, out _));
+            Assert.Null(EndpointRouting.NormalizeEndpoint(endpoint, EntraTrustPolicy(), useAadAuth: true, out _));
+            Assert.False(EndpointRouting.IsMemoised(endpoint));
 
-            // Cached only on the way out, so the unrestricted caller still had to normalize it.
-            Assert.Equal("https://never-trusted.example/", EndpointRouting.NormalizeEndpoint(Endpoint));
+            // A caller that can use it still gets it cached, so the slot is spent on what works.
+            Assert.NotNull(EndpointRouting.NormalizeEndpoint(endpoint));
+            Assert.True(EndpointRouting.IsMemoised(endpoint));
         }
 
         /// <summary>
@@ -1031,7 +1033,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         private static EndpointTrustPolicy EntraTrustPolicy()
-            => new(enabled: true, new Uri("https://ingestion.contoso-private.example/"));
+            => new(enabled: true, new Uri("https://ingestion.contoso-private.example/"), aadAudience: null);
 
         private static (AzureMonitorTraceExporter Exporter, MockTransmitter Transmitter) CreateExporter(bool multiEndpointEnabled)
         {

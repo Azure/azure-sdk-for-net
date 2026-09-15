@@ -155,6 +155,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// </remarks>
         internal static string? NormalizeEndpoint(string rawEndpoint) => NormalizeEndpoint(rawEndpoint, EndpointTrustPolicy.Unrestricted, useAadAuth: false, out _);
 
+        /// <summary>Whether normalization of this spelling has been memoised.</summary>
+        internal static bool IsMemoised(string rawEndpoint) => s_normalizedEndpoints.ContainsKey(rawEndpoint);
+
         internal static string? NormalizeEndpoint(string rawEndpoint, EndpointTrustPolicy trustPolicy, bool useAadAuth, out RoutingRejectionReason reason)
         {
             reason = RoutingRejectionReason.None;

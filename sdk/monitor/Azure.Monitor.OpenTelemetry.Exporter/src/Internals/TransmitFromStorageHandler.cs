@@ -79,6 +79,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         /// <summary>Fixed per partition: a blob outlives the telemetry that asked to be authenticated.</summary>
         private readonly bool _useAadAuth;
+
+        /// <summary>
+        /// Whether this handler's requests actually carry a token, which for a routed partition is
+        /// narrower than the pipeline holding a credential. Unrouted drains always carry one.
+        /// </summary>
+        private readonly bool _reportsAadAuth;
         private TaskCompletionSource<bool>? _inFlightDrain;
         private bool _disposed;
 
@@ -88,6 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _connectionVars = connectionVars;
             _trackUri = trackUri;
             _useAadAuth = useAadAuth;
+            _reportsAadAuth = isAadEnabled && (trackUri == null || useAadAuth);
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
@@ -180,7 +187,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             catch (Exception ex)
             {
                 _networkSdkStatsManager?.TrackException(_statsHost, exceptionType: ex.GetType().FullName);
-                AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
+                AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_reportsAadAuth, _connectionVars.InstrumentationKey, ex);
             }
             finally
             {
@@ -308,7 +315,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 _transmissionStateManager.ResetConsecutiveErrors();
                 _transmissionStateManager.CloseTransmission();
 
-                AzureMonitorExporterEventSource.Log.TransmitFromStorageSuccess(_isAadEnabled, _connectionVars.InstrumentationKey);
+                AzureMonitorExporterEventSource.Log.TransmitFromStorageSuccess(_reportsAadAuth, _connectionVars.InstrumentationKey);
 
                 DeleteAll(batch);
                 return true;
@@ -343,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // No blob is passed because this batch may span many of them: a partial success
             // re-persists the retryable subset as a single new blob, after which every blob in the
             // batch has been superseded and is deleted here.
-            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _isAadEnabled, telemetrySchemaTypeCounter, _networkSdkStatsManager);
+            var transmissionResult = HttpPipelineHelper.ProcessTransmissionResult(httpMessage, _blobProvider, blob: null, _connectionVars, TelemetryItemOrigin.Storage, _reportsAadAuth, telemetrySchemaTypeCounter, _networkSdkStatsManager);
 
             if (statusCode == ResponseStatusCodes.PartialSuccess)
             {

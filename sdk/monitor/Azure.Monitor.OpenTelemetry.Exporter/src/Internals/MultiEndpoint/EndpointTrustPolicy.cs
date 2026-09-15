@@ -29,7 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
         /// <see cref="ConnectionString.AadHelper.GetScope"/>. Guessing wrong only ever rejects a
         /// destination, never widens what the token can reach.
         /// </remarks>
-        internal EndpointTrustPolicy(bool enabled, Uri? ownIngestionEndpoint, string? aadAudience = null)
+        internal EndpointTrustPolicy(bool enabled, Uri? ownIngestionEndpoint, string? aadAudience)
         {
             Enabled = enabled;
 

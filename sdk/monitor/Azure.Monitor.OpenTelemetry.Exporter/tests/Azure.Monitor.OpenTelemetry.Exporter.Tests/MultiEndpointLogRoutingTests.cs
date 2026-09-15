@@ -629,7 +629,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void EntraDropsRecordsBoundForAnUntrustedEndpoint()
         {
-            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs), aadAudience: null);
 
             var routeBatch = new EndpointRouteBatch();
             WithLiveBatch(
@@ -645,7 +645,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void OneEndpointSplitsIntoAuthenticatedAndUnauthenticatedGroupsForLogs()
         {
-            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs), aadAudience: null);
 
             var routeBatch = new EndpointRouteBatch();
             WithLiveBatch(
@@ -665,7 +665,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void TheAuthFlagIsNotEmittedAsACustomProperty()
         {
-            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs));
+            var trustPolicy = new EndpointTrustPolicy(enabled: true, new Uri(EastUs), aadAudience: null);
 
             var routeBatch = new EndpointRouteBatch();
             WithLiveBatch(
