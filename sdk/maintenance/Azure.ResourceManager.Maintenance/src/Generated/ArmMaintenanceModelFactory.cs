@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     @namespace,
                     extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
                     maintenanceScope,
-                    new MaintenanceWindow(
+                    startOn is null && expireOn is null && duration is null && timeZone is null && recurEvery is null ? default : new MaintenanceWindow(
                         startOn,
                         expireOn,
                         duration,
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     @namespace,
                     extensionProperties ?? new ChangeTrackingDictionary<string, string>(),
                     maintenanceScope,
-                    new MaintenanceWindow(
+                    duration is null && timeZone is null && recurEvery is null ? default : new MaintenanceWindow(
                         default,
                         default,
                         duration,
