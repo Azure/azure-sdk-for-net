@@ -111,7 +111,7 @@ Gets GitHub authorization headers from the GitHub CLI or GITHUB_TOKEN.
 .OUTPUTS
 A hashtable containing authorization headers, or null when no token is available.
 #>
-function Get-GitHubApiHeaders {
+function Get-StandaloneToolGitHubApiHeaders {
     $token = $null
 
     if (Get-Command gh -ErrorAction SilentlyContinue) {
@@ -181,7 +181,7 @@ function Install-Standalone-Tool (
     }
 
     $tag = "${Package}_${Version}"
-    $headers = Get-GitHubApiHeaders
+    $headers = Get-StandaloneToolGitHubApiHeaders
     $githubRequestParameters = @{}
     if ($headers) {
         $githubRequestParameters.Headers = $headers
