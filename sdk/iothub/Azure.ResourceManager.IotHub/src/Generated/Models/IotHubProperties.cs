@@ -61,10 +61,12 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
         /// <param name="rootCertificate"> This property store root certificate related information. </param>
         /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
+        /// <param name="connectionProfile"> The connection profile that the IoT hub uses for device connections. Defaults to 'Classic'. </param>
+        /// <param name="mqttV5Settings"> The custom topic configuration for an Event Grid-backed MQTT v5 IoT hub. This property is valid only when connectionProfile is 'MqttV5'. </param>
         /// <param name="deviceRegistry"> Represents properties related to the Azure Device Registry (ADR). </param>
         /// <param name="iotHubDetails"> Set of additional read-only properties for the IoT hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, IotHubDeviceRegistry deviceRegistry, IotHubDetails iotHubDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, string deviceHostName, string serviceHostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, IotHubEncryptionProperties encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, IotHubRootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion, ConnectionProfile? connectionProfile, MqttV5Settings mqttV5Settings, IotHubDeviceRegistry deviceRegistry, IotHubDetails iotHubDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -96,6 +98,8 @@ namespace Azure.ResourceManager.IotHub.Models
             EnableDataResidency = enableDataResidency;
             RootCertificate = rootCertificate;
             IPVersion = ipVersion;
+            ConnectionProfile = connectionProfile;
+            MqttV5Settings = mqttV5Settings;
             DeviceRegistry = deviceRegistry;
             IotHubDetails = iotHubDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -191,8 +195,14 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
         public IotHubIPVersion? IPVersion { get; set; }
 
+        /// <summary> The connection profile that the IoT hub uses for device connections. Defaults to 'Classic'. </summary>
+        public ConnectionProfile? ConnectionProfile { get; set; }
+
+        /// <summary> The custom topic configuration for an Event Grid-backed MQTT v5 IoT hub. This property is valid only when connectionProfile is 'MqttV5'. </summary>
+        internal MqttV5Settings MqttV5Settings { get; set; }
+
         /// <summary> Represents properties related to the Azure Device Registry (ADR). </summary>
-        public IotHubDeviceRegistry DeviceRegistry { get; set; }
+        public IotHubDeviceRegistry DeviceRegistry { get; }
 
         /// <summary> Set of additional read-only properties for the IoT hub. </summary>
         internal IotHubDetails IotHubDetails { get; }
@@ -207,6 +217,19 @@ namespace Azure.ResourceManager.IotHub.Models
                     DeviceStreams = new IotHubPropertiesDeviceStreams();
                 }
                 return DeviceStreams.StreamingEndpoints;
+            }
+        }
+
+        /// <summary> The customer-defined groups of topic templates that devices publish to. </summary>
+        public IList<TopicGroup> MqttV5TopicGroups
+        {
+            get
+            {
+                if (MqttV5Settings is null)
+                {
+                    MqttV5Settings = new MqttV5Settings();
+                }
+                return MqttV5Settings.TopicGroups;
             }
         }
 
