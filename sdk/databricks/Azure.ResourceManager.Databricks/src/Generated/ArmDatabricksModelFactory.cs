@@ -18,77 +18,6 @@ namespace Azure.ResourceManager.Databricks.Models
     public static partial class ArmDatabricksModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="computeMode"> The workspace compute mode. Required on create, cannot be changed. Possible values include: 'Serverless', 'Hybrid'. </param>
-        /// <param name="managedResourceGroupId"> The managed resource group Id. Required in Hybrid ComputeMode workspace. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="parameters"> The workspace's custom parameters. </param>
-        /// <param name="provisioningState"> The workspace provisioning state. </param>
-        /// <param name="uiDefinitionUri"> The blob URI where the UI definition file is located. </param>
-        /// <param name="authorizations"> The workspace provider authorizations. </param>
-        /// <param name="createdBy"> Indicates the Object ID, PUID and Application ID of entity that created the workspace. </param>
-        /// <param name="updatedBy"> Indicates the Object ID, PUID and Application ID of entity that last updated the workspace. </param>
-        /// <param name="createdOn"> Specifies the date and time when the workspace is created. </param>
-        /// <param name="workspaceId"> The unique identifier of the databricks workspace in databricks control plane. </param>
-        /// <param name="workspaceUri"> The workspace URL which is of the format 'adb-{workspaceId}.{random}.azuredatabricks.net'. </param>
-        /// <param name="storageAccountIdentity"> The details of Managed Identity of Storage Account. Only returned in Hybrid ComputeMode workspace. </param>
-        /// <param name="managedDiskIdentity"> The details of Managed Identity of Disk Encryption Set used for Managed Disk Encryption. Only returned in Hybrid ComputeMode workspace. </param>
-        /// <param name="diskEncryptionSetId"> The resource Id of the managed disk encryption set. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="enhancedSecurityCompliance"> Contains settings related to the Enhanced Security and Compliance Add-On. Supported in both Serverless and Hybrid ComputeMode workspace. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections created on the workspace. Supported in both Serverless and Hybrid ComputeMode workspace. </param>
-        /// <param name="publicNetworkAccess"> The network access type for accessing workspace. Set value to disabled to access workspace only via private link. Used to configure front-end only private link for Serverless ComputeMode workspace. </param>
-        /// <param name="requiredNsgRules"> Gets or sets a value indicating whether data plane (clusters) to control plane communication happen over private endpoint. Supported values are 'AllRules' and 'NoAzureDatabricksRules'. 'NoAzureServiceRules' value is for internal use only. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="defaultCatalog"> Properties for Default Catalog configuration during workspace creation. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="isUcEnabled"> Indicates whether unity catalog enabled for the workspace or not. Set as true in Serverless ComputeMode workspace. </param>
-        /// <param name="accessConnector"> Access Connector Resource that is going to be associated with Databricks Workspace. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="defaultStorageFirewall"> Gets or Sets Default Storage Firewall configuration information. Not allowed in Serverless ComputeMode workspace. </param>
-        /// <param name="encryptionEntities"> Encryption entities definition for the workspace. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        /// <returns> A new <see cref="Databricks.DatabricksWorkspaceData"/> instance for mocking. </returns>
-        public static DatabricksWorkspaceData DatabricksWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabricksComputeMode computeMode = default, ResourceIdentifier managedResourceGroupId = default, WorkspaceCustomProperties parameters = default, DatabricksProvisioningState? provisioningState = default, string uiDefinitionUri = default, IEnumerable<DatabricksWorkspaceProviderAuthorization> authorizations = default, DatabricksCreatedBy createdBy = default, DatabricksCreatedBy updatedBy = default, DateTimeOffset? createdOn = default, string workspaceId = default, string workspaceUri = default, DatabricksManagedIdentityConfiguration storageAccountIdentity = default, DatabricksManagedIdentityConfiguration managedDiskIdentity = default, ResourceIdentifier diskEncryptionSetId = default, DatabricksEnhancedSecurityCompliance enhancedSecurityCompliance = default, IEnumerable<DatabricksPrivateEndpointConnectionData> privateEndpointConnections = default, DatabricksPublicNetworkAccess? publicNetworkAccess = default, DatabricksRequiredNsgRules? requiredNsgRules = default, DatabricksDefaultCatalogProperties defaultCatalog = default, bool? isUcEnabled = default, DatabricksWorkspaceAccessConnectorInfo accessConnector = default, DatabricksDefaultStorageFirewall? defaultStorageFirewall = default, DatabricksEncryptionEntities encryptionEntities = default, DatabricksSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DatabricksWorkspaceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new WorkspaceProperties(
-                    computeMode,
-                    managedResourceGroupId,
-                    parameters,
-                    provisioningState,
-                    uiDefinitionUri,
-                    (authorizations ?? new ChangeTrackingList<DatabricksWorkspaceProviderAuthorization>()).ToList(),
-                    createdBy,
-                    updatedBy,
-                    createdOn,
-                    workspaceId,
-                    workspaceUri,
-                    storageAccountIdentity,
-                    managedDiskIdentity,
-                    diskEncryptionSetId,
-                    new WorkspacePropertiesEncryption(encryptionEntities, default),
-                    enhancedSecurityCompliance,
-                    (privateEndpointConnections ?? new ChangeTrackingList<DatabricksPrivateEndpointConnectionData>()).ToList(),
-                    publicNetworkAccess,
-                    requiredNsgRules,
-                    defaultCatalog,
-                    isUcEnabled,
-                    accessConnector,
-                    defaultStorageFirewall,
-                    default),
-                sku,
-                default);
-        }
-
         /// <summary> Custom Parameters used for Workspace Creation. Not allowed in Serverless ComputeMode workspace. </summary>
         /// <param name="amlWorkspaceId"> The ID of a Azure Machine Learning workspace to link with Databricks workspace. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customVirtualNetworkId"> The ID of a Virtual Network where this Databricks Cluster should be created. Not allowed in Serverless ComputeMode workspace. </param>
@@ -341,6 +270,77 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksWorkspaceAccessConnectorInfo(id, identityType, userAssignedIdentityId, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="computeMode"> The workspace compute mode. Required on create, cannot be changed. Possible values include: 'Serverless', 'Hybrid'. </param>
+        /// <param name="managedResourceGroupId"> The managed resource group Id. Required in Hybrid ComputeMode workspace. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="parameters"> The workspace's custom parameters. </param>
+        /// <param name="provisioningState"> The workspace provisioning state. </param>
+        /// <param name="uiDefinitionUri"> The blob URI where the UI definition file is located. </param>
+        /// <param name="authorizations"> The workspace provider authorizations. </param>
+        /// <param name="createdBy"> Indicates the Object ID, PUID and Application ID of entity that created the workspace. </param>
+        /// <param name="updatedBy"> Indicates the Object ID, PUID and Application ID of entity that last updated the workspace. </param>
+        /// <param name="createdOn"> Specifies the date and time when the workspace is created. </param>
+        /// <param name="workspaceId"> The unique identifier of the databricks workspace in databricks control plane. </param>
+        /// <param name="workspaceUri"> The workspace URL which is of the format 'adb-{workspaceId}.{random}.azuredatabricks.net'. </param>
+        /// <param name="storageAccountIdentity"> The details of Managed Identity of Storage Account. Only returned in Hybrid ComputeMode workspace. </param>
+        /// <param name="managedDiskIdentity"> The details of Managed Identity of Disk Encryption Set used for Managed Disk Encryption. Only returned in Hybrid ComputeMode workspace. </param>
+        /// <param name="diskEncryptionSetId"> The resource Id of the managed disk encryption set. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="enhancedSecurityCompliance"> Contains settings related to the Enhanced Security and Compliance Add-On. Supported in both Serverless and Hybrid ComputeMode workspace. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections created on the workspace. Supported in both Serverless and Hybrid ComputeMode workspace. </param>
+        /// <param name="publicNetworkAccess"> The network access type for accessing workspace. Set value to disabled to access workspace only via private link. Used to configure front-end only private link for Serverless ComputeMode workspace. </param>
+        /// <param name="requiredNsgRules"> Gets or sets a value indicating whether data plane (clusters) to control plane communication happen over private endpoint. Supported values are 'AllRules' and 'NoAzureDatabricksRules'. 'NoAzureServiceRules' value is for internal use only. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="defaultCatalog"> Properties for Default Catalog configuration during workspace creation. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="isUcEnabled"> Indicates whether unity catalog enabled for the workspace or not. Set as true in Serverless ComputeMode workspace. </param>
+        /// <param name="accessConnector"> Access Connector Resource that is going to be associated with Databricks Workspace. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="defaultStorageFirewall"> Gets or Sets Default Storage Firewall configuration information. Not allowed in Serverless ComputeMode workspace. </param>
+        /// <param name="encryptionEntities"> Encryption entities definition for the workspace. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
+        /// <returns> A new <see cref="Databricks.DatabricksWorkspaceData"/> instance for mocking. </returns>
+        public static DatabricksWorkspaceData DatabricksWorkspaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatabricksComputeMode computeMode = default, ResourceIdentifier managedResourceGroupId = default, WorkspaceCustomProperties parameters = default, DatabricksProvisioningState? provisioningState = default, string uiDefinitionUri = default, IEnumerable<DatabricksWorkspaceProviderAuthorization> authorizations = default, DatabricksCreatedBy createdBy = default, DatabricksCreatedBy updatedBy = default, DateTimeOffset? createdOn = default, string workspaceId = default, string workspaceUri = default, DatabricksManagedIdentityConfiguration storageAccountIdentity = default, DatabricksManagedIdentityConfiguration managedDiskIdentity = default, ResourceIdentifier diskEncryptionSetId = default, DatabricksEnhancedSecurityCompliance enhancedSecurityCompliance = default, IEnumerable<DatabricksPrivateEndpointConnectionData> privateEndpointConnections = default, DatabricksPublicNetworkAccess? publicNetworkAccess = default, DatabricksRequiredNsgRules? requiredNsgRules = default, DatabricksDefaultCatalogProperties defaultCatalog = default, bool? isUcEnabled = default, DatabricksWorkspaceAccessConnectorInfo accessConnector = default, DatabricksDefaultStorageFirewall? defaultStorageFirewall = default, DatabricksEncryptionEntities encryptionEntities = default, DatabricksSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatabricksWorkspaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new WorkspaceProperties(
+                    computeMode,
+                    managedResourceGroupId,
+                    parameters,
+                    provisioningState,
+                    uiDefinitionUri,
+                    (authorizations ?? new ChangeTrackingList<DatabricksWorkspaceProviderAuthorization>()).ToList(),
+                    createdBy,
+                    updatedBy,
+                    createdOn,
+                    workspaceId,
+                    workspaceUri,
+                    storageAccountIdentity,
+                    managedDiskIdentity,
+                    diskEncryptionSetId,
+                    new WorkspacePropertiesEncryption(encryptionEntities, default),
+                    enhancedSecurityCompliance,
+                    (privateEndpointConnections ?? new ChangeTrackingList<DatabricksPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    requiredNsgRules,
+                    defaultCatalog,
+                    isUcEnabled,
+                    accessConnector,
+                    defaultStorageFirewall,
+                    default),
+                sku,
+                default);
+        }
+
         /// <summary> SKU for the resource. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
@@ -358,6 +358,17 @@ namespace Azure.ResourceManager.Databricks.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DatabricksWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> The DatabricksAccessConnectorProperties. </summary>
+        /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
+        /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
+        /// <returns> A new <see cref="Models.DatabricksAccessConnectorProperties"/> instance for mocking. </returns>
+        public static DatabricksAccessConnectorProperties DatabricksAccessConnectorProperties(DatabricksProvisioningState? provisioningState = default, IEnumerable<string> referredBy = default)
+        {
+            referredBy ??= new ChangeTrackingList<string>();
+
+            return new DatabricksAccessConnectorProperties(provisioningState, (referredBy ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Information about Azure Databricks Access Connector. </summary>
@@ -384,17 +395,6 @@ namespace Azure.ResourceManager.Databricks.Models
                 properties,
                 identity,
                 default);
-        }
-
-        /// <summary> The DatabricksAccessConnectorProperties. </summary>
-        /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
-        /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
-        /// <returns> A new <see cref="Models.DatabricksAccessConnectorProperties"/> instance for mocking. </returns>
-        public static DatabricksAccessConnectorProperties DatabricksAccessConnectorProperties(DatabricksProvisioningState? provisioningState = default, IEnumerable<string> referredBy = default)
-        {
-            referredBy ??= new ChangeTrackingList<string>();
-
-            return new DatabricksAccessConnectorProperties(provisioningState, (referredBy ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> An update to an Azure Databricks Access Connector. </summary>
@@ -441,6 +441,19 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
 
+        /// <summary> The properties for a group information object. </summary>
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="requiredMembers"> The required members for a specific group id. </param>
+        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
+        /// <returns> A new <see cref="Models.DatabricksGroupIdInformationProperties"/> instance for mocking. </returns>
+        public static DatabricksGroupIdInformationProperties DatabricksGroupIdInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new DatabricksGroupIdInformationProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> The group information for creating a private endpoint on a workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -457,19 +470,6 @@ namespace Azure.ResourceManager.Databricks.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> The properties for a group information object. </summary>
-        /// <param name="groupId"> The group id. </param>
-        /// <param name="requiredMembers"> The required members for a specific group id. </param>
-        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        /// <returns> A new <see cref="Models.DatabricksGroupIdInformationProperties"/> instance for mocking. </returns>
-        public static DatabricksGroupIdInformationProperties DatabricksGroupIdInformationProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new DatabricksGroupIdInformationProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

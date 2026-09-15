@@ -19,39 +19,6 @@ namespace Azure.ResourceManager.DevCenter.Models
     public static partial class ArmDevCenterModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> The description of the image. </param>
-        /// <param name="publisher"> The publisher of the image. </param>
-        /// <param name="offer"> The name of the image offer. </param>
-        /// <param name="sku"> The SKU name for the image. </param>
-        /// <param name="recommendedMachineConfiguration"> The recommended machine configuration to use with the image. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
-        /// <param name="architecture"> The architecture type of the image. </param>
-        /// <returns> A new <see cref="DevCenter.DevCenterImageData"/> instance for mocking. </returns>
-        public static DevCenterImageData DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport, DevCenterArchitectureType? architecture)
-        {
-            return new DevCenterImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && publisher is null && offer is null && sku is null && recommendedMachineConfiguration is null && provisioningState is null && hibernateSupport is null && architecture is null ? default : new ImageProperties(
-                    description,
-                    publisher,
-                    offer,
-                    sku,
-                    recommendedMachineConfiguration,
-                    provisioningState,
-                    hibernateSupport,
-                    architecture,
-                    default),
-                default);
-        }
-
         /// <summary> Properties for a recommended machine configuration. </summary>
         /// <param name="memory"> Recommended memory range. </param>
         /// <param name="vCpus"> Recommended vCPU range. </param>
@@ -68,6 +35,25 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static DevCenterResourceRange DevCenterResourceRange(int? min = default, int? max = default)
         {
             return new DevCenterResourceRange(min, max, default);
+        }
+
+        /// <summary> Customer-managed key encryption properties for the resource. </summary>
+        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
+        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
+        /// <returns> A new <see cref="Models.DevCenterCustomerManagedKeyEncryption"/> instance for mocking. </returns>
+        public static DevCenterCustomerManagedKeyEncryption DevCenterCustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        {
+            return new DevCenterCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+        }
+
+        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
+        /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
+        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
+        /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
+        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(DevCenterKeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? delegatedIdentityClientId = default)
+        {
+            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, delegatedIdentityClientId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -109,23 +95,55 @@ namespace Azure.ResourceManager.DevCenter.Models
                 default);
         }
 
-        /// <summary> Customer-managed key encryption properties for the resource. </summary>
-        /// <param name="keyEncryptionKeyIdentity"> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </param>
-        /// <param name="keyEncryptionKeyUri"> key encryption key Url, versioned or non-versioned. Ex: https://contosovault.vault.azure.net/keys/contosokek/562a4bb76b524a1493a6afe8e536ee78 or https://contosovault.vault.azure.net/keys/contosokek. </param>
-        /// <returns> A new <see cref="Models.DevCenterCustomerManagedKeyEncryption"/> instance for mocking. </returns>
-        public static DevCenterCustomerManagedKeyEncryption DevCenterCustomerManagedKeyEncryption(KeyEncryptionKeyIdentity keyEncryptionKeyIdentity = default, string keyEncryptionKeyUri = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="galleryResourceId"> The resource ID of the backing Azure Compute Gallery. </param>
+        /// <returns> A new <see cref="DevCenter.DevCenterGalleryData"/> instance for mocking. </returns>
+        public static DevCenterGalleryData DevCenterGalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterProvisioningState? provisioningState = default, ResourceIdentifier galleryResourceId = default)
         {
-            return new DevCenterCustomerManagedKeyEncryption(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
+            return new DevCenterGalleryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && galleryResourceId is null ? default : new GalleryProperties(provisioningState, galleryResourceId, default),
+                default);
         }
 
-        /// <summary> All identity configuration for Customer-managed key settings defining which identity should be used to auth to Key Vault. </summary>
-        /// <param name="identityType"> The type of identity to use. Values can be systemAssignedIdentity, userAssignedIdentity, or delegatedResourceIdentity. </param>
-        /// <param name="userAssignedIdentityResourceId"> User assigned identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        /// <param name="delegatedIdentityClientId"> delegated identity to use for accessing key encryption key Url. Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity and userAssignedIdentity - internal use only. </param>
-        /// <returns> A new <see cref="Models.KeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static KeyEncryptionKeyIdentity KeyEncryptionKeyIdentity(DevCenterKeyEncryptionKeyIdentityType? identityType = default, ResourceIdentifier userAssignedIdentityResourceId = default, Guid? delegatedIdentityClientId = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> The description of the image. </param>
+        /// <param name="publisher"> The publisher of the image. </param>
+        /// <param name="offer"> The name of the image offer. </param>
+        /// <param name="sku"> The SKU name for the image. </param>
+        /// <param name="recommendedMachineConfiguration"> The recommended machine configuration to use with the image. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="hibernateSupport"> Indicates whether this image has hibernate enabled. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
+        /// <param name="architecture"> The architecture type of the image. </param>
+        /// <returns> A new <see cref="DevCenter.DevCenterImageData"/> instance for mocking. </returns>
+        public static DevCenterImageData DevCenterImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string publisher, string offer, string sku, RecommendedMachineConfiguration recommendedMachineConfiguration, DevCenterProvisioningState? provisioningState, DevCenterHibernateSupport? hibernateSupport, DevCenterArchitectureType? architecture)
         {
-            return new KeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, delegatedIdentityClientId, default);
+            return new DevCenterImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && publisher is null && offer is null && sku is null && recommendedMachineConfiguration is null && provisioningState is null && hibernateSupport is null && architecture is null ? default : new ImageProperties(
+                    description,
+                    publisher,
+                    offer,
+                    sku,
+                    recommendedMachineConfiguration,
+                    provisioningState,
+                    hibernateSupport,
+                    architecture,
+                    default),
+                default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -159,26 +177,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevCenterTrackedResourceUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), location, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="resourcePolicies"> Resource policies that are a part of this project policy. </param>
-        /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
-        /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DevCenter.DevCenterProjectPolicyData"/> instance for mocking. </returns>
-        public static DevCenterProjectPolicyData DevCenterProjectPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DevCenterResourcePolicy> resourcePolicies = default, IEnumerable<string> scopes = default, DevCenterConfigurationPolicies configurationPolicies = default, DevCenterProvisioningState? provisioningState = default)
-        {
-            return new DevCenterProjectPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourcePolicies is null && scopes is null && configurationPolicies is null && provisioningState is null ? default : new ProjectPolicyProperties((resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>()).ToList(), (scopes ?? new ChangeTrackingList<string>()).ToList(), configurationPolicies, default, provisioningState),
-                default);
         }
 
         /// <summary> A resource policy. </summary>
@@ -240,6 +238,26 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterDefaultValue(name, value, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourcePolicies"> Resource policies that are a part of this project policy. </param>
+        /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
+        /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="DevCenter.DevCenterProjectPolicyData"/> instance for mocking. </returns>
+        public static DevCenterProjectPolicyData DevCenterProjectPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<DevCenterResourcePolicy> resourcePolicies = default, IEnumerable<string> scopes = default, DevCenterConfigurationPolicies configurationPolicies = default, DevCenterProvisioningState? provisioningState = default)
+        {
+            return new DevCenterProjectPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourcePolicies is null && scopes is null && configurationPolicies is null && provisioningState is null ? default : new ProjectPolicyProperties((resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>()).ToList(), (scopes ?? new ChangeTrackingList<string>()).ToList(), configurationPolicies, default, provisioningState),
+                default);
+        }
+
         /// <param name="resourcePolicies"> Resource policies that are a part of this project policy. </param>
         /// <param name="scopes"> Resources that have access to the shared resources that are a part of this project policy. </param>
         /// <param name="configurationPolicies"> Configuration Policies part of this project policy. </param>
@@ -247,6 +265,55 @@ namespace Azure.ResourceManager.DevCenter.Models
         public static DevCenterProjectPolicyPatch DevCenterProjectPolicyPatch(IEnumerable<DevCenterResourcePolicy> resourcePolicies = default, IEnumerable<string> scopes = default, DevCenterConfigurationPolicies configurationPolicies = default)
         {
             return new DevCenterProjectPolicyPatch(resourcePolicies is null && scopes is null && configurationPolicies is null ? default : new ProjectPolicyUpdateProperties((resourcePolicies ?? new ChangeTrackingList<DevCenterResourcePolicy>()).ToList(), (scopes ?? new ChangeTrackingList<string>()).ToList(), configurationPolicies, default), default);
+        }
+
+        /// <summary> Settings to be used for customizations. </summary>
+        /// <param name="identities"> The identities that can to be used in customization scenarios; e.g., to clone a repository. </param>
+        /// <param name="userCustomizationsEnableStatus"> Indicates whether user customizations are enabled. </param>
+        /// <returns> A new <see cref="Models.DevCenterProjectCustomizationSettings"/> instance for mocking. </returns>
+        public static DevCenterProjectCustomizationSettings DevCenterProjectCustomizationSettings(IEnumerable<DevCenterProjectCustomizationManagedIdentity> identities = default, DevCenterUserCustomizationsEnableStatus? userCustomizationsEnableStatus = default)
+        {
+            identities ??= new ChangeTrackingList<DevCenterProjectCustomizationManagedIdentity>();
+
+            return new DevCenterProjectCustomizationSettings((identities ?? new ChangeTrackingList<DevCenterProjectCustomizationManagedIdentity>()).ToList(), userCustomizationsEnableStatus, default);
+        }
+
+        /// <summary> A reference to a Managed Identity that is attached to the Project. </summary>
+        /// <param name="identityType"> Values can be systemAssignedIdentity or userAssignedIdentity. </param>
+        /// <param name="identityResourceId"> Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
+        /// <returns> A new <see cref="Models.DevCenterProjectCustomizationManagedIdentity"/> instance for mocking. </returns>
+        public static DevCenterProjectCustomizationManagedIdentity DevCenterProjectCustomizationManagedIdentity(DevCenterProjectCustomizationIdentityType? identityType = default, ResourceIdentifier identityResourceId = default)
+        {
+            return new DevCenterProjectCustomizationManagedIdentity(identityType, identityResourceId, default);
+        }
+
+        /// <summary> Settings controlling the auto deletion of inactive dev boxes. </summary>
+        /// <param name="deleteMode"> Indicates the delete mode for Dev Boxes within this project. </param>
+        /// <param name="inactiveThreshold"> ISO8601 duration required for the dev box to not be inactive prior to it being scheduled for deletion.  ISO8601 format PT[n]H[n]M[n]S. </param>
+        /// <param name="gracePeriod"> ISO8601 duration required for the dev box to be marked for deletion prior to it being deleted. ISO8601 format PT[n]H[n]M[n]S. </param>
+        /// <param name="cancelOnConnectEnableStatus"> Indicates whether scheduled deletion should be canceled when a user connects to the dev box. </param>
+        /// <returns> A new <see cref="Models.DevCenterDevBoxScheduleDeleteSettings"/> instance for mocking. </returns>
+        public static DevCenterDevBoxScheduleDeleteSettings DevCenterDevBoxScheduleDeleteSettings(DevCenterDevBoxDeleteMode? deleteMode = default, TimeSpan? inactiveThreshold = default, TimeSpan? gracePeriod = default, DevCenterCancelOnConnectEnableStatus? cancelOnConnectEnableStatus = default)
+        {
+            return new DevCenterDevBoxScheduleDeleteSettings(deleteMode, inactiveThreshold, gracePeriod, cancelOnConnectEnableStatus, default);
+        }
+
+        /// <summary> Represents settings for serverless GPU access. </summary>
+        /// <param name="serverlessGpuSessionsMode"> The property indicates whether serverless GPU access is enabled on the project. </param>
+        /// <param name="maxConcurrentSessionsPerProject"> When specified, limits the maximum number of concurrent sessions across all pools in the project. </param>
+        /// <returns> A new <see cref="Models.DevCenterServerlessGpuSessionsSettings"/> instance for mocking. </returns>
+        public static DevCenterServerlessGpuSessionsSettings DevCenterServerlessGpuSessionsSettings(DevCenterServerlessGpuSessionsMode? serverlessGpuSessionsMode = default, int? maxConcurrentSessionsPerProject = default)
+        {
+            return new DevCenterServerlessGpuSessionsSettings(serverlessGpuSessionsMode, maxConcurrentSessionsPerProject, default);
+        }
+
+        /// <summary> Represents an Entra group assigned to this Project, entitling all members to resources for the given scope. </summary>
+        /// <param name="objectId"> The Entra group object ID (GUID). </param>
+        /// <param name="scope"> The scope of the assignment. </param>
+        /// <returns> A new <see cref="Models.DevCenterAssignedGroup"/> instance for mocking. </returns>
+        public static DevCenterAssignedGroup DevCenterAssignedGroup(Guid? objectId = default, DevCenterAssignedGroupScope? scope = default)
+        {
+            return new DevCenterAssignedGroup(objectId, scope, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -298,55 +365,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                     devCenterUri),
                 identity,
                 default);
-        }
-
-        /// <summary> Settings to be used for customizations. </summary>
-        /// <param name="identities"> The identities that can to be used in customization scenarios; e.g., to clone a repository. </param>
-        /// <param name="userCustomizationsEnableStatus"> Indicates whether user customizations are enabled. </param>
-        /// <returns> A new <see cref="Models.DevCenterProjectCustomizationSettings"/> instance for mocking. </returns>
-        public static DevCenterProjectCustomizationSettings DevCenterProjectCustomizationSettings(IEnumerable<DevCenterProjectCustomizationManagedIdentity> identities = default, DevCenterUserCustomizationsEnableStatus? userCustomizationsEnableStatus = default)
-        {
-            identities ??= new ChangeTrackingList<DevCenterProjectCustomizationManagedIdentity>();
-
-            return new DevCenterProjectCustomizationSettings((identities ?? new ChangeTrackingList<DevCenterProjectCustomizationManagedIdentity>()).ToList(), userCustomizationsEnableStatus, default);
-        }
-
-        /// <summary> A reference to a Managed Identity that is attached to the Project. </summary>
-        /// <param name="identityType"> Values can be systemAssignedIdentity or userAssignedIdentity. </param>
-        /// <param name="identityResourceId"> Ex: /subscriptions/fa5fc227-a624-475e-b696-cdd604c735bc/resourceGroups/&lt;resource group&gt;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId. Mutually exclusive with identityType systemAssignedIdentity. </param>
-        /// <returns> A new <see cref="Models.DevCenterProjectCustomizationManagedIdentity"/> instance for mocking. </returns>
-        public static DevCenterProjectCustomizationManagedIdentity DevCenterProjectCustomizationManagedIdentity(DevCenterProjectCustomizationIdentityType? identityType = default, ResourceIdentifier identityResourceId = default)
-        {
-            return new DevCenterProjectCustomizationManagedIdentity(identityType, identityResourceId, default);
-        }
-
-        /// <summary> Settings controlling the auto deletion of inactive dev boxes. </summary>
-        /// <param name="deleteMode"> Indicates the delete mode for Dev Boxes within this project. </param>
-        /// <param name="inactiveThreshold"> ISO8601 duration required for the dev box to not be inactive prior to it being scheduled for deletion.  ISO8601 format PT[n]H[n]M[n]S. </param>
-        /// <param name="gracePeriod"> ISO8601 duration required for the dev box to be marked for deletion prior to it being deleted. ISO8601 format PT[n]H[n]M[n]S. </param>
-        /// <param name="cancelOnConnectEnableStatus"> Indicates whether scheduled deletion should be canceled when a user connects to the dev box. </param>
-        /// <returns> A new <see cref="Models.DevCenterDevBoxScheduleDeleteSettings"/> instance for mocking. </returns>
-        public static DevCenterDevBoxScheduleDeleteSettings DevCenterDevBoxScheduleDeleteSettings(DevCenterDevBoxDeleteMode? deleteMode = default, TimeSpan? inactiveThreshold = default, TimeSpan? gracePeriod = default, DevCenterCancelOnConnectEnableStatus? cancelOnConnectEnableStatus = default)
-        {
-            return new DevCenterDevBoxScheduleDeleteSettings(deleteMode, inactiveThreshold, gracePeriod, cancelOnConnectEnableStatus, default);
-        }
-
-        /// <summary> Represents settings for serverless GPU access. </summary>
-        /// <param name="serverlessGpuSessionsMode"> The property indicates whether serverless GPU access is enabled on the project. </param>
-        /// <param name="maxConcurrentSessionsPerProject"> When specified, limits the maximum number of concurrent sessions across all pools in the project. </param>
-        /// <returns> A new <see cref="Models.DevCenterServerlessGpuSessionsSettings"/> instance for mocking. </returns>
-        public static DevCenterServerlessGpuSessionsSettings DevCenterServerlessGpuSessionsSettings(DevCenterServerlessGpuSessionsMode? serverlessGpuSessionsMode = default, int? maxConcurrentSessionsPerProject = default)
-        {
-            return new DevCenterServerlessGpuSessionsSettings(serverlessGpuSessionsMode, maxConcurrentSessionsPerProject, default);
-        }
-
-        /// <summary> Represents an Entra group assigned to this Project, entitling all members to resources for the given scope. </summary>
-        /// <param name="objectId"> The Entra group object ID (GUID). </param>
-        /// <param name="scope"> The scope of the assignment. </param>
-        /// <returns> A new <see cref="Models.DevCenterAssignedGroup"/> instance for mocking. </returns>
-        public static DevCenterAssignedGroup DevCenterAssignedGroup(Guid? objectId = default, DevCenterAssignedGroupScope? scope = default)
-        {
-            return new DevCenterAssignedGroup(objectId, scope, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -457,6 +475,41 @@ namespace Azure.ResourceManager.DevCenter.Models
                 default);
         }
 
+        /// <summary> Stats of the synchronization. </summary>
+        /// <param name="added"> Count of catalog items added during synchronization. </param>
+        /// <param name="updated"> Count of catalog items updated during synchronization. </param>
+        /// <param name="unchanged"> Count of catalog items that were unchanged during synchronization. </param>
+        /// <param name="removed"> Count of catalog items removed during synchronization. </param>
+        /// <param name="validationErrors"> Count of catalog items that had validation errors during synchronization. </param>
+        /// <param name="synchronizationErrors"> Count of synchronization errors that occured during synchronization. </param>
+        /// <param name="syncedCatalogItemTypes"> Indicates catalog item types that were synced. </param>
+        /// <returns> A new <see cref="Models.DevCenterSyncStats"/> instance for mocking. </returns>
+        public static DevCenterSyncStats DevCenterSyncStats(int? added = default, int? updated = default, int? unchanged = default, int? removed = default, int? validationErrors = default, int? synchronizationErrors = default, IEnumerable<DevCenterCatalogItemType> syncedCatalogItemTypes = default)
+        {
+            syncedCatalogItemTypes ??= new ChangeTrackingList<DevCenterCatalogItemType>();
+
+            return new DevCenterSyncStats(
+                added,
+                updated,
+                unchanged,
+                removed,
+                validationErrors,
+                synchronizationErrors,
+                (syncedCatalogItemTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(),
+                default);
+        }
+
+        /// <summary> Properties for a Git repository catalog. </summary>
+        /// <param name="uri"> Git URI. </param>
+        /// <param name="branch"> Git branch. </param>
+        /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>
+        /// <param name="path"> The folder where the catalog items can be found inside the repository. </param>
+        /// <returns> A new <see cref="Models.DevCenterGitCatalog"/> instance for mocking. </returns>
+        public static DevCenterGitCatalog DevCenterGitCatalog(Uri uri = default, string branch = default, string secretIdentifier = default, string path = default)
+        {
+            return new DevCenterGitCatalog(uri, branch, secretIdentifier, path, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -494,41 +547,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                     lastConnectionOn,
                     lastSyncOn),
                 default);
-        }
-
-        /// <summary> Stats of the synchronization. </summary>
-        /// <param name="added"> Count of catalog items added during synchronization. </param>
-        /// <param name="updated"> Count of catalog items updated during synchronization. </param>
-        /// <param name="unchanged"> Count of catalog items that were unchanged during synchronization. </param>
-        /// <param name="removed"> Count of catalog items removed during synchronization. </param>
-        /// <param name="validationErrors"> Count of catalog items that had validation errors during synchronization. </param>
-        /// <param name="synchronizationErrors"> Count of synchronization errors that occured during synchronization. </param>
-        /// <param name="syncedCatalogItemTypes"> Indicates catalog item types that were synced. </param>
-        /// <returns> A new <see cref="Models.DevCenterSyncStats"/> instance for mocking. </returns>
-        public static DevCenterSyncStats DevCenterSyncStats(int? added = default, int? updated = default, int? unchanged = default, int? removed = default, int? validationErrors = default, int? synchronizationErrors = default, IEnumerable<DevCenterCatalogItemType> syncedCatalogItemTypes = default)
-        {
-            syncedCatalogItemTypes ??= new ChangeTrackingList<DevCenterCatalogItemType>();
-
-            return new DevCenterSyncStats(
-                added,
-                updated,
-                unchanged,
-                removed,
-                validationErrors,
-                synchronizationErrors,
-                (syncedCatalogItemTypes ?? new ChangeTrackingList<DevCenterCatalogItemType>()).ToList(),
-                default);
-        }
-
-        /// <summary> Properties for a Git repository catalog. </summary>
-        /// <param name="uri"> Git URI. </param>
-        /// <param name="branch"> Git branch. </param>
-        /// <param name="secretIdentifier"> A reference to the Key Vault secret containing a security token to authenticate to a Git repository. </param>
-        /// <param name="path"> The folder where the catalog items can be found inside the repository. </param>
-        /// <returns> A new <see cref="Models.DevCenterGitCatalog"/> instance for mocking. </returns>
-        public static DevCenterGitCatalog DevCenterGitCatalog(Uri uri = default, string branch = default, string secretIdentifier = default, string path = default)
-        {
-            return new DevCenterGitCatalog(uri, branch, secretIdentifier, path, default);
         }
 
         /// <param name="gitHub"> Properties for a GitHub catalog type. </param>
@@ -590,26 +608,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterCatalogSyncError(path, (errorDetails ?? new ChangeTrackingList<DevCenterCatalogErrorDetails>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A short description of the environment definition. </param>
-        /// <param name="parameters"> Input parameters passed to an environment. </param>
-        /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
-        /// <param name="validationStatus"> Validation status for the environment definition. </param>
-        /// <returns> A new <see cref="DevCenter.EnvironmentDefinitionData"/> instance for mocking. </returns>
-        public static EnvironmentDefinitionData EnvironmentDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<DevCenterEnvironmentDefinitionParameterInfo> parameters = default, string templatePath = default, DevCenterCatalogResourceValidationStatus? validationStatus = default)
-        {
-            return new EnvironmentDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && parameters is null && templatePath is null && validationStatus is null ? default : new EnvironmentDefinitionProperties(description, (parameters ?? new ChangeTrackingList<DevCenterEnvironmentDefinitionParameterInfo>()).ToList(), templatePath, validationStatus, default),
-                default);
-        }
-
         /// <summary> Properties of an Environment Definition parameter. </summary>
         /// <param name="id"> Unique ID of the parameter. </param>
         /// <param name="name"> Display name of the parameter. </param>
@@ -630,6 +628,26 @@ namespace Azure.ResourceManager.DevCenter.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> A short description of the environment definition. </param>
+        /// <param name="parameters"> Input parameters passed to an environment. </param>
+        /// <param name="templatePath"> Path to the Environment Definition entrypoint file. </param>
+        /// <param name="validationStatus"> Validation status for the environment definition. </param>
+        /// <returns> A new <see cref="DevCenter.EnvironmentDefinitionData"/> instance for mocking. </returns>
+        public static EnvironmentDefinitionData EnvironmentDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<DevCenterEnvironmentDefinitionParameterInfo> parameters = default, string templatePath = default, DevCenterCatalogResourceValidationStatus? validationStatus = default)
+        {
+            return new EnvironmentDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && parameters is null && templatePath is null && validationStatus is null ? default : new EnvironmentDefinitionProperties(description, (parameters ?? new ChangeTrackingList<DevCenterEnvironmentDefinitionParameterInfo>()).ToList(), templatePath, validationStatus, default),
+                default);
+        }
+
         /// <summary> List of validator error details. Populated when changes are made to the resource or its dependent resources that impact the validity of the Catalog resource. </summary>
         /// <param name="errors"> Errors associated with resources synchronized from the catalog. </param>
         /// <returns> A new <see cref="Models.DevCenterCatalogResourceValidationErrorDetails"/> instance for mocking. </returns>
@@ -638,24 +656,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             errors ??= new ChangeTrackingList<DevCenterCatalogErrorDetails>();
 
             return new DevCenterCatalogResourceValidationErrorDetails((errors ?? new ChangeTrackingList<DevCenterCatalogErrorDetails>()).ToList(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="galleryResourceId"> The resource ID of the backing Azure Compute Gallery. </param>
-        /// <returns> A new <see cref="DevCenter.DevCenterGalleryData"/> instance for mocking. </returns>
-        public static DevCenterGalleryData DevCenterGalleryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterProvisioningState? provisioningState = default, ResourceIdentifier galleryResourceId = default)
-        {
-            return new DevCenterGalleryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && galleryResourceId is null ? default : new GalleryProperties(provisioningState, galleryResourceId, default),
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -717,6 +717,25 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterEnvironmentTypePatch(displayName is null ? default : new EnvironmentTypeUpdateProperties(displayName, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> A role that can be assigned to a user. </summary>
+        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </param>
+        /// <param name="description"> This is a description of the Role Assignment. </param>
+        /// <returns> A new <see cref="Models.DevCenterEnvironmentRole"/> instance for mocking. </returns>
+        public static DevCenterEnvironmentRole DevCenterEnvironmentRole(string roleName = default, string description = default)
+        {
+            return new DevCenterEnvironmentRole(roleName, description, default);
+        }
+
+        /// <summary> Mapping of user object ID to role assignments. </summary>
+        /// <param name="roles"> A map of roles to assign to the parent user. </param>
+        /// <returns> A new <see cref="Models.DevCenterUserRoleAssignments"/> instance for mocking. </returns>
+        public static DevCenterUserRoleAssignments DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles = default)
+        {
+            roles ??= new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
+
+            return new DevCenterUserRoleAssignments(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -756,25 +775,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 default);
         }
 
-        /// <summary> A role that can be assigned to a user. </summary>
-        /// <param name="roleName"> The common name of the Role Assignment. This is a descriptive name such as 'AcrPush'. </param>
-        /// <param name="description"> This is a description of the Role Assignment. </param>
-        /// <returns> A new <see cref="Models.DevCenterEnvironmentRole"/> instance for mocking. </returns>
-        public static DevCenterEnvironmentRole DevCenterEnvironmentRole(string roleName = default, string description = default)
-        {
-            return new DevCenterEnvironmentRole(roleName, description, default);
-        }
-
-        /// <summary> Mapping of user object ID to role assignments. </summary>
-        /// <param name="roles"> A map of roles to assign to the parent user. </param>
-        /// <returns> A new <see cref="Models.DevCenterUserRoleAssignments"/> instance for mocking. </returns>
-        public static DevCenterUserRoleAssignments DevCenterUserRoleAssignments(IDictionary<string, DevCenterEnvironmentRole> roles = default)
-        {
-            roles ??= new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>();
-
-            return new DevCenterUserRoleAssignments(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default);
-        }
-
         /// <param name="deploymentTargetId"> Id of a subscription that the environment type will be mapped to. The environment's resources will be deployed into this subscription. </param>
         /// <param name="displayName"> The display name of the project environment type. </param>
         /// <param name="status"> Defines whether this Environment Type can be used in this Project. </param>
@@ -794,6 +794,42 @@ namespace Azure.ResourceManager.DevCenter.Models
                 new ProjectEnvironmentTypeUpdatePropertiesCreatorRoleAssignment(roles ?? new ChangeTrackingDictionary<string, DevCenterEnvironmentRole>(), default),
                 userRoleAssignments ?? new ChangeTrackingDictionary<string, DevCenterUserRoleAssignments>(),
                 default), tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+        }
+
+        /// <summary> Image validation error details. </summary>
+        /// <param name="code"> An identifier for the error. </param>
+        /// <param name="message"> A message describing the error. </param>
+        /// <returns> A new <see cref="Models.ImageValidationErrorDetails"/> instance for mocking. </returns>
+        public static ImageValidationErrorDetails ImageValidationErrorDetails(string code = default, string message = default)
+        {
+            return new ImageValidationErrorDetails(code, message, default);
+        }
+
+        /// <summary> Image reference information. </summary>
+        /// <param name="id"> Image ID, or Image version ID. When Image ID is provided, its latest version will be used. </param>
+        /// <param name="exactVersion"> The actual version of the image after use. When id references a gallery image latest version, this will indicate the actual version in use. </param>
+        /// <returns> A new <see cref="Models.DevCenterImageReference"/> instance for mocking. </returns>
+        public static DevCenterImageReference DevCenterImageReference(ResourceIdentifier id = default, string exactVersion = default)
+        {
+            return new DevCenterImageReference(id, exactVersion, default);
+        }
+
+        /// <summary> The resource model definition representing SKU. </summary>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <returns> A new <see cref="Models.DevCenterSku"/> instance for mocking. </returns>
+        public static DevCenterSku DevCenterSku(string name = default, DevCenterSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
+        {
+            return new DevCenterSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -837,42 +873,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 default);
         }
 
-        /// <summary> Image validation error details. </summary>
-        /// <param name="code"> An identifier for the error. </param>
-        /// <param name="message"> A message describing the error. </param>
-        /// <returns> A new <see cref="Models.ImageValidationErrorDetails"/> instance for mocking. </returns>
-        public static ImageValidationErrorDetails ImageValidationErrorDetails(string code = default, string message = default)
-        {
-            return new ImageValidationErrorDetails(code, message, default);
-        }
-
-        /// <summary> Image reference information. </summary>
-        /// <param name="id"> Image ID, or Image version ID. When Image ID is provided, its latest version will be used. </param>
-        /// <param name="exactVersion"> The actual version of the image after use. When id references a gallery image latest version, this will indicate the actual version in use. </param>
-        /// <returns> A new <see cref="Models.DevCenterImageReference"/> instance for mocking. </returns>
-        public static DevCenterImageReference DevCenterImageReference(ResourceIdentifier id = default, string exactVersion = default)
-        {
-            return new DevCenterImageReference(id, exactVersion, default);
-        }
-
-        /// <summary> The resource model definition representing SKU. </summary>
-        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
-        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
-        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
-        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
-        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
-        /// <returns> A new <see cref="Models.DevCenterSku"/> instance for mocking. </returns>
-        public static DevCenterSku DevCenterSku(string name = default, DevCenterSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
-        {
-            return new DevCenterSku(
-                name,
-                tier,
-                size,
-                family,
-                capacity,
-                default);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="imageReference"> Image reference information. </param>
@@ -885,6 +885,16 @@ namespace Azure.ResourceManager.DevCenter.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new DevBoxDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), location, default, imageReference is null && sku is null && osStorageType is null && hibernateSupport is null ? default : new DevBoxDefinitionUpdateProperties(imageReference, sku, osStorageType, hibernateSupport, default));
+        }
+
+        /// <summary> Input for a Task. </summary>
+        /// <param name="description"> Description of the input. </param>
+        /// <param name="type"> Type of the input. </param>
+        /// <param name="required"> Whether or not the input is required. </param>
+        /// <returns> A new <see cref="Models.DevCenterCustomizationTaskInput"/> instance for mocking. </returns>
+        public static DevCenterCustomizationTaskInput DevCenterCustomizationTaskInput(string description = default, DevCenterCustomizationTaskInputType? @type = default, bool? @required = default)
+        {
+            return new DevCenterCustomizationTaskInput(description, @type, @required, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -903,55 +913,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 resourceType,
                 systemData,
                 inputs is null && timeout is null && validationStatus is null ? default : new CustomizationTaskProperties(inputs ?? new ChangeTrackingDictionary<string, DevCenterCustomizationTaskInput>(), timeout, validationStatus, default),
-                default);
-        }
-
-        /// <summary> Input for a Task. </summary>
-        /// <param name="description"> Description of the input. </param>
-        /// <param name="type"> Type of the input. </param>
-        /// <param name="required"> Whether or not the input is required. </param>
-        /// <returns> A new <see cref="Models.DevCenterCustomizationTaskInput"/> instance for mocking. </returns>
-        public static DevCenterCustomizationTaskInput DevCenterCustomizationTaskInput(string description = default, DevCenterCustomizationTaskInputType? @type = default, bool? @required = default)
-        {
-            return new DevCenterCustomizationTaskInput(description, @type, @required, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="imageReference"> Image reference information. </param>
-        /// <param name="fileUri"> The URL to the repository file containing the image definition. </param>
-        /// <param name="latestBuild"> Details about the latest build. </param>
-        /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
-        /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
-        /// <param name="validationStatus"> Validation status for the Image Definition. </param>
-        /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
-        /// <param name="autoImageBuild"> Indicates if automatic image builds will be triggered for image definition updates. </param>
-        /// <param name="tasks"> Tasks to run at Dev Box provisioning time. </param>
-        /// <param name="userTasks"> Tasks to run when a user first logs into a Dev Box. </param>
-        /// <param name="extends"> Another Image Definition that this one extends. </param>
-        /// <returns> A new <see cref="DevCenter.ImageDefinitionData"/> instance for mocking. </returns>
-        public static ImageDefinitionData ImageDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, string fileUri = default, DevCenterLatestImageBuild latestBuild = default, ImageValidationStatus? imageValidationStatus = default, ImageValidationErrorDetails imageValidationErrorDetails = default, DevCenterCatalogResourceValidationStatus? validationStatus = default, DevCenterImageReference activeImageReference = default, DevCenterAutoImageBuildStatus? autoImageBuild = default, IEnumerable<DevCenterCustomizationTaskInstance> tasks = default, IEnumerable<DevCenterCustomizationTaskInstance> userTasks = default, DevCenterImageDefinitionReference extends = default)
-        {
-            return new ImageDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                imageReference is null && fileUri is null && latestBuild is null && imageValidationStatus is null && imageValidationErrorDetails is null && validationStatus is null && activeImageReference is null && autoImageBuild is null && tasks is null && userTasks is null && extends is null ? default : new ImageDefinitionProperties(
-                    imageReference,
-                    fileUri,
-                    latestBuild,
-                    imageValidationStatus,
-                    imageValidationErrorDetails,
-                    validationStatus,
-                    activeImageReference,
-                    autoImageBuild,
-                    (tasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>()).ToList(),
-                    (userTasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>()).ToList(),
-                    extends,
-                    default),
                 default);
         }
 
@@ -1010,6 +971,54 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="imageReference"> Image reference information. </param>
+        /// <param name="fileUri"> The URL to the repository file containing the image definition. </param>
+        /// <param name="latestBuild"> Details about the latest build. </param>
+        /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
+        /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
+        /// <param name="validationStatus"> Validation status for the Image Definition. </param>
+        /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
+        /// <param name="autoImageBuild"> Indicates if automatic image builds will be triggered for image definition updates. </param>
+        /// <param name="tasks"> Tasks to run at Dev Box provisioning time. </param>
+        /// <param name="userTasks"> Tasks to run when a user first logs into a Dev Box. </param>
+        /// <param name="extends"> Another Image Definition that this one extends. </param>
+        /// <returns> A new <see cref="DevCenter.ImageDefinitionData"/> instance for mocking. </returns>
+        public static ImageDefinitionData ImageDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, string fileUri = default, DevCenterLatestImageBuild latestBuild = default, ImageValidationStatus? imageValidationStatus = default, ImageValidationErrorDetails imageValidationErrorDetails = default, DevCenterCatalogResourceValidationStatus? validationStatus = default, DevCenterImageReference activeImageReference = default, DevCenterAutoImageBuildStatus? autoImageBuild = default, IEnumerable<DevCenterCustomizationTaskInstance> tasks = default, IEnumerable<DevCenterCustomizationTaskInstance> userTasks = default, DevCenterImageDefinitionReference extends = default)
+        {
+            return new ImageDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                imageReference is null && fileUri is null && latestBuild is null && imageValidationStatus is null && imageValidationErrorDetails is null && validationStatus is null && activeImageReference is null && autoImageBuild is null && tasks is null && userTasks is null && extends is null ? default : new ImageDefinitionProperties(
+                    imageReference,
+                    fileUri,
+                    latestBuild,
+                    imageValidationStatus,
+                    imageValidationErrorDetails,
+                    validationStatus,
+                    activeImageReference,
+                    autoImageBuild,
+                    (tasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>()).ToList(),
+                    (userTasks ?? new ChangeTrackingList<DevCenterCustomizationTaskInstance>()).ToList(),
+                    extends,
+                    default),
+                default);
+        }
+
+        /// <summary> Image creation error details. </summary>
+        /// <param name="code"> An identifier for the error. </param>
+        /// <param name="message"> A message describing the error. </param>
+        /// <returns> A new <see cref="Models.DevCenterImageCreationErrorDetails"/> instance for mocking. </returns>
+        public static DevCenterImageCreationErrorDetails DevCenterImageCreationErrorDetails(string code = default, string message = default)
+        {
+            return new DevCenterImageCreationErrorDetails(code, message, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="imageReference"> The specific image version used by the build. </param>
         /// <param name="status"> The status of the build. </param>
         /// <param name="startsOn"> Start time of the task group. </param>
@@ -1031,15 +1040,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                     errorDetails,
                     default),
                 default);
-        }
-
-        /// <summary> Image creation error details. </summary>
-        /// <param name="code"> An identifier for the error. </param>
-        /// <param name="message"> A message describing the error. </param>
-        /// <returns> A new <see cref="Models.DevCenterImageCreationErrorDetails"/> instance for mocking. </returns>
-        public static DevCenterImageCreationErrorDetails DevCenterImageCreationErrorDetails(string code = default, string message = default)
-        {
-            return new DevCenterImageCreationErrorDetails(code, message, default);
         }
 
         /// <summary> Represents a specific build of an Image Definition. </summary>
@@ -1127,65 +1127,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterImageDefinitionBuildTaskParametersItem(key, value, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="devBoxDefinitionType"> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </param>
-        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </param>
-        /// <param name="devBoxDefinition"> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </param>
-        /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
-        /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
-        /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
-        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
-        /// <param name="stopOnNoConnect"> Stop on no connect configuration settings for Dev Boxes created in this pool. </param>
-        /// <param name="singleSignOnStatus"> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </param>
-        /// <param name="displayName"> The display name of the pool. </param>
-        /// <param name="virtualNetworkType"> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </param>
-        /// <param name="managedVirtualNetworkRegions"> The regions of the managed virtual network (required when managedNetworkType is Managed). </param>
-        /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
-        /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
-        /// <param name="healthStatus"> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </param>
-        /// <param name="healthStatusDetails"> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </param>
-        /// <param name="devBoxCount"> Indicates the number of provisioned Dev Boxes in this pool. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <returns> A new <see cref="DevCenter.DevCenterPoolData"/> instance for mocking. </returns>
-        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, DevCenterPoolDevBoxDefinitionDetail devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterStopOnNoConnectConfiguration stopOnNoConnect, DevCenterSingleSignOnStatus? singleSignOnStatus, string displayName = default, DevCenterVirtualNetworkType? virtualNetworkType = default, IEnumerable<string> managedVirtualNetworkRegions = default, DevCenterActiveHoursConfiguration activeHoursConfiguration = default, DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default, DevCenterHealthStatus? healthStatus = default, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails = default, int? devBoxCount = default, DevCenterProvisioningState? provisioningState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DevCenterPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                devBoxDefinitionType is null && devBoxDefinitionName is null && devBoxDefinition is null && networkConnectionName is null && licenseType is null && localAdministrator is null && stopOnDisconnect is null && stopOnNoConnect is null && singleSignOnStatus is null && displayName is null && virtualNetworkType is null && managedVirtualNetworkRegions is null && activeHoursConfiguration is null && devBoxTunnelEnableStatus is null && healthStatus is null && healthStatusDetails is null && devBoxCount is null && provisioningState is null ? default : new PoolProperties(
-                    devBoxDefinitionType,
-                    devBoxDefinitionName,
-                    devBoxDefinition,
-                    networkConnectionName,
-                    licenseType,
-                    localAdministrator,
-                    stopOnDisconnect,
-                    stopOnNoConnect,
-                    singleSignOnStatus,
-                    displayName,
-                    virtualNetworkType,
-                    (managedVirtualNetworkRegions ?? new ChangeTrackingList<string>()).ToList(),
-                    activeHoursConfiguration,
-                    devBoxTunnelEnableStatus,
-                    default,
-                    healthStatus,
-                    (healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>()).ToList(),
-                    devBoxCount,
-                    provisioningState),
-                default);
-        }
-
         /// <summary> Pool health status detail. </summary>
         /// <param name="code"> An identifier for the issue. </param>
         /// <param name="message"> A message describing the issue, intended to be suitable for display in a user interface. </param>
@@ -1244,6 +1185,65 @@ namespace Azure.ResourceManager.DevCenter.Models
                 defaultEndTimeHour,
                 (defaultDaysOfWeek ?? new ChangeTrackingList<DayOfWeek>()).ToList(),
                 daysOfWeekLimit,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="devBoxDefinitionType"> Indicates if the pool is created from an existing Dev Box Definition or if one is provided directly. </param>
+        /// <param name="devBoxDefinitionName"> Name of a Dev Box definition in parent Project of this Pool. Will be ignored if devBoxDefinitionType is Value. </param>
+        /// <param name="devBoxDefinition"> A definition of the machines that are created from this Pool. Will be ignored if devBoxDefinitionType is Reference or not provided. </param>
+        /// <param name="networkConnectionName"> Name of a Network Connection in parent Project of this Pool. </param>
+        /// <param name="licenseType"> Specifies the license type indicating the caller has already acquired licenses for the Dev Boxes that will be created. </param>
+        /// <param name="localAdministrator"> Indicates whether owners of Dev Boxes in this pool are added as local administrators on the Dev Box. </param>
+        /// <param name="stopOnDisconnect"> Stop on disconnect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="stopOnNoConnect"> Stop on no connect configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="singleSignOnStatus"> Indicates whether Dev Boxes in this pool are created with single sign on enabled. The also requires that single sign on be enabled on the tenant. </param>
+        /// <param name="displayName"> The display name of the pool. </param>
+        /// <param name="virtualNetworkType"> Indicates whether the pool uses a Virtual Network managed by Microsoft or a customer provided network. </param>
+        /// <param name="managedVirtualNetworkRegions"> The regions of the managed virtual network (required when managedNetworkType is Managed). </param>
+        /// <param name="activeHoursConfiguration"> Active hours configuration settings for Dev Boxes created in this pool. </param>
+        /// <param name="devBoxTunnelEnableStatus"> Indicates whether Dev Box Tunnel is enabled for a the pool. </param>
+        /// <param name="healthStatus"> Overall health status of the Pool. Indicates whether or not the Pool is available to create Dev Boxes. </param>
+        /// <param name="healthStatusDetails"> Details on the Pool health status to help diagnose issues. This is only populated when the pool status indicates the pool is in a non-healthy state. </param>
+        /// <param name="devBoxCount"> Indicates the number of provisioned Dev Boxes in this pool. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <returns> A new <see cref="DevCenter.DevCenterPoolData"/> instance for mocking. </returns>
+        public static DevCenterPoolData DevCenterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterPoolDevBoxDefinitionType? devBoxDefinitionType, string devBoxDefinitionName, DevCenterPoolDevBoxDefinitionDetail devBoxDefinition, string networkConnectionName, DevCenterLicenseType? licenseType, LocalAdminStatus? localAdministrator, StopOnDisconnectConfiguration stopOnDisconnect, DevCenterStopOnNoConnectConfiguration stopOnNoConnect, DevCenterSingleSignOnStatus? singleSignOnStatus, string displayName = default, DevCenterVirtualNetworkType? virtualNetworkType = default, IEnumerable<string> managedVirtualNetworkRegions = default, DevCenterActiveHoursConfiguration activeHoursConfiguration = default, DevCenterDevBoxTunnelEnableStatus? devBoxTunnelEnableStatus = default, DevCenterHealthStatus? healthStatus = default, IEnumerable<DevCenterHealthStatusDetail> healthStatusDetails = default, int? devBoxCount = default, DevCenterProvisioningState? provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DevCenterPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                devBoxDefinitionType is null && devBoxDefinitionName is null && devBoxDefinition is null && networkConnectionName is null && licenseType is null && localAdministrator is null && stopOnDisconnect is null && stopOnNoConnect is null && singleSignOnStatus is null && displayName is null && virtualNetworkType is null && managedVirtualNetworkRegions is null && activeHoursConfiguration is null && devBoxTunnelEnableStatus is null && healthStatus is null && healthStatusDetails is null && devBoxCount is null && provisioningState is null ? default : new PoolProperties(
+                    devBoxDefinitionType,
+                    devBoxDefinitionName,
+                    devBoxDefinition,
+                    networkConnectionName,
+                    licenseType,
+                    localAdministrator,
+                    stopOnDisconnect,
+                    stopOnNoConnect,
+                    singleSignOnStatus,
+                    displayName,
+                    virtualNetworkType,
+                    (managedVirtualNetworkRegions ?? new ChangeTrackingList<string>()).ToList(),
+                    activeHoursConfiguration,
+                    devBoxTunnelEnableStatus,
+                    default,
+                    healthStatus,
+                    (healthStatusDetails ?? new ChangeTrackingList<DevCenterHealthStatusDetail>()).ToList(),
+                    devBoxCount,
+                    provisioningState),
                 default);
         }
 
@@ -1433,25 +1433,6 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterEndpointDetail(port, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startOn"> Start time of last execution of the health checks. </param>
-        /// <param name="endOn"> End time of last execution of the health checks. </param>
-        /// <param name="healthChecks"> Details for each health check item. </param>
-        /// <returns> A new <see cref="DevCenter.HealthCheckStatusDetailData"/> instance for mocking. </returns>
-        public static HealthCheckStatusDetailData HealthCheckStatusDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<DevCenterHealthCheck> healthChecks = default)
-        {
-            return new HealthCheckStatusDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                startOn is null && endOn is null && healthChecks is null ? default : new HealthCheckStatusDetailsProperties(startOn, endOn, (healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>()).ToList(), default),
-                default);
-        }
-
         /// <summary> An individual health check item. </summary>
         /// <param name="status"> The status of the health check item. </param>
         /// <param name="displayName"> The display name of this health check item. </param>
@@ -1472,6 +1453,34 @@ namespace Azure.ResourceManager.DevCenter.Models
                 recommendedAction,
                 additionalDetails,
                 default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="startOn"> Start time of last execution of the health checks. </param>
+        /// <param name="endOn"> End time of last execution of the health checks. </param>
+        /// <param name="healthChecks"> Details for each health check item. </param>
+        /// <returns> A new <see cref="DevCenter.HealthCheckStatusDetailData"/> instance for mocking. </returns>
+        public static HealthCheckStatusDetailData HealthCheckStatusDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<DevCenterHealthCheck> healthChecks = default)
+        {
+            return new HealthCheckStatusDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn is null && endOn is null && healthChecks is null ? default : new HealthCheckStatusDetailsProperties(startOn, endOn, (healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> The managed identity configuration used for key vault access. </summary>
+        /// <param name="type"> The type of managed identity to use for key vault access. </param>
+        /// <param name="userAssignedIdentityResourceId"> For system assigned identity, this will be null. For user assigned identity, this should be the resource ID of the identity. </param>
+        /// <returns> A new <see cref="Models.DevCenterKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
+        public static DevCenterKeyEncryptionKeyIdentity DevCenterKeyEncryptionKeyIdentity(DevCenterCmkIdentityType? @type = default, string userAssignedIdentityResourceId = default)
+        {
+            return new DevCenterKeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1500,15 +1509,6 @@ namespace Azure.ResourceManager.DevCenter.Models
                 devboxDisksEncryptionEnableStatus is null && keyEncryptionKeyUri is null && keyEncryptionKeyIdentity is null && provisioningState is null ? default : new DevCenterEncryptionSetProperties(devboxDisksEncryptionEnableStatus, keyEncryptionKeyUri, keyEncryptionKeyIdentity, default, provisioningState),
                 identity,
                 default);
-        }
-
-        /// <summary> The managed identity configuration used for key vault access. </summary>
-        /// <param name="type"> The type of managed identity to use for key vault access. </param>
-        /// <param name="userAssignedIdentityResourceId"> For system assigned identity, this will be null. For user assigned identity, this should be the resource ID of the identity. </param>
-        /// <returns> A new <see cref="Models.DevCenterKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
-        public static DevCenterKeyEncryptionKeyIdentity DevCenterKeyEncryptionKeyIdentity(DevCenterCmkIdentityType? @type = default, string userAssignedIdentityResourceId = default)
-        {
-            return new DevCenterKeyEncryptionKeyIdentity(@type, userAssignedIdentityResourceId, default);
         }
 
         /// <param name="tags"> Resource tags. </param>

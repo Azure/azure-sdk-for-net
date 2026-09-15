@@ -19,33 +19,6 @@ namespace Azure.ResourceManager.Datadog.Models
     public static partial class ArmDatadogModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties specific to the monitor resource. </param>
-        /// <param name="skuName"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
-        /// <param name="identity"></param>
-        /// <returns> A new <see cref="Datadog.DatadogMonitorData"/> instance for mocking. </returns>
-        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string skuName = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DatadogMonitorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                skuName is null ? default : new DatadogSku(skuName, default),
-                identity,
-                default);
-        }
-
         /// <param name="provisioningState"></param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="marketplaceSubscriptionStatus"> Flag specifying the Marketplace Subscription Status of the resource. If payment is not made in time, the resource will go in Suspended state. </param>
@@ -142,6 +115,33 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMarketplaceOfferDetails(publisherId, offerId, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties specific to the monitor resource. </param>
+        /// <param name="skuName"> Name of the SKU in {PlanId} format. For Terraform, the only allowed value is 'Linked'. </param>
+        /// <param name="identity"></param>
+        /// <returns> A new <see cref="Datadog.DatadogMonitorData"/> instance for mocking. </returns>
+        public static DatadogMonitorData DatadogMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DatadogMonitorProperties properties = default, string skuName = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DatadogMonitorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                skuName is null ? default : new DatadogSku(skuName, default),
+                identity,
+                default);
+        }
+
         /// <summary> Response of get latest linked SaaS resource operation. </summary>
         /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
@@ -149,24 +149,6 @@ namespace Azure.ResourceManager.Datadog.Models
         public static DatadogLatestLinkedSaaSResult DatadogLatestLinkedSaaSResult(bool? isHiddenSaaS = default, ResourceIdentifier saaSResourceId = default)
         {
             return new DatadogLatestLinkedSaaSResult(isHiddenSaaS, saaSResourceId, default);
-        }
-
-        /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Definition of the properties for a TagRules resource. </param>
-        /// <returns> A new <see cref="Datadog.DataMonitoringTagRuleData"/> instance for mocking. </returns>
-        public static DataMonitoringTagRuleData DataMonitoringTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitoringTagRuleProperties properties = default)
-        {
-            return new DataMonitoringTagRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <param name="provisioningState"></param>
@@ -222,16 +204,16 @@ namespace Azure.ResourceManager.Datadog.Models
             return new DatadogMonitorAgentRules(isAgentMonitoringEnabled, (filteringTags ?? new ChangeTrackingList<DatadogMonitorFilteringTag>()).ToList(), default);
         }
 
-        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
+        /// <summary> Capture logs and metrics of Azure resources based on ARM tags. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </param>
-        /// <returns> A new <see cref="Datadog.DatadogMonitoredSubscriptionData"/> instance for mocking. </returns>
-        public static DatadogMonitoredSubscriptionData DatadogMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatadogSubscriptionProperties properties = default)
+        /// <param name="properties"> Definition of the properties for a TagRules resource. </param>
+        /// <returns> A new <see cref="Datadog.DataMonitoringTagRuleData"/> instance for mocking. </returns>
+        public static DataMonitoringTagRuleData DataMonitoringTagRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitoringTagRuleProperties properties = default)
         {
-            return new DatadogMonitoredSubscriptionData(
+            return new DataMonitoringTagRuleData(
                 id,
                 name,
                 resourceType,
@@ -260,6 +242,24 @@ namespace Azure.ResourceManager.Datadog.Models
         public static DatadogMonitoredSubscriptionItem DatadogMonitoredSubscriptionItem(string subscriptionId = default, DatadogMonitorStatus? status = default, string error = default, MonitoringTagRuleProperties tagRules = default)
         {
             return new DatadogMonitoredSubscriptionItem(subscriptionId, status, error, tagRules, default);
+        }
+
+        /// <summary> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The request to update subscriptions needed to be monitored by the Datadog monitor resource. </param>
+        /// <returns> A new <see cref="Datadog.DatadogMonitoredSubscriptionData"/> instance for mocking. </returns>
+        public static DatadogMonitoredSubscriptionData DatadogMonitoredSubscriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DatadogSubscriptionProperties properties = default)
+        {
+            return new DatadogMonitoredSubscriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> SaaS resource details for Activate and Validate SaaS Resource. </summary>
@@ -459,6 +459,17 @@ namespace Azure.ResourceManager.Datadog.Models
             return new ResubscribeOrganizationContent(skuName is null ? default : new DatadogSku(skuName, default), azureSubscriptionId, resourceGroup, default);
         }
 
+        /// <summary> The DatadogSingleSignOnProperties. </summary>
+        /// <param name="provisioningState"></param>
+        /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
+        /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
+        /// <param name="singleSignOnUri"> The login URL specific to this Datadog Organization. </param>
+        /// <returns> A new <see cref="Models.DatadogSingleSignOnProperties"/> instance for mocking. </returns>
+        public static DatadogSingleSignOnProperties DatadogSingleSignOnProperties(DatadogProvisioningState? provisioningState = default, DatadogSingleSignOnState? singleSignOnState = default, string enterpriseAppId = default, Uri singleSignOnUri = default)
+        {
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, default);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -475,17 +486,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> The DatadogSingleSignOnProperties. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="singleSignOnState"> Various states of the SSO resource. </param>
-        /// <param name="enterpriseAppId"> The Id of the Enterprise App used for Single sign-on. </param>
-        /// <param name="singleSignOnUri"> The login URL specific to this Datadog Organization. </param>
-        /// <returns> A new <see cref="Models.DatadogSingleSignOnProperties"/> instance for mocking. </returns>
-        public static DatadogSingleSignOnProperties DatadogSingleSignOnProperties(DatadogProvisioningState? provisioningState = default, DatadogSingleSignOnState? singleSignOnState = default, string enterpriseAppId = default, Uri singleSignOnUri = default)
-        {
-            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, default);
         }
 
         /// <summary> The DatadogAgreement. </summary>

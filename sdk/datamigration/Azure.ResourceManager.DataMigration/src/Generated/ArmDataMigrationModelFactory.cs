@@ -20,48 +20,6 @@ namespace Azure.ResourceManager.DataMigration.Models
     public static partial class ArmDataMigrationModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="scope"> Resource Id of the target resource. </param>
-        /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
-        /// <param name="migrationStatus"> Migration status. </param>
-        /// <param name="startedOn"> Database migration start time. </param>
-        /// <param name="endedOn"> Database migration end time. </param>
-        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
-        /// <param name="migrationOperationId"> ID for current migration operation. </param>
-        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
-        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
-        /// <param name="sourceMongoConnection"> Source Mongo connection details. </param>
-        /// <param name="targetMongoConnection"> Target Cosmos DB Mongo connection details. </param>
-        /// <param name="collectionList"> List of Mongo Collections to be migrated. </param>
-        /// <returns> A new <see cref="DataMigration.DatabaseMigrationCosmosDBMongoData"/> instance for mocking. </returns>
-        public static DatabaseMigrationCosmosDBMongoData DatabaseMigrationCosmosDBMongoData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
-        {
-            return new DatabaseMigrationCosmosDBMongoData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                scope is null && provisioningState is null && migrationStatus is null && startedOn is null && endedOn is null && migrationService is null && migrationOperationId is null && migrationFailureError is null && provisioningError is null && sourceMongoConnection is null && targetMongoConnection is null && collectionList is null ? default : new DatabaseMigrationPropertiesCosmosDBMongo(
-                    default,
-                    scope,
-                    provisioningState,
-                    migrationStatus,
-                    startedOn,
-                    endedOn,
-                    migrationService,
-                    migrationOperationId,
-                    migrationFailureError,
-                    provisioningError,
-                    default,
-                    sourceMongoConnection,
-                    targetMongoConnection,
-                    (collectionList ?? new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>()).ToList()),
-                default);
-        }
-
         /// <summary> Database Migration Resource properties for CosmosDb for Mongo. </summary>
         /// <param name="scope"> Resource Id of the target resource. </param>
         /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
@@ -589,6 +547,48 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="scope"> Resource Id of the target resource. </param>
+        /// <param name="provisioningState"> Provisioning State of migration. ProvisioningState as Succeeded implies that validations have been performed and migration has started. </param>
+        /// <param name="migrationStatus"> Migration status. </param>
+        /// <param name="startedOn"> Database migration start time. </param>
+        /// <param name="endedOn"> Database migration end time. </param>
+        /// <param name="migrationService"> Resource Id of the Migration Service. </param>
+        /// <param name="migrationOperationId"> ID for current migration operation. </param>
+        /// <param name="migrationFailureError"> Error details in case of migration failure. </param>
+        /// <param name="provisioningError"> Error message for migration provisioning failure, if any. </param>
+        /// <param name="sourceMongoConnection"> Source Mongo connection details. </param>
+        /// <param name="targetMongoConnection"> Target Cosmos DB Mongo connection details. </param>
+        /// <param name="collectionList"> List of Mongo Collections to be migrated. </param>
+        /// <returns> A new <see cref="DataMigration.DatabaseMigrationCosmosDBMongoData"/> instance for mocking. </returns>
+        public static DatabaseMigrationCosmosDBMongoData DatabaseMigrationCosmosDBMongoData(ResourceIdentifier id = default, string name = default, Core.ResourceType resourceType = default, SystemData systemData = default, string scope = default, DataMigrationProvisioningState? provisioningState = default, string migrationStatus = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, ResourceIdentifier migrationService = default, string migrationOperationId = default, SqlMigrationErrorInfo migrationFailureError = default, string provisioningError = default, MongoConnectionInformation sourceMongoConnection = default, MongoConnectionInformation targetMongoConnection = default, IEnumerable<DataMigrationMongoMigrationCollectionInfo> collectionList = default)
+        {
+            return new DatabaseMigrationCosmosDBMongoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                scope is null && provisioningState is null && migrationStatus is null && startedOn is null && endedOn is null && migrationService is null && migrationOperationId is null && migrationFailureError is null && provisioningError is null && sourceMongoConnection is null && targetMongoConnection is null && collectionList is null ? default : new DatabaseMigrationPropertiesCosmosDBMongo(
+                    default,
+                    scope,
+                    provisioningState,
+                    migrationStatus,
+                    startedOn,
+                    endedOn,
+                    migrationService,
+                    migrationOperationId,
+                    migrationFailureError,
+                    provisioningError,
+                    default,
+                    sourceMongoConnection,
+                    targetMongoConnection,
+                    (collectionList ?? new ChangeTrackingList<DataMigrationMongoMigrationCollectionInfo>()).ToList()),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
@@ -753,26 +753,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 maxConcurrentJobs,
                 sentBytes,
                 receivedBytes,
-                default);
-        }
-
-        /// <summary> A task resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Custom task properties. </param>
-        /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
-        /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
-        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectTaskProperties properties, ETag? eTag)
-        {
-            return new DataMigrationProjectTaskData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
                 default);
         }
 
@@ -5226,6 +5206,73 @@ namespace Azure.ResourceManager.DataMigration.Models
                 (exceptionsAndWarnings ?? new ChangeTrackingList<DataMigrationReportableException>()).ToList());
         }
 
+        /// <summary> Project Database Details. </summary>
+        /// <param name="sourceDatabaseName"> Name of the database. </param>
+        /// <returns> A new <see cref="Models.DataMigrationProjectDatabaseInfo"/> instance for mocking. </returns>
+        public static DataMigrationProjectDatabaseInfo DataMigrationProjectDatabaseInfo(string sourceDatabaseName = default)
+        {
+            return new DataMigrationProjectDatabaseInfo(sourceDatabaseName, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The resource's provisioning state. </param>
+        /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
+        /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
+        /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
+        /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
+        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
+        /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
+        /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
+        /// <param name="sku"> Service SKU. </param>
+        /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
+        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, ETag? eTag, string kind, DataMigrationServiceSku sku)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DataMigrationServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && publicKey is null && virtualSubnetId is null && virtualNicId is null && autoStopDelay is null && shouldDeleteResourcesOnStop is null ? default : new DataMigrationServiceProperties(
+                    provisioningState,
+                    publicKey,
+                    virtualSubnetId,
+                    virtualNicId,
+                    autoStopDelay,
+                    shouldDeleteResourcesOnStop,
+                    default),
+                eTag,
+                kind,
+                sku,
+                default);
+        }
+
+        /// <summary> An Azure SKU instance. </summary>
+        /// <param name="name"> The unique name of the SKU, such as 'P3'. </param>
+        /// <param name="tier"> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </param>
+        /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </param>
+        /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines. </param>
+        /// <param name="capacity"> The capacity of the SKU, if it supports scaling. </param>
+        /// <returns> A new <see cref="Models.DataMigrationServiceSku"/> instance for mocking. </returns>
+        public static DataMigrationServiceSku DataMigrationServiceSku(string name = default, string tier = default, string family = default, string size = default, int? capacity = default)
+        {
+            return new DataMigrationServiceSku(
+                name,
+                tier,
+                family,
+                size,
+                capacity,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5267,12 +5314,24 @@ namespace Azure.ResourceManager.DataMigration.Models
                 default);
         }
 
-        /// <summary> Project Database Details. </summary>
-        /// <param name="sourceDatabaseName"> Name of the database. </param>
-        /// <returns> A new <see cref="Models.DataMigrationProjectDatabaseInfo"/> instance for mocking. </returns>
-        public static DataMigrationProjectDatabaseInfo DataMigrationProjectDatabaseInfo(string sourceDatabaseName = default)
+        /// <summary> A task resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Custom task properties. </param>
+        /// <param name="eTag"> HTTP strong entity tag value. This is ignored if submitted. </param>
+        /// <returns> A new <see cref="DataMigration.DataMigrationProjectTaskData"/> instance for mocking. </returns>
+        public static DataMigrationProjectTaskData DataMigrationProjectTaskData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DataMigrationProjectTaskProperties properties, ETag? eTag)
         {
-            return new DataMigrationProjectDatabaseInfo(sourceDatabaseName, default);
+            return new DataMigrationProjectTaskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
         }
 
         /// <summary> Database Migration Resource for SQL Database. </summary>
@@ -5334,65 +5393,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 resourceType,
                 systemData,
                 properties,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The resource's provisioning state. </param>
-        /// <param name="publicKey"> The public key of the service, used to encrypt secrets sent to the service. </param>
-        /// <param name="virtualSubnetId"> The ID of the Microsoft.Network/virtualNetworks/subnets resource to which the service should be joined. </param>
-        /// <param name="virtualNicId"> The ID of the Microsoft.Network/networkInterfaces resource which the service have. </param>
-        /// <param name="autoStopDelay"> The time delay before the service is auto-stopped when idle. </param>
-        /// <param name="shouldDeleteResourcesOnStop"> Whether service resources should be deleted when stopped. (Turned on by default). </param>
-        /// <param name="eTag"> HTTP strong entity tag value. Ignored if submitted. </param>
-        /// <param name="kind"> The resource kind. Only 'vm' (the default) is supported. </param>
-        /// <param name="sku"> Service SKU. </param>
-        /// <returns> A new <see cref="DataMigration.DataMigrationServiceData"/> instance for mocking. </returns>
-        public static DataMigrationServiceData DataMigrationServiceData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataMigrationServiceProvisioningState? provisioningState, string publicKey, string virtualSubnetId, string virtualNicId, string autoStopDelay, bool? shouldDeleteResourcesOnStop, ETag? eTag, string kind, DataMigrationServiceSku sku)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DataMigrationServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && publicKey is null && virtualSubnetId is null && virtualNicId is null && autoStopDelay is null && shouldDeleteResourcesOnStop is null ? default : new DataMigrationServiceProperties(
-                    provisioningState,
-                    publicKey,
-                    virtualSubnetId,
-                    virtualNicId,
-                    autoStopDelay,
-                    shouldDeleteResourcesOnStop,
-                    default),
-                eTag,
-                kind,
-                sku,
-                default);
-        }
-
-        /// <summary> An Azure SKU instance. </summary>
-        /// <param name="name"> The unique name of the SKU, such as 'P3'. </param>
-        /// <param name="tier"> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </param>
-        /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </param>
-        /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines. </param>
-        /// <param name="capacity"> The capacity of the SKU, if it supports scaling. </param>
-        /// <returns> A new <see cref="Models.DataMigrationServiceSku"/> instance for mocking. </returns>
-        public static DataMigrationServiceSku DataMigrationServiceSku(string name = default, string tier = default, string family = default, string size = default, int? capacity = default)
-        {
-            return new DataMigrationServiceSku(
-                name,
-                tier,
-                family,
-                size,
-                capacity,
                 default);
         }
 
@@ -5467,6 +5467,24 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new DataMigrationServiceNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Base class for file properties. </summary>
+        /// <param name="extension"> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </param>
+        /// <param name="filePath"> Relative path of this file resource. This property can be set when creating or updating the file resource. </param>
+        /// <param name="lastModifiedOn"> Modification DateTime. </param>
+        /// <param name="mediaType"> File content type. This property can be modified to reflect the file content type. </param>
+        /// <param name="size"> File size. </param>
+        /// <returns> A new <see cref="Models.DataMigrationProjectFileProperties"/> instance for mocking. </returns>
+        public static DataMigrationProjectFileProperties DataMigrationProjectFileProperties(string extension = default, string filePath = default, DateTimeOffset? lastModifiedOn = default, string mediaType = default, long? size = default)
+        {
+            return new DataMigrationProjectFileProperties(
+                extension,
+                filePath,
+                lastModifiedOn,
+                mediaType,
+                size,
+                default);
+        }
+
         /// <summary> A file resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -5484,24 +5502,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 systemData,
                 properties,
                 eTag,
-                default);
-        }
-
-        /// <summary> Base class for file properties. </summary>
-        /// <param name="extension"> Optional File extension. If submitted it should not have a leading period and must match the extension from filePath. </param>
-        /// <param name="filePath"> Relative path of this file resource. This property can be set when creating or updating the file resource. </param>
-        /// <param name="lastModifiedOn"> Modification DateTime. </param>
-        /// <param name="mediaType"> File content type. This property can be modified to reflect the file content type. </param>
-        /// <param name="size"> File size. </param>
-        /// <returns> A new <see cref="Models.DataMigrationProjectFileProperties"/> instance for mocking. </returns>
-        public static DataMigrationProjectFileProperties DataMigrationProjectFileProperties(string extension = default, string filePath = default, DateTimeOffset? lastModifiedOn = default, string mediaType = default, long? size = default)
-        {
-            return new DataMigrationProjectFileProperties(
-                extension,
-                filePath,
-                lastModifiedOn,
-                mediaType,
-                size,
                 default);
         }
 

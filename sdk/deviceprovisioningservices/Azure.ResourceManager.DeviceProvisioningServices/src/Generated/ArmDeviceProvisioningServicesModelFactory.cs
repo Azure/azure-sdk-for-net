@@ -19,25 +19,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDeviceProvisioningServicesModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> properties of a certificate. </param>
-        /// <param name="etag"> The entity tag. </param>
-        /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesCertificateData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesCertificateProperties properties = default, ETag? etag = default)
-        {
-            return new DeviceProvisioningServicesCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                default);
-        }
-
         /// <summary> The description of an X509 CA Certificate. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
@@ -57,91 +38,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 certificate,
                 createdOn,
                 updatedOn,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Request etag. </param>
-        /// <param name="properties"></param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, CertificateVerificationCodeProperties properties = default)
-        {
-            return new CertificateVerificationCodeResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                etag,
-                properties,
-                default);
-        }
-
-        /// <summary> The CertificateVerificationCodeProperties. </summary>
-        /// <param name="verificationCode"> Verification code. </param>
-        /// <param name="subject"> Certificate subject. </param>
-        /// <param name="expireOn"> Code expiry. </param>
-        /// <param name="thumbprint"> Certificate thumbprint. </param>
-        /// <param name="isVerified"> Indicate if the certificate is verified by owner of private key. </param>
-        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
-        /// <param name="createdOn"> Certificate created time. </param>
-        /// <param name="updatedOn"> Certificate updated time. </param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeProperties"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = default, string subject = default, DateTimeOffset? expireOn = default, BinaryData thumbprint = default, bool? isVerified = default, BinaryData certificate = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
-        {
-            return new CertificateVerificationCodeProperties(
-                verificationCode,
-                subject,
-                expireOn,
-                thumbprint,
-                isVerified,
-                certificate,
-                createdOn,
-                updatedOn,
-                default);
-        }
-
-        /// <summary> The JSON-serialized leaf certificate. </summary>
-        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
-        /// <returns> A new <see cref="Models.CertificateVerificationCodeContent"/> instance for mocking. </returns>
-        public static CertificateVerificationCodeContent CertificateVerificationCodeContent(string certificate = default)
-        {
-            return new CertificateVerificationCodeContent(certificate, default);
-        }
-
-        /// <summary> The description of the provisioning service. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="subscriptionId"> The subscription id of the resource. </param>
-        /// <param name="properties"> Service specific properties for a provisioning service. </param>
-        /// <param name="sku"> Sku info for a provisioning Service. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? eTag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DeviceProvisioningServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                eTag,
-                resourceGroup,
-                subscriptionId,
-                properties,
-                sku,
-                identity,
                 default);
         }
 
@@ -271,6 +167,40 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesSharedAccessKey(keyName, primaryKey, secondaryKey, rights, default);
         }
 
+        /// <summary> The description of the provisioning service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="resourceGroup"> The resource group of the resource. </param>
+        /// <param name="subscriptionId"> The subscription id of the resource. </param>
+        /// <param name="properties"> Service specific properties for a provisioning service. </param>
+        /// <param name="sku"> Sku info for a provisioning Service. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? eTag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DeviceProvisioningServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                eTag,
+                resourceGroup,
+                subscriptionId,
+                properties,
+                sku,
+                identity,
+                default);
+        }
+
         /// <summary> List of possible provisioning service SKUs. </summary>
         /// <param name="name"> Sku name. </param>
         /// <param name="tier"> Pricing tier name of the provisioning service. </param>
@@ -279,6 +209,76 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         public static DeviceProvisioningServicesSkuInfo DeviceProvisioningServicesSkuInfo(DeviceProvisioningServicesSku? name = default, string tier = default, long? capacity = default)
         {
             return new DeviceProvisioningServicesSkuInfo(name, tier, capacity, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> properties of a certificate. </param>
+        /// <param name="etag"> The entity tag. </param>
+        /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesCertificateData"/> instance for mocking. </returns>
+        public static DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesCertificateProperties properties = default, ETag? etag = default)
+        {
+            return new DeviceProvisioningServicesCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="etag"> Request etag. </param>
+        /// <param name="properties"></param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeResult"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeResult CertificateVerificationCodeResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, CertificateVerificationCodeProperties properties = default)
+        {
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                etag,
+                properties,
+                default);
+        }
+
+        /// <summary> The CertificateVerificationCodeProperties. </summary>
+        /// <param name="verificationCode"> Verification code. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="expireOn"> Code expiry. </param>
+        /// <param name="thumbprint"> Certificate thumbprint. </param>
+        /// <param name="isVerified"> Indicate if the certificate is verified by owner of private key. </param>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <param name="createdOn"> Certificate created time. </param>
+        /// <param name="updatedOn"> Certificate updated time. </param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeProperties"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeProperties CertificateVerificationCodeProperties(string verificationCode = default, string subject = default, DateTimeOffset? expireOn = default, BinaryData thumbprint = default, bool? isVerified = default, BinaryData certificate = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
+        {
+            return new CertificateVerificationCodeProperties(
+                verificationCode,
+                subject,
+                expireOn,
+                thumbprint,
+                isVerified,
+                certificate,
+                createdOn,
+                updatedOn,
+                default);
+        }
+
+        /// <summary> The JSON-serialized leaf certificate. </summary>
+        /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
+        /// <returns> A new <see cref="Models.CertificateVerificationCodeContent"/> instance for mocking. </returns>
+        public static CertificateVerificationCodeContent CertificateVerificationCodeContent(string certificate = default)
+        {
+            return new CertificateVerificationCodeContent(certificate, default);
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a Provisioning Service instance. </summary>
@@ -299,6 +299,19 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             return new DeviceProvisioningServicesSkuDefinition(name, default);
         }
 
+        /// <summary> The properties for a group information object. </summary>
+        /// <param name="groupId"> The group id. </param>
+        /// <param name="requiredMembers"> The required members for a specific group id. </param>
+        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
+        /// <returns> A new <see cref="Models.DeviceProvisioningServicesPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static DeviceProvisioningServicesPrivateLinkResourceProperties DeviceProvisioningServicesPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> The group information for creating a private endpoint on a provisioning service. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -315,19 +328,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> The properties for a group information object. </summary>
-        /// <param name="groupId"> The group id. </param>
-        /// <param name="requiredMembers"> The required members for a specific group id. </param>
-        /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>
-        /// <returns> A new <see cref="Models.DeviceProvisioningServicesPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesPrivateLinkResourceProperties DeviceProvisioningServicesPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new DeviceProvisioningServicesPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Input values for operation results call. </summary>
