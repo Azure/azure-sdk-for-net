@@ -24,25 +24,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="JobProperties"/>. </summary>
-        /// <param name="endOn"> The time the job completed. </param>
+        /// <param name="endsOn"> The time the job completed. </param>
         /// <param name="items"> List of items published by the job. </param>
         /// <param name="provisioningState"> State of the job. </param>
-        /// <param name="startOn"> The time the job started. </param>
+        /// <param name="startsOn"> The time the job started. </param>
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(DateTimeOffset? endOn, IList<SecurityInsightsContentJobItem> items, JobProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(DateTimeOffset? endsOn, IList<SecurityInsightsContentJobItem> items, JobProvisioningState? provisioningState, DateTimeOffset? startsOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            EndsOn = endsOn;
             Items = items;
             ProvisioningState = provisioningState;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ErrorMessage = errorMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time the job completed. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> List of items published by the job. </summary>
         [WirePath("items")]
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the job started. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Message to describe error, if an error exists. </summary>
         [WirePath("errorMessage")]

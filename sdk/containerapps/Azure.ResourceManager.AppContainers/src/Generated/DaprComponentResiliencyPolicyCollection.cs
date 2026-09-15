@@ -65,10 +65,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_CreateOrUpdate. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -120,10 +116,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_CreateOrUpdate. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -165,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Dapr component resiliency policy.
+        /// Gets the details of a resiliency policy for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -174,10 +166,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a Dapr component resiliency policy.
+        /// Gets the details of a resiliency policy for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -223,10 +211,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +247,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the resiliency policies for a Dapr component.
+        /// Lists the resiliency policies configured for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -272,10 +256,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +278,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the resiliency policies for a Dapr component.
+        /// Lists the resiliency policies configured for a Dapr component.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -307,10 +287,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -342,10 +318,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,10 +372,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
         /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the Dapr Component Resiliency Policy. </param>
@@ -456,10 +424,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -517,10 +481,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> DaprComponentResiliencyPolicies_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

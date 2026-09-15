@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ValidationProperties"/>. </summary>
         /// <param name="status"> The scenario validation status. </param>
-        /// <param name="startOn"> The scenario validation UTC start time. </param>
+        /// <param name="startsOn"> The scenario validation UTC start time. </param>
         /// <param name="executionPlanJson"> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </param>
-        /// <param name="endOn"> The scenario validation UTC end time. </param>
+        /// <param name="endsOn"> The scenario validation UTC end time. </param>
         /// <param name="resources">
         /// Resources that matched the scenario's target resource types and will be impacted
         /// by the run, resolved after applying the configuration's resource-targeting filters.
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="errors"> System or infrastructure errors encountered during validation. </param>
         /// <param name="validationErrors"> Business errors from validation — permission and resource state issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ValidationProperties(ScenarioValidationState status, DateTimeOffset startOn, string executionPlanJson, DateTimeOffset? endOn, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<ScenarioRunResource> excludedResources, IReadOnlyList<ChaosOperationError> errors, ScenarioErrors validationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ValidationProperties(ScenarioValidationState status, DateTimeOffset startsOn, string executionPlanJson, DateTimeOffset? endsOn, IReadOnlyList<ScenarioRunResource> resources, IReadOnlyList<ScenarioRunResource> excludedResources, IReadOnlyList<ChaosOperationError> errors, ScenarioErrors validationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ExecutionPlanJson = executionPlanJson;
-            EndOn = endOn;
+            EndsOn = endsOn;
             Resources = resources;
             ExcludedResources = excludedResources;
             Errors = errors;
@@ -59,13 +59,13 @@ namespace Azure.ResourceManager.Chaos.Models
         public ScenarioValidationState Status { get; }
 
         /// <summary> The scenario validation UTC start time. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </summary>
         public string ExecutionPlanJson { get; }
 
         /// <summary> The scenario validation UTC end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary>
         /// Resources that matched the scenario's target resource types and will be impacted

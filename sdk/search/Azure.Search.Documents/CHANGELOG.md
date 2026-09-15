@@ -2,11 +2,9 @@
 
 ## 12.1.0-beta.3 (Unreleased)
 
-### Features Added
-
-### Breaking Changes
-
 ### Bugs Fixed
+
+- Restored public `SearchIndexerClient` create-or-update parameters for controlling indexer cache reset and reprocessing behavior.
 
 ### Other Changes
 

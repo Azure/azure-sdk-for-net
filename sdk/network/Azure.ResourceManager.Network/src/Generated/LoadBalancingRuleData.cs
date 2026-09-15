@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.Protocol;
+                return Properties is null ? (LoadBalancingTransportProtocol?)default : Properties.Protocol;
             }
             set
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network
         {
             get
             {
-                return Properties is null ? default : Properties.FrontendPort;
+                return Properties is null ? (int?)default : Properties.FrontendPort;
             }
             set
             {
@@ -282,19 +282,6 @@ namespace Azure.ResourceManager.Network
                     Properties = new LoadBalancingRuleProperties();
                 }
                 Properties.ProbeId = value;
-            }
-        }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancingRuleProperties();
-                }
-                return Properties.AdditionalProperties;
             }
         }
     }

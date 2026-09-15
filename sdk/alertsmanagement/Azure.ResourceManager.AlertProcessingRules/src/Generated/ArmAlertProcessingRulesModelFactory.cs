@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAlertProcessingRulesModelFactory
     {
+        /// <summary> Alert processing rule object containing target scopes, conditions and scheduling logic. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 default);
         }
 
+        /// <summary> Alert processing rule properties defining scopes, conditions and scheduling logic for alert processing rule. </summary>
         /// <param name="scopes"> Scopes on which alert processing rule will apply. </param>
         /// <param name="conditions"> Conditions on which alerts will be filtered. </param>
         /// <param name="schedule"> Scheduling for alert processing rule. </param>
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                 default);
         }
 
+        /// <summary> Condition to trigger an alert processing rule. </summary>
         /// <param name="field"> Field for a given condition. </param>
         /// <param name="operator"> Operator for a given condition. </param>
         /// <param name="values"> List of values to match for a given condition. </param>
@@ -74,6 +77,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new AlertProcessingRuleCondition(@field, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Scheduling configuration for a given alert processing rule. </summary>
         /// <param name="effectiveFrom"> Scheduling effective from time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="effectiveUntil"> Scheduling effective until time. Date-Time in ISO-8601 format without timezone suffix. </param>
         /// <param name="timeZone"> Scheduling time zone. </param>
@@ -86,6 +90,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, (recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Recurrence object.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DailyRecurrence"/>, <see cref="Models.AlertProcessingRuleWeeklyRecurrence"/>, and <see cref="Models.AlertProcessingRuleMonthlyRecurrence"/>.
+        /// </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
@@ -95,6 +103,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new UnknownAlertProcessingRuleRecurrence(default, startOn, endOn, default);
         }
 
+        /// <summary> Daily recurrence object. </summary>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <returns> A new <see cref="Models.DailyRecurrence"/> instance for mocking. </returns>
@@ -103,6 +112,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new DailyRecurrence(default, startOn, endOn, default);
         }
 
+        /// <summary> Weekly recurrence object. </summary>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfWeek"> Specifies the values for weekly recurrence pattern. </param>
@@ -114,6 +124,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new AlertProcessingRuleWeeklyRecurrence(default, startOn, endOn, default, (daysOfWeek ?? new ChangeTrackingList<AlertsManagementDayOfWeek>()).ToList());
         }
 
+        /// <summary> Monthly recurrence object. </summary>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
         /// <param name="daysOfMonth"> Specifies the values for monthly recurrence pattern. </param>
@@ -125,6 +136,10 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new AlertProcessingRuleMonthlyRecurrence(default, startOn, endOn, default, (daysOfMonth ?? new ChangeTrackingList<int>()).ToList());
         }
 
+        /// <summary>
+        /// Action to be applied.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AlertProcessingRuleAddGroupsAction"/> and <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/>.
+        /// </summary>
         /// <param name="actionType"> Action that should be applied. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleAction AlertProcessingRuleAction(string actionType = default)
@@ -132,6 +147,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new UnknownAlertProcessingRuleAction(default, default);
         }
 
+        /// <summary> Add action groups to alert processing rule. </summary>
         /// <param name="actionGroupIds"> List of action group Ids to add to alert processing rule. </param>
         /// <returns> A new <see cref="Models.AlertProcessingRuleAddGroupsAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleAddGroupsAction AlertProcessingRuleAddGroupsAction(IEnumerable<ResourceIdentifier> actionGroupIds = default)
@@ -141,6 +157,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
             return new AlertProcessingRuleAddGroupsAction(default, default, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList());
         }
 
+        /// <summary> Indicates if all action groups should be removed. </summary>
         /// <returns> A new <see cref="Models.AlertProcessingRuleRemoveAllGroupsAction"/> instance for mocking. </returns>
         public static AlertProcessingRuleRemoveAllGroupsAction AlertProcessingRuleRemoveAllGroupsAction()
         {

@@ -81,6 +81,10 @@ namespace Azure.AI.Extensions.OpenAI
             ///
             /// </summary>
             public static ResponseToolKind Namespace => new ResponseToolKind("namespace");
+            /// <summary>
+            ///
+            /// </summary>
+            public static ResponseToolKind WebIQPreview => new ResponseToolKind("web_iq_preview");
         }
     }
 }

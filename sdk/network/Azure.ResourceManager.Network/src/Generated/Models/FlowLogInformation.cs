@@ -154,40 +154,6 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        /// <summary> Gets or sets the FormatType. </summary>
-        public FlowLogFormatType? FormatType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FormatType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FlowLogProperties();
-                }
-                Properties.FormatType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Version. </summary>
-        public int? Version
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Version;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FlowLogProperties();
-                }
-                Properties.Version = value;
-            }
-        }
-
         /// <summary> Parameters that define the configuration of traffic analytics. </summary>
         [WirePath("flowAnalyticsConfiguration.networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration

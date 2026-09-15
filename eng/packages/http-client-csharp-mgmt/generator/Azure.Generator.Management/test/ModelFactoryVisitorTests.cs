@@ -6,6 +6,7 @@ using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.SourceInput;
@@ -568,7 +569,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void RebuildsPrimaryFactoryBodyFromCurrentConstructor()
+        public void ModelFactoryVisitorRebuildsPrimaryFactoryBodyFromCurrentConstructor()
         {
             var inputModel = InputFactory.Model(
                 "TestModel",
@@ -598,11 +599,192 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("string legacyValue"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
+        }
+
+        [Test]
+        public void ModelFactoryVisitorRebuildsReorderedNestedModelArgument()
+        {
+            var nestedModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("annotation", InputPrimitiveType.String)]);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("properties", nestedModel),
+                    InputFactory.Property("identity", InputPrimitiveType.String)
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel, nestedModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var nestedProvider = plugin.Object.TypeFactory.CreateModel(nestedModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var annotationParameter = new ParameterProvider("annotation", $"", typeof(string), Default);
+            var identityParameter = new ParameterProvider("identity", $"", typeof(string), Default);
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [annotationParameter, identityParameter]);
+            var nestedArguments = nestedProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "annotation" ? annotationParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            var reorderedArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name switch
+                {
+                    "properties" => (ValueExpression)identityParameter,
+                    "identity" => New.Instance(nestedProvider.Type, nestedArguments),
+                    _ => parameter.DefaultValue ?? Default
+                })
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(signature, Return(New.Instance(model.Type, reorderedArguments)), modelFactory)]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var visitedBody = modelFactory.Methods.Single().BodyStatements!.ToDisplayString();
+            Assert.That(visitedBody, Does.Contain("new global::Samples.Models.TestProperties(annotation,"));
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(annotation,"));
+            Assert.That(rendered, Does.Contain("), identity,"));
+        }
+
+        [Test]
+        public void ModelFactoryVisitorRebuildsReorderedArgumentsWithSameNestedModelType()
+        {
+            var nestedModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("annotation", InputPrimitiveType.String)]);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("left", nestedModel),
+                    InputFactory.Property("right", nestedModel)
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel, nestedModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var nestedProvider = plugin.Object.TypeFactory.CreateModel(nestedModel)!;
+            var leftProperty = model.Properties.Single(property => property.Name == "Left");
+            var rightProperty = model.Properties.Single(property => property.Name == "Right");
+            var annotationProperty = nestedProvider.Properties.Single(property => property.Name == "Annotation");
+            var leftAnnotationParameter = new ParameterProvider(
+                Azure.Generator.Management.Utilities.PropertyHelpers.GetCombinedPropertyName(annotationProperty, leftProperty).ToVariableName(),
+                $"",
+                typeof(string),
+                Default);
+            var rightAnnotationParameter = new ParameterProvider(
+                Azure.Generator.Management.Utilities.PropertyHelpers.GetCombinedPropertyName(annotationProperty, rightProperty).ToVariableName(),
+                $"",
+                typeof(string),
+                Default);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [leftAnnotationParameter, rightAnnotationParameter]);
+            ValueExpression BuildNested(ParameterProvider annotationParameter)
+                => New.Instance(
+                    nestedProvider.Type,
+                    nestedProvider.FullConstructor.Signature.Parameters
+                        .Select(parameter => parameter.Name == "annotation" ? annotationParameter : parameter.DefaultValue ?? Default)
+                        .ToArray());
+            var reorderedArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name switch
+                {
+                    "left" => BuildNested(rightAnnotationParameter),
+                    "right" => BuildNested(leftAnnotationParameter),
+                    _ => parameter.DefaultValue ?? Default
+                })
+                .ToArray();
+            var method = new MethodProvider(signature, Return(New.Instance(model.Type, reorderedArguments)), modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            var findOriginalArgumentIndex = typeof(Management.Visitors.ModelFactoryBackwardCompatHelper).GetMethod(
+                "FindOriginalArgumentIndex",
+                BindingFlags.NonPublic | BindingFlags.Static)!;
+            var leftConstructorParameter = model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "left");
+            var rightConstructorParameter = model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "right");
+            Assert.That(findOriginalArgumentIndex.Invoke(null, [method, leftConstructorParameter, reorderedArguments]), Is.EqualTo(1));
+            Assert.That(findOriginalArgumentIndex.Invoke(null, [method, rightConstructorParameter, reorderedArguments]), Is.EqualTo(0));
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var visitedBody = modelFactory.Methods.Single().BodyStatements!.ToDisplayString();
+            Assert.That(visitedBody, Does.Contain($"new global::Samples.Models.TestProperties({leftAnnotationParameter.Name},"));
+            Assert.That(visitedBody, Does.Contain($"new global::Samples.Models.TestProperties({rightAnnotationParameter.Name},"));
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain($"new global::Samples.Models.TestProperties({leftAnnotationParameter.Name},"));
+            Assert.That(rendered, Does.Contain($"new global::Samples.Models.TestProperties({rightAnnotationParameter.Name},"));
+        }
+
+        [Test]
+        public void ModelFactoryVisitorAlwaysConstructsNestedModelForNonNullableValueParameter()
+        {
+            var nestedModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("annotation", InputPrimitiveType.String),
+                    InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true)
+                ]);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("properties", nestedModel)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel, nestedModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(nestedModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var annotationParameter = new ParameterProvider("annotation", $"", typeof(string), Default);
+            var countParameter = new ParameterProvider("count", $"", typeof(int), Default);
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [annotationParameter, countParameter]);
+            var constructorArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(signature, Return(New.Instance(model.Type, constructorArguments)), modelFactory)]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(annotation, count,"));
+            Assert.That(rendered, Does.Not.Contain("annotation is null) ? default"));
         }
 
         [Test]
