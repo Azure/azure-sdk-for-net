@@ -21,30 +21,6 @@ namespace Azure.ResourceManager.HDInsight.Models
     public static partial class ArmHDInsightModelFactory
     {
 
-        /// <summary> The HDInsight cluster application. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of the application. </param>
-        /// <param name="eTag"> The ETag for the application. </param>
-        /// <param name="tags"> The tags for the application. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
-        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HDInsightApplicationProperties properties, ETag? eTag, IDictionary<string, string> tags)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HDInsightApplicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <param name="computeRoles"> The list of roles in the cluster. </param>
         /// <param name="installScriptActions"> The list of install script actions. </param>
         /// <param name="uninstallScriptActions"> The list of uninstall script actions. </param>
@@ -296,45 +272,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 privateIPAllocationMethod,
                 subnetId is null ? default : new ResourceId(subnetId, default),
                 default), default);
-        }
-
-        /// <param name="status"> The async operation state. </param>
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
-        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, ResponseError error = default)
-        {
-            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResponse(error, default), default);
-        }
-
-        /// <summary> The HDInsight cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The properties of the cluster. </param>
-        /// <param name="eTag"> The ETag for the resource. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <param name="identity"> The identity of the cluster, if configured. </param>
-        /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
-        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, ETag? eTag, IEnumerable<string> zones, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new HDInsightClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                identity,
-                default);
         }
 
         /// <param name="clusterVersion"> The version of the cluster. </param>
@@ -591,6 +528,69 @@ namespace Azure.ResourceManager.HDInsight.Models
         public static HDInsightPrivateLinkServiceConnectionState HDInsightPrivateLinkServiceConnectionState(HDInsightPrivateLinkServiceConnectionStatus status = default, string description = default, string actionsRequired = default)
         {
             return new HDInsightPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <summary> The HDInsight cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The properties of the cluster. </param>
+        /// <param name="eTag"> The ETag for the resource. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <param name="identity"> The identity of the cluster, if configured. </param>
+        /// <returns> A new <see cref="HDInsight.HDInsightClusterData"/> instance for mocking. </returns>
+        public static HDInsightClusterData HDInsightClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightClusterProperties properties, ETag? eTag, IEnumerable<string> zones, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new HDInsightClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                identity,
+                default);
+        }
+
+        /// <summary> The HDInsight cluster application. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of the application. </param>
+        /// <param name="eTag"> The ETag for the application. </param>
+        /// <param name="tags"> The tags for the application. </param>
+        /// <returns> A new <see cref="HDInsight.HDInsightApplicationData"/> instance for mocking. </returns>
+        public static HDInsightApplicationData HDInsightApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HDInsightApplicationProperties properties, ETag? eTag, IDictionary<string, string> tags)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HDInsightApplicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <param name="status"> The async operation state. </param>
+        /// <param name="error"> The error object. </param>
+        /// <returns> A new <see cref="Models.HDInsightAsyncOperationResult"/> instance for mocking. </returns>
+        public static HDInsightAsyncOperationResult HDInsightAsyncOperationResult(HDInsightAsyncOperationState? status = default, ResponseError error = default)
+        {
+            return new HDInsightAsyncOperationResult(status, error is null ? default : new ErrorResponse(error, default), default);
         }
 
         /// <summary> The CreateCluster request parameters. </summary>

@@ -18,24 +18,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
     public static partial class ArmImageBuilderModelFactory
     {
 
-        /// <summary> Represents a trigger that can invoke an image template build. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of a trigger. </param>
-        /// <returns> A new <see cref="ImageBuilder.ImageTemplateTriggerData"/> instance for mocking. </returns>
-        public static ImageTemplateTriggerData ImageTemplateTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggerProperties properties = default)
-        {
-            return new ImageTemplateTriggerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary>
         /// Describes the properties of a trigger
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SourceImageTriggerProperties"/>.
@@ -66,63 +48,6 @@ namespace Azure.ResourceManager.ImageBuilder.Models
         public static SourceImageTriggerProperties SourceImageTriggerProperties(ImageTemplateTriggerStatus status = default, ImageBuilderProvisioningState? provisioningState = default)
         {
             return new SourceImageTriggerProperties(default, status, provisioningState, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="source"> Specifies the properties used to describe the source image. </param>
-        /// <param name="customize"> Specifies the properties used to describe the customization steps of the image, like Image source etc. </param>
-        /// <param name="optimize"> Specifies optimization to be performed on image. </param>
-        /// <param name="validate"> Configuration options and list of validations to be performed on the resulting image. </param>
-        /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
-        /// <param name="errorHandling"> Error handling options upon a build failure. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="provisioningError"> Provisioning error, if any. </param>
-        /// <param name="lastRunStatus"> State of 'run' that is currently executing or was last executed. </param>
-        /// <param name="buildTimeoutInMinutes"> Maximum duration to wait while building the image template (includes all customizations, optimization, validations, and distributions). Omit or specify 0 to use the default (4 hours). </param>
-        /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
-        /// <param name="additionalDataDisks"> Optional array of additional data disks to be added to the image. </param>
-        /// <param name="stagingResourceGroup"> The staging resource group id in the same subscription as the image template that will be used to build the image. If this field is empty, a resource group with a random name will be created. If the resource group specified in this field doesn't exist, it will be created with the same name. If the resource group specified exists, it must be empty and in the same region as the image template. The resource group created will be deleted during template deletion if this field is empty or the resource group specified doesn't exist, but if the resource group specified exists the resources created in the resource group will be deleted during template deletion and the resource group itself will remain. </param>
-        /// <param name="exactStagingResourceGroup"> The staging resource group id in the same subscription as the image template that will be used to build the image. This read-only field differs from 'stagingResourceGroup' only if the value specified in the 'stagingResourceGroup' field is empty. </param>
-        /// <param name="managedResourceTags"> Tags that will be applied to the resource group and/or resources created by the service. </param>
-        /// <param name="autoRunState"> Enabling this field will trigger an automatic build on image template creation or update. </param>
-        /// <param name="identity"> The identity of the image template, if configured. </param>
-        /// <returns> A new <see cref="ImageBuilder.ImageTemplateData"/> instance for mocking. </returns>
-        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplateOptimizeConfig optimize = default, ImageTemplateValidationConfig validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateErrorHandling errorHandling = default, ImageBuilderProvisioningState? provisioningState = default, ImageBuilderProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<ImageBuilderDataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, ImageTemplateAutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ImageTemplateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                source is null && customize is null && optimize is null && validate is null && distribute is null && errorHandling is null && provisioningState is null && provisioningError is null && lastRunStatus is null && buildTimeoutInMinutes is null && vmProfile is null && additionalDataDisks is null && stagingResourceGroup is null && exactStagingResourceGroup is null && autoRunState is null && managedResourceTags is null ? default : new ImageTemplateProperties(
-                    source,
-                    (customize ?? new ChangeTrackingList<ImageTemplateCustomizer>()).ToList(),
-                    optimize,
-                    validate,
-                    (distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(),
-                    errorHandling,
-                    provisioningState,
-                    provisioningError,
-                    lastRunStatus,
-                    buildTimeoutInMinutes,
-                    vmProfile,
-                    (additionalDataDisks ?? new ChangeTrackingList<ImageBuilderDataDisk>()).ToList(),
-                    stagingResourceGroup,
-                    exactStagingResourceGroup,
-                    autoRunState is null ? default : new ImageTemplateAutoRun(autoRunState, default),
-                    managedResourceTags ?? new ChangeTrackingDictionary<string, string>(),
-                    default),
-                identity,
-                default);
         }
 
         /// <summary>
@@ -578,6 +503,63 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageBuilderDataDisk(sizeGB, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="source"> Specifies the properties used to describe the source image. </param>
+        /// <param name="customize"> Specifies the properties used to describe the customization steps of the image, like Image source etc. </param>
+        /// <param name="optimize"> Specifies optimization to be performed on image. </param>
+        /// <param name="validate"> Configuration options and list of validations to be performed on the resulting image. </param>
+        /// <param name="distribute"> The distribution targets where the image output needs to go to. </param>
+        /// <param name="errorHandling"> Error handling options upon a build failure. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="provisioningError"> Provisioning error, if any. </param>
+        /// <param name="lastRunStatus"> State of 'run' that is currently executing or was last executed. </param>
+        /// <param name="buildTimeoutInMinutes"> Maximum duration to wait while building the image template (includes all customizations, optimization, validations, and distributions). Omit or specify 0 to use the default (4 hours). </param>
+        /// <param name="vmProfile"> Describes how virtual machine is set up to build images. </param>
+        /// <param name="additionalDataDisks"> Optional array of additional data disks to be added to the image. </param>
+        /// <param name="stagingResourceGroup"> The staging resource group id in the same subscription as the image template that will be used to build the image. If this field is empty, a resource group with a random name will be created. If the resource group specified in this field doesn't exist, it will be created with the same name. If the resource group specified exists, it must be empty and in the same region as the image template. The resource group created will be deleted during template deletion if this field is empty or the resource group specified doesn't exist, but if the resource group specified exists the resources created in the resource group will be deleted during template deletion and the resource group itself will remain. </param>
+        /// <param name="exactStagingResourceGroup"> The staging resource group id in the same subscription as the image template that will be used to build the image. This read-only field differs from 'stagingResourceGroup' only if the value specified in the 'stagingResourceGroup' field is empty. </param>
+        /// <param name="managedResourceTags"> Tags that will be applied to the resource group and/or resources created by the service. </param>
+        /// <param name="autoRunState"> Enabling this field will trigger an automatic build on image template creation or update. </param>
+        /// <param name="identity"> The identity of the image template, if configured. </param>
+        /// <returns> A new <see cref="ImageBuilder.ImageTemplateData"/> instance for mocking. </returns>
+        public static ImageTemplateData ImageTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ImageTemplateSource source = default, IEnumerable<ImageTemplateCustomizer> customize = default, ImageTemplateOptimizeConfig optimize = default, ImageTemplateValidationConfig validate = default, IEnumerable<ImageTemplateDistributor> distribute = default, ImageTemplateErrorHandling errorHandling = default, ImageBuilderProvisioningState? provisioningState = default, ImageBuilderProvisioningError provisioningError = default, ImageTemplateLastRunStatus lastRunStatus = default, int? buildTimeoutInMinutes = default, ImageTemplateVmProfile vmProfile = default, IEnumerable<ImageBuilderDataDisk> additionalDataDisks = default, string stagingResourceGroup = default, string exactStagingResourceGroup = default, IDictionary<string, string> managedResourceTags = default, ImageTemplateAutoRunState? autoRunState = default, ImageTemplateIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ImageTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source is null && customize is null && optimize is null && validate is null && distribute is null && errorHandling is null && provisioningState is null && provisioningError is null && lastRunStatus is null && buildTimeoutInMinutes is null && vmProfile is null && additionalDataDisks is null && stagingResourceGroup is null && exactStagingResourceGroup is null && autoRunState is null && managedResourceTags is null ? default : new ImageTemplateProperties(
+                    source,
+                    (customize ?? new ChangeTrackingList<ImageTemplateCustomizer>()).ToList(),
+                    optimize,
+                    validate,
+                    (distribute ?? new ChangeTrackingList<ImageTemplateDistributor>()).ToList(),
+                    errorHandling,
+                    provisioningState,
+                    provisioningError,
+                    lastRunStatus,
+                    buildTimeoutInMinutes,
+                    vmProfile,
+                    (additionalDataDisks ?? new ChangeTrackingList<ImageBuilderDataDisk>()).ToList(),
+                    stagingResourceGroup,
+                    exactStagingResourceGroup,
+                    autoRunState is null ? default : new ImageTemplateAutoRun(autoRunState, default),
+                    managedResourceTags ?? new ChangeTrackingDictionary<string, string>(),
+                    default),
+                identity,
+                default);
+        }
+
         /// <summary> Identity for the image template. </summary>
         /// <param name="type"> The type of identity used for the image template. The type 'None' will remove any identities from the image template. </param>
         /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
@@ -587,6 +569,24 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
             return new ImageTemplateIdentity(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
+        }
+
+        /// <summary> Represents a trigger that can invoke an image template build. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a trigger. </param>
+        /// <returns> A new <see cref="ImageBuilder.ImageTemplateTriggerData"/> instance for mocking. </returns>
+        public static ImageTemplateTriggerData ImageTemplateTriggerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, TriggerProperties properties = default)
+        {
+            return new ImageTemplateTriggerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <param name="identity"> The identity of the image template, if configured. </param>

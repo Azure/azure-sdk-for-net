@@ -20,24 +20,6 @@ namespace Azure.ResourceManager.IotHub.Models
     public static partial class ArmIotHubModelFactory
     {
 
-        /// <summary> The private endpoint connection of an IotHub. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties of a private endpoint connection. </param>
-        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static IotHubPrivateEndpointConnectionData IotHubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointConnectionProperties properties = default)
-        {
-            return new IotHubPrivateEndpointConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="privateEndpointId"> The resource identifier. </param>
         /// <param name="connectionState"> The current state of a private endpoint connection. </param>
         /// <returns> A new <see cref="Models.IotHubPrivateEndpointConnectionProperties"/> instance for mocking. </returns>
@@ -54,36 +36,6 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubPrivateLinkServiceConnectionState IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus status = default, string description = default, string actionsRequired = default)
         {
             return new IotHubPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
-        }
-
-        /// <summary> The description of the IoT hub. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> IotHub properties. </param>
-        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
-        /// <param name="sku"> IotHub SKU info. </param>
-        /// <param name="identity"> The managed identities for the IotHub. </param>
-        /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
-        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotHubProperties properties, ETag? eTag, IotHubSkuInfo sku, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new IotHubDescriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                sku,
-                identity,
-                default);
         }
 
         /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
@@ -207,6 +159,24 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubNetworkRuleSetIPRule IotHubNetworkRuleSetIPRule(string filterName = default, IotHubNetworkRuleIPAction? action = default, string ipMask = default)
         {
             return new IotHubNetworkRuleSetIPRule(filterName, action, ipMask, default);
+        }
+
+        /// <summary> The private endpoint connection of an IotHub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
+        /// <returns> A new <see cref="IotHub.IotHubPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointConnectionData IotHubPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointConnectionProperties properties = default)
+        {
+            return new IotHubPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> The properties of the provisioned Event Hub-compatible endpoint used by the IoT hub. </summary>
@@ -581,6 +551,36 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubDeviceRegistry(namespaceResourceId, identityResourceId, default);
         }
 
+        /// <summary> The description of the IoT hub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> IotHub properties. </param>
+        /// <param name="eTag"> The Etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal ETag convention. </param>
+        /// <param name="sku"> IotHub SKU info. </param>
+        /// <param name="identity"> The managed identities for the IotHub. </param>
+        /// <returns> A new <see cref="IotHub.IotHubDescriptionData"/> instance for mocking. </returns>
+        public static IotHubDescriptionData IotHubDescriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotHubProperties properties, ETag? eTag, IotHubSkuInfo sku, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new IotHubDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                sku,
+                identity,
+                default);
+        }
+
         /// <summary> Information about the SKU of the IoT hub. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="tier"> The billing tier for the IoT hub. </param>
@@ -589,6 +589,24 @@ namespace Azure.ResourceManager.IotHub.Models
         public static IotHubSkuInfo IotHubSkuInfo(IotHubSku name = default, IotHubSkuTier? tier = default, long? capacity = default)
         {
             return new IotHubSkuInfo(name, tier, capacity, default);
+        }
+
+        /// <summary> The private endpoint connection of an IotHub. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties of a private endpoint connection. </param>
+        /// <returns> A new <see cref="Models.IotHubPrivateEndpointConnection1Data"/> instance for mocking. </returns>
+        public static IotHubPrivateEndpointConnection1Data IotHubPrivateEndpointConnection1Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubPrivateEndpointConnectionProperties properties = default)
+        {
+            return new IotHubPrivateEndpointConnection1Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on an IoT Hub instance. </summary>
@@ -889,25 +907,6 @@ namespace Azure.ResourceManager.IotHub.Models
             return new IotHubNameAvailabilityResponse(isNameAvailable, reason, message, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The description of an X509 CA Certificate. </param>
-        /// <param name="etag"> The entity tag. </param>
-        /// <returns> A new <see cref="IotHub.IotHubCertificateDescriptionData"/> instance for mocking. </returns>
-        public static IotHubCertificateDescriptionData IotHubCertificateDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubCertificateProperties properties = default, ETag? etag = default)
-        {
-            return new IotHubCertificateDescriptionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                etag,
-                default);
-        }
-
         /// <summary> The description of an X509 CA Certificate. </summary>
         /// <param name="subject"> The certificate's subject name. </param>
         /// <param name="expireOn"> The certificate's expiration date and time. </param>
@@ -929,6 +928,25 @@ namespace Azure.ResourceManager.IotHub.Models
                 updatedOn,
                 certificate,
                 policyResourceId,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The description of an X509 CA Certificate. </param>
+        /// <param name="etag"> The entity tag. </param>
+        /// <returns> A new <see cref="IotHub.IotHubCertificateDescriptionData"/> instance for mocking. </returns>
+        public static IotHubCertificateDescriptionData IotHubCertificateDescriptionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotHubCertificateProperties properties = default, ETag? etag = default)
+        {
+            return new IotHubCertificateDescriptionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
                 default);
         }
 

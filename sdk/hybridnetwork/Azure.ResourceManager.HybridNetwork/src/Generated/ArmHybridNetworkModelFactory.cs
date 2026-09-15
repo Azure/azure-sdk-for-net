@@ -19,30 +19,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public static partial class ArmHybridNetworkModelFactory
     {
 
-        /// <summary> Configuration group schema resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Configuration group schema properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
-        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfigurationGroupSchemaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Configuration group schema properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
@@ -54,22 +30,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, default);
         }
 
-        /// <summary> Tags object for patch operations. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
-        public static TagsObject TagsObject(IDictionary<string, string> tags = default)
+        /// <summary> publisher properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
+        /// <param name="scope"> The publisher scope. </param>
+        /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
+        public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = default, PublisherScope? scope = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Publisher configuration group schema update request definition. </summary>
-        /// <param name="versionState"> The configuration group schema state. </param>
-        /// <returns> A new <see cref="Models.ConfigurationGroupSchemaVersionUpdateState"/> instance for mocking. </returns>
-        public static ConfigurationGroupSchemaVersionUpdateState ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState = default)
-        {
-            return new ConfigurationGroupSchemaVersionUpdateState(versionState, default);
+            return new PublisherPropertiesFormat(provisioningState, scope, default);
         }
 
         /// <summary> publisher resource. </summary>
@@ -98,29 +65,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
-        /// <summary> publisher properties. </summary>
-        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
-        /// <param name="scope"> The publisher scope. </param>
-        /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
-        public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = default, PublisherScope? scope = default)
-        {
-            return new PublisherPropertiesFormat(provisioningState, scope, default);
-        }
-
-        /// <summary> Hybrid configuration group value resource. </summary>
+        /// <summary> Configuration group schema resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Hybrid configuration group value properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupValueData"/> instance for mocking. </returns>
-        public static ConfigurationGroupValueData ConfigurationGroupValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupValuePropertiesFormat properties = default)
+        /// <param name="properties"> Configuration group schema properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
+        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConfigurationGroupValueData(
+            return new ConfigurationGroupSchemaData(
                 id,
                 name,
                 resourceType,
@@ -129,6 +87,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> Tags object for patch operations. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
+        public static TagsObject TagsObject(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Publisher configuration group schema update request definition. </summary>
+        /// <param name="versionState"> The configuration group schema state. </param>
+        /// <returns> A new <see cref="Models.ConfigurationGroupSchemaVersionUpdateState"/> instance for mocking. </returns>
+        public static ConfigurationGroupSchemaVersionUpdateState ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState = default)
+        {
+            return new ConfigurationGroupSchemaVersionUpdateState(versionState, default);
         }
 
         /// <summary>
@@ -229,22 +205,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationValue);
         }
 
-        /// <summary> Network function resource response. </summary>
+        /// <summary> Hybrid configuration group value resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Network function properties. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The managed identity of the network function. </param>
-        /// <returns> A new <see cref="HybridNetwork.NetworkFunctionData"/> instance for mocking. </returns>
-        public static NetworkFunctionData NetworkFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionPropertiesFormat properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        /// <param name="properties"> Hybrid configuration group value properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupValueData"/> instance for mocking. </returns>
+        public static ConfigurationGroupValueData ConfigurationGroupValueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConfigurationGroupValuePropertiesFormat properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFunctionData(
+            return new ConfigurationGroupValueData(
                 id,
                 name,
                 resourceType,
@@ -252,8 +226,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                eTag,
-                identity,
                 default);
         }
 
@@ -364,6 +336,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 deploymentValues);
         }
 
+        /// <summary> Network function resource response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Network function properties. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="identity"> The managed identity of the network function. </param>
+        /// <returns> A new <see cref="HybridNetwork.NetworkFunctionData"/> instance for mocking. </returns>
+        public static NetworkFunctionData NetworkFunctionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionPropertiesFormat properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFunctionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                identity,
+                default);
+        }
+
         /// <summary> Payload for execute request post call. </summary>
         /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
         /// <param name="requestMetadata"> The request metadata. </param>
@@ -382,24 +382,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static RequestMetadata RequestMetadata(string relativePath = default, HttpMethod httpMethod = default, string serializedBody = default, string apiVersion = default)
         {
             return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, default);
-        }
-
-        /// <summary> The component sub resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The component properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ComponentData"/> instance for mocking. </returns>
-        public static ComponentData ComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComponentProperties properties = default)
-        {
-            return new ComponentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> The component properties of the network function. </summary>
@@ -565,6 +547,33 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The component sub resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The component properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ComponentData"/> instance for mocking. </returns>
+        public static ComponentData ComponentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComponentProperties properties = default)
+        {
+            return new ComponentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Network function definition group properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
+        /// <param name="description"> The network function definition group description. </param>
+        /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
+        public static NetworkFunctionDefinitionGroupPropertiesFormat NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
+        {
+            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, default);
+        }
+
         /// <summary> Network function definition group resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -579,39 +588,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkFunctionDefinitionGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> Network function definition group properties. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
-        /// <param name="description"> The network function definition group description. </param>
-        /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionDefinitionGroupPropertiesFormat NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
-        {
-            return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, default);
-        }
-
-        /// <summary> Network function definition version. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Network function definition version properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.NetworkFunctionDefinitionVersionData"/> instance for mocking. </returns>
-        public static NetworkFunctionDefinitionVersionData NetworkFunctionDefinitionVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionDefinitionVersionPropertiesFormat properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkFunctionDefinitionVersionData(
                 id,
                 name,
                 resourceType,
@@ -1072,12 +1048,45 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusArmTemplateDeployMappingRuleProfile(applicationEnablement, default, templateParameters is null ? default : new ArmTemplateMappingRuleProfile(templateParameters, default));
         }
 
+        /// <summary> Network function definition version. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Network function definition version properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.NetworkFunctionDefinitionVersionData"/> instance for mocking. </returns>
+        public static NetworkFunctionDefinitionVersionData NetworkFunctionDefinitionVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkFunctionDefinitionVersionPropertiesFormat properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkFunctionDefinitionVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> Publisher network function definition version update request definition. </summary>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionUpdateState"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionVersionUpdateState NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState = default)
         {
             return new NetworkFunctionDefinitionVersionUpdateState(versionState, default);
+        }
+
+        /// <summary> network service design group properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
+        /// <param name="description"> The network service design group description. </param>
+        /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
+        public static NetworkServiceDesignGroupPropertiesFormat NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
+        {
+            return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description, default);
         }
 
         /// <summary> network service design group resource. </summary>
@@ -1094,39 +1103,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetworkServiceDesignGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> network service design group properties. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
-        /// <param name="description"> The network service design group description. </param>
-        /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkServiceDesignGroupPropertiesFormat NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState = default, string description = default)
-        {
-            return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description, default);
-        }
-
-        /// <summary> network service design version. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> network service design version properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.NetworkServiceDesignVersionData"/> instance for mocking. </returns>
-        public static NetworkServiceDesignVersionData NetworkServiceDesignVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkServiceDesignVersionPropertiesFormat properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkServiceDesignVersionData(
                 id,
                 name,
                 resourceType,
@@ -1222,28 +1198,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
         }
 
-        /// <summary> Publisher network service design version update request definition. </summary>
-        /// <param name="versionState"> The network service design version state. </param>
-        /// <returns> A new <see cref="Models.NetworkServiceDesignVersionUpdateState"/> instance for mocking. </returns>
-        public static NetworkServiceDesignVersionUpdateState NetworkServiceDesignVersionUpdateState(VersionState? versionState = default)
-        {
-            return new NetworkServiceDesignVersionUpdateState(versionState, default);
-        }
-
-        /// <summary> Artifact store properties. </summary>
+        /// <summary> network service design version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> ArtifactStores properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ArtifactStoreData"/> instance for mocking. </returns>
-        public static ArtifactStoreData ArtifactStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArtifactStorePropertiesFormat properties = default)
+        /// <param name="properties"> network service design version properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.NetworkServiceDesignVersionData"/> instance for mocking. </returns>
+        public static NetworkServiceDesignVersionData NetworkServiceDesignVersionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkServiceDesignVersionPropertiesFormat properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ArtifactStoreData(
+            return new NetworkServiceDesignVersionData(
                 id,
                 name,
                 resourceType,
@@ -1252,6 +1220,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <summary> Publisher network service design version update request definition. </summary>
+        /// <param name="versionState"> The network service design version state. </param>
+        /// <returns> A new <see cref="Models.NetworkServiceDesignVersionUpdateState"/> instance for mocking. </returns>
+        public static NetworkServiceDesignVersionUpdateState NetworkServiceDesignVersionUpdateState(VersionState? versionState = default)
+        {
+            return new NetworkServiceDesignVersionUpdateState(versionState, default);
         }
 
         /// <summary> Artifact store properties. </summary>
@@ -1281,6 +1257,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(string name = default, AzureLocation? location = default)
         {
             return new ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(name, location, default);
+        }
+
+        /// <summary> Artifact store properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> ArtifactStores properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ArtifactStoreData"/> instance for mocking. </returns>
+        public static ArtifactStoreData ArtifactStoreData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ArtifactStorePropertiesFormat properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArtifactStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
         }
 
         /// <summary> List of network fabric controller ids. </summary>
@@ -1350,6 +1350,28 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Artifact manifest properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
+        /// <param name="artifactManifestState"> The artifact manifest state. </param>
+        /// <param name="artifacts"> The artifacts list. </param>
+        /// <returns> A new <see cref="Models.ArtifactManifestPropertiesFormat"/> instance for mocking. </returns>
+        public static ArtifactManifestPropertiesFormat ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState = default, ArtifactManifestState? artifactManifestState = default, IEnumerable<ManifestArtifactFormat> artifacts = default)
+        {
+            artifacts ??= new ChangeTrackingList<ManifestArtifactFormat>();
+
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, (artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>()).ToList(), default);
+        }
+
+        /// <summary> Manifest artifact properties. </summary>
+        /// <param name="artifactName"> The artifact name. </param>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <param name="artifactVersion"> The artifact version. </param>
+        /// <returns> A new <see cref="Models.ManifestArtifactFormat"/> instance for mocking. </returns>
+        public static ManifestArtifactFormat ManifestArtifactFormat(string artifactName = default, ArtifactType? artifactType = default, string artifactVersion = default)
+        {
+            return new ManifestArtifactFormat(artifactName, artifactType, artifactVersion, default);
+        }
+
+        /// <summary> Artifact manifest properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1371,28 +1393,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary> Artifact manifest properties. </summary>
-        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
-        /// <param name="artifactManifestState"> The artifact manifest state. </param>
-        /// <param name="artifacts"> The artifacts list. </param>
-        /// <returns> A new <see cref="Models.ArtifactManifestPropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactManifestPropertiesFormat ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState = default, ArtifactManifestState? artifactManifestState = default, IEnumerable<ManifestArtifactFormat> artifacts = default)
-        {
-            artifacts ??= new ChangeTrackingList<ManifestArtifactFormat>();
-
-            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, (artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>()).ToList(), default);
-        }
-
-        /// <summary> Manifest artifact properties. </summary>
-        /// <param name="artifactName"> The artifact name. </param>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactVersion"> The artifact version. </param>
-        /// <returns> A new <see cref="Models.ManifestArtifactFormat"/> instance for mocking. </returns>
-        public static ManifestArtifactFormat ManifestArtifactFormat(string artifactName = default, ArtifactType? artifactType = default, string artifactVersion = default)
-        {
-            return new ManifestArtifactFormat(artifactName, artifactType, artifactVersion, default);
         }
 
         /// <summary>
@@ -1456,30 +1456,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestUpdateState(artifactManifestState, default);
         }
 
-        /// <summary> Site resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Site properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.SiteData"/> instance for mocking. </returns>
-        public static SiteData SiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SitePropertiesFormat properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SiteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Site properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. <b>TODO</b>: Confirm if this is needed. </param>
         /// <param name="nfvis"> List of NFVIs. </param>
@@ -1530,22 +1506,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
         }
 
-        /// <summary> Site network service resource. </summary>
+        /// <summary> Site resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Site network service properties. </param>
-        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
-        /// <param name="sku"> Sku of the site network service. </param>
-        /// <returns> A new <see cref="HybridNetwork.SiteNetworkServiceData"/> instance for mocking. </returns>
-        public static SiteNetworkServiceData SiteNetworkServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SiteNetworkServicePropertiesFormat properties = default, ManagedServiceIdentity identity = default, HybridNetworkSku sku = default)
+        /// <param name="properties"> Site properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.SiteData"/> instance for mocking. </returns>
+        public static SiteData SiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SitePropertiesFormat properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SiteNetworkServiceData(
+            return new SiteData(
                 id,
                 name,
                 resourceType,
@@ -1553,8 +1527,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                identity,
-                sku,
                 default);
         }
 
@@ -1599,6 +1571,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration(string name = default, AzureLocation? location = default)
         {
             return new ManagedResourceGroupConfiguration(name, location, default);
+        }
+
+        /// <summary> Site network service resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Site network service properties. </param>
+        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
+        /// <param name="sku"> Sku of the site network service. </param>
+        /// <returns> A new <see cref="HybridNetwork.SiteNetworkServiceData"/> instance for mocking. </returns>
+        public static SiteNetworkServiceData SiteNetworkServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SiteNetworkServicePropertiesFormat properties = default, ManagedServiceIdentity identity = default, HybridNetworkSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SiteNetworkServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                sku,
+                default);
         }
 
         /// <summary> Sku, to be associated with a SiteNetworkService. </summary>

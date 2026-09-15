@@ -15,6 +15,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HealthcareApis.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HealthcareApisPrivateEndpointConnection1Data>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnection1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthcareApisPrivateEndpointConnection1Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(
-                    new HealthcareApisWorkspacePrivateEndpointConnectionResourceOperationSource(Client),
+                HealthcareApisArmOperation<HealthcareApisPrivateEndpointConnection1Data> operation = new HealthcareApisArmOperation<HealthcareApisPrivateEndpointConnection1Data>(
+                    new HealthcareApisPrivateEndpointConnection1DataOperationSource(),
                     _healthcareApisWorkspacePrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HealthcareApisPrivateEndpointConnection1Data> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, HealthcareApisPrivateEndpointConnection1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
@@ -148,10 +149,10 @@ namespace Azure.ResourceManager.HealthcareApis
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthcareApisPrivateEndpointConnectionData.ToRequestContent(data), context);
+                HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, HealthcareApisPrivateEndpointConnection1Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> operation = new HealthcareApisArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>(
-                    new HealthcareApisWorkspacePrivateEndpointConnectionResourceOperationSource(Client),
+                HealthcareApisArmOperation<HealthcareApisPrivateEndpointConnection1Data> operation = new HealthcareApisArmOperation<HealthcareApisPrivateEndpointConnection1Data>(
+                    new HealthcareApisPrivateEndpointConnection1DataOperationSource(),
                     _healthcareApisWorkspacePrivateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<HealthcareApisWorkspacePrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HealthcareApisPrivateEndpointConnection1Data>> GetAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.HealthcareApis
                 };
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<HealthcareApisPrivateEndpointConnectionData> response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<HealthcareApisWorkspacePrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<HealthcareApisPrivateEndpointConnection1Data> Get(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
@@ -254,12 +255,12 @@ namespace Azure.ResourceManager.HealthcareApis
                 };
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<HealthcareApisPrivateEndpointConnectionData> response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new HealthcareApisWorkspacePrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -372,14 +373,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HealthcareApisPrivateEndpointConnectionData> response = default;
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HealthcareApisPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((HealthcareApisPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -429,14 +430,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HealthcareApisPrivateEndpointConnectionData> response = default;
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HealthcareApisPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((HealthcareApisPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -486,14 +487,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<HealthcareApisPrivateEndpointConnectionData> response = default;
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HealthcareApisPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((HealthcareApisPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -547,14 +548,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 HttpMessage message = _healthcareApisWorkspacePrivateEndpointConnectionsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<HealthcareApisPrivateEndpointConnectionData> response = default;
+                Response<HealthcareApisPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(HealthcareApisPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(HealthcareApisPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((HealthcareApisPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((HealthcareApisPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

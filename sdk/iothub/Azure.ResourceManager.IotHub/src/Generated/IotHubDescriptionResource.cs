@@ -1791,6 +1791,39 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
+        /// <summary> Gets a collection of IotHubPrivateEndpointConnection1s in the <see cref="IotHubDescriptionResource"/>. </summary>
+        /// <returns> An object representing collection of IotHubPrivateEndpointConnection1s and their operations over a IotHubPrivateEndpointConnection1Resource. </returns>
+        public virtual IotHubPrivateEndpointConnection1Collection GetIotHubPrivateEndpointConnection1s()
+        {
+            return GetCachedClient(client => new IotHubPrivateEndpointConnection1Collection(client, Id));
+        }
+
+        /// <summary> Get private endpoint connection properties. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IotHubPrivateEndpointConnection1Data>> GetIotHubPrivateEndpointConnection1Async(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return await GetIotHubPrivateEndpointConnection1s().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get private endpoint connection properties. </summary>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IotHubPrivateEndpointConnection1Data> GetIotHubPrivateEndpointConnection1(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
+
+            return GetIotHubPrivateEndpointConnection1s().Get(privateEndpointConnectionName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of EventHubConsumerGroupInfos in the <see cref="IotHubDescriptionResource"/>. </summary>
         /// <param name="eventHubEndpointName"> The eventHubEndpointName for the resource. </param>
         /// <returns> An object representing collection of EventHubConsumerGroupInfos and their operations over a EventHubConsumerGroupInfoResource. </returns>

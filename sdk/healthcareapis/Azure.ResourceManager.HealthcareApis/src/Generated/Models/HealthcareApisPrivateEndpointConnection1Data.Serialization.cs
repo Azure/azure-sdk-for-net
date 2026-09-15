@@ -10,58 +10,76 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
+using Azure.ResourceManager.HealthcareApis;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class HealthcareApisPrivateEndpointConnectionData : ResourceData, IJsonModel<HealthcareApisPrivateEndpointConnectionData>
+    public partial class HealthcareApisPrivateEndpointConnection1Data : ResourceData, IJsonModel<HealthcareApisPrivateEndpointConnection1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeHealthcareApisPrivateEndpointConnection1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnection1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnection1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        HealthcareApisPrivateEndpointConnection1Data IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnection1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="healthcareApisPrivateEndpointConnection1Data"> The <see cref="HealthcareApisPrivateEndpointConnection1Data"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HealthcareApisPrivateEndpointConnection1Data healthcareApisPrivateEndpointConnection1Data)
+        {
+            if (healthcareApisPrivateEndpointConnection1Data == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(healthcareApisPrivateEndpointConnection1Data, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthcareApisPrivateEndpointConnection1Data"/> from. </param>
+        internal static HealthcareApisPrivateEndpointConnection1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeHealthcareApisPrivateEndpointConnection1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HealthcareApisPrivateEndpointConnection1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +90,10 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnection1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +120,24 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareApisPrivateEndpointConnectionData IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        HealthcareApisPrivateEndpointConnection1Data IJsonModel<HealthcareApisPrivateEndpointConnection1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnection1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnection1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeHealthcareApisPrivateEndpointConnection1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HealthcareApisPrivateEndpointConnectionData DeserializeHealthcareApisPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static HealthcareApisPrivateEndpointConnection1Data DeserializeHealthcareApisPrivateEndpointConnection1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +197,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HealthcareApisPrivateEndpointConnectionData(
+            return new HealthcareApisPrivateEndpointConnection1Data(
                 id,
                 name,
                 resourceType,

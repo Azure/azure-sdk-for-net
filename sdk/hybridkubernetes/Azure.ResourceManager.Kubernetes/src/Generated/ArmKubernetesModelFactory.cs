@@ -17,34 +17,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesModelFactory
     {
-        /// <summary> Represents a connected cluster. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Describes the connected cluster resource properties. </param>
-        /// <param name="identity"> The identity of the connected cluster. </param>
-        /// <param name="kind"> The kind of connected cluster. </param>
-        /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
-        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConnectedClusterData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                kind,
-                default);
-        }
-
         /// <param name="agentPublicKeyCertificate"> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </param>
         /// <param name="kubernetesVersion"> The Kubernetes version of the connected cluster resource. </param>
         /// <param name="totalNodeCount"> Number of nodes present in the connected cluster resource. </param>
@@ -177,6 +149,34 @@ namespace Azure.ResourceManager.Kubernetes.Models
             protectedSettings ??= new ChangeTrackingDictionary<string, string>();
 
             return new ConnectedClusterArcAgentryConfiguration(feature, settings ?? new ChangeTrackingDictionary<string, string>(), protectedSettings ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Represents a connected cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Describes the connected cluster resource properties. </param>
+        /// <param name="identity"> The identity of the connected cluster. </param>
+        /// <param name="kind"> The kind of connected cluster. </param>
+        /// <returns> A new <see cref="Kubernetes.ConnectedClusterData"/> instance for mocking. </returns>
+        public static ConnectedClusterData ConnectedClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ConnectedClusterProperties properties = default, ManagedServiceIdentity identity = default, ConnectedClusterKind? kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConnectedClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                kind,
+                default);
         }
 
         /// <summary> Object containing updates for patch operations. </summary>

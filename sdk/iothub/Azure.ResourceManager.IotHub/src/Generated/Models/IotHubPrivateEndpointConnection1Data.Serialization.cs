@@ -10,58 +10,81 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HealthcareApis.Models;
+using Azure.ResourceManager.IotHub;
 using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.HealthcareApis
+namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class HealthcareApisPrivateEndpointConnectionData : ResourceData, IJsonModel<HealthcareApisPrivateEndpointConnectionData>
+    /// <summary> The private endpoint connection of an IotHub. </summary>
+    public partial class IotHubPrivateEndpointConnection1Data : ResourceData, IJsonModel<IotHubPrivateEndpointConnection1Data>
     {
+        /// <summary> Initializes a new instance of <see cref="IotHubPrivateEndpointConnection1Data"/> for deserialization. </summary>
+        internal IotHubPrivateEndpointConnection1Data()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement, options);
+                        return DeserializeIotHubPrivateEndpointConnection1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnection1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnection1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IotHubPrivateEndpointConnection1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnectionData)PersistableModelCreateCore(data, options);
+        IotHubPrivateEndpointConnection1Data IPersistableModel<IotHubPrivateEndpointConnection1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (IotHubPrivateEndpointConnection1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IotHubPrivateEndpointConnection1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="iotHubPrivateEndpointConnection1Data"> The <see cref="IotHubPrivateEndpointConnection1Data"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IotHubPrivateEndpointConnection1Data iotHubPrivateEndpointConnection1Data)
+        {
+            if (iotHubPrivateEndpointConnection1Data == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(iotHubPrivateEndpointConnection1Data, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IotHubPrivateEndpointConnection1Data"/> from. </param>
+        internal static IotHubPrivateEndpointConnection1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeIotHubPrivateEndpointConnection1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IotHubPrivateEndpointConnection1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,17 +95,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnection1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,24 +122,24 @@ namespace Azure.ResourceManager.HealthcareApis
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HealthcareApisPrivateEndpointConnectionData IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HealthcareApisPrivateEndpointConnectionData)JsonModelCreateCore(ref reader, options);
+        IotHubPrivateEndpointConnection1Data IJsonModel<IotHubPrivateEndpointConnection1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (IotHubPrivateEndpointConnection1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthcareApisPrivateEndpointConnectionData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnection1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealthcareApisPrivateEndpointConnectionData(document.RootElement, options);
+            return DeserializeIotHubPrivateEndpointConnection1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HealthcareApisPrivateEndpointConnectionData DeserializeHealthcareApisPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
+        internal static IotHubPrivateEndpointConnection1Data DeserializeIotHubPrivateEndpointConnection1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +149,7 @@ namespace Azure.ResourceManager.HealthcareApis
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            PrivateEndpointConnectionProperties properties = default;
+            IotHubPrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,16 +182,12 @@ namespace Azure.ResourceManager.HealthcareApis
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHealthcareApisContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerIotHubContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    properties = PrivateEndpointConnectionProperties.DeserializePrivateEndpointConnectionProperties(prop.Value, options);
+                    properties = IotHubPrivateEndpointConnectionProperties.DeserializeIotHubPrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +195,7 @@ namespace Azure.ResourceManager.HealthcareApis
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HealthcareApisPrivateEndpointConnectionData(
+            return new IotHubPrivateEndpointConnection1Data(
                 id,
                 name,
                 resourceType,

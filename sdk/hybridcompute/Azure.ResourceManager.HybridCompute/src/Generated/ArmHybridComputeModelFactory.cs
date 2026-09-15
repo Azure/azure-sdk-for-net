@@ -129,32 +129,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeOperationValueDisplay(operation, resource, description, provider, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="tenantId"> Describes the tenant id. </param>
-        /// <param name="licenseType"> The type of the license resource. </param>
-        /// <param name="licenseDetails"> Describes the properties of a License. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
-        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HybridComputeLicenseData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, default),
-                default);
-        }
-
         /// <summary> Describes the properties of a License. </summary>
         /// <param name="state"> Describes the state of the license. </param>
         /// <param name="target"> Describes the license target server. </param>
@@ -190,6 +164,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new VolumeLicenseDetails(programYear, invoiceId, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="tenantId"> Describes the tenant id. </param>
+        /// <param name="licenseType"> The type of the license resource. </param>
+        /// <param name="licenseDetails"> Describes the properties of a License. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeLicenseData"/> instance for mocking. </returns>
+        public static HybridComputeLicenseData HybridComputeLicenseData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeProvisioningState? provisioningState = default, Guid? tenantId = default, HybridComputeLicenseType? licenseType = default, HybridComputeLicenseDetails licenseDetails = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridComputeLicenseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && tenantId is null && licenseType is null && licenseDetails is null ? default : new LicenseProperties(provisioningState, tenantId, licenseType, licenseDetails, default),
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="state"> Describes the state of the license. </param>
@@ -219,112 +219,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HybridComputeResourceUpdate(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
-        /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
-        /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
-        /// <param name="hardwareProfile"> Information about the machine's hardware. </param>
-        /// <param name="firmwareProfile"> Information about the machine's firmware. </param>
-        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
-        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
-        /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
-        /// <param name="statusReason"> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="status"> The status of the hybrid machine agent. </param>
-        /// <param name="lastStatusChange"> The time of the last status change. </param>
-        /// <param name="errorDetails"> Details about the error state. </param>
-        /// <param name="agentVersion"> The hybrid machine agent full version. </param>
-        /// <param name="vmId"> Specifies the hybrid machine unique ID. </param>
-        /// <param name="displayName"> Specifies the hybrid machine display name. </param>
-        /// <param name="machineFqdn"> Specifies the hybrid machine FQDN. </param>
-        /// <param name="clientPublicKey"> Public Key that the client provides to be used during initial resource onboarding. </param>
-        /// <param name="identityKeyStore"> Specifies the identity key store a machine is using. </param>
-        /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
-        /// <param name="osName"> The Operating System running on the hybrid machine. </param>
-        /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
-        /// <param name="osType"> The type of Operating System (windows/linux). </param>
-        /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
-        /// <param name="extensions"> Machine Extensions information (deprecated field). </param>
-        /// <param name="osSku"> Specifies the Operating System product SKU. </param>
-        /// <param name="osEdition"> The edition of the Operating System. </param>
-        /// <param name="domainName"> Specifies the Windows domain name. </param>
-        /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
-        /// <param name="dnsFqdn"> Specifies the DNS fully qualified display name. </param>
-        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
-        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
-        /// <param name="hardwareResourceId"> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </param>
-        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
-        /// <param name="detectedProperties"> Detected properties from the machine. </param>
-        /// <param name="storageDisks"> The disks on the machine. </param>
-        /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
-        /// <param name="networkInterfaces"> The list of network interfaces. </param>
-        /// <param name="resources"> The list of extensions affiliated to the machine. </param>
-        /// <param name="identity"> Identity for the resource. </param>
-        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
-        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, MachineStatusReason? statusReason = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
-
-            return new HybridComputeMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && storageDisks is null && firmwareProfile is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && statusReason is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
-                    locationData,
-                    agentConfiguration,
-                    serviceStatuses,
-                    hardwareProfile,
-                    storageDisks is null ? default : new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
-                    firmwareProfile,
-                    cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
-                    agentUpgrade,
-                    osProfile,
-                    licenseProfile,
-                    statusReason,
-                    provisioningState,
-                    status,
-                    lastStatusChange,
-                    (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
-                    agentVersion,
-                    vmId,
-                    displayName,
-                    machineFqdn,
-                    clientPublicKey,
-                    identityKeyStore,
-                    tpmEkCertificate,
-                    osName,
-                    osVersion,
-                    osType,
-                    vmUuid,
-                    (extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>()).ToList(),
-                    osSku,
-                    osEdition,
-                    domainName,
-                    adFqdn,
-                    dnsFqdn,
-                    privateLinkScopeResourceId,
-                    parentClusterResourceId,
-                    hardwareResourceId,
-                    msSqlDiscovered,
-                    detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
-                    networkInterfaces is null ? default : new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
-                    default),
-                (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
-                identity,
-                kind,
-                default);
         }
 
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
@@ -603,6 +497,112 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static HybridComputeIPAddress HybridComputeIPAddress(string address = default, string ipAddressVersion = default, string subnetAddressPrefix = default)
         {
             return new HybridComputeIPAddress(address, ipAddressVersion, subnetAddressPrefix is null ? default : new HybridComputeSubnet(subnetAddressPrefix, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
+        /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
+        /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
+        /// <param name="hardwareProfile"> Information about the machine's hardware. </param>
+        /// <param name="firmwareProfile"> Information about the machine's firmware. </param>
+        /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
+        /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
+        /// <param name="statusReason"> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="status"> The status of the hybrid machine agent. </param>
+        /// <param name="lastStatusChange"> The time of the last status change. </param>
+        /// <param name="errorDetails"> Details about the error state. </param>
+        /// <param name="agentVersion"> The hybrid machine agent full version. </param>
+        /// <param name="vmId"> Specifies the hybrid machine unique ID. </param>
+        /// <param name="displayName"> Specifies the hybrid machine display name. </param>
+        /// <param name="machineFqdn"> Specifies the hybrid machine FQDN. </param>
+        /// <param name="clientPublicKey"> Public Key that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="identityKeyStore"> Specifies the identity key store a machine is using. </param>
+        /// <param name="tpmEkCertificate"> Endorsement Key Certificate of the Trusted Platform Module (TPM) that the client provides to be used during initial resource onboarding. </param>
+        /// <param name="osName"> The Operating System running on the hybrid machine. </param>
+        /// <param name="osVersion"> The version of Operating System running on the hybrid machine. </param>
+        /// <param name="osType"> The type of Operating System (windows/linux). </param>
+        /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
+        /// <param name="extensions"> Machine Extensions information (deprecated field). </param>
+        /// <param name="osSku"> Specifies the Operating System product SKU. </param>
+        /// <param name="osEdition"> The edition of the Operating System. </param>
+        /// <param name="domainName"> Specifies the Windows domain name. </param>
+        /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
+        /// <param name="dnsFqdn"> Specifies the DNS fully qualified display name. </param>
+        /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
+        /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
+        /// <param name="hardwareResourceId"> Specifies the resource ID of the associated hardware device. Only settable by HCI RP. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="detectedProperties"> Detected properties from the machine. </param>
+        /// <param name="storageDisks"> The disks on the machine. </param>
+        /// <param name="cloudMetadataProvider"> Specifies the cloud provider (Azure/AWS/GCP...). </param>
+        /// <param name="networkInterfaces"> The list of network interfaces. </param>
+        /// <param name="resources"> The list of extensions affiliated to the machine. </param>
+        /// <param name="identity"> Identity for the resource. </param>
+        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineData"/> instance for mocking. </returns>
+        public static HybridComputeMachineData HybridComputeMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputeLocation locationData = default, AgentConfiguration agentConfiguration = default, HybridComputeServiceStatuses serviceStatuses = default, HybridComputeHardwareProfile hardwareProfile = default, HybridComputeFirmwareProfile firmwareProfile = default, AgentUpgrade agentUpgrade = default, HybridComputeOSProfile osProfile = default, LicenseProfileMachineInstanceView licenseProfile = default, MachineStatusReason? statusReason = default, string provisioningState = default, HybridComputeStatusType? status = default, DateTimeOffset? lastStatusChange = default, IEnumerable<ResponseError> errorDetails = default, string agentVersion = default, Guid? vmId = default, string displayName = default, string machineFqdn = default, string clientPublicKey = default, HybridComputeIdentityKeyStore? identityKeyStore = default, string tpmEkCertificate = default, string osName = default, string osVersion = default, string osType = default, Guid? vmUuid = default, IEnumerable<MachineExtensionInstanceView> extensions = default, string osSku = default, string osEdition = default, string domainName = default, string adFqdn = default, string dnsFqdn = default, ResourceIdentifier privateLinkScopeResourceId = default, ResourceIdentifier parentClusterResourceId = default, ResourceIdentifier hardwareResourceId = default, string msSqlDiscovered = default, IReadOnlyDictionary<string, string> detectedProperties = default, IEnumerable<HybridComputeDisk> storageDisks = default, string cloudMetadataProvider = default, IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default, IEnumerable<HybridComputeMachineExtensionData> resources = default, ManagedServiceIdentity identity = default, ArcKindEnum? kind = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            resources ??= new ChangeTrackingList<HybridComputeMachineExtensionData>();
+
+            return new HybridComputeMachineData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                locationData is null && agentConfiguration is null && serviceStatuses is null && hardwareProfile is null && storageDisks is null && firmwareProfile is null && cloudMetadataProvider is null && agentUpgrade is null && osProfile is null && licenseProfile is null && statusReason is null && provisioningState is null && status is null && lastStatusChange is null && errorDetails is null && agentVersion is null && vmId is null && displayName is null && machineFqdn is null && clientPublicKey is null && identityKeyStore is null && tpmEkCertificate is null && osName is null && osVersion is null && osType is null && vmUuid is null && extensions is null && osSku is null && osEdition is null && domainName is null && adFqdn is null && dnsFqdn is null && privateLinkScopeResourceId is null && parentClusterResourceId is null && hardwareResourceId is null && msSqlDiscovered is null && detectedProperties is null && networkInterfaces is null ? default : new MachineProperties(
+                    locationData,
+                    agentConfiguration,
+                    serviceStatuses,
+                    hardwareProfile,
+                    storageDisks is null ? default : new StorageProfile((storageDisks ?? new ChangeTrackingList<HybridComputeDisk>()).ToList(), default),
+                    firmwareProfile,
+                    cloudMetadataProvider is null ? default : new HybridComputeCloudMetadata(cloudMetadataProvider, default),
+                    agentUpgrade,
+                    osProfile,
+                    licenseProfile,
+                    statusReason,
+                    provisioningState,
+                    status,
+                    lastStatusChange,
+                    (errorDetails ?? new ChangeTrackingList<ResponseError>()).ToList(),
+                    agentVersion,
+                    vmId,
+                    displayName,
+                    machineFqdn,
+                    clientPublicKey,
+                    identityKeyStore,
+                    tpmEkCertificate,
+                    osName,
+                    osVersion,
+                    osType,
+                    vmUuid,
+                    (extensions ?? new ChangeTrackingList<MachineExtensionInstanceView>()).ToList(),
+                    osSku,
+                    osEdition,
+                    domainName,
+                    adFqdn,
+                    dnsFqdn,
+                    privateLinkScopeResourceId,
+                    parentClusterResourceId,
+                    hardwareResourceId,
+                    msSqlDiscovered,
+                    detectedProperties ?? new ChangeTrackingDictionary<string, string>(),
+                    networkInterfaces is null ? default : new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default),
+                    default),
+                (resources ?? new ChangeTrackingList<HybridComputeMachineExtensionData>()).ToList(),
+                identity,
+                kind,
+                default);
         }
 
         /// <summary> Describes a Machine Extension. </summary>
@@ -905,55 +905,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="source"> The source of the run command script. </param>
-        /// <param name="parameters"> The parameters used by the script. </param>
-        /// <param name="protectedParameters"> The parameters used by the script. </param>
-        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
-        /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
-        /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
-        /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
-        /// <param name="outputBlobUri"> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </param>
-        /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </param>
-        /// <param name="outputBlobManagedIdentity"> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="instanceView"> The machine run command instance view. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineRunCommandData"/> instance for mocking. </returns>
-        public static HybridComputeMachineRunCommandData HybridComputeMachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HybridComputeMachineRunCommandData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                source is null && parameters is null && protectedParameters is null && isAsyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
-                    source,
-                    (parameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
-                    (protectedParameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
-                    isAsyncExecution,
-                    runAsUser,
-                    runAsPassword,
-                    timeoutInSeconds,
-                    outputBlobUri,
-                    errorBlobUri,
-                    outputBlobManagedIdentity,
-                    errorBlobManagedIdentity,
-                    provisioningState,
-                    instanceView,
-                    default),
-                default);
-        }
-
         /// <summary> Describes the script sources for run command. Use only one of script, scriptUri, commandId. </summary>
         /// <param name="script"> Specifies the script content to be executed on the machine. </param>
         /// <param name="scriptUri"> Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI. </param>
@@ -1033,6 +984,55 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="source"> The source of the run command script. </param>
+        /// <param name="parameters"> The parameters used by the script. </param>
+        /// <param name="protectedParameters"> The parameters used by the script. </param>
+        /// <param name="isAsyncExecution"> Optional. If set to true, provisioning will complete as soon as script starts and will not wait for script to complete. </param>
+        /// <param name="runAsUser"> Specifies the user account on the machine when executing the run command. </param>
+        /// <param name="runAsPassword"> Specifies the user account password on the machine when executing the run command. </param>
+        /// <param name="timeoutInSeconds"> The timeout in seconds to execute the run command. </param>
+        /// <param name="outputBlobUri"> Specifies the Azure storage blob where script output stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer outputBlobManagedIdentity parameter. </param>
+        /// <param name="errorBlobUri"> Specifies the Azure storage blob where script error stream will be uploaded. Use a SAS URI with read, append, create, write access OR use managed identity to provide the VM access to the blob. Refer errorBlobManagedIdentity parameter. </param>
+        /// <param name="outputBlobManagedIdentity"> User-assigned managed identity that has access to outputBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
+        /// <param name="errorBlobManagedIdentity"> User-assigned managed identity that has access to errorBlobUri storage blob. Use an empty object in case of system-assigned identity. Make sure managed identity has been given access to blob's container with 'Storage Blob Data Contributor' role assignment. In case of user-assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </param>
+        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
+        /// <param name="instanceView"> The machine run command instance view. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputeMachineRunCommandData"/> instance for mocking. </returns>
+        public static HybridComputeMachineRunCommandData HybridComputeMachineRunCommandData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MachineRunCommandScriptSource source = default, IEnumerable<RunCommandInputContent> parameters = default, IEnumerable<RunCommandInputContent> protectedParameters = default, bool? isAsyncExecution = default, string runAsUser = default, string runAsPassword = default, int? timeoutInSeconds = default, Uri outputBlobUri = default, Uri errorBlobUri = default, RunCommandManagedIdentity outputBlobManagedIdentity = default, RunCommandManagedIdentity errorBlobManagedIdentity = default, string provisioningState = default, MachineRunCommandInstanceView instanceView = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridComputeMachineRunCommandData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                source is null && parameters is null && protectedParameters is null && isAsyncExecution is null && runAsUser is null && runAsPassword is null && timeoutInSeconds is null && outputBlobUri is null && errorBlobUri is null && outputBlobManagedIdentity is null && errorBlobManagedIdentity is null && provisioningState is null && instanceView is null ? default : new MachineRunCommandProperties(
+                    source,
+                    (parameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
+                    (protectedParameters ?? new ChangeTrackingList<RunCommandInputContent>()).ToList(),
+                    isAsyncExecution,
+                    runAsUser,
+                    runAsPassword,
+                    timeoutInSeconds,
+                    outputBlobUri,
+                    errorBlobUri,
+                    outputBlobManagedIdentity,
+                    errorBlobManagedIdentity,
+                    provisioningState,
+                    instanceView,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="gatewayId"> A unique, immutable, identifier for the Gateway. </param>
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
@@ -1073,24 +1073,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, allowedFeatures is null && gatewayBypass is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), (gatewayBypass ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
-        /// <summary> A private link resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/> instance for mocking. </returns>
-        public static HybridComputePrivateLinkResourceData HybridComputePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateLinkResourceProperties properties = default)
-        {
-            return new HybridComputePrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
@@ -1104,16 +1086,37 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <summary> A private endpoint connection. </summary>
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
+        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
+        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
+        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
+        /// <param name="serviceExtensions"> Enable private link validation for an Azure Arc Extension. </param>
+        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
+        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default, IEnumerable<HybridComputeServiceExtension> serviceExtensions = default)
+        {
+            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
+            serviceExtensions ??= new ChangeTrackingList<HybridComputeServiceExtension>();
+
+            return new HybridComputePrivateLinkScopeProperties(
+                publicNetworkAccess,
+                provisioningState,
+                privateLinkScopeId,
+                (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>()).ToList(),
+                (serviceExtensions ?? new ChangeTrackingList<HybridComputeServiceExtension>()).ToList(),
+                default);
+        }
+
+        /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Resource properties. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static HybridComputePrivateEndpointConnectionData HybridComputePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
+        /// <param name="properties"> The Private Endpoint Connection properties. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
         {
-            return new HybridComputePrivateEndpointConnectionData(
+            return new PrivateEndpointConnectionDataModel(
                 id,
                 name,
                 resourceType,
@@ -1132,30 +1135,72 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkServiceConnectionStateProperty(status, description, actionsRequired, default);
         }
 
+        /// <summary> Enable private link validation for an Azure Arc Extension. </summary>
+        /// <param name="serviceExtensionType"> The name of the Azure Arc Extension. </param>
+        /// <param name="serviceExtensionPublicNetworkAccess"> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </param>
+        /// <returns> A new <see cref="Models.HybridComputeServiceExtension"/> instance for mocking. </returns>
+        public static HybridComputeServiceExtension HybridComputeServiceExtension(BinaryData serviceExtensionType = default, HybridComputeServiceExtensionPublicNetworkAccess? serviceExtensionPublicNetworkAccess = default)
+        {
+            return new HybridComputeServiceExtension(serviceExtensionType, serviceExtensionPublicNetworkAccess, default);
+        }
+
+        /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="provisioningIssues"> Provisioning issues. </param>
-        /// <param name="networkSecurityPerimeter"> The Network Security Perimeter associated with this configuration. </param>
-        /// <param name="resourceAssociation"> The Resource Association. </param>
-        /// <param name="profile"> Network Security Perimeter profile. </param>
-        /// <returns> A new <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, IEnumerable<HybridComputeProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, HybridComputeResourceAssociation resourceAssociation = default, NetworkSecurityPerimeterProfile profile = default)
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties that define a Azure Arc PrivateLinkScope resource. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/> instance for mocking. </returns>
+        public static HybridComputePrivateLinkScopeData HybridComputePrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputePrivateLinkScopeProperties properties = default)
         {
-            return new NetworkSecurityPerimeterConfigurationData(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HybridComputePrivateLinkScopeData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
-                    provisioningState,
-                    (provisioningIssues ?? new ChangeTrackingList<HybridComputeProvisioningIssue>()).ToList(),
-                    networkSecurityPerimeter,
-                    resourceAssociation,
-                    profile,
-                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary> A private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkResourceData"/> instance for mocking. </returns>
+        public static HybridComputePrivateLinkResourceData HybridComputePrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateLinkResourceProperties properties = default)
+        {
+            return new HybridComputePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> A private endpoint connection. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static HybridComputePrivateEndpointConnectionData HybridComputePrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
+        {
+            return new HybridComputePrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -1226,6 +1271,33 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Current state of this NetworkSecurityPerimeter: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
+        /// <param name="provisioningIssues"> Provisioning issues. </param>
+        /// <param name="networkSecurityPerimeter"> The Network Security Perimeter associated with this configuration. </param>
+        /// <param name="resourceAssociation"> The Resource Association. </param>
+        /// <param name="profile"> Network Security Perimeter profile. </param>
+        /// <returns> A new <see cref="HybridCompute.NetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, IEnumerable<HybridComputeProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, HybridComputeResourceAssociation resourceAssociation = default, NetworkSecurityPerimeterProfile profile = default)
+        {
+            return new NetworkSecurityPerimeterConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && provisioningIssues is null && networkSecurityPerimeter is null && resourceAssociation is null && profile is null ? default : new NetworkSecurityPerimeterConfigurationProperties(
+                    provisioningState,
+                    (provisioningIssues ?? new ChangeTrackingList<HybridComputeProvisioningIssue>()).ToList(),
+                    networkSecurityPerimeter,
+                    resourceAssociation,
+                    profile,
+                    default),
+                default);
+        }
+
         /// <summary> Result of network security perimeter configurations. </summary>
         /// <param name="location"> The URL of the resource used to check the status of the asynchronous operation. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationReconcileResult"/> instance for mocking. </returns>
@@ -1262,78 +1334,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 groupId,
                 memberName,
                 default);
-        }
-
-        /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties that define a Azure Arc PrivateLinkScope resource. </param>
-        /// <returns> A new <see cref="HybridCompute.HybridComputePrivateLinkScopeData"/> instance for mocking. </returns>
-        public static HybridComputePrivateLinkScopeData HybridComputePrivateLinkScopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HybridComputePrivateLinkScopeProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HybridComputePrivateLinkScopeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
-        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
-        /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
-        /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
-        /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
-        /// <param name="privateEndpointConnections"> The collection of associated Private Endpoint Connections. </param>
-        /// <param name="serviceExtensions"> Enable private link validation for an Azure Arc Extension. </param>
-        /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopeProperties"/> instance for mocking. </returns>
-        public static HybridComputePrivateLinkScopeProperties HybridComputePrivateLinkScopeProperties(HybridComputePublicNetworkAccessType? publicNetworkAccess = default, string provisioningState = default, string privateLinkScopeId = default, IEnumerable<PrivateEndpointConnectionDataModel> privateEndpointConnections = default, IEnumerable<HybridComputeServiceExtension> serviceExtensions = default)
-        {
-            privateEndpointConnections ??= new ChangeTrackingList<PrivateEndpointConnectionDataModel>();
-            serviceExtensions ??= new ChangeTrackingList<HybridComputeServiceExtension>();
-
-            return new HybridComputePrivateLinkScopeProperties(
-                publicNetworkAccess,
-                provisioningState,
-                privateLinkScopeId,
-                (privateEndpointConnections ?? new ChangeTrackingList<PrivateEndpointConnectionDataModel>()).ToList(),
-                (serviceExtensions ?? new ChangeTrackingList<HybridComputeServiceExtension>()).ToList(),
-                default);
-        }
-
-        /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The Private Endpoint Connection properties. </param>
-        /// <returns> A new <see cref="Models.PrivateEndpointConnectionDataModel"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionDataModel PrivateEndpointConnectionDataModel(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridComputePrivateEndpointConnectionProperties properties = default)
-        {
-            return new PrivateEndpointConnectionDataModel(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Enable private link validation for an Azure Arc Extension. </summary>
-        /// <param name="serviceExtensionType"> The name of the Azure Arc Extension. </param>
-        /// <param name="serviceExtensionPublicNetworkAccess"> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </param>
-        /// <returns> A new <see cref="Models.HybridComputeServiceExtension"/> instance for mocking. </returns>
-        public static HybridComputeServiceExtension HybridComputeServiceExtension(BinaryData serviceExtensionType = default, HybridComputeServiceExtensionPublicNetworkAccess? serviceExtensionPublicNetworkAccess = default)
-        {
-            return new HybridComputeServiceExtension(serviceExtensionType, serviceExtensionPublicNetworkAccess, default);
         }
 
         /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
