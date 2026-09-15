@@ -20,6 +20,27 @@ namespace Azure.ResourceManager.StandbyPool.Models
     public static partial class ArmStandbyPoolModelFactory
     {
 
+        /// <summary> Details of the StandbyVirtualMachinePool. </summary>
+        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
+        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
+        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolProperties"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default, StandbyVirtualMachineState virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = default, StandbyProvisioningState? provisioningState = default)
+        {
+            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, default);
+        }
+
+        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
+        /// <param name="minReadyCapacity"> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </param>
+        /// <param name="postProvisioningDelay"> Specifies the duration to wait after virtual machine provisioning before the virtual machine becomes available for use. The duration should be specified in ISO 8601 format (e.g., PT2S for 2 seconds). </param>
+        /// <param name="dynamicSizingEnabled"> Indicates whether dynamic sizing is enabled for the standby pool. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolElasticityProfile"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolElasticityProfile StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity = default, long? minReadyCapacity = default, string postProvisioningDelay = default, bool? dynamicSizingEnabled = default)
+        {
+            return new StandbyVirtualMachinePoolElasticityProfile(maxReadyCapacity, minReadyCapacity, postProvisioningDelay, dynamicSizingEnabled is null ? default : new DynamicSizing(dynamicSizingEnabled, default), default);
+        }
+
         /// <summary> A StandbyVirtualMachinePoolResource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -44,27 +65,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 default);
         }
 
-        /// <summary> Details of the StandbyVirtualMachinePool. </summary>
-        /// <param name="elasticityProfile"> Specifies the elasticity profile of the standby virtual machine pools. </param>
-        /// <param name="virtualMachineState"> Specifies the desired state of virtual machines in the pool. </param>
-        /// <param name="attachedVirtualMachineScaleSetId"> Specifies the fully qualified resource ID of a virtual machine scale set the pool is attached to. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolProperties"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolProperties StandbyVirtualMachinePoolProperties(StandbyVirtualMachinePoolElasticityProfile elasticityProfile = default, StandbyVirtualMachineState virtualMachineState = default, ResourceIdentifier attachedVirtualMachineScaleSetId = default, StandbyProvisioningState? provisioningState = default)
-        {
-            return new StandbyVirtualMachinePoolProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, provisioningState, default);
-        }
-
-        /// <param name="maxReadyCapacity"> Specifies the maximum number of virtual machines in the standby virtual machine pool. </param>
-        /// <param name="minReadyCapacity"> Specifies the desired minimum number of virtual machines in the standby virtual machine pool. MinReadyCapacity cannot exceed MaxReadyCapacity. </param>
-        /// <param name="postProvisioningDelay"> Specifies the duration to wait after virtual machine provisioning before the virtual machine becomes available for use. The duration should be specified in ISO 8601 format (e.g., PT2S for 2 seconds). </param>
-        /// <param name="dynamicSizingEnabled"> Indicates whether dynamic sizing is enabled for the standby pool. </param>
-        /// <returns> A new <see cref="Models.StandbyVirtualMachinePoolElasticityProfile"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolElasticityProfile StandbyVirtualMachinePoolElasticityProfile(long maxReadyCapacity = default, long? minReadyCapacity = default, string postProvisioningDelay = default, bool? dynamicSizingEnabled = default)
-        {
-            return new StandbyVirtualMachinePoolElasticityProfile(maxReadyCapacity, minReadyCapacity, postProvisioningDelay, dynamicSizingEnabled is null ? default : new DynamicSizing(dynamicSizingEnabled, default), default);
-        }
-
         /// <summary> The type used for update operations of the StandbyVirtualMachinePoolResource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -86,6 +86,15 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyVirtualMachinePoolUpdateProperties(elasticityProfile, virtualMachineState, attachedVirtualMachineScaleSetId, default);
         }
 
+        /// <summary> Details of the StandbyVirtualMachine. </summary>
+        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.StandbyVirtualMachineProperties"/> instance for mocking. </returns>
+        public static StandbyVirtualMachineProperties StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId = default, StandbyProvisioningState? provisioningState = default)
+        {
+            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, default);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -96,33 +105,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static StandbyVirtualMachineData StandbyVirtualMachineData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StandbyVirtualMachineProperties properties = default)
         {
             return new StandbyVirtualMachineData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Details of the StandbyVirtualMachine. </summary>
-        /// <param name="virtualMachineResourceId"> Resource id of the virtual machine. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.StandbyVirtualMachineProperties"/> instance for mocking. </returns>
-        public static StandbyVirtualMachineProperties StandbyVirtualMachineProperties(ResourceIdentifier virtualMachineResourceId = default, StandbyProvisioningState? provisioningState = default)
-        {
-            return new StandbyVirtualMachineProperties(virtualMachineResourceId, provisioningState, default);
-        }
-
-        /// <summary> Contains information about a standby virtual machine pool as last known by the StandbyPool resource provider. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolRuntimeViewData"/> instance for mocking. </returns>
-        public static StandbyVirtualMachinePoolRuntimeViewData StandbyVirtualMachinePoolRuntimeViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StandbyVirtualMachinePoolRuntimeViewProperties properties = default)
-        {
-            return new StandbyVirtualMachinePoolRuntimeViewData(
                 id,
                 name,
                 resourceType,
@@ -171,26 +153,20 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyVirtualMachinePoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyVirtualMachinePoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), default), forecastStartOn, forecastInfo, default);
         }
 
-        /// <summary> A StandbyContainerGroupPoolResource. </summary>
+        /// <summary> Contains information about a standby virtual machine pool as last known by the StandbyPool resource provider. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StandbyContainerGroupPoolProperties properties = default)
+        /// <returns> A new <see cref="StandbyPool.StandbyVirtualMachinePoolRuntimeViewData"/> instance for mocking. </returns>
+        public static StandbyVirtualMachinePoolRuntimeViewData StandbyVirtualMachinePoolRuntimeViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StandbyVirtualMachinePoolRuntimeViewProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new StandbyContainerGroupPoolData(
+            return new StandbyVirtualMachinePoolRuntimeViewData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 default);
         }
@@ -237,6 +213,30 @@ namespace Azure.ResourceManager.StandbyPool.Models
             return new StandbyContainerGroupProfile(id, revision, default);
         }
 
+        /// <summary> A StandbyContainerGroupPoolResource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolData"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolData StandbyContainerGroupPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, StandbyContainerGroupPoolProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StandbyContainerGroupPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The type used for update operations of the StandbyContainerGroupPoolResource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -258,24 +258,6 @@ namespace Azure.ResourceManager.StandbyPool.Models
             zones ??= new ChangeTrackingList<string>();
 
             return new StandbyContainerGroupPoolUpdateProperties(elasticityProfile, containerGroupProperties, (zones ?? new ChangeTrackingList<string>()).ToList(), default);
-        }
-
-        /// <summary> Contains information about a standby container group pool as last known by the StandbyPool resource provider. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/> instance for mocking. </returns>
-        public static StandbyContainerGroupPoolRuntimeViewData StandbyContainerGroupPoolRuntimeViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StandbyContainerGroupPoolRuntimeViewProperties properties = default)
-        {
-            return new StandbyContainerGroupPoolRuntimeViewData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Contains information about a standby pool as last known by the StandbyPool resource provider. </summary>
@@ -318,6 +300,24 @@ namespace Azure.ResourceManager.StandbyPool.Models
         public static StandbyContainerGroupPoolPrediction StandbyContainerGroupPoolPrediction(IEnumerable<long> forecastValuesInstancesRequestedCount = default, DateTimeOffset forecastStartOn = default, string forecastInfo = default)
         {
             return new StandbyContainerGroupPoolPrediction(forecastValuesInstancesRequestedCount is null ? default : new StandbyContainerGroupPoolForecastValues((forecastValuesInstancesRequestedCount ?? new ChangeTrackingList<long>()).ToList(), default), forecastStartOn, forecastInfo, default);
+        }
+
+        /// <summary> Contains information about a standby container group pool as last known by the StandbyPool resource provider. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="StandbyPool.StandbyContainerGroupPoolRuntimeViewData"/> instance for mocking. </returns>
+        public static StandbyContainerGroupPoolRuntimeViewData StandbyContainerGroupPoolRuntimeViewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StandbyContainerGroupPoolRuntimeViewProperties properties = default)
+        {
+            return new StandbyContainerGroupPoolRuntimeViewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Contains the counts of VMs in each power state in a given zone, fault domain, as known by the StandbyPool resource provider. Note: any resources in the Running state may still be installing extensions / not fully provisioned. </summary>

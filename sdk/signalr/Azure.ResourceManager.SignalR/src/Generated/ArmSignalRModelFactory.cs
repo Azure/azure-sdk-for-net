@@ -23,109 +23,6 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
-        /// <param name="hostName"> FQDN of the service instance. </param>
-        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
-        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
-        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="hostNamePrefix"> Deprecated. </param>
-        /// <param name="features">
-        /// List of the featureFlags.
-        /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
-        /// And the response will only include featureFlags that are explicitly set.
-        /// When a featureFlag is not explicitly set, its globally default value will be used
-        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
-        /// </param>
-        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="serverless"> Serverless settings. </param>
-        /// <param name="networkACLs"> Network ACLs for the resource. </param>
-        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to "Enabled".
-        /// When it's Enabled, network ACLs still apply.
-        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
-        /// </param>
-        /// <param name="disableLocalAuth">
-        /// DisableLocalAuth
-        /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won't work.
-        /// </param>
-        /// <param name="disableAadAuth">
-        /// DisableLocalAuth
-        /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won't work.
-        /// </param>
-        /// <param name="regionEndpointEnabled">
-        /// Enable or disable the regional endpoint. Default to "Enabled".
-        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
-        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
-        /// </param>
-        /// <param name="resourceStopped">
-        /// Stop or start the resource.  Default to "False".
-        /// When it's true, the data plane of the resource is shutdown.
-        /// When it's false, the data plane of the resource is started.
-        /// </param>
-        /// <param name="routeSettings"> Route settings for the resource. </param>
-        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
-        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
-        /// <param name="corsAllowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
-        /// <param name="upstreamTemplates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. </param>
-        /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
-        public static SignalRData SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, string hostNamePrefix, IEnumerable<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRServerlessSettings serverless, SignalRNetworkAcls networkACLs, SignalRApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, string regionEndpointEnabled, string resourceStopped, SignalRRouteSettings routeSettings, bool? isClientCertEnabled, IEnumerable<SignalRResourceLogCategory> resourceLogCategories, IEnumerable<string> corsAllowedOrigins, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SignalRData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isClientCertEnabled is null && hostNamePrefix is null && features is null && liveTraceConfiguration is null && resourceLogCategories is null && corsAllowedOrigins is null && serverless is null && upstreamTemplates is null && networkACLs is null && applicationFirewall is null && publicNetworkAccess is null && disableLocalAuth is null && disableAadAuth is null && regionEndpointEnabled is null && resourceStopped is null && routeSettings is null ? default : new SignalRProperties(
-                    provisioningState,
-                    externalIP,
-                    hostName,
-                    publicPort,
-                    serverPort,
-                    version,
-                    (privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>()).ToList(),
-                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>()).ToList(),
-                    isClientCertEnabled is null ? default : new SignalRTlsSettings(isClientCertEnabled, default),
-                    hostNamePrefix,
-                    (features ?? new ChangeTrackingList<SignalRFeature>()).ToList(),
-                    liveTraceConfiguration,
-                    resourceLogCategories is null ? default : new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
-                    corsAllowedOrigins is null ? default : new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
-                    serverless,
-                    upstreamTemplates is null ? default : new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
-                    networkACLs,
-                    applicationFirewall,
-                    publicNetworkAccess,
-                    disableLocalAuth,
-                    disableAadAuth,
-                    regionEndpointEnabled,
-                    resourceStopped,
-                    routeSettings,
-                    default),
-                sku,
-                kind,
-                identity,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
@@ -483,6 +380,109 @@ namespace Azure.ResourceManager.SignalR.Models
         public static SignalRRouteSettings SignalRRouteSettings(int? serverBalanceWeight = default, int? connectionBalanceWeight = default, int? latencyWeight = default)
         {
             return new SignalRRouteSettings(serverBalanceWeight, connectionBalanceWeight, latencyWeight, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
+        /// <param name="hostName"> FQDN of the service instance. </param>
+        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
+        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
+        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
+        /// <param name="hostNamePrefix"> Deprecated. </param>
+        /// <param name="features">
+        /// List of the featureFlags.
+        /// FeatureFlags that are not included in the parameters for the update operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly set.
+        /// When a featureFlag is not explicitly set, its globally default value will be used
+        /// But keep in mind, the default value doesn't mean "false". It varies in terms of different FeatureFlags.
+        /// </param>
+        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="serverless"> Serverless settings. </param>
+        /// <param name="networkACLs"> Network ACLs for the resource. </param>
+        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// </param>
+        /// <param name="disableLocalAuth">
+        /// DisableLocalAuth
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.
+        /// </param>
+        /// <param name="disableAadAuth">
+        /// DisableLocalAuth
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.
+        /// </param>
+        /// <param name="regionEndpointEnabled">
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </param>
+        /// <param name="resourceStopped">
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </param>
+        /// <param name="routeSettings"> Route settings for the resource. </param>
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
+        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
+        /// <param name="corsAllowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
+        /// <param name="upstreamTemplates"> Gets or sets the list of Upstream URL templates. Order matters, and the first matching template takes effects. </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. </param>
+        /// <returns> A new <see cref="SignalR.SignalRData"/> instance for mocking. </returns>
+        public static SignalRData SignalRData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SignalRProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<SignalRPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<SignalRSharedPrivateLinkResourceData> sharedPrivateLinkResources, string hostNamePrefix, IEnumerable<SignalRFeature> features, SignalRLiveTraceConfiguration liveTraceConfiguration, SignalRServerlessSettings serverless, SignalRNetworkAcls networkACLs, SignalRApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? disableLocalAuth, bool? disableAadAuth, string regionEndpointEnabled, string resourceStopped, SignalRRouteSettings routeSettings, bool? isClientCertEnabled, IEnumerable<SignalRResourceLogCategory> resourceLogCategories, IEnumerable<string> corsAllowedOrigins, IEnumerable<SignalRUpstreamTemplate> upstreamTemplates = default, SignalRResourceSku sku = default, SignalRServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SignalRData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isClientCertEnabled is null && hostNamePrefix is null && features is null && liveTraceConfiguration is null && resourceLogCategories is null && corsAllowedOrigins is null && serverless is null && upstreamTemplates is null && networkACLs is null && applicationFirewall is null && publicNetworkAccess is null && disableLocalAuth is null && disableAadAuth is null && regionEndpointEnabled is null && resourceStopped is null && routeSettings is null ? default : new SignalRProperties(
+                    provisioningState,
+                    externalIP,
+                    hostName,
+                    publicPort,
+                    serverPort,
+                    version,
+                    (privateEndpointConnections ?? new ChangeTrackingList<SignalRPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<SignalRSharedPrivateLinkResourceData>()).ToList(),
+                    isClientCertEnabled is null ? default : new SignalRTlsSettings(isClientCertEnabled, default),
+                    hostNamePrefix,
+                    (features ?? new ChangeTrackingList<SignalRFeature>()).ToList(),
+                    liveTraceConfiguration,
+                    resourceLogCategories is null ? default : new SignalRResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<SignalRResourceLogCategory>()).ToList(), default),
+                    corsAllowedOrigins is null ? default : new SignalRCorsSettings((corsAllowedOrigins ?? new ChangeTrackingList<string>()).ToList(), default),
+                    serverless,
+                    upstreamTemplates is null ? default : new ServerlessUpstreamSettings((upstreamTemplates ?? new ChangeTrackingList<SignalRUpstreamTemplate>()).ToList(), default),
+                    networkACLs,
+                    applicationFirewall,
+                    publicNetworkAccess,
+                    disableLocalAuth,
+                    disableAadAuth,
+                    regionEndpointEnabled,
+                    resourceStopped,
+                    routeSettings,
+                    default),
+                sku,
+                kind,
+                identity,
+                default);
         }
 
         /// <summary> The billing information of the resource. </summary>

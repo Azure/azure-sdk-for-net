@@ -20,37 +20,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     public static partial class ArmSqlVirtualMachineModelFactory
     {
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="availabilityGroupName"> Name of the availability group. </param>
-        /// <param name="loadBalancerConfigurations"> List of load balancer configurations for an availability group listener. </param>
-        /// <param name="multiSubnetIPConfigurations"> List of multi subnet IP configurations for an AG listener. </param>
-        /// <param name="createDefaultAvailabilityGroupIfNotExist"> Create a default availability group if it does not exist. </param>
-        /// <param name="port"> Listener port. </param>
-        /// <param name="availabilityGroupReplicas"> Replica configurations. </param>
-        /// <returns> A new <see cref="SqlVirtualMachine.AvailabilityGroupListenerData"/> instance for mocking. </returns>
-        public static AvailabilityGroupListenerData AvailabilityGroupListenerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string availabilityGroupName = default, IEnumerable<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default, IEnumerable<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default, bool? createDefaultAvailabilityGroupIfNotExist = default, int? port = default, IEnumerable<AvailabilityGroupReplica> availabilityGroupReplicas = default)
-        {
-            return new AvailabilityGroupListenerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && availabilityGroupName is null && loadBalancerConfigurations is null && multiSubnetIPConfigurations is null && createDefaultAvailabilityGroupIfNotExist is null && port is null && availabilityGroupReplicas is null ? default : new AvailabilityGroupListenerProperties(
-                    provisioningState,
-                    availabilityGroupName,
-                    (loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>()).ToList(),
-                    (multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>()).ToList(),
-                    createDefaultAvailabilityGroupIfNotExist,
-                    port,
-                    availabilityGroupReplicas is null ? default : new AvailabilityGroupConfiguration((availabilityGroupReplicas ?? new ChangeTrackingList<AvailabilityGroupReplica>()).ToList(), default),
-                    default),
-                default);
-        }
-
         /// <summary> A load balancer configuration for an availability group listener. </summary>
         /// <param name="privateIPAddress"> Private IP address. </param>
         /// <param name="publicIPAddressResourceId"> Resource id of the public IP. </param>
@@ -104,6 +73,104 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 commit,
                 failover,
                 readableSecondary,
+                default);
+        }
+
+        /// <summary> Active Directory account details to operate Windows Server Failover Cluster. </summary>
+        /// <param name="domainFqdn"> Fully qualified name of the domain. </param>
+        /// <param name="organizationalUnitPath"> Organizational Unit path in which the nodes and cluster will be present. </param>
+        /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </param>
+        /// <param name="clusterOperatorAccount"> Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster. </param>
+        /// <param name="sqlServiceAccount"> Account name under which SQL service will run on all participating SQL virtual machines in the cluster. </param>
+        /// <param name="isSqlServiceAccountGmsa"> The flag to check if SQL service account is GMSA. </param>
+        /// <param name="fileShareWitnessPath"> Optional path for fileshare witness. </param>
+        /// <param name="storageAccountUri"> Fully qualified ARM resource id of the witness storage account. </param>
+        /// <param name="storageAccountPrimaryKey"> Primary key of the witness storage account. </param>
+        /// <param name="clusterSubnetType"> Cluster subnet type. </param>
+        /// <returns> A new <see cref="Models.WindowsServerFailoverClusterDomainProfile"/> instance for mocking. </returns>
+        public static WindowsServerFailoverClusterDomainProfile WindowsServerFailoverClusterDomainProfile(string domainFqdn = default, string organizationalUnitPath = default, string clusterBootstrapAccount = default, string clusterOperatorAccount = default, string sqlServiceAccount = default, bool? isSqlServiceAccountGmsa = default, string fileShareWitnessPath = default, Uri storageAccountUri = default, string storageAccountPrimaryKey = default, SqlVmClusterSubnetType? clusterSubnetType = default)
+        {
+            return new WindowsServerFailoverClusterDomainProfile(
+                domainFqdn,
+                organizationalUnitPath,
+                clusterBootstrapAccount,
+                clusterOperatorAccount,
+                sqlServiceAccount,
+                isSqlServiceAccountGmsa,
+                fileShareWitnessPath,
+                storageAccountUri,
+                storageAccountPrimaryKey,
+                clusterSubnetType,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
+        /// <param name="sqlImageOffer"> SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016. </param>
+        /// <param name="sqlImageSku"> SQL image sku. </param>
+        /// <param name="scaleType"> Scale type. </param>
+        /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
+        /// <param name="clusterConfiguration"> Cluster type. </param>
+        /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
+        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
+        /// <returns> A new <see cref="SqlVirtualMachine.SqlVmGroupData"/> instance for mocking. </returns>
+        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string sqlImageOffer = default, SqlVmGroupImageSku? sqlImageSku = default, SqlVmGroupScaleType? scaleType = default, SqlVmClusterManagerType? clusterManagerType = default, SqlVmClusterConfiguration? clusterConfiguration = default, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default, string sqlVmGroupName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SqlVmGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && sqlImageOffer is null && sqlImageSku is null && scaleType is null && clusterManagerType is null && clusterConfiguration is null && windowsServerFailoverClusterDomainProfile is null ? default : new SqlVirtualMachineGroupProperties(
+                    provisioningState,
+                    sqlImageOffer,
+                    sqlImageSku,
+                    scaleType,
+                    clusterManagerType,
+                    clusterConfiguration,
+                    windowsServerFailoverClusterDomainProfile,
+                    default),
+                sqlVmGroupName,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
+        /// <param name="availabilityGroupName"> Name of the availability group. </param>
+        /// <param name="loadBalancerConfigurations"> List of load balancer configurations for an availability group listener. </param>
+        /// <param name="multiSubnetIPConfigurations"> List of multi subnet IP configurations for an AG listener. </param>
+        /// <param name="createDefaultAvailabilityGroupIfNotExist"> Create a default availability group if it does not exist. </param>
+        /// <param name="port"> Listener port. </param>
+        /// <param name="availabilityGroupReplicas"> Replica configurations. </param>
+        /// <returns> A new <see cref="SqlVirtualMachine.AvailabilityGroupListenerData"/> instance for mocking. </returns>
+        public static AvailabilityGroupListenerData AvailabilityGroupListenerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, string availabilityGroupName = default, IEnumerable<AvailabilityGroupListenerLoadBalancerConfiguration> loadBalancerConfigurations = default, IEnumerable<MultiSubnetIPConfiguration> multiSubnetIPConfigurations = default, bool? createDefaultAvailabilityGroupIfNotExist = default, int? port = default, IEnumerable<AvailabilityGroupReplica> availabilityGroupReplicas = default)
+        {
+            return new AvailabilityGroupListenerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && availabilityGroupName is null && loadBalancerConfigurations is null && multiSubnetIPConfigurations is null && createDefaultAvailabilityGroupIfNotExist is null && port is null && availabilityGroupReplicas is null ? default : new AvailabilityGroupListenerProperties(
+                    provisioningState,
+                    availabilityGroupName,
+                    (loadBalancerConfigurations ?? new ChangeTrackingList<AvailabilityGroupListenerLoadBalancerConfiguration>()).ToList(),
+                    (multiSubnetIPConfigurations ?? new ChangeTrackingList<MultiSubnetIPConfiguration>()).ToList(),
+                    createDefaultAvailabilityGroupIfNotExist,
+                    port,
+                    availabilityGroupReplicas is null ? default : new AvailabilityGroupConfiguration((availabilityGroupReplicas ?? new ChangeTrackingList<AvailabilityGroupReplica>()).ToList(), default),
+                    default),
                 default);
         }
 
@@ -389,73 +456,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public static SqlVmDiskConfigAssessmentContent SqlVmDiskConfigAssessmentContent(bool? runDiskConfigRules = default)
         {
             return new SqlVmDiskConfigAssessmentContent(runDiskConfigRules, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state to track the async operation status. </param>
-        /// <param name="sqlImageOffer"> SQL image offer. Examples may include SQL2016-WS2016, SQL2017-WS2016. </param>
-        /// <param name="sqlImageSku"> SQL image sku. </param>
-        /// <param name="scaleType"> Scale type. </param>
-        /// <param name="clusterManagerType"> Type of cluster manager: Windows Server Failover Cluster (WSFC), implied by the scale type of the group and the OS type. </param>
-        /// <param name="clusterConfiguration"> Cluster type. </param>
-        /// <param name="windowsServerFailoverClusterDomainProfile"> Cluster Active Directory domain profile. </param>
-        /// <param name="sqlVmGroupName"> Name of the SQL virtual machine group. </param>
-        /// <returns> A new <see cref="SqlVirtualMachine.SqlVmGroupData"/> instance for mocking. </returns>
-        public static SqlVmGroupData SqlVmGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string sqlImageOffer = default, SqlVmGroupImageSku? sqlImageSku = default, SqlVmGroupScaleType? scaleType = default, SqlVmClusterManagerType? clusterManagerType = default, SqlVmClusterConfiguration? clusterConfiguration = default, WindowsServerFailoverClusterDomainProfile windowsServerFailoverClusterDomainProfile = default, string sqlVmGroupName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SqlVmGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && sqlImageOffer is null && sqlImageSku is null && scaleType is null && clusterManagerType is null && clusterConfiguration is null && windowsServerFailoverClusterDomainProfile is null ? default : new SqlVirtualMachineGroupProperties(
-                    provisioningState,
-                    sqlImageOffer,
-                    sqlImageSku,
-                    scaleType,
-                    clusterManagerType,
-                    clusterConfiguration,
-                    windowsServerFailoverClusterDomainProfile,
-                    default),
-                sqlVmGroupName,
-                default);
-        }
-
-        /// <summary> Active Directory account details to operate Windows Server Failover Cluster. </summary>
-        /// <param name="domainFqdn"> Fully qualified name of the domain. </param>
-        /// <param name="organizationalUnitPath"> Organizational Unit path in which the nodes and cluster will be present. </param>
-        /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </param>
-        /// <param name="clusterOperatorAccount"> Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster. </param>
-        /// <param name="sqlServiceAccount"> Account name under which SQL service will run on all participating SQL virtual machines in the cluster. </param>
-        /// <param name="isSqlServiceAccountGmsa"> The flag to check if SQL service account is GMSA. </param>
-        /// <param name="fileShareWitnessPath"> Optional path for fileshare witness. </param>
-        /// <param name="storageAccountUri"> Fully qualified ARM resource id of the witness storage account. </param>
-        /// <param name="storageAccountPrimaryKey"> Primary key of the witness storage account. </param>
-        /// <param name="clusterSubnetType"> Cluster subnet type. </param>
-        /// <returns> A new <see cref="Models.WindowsServerFailoverClusterDomainProfile"/> instance for mocking. </returns>
-        public static WindowsServerFailoverClusterDomainProfile WindowsServerFailoverClusterDomainProfile(string domainFqdn = default, string organizationalUnitPath = default, string clusterBootstrapAccount = default, string clusterOperatorAccount = default, string sqlServiceAccount = default, bool? isSqlServiceAccountGmsa = default, string fileShareWitnessPath = default, Uri storageAccountUri = default, string storageAccountPrimaryKey = default, SqlVmClusterSubnetType? clusterSubnetType = default)
-        {
-            return new WindowsServerFailoverClusterDomainProfile(
-                domainFqdn,
-                organizationalUnitPath,
-                clusterBootstrapAccount,
-                clusterOperatorAccount,
-                sqlServiceAccount,
-                isSqlServiceAccountGmsa,
-                fileShareWitnessPath,
-                storageAccountUri,
-                storageAccountPrimaryKey,
-                clusterSubnetType,
-                default);
         }
 
         /// <summary> An update to a SQL virtual machine group. </summary>
