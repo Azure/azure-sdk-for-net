@@ -9,57 +9,75 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.TrafficManager.Models;
+using Azure.ResourceManager.TrafficManager;
 
-namespace Azure.ResourceManager.TrafficManager
+namespace Azure.ResourceManager.TrafficManager.Models
 {
     /// <summary> Class representing a Traffic Manager endpoint. </summary>
-    public partial class TrafficManagerEndpointData : TrafficManagerProxyResourceData, IJsonModel<TrafficManagerEndpointData>
+    public partial class TrafficManagerEndpoint1Data : TrafficManagerProxyResourceData, IJsonModel<TrafficManagerEndpoint1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TrafficManagerResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpoint1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTrafficManagerEndpointData(document.RootElement, options);
+                        return DeserializeTrafficManagerEndpoint1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpoint1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpoint1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpoint1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TrafficManagerEndpointData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TrafficManagerEndpoint1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerEndpointData IPersistableModel<TrafficManagerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficManagerEndpointData)PersistableModelCreateCore(data, options);
+        TrafficManagerEndpoint1Data IPersistableModel<TrafficManagerEndpoint1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrafficManagerEndpoint1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TrafficManagerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrafficManagerEndpoint1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="trafficManagerEndpoint1Data"> The <see cref="TrafficManagerEndpoint1Data"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(TrafficManagerEndpoint1Data trafficManagerEndpoint1Data)
+        {
+            if (trafficManagerEndpoint1Data == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(trafficManagerEndpoint1Data, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TrafficManagerEndpoint1Data"/> from. </param>
+        internal static TrafficManagerEndpoint1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeTrafficManagerEndpoint1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TrafficManagerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TrafficManagerEndpoint1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,10 +88,10 @@ namespace Azure.ResourceManager.TrafficManager
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpoint1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpoint1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -85,24 +103,24 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TrafficManagerEndpointData IJsonModel<TrafficManagerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrafficManagerEndpointData)JsonModelCreateCore(ref reader, options);
+        TrafficManagerEndpoint1Data IJsonModel<TrafficManagerEndpoint1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrafficManagerEndpoint1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override TrafficManagerResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpoint1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpoint1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrafficManagerEndpointData(document.RootElement, options);
+            return DeserializeTrafficManagerEndpoint1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TrafficManagerEndpointData DeserializeTrafficManagerEndpointData(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrafficManagerEndpoint1Data DeserializeTrafficManagerEndpoint1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +170,7 @@ namespace Azure.ResourceManager.TrafficManager
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TrafficManagerEndpointData(id, name, resourceType, additionalBinaryDataProperties, properties);
+            return new TrafficManagerEndpoint1Data(id, name, resourceType, additionalBinaryDataProperties, properties);
         }
     }
 }

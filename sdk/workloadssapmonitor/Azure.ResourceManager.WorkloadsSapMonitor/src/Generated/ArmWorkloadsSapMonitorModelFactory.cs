@@ -18,6 +18,16 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmWorkloadsSapMonitorModelFactory
     {
+
+        /// <summary> Configuration details of app service plan. </summary>
+        /// <param name="tier"> The App Service plan tier. </param>
+        /// <param name="capacity"> The number of workers in app service plan. If this is not set or set to 0, auto scale will be configured for the app service plan, otherwise, instance count is set to this number. </param>
+        /// <returns> A new <see cref="Models.SapMonitorAppServicePlanConfiguration"/> instance for mocking. </returns>
+        public static SapMonitorAppServicePlanConfiguration SapMonitorAppServicePlanConfiguration(SapMonitorAppServicePlanTier? tier = default, int? capacity = default)
+        {
+            return new SapMonitorAppServicePlanConfiguration(tier, capacity, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -65,15 +75,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 default);
         }
 
-        /// <summary> Configuration details of app service plan. </summary>
-        /// <param name="tier"> The App Service plan tier. </param>
-        /// <param name="capacity"> The number of workers in app service plan. If this is not set or set to 0, auto scale will be configured for the app service plan, otherwise, instance count is set to this number. </param>
-        /// <returns> A new <see cref="Models.SapMonitorAppServicePlanConfiguration"/> instance for mocking. </returns>
-        public static SapMonitorAppServicePlanConfiguration SapMonitorAppServicePlanConfiguration(SapMonitorAppServicePlanTier? tier = default, int? capacity = default)
-        {
-            return new SapMonitorAppServicePlanConfiguration(tier, capacity, default);
-        }
-
         /// <summary> Defines the request body for updating SAP monitor resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -83,26 +84,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SapMonitorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
-        /// <param name="health"> Resource health details. </param>
-        /// <param name="errors"> Defines the provider instance errors. </param>
-        /// <param name="providerSettings"> Defines the provider specific properties. </param>
-        /// <returns> A new <see cref="WorkloadsSapMonitor.SapProviderInstanceData"/> instance for mocking. </returns>
-        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadsSapMonitorProvisioningState? provisioningState = default, WorkloadsSapMonitorHealth health = default, ResponseError errors = default, SapProviderInstanceSpecificProperties providerSettings = default)
-        {
-            return new SapProviderInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && health is null && errors is null && providerSettings is null ? default : new ProviderInstanceProperties(provisioningState, health, errors, providerSettings, default),
-                default);
         }
 
         /// <summary> Resource health details. </summary>
@@ -310,18 +291,19 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
-        /// <param name="grouping"> Gets or sets the SID groupings by landscape and Environment. </param>
-        /// <param name="topMetricsThresholds"> Gets or sets the list Top Metric Thresholds for SAP Landscape Monitor Dashboard. </param>
-        /// <returns> A new <see cref="WorkloadsSapMonitor.SapLandscapeMonitorData"/> instance for mocking. </returns>
-        public static SapLandscapeMonitorData SapLandscapeMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapLandscapeMonitorProvisioningState? provisioningState = default, SapLandscapeMonitorPropertiesGrouping grouping = default, IEnumerable<SapLandscapeMonitorMetricThresholds> topMetricsThresholds = default)
+        /// <param name="provisioningState"> State of provisioning of the provider instance. </param>
+        /// <param name="health"> Resource health details. </param>
+        /// <param name="errors"> Defines the provider instance errors. </param>
+        /// <param name="providerSettings"> Defines the provider specific properties. </param>
+        /// <returns> A new <see cref="WorkloadsSapMonitor.SapProviderInstanceData"/> instance for mocking. </returns>
+        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadsSapMonitorProvisioningState? provisioningState = default, WorkloadsSapMonitorHealth health = default, ResponseError errors = default, SapProviderInstanceSpecificProperties providerSettings = default)
         {
-            return new SapLandscapeMonitorData(
+            return new SapProviderInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                provisioningState is null && grouping is null && topMetricsThresholds is null ? default : new SapLandscapeMonitorProperties(provisioningState, grouping, (topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>()).ToList(), default),
+                provisioningState is null && health is null && errors is null && providerSettings is null ? default : new ProviderInstanceProperties(provisioningState, health, errors, providerSettings, default),
                 default);
         }
 
@@ -359,21 +341,22 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapLandscapeMonitorMetricThresholds(name, green, yellow, red, default);
         }
 
-        /// <summary> A alert associated with SAP monitor. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Alert Instance properties. </param>
-        /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorAlertData"/> instance for mocking. </returns>
-        public static SapMonitorAlertData SapMonitorAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertProperties properties = default)
+        /// <param name="provisioningState"> State of provisioning of the SAP monitor. </param>
+        /// <param name="grouping"> Gets or sets the SID groupings by landscape and Environment. </param>
+        /// <param name="topMetricsThresholds"> Gets or sets the list Top Metric Thresholds for SAP Landscape Monitor Dashboard. </param>
+        /// <returns> A new <see cref="WorkloadsSapMonitor.SapLandscapeMonitorData"/> instance for mocking. </returns>
+        public static SapLandscapeMonitorData SapLandscapeMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapLandscapeMonitorProvisioningState? provisioningState = default, SapLandscapeMonitorPropertiesGrouping grouping = default, IEnumerable<SapLandscapeMonitorMetricThresholds> topMetricsThresholds = default)
         {
-            return new SapMonitorAlertData(
+            return new SapLandscapeMonitorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState is null && grouping is null && topMetricsThresholds is null ? default : new SapLandscapeMonitorProperties(provisioningState, grouping, (topMetricsThresholds ?? new ChangeTrackingList<SapLandscapeMonitorMetricThresholds>()).ToList(), default),
                 default);
         }
 
@@ -447,16 +430,16 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             return new SapMonitorAlertQueryContent(name, value, default);
         }
 
-        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <summary> A alert associated with SAP monitor. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Alert Template properties. </param>
-        /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorAlertTemplateData"/> instance for mocking. </returns>
-        public static SapMonitorAlertTemplateData SapMonitorAlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertTemplateProperties properties = default)
+        /// <param name="properties"> Alert Instance properties. </param>
+        /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorAlertData"/> instance for mocking. </returns>
+        public static SapMonitorAlertData SapMonitorAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertProperties properties = default)
         {
-            return new SapMonitorAlertTemplateData(
+            return new SapMonitorAlertData(
                 id,
                 name,
                 resourceType,
@@ -544,6 +527,24 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 laQuery,
                 selectionMode,
                 displayName,
+                default);
+        }
+
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Alert Template properties. </param>
+        /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorAlertTemplateData"/> instance for mocking. </returns>
+        public static SapMonitorAlertTemplateData SapMonitorAlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertTemplateProperties properties = default)
+        {
+            return new SapMonitorAlertTemplateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

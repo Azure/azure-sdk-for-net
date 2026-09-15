@@ -123,6 +123,15 @@ namespace Azure.ResourceManager.Support.Models
                 default);
         }
 
+        /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
+        /// <param name="description"> User consent description. </param>
+        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
+        /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
+        public static SecondaryConsentEnabled SecondaryConsentEnabled(string description = default, string secondaryConsentEnabledType = default)
+        {
+            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -138,142 +147,6 @@ namespace Azure.ResourceManager.Support.Models
                 resourceType,
                 systemData,
                 displayName is null ? default : new ProblemClassificationProperties(displayName, default, default),
-                default);
-        }
-
-        /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
-        /// <param name="description"> User consent description. </param>
-        /// <param name="secondaryConsentEnabledType"> The Azure service for which secondary consent is needed for case creation. </param>
-        /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
-        public static SecondaryConsentEnabled SecondaryConsentEnabled(string description = default, string secondaryConsentEnabledType = default)
-        {
-            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="communicationType"> Communication type. </param>
-        /// <param name="communicationDirection"> Direction of communication. </param>
-        /// <param name="sender"> Email address of the sender. This property is required if called by a service principal. </param>
-        /// <param name="subject"> Subject of the communication. </param>
-        /// <param name="body"> Body of the communication. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
-        /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
-        public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SupportTicketCommunicationType? communicationType = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string subject = default, string body = default, DateTimeOffset? createdOn = default)
-        {
-            return new SupportTicketCommunicationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                communicationType is null && communicationDirection is null && sender is null && subject is null && body is null && createdOn is null ? default : new CommunicationDetailsProperties(
-                    communicationType,
-                    communicationDirection,
-                    sender,
-                    subject,
-                    body,
-                    createdOn,
-                    default),
-                default);
-        }
-
-        /// <summary> Input of CheckNameAvailability API. </summary>
-        /// <param name="name"> The resource name to validate. </param>
-        /// <param name="resourceType"> The type of resource. </param>
-        /// <returns> A new <see cref="Models.SupportNameAvailabilityContent"/> instance for mocking. </returns>
-        public static SupportNameAvailabilityContent SupportNameAvailabilityContent(string name = default, SupportResourceType resourceType = default)
-        {
-            return new SupportNameAvailabilityContent(name, resourceType, default);
-        }
-
-        /// <summary> Output of check name availability API. </summary>
-        /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
-        /// <param name="reason"> The reason why the name is not available. </param>
-        /// <param name="message"> The detailed error message describing why the name is not available. </param>
-        /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
-        public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default, string reason = default, string message = default)
-        {
-            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="supportTicketId"> System generated support ticket Id that is unique. </param>
-        /// <param name="description"> Detailed description of the question or issue. </param>
-        /// <param name="problemClassificationId"> Each Azure service has its own set of issue categories, also known as problem classification. This parameter is the unique Id for the type of problem you are experiencing. </param>
-        /// <param name="problemClassificationDisplayName"> Localized name of problem classification. </param>
-        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
-        /// <param name="enrollmentId"> Enrollment Id associated with the support ticket. </param>
-        /// <param name="require24X7Response"> Indicates if this requires a 24x7 response from Azure. </param>
-        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
-        /// <param name="problemScopingQuestions"> Problem scoping questions associated with the support ticket. </param>
-        /// <param name="supportPlanId"> Support plan id associated with the support ticket. </param>
-        /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
-        /// <param name="serviceLevelAgreement"> Service Level Agreement information for this support ticket. </param>
-        /// <param name="supportPlanType"> Support plan type associated with the support ticket. </param>
-        /// <param name="supportPlanDisplayName"> Support plan type associated with the support ticket. </param>
-        /// <param name="title"> Title of the support ticket. </param>
-        /// <param name="problemStartOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
-        /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
-        /// <param name="serviceDisplayName"> Localized name of the Azure service. </param>
-        /// <param name="status"> Status of the support ticket. </param>
-        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the support ticket was created. </param>
-        /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
-        /// <param name="fileWorkspaceName"> File workspace name. </param>
-        /// <param name="isTemporaryTicket"> This property indicates if support ticket is a temporary ticket. </param>
-        /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
-        /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
-        /// <param name="directConnectEscalation"> Direct Connect Escalation details for a support ticket. </param>
-        /// <param name="communityForumPost"> Contains a link to the post on the community forum. </param>
-        /// <param name="supportChannel"> Support channel type for the support ticket. </param>
-        /// <param name="chatConversationStatus"> Status of the chat conversation associated with the support ticket. </param>
-        /// <param name="supportEngineerEmailAddress"> Email address of the Azure Support engineer assigned to the support ticket. </param>
-        /// <param name="technicalTicketDetailsResourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
-        /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, SupportChannel? supportChannel = default, ChatConversationStatus? chatConversationStatus = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
-        {
-            return new SupportTicketData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                new SupportTicketDetailsProperties(
-                    supportTicketId,
-                    description,
-                    problemClassificationId,
-                    problemClassificationDisplayName,
-                    severity,
-                    enrollmentId,
-                    require24X7Response,
-                    advancedDiagnosticConsent,
-                    problemScopingQuestions,
-                    supportPlanId,
-                    contactDetails,
-                    serviceLevelAgreement,
-                    supportEngineerEmailAddress is null ? default : new SupportEngineer(supportEngineerEmailAddress, default),
-                    supportPlanType,
-                    supportPlanDisplayName,
-                    title,
-                    problemStartOn,
-                    serviceId,
-                    serviceDisplayName,
-                    status,
-                    createdOn,
-                    modifiedOn,
-                    fileWorkspaceName,
-                    isTemporaryTicket,
-                    technicalTicketDetailsResourceId is null ? default : new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
-                    quotaTicketDetails,
-                    (secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>()).ToList(),
-                    directConnectEscalation,
-                    communityForumPost,
-                    supportChannel,
-                    chatConversationStatus,
-                    default),
                 default);
         }
 
@@ -357,6 +230,133 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportDirectConnectEscalation(azureEEStatus, (allowedSeverities ?? new ChangeTrackingList<SupportSeverityLevel>()).ToList(), reasonForEscalation, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="supportTicketId"> System generated support ticket Id that is unique. </param>
+        /// <param name="description"> Detailed description of the question or issue. </param>
+        /// <param name="problemClassificationId"> Each Azure service has its own set of issue categories, also known as problem classification. This parameter is the unique Id for the type of problem you are experiencing. </param>
+        /// <param name="problemClassificationDisplayName"> Localized name of problem classification. </param>
+        /// <param name="severity"> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </param>
+        /// <param name="enrollmentId"> Enrollment Id associated with the support ticket. </param>
+        /// <param name="require24X7Response"> Indicates if this requires a 24x7 response from Azure. </param>
+        /// <param name="advancedDiagnosticConsent"> Advanced diagnostic consent to be updated on the support ticket. </param>
+        /// <param name="problemScopingQuestions"> Problem scoping questions associated with the support ticket. </param>
+        /// <param name="supportPlanId"> Support plan id associated with the support ticket. </param>
+        /// <param name="contactDetails"> Contact information of the user requesting to create a support ticket. </param>
+        /// <param name="serviceLevelAgreement"> Service Level Agreement information for this support ticket. </param>
+        /// <param name="supportPlanType"> Support plan type associated with the support ticket. </param>
+        /// <param name="supportPlanDisplayName"> Support plan type associated with the support ticket. </param>
+        /// <param name="title"> Title of the support ticket. </param>
+        /// <param name="problemStartOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
+        /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
+        /// <param name="serviceDisplayName"> Localized name of the Azure service. </param>
+        /// <param name="status"> Status of the support ticket. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the support ticket was created. </param>
+        /// <param name="modifiedOn"> Time in UTC (ISO 8601 format) when the support ticket was last modified. </param>
+        /// <param name="fileWorkspaceName"> File workspace name. </param>
+        /// <param name="isTemporaryTicket"> This property indicates if support ticket is a temporary ticket. </param>
+        /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
+        /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
+        /// <param name="directConnectEscalation"> Direct Connect Escalation details for a support ticket. </param>
+        /// <param name="communityForumPost"> Contains a link to the post on the community forum. </param>
+        /// <param name="supportChannel"> Support channel type for the support ticket. </param>
+        /// <param name="chatConversationStatus"> Status of the chat conversation associated with the support ticket. </param>
+        /// <param name="supportEngineerEmailAddress"> Email address of the Azure Support engineer assigned to the support ticket. </param>
+        /// <param name="technicalTicketDetailsResourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
+        /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, SupportChannel? supportChannel = default, ChatConversationStatus? chatConversationStatus = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
+        {
+            return new SupportTicketData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new SupportTicketDetailsProperties(
+                    supportTicketId,
+                    description,
+                    problemClassificationId,
+                    problemClassificationDisplayName,
+                    severity,
+                    enrollmentId,
+                    require24X7Response,
+                    advancedDiagnosticConsent,
+                    problemScopingQuestions,
+                    supportPlanId,
+                    contactDetails,
+                    serviceLevelAgreement,
+                    supportEngineerEmailAddress is null ? default : new SupportEngineer(supportEngineerEmailAddress, default),
+                    supportPlanType,
+                    supportPlanDisplayName,
+                    title,
+                    problemStartOn,
+                    serviceId,
+                    serviceDisplayName,
+                    status,
+                    createdOn,
+                    modifiedOn,
+                    fileWorkspaceName,
+                    isTemporaryTicket,
+                    technicalTicketDetailsResourceId is null ? default : new TechnicalTicketDetails(technicalTicketDetailsResourceId, default),
+                    quotaTicketDetails,
+                    (secondaryConsent ?? new ChangeTrackingList<SecondaryConsent>()).ToList(),
+                    directConnectEscalation,
+                    communityForumPost,
+                    supportChannel,
+                    chatConversationStatus,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="communicationType"> Communication type. </param>
+        /// <param name="communicationDirection"> Direction of communication. </param>
+        /// <param name="sender"> Email address of the sender. This property is required if called by a service principal. </param>
+        /// <param name="subject"> Subject of the communication. </param>
+        /// <param name="body"> Body of the communication. </param>
+        /// <param name="createdOn"> Time in UTC (ISO 8601 format) when the communication was created. </param>
+        /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
+        public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SupportTicketCommunicationType? communicationType = default, SupportTicketCommunicationDirection? communicationDirection = default, string sender = default, string subject = default, string body = default, DateTimeOffset? createdOn = default)
+        {
+            return new SupportTicketCommunicationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                communicationType is null && communicationDirection is null && sender is null && subject is null && body is null && createdOn is null ? default : new CommunicationDetailsProperties(
+                    communicationType,
+                    communicationDirection,
+                    sender,
+                    subject,
+                    body,
+                    createdOn,
+                    default),
+                default);
+        }
+
+        /// <summary> Input of CheckNameAvailability API. </summary>
+        /// <param name="name"> The resource name to validate. </param>
+        /// <param name="resourceType"> The type of resource. </param>
+        /// <returns> A new <see cref="Models.SupportNameAvailabilityContent"/> instance for mocking. </returns>
+        public static SupportNameAvailabilityContent SupportNameAvailabilityContent(string name = default, SupportResourceType resourceType = default)
+        {
+            return new SupportNameAvailabilityContent(name, resourceType, default);
+        }
+
+        /// <summary> Output of check name availability API. </summary>
+        /// <param name="isNameAvailable"> Indicates whether the name is available. </param>
+        /// <param name="reason"> The reason why the name is not available. </param>
+        /// <param name="message"> The detailed error message describing why the name is not available. </param>
+        /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
+        public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = default, string reason = default, string message = default)
+        {
+            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, default);
+        }
+
         /// <summary> Updates severity, ticket status, contact details, advanced diagnostic consent and secondary consent in the support ticket. </summary>
         /// <param name="severity"> Severity level. </param>
         /// <param name="status"> Status to be updated on the ticket. </param>
@@ -424,24 +424,6 @@ namespace Azure.ResourceManager.Support.Models
             return new SupportLookUpResourceIdResult(resourceId, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="messages"> List of chat transcript communication resources. </param>
-        /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
-        /// <returns> A new <see cref="Support.ChatTranscriptDetailData"/> instance for mocking. </returns>
-        public static ChatTranscriptDetailData ChatTranscriptDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ChatTranscriptMessageProperties> messages = default, DateTimeOffset? startOn = default)
-        {
-            return new ChatTranscriptDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                messages is null && startOn is null ? default : new ChatTranscriptDetailsProperties((messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>()).ToList(), startOn, default),
-                default);
-        }
-
         /// <summary> Describes the properties of a Message Details resource. </summary>
         /// <param name="transcriptContentType"> Content type. </param>
         /// <param name="communicationDirection"> Direction of communication. </param>
@@ -457,6 +439,24 @@ namespace Azure.ResourceManager.Support.Models
                 sender,
                 body,
                 createdOn,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="messages"> List of chat transcript communication resources. </param>
+        /// <param name="startOn"> Time in UTC (ISO 8601 format) when the chat began. </param>
+        /// <returns> A new <see cref="Support.ChatTranscriptDetailData"/> instance for mocking. </returns>
+        public static ChatTranscriptDetailData ChatTranscriptDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ChatTranscriptMessageProperties> messages = default, DateTimeOffset? startOn = default)
+        {
+            return new ChatTranscriptDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                messages is null && startOn is null ? default : new ChatTranscriptDetailsProperties((messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>()).ToList(), startOn, default),
                 default);
         }
 

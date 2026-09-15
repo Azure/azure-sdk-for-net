@@ -18,98 +18,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmWebPubSubModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
-        /// <param name="hostName"> FQDN of the service instance. </param>
-        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
-        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
-        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
-        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
-        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="hostNamePrefix"> Deprecated. </param>
-        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="networkAcls"> Network ACLs for the resource. </param>
-        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to "Enabled".
-        /// When it's Enabled, network ACLs still apply.
-        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
-        /// </param>
-        /// <param name="isLocalAuthDisabled">
-        /// DisableLocalAuth
-        /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won't work.
-        /// </param>
-        /// <param name="isAadAuthDisabled">
-        /// DisableLocalAuth
-        /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won't work.
-        /// </param>
-        /// <param name="isRegionEndpointEnabled">
-        /// Enable or disable the regional endpoint. Default to "Enabled".
-        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
-        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
-        /// </param>
-        /// <param name="resourceStopped">
-        /// Stop or start the resource.  Default to "False".
-        /// When it's true, the data plane of the resource is shutdown.
-        /// When it's false, the data plane of the resource is started.
-        /// </param>
-        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
-        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
-        /// <param name="socketIOServiceMode">
-        /// The service mode of Web PubSub for Socket.IO. Values allowed:
-        /// "Default": have your own backend Socket.IO server
-        /// "Serverless": your application doesn't have a backend server
-        /// </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="kind"> The kind of the service. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. </param>
-        /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
-        public static WebPubSubData WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, WebPubSubNetworkAcls networkAcls, WebPubSubApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, bool? isClientCertEnabled, IEnumerable<ResourceLogCategory> resourceLogCategories, string socketIOServiceMode = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WebPubSubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isClientCertEnabled is null && hostNamePrefix is null && liveTraceConfiguration is null && resourceLogCategories is null && networkAcls is null && applicationFirewall is null && publicNetworkAccess is null && isLocalAuthDisabled is null && isAadAuthDisabled is null && isRegionEndpointEnabled is null && resourceStopped is null && socketIOServiceMode is null ? default : new WebPubSubProperties(
-                    provisioningState,
-                    externalIP,
-                    hostName,
-                    publicPort,
-                    serverPort,
-                    version,
-                    (privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>()).ToList(),
-                    (sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>()).ToList(),
-                    isClientCertEnabled is null ? default : new WebPubSubTlsSettings(isClientCertEnabled, default),
-                    hostNamePrefix,
-                    liveTraceConfiguration,
-                    resourceLogCategories is null ? default : new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
-                    networkAcls,
-                    applicationFirewall,
-                    publicNetworkAccess,
-                    isLocalAuthDisabled,
-                    isAadAuthDisabled,
-                    isRegionEndpointEnabled,
-                    resourceStopped,
-                    socketIOServiceMode is null ? default : new WebPubSubSocketIOSettings(socketIOServiceMode, default),
-                    default),
-                sku,
-                kind,
-                identity,
-                default);
-        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -357,6 +265,99 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
+        /// <param name="hostName"> FQDN of the service instance. </param>
+        /// <param name="publicPort"> The publicly accessible port of the resource which is designed for browser/client side usage. </param>
+        /// <param name="serverPort"> The publicly accessible port of the resource which is designed for customer server side usage. </param>
+        /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
+        /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
+        /// <param name="hostNamePrefix"> Deprecated. </param>
+        /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="networkAcls"> Network ACLs for the resource. </param>
+        /// <param name="applicationFirewall"> Application firewall settings for the resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// </param>
+        /// <param name="isLocalAuthDisabled">
+        /// DisableLocalAuth
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.
+        /// </param>
+        /// <param name="isAadAuthDisabled">
+        /// DisableLocalAuth
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.
+        /// </param>
+        /// <param name="isRegionEndpointEnabled">
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// This property is replica specific. Disable the regional endpoint without replica is not allowed.
+        /// </param>
+        /// <param name="resourceStopped">
+        /// Stop or start the resource.  Default to "False".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </param>
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
+        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
+        /// <param name="socketIOServiceMode">
+        /// The service mode of Web PubSub for Socket.IO. Values allowed:
+        /// "Default": have your own backend Socket.IO server
+        /// "Serverless": your application doesn't have a backend server
+        /// </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <param name="kind"> The kind of the service. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. </param>
+        /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
+        public static WebPubSubData WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IEnumerable<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IEnumerable<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, WebPubSubNetworkAcls networkAcls, WebPubSubApplicationFirewallSettings applicationFirewall, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled, string isRegionEndpointEnabled, string resourceStopped, bool? isClientCertEnabled, IEnumerable<ResourceLogCategory> resourceLogCategories, string socketIOServiceMode = default, BillingInfoSku sku = default, WebPubSubServiceKind? kind = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WebPubSubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && externalIP is null && hostName is null && publicPort is null && serverPort is null && version is null && privateEndpointConnections is null && sharedPrivateLinkResources is null && isClientCertEnabled is null && hostNamePrefix is null && liveTraceConfiguration is null && resourceLogCategories is null && networkAcls is null && applicationFirewall is null && publicNetworkAccess is null && isLocalAuthDisabled is null && isAadAuthDisabled is null && isRegionEndpointEnabled is null && resourceStopped is null && socketIOServiceMode is null ? default : new WebPubSubProperties(
+                    provisioningState,
+                    externalIP,
+                    hostName,
+                    publicPort,
+                    serverPort,
+                    version,
+                    (privateEndpointConnections ?? new ChangeTrackingList<WebPubSubPrivateEndpointConnectionData>()).ToList(),
+                    (sharedPrivateLinkResources ?? new ChangeTrackingList<WebPubSubSharedPrivateLinkData>()).ToList(),
+                    isClientCertEnabled is null ? default : new WebPubSubTlsSettings(isClientCertEnabled, default),
+                    hostNamePrefix,
+                    liveTraceConfiguration,
+                    resourceLogCategories is null ? default : new ResourceLogConfiguration((resourceLogCategories ?? new ChangeTrackingList<ResourceLogCategory>()).ToList(), default),
+                    networkAcls,
+                    applicationFirewall,
+                    publicNetworkAccess,
+                    isLocalAuthDisabled,
+                    isAadAuthDisabled,
+                    isRegionEndpointEnabled,
+                    resourceStopped,
+                    socketIOServiceMode is null ? default : new WebPubSubSocketIOSettings(socketIOServiceMode, default),
+                    default),
+                sku,
+                kind,
+                identity,
+                default);
+        }
+
         /// <summary> The billing information of the resource. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
@@ -386,6 +387,40 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 size,
                 family,
                 capacity,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="isRegionEndpointEnabled">
+        /// Enable or disable the regional endpoint. Default to "Enabled".
+        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
+        /// </param>
+        /// <param name="resourceStopped">
+        /// Stop or start the resource.  Default to "false".
+        /// When it's true, the data plane of the resource is shutdown.
+        /// When it's false, the data plane of the resource is started.
+        /// </param>
+        /// <param name="sku"> The billing information of the resource. </param>
+        /// <returns> A new <see cref="WebPubSub.WebPubSubReplicaData"/> instance for mocking. </returns>
+        public static WebPubSubReplicaData WebPubSubReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebPubSubProvisioningState? provisioningState = default, string isRegionEndpointEnabled = default, string resourceStopped = default, BillingInfoSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new WebPubSubReplicaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && isRegionEndpointEnabled is null && resourceStopped is null ? default : new ReplicaProperties(provisioningState, isRegionEndpointEnabled, resourceStopped, default),
+                sku,
                 default);
         }
 
@@ -513,24 +548,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 resourceType,
                 systemData,
                 provisioningState is null && domainName is null && customCertificateId is null ? default : new CustomDomainProperties(provisioningState, domainName, new ResourceReference(customCertificateId, default), default),
-                default);
-        }
-
-        /// <summary> A hub setting. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Properties of a hub. </param>
-        /// <returns> A new <see cref="WebPubSub.WebPubSubHubData"/> instance for mocking. </returns>
-        public static WebPubSubHubData WebPubSubHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebPubSubHubProperties properties = default)
-        {
-            return new WebPubSubHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -663,37 +680,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubEventHubEndpoint(default, default, fullyQualifiedNamespace, eventHubName);
         }
 
+        /// <summary> A hub setting. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="isRegionEndpointEnabled">
-        /// Enable or disable the regional endpoint. Default to "Enabled".
-        /// When it's Disabled, new connections will not be routed to this endpoint, however existing connections will not be affected.
-        /// </param>
-        /// <param name="resourceStopped">
-        /// Stop or start the resource.  Default to "false".
-        /// When it's true, the data plane of the resource is shutdown.
-        /// When it's false, the data plane of the resource is started.
-        /// </param>
-        /// <param name="sku"> The billing information of the resource. </param>
-        /// <returns> A new <see cref="WebPubSub.WebPubSubReplicaData"/> instance for mocking. </returns>
-        public static WebPubSubReplicaData WebPubSubReplicaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WebPubSubProvisioningState? provisioningState = default, string isRegionEndpointEnabled = default, string resourceStopped = default, BillingInfoSku sku = default)
+        /// <param name="properties"> Properties of a hub. </param>
+        /// <returns> A new <see cref="WebPubSub.WebPubSubHubData"/> instance for mocking. </returns>
+        public static WebPubSubHubData WebPubSubHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebPubSubHubProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new WebPubSubReplicaData(
+            return new WebPubSubHubData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && isRegionEndpointEnabled is null && resourceStopped is null ? default : new ReplicaProperties(provisioningState, isRegionEndpointEnabled, resourceStopped, default),
-                sku,
+                properties,
                 default);
         }
 

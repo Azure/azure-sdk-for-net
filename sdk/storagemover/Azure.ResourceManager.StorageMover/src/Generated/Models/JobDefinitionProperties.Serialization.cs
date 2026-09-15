@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             JobRunStatus? latestJobRunStatus = default;
             string agentName = default;
             ResourceIdentifier agentResourceId = default;
-            JobDefinitionPropertiesSourceTargetMap sourceTargetMap = default;
+            JobDefinitionSourceTargetMap sourceTargetMap = default;
             StorageMoverProvisioningState? provisioningState = default;
             IList<ResourceIdentifier> connections = default;
             StorageMoverScheduleInfo schedule = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    sourceTargetMap = JobDefinitionPropertiesSourceTargetMap.DeserializeJobDefinitionPropertiesSourceTargetMap(prop.Value, options);
+                    sourceTargetMap = JobDefinitionSourceTargetMap.DeserializeJobDefinitionSourceTargetMap(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

@@ -117,57 +117,57 @@ namespace Azure.ResourceManager.TrafficManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetAzureEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetAzureEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public static AzureEndpointTrafficManagerEndpointResource GetAzureEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AzureEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public static AzureEndpointTrafficManagerEndpoint1Resource GetAzureEndpointTrafficManagerEndpoint1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerArmClient(client).GetAzureEndpointTrafficManagerEndpointResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetAzureEndpointTrafficManagerEndpoint1Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetExternalEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetExternalEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public static ExternalEndpointTrafficManagerEndpointResource GetExternalEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExternalEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public static ExternalEndpointTrafficManagerEndpoint1Resource GetExternalEndpointTrafficManagerEndpoint1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerArmClient(client).GetExternalEndpointTrafficManagerEndpointResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetExternalEndpointTrafficManagerEndpoint1Resource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="NestedEndpointTrafficManagerEndpoint1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetNestedEndpointTrafficManagerEndpointResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetNestedEndpointTrafficManagerEndpoint1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpointResource"/> object. </returns>
-        public static NestedEndpointTrafficManagerEndpointResource GetNestedEndpointTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NestedEndpointTrafficManagerEndpoint1Resource"/> object. </returns>
+        public static NestedEndpointTrafficManagerEndpoint1Resource GetNestedEndpointTrafficManagerEndpoint1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableTrafficManagerArmClient(client).GetNestedEndpointTrafficManagerEndpointResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetNestedEndpointTrafficManagerEndpoint1Resource(id);
         }
 
         /// <summary>

@@ -53,51 +53,6 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverPatch(description is null ? default : new StorageMoverUpdateProperties(description, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="description"> A description for the Agent. </param>
-        /// <param name="agentVersion"> The Agent version. </param>
-        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
-        /// <param name="agentStatus"> The Agent status. </param>
-        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
-        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
-        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
-        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
-        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
-        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
-        /// <param name="errorDetails"> Gets the ErrorDetails. </param>
-        /// <param name="provisioningState"> The provisioning state of this resource. </param>
-        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
-        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
-        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string agentVersion = default, string arcResourceId = default, string arcVmUuid = default, StorageMoverAgentStatus? agentStatus = default, DateTimeOffset? lastStatusUpdate = default, string localIPAddress = default, long? memoryInMB = default, long? numberOfCores = default, long? uptimeInSeconds = default, string timeZone = default, StorageMoverAgentPropertiesErrorDetails errorDetails = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
-        {
-            return new StorageMoverAgentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                description is null && agentVersion is null && arcResourceId is null && arcVmUuid is null && agentStatus is null && lastStatusUpdate is null && localIPAddress is null && memoryInMB is null && numberOfCores is null && uptimeInSeconds is null && timeZone is null && uploadLimitScheduleWeeklyRecurrences is null && errorDetails is null && provisioningState is null ? default : new AgentProperties(
-                    description,
-                    agentVersion,
-                    arcResourceId,
-                    arcVmUuid,
-                    agentStatus,
-                    lastStatusUpdate,
-                    localIPAddress,
-                    memoryInMB,
-                    numberOfCores,
-                    uptimeInSeconds,
-                    timeZone,
-                    uploadLimitScheduleWeeklyRecurrences is null ? default : new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
-                    errorDetails,
-                    provisioningState,
-                    default),
-                default);
-        }
-
         /// <summary> The weekly recurrence of the WAN-link upload limit schedule. The start time must be earlier in the day than the end time. The recurrence must not span across multiple days. </summary>
         /// <param name="startTime"> The start time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
         /// <param name="endTime"> The end time of the schedule recurrence. Full hour and 30-minute intervals are supported. </param>
@@ -150,32 +105,57 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new StorageMoverAgentPropertiesErrorDetails(code, message, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="description"> A description for the Agent. </param>
+        /// <param name="agentVersion"> The Agent version. </param>
+        /// <param name="arcResourceId"> The fully qualified resource ID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="arcVmUuid"> The VM UUID of the Hybrid Compute resource for the Agent. </param>
+        /// <param name="agentStatus"> The Agent status. </param>
+        /// <param name="lastStatusUpdate"> The last updated time of the Agent status. </param>
+        /// <param name="localIPAddress"> Local IP address reported by the Agent. </param>
+        /// <param name="memoryInMB"> Available memory reported by the Agent, in MB. </param>
+        /// <param name="numberOfCores"> Available compute cores reported by the Agent. </param>
+        /// <param name="uptimeInSeconds"> Uptime of the Agent in seconds. </param>
+        /// <param name="timeZone"> The agent's local time zone represented in Windows format. </param>
+        /// <param name="errorDetails"> Gets the ErrorDetails. </param>
+        /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
+        public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, string agentVersion = default, string arcResourceId = default, string arcVmUuid = default, StorageMoverAgentStatus? agentStatus = default, DateTimeOffset? lastStatusUpdate = default, string localIPAddress = default, long? memoryInMB = default, long? numberOfCores = default, long? uptimeInSeconds = default, string timeZone = default, StorageMoverAgentPropertiesErrorDetails errorDetails = default, StorageMoverProvisioningState? provisioningState = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
+        {
+            return new StorageMoverAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description is null && agentVersion is null && arcResourceId is null && arcVmUuid is null && agentStatus is null && lastStatusUpdate is null && localIPAddress is null && memoryInMB is null && numberOfCores is null && uptimeInSeconds is null && timeZone is null && uploadLimitScheduleWeeklyRecurrences is null && errorDetails is null && provisioningState is null ? default : new AgentProperties(
+                    description,
+                    agentVersion,
+                    arcResourceId,
+                    arcVmUuid,
+                    agentStatus,
+                    lastStatusUpdate,
+                    localIPAddress,
+                    memoryInMB,
+                    numberOfCores,
+                    uptimeInSeconds,
+                    timeZone,
+                    uploadLimitScheduleWeeklyRecurrences is null ? default : new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default),
+                    errorDetails,
+                    provisioningState,
+                    default),
+                default);
+        }
+
         /// <param name="description"> A description for the Agent. </param>
         /// <param name="uploadLimitScheduleWeeklyRecurrences"> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </param>
         /// <returns> A new <see cref="Models.StorageMoverAgentPatch"/> instance for mocking. </returns>
         public static StorageMoverAgentPatch StorageMoverAgentPatch(string description = default, IEnumerable<UploadLimitWeeklyRecurrence> uploadLimitScheduleWeeklyRecurrences = default)
         {
             return new StorageMoverAgentPatch(description is null && uploadLimitScheduleWeeklyRecurrences is null ? default : new AgentUpdateProperties(description, uploadLimitScheduleWeeklyRecurrences is null ? default : new UploadLimitSchedule((uploadLimitScheduleWeeklyRecurrences ?? new ChangeTrackingList<UploadLimitWeeklyRecurrence>()).ToList(), default), default), default);
-        }
-
-        /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource specific properties for the Storage Mover resource. </param>
-        /// <param name="identity"> The managed service identity of the resource. This property is only available on the latest version. </param>
-        /// <returns> A new <see cref="StorageMover.StorageMoverEndpointData"/> instance for mocking. </returns>
-        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointBaseProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            return new StorageMoverEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                identity,
-                default);
         }
 
         /// <summary>
@@ -360,6 +340,26 @@ namespace Azure.ResourceManager.StorageMover.Models
                 default,
                 multiCloudConnectorId,
                 awsS3BucketId);
+        }
+
+        /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource specific properties for the Storage Mover resource. </param>
+        /// <param name="identity"> The managed service identity of the resource. This property is only available on the latest version. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverEndpointData"/> instance for mocking. </returns>
+        public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, EndpointBaseProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new StorageMoverEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                identity,
+                default);
         }
 
         /// <summary> The Endpoint resource. </summary>
@@ -558,24 +558,6 @@ namespace Azure.ResourceManager.StorageMover.Models
             return new JobRunResourceId(jobRunResourceIdValue, default);
         }
 
-        /// <summary> The Connection resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Connection properties. </param>
-        /// <returns> A new <see cref="StorageMover.StorageMoverConnectionData"/> instance for mocking. </returns>
-        public static StorageMoverConnectionData StorageMoverConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageMoverConnectionProperties properties = default)
-        {
-            return new StorageMoverConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Properties of the Connection resource. </summary>
         /// <param name="description"> A description for the Connection. </param>
         /// <param name="connectionStatus"> The connection status. </param>
@@ -597,6 +579,24 @@ namespace Azure.ResourceManager.StorageMover.Models
                 privateEndpointResourceId,
                 (jobList ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
                 provisioningState,
+                default);
+        }
+
+        /// <summary> The Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Connection properties. </param>
+        /// <returns> A new <see cref="StorageMover.StorageMoverConnectionData"/> instance for mocking. </returns>
+        public static StorageMoverConnectionData StorageMoverConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, StorageMoverConnectionProperties properties = default)
+        {
+            return new StorageMoverConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
