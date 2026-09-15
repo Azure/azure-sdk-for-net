@@ -17,30 +17,6 @@ namespace Azure.ResourceManager.FileShares.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmFileSharesModelFactory
     {
-        /// <summary> File share resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
-        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FileShareData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <param name="mountName"> The name of the file share as seen by the end user when mounting the share, such as in a URI or UNC format in their operating system. </param>
         /// <param name="hostName"> The host name of the file share. </param>
         /// <param name="mediaTier"> The storage media tier of the file share. </param>
@@ -135,6 +111,30 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileSharePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> File share resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="FileShares.FileShareData"/> instance for mocking. </returns>
+        public static FileShareData FileShareData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, FileShareProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FileShareData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The type used for update operations of the FileShare. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -184,6 +184,18 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> FileShareSnapshot properties. </summary>
+        /// <param name="snapshotTime"> The FileShareSnapshot time in UTC in string representation. </param>
+        /// <param name="initiatorId"> The initiator of the FileShareSnapshot. This is a user-defined value. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <returns> A new <see cref="Models.FileShareSnapshotProperties"/> instance for mocking. </returns>
+        public static FileShareSnapshotProperties FileShareSnapshotProperties(string snapshotTime = default, string initiatorId = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FileShareSnapshotProperties(snapshotTime, initiatorId, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
         /// <summary> FileShareSnapshot resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -200,18 +212,6 @@ namespace Azure.ResourceManager.FileShares.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> FileShareSnapshot properties. </summary>
-        /// <param name="snapshotTime"> The FileShareSnapshot time in UTC in string representation. </param>
-        /// <param name="initiatorId"> The initiator of the FileShareSnapshot. This is a user-defined value. </param>
-        /// <param name="metadata"> The metadata. </param>
-        /// <returns> A new <see cref="Models.FileShareSnapshotProperties"/> instance for mocking. </returns>
-        public static FileShareSnapshotProperties FileShareSnapshotProperties(string snapshotTime = default, string initiatorId = default, IDictionary<string, string> metadata = default)
-        {
-            metadata ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FileShareSnapshotProperties(snapshotTime, initiatorId, metadata ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="fileShareSnapshotUpdateMetadata"> The metadata. </param>
@@ -320,6 +320,19 @@ namespace Azure.ResourceManager.FileShares.Models
             return new FileShareProvisioningRecommendationOutputProperties(provisionedIOPerSec, provisionedThroughputMiBPerSec, (availableRedundancyOptions ?? new ChangeTrackingList<FileShareRedundancyLevel>()).ToList(), default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.FileSharePrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static FileSharePrivateLinkResourceProperties FileSharePrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new FileSharePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -336,19 +349,6 @@ namespace Azure.ResourceManager.FileShares.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties of a private link resource. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.FileSharePrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static FileSharePrivateLinkResourceProperties FileSharePrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            requiredMembers ??= new ChangeTrackingList<string>();
-            requiredZoneNames ??= new ChangeTrackingList<string>();
-
-            return new FileSharePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
     }
 }

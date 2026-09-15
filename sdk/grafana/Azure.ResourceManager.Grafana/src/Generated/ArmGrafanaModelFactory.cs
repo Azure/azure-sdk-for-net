@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.Grafana.Models
     public static partial class ArmGrafanaModelFactory
     {
 
-        /// <summary> The grafana resource type. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Properties specific to the grafana resource. </param>
-        /// <param name="sku"> The Sku of the grafana resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
-        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ManagedGrafanaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                sku,
-                identity,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="grafanaVersion"> The Grafana software version. </param>
         /// <param name="endpoint"> The endpoint of the Grafana instance. </param>
@@ -212,6 +184,34 @@ namespace Azure.ResourceManager.Grafana.Models
             return new GrafanaPlugin(pluginId, default);
         }
 
+        /// <summary> The grafana resource type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Properties specific to the grafana resource. </param>
+        /// <param name="sku"> The Sku of the grafana resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ManagedGrafanaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                identity,
+                default);
+        }
+
         /// <summary> Represents the SKU of a resource. </summary>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> Specifies the capacity tier of the Grafana instance. </param>
@@ -335,6 +335,15 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
+        /// <summary> The state of managed private endpoint connection. </summary>
+        /// <param name="status"> The approval/rejection status of managed private endpoint connection. </param>
+        /// <param name="description"> Gets or sets the reason for approval/rejection of the connection. </param>
+        /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
+        public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(ManagedPrivateEndpointConnectionStatus? status = default, string description = default)
+        {
+            return new ManagedPrivateEndpointConnectionState(status, description, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -374,15 +383,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 default);
         }
 
-        /// <summary> The state of managed private endpoint connection. </summary>
-        /// <param name="status"> The approval/rejection status of managed private endpoint connection. </param>
-        /// <param name="description"> Gets or sets the reason for approval/rejection of the connection. </param>
-        /// <returns> A new <see cref="Models.ManagedPrivateEndpointConnectionState"/> instance for mocking. </returns>
-        public static ManagedPrivateEndpointConnectionState ManagedPrivateEndpointConnectionState(ManagedPrivateEndpointConnectionStatus? status = default, string description = default)
-        {
-            return new ManagedPrivateEndpointConnectionState(status, description, default);
-        }
-
         /// <summary> The parameters for a PATCH request to a managed private endpoint. </summary>
         /// <param name="tags"> The new tags of the managed private endpoint. </param>
         /// <returns> A new <see cref="Models.ManagedPrivateEndpointModelPatch"/> instance for mocking. </returns>
@@ -391,6 +391,19 @@ namespace Azure.ResourceManager.Grafana.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ManagedPrivateEndpointModelPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> The GrafanaIntegrationFabricProperties. </summary>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
+        /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
+        /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
+        /// <returns> A new <see cref="Models.GrafanaIntegrationFabricProperties"/> instance for mocking. </returns>
+        public static GrafanaIntegrationFabricProperties GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState = default, ResourceIdentifier targetResourceId = default, ResourceIdentifier dataSourceResourceId = default, IEnumerable<string> scenarios = default)
+        {
+            scenarios ??= new ChangeTrackingList<string>();
+
+            return new GrafanaIntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, (scenarios ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> The integration fabric resource type. </summary>
@@ -415,19 +428,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 location,
                 properties,
                 default);
-        }
-
-        /// <summary> The GrafanaIntegrationFabricProperties. </summary>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="targetResourceId"> The resource Id of the Azure resource being integrated with Azure Managed Grafana. E.g., an Azure Kubernetes Service cluster. </param>
-        /// <param name="dataSourceResourceId"> The resource Id of the Azure resource which is used to configure Grafana data source. E.g., an Azure Monitor Workspace, an Azure Data Explorer cluster, etc. </param>
-        /// <param name="scenarios"> A list of integration scenarios covered by this integration fabric. </param>
-        /// <returns> A new <see cref="Models.GrafanaIntegrationFabricProperties"/> instance for mocking. </returns>
-        public static GrafanaIntegrationFabricProperties GrafanaIntegrationFabricProperties(GrafanaProvisioningState? provisioningState = default, ResourceIdentifier targetResourceId = default, ResourceIdentifier dataSourceResourceId = default, IEnumerable<string> scenarios = default)
-        {
-            scenarios ??= new ChangeTrackingList<string>();
-
-            return new GrafanaIntegrationFabricProperties(provisioningState, targetResourceId, dataSourceResourceId, (scenarios ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="tags"> The new tags of the Integration Fabric resource. </param>
@@ -473,6 +473,15 @@ namespace Azure.ResourceManager.Grafana.Models
             return new ManagedDashboardPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Properties specific to the dashboard definition. </summary>
+        /// <param name="serializedData"> The dashboard definition data in JSON format. </param>
+        /// <param name="provisioningState"> The provisioning state of the dashboard definition resource. </param>
+        /// <returns> A new <see cref="Models.DashboardDefinitionProperties"/> instance for mocking. </returns>
+        public static DashboardDefinitionProperties DashboardDefinitionProperties(string serializedData = default, GrafanaProvisioningState? provisioningState = default)
+        {
+            return new DashboardDefinitionProperties(serializedData, provisioningState, default);
+        }
+
         /// <summary> The dashboard definition resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -489,15 +498,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <summary> Properties specific to the dashboard definition. </summary>
-        /// <param name="serializedData"> The dashboard definition data in JSON format. </param>
-        /// <param name="provisioningState"> The provisioning state of the dashboard definition resource. </param>
-        /// <returns> A new <see cref="Models.DashboardDefinitionProperties"/> instance for mocking. </returns>
-        public static DashboardDefinitionProperties DashboardDefinitionProperties(string serializedData = default, GrafanaProvisioningState? provisioningState = default)
-        {
-            return new DashboardDefinitionProperties(serializedData, provisioningState, default);
         }
     }
 }

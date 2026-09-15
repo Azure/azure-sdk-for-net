@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Enclave.Models
             string managedResourceGroupName = default;
             ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             IList<VirtualEnclaveGovernedService> governedServiceList = default;
-            CommunityPropertiesPolicyOverride? policyOverride = default;
+            Models.CommunityPropertiesPolicyOverride? policyOverride = default;
             IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default;
             VirtualEnclaveFirewallSku? firewallSku = default;
             VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default;
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Enclave.Models
                     {
                         continue;
                     }
-                    policyOverride = new CommunityPropertiesPolicyOverride(prop.Value.GetString());
+                    policyOverride = new Models.CommunityPropertiesPolicyOverride(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("communityRoleAssignments"u8))

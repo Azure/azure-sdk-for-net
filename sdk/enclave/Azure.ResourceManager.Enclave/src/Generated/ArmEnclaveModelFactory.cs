@@ -18,30 +18,6 @@ namespace Azure.ResourceManager.Enclave.Models
     public static partial class ArmEnclaveModelFactory
     {
 
-        /// <summary> Workload Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveWorkloadData"/> instance for mocking. </returns>
-        public static VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveWorkloadProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveWorkloadData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="resourceGroupCollection"> List of resource group ids. </param>
         /// <param name="managedOnBehalfOfMoboBrokerResources"> Managed-On-Behalf-Of broker resources. </param>
@@ -59,42 +35,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public static VirtualEnclaveManagedOnBehalfOfBroker VirtualEnclaveManagedOnBehalfOfBroker(ResourceIdentifier id = default)
         {
             return new VirtualEnclaveManagedOnBehalfOfBroker(id, default);
-        }
-
-        /// <param name="workloadPatchResourceGroupCollection"> List of resource group ids. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.VirtualEnclaveWorkloadPatch"/> instance for mocking. </returns>
-        public static VirtualEnclaveWorkloadPatch VirtualEnclaveWorkloadPatch(IEnumerable<string> workloadPatchResourceGroupCollection = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveWorkloadPatch(workloadPatchResourceGroupCollection is null ? default : new WorkloadPatchProperties((workloadPatchResourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Virtual Enclave Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveData"/> instance for mocking. </returns>
-        public static VirtualEnclaveData VirtualEnclaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
         }
 
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -314,6 +254,66 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMonitoringDestination(destinationType, customWorkspaceResourceId, diagnosticSettingsName, default);
         }
 
+        /// <summary> Virtual Enclave Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveData"/> instance for mocking. </returns>
+        public static VirtualEnclaveData VirtualEnclaveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
+        /// <summary> Workload Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveWorkloadData"/> instance for mocking. </returns>
+        public static VirtualEnclaveWorkloadData VirtualEnclaveWorkloadData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveWorkloadProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveWorkloadData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="workloadPatchResourceGroupCollection"> List of resource group ids. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.VirtualEnclaveWorkloadPatch"/> instance for mocking. </returns>
+        public static VirtualEnclaveWorkloadPatch VirtualEnclaveWorkloadPatch(IEnumerable<string> workloadPatchResourceGroupCollection = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveWorkloadPatch(workloadPatchResourceGroupCollection is null ? default : new WorkloadPatchProperties((workloadPatchResourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
         /// <summary> Virtual Enclave Patch Model. </summary>
         /// <param name="properties"> Virtual Enclave Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -431,32 +431,6 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalDeletionCallbackContent(resourceRequestAction, default);
         }
 
-        /// <summary> Community Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityData"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityData VirtualEnclaveCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveCommunityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <param name="addressSpace"> Address Space. </param>
         /// <param name="dnsServers"> DNS Servers. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -473,7 +447,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<VirtualEnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<VirtualEnclaveDedicatedHubData> dedicatedHubList = default, VirtualEnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
+        public static VirtualEnclaveCommunityProperties VirtualEnclaveCommunityProperties(string addressSpace = default, IEnumerable<string> dnsServers = default, VirtualEnclaveProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> resourceCollection = default, string managedResourceGroupName = default, IEnumerable<VirtualEnclaveManagedOnBehalfOfBroker> managedOnBehalfOfMoboBrokerResources = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, Models.CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, VirtualEnclaveBaseApprovalSettings granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration = default, IEnumerable<VirtualEnclaveDedicatedHubData> dedicatedHubList = default, VirtualEnclaveMonitoringSettings monitoringSettings = default, IEnumerable<string> addressSpaces = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
             resourceCollection ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -565,6 +539,32 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Community Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityData"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityData VirtualEnclaveCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveCommunityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> Community Patch Resource. </summary>
         /// <param name="properties"> Community Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityPatchProperties"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityPatchProperties VirtualEnclaveCommunityPatchProperties(IEnumerable<string> dnsServers = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, ApprovalSettingsPatchProperties granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default, VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default, IEnumerable<string> addressSpaces = default)
+        public static VirtualEnclaveCommunityPatchProperties VirtualEnclaveCommunityPatchProperties(IEnumerable<string> dnsServers = default, IEnumerable<VirtualEnclaveGovernedService> governedServiceList = default, Models.CommunityPropertiesPolicyOverride? policyOverride = default, IEnumerable<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments = default, VirtualEnclaveFirewallSku? firewallSku = default, ApprovalSettingsPatchProperties granularApprovalSettings = default, VirtualEnclaveMaintenanceModeConfigurationPatch maintenanceModeConfiguration = default, VirtualEnclaveMonitoringSettingsPatch monitoringSettings = default, IEnumerable<string> addressSpaces = default)
         {
             dnsServers ??= new ChangeTrackingList<string>();
             governedServiceList ??= new ChangeTrackingList<VirtualEnclaveGovernedService>();
@@ -647,30 +647,6 @@ namespace Azure.ResourceManager.Enclave.Models
             return new CheckAddressSpaceAvailabilityResult(isAvailable, default);
         }
 
-        /// <summary> TransitHub Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveTransitHubData"/> instance for mocking. </returns>
-        public static VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveTransitHubProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveTransitHubData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Describes the properties of an Transit Hub. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="state"> The state of the transitHub. </param>
@@ -709,6 +685,30 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveTransitOptionContent(scaleUnits, remoteVirtualNetworkId, default);
         }
 
+        /// <summary> TransitHub Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveTransitHubData"/> instance for mocking. </returns>
+        public static VirtualEnclaveTransitHubData VirtualEnclaveTransitHubData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveTransitHubProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveTransitHubData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> TH Patch Resource. </summary>
         /// <param name="properties"> The TransitHub resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -728,30 +728,6 @@ namespace Azure.ResourceManager.Enclave.Models
         public static VirtualEnclaveTransitHubPatchProperties VirtualEnclaveTransitHubPatchProperties(VirtualEnclaveTransitHubState? state = default, VirtualEnclaveTransitOptionProperties transitOption = default, VirtualEnclaveSecurityProvider? securityProvider = default)
         {
             return new VirtualEnclaveTransitHubPatchProperties(state, transitOption, securityProvider, default);
-        }
-
-        /// <summary> EnclaveConnection Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveConnectionData"/> instance for mocking. </returns>
-        public static VirtualEnclaveConnectionData VirtualEnclaveConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveConnectionProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
         }
 
         /// <summary> Enclave Connection Resource properties. </summary>
@@ -780,17 +756,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
-        /// <param name="enclaveConnectionPatchSourceCidr"> Source CIDR. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.VirtualEnclaveConnectionPatch"/> instance for mocking. </returns>
-        public static VirtualEnclaveConnectionPatch VirtualEnclaveConnectionPatch(string enclaveConnectionPatchSourceCidr = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveConnectionPatch(enclaveConnectionPatchSourceCidr is null ? default : new EnclaveConnectionPatchProperties(enclaveConnectionPatchSourceCidr, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> EnclaveEndpoint Model Resource. </summary>
+        /// <summary> EnclaveConnection Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -798,12 +764,12 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveEndpointData"/> instance for mocking. </returns>
-        public static VirtualEnclaveEndpointData VirtualEnclaveEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveEndpointProperties properties = default)
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveConnectionData"/> instance for mocking. </returns>
+        public static VirtualEnclaveConnectionData VirtualEnclaveConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveConnectionProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new VirtualEnclaveEndpointData(
+            return new VirtualEnclaveConnectionData(
                 id,
                 name,
                 resourceType,
@@ -812,6 +778,16 @@ namespace Azure.ResourceManager.Enclave.Models
                 location,
                 properties,
                 default);
+        }
+
+        /// <param name="enclaveConnectionPatchSourceCidr"> Source CIDR. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.VirtualEnclaveConnectionPatch"/> instance for mocking. </returns>
+        public static VirtualEnclaveConnectionPatch VirtualEnclaveConnectionPatch(string enclaveConnectionPatchSourceCidr = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveConnectionPatch(enclaveConnectionPatchSourceCidr is null ? default : new EnclaveConnectionPatchProperties(enclaveConnectionPatchSourceCidr, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Enclave Endpoint Resource properties. </summary>
@@ -841,6 +817,30 @@ namespace Azure.ResourceManager.Enclave.Models
             return new EnclaveEndpointDestinationRule((protocols ?? new ChangeTrackingList<EnclaveEndpointProtocol>()).ToList(), endpointRuleName, destination, ports, default);
         }
 
+        /// <summary> EnclaveEndpoint Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveEndpointData"/> instance for mocking. </returns>
+        public static VirtualEnclaveEndpointData VirtualEnclaveEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveEndpointProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> Enclave Endpoint Patch Resource. </summary>
         /// <param name="properties"> Enclave Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -861,30 +861,6 @@ namespace Azure.ResourceManager.Enclave.Models
             ruleCollection ??= new ChangeTrackingList<EnclaveEndpointDestinationRule>();
 
             return new VirtualEnclaveEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<EnclaveEndpointDestinationRule>()).ToList(), updateMode, default);
-        }
-
-        /// <summary> CommunityEndpoint Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityEndpointData"/> instance for mocking. </returns>
-        public static VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityEndpointProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualEnclaveCommunityEndpointData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
         }
 
         /// <summary> Community Endpoint Resource properties. </summary>
@@ -923,6 +899,30 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> CommunityEndpoint Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveCommunityEndpointData"/> instance for mocking. </returns>
+        public static VirtualEnclaveCommunityEndpointData VirtualEnclaveCommunityEndpointData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, VirtualEnclaveCommunityEndpointProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualEnclaveCommunityEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> Community Endpoint Patch Resource. </summary>
         /// <param name="properties"> Community Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -953,24 +953,6 @@ namespace Azure.ResourceManager.Enclave.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new VirtualEnclaveDedicatedHubPatch(virtualEnclaveDedicatedHubPatchDesignation is null ? default : new VirtualEnclaveDedicatedHubPatchProperties(virtualEnclaveDedicatedHubPatchDesignation, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Approval Model Resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Enclave.VirtualEnclaveApprovalData"/> instance for mocking. </returns>
-        public static VirtualEnclaveApprovalData VirtualEnclaveApprovalData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualEnclaveApprovalProperties properties = default)
-        {
-            return new VirtualEnclaveApprovalData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Approval Base model. </summary>
@@ -1033,6 +1015,24 @@ namespace Azure.ResourceManager.Enclave.Models
         public static ApprovalRequestMetadata ApprovalRequestMetadata(string resourceAction = default, string approvalCallbackRoute = default, string approvalCallbackPayload = default, VirtualEnclaveApprovalStatus? approvalStatus = default)
         {
             return new ApprovalRequestMetadata(resourceAction, approvalCallbackRoute, approvalCallbackPayload, approvalStatus, default);
+        }
+
+        /// <summary> Approval Model Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Enclave.VirtualEnclaveApprovalData"/> instance for mocking. </returns>
+        public static VirtualEnclaveApprovalData VirtualEnclaveApprovalData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VirtualEnclaveApprovalProperties properties = default)
+        {
+            return new VirtualEnclaveApprovalData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Approvals patch model. </summary>

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Enclave.Models
         /// <param name="monitoringSettings"> Community Monitoring Settings for diagnostic and virtual network flow logs. </param>
         /// <param name="addressSpaces"> Address spaces list. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<VirtualEnclaveGovernedService> governedServiceList, CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, VirtualEnclaveBaseApprovalSettings granularApprovalSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IReadOnlyList<VirtualEnclaveDedicatedHubData> dedicatedHubList, VirtualEnclaveMonitoringSettings monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualEnclaveCommunityProperties(string addressSpace, IList<string> dnsServers, VirtualEnclaveProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, IList<VirtualEnclaveGovernedService> governedServiceList, Models.CommunityPropertiesPolicyOverride? policyOverride, IList<VirtualEnclaveRoleAssignmentItem> communityRoleAssignments, VirtualEnclaveFirewallSku? firewallSku, VirtualEnclaveBaseApprovalSettings granularApprovalSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IReadOnlyList<VirtualEnclaveDedicatedHubData> dedicatedHubList, VirtualEnclaveMonitoringSettings monitoringSettings, IList<string> addressSpaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AddressSpace = addressSpace;
             DnsServers = dnsServers;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Enclave.Models
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
 
         /// <summary> Policy override setting for the community. Specifies whether to apply enclave-specific policies or disable policy enforcement. </summary>
-        public CommunityPropertiesPolicyOverride? PolicyOverride { get; set; }
+        public Models.CommunityPropertiesPolicyOverride? PolicyOverride { get; set; }
 
         /// <summary> Community role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> CommunityRoleAssignments { get; }
