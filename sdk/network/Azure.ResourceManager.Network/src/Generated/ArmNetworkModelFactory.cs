@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkTapData"/> instance for mocking. </returns>
-        public static VirtualNetworkTapData VirtualNetworkTapData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = default, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = default, int? destinationPort = default, ETag? eTag = default)
+        public static VirtualNetworkTapData VirtualNetworkTapData(ResourceIdentifier id, string name, string @type, AzureLocation? location, IDictionary<string, string> tags, IEnumerable<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations, Guid? resourceGuid, NetworkProvisioningState? provisioningState, Network.NetworkInterfaceIPConfiguration1Data destinationNetworkInterfaceIPConfiguration, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration, int? destinationPort, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -498,6 +498,16 @@ namespace Azure.ResourceManager.Network.Models
         public static NetworkResourceData NetworkResourceData(ResourceIdentifier id = default, string name = default, string @type = default)
         {
             return new NetworkResourceData(id, default, name, @type);
+        }
+
+        /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <returns> A new <see cref="Models.NetworkWritableResourceData"/> instance for mocking. </returns>
+        public static NetworkWritableResourceData NetworkWritableResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
+        {
+            return new NetworkWritableResourceData(id, default, name, resourceType);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -742,16 +752,6 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
-        }
-
-        /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <returns> A new <see cref="Models.NetworkWritableResourceData"/> instance for mocking. </returns>
-        public static NetworkWritableResourceData NetworkWritableResourceData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default)
-        {
-            return new NetworkWritableResourceData(id, default, name, resourceType);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -1673,7 +1673,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
         /// <param name="backendAddressPoolId"> Resource ID. </param>
         /// <returns> A new <see cref="Network.InboundNatRuleData"/> instance for mocking. </returns>
-        public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id = default, string name = default, string @type = default, NetworkInterfaceIPConfigurationData backendIPConfiguration = default, LoadBalancingTransportProtocol? protocol = default, int? frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, int? frontendPortRangeStart = default, int? frontendPortRangeEnd = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default)
+        public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id, string name, string @type, Network.NetworkInterfaceIPConfiguration1Data backendIPConfiguration, LoadBalancingTransportProtocol? protocol, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, int? frontendPortRangeStart, int? frontendPortRangeEnd, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId)
         {
             return new InboundNatRuleData(id, default, name, @type, frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
                 new NetworkSubResource(frontendIPConfigurationId, default),
@@ -2366,6 +2366,439 @@ namespace Azure.ResourceManager.Network.Models
         public static ApplicationGatewayGlobalConfiguration ApplicationGatewayGlobalConfiguration(bool? enableRequestBuffering = default, bool? enableResponseBuffering = default, bool? disableDefaultServerHeaderInResponse = default)
         {
             return new ApplicationGatewayGlobalConfiguration(enableRequestBuffering, enableResponseBuffering, disableDefaultServerHeaderInResponse, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </param>
+        /// <param name="flowTimeoutInMinutes"> The FlowTimeout value (in minutes) for the Virtual Network. </param>
+        /// <param name="subnets"> A list of subnets in a Virtual Network. </param>
+        /// <param name="virtualNetworkPeerings"> A list of peerings in a Virtual Network. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
+        /// <param name="enableDdosProtection"> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </param>
+        /// <param name="enableVmProtection"> Indicates if VM protection is enabled for all the subnets in the virtual network. </param>
+        /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
+        /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
+        /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
+        /// <param name="flowLogs"> A collection of references to flow log resources. </param>
+        /// <param name="privateEndpointVNetPolicies"> Private Endpoint VNet Policies. </param>
+        /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
+        /// <param name="dhcpOptionsDnsServers"> The list of DNS servers IP addresses. </param>
+        /// <param name="ddosProtectionPlanId"> Resource ID. </param>
+        /// <param name="defaultPublicNatGatewayId"> Resource ID. </param>
+        /// <param name="extendedLocation"> The extended location of the virtual network. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkData"/> instance for mocking. </returns>
+        public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, VirtualNetworkAddressSpace addressSpace = default, int? flowTimeoutInMinutes = default, IEnumerable<SubnetData> subnets = default, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, bool? enableDdosProtection = default, bool? enableVmProtection = default, VirtualNetworkBgpCommunities bgpCommunities = default, VirtualNetworkEncryption encryption = default, IEnumerable<NetworkSubResource> ipAllocations = default, IEnumerable<FlowLogData> flowLogs = default, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies = default, VirtualNetworkAddressSpace summarizedGatewayPrefixes = default, IEnumerable<string> dhcpOptionsDnsServers = default, ResourceIdentifier ddosProtectionPlanId = default, ResourceIdentifier defaultPublicNatGatewayId = default, ExtendedLocation extendedLocation = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new VirtualNetworkData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                addressSpace is null && dhcpOptionsDnsServers is null && flowTimeoutInMinutes is null && subnets is null && virtualNetworkPeerings is null && resourceGuid is null && provisioningState is null && enableDdosProtection is null && enableVmProtection is null && ddosProtectionPlanId is null && bgpCommunities is null && encryption is null && ipAllocations is null && flowLogs is null && privateEndpointVNetPolicies is null && defaultPublicNatGatewayId is null && summarizedGatewayPrefixes is null ? default : new VirtualNetworkPropertiesFormat(
+                    addressSpace,
+                    new DhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
+                    flowTimeoutInMinutes,
+                    (subnets ?? new ChangeTrackingList<SubnetData>()).ToList(),
+                    (virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
+                    enableDdosProtection,
+                    enableVmProtection,
+                    new NetworkSubResource(ddosProtectionPlanId, default),
+                    bgpCommunities,
+                    encryption,
+                    (ipAllocations ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
+                    (flowLogs ?? new ChangeTrackingList<FlowLogData>()).ToList(),
+                    privateEndpointVNetPolicies,
+                    new NetworkSubResource(defaultPublicNatGatewayId, default),
+                    summarizedGatewayPrefixes,
+                    default),
+                extendedLocation,
+                eTag);
+        }
+
+        /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
+        /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
+        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools allocating IP address prefixes. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkAddressSpace"/> instance for mocking. </returns>
+        public static VirtualNetworkAddressSpace VirtualNetworkAddressSpace(IEnumerable<string> addressPrefixes = default, IEnumerable<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default)
+        {
+            addressPrefixes ??= new ChangeTrackingList<string>();
+            ipamPoolPrefixAllocations ??= new ChangeTrackingList<IpamPoolPrefixAllocation>();
+
+            return new VirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>()).ToList(), default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="allowVirtualNetworkAccess"> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </param>
+        /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
+        /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
+        /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
+        /// <param name="localAddressSpace"> The local address space of the local virtual network that is peered. </param>
+        /// <param name="localVirtualNetworkAddressSpace"> The current local address space of the local virtual network that is peered. </param>
+        /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
+        /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
+        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
+        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network's encryption. </param>
+        /// <param name="peeringState"> The status of the virtual network peering. </param>
+        /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
+        /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
+        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
+        /// <param name="peerCompleteVnets"> Whether complete virtual network address space is peered. </param>
+        /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
+        /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
+        /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
+        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
+        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, bool? allowVirtualNetworkAccess = default, bool? allowForwardedTraffic = default, bool? allowGatewayTransit = default, bool? useRemoteGateways = default, VirtualNetworkAddressSpace localAddressSpace = default, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default, VirtualNetworkAddressSpace remoteAddressSpace = default, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default, VirtualNetworkBgpCommunities remoteBgpCommunities = default, VirtualNetworkEncryption remoteVirtualNetworkEncryption = default, VirtualNetworkPeeringState? peeringState = default, VirtualNetworkPeeringLevel? peeringSyncLevel = default, NetworkProvisioningState? provisioningState = default, bool? doNotVerifyRemoteGateways = default, Guid? resourceGuid = default, bool? peerCompleteVnets = default, bool? enableOnlyIPv6Peering = default, IEnumerable<string> localSubnetNames = default, IEnumerable<string> remoteSubnetNames = default, ResourceIdentifier remoteVirtualNetworkId = default, ETag? eTag = default)
+        {
+            return new VirtualNetworkPeeringData(
+                id,
+                default,
+                name,
+                resourceType,
+                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && peerCompleteVnets is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
+                    allowVirtualNetworkAccess,
+                    allowForwardedTraffic,
+                    allowGatewayTransit,
+                    useRemoteGateways,
+                    new NetworkSubResource(remoteVirtualNetworkId, default),
+                    localAddressSpace,
+                    localVirtualNetworkAddressSpace,
+                    remoteAddressSpace,
+                    remoteVirtualNetworkAddressSpace,
+                    remoteBgpCommunities,
+                    remoteVirtualNetworkEncryption,
+                    peeringState,
+                    peeringSyncLevel,
+                    provisioningState,
+                    doNotVerifyRemoteGateways,
+                    resourceGuid,
+                    peerCompleteVnets,
+                    enableOnlyIPv6Peering,
+                    (localSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
+                    (remoteSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                eTag);
+        }
+
+        /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
+        /// <param name="virtualNetworkCommunity"> The BGP community associated with the virtual network. </param>
+        /// <param name="regionalCommunity"> The BGP community associated with the region of the virtual network. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkBgpCommunities"/> instance for mocking. </returns>
+        public static VirtualNetworkBgpCommunities VirtualNetworkBgpCommunities(string virtualNetworkCommunity = default, string regionalCommunity = default)
+        {
+            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, default);
+        }
+
+        /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
+        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
+        /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
+        /// <returns> A new <see cref="Models.VirtualNetworkEncryption"/> instance for mocking. </returns>
+        public static VirtualNetworkEncryption VirtualNetworkEncryption(bool enabled = default, VirtualNetworkEncryptionEnforcement? enforcement = default)
+        {
+            return new VirtualNetworkEncryption(enabled, enforcement, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
+        /// <returns> A new <see cref="Network.NetworkWatcherData"/> instance for mocking. </returns>
+        public static NetworkWatcherData NetworkWatcherData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkWatcherData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default));
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="frontendIPConfigurations"> Object representing the frontend IPs to be used for the load balancer. </param>
+        /// <param name="backendAddressPools"> Collection of backend address pools used by a load balancer. </param>
+        /// <param name="loadBalancingRules"> Object collection representing the load balancing rules Gets the provisioning. </param>
+        /// <param name="probes"> Collection of probe objects used in the load balancer. </param>
+        /// <param name="inboundNatRules"> Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound NAT pool. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual inbound NAT rules. </param>
+        /// <param name="inboundNatPools"> Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound NAT rules. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual inbound NAT rules. </param>
+        /// <param name="outboundRules"> The outbound rules. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
+        /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
+        /// <param name="mode"> The load balancer mode. Set to `Advanced` to enable additional capabilities on a Standard SKU load balancer. Advanced mode must be specified at creation and cannot be changed afterward. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="extendedLocation"> The extended location of the load balancer. </param>
+        /// <param name="sku"> The load balancer SKU. </param>
+        /// <returns> A new <see cref="Network.LoadBalancerData"/> instance for mocking. </returns>
+        public static LoadBalancerData LoadBalancerData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<FrontendIPConfigurationData> frontendIPConfigurations = default, IEnumerable<BackendAddressPoolData> backendAddressPools = default, IEnumerable<LoadBalancingRuleData> loadBalancingRules = default, IEnumerable<ProbeData> probes = default, IEnumerable<InboundNatRuleData> inboundNatRules = default, IEnumerable<LoadBalancerInboundNatPool> inboundNatPools = default, IEnumerable<OutboundRuleData> outboundRules = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, LoadBalancerScope? scope = default, LoadBalancerMode? mode = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, LoadBalancerSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LoadBalancerData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                frontendIPConfigurations is null && backendAddressPools is null && loadBalancingRules is null && probes is null && inboundNatRules is null && inboundNatPools is null && outboundRules is null && resourceGuid is null && provisioningState is null && scope is null && mode is null ? default : new LoadBalancerPropertiesFormat(
+                    (frontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>()).ToList(),
+                    (backendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>()).ToList(),
+                    (loadBalancingRules ?? new ChangeTrackingList<LoadBalancingRuleData>()).ToList(),
+                    (probes ?? new ChangeTrackingList<ProbeData>()).ToList(),
+                    (inboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>()).ToList(),
+                    (inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>()).ToList(),
+                    (outboundRules ?? new ChangeTrackingList<OutboundRuleData>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
+                    scope,
+                    mode,
+                    default),
+                eTag,
+                extendedLocation,
+                sku);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="probeId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
+        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id, string name, string @type, IEnumerable<WritableSubResource> backendAddressPools, LoadBalancingTransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId, ResourceIdentifier probeId, ETag? eTag)
+        {
+            return new LoadBalancingRuleData(
+                id,
+                default,
+                name,
+                @type,
+                frontendIPConfigurationId is null && backendAddressPoolId is null && backendAddressPools is null && probeId is null && protocol is null && loadDistribution is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && disableOutboundSnat is null && enableConnectionTracking is null && provisioningState is null ? default : new LoadBalancingRuleProperties(
+                    new NetworkSubResource(frontendIPConfigurationId, default),
+                    new NetworkSubResource(backendAddressPoolId, default),
+                    (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    new NetworkSubResource(probeId, default),
+                    protocol.GetValueOrDefault(),
+                    loadDistribution,
+                    frontendPort.GetValueOrDefault(),
+                    backendPort,
+                    idleTimeoutInMinutes,
+                    enableFloatingIP,
+                    enableTcpReset,
+                    disableOutboundSnat,
+                    enableConnectionTracking,
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
+        /// <param name="probeId"> Resource ID. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
+        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
+        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
+        /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
+        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default)
+        {
+            backendAddressPools ??= new ChangeTrackingList<WritableSubResource>();
+
+            return new LoadBalancingRuleProperties(
+                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
+                (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                probeId is null ? default : new NetworkSubResource(probeId, default),
+                protocol,
+                loadDistribution,
+                frontendPort,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                disableOutboundSnat,
+                enableConnectionTracking,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="loadBalancingRules"> The load balancer rules that use this probe. </param>
+        /// <param name="protocol"> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </param>
+        /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
+        /// <param name="intervalInSeconds"> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </param>
+        /// <param name="noHealthyBackendsBehavior"> Determines how new connections are handled by the load balancer when all backend instances are probed down. </param>
+        /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
+        /// <param name="probeThreshold"> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </param>
+        /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
+        /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ProbeData"/> instance for mocking. </returns>
+        public static ProbeData ProbeData(ResourceIdentifier id = default, string name = default, string @type = default, IEnumerable<WritableSubResource> loadBalancingRules = default, ProbeProtocol? protocol = default, int? port = default, int? intervalInSeconds = default, ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior = default, int? numberOfProbes = default, int? probeThreshold = default, string requestPath = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new ProbeData(
+                id,
+                default,
+                name,
+                @type,
+                loadBalancingRules is null && protocol is null && port is null && intervalInSeconds is null && noHealthyBackendsBehavior is null && numberOfProbes is null && probeThreshold is null && requestPath is null && provisioningState is null ? default : new ProbePropertiesFormat(
+                    (loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    protocol.GetValueOrDefault(),
+                    port.GetValueOrDefault(),
+                    intervalInSeconds,
+                    noHealthyBackendsBehavior,
+                    numberOfProbes,
+                    probeThreshold,
+                    requestPath,
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
+        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
+        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
+        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id, string name, string @type, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ETag? eTag)
+        {
+            return new LoadBalancerInboundNatPool(
+                id,
+                default,
+                name,
+                @type,
+                frontendIPConfigurationId is null && protocol is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && provisioningState is null ? default : new LoadBalancerInboundNatPoolProperties(
+                    new NetworkSubResource(frontendIPConfigurationId, default),
+                    protocol.GetValueOrDefault(),
+                    frontendPortRangeStart.GetValueOrDefault(),
+                    frontendPortRangeEnd.GetValueOrDefault(),
+                    backendPort.GetValueOrDefault(),
+                    idleTimeoutInMinutes,
+                    enableFloatingIP,
+                    enableTcpReset,
+                    provisioningState,
+                    default),
+                eTag);
+        }
+
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
+        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
+        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
+        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = default, int frontendPortRangeEnd = default, int backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new LoadBalancerInboundNatPoolProperties(
+                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
+                protocol,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                provisioningState,
+                default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
+        /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
+        /// <param name="provisioningState"> The provisioning state of the outbound rule resource. </param>
+        /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.OutboundRuleData"/> instance for mocking. </returns>
+        public static OutboundRuleData OutboundRuleData(ResourceIdentifier id = default, string name = default, string @type = default, int? allocatedOutboundPorts = default, IEnumerable<WritableSubResource> frontendIPConfigurations = default, NetworkProvisioningState? provisioningState = default, LoadBalancerOutboundRuleProtocol? protocol = default, bool? enableTcpReset = default, int? idleTimeoutInMinutes = default, ResourceIdentifier backendAddressPoolId = default, ETag? eTag = default)
+        {
+            return new OutboundRuleData(
+                id,
+                default,
+                name,
+                @type,
+                allocatedOutboundPorts is null && frontendIPConfigurations is null && backendAddressPoolId is null && provisioningState is null && protocol is null && enableTcpReset is null && idleTimeoutInMinutes is null ? default : new OutboundRulePropertiesFormat(
+                    allocatedOutboundPorts,
+                    (frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    new NetworkSubResource(backendAddressPoolId, default),
+                    provisioningState,
+                    protocol.GetValueOrDefault(),
+                    enableTcpReset,
+                    idleTimeoutInMinutes,
+                    default),
+                eTag);
+        }
+
+        /// <summary> SKU of a load balancer. </summary>
+        /// <param name="name"> Name of a load balancer SKU. </param>
+        /// <param name="tier"> Tier of a load balancer SKU. </param>
+        /// <returns> A new <see cref="Models.LoadBalancerSku"/> instance for mocking. </returns>
+        public static LoadBalancerSku LoadBalancerSku(LoadBalancerSkuName? name = default, LoadBalancerSkuTier? tier = default)
+        {
+            return new LoadBalancerSku(name, tier, default);
         }
 
         /// <summary> Tags object for patch operations. </summary>
@@ -3309,26 +3742,6 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="authorizationKey"> The authorization key. </param>
-        /// <param name="authorizationUseStatus"> The authorization use status. </param>
-        /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
-        /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.ExpressRouteCircuitAuthorizationData"/> instance for mocking. </returns>
-        public static ExpressRouteCircuitAuthorizationData ExpressRouteCircuitAuthorizationData(ResourceIdentifier id = default, string name = default, string @type = default, string authorizationKey = default, AuthorizationUseStatus? authorizationUseStatus = default, Uri connectionResourceUri = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ExpressRouteCircuitAuthorizationData(
-                id,
-                default,
-                name,
-                @type,
-                authorizationKey is null && authorizationUseStatus is null && connectionResourceUri is null && provisioningState is null ? default : new AuthorizationPropertiesFormat(authorizationKey, authorizationUseStatus, connectionResourceUri, provisioningState, default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
@@ -3391,6 +3804,26 @@ namespace Azure.ResourceManager.Network.Models
                     default),
                 eTag,
                 sku);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="authorizationKey"> The authorization key. </param>
+        /// <param name="authorizationUseStatus"> The authorization use status. </param>
+        /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
+        /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.ExpressRouteCircuitAuthorizationData"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitAuthorizationData ExpressRouteCircuitAuthorizationData(ResourceIdentifier id = default, string name = default, string @type = default, string authorizationKey = default, AuthorizationUseStatus? authorizationUseStatus = default, Uri connectionResourceUri = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new ExpressRouteCircuitAuthorizationData(
+                id,
+                default,
+                name,
+                @type,
+                authorizationKey is null && authorizationUseStatus is null && connectionResourceUri is null && provisioningState is null ? default : new AuthorizationPropertiesFormat(authorizationKey, authorizationUseStatus, connectionResourceUri, provisioningState, default),
+                eTag);
         }
 
         /// <param name="id"> Resource ID. </param>
@@ -3604,6 +4037,26 @@ namespace Azure.ResourceManager.Network.Models
         public static ExpressRouteCircuitSku ExpressRouteCircuitSku(string name = default, ExpressRouteCircuitSkuTier? tier = default, ExpressRouteCircuitSkuFamily? family = default)
         {
             return new ExpressRouteCircuitSku(name, tier, family, default);
+        }
+
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="authorizationKey"> The authorization key. </param>
+        /// <param name="authorizationUseStatus"> The authorization use status. </param>
+        /// <param name="connectionResourceUri"> The reference to the ExpressRoute connection resource using the authorization. </param>
+        /// <param name="provisioningState"> The provisioning state of the authorization resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Models.ExpressRouteCircuitAuthorization1Data"/> instance for mocking. </returns>
+        public static ExpressRouteCircuitAuthorization1Data ExpressRouteCircuitAuthorization1Data(ResourceIdentifier id = default, string name = default, string @type = default, string authorizationKey = default, AuthorizationUseStatus? authorizationUseStatus = default, Uri connectionResourceUri = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            return new ExpressRouteCircuitAuthorization1Data(
+                id,
+                default,
+                name,
+                @type,
+                authorizationKey is null && authorizationUseStatus is null && connectionResourceUri is null && provisioningState is null ? default : new AuthorizationPropertiesFormat(authorizationKey, authorizationUseStatus, connectionResourceUri, provisioningState, default),
+                eTag);
         }
 
         /// <summary> ExpressRoute circuit link failover test details for all tests. </summary>
@@ -4819,6 +5272,68 @@ namespace Azure.ResourceManager.Network.Models
             return new FirewallPolicyRuleCollectionGroupDraftData(id, default, name, @type, size is null && priority is null && ruleCollections is null ? default : new FirewallPolicyRuleCollectionGroupDraftProperties(size, priority, (ruleCollections ?? new ChangeTrackingList<FirewallPolicyRuleCollectionInfo>()).ToList(), default));
         }
 
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="description"> A description of the network manager. </param>
+        /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
+        /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
+        /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
+        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <returns> A new <see cref="Network.NetworkManagerData"/> instance for mocking. </returns>
+        public static NetworkManagerData NetworkManagerData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string description = default, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = default, IEnumerable<NetworkConfigurationDeploymentType> networkManagerScopeAccesses = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? eTag = default, SystemData systemData = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetworkManagerData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                description is null && networkManagerScopes is null && networkManagerScopeAccesses is null && provisioningState is null && resourceGuid is null ? default : new NetworkManagerProperties(
+                    description,
+                    networkManagerScopes,
+                    (networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>()).ToList(),
+                    provisioningState,
+                    resourceGuid,
+                    default),
+                eTag,
+                systemData);
+        }
+
+        /// <summary> Scope of Network Manager. </summary>
+        /// <param name="managementGroups"> List of management groups. </param>
+        /// <param name="subscriptions"> List of subscriptions. </param>
+        /// <param name="crossTenantScopes"> List of cross tenant scopes. </param>
+        /// <returns> A new <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/> instance for mocking. </returns>
+        public static NetworkManagerPropertiesNetworkManagerScopes NetworkManagerPropertiesNetworkManagerScopes(IEnumerable<string> managementGroups = default, IEnumerable<string> subscriptions = default, IEnumerable<CrossTenantScopes> crossTenantScopes = default)
+        {
+            managementGroups ??= new ChangeTrackingList<string>();
+            subscriptions ??= new ChangeTrackingList<string>();
+            crossTenantScopes ??= new ChangeTrackingList<CrossTenantScopes>();
+
+            return new NetworkManagerPropertiesNetworkManagerScopes((managementGroups ?? new ChangeTrackingList<string>()).ToList(), (subscriptions ?? new ChangeTrackingList<string>()).ToList(), (crossTenantScopes ?? new ChangeTrackingList<CrossTenantScopes>()).ToList(), default);
+        }
+
+        /// <summary> Cross tenant scopes. </summary>
+        /// <param name="tenantId"> Tenant ID. </param>
+        /// <param name="managementGroups"> List of management groups. </param>
+        /// <param name="subscriptions"> List of subscriptions. </param>
+        /// <returns> A new <see cref="Models.CrossTenantScopes"/> instance for mocking. </returns>
+        public static CrossTenantScopes CrossTenantScopes(Guid? tenantId = default, IEnumerable<string> managementGroups = default, IEnumerable<string> subscriptions = default)
+        {
+            managementGroups ??= new ChangeTrackingList<string>();
+            subscriptions ??= new ChangeTrackingList<string>();
+
+            return new CrossTenantScopes(tenantId, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), (subscriptions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <summary> Instance of Pool resource. </summary>
         /// <param name="properties"> Properties of IpamPool resource properties which are specific to the Pool resource. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -4942,68 +5457,6 @@ namespace Azure.ResourceManager.Network.Models
                 createdOn,
                 reservationExpiresOn,
                 default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="description"> A description of the network manager. </param>
-        /// <param name="networkManagerScopes"> Scope of Network Manager. </param>
-        /// <param name="networkManagerScopeAccesses"> Scope Access. </param>
-        /// <param name="provisioningState"> The provisioning state of the network manager resource. </param>
-        /// <param name="resourceGuid"> Unique identifier for this resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <returns> A new <see cref="Network.NetworkManagerData"/> instance for mocking. </returns>
-        public static NetworkManagerData NetworkManagerData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, string description = default, NetworkManagerPropertiesNetworkManagerScopes networkManagerScopes = default, IEnumerable<NetworkConfigurationDeploymentType> networkManagerScopeAccesses = default, NetworkProvisioningState? provisioningState = default, Guid? resourceGuid = default, ETag? eTag = default, SystemData systemData = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkManagerData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                description is null && networkManagerScopes is null && networkManagerScopeAccesses is null && provisioningState is null && resourceGuid is null ? default : new NetworkManagerProperties(
-                    description,
-                    networkManagerScopes,
-                    (networkManagerScopeAccesses ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>()).ToList(),
-                    provisioningState,
-                    resourceGuid,
-                    default),
-                eTag,
-                systemData);
-        }
-
-        /// <summary> Scope of Network Manager. </summary>
-        /// <param name="managementGroups"> List of management groups. </param>
-        /// <param name="subscriptions"> List of subscriptions. </param>
-        /// <param name="crossTenantScopes"> List of cross tenant scopes. </param>
-        /// <returns> A new <see cref="Models.NetworkManagerPropertiesNetworkManagerScopes"/> instance for mocking. </returns>
-        public static NetworkManagerPropertiesNetworkManagerScopes NetworkManagerPropertiesNetworkManagerScopes(IEnumerable<string> managementGroups = default, IEnumerable<string> subscriptions = default, IEnumerable<CrossTenantScopes> crossTenantScopes = default)
-        {
-            managementGroups ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<string>();
-            crossTenantScopes ??= new ChangeTrackingList<CrossTenantScopes>();
-
-            return new NetworkManagerPropertiesNetworkManagerScopes((managementGroups ?? new ChangeTrackingList<string>()).ToList(), (subscriptions ?? new ChangeTrackingList<string>()).ToList(), (crossTenantScopes ?? new ChangeTrackingList<CrossTenantScopes>()).ToList(), default);
-        }
-
-        /// <summary> Cross tenant scopes. </summary>
-        /// <param name="tenantId"> Tenant ID. </param>
-        /// <param name="managementGroups"> List of management groups. </param>
-        /// <param name="subscriptions"> List of subscriptions. </param>
-        /// <returns> A new <see cref="Models.CrossTenantScopes"/> instance for mocking. </returns>
-        public static CrossTenantScopes CrossTenantScopes(Guid? tenantId = default, IEnumerable<string> managementGroups = default, IEnumerable<string> subscriptions = default)
-        {
-            managementGroups ??= new ChangeTrackingList<string>();
-            subscriptions ??= new ChangeTrackingList<string>();
-
-            return new CrossTenantScopes(tenantId, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), (subscriptions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> Object for patch operations. </summary>
@@ -5371,272 +5824,6 @@ namespace Azure.ResourceManager.Network.Models
                 default,
                 provisioningState is null && ipAddresses is null && firewalls is null && firewallPolicies is null ? default : new IPGroupPropertiesFormat(provisioningState, (ipAddresses ?? new ChangeTrackingList<string>()).ToList(), (firewalls ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (firewallPolicies ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default),
                 eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="frontendIPConfigurations"> Object representing the frontend IPs to be used for the load balancer. </param>
-        /// <param name="backendAddressPools"> Collection of backend address pools used by a load balancer. </param>
-        /// <param name="loadBalancingRules"> Object collection representing the load balancing rules Gets the provisioning. </param>
-        /// <param name="probes"> Collection of probe objects used in the load balancer. </param>
-        /// <param name="inboundNatRules"> Collection of inbound NAT Rules used by a load balancer. Defining inbound NAT rules on your load balancer is mutually exclusive with defining an inbound NAT pool. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an Inbound NAT pool. They have to reference individual inbound NAT rules. </param>
-        /// <param name="inboundNatPools"> Defines an external port range for inbound NAT to a single backend port on NICs associated with a load balancer. Inbound NAT rules are created automatically for each NIC associated with the Load Balancer using an external port from this range. Defining an Inbound NAT pool on your Load Balancer is mutually exclusive with defining inbound NAT rules. Inbound NAT pools are referenced from virtual machine scale sets. NICs that are associated with individual virtual machines cannot reference an inbound NAT pool. They have to reference individual inbound NAT rules. </param>
-        /// <param name="outboundRules"> The outbound rules. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
-        /// <param name="mode"> The load balancer mode. Set to `Advanced` to enable additional capabilities on a Standard SKU load balancer. Advanced mode must be specified at creation and cannot be changed afterward. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="extendedLocation"> The extended location of the load balancer. </param>
-        /// <param name="sku"> The load balancer SKU. </param>
-        /// <returns> A new <see cref="Network.LoadBalancerData"/> instance for mocking. </returns>
-        public static LoadBalancerData LoadBalancerData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<FrontendIPConfigurationData> frontendIPConfigurations = default, IEnumerable<BackendAddressPoolData> backendAddressPools = default, IEnumerable<LoadBalancingRuleData> loadBalancingRules = default, IEnumerable<ProbeData> probes = default, IEnumerable<InboundNatRuleData> inboundNatRules = default, IEnumerable<LoadBalancerInboundNatPool> inboundNatPools = default, IEnumerable<OutboundRuleData> outboundRules = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, LoadBalancerScope? scope = default, LoadBalancerMode? mode = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, LoadBalancerSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LoadBalancerData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                frontendIPConfigurations is null && backendAddressPools is null && loadBalancingRules is null && probes is null && inboundNatRules is null && inboundNatPools is null && outboundRules is null && resourceGuid is null && provisioningState is null && scope is null && mode is null ? default : new LoadBalancerPropertiesFormat(
-                    (frontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>()).ToList(),
-                    (backendAddressPools ?? new ChangeTrackingList<BackendAddressPoolData>()).ToList(),
-                    (loadBalancingRules ?? new ChangeTrackingList<LoadBalancingRuleData>()).ToList(),
-                    (probes ?? new ChangeTrackingList<ProbeData>()).ToList(),
-                    (inboundNatRules ?? new ChangeTrackingList<InboundNatRuleData>()).ToList(),
-                    (inboundNatPools ?? new ChangeTrackingList<LoadBalancerInboundNatPool>()).ToList(),
-                    (outboundRules ?? new ChangeTrackingList<OutboundRuleData>()).ToList(),
-                    resourceGuid,
-                    provisioningState,
-                    scope,
-                    mode,
-                    default),
-                eTag,
-                extendedLocation,
-                sku);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
-        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
-        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="probeId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.LoadBalancingRuleData"/> instance for mocking. </returns>
-        public static LoadBalancingRuleData LoadBalancingRuleData(ResourceIdentifier id, string name, string @type, IEnumerable<WritableSubResource> backendAddressPools, LoadBalancingTransportProtocol? protocol, LoadDistribution? loadDistribution, int? frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ResourceIdentifier backendAddressPoolId, ResourceIdentifier probeId, ETag? eTag)
-        {
-            return new LoadBalancingRuleData(
-                id,
-                default,
-                name,
-                @type,
-                frontendIPConfigurationId is null && backendAddressPoolId is null && backendAddressPools is null && probeId is null && protocol is null && loadDistribution is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && disableOutboundSnat is null && enableConnectionTracking is null && provisioningState is null ? default : new LoadBalancingRuleProperties(
-                    new NetworkSubResource(frontendIPConfigurationId, default),
-                    new NetworkSubResource(backendAddressPoolId, default),
-                    (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    new NetworkSubResource(probeId, default),
-                    protocol.GetValueOrDefault(),
-                    loadDistribution,
-                    frontendPort.GetValueOrDefault(),
-                    backendPort,
-                    idleTimeoutInMinutes,
-                    enableFloatingIP,
-                    enableTcpReset,
-                    disableOutboundSnat,
-                    enableConnectionTracking,
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="backendAddressPools"> An array of references to pool of DIPs. </param>
-        /// <param name="probeId"> Resource ID. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
-        /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
-        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
-        /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <returns> A new <see cref="Models.LoadBalancingRuleProperties"/> instance for mocking. </returns>
-        public static LoadBalancingRuleProperties LoadBalancingRuleProperties(ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default, IEnumerable<WritableSubResource> backendAddressPools = default, ResourceIdentifier probeId = default, LoadBalancingTransportProtocol protocol = default, LoadDistribution? loadDistribution = default, int frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, bool? disableOutboundSnat = default, bool? enableConnectionTracking = default, NetworkProvisioningState? provisioningState = default)
-        {
-            backendAddressPools ??= new ChangeTrackingList<WritableSubResource>();
-
-            return new LoadBalancingRuleProperties(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                backendAddressPoolId is null ? default : new NetworkSubResource(backendAddressPoolId, default),
-                (backendAddressPools ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                probeId is null ? default : new NetworkSubResource(probeId, default),
-                protocol,
-                loadDistribution,
-                frontendPort,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                disableOutboundSnat,
-                enableConnectionTracking,
-                provisioningState,
-                default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="loadBalancingRules"> The load balancer rules that use this probe. </param>
-        /// <param name="protocol"> The protocol of the end point. If 'Tcp' is specified, a received ACK is required for the probe to be successful. If 'Http' or 'Https' is specified, a 200 OK response from the specifies URI is required for the probe to be successful. </param>
-        /// <param name="port"> The port for communicating the probe. Possible values range from 1 to 65535, inclusive. </param>
-        /// <param name="intervalInSeconds"> The interval, in seconds, for how frequently to probe the endpoint for health status. Typically, the interval is slightly less than half the allocated timeout period (in seconds) which allows two full probes before taking the instance out of rotation. The default value is 15, the minimum value is 5. </param>
-        /// <param name="noHealthyBackendsBehavior"> Determines how new connections are handled by the load balancer when all backend instances are probed down. </param>
-        /// <param name="numberOfProbes"> The number of probes where if no response, will result in stopping further traffic from being delivered to the endpoint. This values allows endpoints to be taken out of rotation faster or slower than the typical times used in Azure. </param>
-        /// <param name="probeThreshold"> The number of consecutive successful or failed probes in order to allow or deny traffic from being delivered to this endpoint. After failing the number of consecutive probes equal to this value, the endpoint will be taken out of rotation and require the same number of successful consecutive probes to be placed back in rotation. </param>
-        /// <param name="requestPath"> The URI used for requesting health status from the VM. Path is required if a protocol is set to http. Otherwise, it is not allowed. There is no default value. </param>
-        /// <param name="provisioningState"> The provisioning state of the probe resource. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.ProbeData"/> instance for mocking. </returns>
-        public static ProbeData ProbeData(ResourceIdentifier id = default, string name = default, string @type = default, IEnumerable<WritableSubResource> loadBalancingRules = default, ProbeProtocol? protocol = default, int? port = default, int? intervalInSeconds = default, ProbeNoHealthyBackendsBehavior? noHealthyBackendsBehavior = default, int? numberOfProbes = default, int? probeThreshold = default, string requestPath = default, NetworkProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            return new ProbeData(
-                id,
-                default,
-                name,
-                @type,
-                loadBalancingRules is null && protocol is null && port is null && intervalInSeconds is null && noHealthyBackendsBehavior is null && numberOfProbes is null && probeThreshold is null && requestPath is null && provisioningState is null ? default : new ProbePropertiesFormat(
-                    (loadBalancingRules ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    protocol.GetValueOrDefault(),
-                    port.GetValueOrDefault(),
-                    intervalInSeconds,
-                    noHealthyBackendsBehavior,
-                    numberOfProbes,
-                    probeThreshold,
-                    requestPath,
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
-        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
-        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPool"/> instance for mocking. </returns>
-        public static LoadBalancerInboundNatPool LoadBalancerInboundNatPool(ResourceIdentifier id, string name, string @type, LoadBalancingTransportProtocol? protocol, int? frontendPortRangeStart, int? frontendPortRangeEnd, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, NetworkProvisioningState? provisioningState, ResourceIdentifier frontendIPConfigurationId, ETag? eTag)
-        {
-            return new LoadBalancerInboundNatPool(
-                id,
-                default,
-                name,
-                @type,
-                frontendIPConfigurationId is null && protocol is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && provisioningState is null ? default : new LoadBalancerInboundNatPoolProperties(
-                    new NetworkSubResource(frontendIPConfigurationId, default),
-                    protocol.GetValueOrDefault(),
-                    frontendPortRangeStart.GetValueOrDefault(),
-                    frontendPortRangeEnd.GetValueOrDefault(),
-                    backendPort.GetValueOrDefault(),
-                    idleTimeoutInMinutes,
-                    enableFloatingIP,
-                    enableTcpReset,
-                    provisioningState,
-                    default),
-                eTag);
-        }
-
-        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="protocol"> The reference to the transport protocol used by the inbound NAT pool. </param>
-        /// <param name="frontendPortRangeStart"> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </param>
-        /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="provisioningState"> The provisioning state of the inbound NAT pool resource. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerInboundNatPoolProperties"/> instance for mocking. </returns>
-        public static LoadBalancerInboundNatPoolProperties LoadBalancerInboundNatPoolProperties(ResourceIdentifier frontendIPConfigurationId = default, LoadBalancingTransportProtocol protocol = default, int frontendPortRangeStart = default, int frontendPortRangeEnd = default, int backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, NetworkProvisioningState? provisioningState = default)
-        {
-            return new LoadBalancerInboundNatPoolProperties(
-                frontendIPConfigurationId is null ? default : new NetworkSubResource(frontendIPConfigurationId, default),
-                protocol,
-                frontendPortRangeStart,
-                frontendPortRangeEnd,
-                backendPort,
-                idleTimeoutInMinutes,
-                enableFloatingIP,
-                enableTcpReset,
-                provisioningState,
-                default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="allocatedOutboundPorts"> The number of outbound ports to be used for NAT. </param>
-        /// <param name="frontendIPConfigurations"> The Frontend IP addresses of the load balancer. </param>
-        /// <param name="provisioningState"> The provisioning state of the outbound rule resource. </param>
-        /// <param name="protocol"> The protocol for the outbound rule in load balancer. </param>
-        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. </param>
-        /// <param name="backendAddressPoolId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.OutboundRuleData"/> instance for mocking. </returns>
-        public static OutboundRuleData OutboundRuleData(ResourceIdentifier id = default, string name = default, string @type = default, int? allocatedOutboundPorts = default, IEnumerable<WritableSubResource> frontendIPConfigurations = default, NetworkProvisioningState? provisioningState = default, LoadBalancerOutboundRuleProtocol? protocol = default, bool? enableTcpReset = default, int? idleTimeoutInMinutes = default, ResourceIdentifier backendAddressPoolId = default, ETag? eTag = default)
-        {
-            return new OutboundRuleData(
-                id,
-                default,
-                name,
-                @type,
-                allocatedOutboundPorts is null && frontendIPConfigurations is null && backendAddressPoolId is null && provisioningState is null && protocol is null && enableTcpReset is null && idleTimeoutInMinutes is null ? default : new OutboundRulePropertiesFormat(
-                    allocatedOutboundPorts,
-                    (frontendIPConfigurations ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    new NetworkSubResource(backendAddressPoolId, default),
-                    provisioningState,
-                    protocol.GetValueOrDefault(),
-                    enableTcpReset,
-                    idleTimeoutInMinutes,
-                    default),
-                eTag);
-        }
-
-        /// <summary> SKU of a load balancer. </summary>
-        /// <param name="name"> Name of a load balancer SKU. </param>
-        /// <param name="tier"> Tier of a load balancer SKU. </param>
-        /// <returns> A new <see cref="Models.LoadBalancerSku"/> instance for mocking. </returns>
-        public static LoadBalancerSku LoadBalancerSku(LoadBalancerSkuName? name = default, LoadBalancerSkuTier? tier = default)
-        {
-            return new LoadBalancerSku(name, tier, default);
         }
 
         /// <summary> The request for a migrateToIpBased API. </summary>
@@ -6118,6 +6305,26 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkSecurityPerimeterPatch(id, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Instance of Verifier Workspace. </summary>
+        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
+        /// <param name="eTag"> String representing unique etag for the resource document. </param>
+        /// <param name="systemData"> The system metadata related to this resource. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
+        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(NetworkVerifierWorkspaceProperties properties = default, ETag? eTag = default, SystemData systemData = default, string name = default)
+        {
+            return new NetworkVerifierWorkspaceData(properties, eTag, systemData, name, default);
+        }
+
+        /// <summary> Properties of Verifier Workspace resource. </summary>
+        /// <param name="description"></param>
+        /// <param name="provisioningState"> Provisioning states of a resource. </param>
+        /// <returns> A new <see cref="Models.NetworkVerifierWorkspaceProperties"/> instance for mocking. </returns>
+        public static NetworkVerifierWorkspaceProperties NetworkVerifierWorkspaceProperties(string description = default, NetworkProvisioningState? provisioningState = default)
+        {
+            return new NetworkVerifierWorkspaceProperties(description, provisioningState, default);
+        }
+
         /// <summary> Configuration information or intent on which to do the analysis on. </summary>
         /// <param name="properties"> Represents the Reachability Analysis Intent properties. </param>
         /// <param name="name"> Reachability Analysis Intent name. </param>
@@ -6167,26 +6374,6 @@ namespace Azure.ResourceManager.Network.Models
                 (destinationPorts ?? new ChangeTrackingList<string>()).ToList(),
                 (protocols ?? new ChangeTrackingList<NetworkProtocol>()).ToList(),
                 default);
-        }
-
-        /// <summary> Instance of Verifier Workspace. </summary>
-        /// <param name="properties"> Properties of Verifier Workspace resource. </param>
-        /// <param name="eTag"> String representing unique etag for the resource document. </param>
-        /// <param name="systemData"> The system metadata related to this resource. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <returns> A new <see cref="Network.NetworkVerifierWorkspaceData"/> instance for mocking. </returns>
-        public static NetworkVerifierWorkspaceData NetworkVerifierWorkspaceData(NetworkVerifierWorkspaceProperties properties = default, ETag? eTag = default, SystemData systemData = default, string name = default)
-        {
-            return new NetworkVerifierWorkspaceData(properties, eTag, systemData, name, default);
-        }
-
-        /// <summary> Properties of Verifier Workspace resource. </summary>
-        /// <param name="description"></param>
-        /// <param name="provisioningState"> Provisioning states of a resource. </param>
-        /// <returns> A new <see cref="Models.NetworkVerifierWorkspaceProperties"/> instance for mocking. </returns>
-        public static NetworkVerifierWorkspaceProperties NetworkVerifierWorkspaceProperties(string description = default, NetworkProvisioningState? provisioningState = default)
-        {
-            return new NetworkVerifierWorkspaceProperties(description, provisioningState, default);
         }
 
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
@@ -6585,27 +6772,6 @@ namespace Azure.ResourceManager.Network.Models
         public static BreakOutCategoryPolicies BreakOutCategoryPolicies(bool? allow = default, bool? optimize = default, bool? @default = default)
         {
             return new BreakOutCategoryPolicies(allow, optimize, @default, default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="provisioningState"> The provisioning state of the network watcher resource. </param>
-        /// <returns> A new <see cref="Network.NetworkWatcherData"/> instance for mocking. </returns>
-        public static NetworkWatcherData NetworkWatcherData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkWatcherData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                provisioningState is null ? default : new NetworkWatcherPropertiesFormat(provisioningState, default));
         }
 
         /// <param name="targetResourceGroupName"> The name of the target resource group to perform topology on. </param>
@@ -7599,152 +7765,6 @@ namespace Azure.ResourceManager.Network.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
                 provisioningState is null && securityProviderName is null && connectionStatus is null && virtualHubId is null ? default : new SecurityPartnerProviderPropertiesFormat(provisioningState, securityProviderName, connectionStatus, new NetworkSubResource(virtualHubId, default), default));
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="addressSpace"> The AddressSpace that contains an array of IP address ranges that can be used by subnets. </param>
-        /// <param name="flowTimeoutInMinutes"> The FlowTimeout value (in minutes) for the Virtual Network. </param>
-        /// <param name="subnets"> A list of subnets in a Virtual Network. </param>
-        /// <param name="virtualNetworkPeerings"> A list of peerings in a Virtual Network. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network resource. </param>
-        /// <param name="enableDdosProtection"> Indicates if DDoS protection is enabled for all the protected resources in the virtual network. It requires a DDoS protection plan associated with the resource. </param>
-        /// <param name="enableVmProtection"> Indicates if VM protection is enabled for all the subnets in the virtual network. </param>
-        /// <param name="bgpCommunities"> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </param>
-        /// <param name="encryption"> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </param>
-        /// <param name="ipAllocations"> Array of IpAllocation which reference this VNET. </param>
-        /// <param name="flowLogs"> A collection of references to flow log resources. </param>
-        /// <param name="privateEndpointVNetPolicies"> Private Endpoint VNet Policies. </param>
-        /// <param name="summarizedGatewayPrefixes"> A configurable list of summarized gateway prefixes advertised for the virtual network. </param>
-        /// <param name="dhcpOptionsDnsServers"> The list of DNS servers IP addresses. </param>
-        /// <param name="ddosProtectionPlanId"> Resource ID. </param>
-        /// <param name="defaultPublicNatGatewayId"> Resource ID. </param>
-        /// <param name="extendedLocation"> The extended location of the virtual network. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkData"/> instance for mocking. </returns>
-        public static VirtualNetworkData VirtualNetworkData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, VirtualNetworkAddressSpace addressSpace = default, int? flowTimeoutInMinutes = default, IEnumerable<SubnetData> subnets = default, IEnumerable<VirtualNetworkPeeringData> virtualNetworkPeerings = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, bool? enableDdosProtection = default, bool? enableVmProtection = default, VirtualNetworkBgpCommunities bgpCommunities = default, VirtualNetworkEncryption encryption = default, IEnumerable<NetworkSubResource> ipAllocations = default, IEnumerable<FlowLogData> flowLogs = default, PrivateEndpointVnetPolicy? privateEndpointVNetPolicies = default, VirtualNetworkAddressSpace summarizedGatewayPrefixes = default, IEnumerable<string> dhcpOptionsDnsServers = default, ResourceIdentifier ddosProtectionPlanId = default, ResourceIdentifier defaultPublicNatGatewayId = default, ExtendedLocation extendedLocation = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new VirtualNetworkData(
-                id,
-                name,
-                @type,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                addressSpace is null && dhcpOptionsDnsServers is null && flowTimeoutInMinutes is null && subnets is null && virtualNetworkPeerings is null && resourceGuid is null && provisioningState is null && enableDdosProtection is null && enableVmProtection is null && ddosProtectionPlanId is null && bgpCommunities is null && encryption is null && ipAllocations is null && flowLogs is null && privateEndpointVNetPolicies is null && defaultPublicNatGatewayId is null && summarizedGatewayPrefixes is null ? default : new VirtualNetworkPropertiesFormat(
-                    addressSpace,
-                    new DhcpOptions((dhcpOptionsDnsServers ?? new ChangeTrackingList<string>()).ToList(), default),
-                    flowTimeoutInMinutes,
-                    (subnets ?? new ChangeTrackingList<SubnetData>()).ToList(),
-                    (virtualNetworkPeerings ?? new ChangeTrackingList<VirtualNetworkPeeringData>()).ToList(),
-                    resourceGuid,
-                    provisioningState,
-                    enableDdosProtection,
-                    enableVmProtection,
-                    new NetworkSubResource(ddosProtectionPlanId, default),
-                    bgpCommunities,
-                    encryption,
-                    (ipAllocations ?? new ChangeTrackingList<NetworkSubResource>()).ToList(),
-                    (flowLogs ?? new ChangeTrackingList<FlowLogData>()).ToList(),
-                    privateEndpointVNetPolicies,
-                    new NetworkSubResource(defaultPublicNatGatewayId, default),
-                    summarizedGatewayPrefixes,
-                    default),
-                extendedLocation,
-                eTag);
-        }
-
-        /// <summary> AddressSpace contains an array of IP address ranges that can be used by subnets of the virtual network. </summary>
-        /// <param name="addressPrefixes"> A list of address blocks reserved for this virtual network in CIDR notation. </param>
-        /// <param name="ipamPoolPrefixAllocations"> A list of IPAM Pools allocating IP address prefixes. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkAddressSpace"/> instance for mocking. </returns>
-        public static VirtualNetworkAddressSpace VirtualNetworkAddressSpace(IEnumerable<string> addressPrefixes = default, IEnumerable<IpamPoolPrefixAllocation> ipamPoolPrefixAllocations = default)
-        {
-            addressPrefixes ??= new ChangeTrackingList<string>();
-            ipamPoolPrefixAllocations ??= new ChangeTrackingList<IpamPoolPrefixAllocation>();
-
-            return new VirtualNetworkAddressSpace((addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), (ipamPoolPrefixAllocations ?? new ChangeTrackingList<IpamPoolPrefixAllocation>()).ToList(), default);
-        }
-
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="allowVirtualNetworkAccess"> Whether the VMs in the local virtual network space would be able to access the VMs in remote virtual network space. </param>
-        /// <param name="allowForwardedTraffic"> Whether the forwarded traffic from the VMs in the local virtual network will be allowed/disallowed in remote virtual network. </param>
-        /// <param name="allowGatewayTransit"> If gateway links can be used in remote virtual networking to link to this virtual network. </param>
-        /// <param name="useRemoteGateways"> If remote gateways can be used on this virtual network. If the flag is set to true, and allowGatewayTransit on remote peering is also true, virtual network will use gateways of remote virtual network for transit. Only one peering can have this flag set to true. This flag cannot be set if virtual network already has a gateway. </param>
-        /// <param name="localAddressSpace"> The local address space of the local virtual network that is peered. </param>
-        /// <param name="localVirtualNetworkAddressSpace"> The current local address space of the local virtual network that is peered. </param>
-        /// <param name="remoteAddressSpace"> The reference to the address space peered with the remote virtual network. </param>
-        /// <param name="remoteVirtualNetworkAddressSpace"> The reference to the current address space of the remote virtual network. </param>
-        /// <param name="remoteBgpCommunities"> The reference to the remote virtual network's Bgp Communities. </param>
-        /// <param name="remoteVirtualNetworkEncryption"> The reference to the remote virtual network's encryption. </param>
-        /// <param name="peeringState"> The status of the virtual network peering. </param>
-        /// <param name="peeringSyncLevel"> The peering sync status of the virtual network peering. </param>
-        /// <param name="provisioningState"> The provisioning state of the virtual network peering resource. </param>
-        /// <param name="doNotVerifyRemoteGateways"> If we need to verify the provisioning state of the remote gateway. </param>
-        /// <param name="resourceGuid"> The resourceGuid property of the Virtual Network peering resource. </param>
-        /// <param name="peerCompleteVnets"> Whether complete virtual network address space is peered. </param>
-        /// <param name="enableOnlyIPv6Peering"> Whether only Ipv6 address space is peered for subnet peering. </param>
-        /// <param name="localSubnetNames"> List of local subnet names that are subnet peered with remote virtual network. </param>
-        /// <param name="remoteSubnetNames"> List of remote subnet names from remote virtual network that are subnet peered. </param>
-        /// <param name="remoteVirtualNetworkId"> Resource ID. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="Network.VirtualNetworkPeeringData"/> instance for mocking. </returns>
-        public static VirtualNetworkPeeringData VirtualNetworkPeeringData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, bool? allowVirtualNetworkAccess = default, bool? allowForwardedTraffic = default, bool? allowGatewayTransit = default, bool? useRemoteGateways = default, VirtualNetworkAddressSpace localAddressSpace = default, VirtualNetworkAddressSpace localVirtualNetworkAddressSpace = default, VirtualNetworkAddressSpace remoteAddressSpace = default, VirtualNetworkAddressSpace remoteVirtualNetworkAddressSpace = default, VirtualNetworkBgpCommunities remoteBgpCommunities = default, VirtualNetworkEncryption remoteVirtualNetworkEncryption = default, VirtualNetworkPeeringState? peeringState = default, VirtualNetworkPeeringLevel? peeringSyncLevel = default, NetworkProvisioningState? provisioningState = default, bool? doNotVerifyRemoteGateways = default, Guid? resourceGuid = default, bool? peerCompleteVnets = default, bool? enableOnlyIPv6Peering = default, IEnumerable<string> localSubnetNames = default, IEnumerable<string> remoteSubnetNames = default, ResourceIdentifier remoteVirtualNetworkId = default, ETag? eTag = default)
-        {
-            return new VirtualNetworkPeeringData(
-                id,
-                default,
-                name,
-                resourceType,
-                allowVirtualNetworkAccess is null && allowForwardedTraffic is null && allowGatewayTransit is null && useRemoteGateways is null && remoteVirtualNetworkId is null && localAddressSpace is null && localVirtualNetworkAddressSpace is null && remoteAddressSpace is null && remoteVirtualNetworkAddressSpace is null && remoteBgpCommunities is null && remoteVirtualNetworkEncryption is null && peeringState is null && peeringSyncLevel is null && provisioningState is null && doNotVerifyRemoteGateways is null && resourceGuid is null && peerCompleteVnets is null && enableOnlyIPv6Peering is null && localSubnetNames is null && remoteSubnetNames is null ? default : new VirtualNetworkPeeringPropertiesFormat(
-                    allowVirtualNetworkAccess,
-                    allowForwardedTraffic,
-                    allowGatewayTransit,
-                    useRemoteGateways,
-                    new NetworkSubResource(remoteVirtualNetworkId, default),
-                    localAddressSpace,
-                    localVirtualNetworkAddressSpace,
-                    remoteAddressSpace,
-                    remoteVirtualNetworkAddressSpace,
-                    remoteBgpCommunities,
-                    remoteVirtualNetworkEncryption,
-                    peeringState,
-                    peeringSyncLevel,
-                    provisioningState,
-                    doNotVerifyRemoteGateways,
-                    resourceGuid,
-                    peerCompleteVnets,
-                    enableOnlyIPv6Peering,
-                    (localSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
-                    (remoteSubnetNames ?? new ChangeTrackingList<string>()).ToList(),
-                    default),
-                eTag);
-        }
-
-        /// <summary> Bgp Communities sent over ExpressRoute with each route corresponding to a prefix in this VNET. </summary>
-        /// <param name="virtualNetworkCommunity"> The BGP community associated with the virtual network. </param>
-        /// <param name="regionalCommunity"> The BGP community associated with the region of the virtual network. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkBgpCommunities"/> instance for mocking. </returns>
-        public static VirtualNetworkBgpCommunities VirtualNetworkBgpCommunities(string virtualNetworkCommunity = default, string regionalCommunity = default)
-        {
-            return new VirtualNetworkBgpCommunities(virtualNetworkCommunity, regionalCommunity, default);
-        }
-
-        /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
-        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
-        /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
-        /// <returns> A new <see cref="Models.VirtualNetworkEncryption"/> instance for mocking. </returns>
-        public static VirtualNetworkEncryption VirtualNetworkEncryption(bool enabled = default, VirtualNetworkEncryptionEnforcement? enforcement = default)
-        {
-            return new VirtualNetworkEncryption(enabled, enforcement, default);
         }
 
         /// <summary> Response for CheckIPAddressAvailability API service call. </summary>
@@ -12486,6 +12506,77 @@ namespace Azure.ResourceManager.Network.Models
             return new NetworkUsageName(value, localizedValue, default);
         }
 
+        /// <summary> Virtual Network Tap resource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="networkInterfaceTapConfigurations"> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </param>
+        /// <param name="resourceGuid"> The resource GUID property of the virtual network tap resource. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual network tap resource. </param>
+        /// <param name="destinationNetworkInterfaceIPConfiguration"></param>
+        /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
+        /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.VirtualNetworkTapData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static VirtualNetworkTapData VirtualNetworkTapData(ResourceIdentifier id = default, string name = default, string @type = default, AzureLocation? location = default, IDictionary<string, string> tags = default, IEnumerable<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = default, FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = default, int? destinationPort = default, ETag? eTag = default)
+        {
+            return new VirtualNetworkTapData(
+                id,
+                name,
+                @type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default,
+                networkInterfaceTapConfigurations is null && resourceGuid is null && provisioningState is null && destinationLoadBalancerFrontEndIPConfiguration is null && destinationPort is null ? default : new VirtualNetworkTapPropertiesFormat(
+                    (networkInterfaceTapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>()).ToList(),
+                    resourceGuid,
+                    provisioningState,
+                    (Network.NetworkInterfaceIPConfiguration1Data)default,
+                    destinationLoadBalancerFrontEndIPConfiguration,
+                    destinationPort,
+                    default),
+                eTag);
+        }
+
+        /// <summary> Inbound NAT rule of the load balancer. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
+        /// <param name="backendIPConfiguration"></param>
+        /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </param>
+        /// <param name="backendPort"> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </param>
+        /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
+        /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
+        /// <param name="frontendPortRangeStart"> The port range start for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeEnd. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </param>
+        /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. This property is used together with BackendAddressPool and FrontendPortRangeStart. Individual inbound NAT rule port mappings will be created for each backend address from BackendAddressPool. Acceptable values range from 1 to 65534. </param>
+        /// <param name="provisioningState"> The provisioning state of the inbound NAT rule resource. </param>
+        /// <param name="frontendIPConfigurationId"> Resource ID. </param>
+        /// <param name="backendAddressPoolId"> Resource ID. </param>
+        /// <returns> A new <see cref="Network.InboundNatRuleData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id = default, string name = default, string @type = default, NetworkInterfaceIPConfigurationData backendIPConfiguration = default, LoadBalancingTransportProtocol? protocol = default, int? frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, int? frontendPortRangeStart = default, int? frontendPortRangeEnd = default, NetworkProvisioningState? provisioningState = default, ResourceIdentifier frontendIPConfigurationId = default, ResourceIdentifier backendAddressPoolId = default)
+        {
+            return new InboundNatRuleData(id, default, name, @type, frontendIPConfigurationId is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
+                new NetworkSubResource(frontendIPConfigurationId, default),
+                (Network.NetworkInterfaceIPConfiguration1Data)default,
+                protocol,
+                frontendPort,
+                backendPort,
+                idleTimeoutInMinutes,
+                enableFloatingIP,
+                enableTcpReset,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                new NetworkSubResource(backendAddressPoolId, default),
+                provisioningState,
+                default));
+        }
+
         /// <summary> A load balancing rule for a load balancer. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Name of the resource. </param>
@@ -14453,7 +14544,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="networkInterfaceTapConfigurations"> Specifies the list of resource IDs for the network interface IP configuration that needs to be tapped. </param>
         /// <param name="resourceGuid"> The resource GUID property of the virtual network tap resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network tap resource. </param>
-        /// <param name="destinationNetworkInterfaceIPConfiguration"> The reference to the private IP Address of the collector nic that will receive the tap. </param>
+        /// <param name="destinationNetworkInterfaceIPConfiguration"></param>
         /// <param name="destinationLoadBalancerFrontEndIPConfiguration"> The reference to the private IP address on the internal Load Balancer that will receive the tap. </param>
         /// <param name="destinationPort"> The VXLAN destination port that will receive the tapped traffic. </param>
         /// <returns> A new <see cref="Network.VirtualNetworkTapData"/> instance for mocking. </returns>
@@ -14467,11 +14558,11 @@ namespace Azure.ResourceManager.Network.Models
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default,
-                networkInterfaceTapConfigurations is null && resourceGuid is null && provisioningState is null && destinationNetworkInterfaceIPConfiguration is null && destinationLoadBalancerFrontEndIPConfiguration is null && destinationPort is null ? default : new VirtualNetworkTapPropertiesFormat(
+                networkInterfaceTapConfigurations is null && resourceGuid is null && provisioningState is null && destinationLoadBalancerFrontEndIPConfiguration is null && destinationPort is null ? default : new VirtualNetworkTapPropertiesFormat(
                     (networkInterfaceTapConfigurations ?? new ChangeTrackingList<NetworkInterfaceTapConfigurationData>()).ToList(),
                     resourceGuid,
                     provisioningState,
-                    destinationNetworkInterfaceIPConfiguration,
+                    (Network.NetworkInterfaceIPConfiguration1Data)default,
                     destinationLoadBalancerFrontEndIPConfiguration,
                     destinationPort,
                     default),
@@ -15494,7 +15585,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceType"></param>
         /// <param name="etag"></param>
         /// <param name="frontendIPConfigurationId"> Resource ID. </param>
-        /// <param name="backendIPConfiguration"> A reference to a private IP address defined on a network interface of a VM. Traffic sent to the frontend port of each of the frontend IP configurations is forwarded to the backend IP. </param>
+        /// <param name="backendIPConfiguration"></param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values range from 1 to 65534. </param>
         /// <param name="backendPort"> The port used for the internal endpoint. Acceptable values range from 1 to 65535. </param>
@@ -15509,9 +15600,9 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static InboundNatRuleData InboundNatRuleData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, ETag? etag = default, ResourceIdentifier frontendIPConfigurationId = default, NetworkInterfaceIPConfigurationData backendIPConfiguration = default, LoadBalancingTransportProtocol? protocol = default, int? frontendPort = default, int? backendPort = default, int? idleTimeoutInMinutes = default, bool? enableFloatingIP = default, bool? enableTcpReset = default, int? frontendPortRangeStart = default, int? frontendPortRangeEnd = default, ResourceIdentifier backendAddressPoolId = default, NetworkProvisioningState? provisioningState = default)
         {
-            return new InboundNatRuleData(id, default, name, default, frontendIPConfigurationId is null && backendIPConfiguration is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
+            return new InboundNatRuleData(id, default, name, default, frontendIPConfigurationId is null && protocol is null && frontendPort is null && backendPort is null && idleTimeoutInMinutes is null && enableFloatingIP is null && enableTcpReset is null && frontendPortRangeStart is null && frontendPortRangeEnd is null && backendAddressPoolId is null && provisioningState is null ? default : new InboundNatRulePropertiesFormat(
                 new NetworkSubResource(frontendIPConfigurationId, default),
-                backendIPConfiguration,
+                (Network.NetworkInterfaceIPConfiguration1Data)default,
                 protocol,
                 frontendPort,
                 backendPort,

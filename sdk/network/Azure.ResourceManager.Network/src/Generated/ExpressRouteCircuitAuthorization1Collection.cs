@@ -15,32 +15,33 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> and their operations.
-    /// Each <see cref="ExpressRouteCircuitAuthorizationResource"/> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource"/>.
-    /// To get a <see cref="ExpressRouteCircuitAuthorizationCollection"/> instance call the GetExpressRouteCircuitAuthorizations method from an instance of <see cref="ExpressRouteCircuitResource"/>.
+    /// A class representing a collection of <see cref="ExpressRouteCircuitAuthorization1Resource"/> and their operations.
+    /// Each <see cref="ExpressRouteCircuitAuthorization1Resource"/> in the collection will belong to the same instance of <see cref="ExpressRouteCircuitResource"/>.
+    /// To get a <see cref="ExpressRouteCircuitAuthorization1Collection"/> instance call the GetExpressRouteCircuitAuthorization1s method from an instance of <see cref="ExpressRouteCircuitResource"/>.
     /// </summary>
-    public partial class ExpressRouteCircuitAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorizationResource>, IAsyncEnumerable<ExpressRouteCircuitAuthorizationResource>
+    public partial class ExpressRouteCircuitAuthorization1Collection : ArmCollection, IEnumerable<ExpressRouteCircuitAuthorization1Resource>, IAsyncEnumerable<ExpressRouteCircuitAuthorization1Resource>
     {
         private readonly ClientDiagnostics _expressRouteCircuitAuthorizationsClientDiagnostics;
         private readonly ExpressRouteCircuitAuthorizations _expressRouteCircuitAuthorizationsRestClient;
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorizationCollection for mocking. </summary>
-        protected ExpressRouteCircuitAuthorizationCollection()
+        /// <summary> Initializes a new instance of ExpressRouteCircuitAuthorization1Collection for mocking. </summary>
+        protected ExpressRouteCircuitAuthorization1Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorizationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitAuthorization1Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ExpressRouteCircuitAuthorizationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ExpressRouteCircuitAuthorization1Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ExpressRouteCircuitAuthorizationResource.ResourceType, out string expressRouteCircuitAuthorizationApiVersion);
-            _expressRouteCircuitAuthorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitAuthorizationResource.ResourceType.Namespace, Diagnostics);
-            _expressRouteCircuitAuthorizationsRestClient = new ExpressRouteCircuitAuthorizations(_expressRouteCircuitAuthorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitAuthorizationApiVersion ?? "2025-09-01");
+            TryGetApiVersion(ExpressRouteCircuitAuthorization1Resource.ResourceType, out string expressRouteCircuitAuthorization1ApiVersion);
+            _expressRouteCircuitAuthorizationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ExpressRouteCircuitAuthorization1Resource.ResourceType.Namespace, Diagnostics);
+            _expressRouteCircuitAuthorizationsRestClient = new ExpressRouteCircuitAuthorizations(_expressRouteCircuitAuthorizationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, expressRouteCircuitAuthorization1ApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -77,12 +78,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ExpressRouteCircuitAuthorizationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationName, ExpressRouteCircuitAuthorizationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ExpressRouteCircuitAuthorization1Data>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationName, ExpressRouteCircuitAuthorization1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,10 +91,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteCircuitAuthorizationData.ToRequestContent(data), context);
+                HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteCircuitAuthorization1Data.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NetworkArmOperation<ExpressRouteCircuitAuthorizationResource> operation = new NetworkArmOperation<ExpressRouteCircuitAuthorizationResource>(
-                    new ExpressRouteCircuitAuthorizationResourceOperationSource(Client),
+                NetworkArmOperation<ExpressRouteCircuitAuthorization1Data> operation = new NetworkArmOperation<ExpressRouteCircuitAuthorization1Data>(
+                    new ExpressRouteCircuitAuthorization1DataOperationSource(),
                     _expressRouteCircuitAuthorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -135,12 +136,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ExpressRouteCircuitAuthorizationResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationName, ExpressRouteCircuitAuthorizationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ExpressRouteCircuitAuthorization1Data> CreateOrUpdate(WaitUntil waitUntil, string authorizationName, ExpressRouteCircuitAuthorization1Data data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,10 +149,10 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteCircuitAuthorizationData.ToRequestContent(data), context);
+                HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, ExpressRouteCircuitAuthorization1Data.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NetworkArmOperation<ExpressRouteCircuitAuthorizationResource> operation = new NetworkArmOperation<ExpressRouteCircuitAuthorizationResource>(
-                    new ExpressRouteCircuitAuthorizationResourceOperationSource(Client),
+                NetworkArmOperation<ExpressRouteCircuitAuthorization1Data> operation = new NetworkArmOperation<ExpressRouteCircuitAuthorization1Data>(
+                    new ExpressRouteCircuitAuthorization1DataOperationSource(),
                     _expressRouteCircuitAuthorizationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -191,11 +192,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ExpressRouteCircuitAuthorizationResource>> GetAsync(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCircuitAuthorization1Data>> GetAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.Get");
             scope.Start();
             try
             {
@@ -205,12 +206,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExpressRouteCircuitAuthorizationData> response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                Response<ExpressRouteCircuitAuthorization1Data> response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -240,11 +241,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ExpressRouteCircuitAuthorizationResource> Get(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitAuthorization1Data> Get(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Get");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.Get");
             scope.Start();
             try
             {
@@ -254,12 +255,12 @@ namespace Azure.ResourceManager.Network
                 };
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExpressRouteCircuitAuthorizationData> response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                Response<ExpressRouteCircuitAuthorization1Data> response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -286,20 +287,20 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ExpressRouteCircuitAuthorizationResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorization1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteCircuitAuthorization1Resource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExpressRouteCircuitAuthorizationData, ExpressRouteCircuitAuthorizationResource>(new ExpressRouteCircuitAuthorizationsGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ExpressRouteCircuitAuthorizationData, ExpressRouteCircuitAuthorization1Resource>(new ExpressRouteCircuitAuthorizationsGetAllAsyncCollectionResultOfT(
                 _expressRouteCircuitAuthorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ExpressRouteCircuitAuthorizationCollection.GetAll"), data => new ExpressRouteCircuitAuthorizationResource(Client, data));
+                "ExpressRouteCircuitAuthorization1Collection.GetAll"), data => new ExpressRouteCircuitAuthorization1Resource(Client, data));
         }
 
         /// <summary>
@@ -320,20 +321,20 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorizationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ExpressRouteCircuitAuthorizationResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ExpressRouteCircuitAuthorization1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteCircuitAuthorization1Resource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExpressRouteCircuitAuthorizationData, ExpressRouteCircuitAuthorizationResource>(new ExpressRouteCircuitAuthorizationsGetAllCollectionResultOfT(
+            return new PageableWrapper<ExpressRouteCircuitAuthorizationData, ExpressRouteCircuitAuthorization1Resource>(new ExpressRouteCircuitAuthorizationsGetAllCollectionResultOfT(
                 _expressRouteCircuitAuthorizationsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "ExpressRouteCircuitAuthorizationCollection.GetAll"), data => new ExpressRouteCircuitAuthorizationResource(Client, data));
+                "ExpressRouteCircuitAuthorization1Collection.GetAll"), data => new ExpressRouteCircuitAuthorization1Resource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +373,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExpressRouteCircuitAuthorizationData> response = default;
+                Response<ExpressRouteCircuitAuthorization1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                        response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExpressRouteCircuitAuthorizationData)null, result);
+                        response = Response.FromValue((ExpressRouteCircuitAuthorization1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +419,7 @@ namespace Azure.ResourceManager.Network
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.Exists");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +430,14 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExpressRouteCircuitAuthorizationData> response = default;
+                Response<ExpressRouteCircuitAuthorization1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                        response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExpressRouteCircuitAuthorizationData)null, result);
+                        response = Response.FromValue((ExpressRouteCircuitAuthorization1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +472,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ExpressRouteCircuitAuthorizationResource>> GetIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ExpressRouteCircuitAuthorization1Resource>> GetIfExistsAsync(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +487,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExpressRouteCircuitAuthorizationData> response = default;
+                Response<ExpressRouteCircuitAuthorization1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                        response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExpressRouteCircuitAuthorizationData)null, result);
+                        response = Response.FromValue((ExpressRouteCircuitAuthorization1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExpressRouteCircuitAuthorizationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ExpressRouteCircuitAuthorization1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +533,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ExpressRouteCircuitAuthorizationResource> GetIfExists(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ExpressRouteCircuitAuthorization1Resource> GetIfExists(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorizationCollection.GetIfExists");
+            using DiagnosticScope scope = _expressRouteCircuitAuthorizationsClientDiagnostics.CreateScope("ExpressRouteCircuitAuthorization1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +548,23 @@ namespace Azure.ResourceManager.Network
                 HttpMessage message = _expressRouteCircuitAuthorizationsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, authorizationName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExpressRouteCircuitAuthorizationData> response = default;
+                Response<ExpressRouteCircuitAuthorization1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExpressRouteCircuitAuthorizationData.FromResponse(result), result);
+                        response = Response.FromValue(ExpressRouteCircuitAuthorization1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExpressRouteCircuitAuthorizationData)null, result);
+                        response = Response.FromValue((ExpressRouteCircuitAuthorization1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ExpressRouteCircuitAuthorizationResource>(response.GetRawResponse());
+                    return new NoValueResponse<ExpressRouteCircuitAuthorization1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ExpressRouteCircuitAuthorizationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteCircuitAuthorization1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +573,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        IEnumerator<ExpressRouteCircuitAuthorizationResource> IEnumerable<ExpressRouteCircuitAuthorizationResource>.GetEnumerator()
+        IEnumerator<ExpressRouteCircuitAuthorization1Resource> IEnumerable<ExpressRouteCircuitAuthorization1Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +584,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ExpressRouteCircuitAuthorizationResource> IAsyncEnumerable<ExpressRouteCircuitAuthorizationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ExpressRouteCircuitAuthorization1Resource> IAsyncEnumerable<ExpressRouteCircuitAuthorization1Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

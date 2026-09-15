@@ -40,27 +40,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="groupMetaData"> Volume group details. </param>
-        /// <param name="volumes"> List of volumes from group. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <returns> A new <see cref="NetApp.NetAppVolumeGroupData"/> instance for mocking. </returns>
-        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default, IEnumerable<NetAppVolumeGroupVolume> volumes = default, AzureLocation? location = default)
-        {
-            return new NetAppVolumeGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && groupMetaData is null && volumes is null ? default : new VolumeGroupProperties(provisioningState, groupMetaData, (volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>()).ToList(), default),
-                location,
-                default);
-        }
-
         /// <summary> Volume group properties. </summary>
         /// <param name="groupDescription"> Group Description. </param>
         /// <param name="applicationType"> Application Type. </param>
@@ -237,6 +216,180 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RansomwareProtectionSettings(desiredRansomwareProtectionState, actualRansomwareProtectionState, default);
         }
 
+        /// <summary> Active Directory. </summary>
+        /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
+        /// <param name="username"> A domain user account with permission to create machine accounts. </param>
+        /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
+        /// <param name="domain"> Name of the Active Directory domain. </param>
+        /// <param name="dns"> Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain. </param>
+        /// <param name="status"> Status of the Active Directory. </param>
+        /// <param name="statusDetails"> Any details in regards to the Status of the Active Directory. </param>
+        /// <param name="smbServerName"> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </param>
+        /// <param name="organizationalUnit"> The Organizational Unit (OU) within the Windows Active Directory. </param>
+        /// <param name="site"> The Active Directory site the service will limit Domain Controller discovery to. </param>
+        /// <param name="backupOperators"> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </param>
+        /// <param name="administrators"> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </param>
+        /// <param name="kdcIP"> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
+        /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
+        /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
+        /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
+        /// <param name="isLdapSigningEnabled"> Specifies whether or not the LDAP traffic needs to be signed. </param>
+        /// <param name="securityOperators"> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
+        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
+        /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </param>
+        /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
+        /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
+        /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
+        /// <returns> A new <see cref="Models.NetAppAccountActiveDirectory"/> instance for mocking. </returns>
+        public static NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = default, string username = default, string password = default, string domain = default, string dns = default, NetAppAccountActiveDirectoryStatus? status = default, string statusDetails = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IPAddress kdcIP = default, string adName = default, string serverRootCACertificate = default, bool? isAesEncryptionEnabled = default, bool? isLdapSigningEnabled = default, IEnumerable<string> securityOperators = default, bool? isLdapOverTlsEnabled = default, bool? allowLocalNfsUsersWithLdap = default, bool? encryptDCConnections = default, NetAppLdapSearchScopeConfiguration ldapSearchScope = default, string preferredServersForLdapClient = default)
+        {
+            backupOperators ??= new ChangeTrackingList<string>();
+            administrators ??= new ChangeTrackingList<string>();
+            securityOperators ??= new ChangeTrackingList<string>();
+
+            return new NetAppAccountActiveDirectory(
+                activeDirectoryId,
+                username,
+                password,
+                domain,
+                dns,
+                status,
+                statusDetails,
+                smbServerName,
+                organizationalUnit,
+                site,
+                (backupOperators ?? new ChangeTrackingList<string>()).ToList(),
+                (administrators ?? new ChangeTrackingList<string>()).ToList(),
+                kdcIP,
+                adName,
+                serverRootCACertificate,
+                isAesEncryptionEnabled,
+                isLdapSigningEnabled,
+                (securityOperators ?? new ChangeTrackingList<string>()).ToList(),
+                isLdapOverTlsEnabled,
+                allowLocalNfsUsersWithLdap,
+                encryptDCConnections,
+                ldapSearchScope,
+                preferredServersForLdapClient,
+                default);
+        }
+
+        /// <summary> LDAP search scope. </summary>
+        /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
+        /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
+        /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>
+        /// <returns> A new <see cref="Models.NetAppLdapSearchScopeConfiguration"/> instance for mocking. </returns>
+        public static NetAppLdapSearchScopeConfiguration NetAppLdapSearchScopeConfiguration(string userDN = default, string groupDN = default, string groupMembershipFilter = default)
+        {
+            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, default);
+        }
+
+        /// <summary> Encryption settings. </summary>
+        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
+        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
+        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
+        /// <returns> A new <see cref="Models.NetAppAccountEncryption"/> instance for mocking. </returns>
+        public static NetAppAccountEncryption NetAppAccountEncryption(NetAppKeySource? keySource = default, NetAppKeyVaultProperties keyVaultProperties = default, NetAppEncryptionIdentity identity = default)
+        {
+            return new NetAppAccountEncryption(keySource, keyVaultProperties, identity, default);
+        }
+
+        /// <summary> Properties of key vault. </summary>
+        /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
+        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
+        /// <param name="keyName"> The name of KeyVault key. </param>
+        /// <param name="keyVaultArmResourceId"> The resource ID of KeyVault. </param>
+        /// <param name="status"> Status of the KeyVault connection. </param>
+        /// <returns> A new <see cref="Models.NetAppKeyVaultProperties"/> instance for mocking. </returns>
+        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId = default, Uri keyVaultUri = default, string keyName = default, ResourceIdentifier keyVaultArmResourceId = default, NetAppKeyVaultStatus? status = default)
+        {
+            return new NetAppKeyVaultProperties(
+                keyVaultId,
+                keyVaultUri,
+                keyName,
+                keyVaultArmResourceId,
+                status,
+                default);
+        }
+
+        /// <summary> Identity used to authenticate with key vault. </summary>
+        /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
+        /// <param name="federatedClientId"> ClientId of the multi-tenant Entra ID Application. Used to access cross-tenant keyvaults. </param>
+        /// <returns> A new <see cref="Models.NetAppEncryptionIdentity"/> instance for mocking. </returns>
+        public static NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = default, string userAssignedIdentity = default, string federatedClientId = default)
+        {
+            return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, default);
+        }
+
+        /// <summary> LDAP configuration. </summary>
+        /// <param name="domain"> Name of the LDAP configuration domain. </param>
+        /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
+        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
+        /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
+        /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
+        /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
+        /// <param name="ldapPort"> Port number for LDAP communication. Default is 389 for LDAP. </param>
+        /// <param name="userDN"> This specifies the user DN (Distinguished Name), which overrides the base DN for user lookups. </param>
+        /// <param name="groupDN"> This specifies the group DN (Distinguished Name), which overrides the base DN for group lookups. </param>
+        /// <param name="netGroupDN"> This specifies the netgroup DN (Distinguished Name), which overrides the base DN for netgroup lookups. </param>
+        /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
+        /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
+        /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
+        /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
+        public static LdapConfiguration LdapConfiguration(string domain, IEnumerable<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IEnumerable<IPAddress> dnsServers, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
+        {
+            ldapServers ??= new ChangeTrackingList<IPAddress>();
+            dnsServers ??= new ChangeTrackingList<IPAddress>();
+
+            return new LdapConfiguration(
+                domain,
+                (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                secureLdapType,
+                serverCACertificate,
+                certificateCNHost,
+                (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
+                ldapPort,
+                userDN,
+                groupDN,
+                netGroupDN,
+                bindAuthenticationLevel,
+                bindDN,
+                bindPasswordAkvConfig,
+                default);
+        }
+
+        /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
+        /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
+        /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
+        /// <returns> A new <see cref="Models.BindPasswordKeyVaultConfig"/> instance for mocking. </returns>
+        public static BindPasswordKeyVaultConfig BindPasswordKeyVaultConfig(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new BindPasswordKeyVaultConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="groupMetaData"> Volume group details. </param>
+        /// <param name="volumes"> List of volumes from group. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <returns> A new <see cref="NetApp.NetAppVolumeGroupData"/> instance for mocking. </returns>
+        public static NetAppVolumeGroupData NetAppVolumeGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, NetAppVolumeGroupMetadata groupMetaData = default, IEnumerable<NetAppVolumeGroupVolume> volumes = default, AzureLocation? location = default)
+        {
+            return new NetAppVolumeGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState is null && groupMetaData is null && volumes is null ? default : new VolumeGroupProperties(provisioningState, groupMetaData, (volumes ?? new ChangeTrackingList<NetAppVolumeGroupVolume>()).ToList(), default),
+                location,
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -257,11 +410,79 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <returns> A new <see cref="NetApp.NetAppBackupVaultData"/> instance for mocking. </returns>
+        public static NetAppBackupVaultData NetAppBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppBackupVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null ? default : new BackupVaultProperties(provisioningState, default),
+                default);
+        }
+
         /// <param name="label"> Label for backup. </param>
         /// <returns> A new <see cref="Models.NetAppBackupVaultBackupPatch"/> instance for mocking. </returns>
         public static NetAppBackupVaultBackupPatch NetAppBackupVaultBackupPatch(string label = default)
         {
             return new NetAppBackupVaultBackupPatch(label is null ? default : new BackupPatchProperties(label, default), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
+        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
+        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
+        /// <param name="qosType"> The qos type of the pool. </param>
+        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
+        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
+        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? poolId = default, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = default, float? totalThroughputMibps = default, float? utilizedThroughputMibps = default, int? customThroughputMibpsInt = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, CapacityPoolEncryptionType? encryptionType = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                new PoolProperties(
+                    poolId,
+                    size,
+                    serviceLevel,
+                    provisioningState,
+                    totalThroughputMibps,
+                    utilizedThroughputMibps,
+                    customThroughputMibpsInt,
+                    qosType,
+                    isCoolAccessEnabled,
+                    encryptionType,
+                    default),
+                eTag,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -559,43 +780,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppVolumeSnapshotRestoreFilesContent((filePaths ?? new ChangeTrackingList<string>()).ToList(), destinationPath, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
-        /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
-        /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
-        /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
-        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
-        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SnapshotPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
-                    hourlySchedule,
-                    dailySchedule,
-                    weeklySchedule,
-                    monthlySchedule,
-                    isEnabled,
-                    provisioningState,
-                    default),
-                eTag,
-                default);
-        }
-
         /// <summary> Hourly Schedule properties. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
@@ -665,6 +849,43 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
         /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="NetApp.SnapshotPolicyData"/> instance for mocking. </returns>
+        public static SnapshotPolicyData SnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SnapshotPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hourlySchedule is null && dailySchedule is null && weeklySchedule is null && monthlySchedule is null && isEnabled is null && provisioningState is null ? default : new SnapshotPolicyProperties(
+                    hourlySchedule,
+                    dailySchedule,
+                    weeklySchedule,
+                    monthlySchedule,
+                    isEnabled,
+                    provisioningState,
+                    default),
+                eTag,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="hourlySchedule"> Schedule for hourly snapshots. </param>
+        /// <param name="dailySchedule"> Schedule for daily snapshots. </param>
+        /// <param name="weeklySchedule"> Schedule for weekly snapshots. </param>
+        /// <param name="monthlySchedule"> Schedule for monthly snapshots. </param>
+        /// <param name="isEnabled"> The property to decide policy is enabled or not. </param>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.SnapshotPolicyPatch"/> instance for mocking. </returns>
         public static SnapshotPolicyPatch SnapshotPolicyPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SnapshotPolicyHourlySchedule hourlySchedule = default, SnapshotPolicyDailySchedule dailySchedule = default, SnapshotPolicyWeeklySchedule weeklySchedule = default, SnapshotPolicyMonthlySchedule monthlySchedule = default, bool? isEnabled = default, string provisioningState = default)
         {
@@ -686,6 +907,17 @@ namespace Azure.ResourceManager.NetApp.Models
                     provisioningState,
                     default),
                 default);
+        }
+
+        /// <summary> Volume details using the backup policy. </summary>
+        /// <param name="volumeName"> Volume name. </param>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
+        /// <param name="backupsCount"> Total count of backups for volume. </param>
+        /// <param name="isPolicyEnabled"> Policy enabled. </param>
+        /// <returns> A new <see cref="Models.NetAppVolumeBackupDetail"/> instance for mocking. </returns>
+        public static NetAppVolumeBackupDetail NetAppVolumeBackupDetail(string volumeName = default, ResourceIdentifier volumeResourceId = default, int? backupsCount = default, bool? isPolicyEnabled = default)
+        {
+            return new NetAppVolumeBackupDetail(volumeName, volumeResourceId, backupsCount, isPolicyEnabled, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -727,17 +959,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     default),
                 eTag,
                 default);
-        }
-
-        /// <summary> Volume details using the backup policy. </summary>
-        /// <param name="volumeName"> Volume name. </param>
-        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
-        /// <param name="backupsCount"> Total count of backups for volume. </param>
-        /// <param name="isPolicyEnabled"> Policy enabled. </param>
-        /// <returns> A new <see cref="Models.NetAppVolumeBackupDetail"/> instance for mocking. </returns>
-        public static NetAppVolumeBackupDetail NetAppVolumeBackupDetail(string volumeName = default, ResourceIdentifier volumeResourceId = default, int? backupsCount = default, bool? isPolicyEnabled = default)
-        {
-            return new NetAppVolumeBackupDetail(volumeName, volumeResourceId, backupsCount, isPolicyEnabled, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -819,29 +1040,6 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary>
-        /// Advanced Ransomware Protection (ARP) report
-        /// Get details of the specified Advanced Ransomware Protection report (ARP).
-        /// ARP reports are created with a list of suspected files when it detects any combination of high data entropy, abnormal volume activity with data encryption, and unusual file extensions.
-        /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data.
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Advanced Ransomware Protection reports Properties. </param>
-        /// <returns> A new <see cref="NetApp.RansomwareReportData"/> instance for mocking. </returns>
-        public static RansomwareReportData RansomwareReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RansomwareReportProperties properties = default)
-        {
-            return new RansomwareReportData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary>
         /// Advanced Ransomware Protection (ARP) report properties.
         /// Evaluate the report to determine whether the activity is acceptable (false positive) or whether an attack seems malicious using the ClearSuspects operation.
         /// Advanced Ransomware Protection (ARP) creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of the ARP snapshots or another snapshot of your volume to restore data.
@@ -891,6 +1089,29 @@ namespace Azure.ResourceManager.NetApp.Models
             return new SuspectFile(suspectFileName, fileTimestamp, default);
         }
 
+        /// <summary>
+        /// Advanced Ransomware Protection (ARP) report
+        /// Get details of the specified Advanced Ransomware Protection report (ARP).
+        /// ARP reports are created with a list of suspected files when it detects any combination of high data entropy, abnormal volume activity with data encryption, and unusual file extensions.
+        /// ARP creates snapshots named Anti_ransomware_backup when it detects a potential ransomware threat. You can use one of these ARP snapshots or another snapshot of your volume to restore data.
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Advanced Ransomware Protection reports Properties. </param>
+        /// <returns> A new <see cref="NetApp.RansomwareReportData"/> instance for mocking. </returns>
+        public static RansomwareReportData RansomwareReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RansomwareReportProperties properties = default)
+        {
+            return new RansomwareReportData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Clear suspects for Advanced Ransomware Protection (ARP) report. </summary>
         /// <param name="resolution"> ARP report suspect resolution. </param>
         /// <param name="extensions"> List of file extensions resolved (PotentialThreat or FalsePositive). </param>
@@ -902,29 +1123,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new RansomwareSuspectsClearContent(resolution, (extensions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <returns> A new <see cref="NetApp.NetAppBackupVaultData"/> instance for mocking. </returns>
-        public static NetAppBackupVaultData NetAppBackupVaultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppBackupVaultData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null ? default : new BackupVaultProperties(provisioningState, default),
-                default);
-        }
-
         /// <summary> Backup Vault information. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NetAppBackupVaultPatch"/> instance for mocking. </returns>
@@ -933,48 +1131,6 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetAppBackupVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="path"> The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created. </param>
-        /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="status">
-        /// The bucket credentials status. There states:
-        /// "NoCredentialsSet": Access and Secret key pair have not been generated.
-        /// "CredentialsExpired": Access and Secret key pair have expired.
-        /// "Active": The certificate has been installed and credentials are unexpired.
-        /// </param>
-        /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
-        /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
-        /// <param name="keyVaultDetails">
-        /// Specifies the Azure Key Vault settings. These are used when
-        /// a) retrieving the bucket server certificate, and
-        /// b) storing the bucket credentials
-        /// Notes:
-        /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
-        /// </param>
-        /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
-        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, NetAppFileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, NetAppCredentialsStatus? status = default, NetAppBucketServerProperties server = default, NetAppBucketPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
-        {
-            return new NetAppBucketData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                path is null && fileSystemUser is null && provisioningState is null && status is null && server is null && permissions is null && keyVaultDetails is null ? default : new BucketProperties(
-                    path,
-                    fileSystemUser,
-                    provisioningState,
-                    status,
-                    server,
-                    permissions,
-                    keyVaultDetails,
-                    default),
-                default);
         }
 
         /// <param name="nfsUser"> The effective NFS User ID and Group ID when accessing the volume data. </param>
@@ -1066,6 +1222,48 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="path"> The volume path mounted inside the bucket. The default is the root path '/' if no value is provided when the bucket is created. </param>
+        /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="status">
+        /// The bucket credentials status. There states:
+        /// "NoCredentialsSet": Access and Secret key pair have not been generated.
+        /// "CredentialsExpired": Access and Secret key pair have expired.
+        /// "Active": The certificate has been installed and credentials are unexpired.
+        /// </param>
+        /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
+        /// <param name="permissions"> Access permissions for the bucket. Either ReadOnly or ReadWrite. The default is ReadOnly if no value is provided during bucket creation. </param>
+        /// <param name="keyVaultDetails">
+        /// Specifies the Azure Key Vault settings. These are used when
+        /// a) retrieving the bucket server certificate, and
+        /// b) storing the bucket credentials
+        /// Notes:
+        /// <list type="number"><item><description>If a bucket certificate was previously provided directly using the certificateObject property, it is possible to subsequently use the Azure Key Vault for certificate management by using these 'akvDetails' properties. However, once Azure Key Vault is configured, it is no longer possible to provide the certificate directly via the certificateObject property.</description></item><item><description>These properties are mutually exclusive with the server.certificateObject property.</description></item></list>
+        /// </param>
+        /// <returns> A new <see cref="NetApp.NetAppBucketData"/> instance for mocking. </returns>
+        public static NetAppBucketData NetAppBucketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string path = default, NetAppFileSystemUser fileSystemUser = default, NetAppProvisioningState? provisioningState = default, NetAppCredentialsStatus? status = default, NetAppBucketServerProperties server = default, NetAppBucketPermission? permissions = default, NetAppKeyVaultDetails keyVaultDetails = default)
+        {
+            return new NetAppBucketData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path is null && fileSystemUser is null && provisioningState is null && status is null && server is null && permissions is null && keyVaultDetails is null ? default : new BucketProperties(
+                    path,
+                    fileSystemUser,
+                    provisioningState,
+                    status,
+                    server,
+                    permissions,
+                    keyVaultDetails,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="fileSystemUser"> File System user having access to volume data. For Unix, this is the user's uid and gid. For Windows, this is the user's username. Note that the Unix and Windows user details are mutually exclusive, meaning one or other must be supplied, but not both. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="server"> Properties of the server managing the lifecycle of volume buckets. </param>
@@ -1127,34 +1325,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static NetAppBucketGenerateCredentials NetAppBucketGenerateCredentials(string accessKey = default, string secretKey = default, DateTimeOffset? keyPairExpiresOn = default)
         {
             return new NetAppBucketGenerateCredentials(accessKey, secretKey, keyPairExpiresOn, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Cache properties. </param>
-        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.NetAppCacheData"/> instance for mocking. </returns>
-        public static NetAppCacheData NetAppCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppCacheProperties properties = default, ETag? etag = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new NetAppCacheData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                etag,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
         }
 
         /// <param name="filePath"> The file path of the Cache. </param>
@@ -1250,6 +1420,34 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppOriginClusterInformation(peerClusterName, (peerAddresses ?? new ChangeTrackingList<string>()).ToList(), peerVserverName, peerVolumeName, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Cache properties. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="NetApp.NetAppCacheData"/> instance for mocking. </returns>
+        public static NetAppCacheData NetAppCacheData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetAppCacheProperties properties = default, ETag? etag = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetAppCacheData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                etag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <summary> The type used for update operations of the Cache. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1297,34 +1495,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppPeeringPassphrases(clusterPeeringCommand, clusterPeeringPassphrase, vserverPeeringCommand, criticalWarning, default);
         }
 
-        /// <summary> NetApp elastic account resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NetApp.NetAppElasticAccountData"/> instance for mocking. </returns>
-        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppElasticAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                identity,
-                default);
-        }
-
         /// <summary> NetApp elastic account properties. </summary>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="encryption"> Encryption settings. </param>
@@ -1365,6 +1535,34 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ElasticEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, default);
         }
 
+        /// <summary> NetApp elastic account resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="NetApp.NetAppElasticAccountData"/> instance for mocking. </returns>
+        public static NetAppElasticAccountData NetAppElasticAccountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticAccountProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppElasticAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                identity,
+                default);
+        }
+
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="elasticAccountUpdateEncryption"> Encryption settings. </param>
@@ -1374,35 +1572,6 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetAppElasticAccountPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), elasticAccountUpdateEncryption is null ? default : new ElasticAccountUpdateProperties(elasticAccountUpdateEncryption, default), default);
-        }
-
-        /// <summary> NetApp Elastic Capacity Pool resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.NetAppElasticCapacityPoolData"/> instance for mocking. </returns>
-        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new NetAppElasticCapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
         }
 
         /// <summary> Elastic capacity pool properties. </summary>
@@ -1440,6 +1609,35 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ElasticEncryptionConfiguration(elasticPoolEncryptionKeySource, keyVaultPrivateEndpointResourceId, default);
         }
 
+        /// <summary> NetApp Elastic Capacity Pool resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="NetApp.NetAppElasticCapacityPoolData"/> instance for mocking. </returns>
+        public static NetAppElasticCapacityPoolData NetAppElasticCapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticCapacityPoolProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetAppElasticCapacityPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <summary> The type used for update operations of the ElasticCapacityPool. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1475,35 +1673,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static CheckElasticResourceAvailabilityResult CheckElasticResourceAvailabilityResult(CheckElasticResourceAvailabilityStatus? isAvailable = default, CheckElasticResourceAvailabilityReason? reason = default, string message = default)
         {
             return new CheckElasticResourceAvailabilityResult(isAvailable, reason, message, default);
-        }
-
-        /// <summary> NetApp Elastic Volume resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.NetAppElasticVolumeData"/> instance for mocking. </returns>
-        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            zones ??= new ChangeTrackingList<string>();
-
-            return new NetAppElasticVolumeData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
-                (zones ?? new ChangeTrackingList<string>()).ToList(),
-                default);
         }
 
         /// <param name="filePath"> A unique file path for the volume. Used when creating mount targets. This needs to be unique within the elastic capacity pool. </param>
@@ -1591,6 +1760,35 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ElasticVolumeBackupProperties(elasticBackupPolicyResourceId, policyEnforcement, elasticBackupVaultResourceId, default);
         }
 
+        /// <summary> NetApp Elastic Volume resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="zones"> The availability zones. </param>
+        /// <returns> A new <see cref="NetApp.NetAppElasticVolumeData"/> instance for mocking. </returns>
+        public static NetAppElasticVolumeData NetAppElasticVolumeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticVolumeProperties properties = default, ETag? eTag = default, IEnumerable<string> zones = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            zones ??= new ChangeTrackingList<string>();
+
+            return new NetAppElasticVolumeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                (zones ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
         /// <summary> The type used for update operations of the ElasticVolume. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1632,32 +1830,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 systemData,
                 elasticSnapshotProvisioningState is null ? default : new ElasticSnapshotProperties(elasticSnapshotProvisioningState, default),
-                default);
-        }
-
-        /// <summary> NetApp Elastic Snapshot Policy under an Elastic Account. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotPolicyData"/> instance for mocking. </returns>
-        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppElasticSnapshotPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                eTag,
                 default);
         }
 
@@ -1726,6 +1898,32 @@ namespace Azure.ResourceManager.NetApp.Models
             return new ElasticSnapshotPolicyMonthlySchedule(snapshotsToKeep, (daysOfMonth ?? new ChangeTrackingList<int>()).ToList(), hour, minute, default);
         }
 
+        /// <summary> NetApp Elastic Snapshot Policy under an Elastic Account. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="NetApp.NetAppElasticSnapshotPolicyData"/> instance for mocking. </returns>
+        public static NetAppElasticSnapshotPolicyData NetAppElasticSnapshotPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ElasticSnapshotPolicyProperties properties = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppElasticSnapshotPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
         /// <summary> The type used for update operations of the ElasticSnapshotPolicy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1772,6 +1970,26 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppElasticBackupVaultPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Elastic Backup Policy properties. </summary>
+        /// <param name="provisioningState"> Azure lifecycle management. </param>
+        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
+        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
+        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
+        /// <param name="assignedVolumesCount"> The number of volumes currently using this Backup Policy. </param>
+        /// <param name="policyState"> The property to identify whether Backup Policy is enabled or not. </param>
+        /// <returns> A new <see cref="Models.ElasticBackupPolicyProperties"/> instance for mocking. </returns>
+        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
+        {
+            return new ElasticBackupPolicyProperties(
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                assignedVolumesCount,
+                policyState,
+                default);
+        }
+
         /// <summary> NetApp Elastic Backup Policy resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1795,26 +2013,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 location,
                 properties,
                 eTag,
-                default);
-        }
-
-        /// <summary> Elastic Backup Policy properties. </summary>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="dailyBackupsToKeep"> Daily backups count to keep. </param>
-        /// <param name="weeklyBackupsToKeep"> Weekly backups count to keep. </param>
-        /// <param name="monthlyBackupsToKeep"> Monthly backups count to keep. </param>
-        /// <param name="assignedVolumesCount"> The number of volumes currently using this Backup Policy. </param>
-        /// <param name="policyState"> The property to identify whether Backup Policy is enabled or not. </param>
-        /// <returns> A new <see cref="Models.ElasticBackupPolicyProperties"/> instance for mocking. </returns>
-        public static ElasticBackupPolicyProperties ElasticBackupPolicyProperties(NetAppProvisioningState? provisioningState = default, int? dailyBackupsToKeep = default, int? weeklyBackupsToKeep = default, int? monthlyBackupsToKeep = default, int? assignedVolumesCount = default, ElasticBackupPolicyState? policyState = default)
-        {
-            return new ElasticBackupPolicyProperties(
-                provisioningState,
-                dailyBackupsToKeep,
-                weeklyBackupsToKeep,
-                monthlyBackupsToKeep,
-                assignedVolumesCount,
-                policyState,
                 default);
         }
 
@@ -1847,32 +2045,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 default);
         }
 
-        /// <summary> Active Directory Configuration resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
-        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ActiveDirectoryConfigProperties properties, ManagedServiceIdentity identity)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetAppActiveDirectoryConfigData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
-        }
-
         /// <summary> Access password from Azure KeyVault Secrets to connect Active Directory. </summary>
         /// <param name="keyVaultProperties"></param>
         /// <param name="identity"></param>
@@ -1900,6 +2072,32 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppSecretPasswordIdentity(principalId, userAssignedIdentity, default);
         }
 
+        /// <summary> Active Directory Configuration resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="NetApp.NetAppActiveDirectoryConfigData"/> instance for mocking. </returns>
+        public static NetAppActiveDirectoryConfigData NetAppActiveDirectoryConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ActiveDirectoryConfigProperties properties, ManagedServiceIdentity identity)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NetAppActiveDirectoryConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
         /// <summary> The type used for update operations of the ActiveDirectoryConfig. </summary>
         /// <param name="identity"></param>
         /// <param name="tags"></param>
@@ -1910,24 +2108,6 @@ namespace Azure.ResourceManager.NetApp.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new NetAppActiveDirectoryConfigPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
-        /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
-        /// <returns> A new <see cref="NetApp.RegionInfoResourceData"/> instance for mocking. </returns>
-        public static RegionInfoResourceData RegionInfoResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegionStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<AvailabilityZoneMapping> availabilityZoneMappings = default)
-        {
-            return new RegionInfoResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                storageToNetworkProximity is null && availabilityZoneMappings is null ? default : new NetAppRegionInfo(storageToNetworkProximity, (availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>()).ToList(), default),
-                default);
         }
 
         /// <summary> Provides region specific information. </summary>
@@ -1950,157 +2130,22 @@ namespace Azure.ResourceManager.NetApp.Models
             return new AvailabilityZoneMapping(availabilityZone, isAvailable, default);
         }
 
-        /// <summary> Active Directory. </summary>
-        /// <param name="activeDirectoryId"> Id of the Active Directory. </param>
-        /// <param name="username"> A domain user account with permission to create machine accounts. </param>
-        /// <param name="password"> Plain text password of Active Directory domain administrator, value is masked in the response. </param>
-        /// <param name="domain"> Name of the Active Directory domain. </param>
-        /// <param name="dns"> Comma separated list of DNS server IP addresses (IPv4 only) for the Active Directory domain. </param>
-        /// <param name="status"> Status of the Active Directory. </param>
-        /// <param name="statusDetails"> Any details in regards to the Status of the Active Directory. </param>
-        /// <param name="smbServerName"> NetBIOS name of the SMB server. This name will be registered as a computer account in the AD and used to mount volumes. </param>
-        /// <param name="organizationalUnit"> The Organizational Unit (OU) within the Windows Active Directory. </param>
-        /// <param name="site"> The Active Directory site the service will limit Domain Controller discovery to. </param>
-        /// <param name="backupOperators"> Users to be added to the Built-in Backup Operator active directory group. A list of unique usernames without domain specifier. </param>
-        /// <param name="administrators"> Users to be added to the Built-in Administrators active directory group. A list of unique usernames without domain specifier. </param>
-        /// <param name="kdcIP"> kdc server IP address for the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
-        /// <param name="adName"> Name of the active directory machine. This optional parameter is used only while creating kerberos volume. </param>
-        /// <param name="serverRootCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded Active Directory Certificate Service's self-signed root CA certificate, this optional parameter is used only for dual protocol with LDAP user-mapping volumes. </param>
-        /// <param name="isAesEncryptionEnabled"> If enabled, AES encryption will be enabled for SMB communication. </param>
-        /// <param name="isLdapSigningEnabled"> Specifies whether or not the LDAP traffic needs to be signed. </param>
-        /// <param name="securityOperators"> Domain Users in the Active directory to be given SeSecurityPrivilege privilege (Needed for SMB Continuously available shares for SQL). A list of unique usernames without domain specifier. </param>
-        /// <param name="isLdapOverTlsEnabled"> Specifies whether or not the LDAP traffic needs to be secured via TLS. </param>
-        /// <param name="allowLocalNfsUsersWithLdap"> If enabled, NFS client local users can also (in addition to LDAP users) access the NFS volumes. </param>
-        /// <param name="encryptDCConnections"> If enabled, Traffic between the SMB server to Domain Controller (DC) will be encrypted. </param>
-        /// <param name="ldapSearchScope"> LDAP Search scope options. </param>
-        /// <param name="preferredServersForLdapClient"> Comma separated list of IPv4 addresses of preferred servers for LDAP client. At most two comma separated IPv4 addresses can be passed. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountActiveDirectory"/> instance for mocking. </returns>
-        public static NetAppAccountActiveDirectory NetAppAccountActiveDirectory(string activeDirectoryId = default, string username = default, string password = default, string domain = default, string dns = default, NetAppAccountActiveDirectoryStatus? status = default, string statusDetails = default, string smbServerName = default, string organizationalUnit = default, string site = default, IEnumerable<string> backupOperators = default, IEnumerable<string> administrators = default, IPAddress kdcIP = default, string adName = default, string serverRootCACertificate = default, bool? isAesEncryptionEnabled = default, bool? isLdapSigningEnabled = default, IEnumerable<string> securityOperators = default, bool? isLdapOverTlsEnabled = default, bool? allowLocalNfsUsersWithLdap = default, bool? encryptDCConnections = default, NetAppLdapSearchScopeConfiguration ldapSearchScope = default, string preferredServersForLdapClient = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
+        /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
+        /// <returns> A new <see cref="NetApp.RegionInfoResourceData"/> instance for mocking. </returns>
+        public static RegionInfoResourceData RegionInfoResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegionStorageToNetworkProximity? storageToNetworkProximity = default, IEnumerable<AvailabilityZoneMapping> availabilityZoneMappings = default)
         {
-            backupOperators ??= new ChangeTrackingList<string>();
-            administrators ??= new ChangeTrackingList<string>();
-            securityOperators ??= new ChangeTrackingList<string>();
-
-            return new NetAppAccountActiveDirectory(
-                activeDirectoryId,
-                username,
-                password,
-                domain,
-                dns,
-                status,
-                statusDetails,
-                smbServerName,
-                organizationalUnit,
-                site,
-                (backupOperators ?? new ChangeTrackingList<string>()).ToList(),
-                (administrators ?? new ChangeTrackingList<string>()).ToList(),
-                kdcIP,
-                adName,
-                serverRootCACertificate,
-                isAesEncryptionEnabled,
-                isLdapSigningEnabled,
-                (securityOperators ?? new ChangeTrackingList<string>()).ToList(),
-                isLdapOverTlsEnabled,
-                allowLocalNfsUsersWithLdap,
-                encryptDCConnections,
-                ldapSearchScope,
-                preferredServersForLdapClient,
+            return new RegionInfoResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageToNetworkProximity is null && availabilityZoneMappings is null ? default : new NetAppRegionInfo(storageToNetworkProximity, (availabilityZoneMappings ?? new ChangeTrackingList<AvailabilityZoneMapping>()).ToList(), default),
                 default);
-        }
-
-        /// <summary> LDAP search scope. </summary>
-        /// <param name="userDN"> This specifies the user DN, which overrides the base DN for user lookups. </param>
-        /// <param name="groupDN"> This specifies the group DN, which overrides the base DN for group lookups. </param>
-        /// <param name="groupMembershipFilter"> This specifies the custom LDAP search filter to be used when looking up group membership from LDAP server. </param>
-        /// <returns> A new <see cref="Models.NetAppLdapSearchScopeConfiguration"/> instance for mocking. </returns>
-        public static NetAppLdapSearchScopeConfiguration NetAppLdapSearchScopeConfiguration(string userDN = default, string groupDN = default, string groupMembershipFilter = default)
-        {
-            return new NetAppLdapSearchScopeConfiguration(userDN, groupDN, groupMembershipFilter, default);
-        }
-
-        /// <summary> Encryption settings. </summary>
-        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
-        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
-        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
-        /// <returns> A new <see cref="Models.NetAppAccountEncryption"/> instance for mocking. </returns>
-        public static NetAppAccountEncryption NetAppAccountEncryption(NetAppKeySource? keySource = default, NetAppKeyVaultProperties keyVaultProperties = default, NetAppEncryptionIdentity identity = default)
-        {
-            return new NetAppAccountEncryption(keySource, keyVaultProperties, identity, default);
-        }
-
-        /// <summary> Properties of key vault. </summary>
-        /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
-        /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
-        /// <param name="keyName"> The name of KeyVault key. </param>
-        /// <param name="keyVaultArmResourceId"> The resource ID of KeyVault. </param>
-        /// <param name="status"> Status of the KeyVault connection. </param>
-        /// <returns> A new <see cref="Models.NetAppKeyVaultProperties"/> instance for mocking. </returns>
-        public static NetAppKeyVaultProperties NetAppKeyVaultProperties(string keyVaultId = default, Uri keyVaultUri = default, string keyName = default, ResourceIdentifier keyVaultArmResourceId = default, NetAppKeyVaultStatus? status = default)
-        {
-            return new NetAppKeyVaultProperties(
-                keyVaultId,
-                keyVaultUri,
-                keyName,
-                keyVaultArmResourceId,
-                status,
-                default);
-        }
-
-        /// <summary> Identity used to authenticate with key vault. </summary>
-        /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
-        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
-        /// <param name="federatedClientId"> ClientId of the multi-tenant Entra ID Application. Used to access cross-tenant keyvaults. </param>
-        /// <returns> A new <see cref="Models.NetAppEncryptionIdentity"/> instance for mocking. </returns>
-        public static NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = default, string userAssignedIdentity = default, string federatedClientId = default)
-        {
-            return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, default);
-        }
-
-        /// <summary> LDAP configuration. </summary>
-        /// <param name="domain"> Name of the LDAP configuration domain. </param>
-        /// <param name="ldapServers"> List of LDAP server IP addresses (IPv4 only) for the LDAP domain. </param>
-        /// <param name="secureLdapType"> Indicates the secure LDAP mode for encrypting communication between ANF storage and customer LDAP servers. </param>
-        /// <param name="serverCACertificate"> When LDAP over SSL/TLS is enabled, the LDAP client is required to have base64 encoded ldap servers CA certificate. </param>
-        /// <param name="certificateCNHost"> The CN host name used while generating the certificate, LDAP Over TLS requires the CN host name to create DNS host entry. </param>
-        /// <param name="dnsServers"> List of DNS server IPv4 addresses for resolving the CN host certificate. This parameter is used when LDAP over TLS is enabled. </param>
-        /// <param name="ldapPort"> Port number for LDAP communication. Default is 389 for LDAP. </param>
-        /// <param name="userDN"> This specifies the user DN (Distinguished Name), which overrides the base DN for user lookups. </param>
-        /// <param name="groupDN"> This specifies the group DN (Distinguished Name), which overrides the base DN for group lookups. </param>
-        /// <param name="netGroupDN"> This specifies the netgroup DN (Distinguished Name), which overrides the base DN for netgroup lookups. </param>
-        /// <param name="bindAuthenticationLevel"> The authentication level to use when binding to the LDAP server, defaults to Anonymous. </param>
-        /// <param name="bindDN"> The distinguished name (DN) to bind as when performing LDAP operations. </param>
-        /// <param name="bindPasswordAkvConfig"> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </param>
-        /// <returns> A new <see cref="Models.LdapConfiguration"/> instance for mocking. </returns>
-        public static LdapConfiguration LdapConfiguration(string domain, IEnumerable<IPAddress> ldapServers, SecureLdapType? secureLdapType, string serverCACertificate, string certificateCNHost, IEnumerable<IPAddress> dnsServers, int? ldapPort = default, string userDN = default, string groupDN = default, string netGroupDN = default, BindAuthenticationLevel? bindAuthenticationLevel = default, string bindDN = default, BindPasswordKeyVaultConfig bindPasswordAkvConfig = default)
-        {
-            ldapServers ??= new ChangeTrackingList<IPAddress>();
-            dnsServers ??= new ChangeTrackingList<IPAddress>();
-
-            return new LdapConfiguration(
-                domain,
-                (ldapServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                secureLdapType,
-                serverCACertificate,
-                certificateCNHost,
-                (dnsServers ?? new ChangeTrackingList<IPAddress>()).ToList(),
-                ldapPort,
-                userDN,
-                groupDN,
-                netGroupDN,
-                bindAuthenticationLevel,
-                bindDN,
-                bindPasswordAkvConfig,
-                default);
-        }
-
-        /// <summary> The Azure Key Vault configuration where the Bind DN (Distinguished Name) user password is stored. </summary>
-        /// <param name="azureKeyVaultUri"> The Azure Key Vault URI where the Bind DN user password is stored. </param>
-        /// <param name="secretName"> The name of the secret in Azure Key Vault that contains the Bind DN user password. </param>
-        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. </param>
-        /// <returns> A new <see cref="Models.BindPasswordKeyVaultConfig"/> instance for mocking. </returns>
-        public static BindPasswordKeyVaultConfig BindPasswordKeyVaultConfig(Uri azureKeyVaultUri = default, string secretName = default, ResourceIdentifier userAssignedIdentity = default)
-        {
-            return new BindPasswordKeyVaultConfig(azureKeyVaultUri, secretName, userAssignedIdentity, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2232,51 +2277,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static BackupsMigrationContent BackupsMigrationContent(ResourceIdentifier backupVaultResourceId = default)
         {
             return new BackupsMigrationContent(backupVaultResourceId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="poolId"> UUID v4 used to identify the Pool. </param>
-        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are 512GiB (549755813888 bytes) or in 1TiB chunks (value must be multiple of 1099511627776). </param>
-        /// <param name="serviceLevel"> The service level of the file system. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="totalThroughputMibps"> Total throughput of pool in MiB/s. </param>
-        /// <param name="utilizedThroughputMibps"> Utilized throughput of pool in MiB/s. </param>
-        /// <param name="customThroughputMibpsInt"> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </param>
-        /// <param name="qosType"> The qos type of the pool. </param>
-        /// <param name="isCoolAccessEnabled"> If enabled (true) the pool can contain cool Access enabled volumes. </param>
-        /// <param name="encryptionType"> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </param>
-        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
-        /// <returns> A new <see cref="NetApp.CapacityPoolData"/> instance for mocking. </returns>
-        public static CapacityPoolData CapacityPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Guid? poolId = default, long size = default, NetAppFileServiceLevel serviceLevel = default, string provisioningState = default, float? totalThroughputMibps = default, float? utilizedThroughputMibps = default, int? customThroughputMibpsInt = default, CapacityPoolQosType? qosType = default, bool? isCoolAccessEnabled = default, CapacityPoolEncryptionType? encryptionType = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CapacityPoolData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                new PoolProperties(
-                    poolId,
-                    size,
-                    serviceLevel,
-                    provisioningState,
-                    totalThroughputMibps,
-                    utilizedThroughputMibps,
-                    customThroughputMibpsInt,
-                    qosType,
-                    isCoolAccessEnabled,
-                    encryptionType,
-                    default),
-                eTag,
-                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -20,24 +20,6 @@ namespace Azure.ResourceManager.Nginx.Models
     public static partial class ArmNginxModelFactory
     {
 
-        /// <summary> Nginx Deployment Api Key Response. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Nginx Deployment Api Key Response Properties. </param>
-        /// <returns> A new <see cref="Nginx.NginxDeploymentApiKeyData"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyData NginxDeploymentApiKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxDeploymentApiKeyProperties properties = default)
-        {
-            return new NginxDeploymentApiKeyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Nginx Deployment Api Key Response Properties. </summary>
         /// <param name="hint"> The first three characters of the secret text to help identify it in use. This property is read-only. </param>
         /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
@@ -45,60 +27,6 @@ namespace Azure.ResourceManager.Nginx.Models
         public static NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = default, DateTimeOffset? endOn = default)
         {
             return new NginxDeploymentApiKeyProperties(hint, endOn, default);
-        }
-
-        /// <summary> Nginx Deployment Api Key Request. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="properties"> Nginx Deployment Api Key Request Properties. </param>
-        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyCreateOrUpdateContent NginxDeploymentApiKeyCreateOrUpdateContent(string id = default, string name = default, string resourceType = default, NginxDeploymentApiKeyRequestProperties properties = default, SystemData systemData = default)
-        {
-            return new NginxDeploymentApiKeyCreateOrUpdateContent(
-                id,
-                name,
-                resourceType,
-                properties,
-                systemData,
-                default);
-        }
-
-        /// <summary> Nginx Deployment Api Key Request Properties. </summary>
-        /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
-        /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
-        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyRequestProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyRequestProperties NginxDeploymentApiKeyRequestProperties(string secretText = default, DateTimeOffset? endOn = default)
-        {
-            return new NginxDeploymentApiKeyRequestProperties(secretText, endOn, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Nginx Deployment Properties. </param>
-        /// <param name="identity"> Identity Properties. </param>
-        /// <param name="skuName"> Name of the SKU. </param>
-        /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
-        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NginxDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string skuName = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NginxDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                skuName is null ? default : new NginxResourceSku(skuName, default),
-                default);
         }
 
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -239,6 +167,78 @@ namespace Azure.ResourceManager.Nginx.Models
             return new WebApplicationFirewallComponentVersions(wafEngineVersion, wafNginxVersion, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Nginx Deployment Properties. </param>
+        /// <param name="identity"> Identity Properties. </param>
+        /// <param name="skuName"> Name of the SKU. </param>
+        /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NginxDeploymentProperties properties = default, ManagedServiceIdentity identity = default, string skuName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new NginxDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                skuName is null ? default : new NginxResourceSku(skuName, default),
+                default);
+        }
+
+        /// <summary> Nginx Deployment Api Key Response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Nginx Deployment Api Key Response Properties. </param>
+        /// <returns> A new <see cref="Nginx.NginxDeploymentApiKeyData"/> instance for mocking. </returns>
+        public static NginxDeploymentApiKeyData NginxDeploymentApiKeyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxDeploymentApiKeyProperties properties = default)
+        {
+            return new NginxDeploymentApiKeyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Nginx Deployment Api Key Request. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="resourceType"></param>
+        /// <param name="properties"> Nginx Deployment Api Key Request Properties. </param>
+        /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static NginxDeploymentApiKeyCreateOrUpdateContent NginxDeploymentApiKeyCreateOrUpdateContent(string id = default, string name = default, string resourceType = default, NginxDeploymentApiKeyRequestProperties properties = default, SystemData systemData = default)
+        {
+            return new NginxDeploymentApiKeyCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                properties,
+                systemData,
+                default);
+        }
+
+        /// <summary> Nginx Deployment Api Key Request Properties. </summary>
+        /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
+        /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
+        /// <returns> A new <see cref="Models.NginxDeploymentApiKeyRequestProperties"/> instance for mocking. </returns>
+        public static NginxDeploymentApiKeyRequestProperties NginxDeploymentApiKeyRequestProperties(string secretText = default, DateTimeOffset? endOn = default)
+        {
+            return new NginxDeploymentApiKeyRequestProperties(secretText, endOn, default);
+        }
+
         /// <param name="identity"> Identity Properties. </param>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <param name="skuName"> Name of the SKU. </param>
@@ -348,26 +348,6 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentDefaultWafPolicyProperties(content, filepath, default);
         }
 
-        /// <summary> Nginx Certificate. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Nginx Certificate Properties. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <returns> A new <see cref="Nginx.NginxCertificateData"/> instance for mocking. </returns>
-        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxCertificateProperties properties = default, AzureLocation? location = default)
-        {
-            return new NginxCertificateData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                default);
-        }
-
         /// <summary> Nginx Certificate Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="keyVirtualPath"></param>
@@ -401,21 +381,23 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxCertificateError(code, message, default);
         }
 
-        /// <summary> Nginx Configuration Response. </summary>
+        /// <summary> Nginx Certificate. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Nginx Configuration Response Properties. </param>
-        /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
-        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxConfigurationProperties properties = default)
+        /// <param name="properties"> Nginx Certificate Properties. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <returns> A new <see cref="Nginx.NginxCertificateData"/> instance for mocking. </returns>
+        public static NginxCertificateData NginxCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxCertificateProperties properties = default, AzureLocation? location = default)
         {
-            return new NginxConfigurationData(
+            return new NginxCertificateData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
+                location,
                 default);
         }
 
@@ -459,6 +441,24 @@ namespace Azure.ResourceManager.Nginx.Models
             protectedFiles ??= new ChangeTrackingList<string>();
 
             return new NginxConfigurationPackage(data, (protectedFiles ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> Nginx Configuration Response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Nginx Configuration Response Properties. </param>
+        /// <returns> A new <see cref="Nginx.NginxConfigurationData"/> instance for mocking. </returns>
+        public static NginxConfigurationData NginxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxConfigurationProperties properties = default)
+        {
+            return new NginxConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Nginx Configuration Request. </summary>
@@ -601,24 +601,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
-        /// <summary> Nginx Deployment Waf Policy. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Nginx Deployment Waf Policy Properties. </param>
-        /// <returns> A new <see cref="Nginx.NginxDeploymentWafPolicyData"/> instance for mocking. </returns>
-        public static NginxDeploymentWafPolicyData NginxDeploymentWafPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxDeploymentWafPolicyProperties properties = default)
-        {
-            return new NginxDeploymentWafPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Nginx Deployment Waf Policy Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="content"> The byte content of the Policy. </param>
@@ -634,6 +616,24 @@ namespace Azure.ResourceManager.Nginx.Models
                 filepath,
                 compilingState,
                 applyingState,
+                default);
+        }
+
+        /// <summary> Nginx Deployment Waf Policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Nginx Deployment Waf Policy Properties. </param>
+        /// <returns> A new <see cref="Nginx.NginxDeploymentWafPolicyData"/> instance for mocking. </returns>
+        public static NginxDeploymentWafPolicyData NginxDeploymentWafPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, NginxDeploymentWafPolicyProperties properties = default)
+        {
+            return new NginxDeploymentWafPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 

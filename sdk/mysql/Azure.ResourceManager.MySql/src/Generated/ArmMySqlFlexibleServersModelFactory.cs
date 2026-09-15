@@ -19,103 +19,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMySqlFlexibleServersModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="administratorType"> Type of the sever administrator. </param>
-        /// <param name="login"> Login name of the server administrator. </param>
-        /// <param name="sid"> SID (object ID) of the server administrator. </param>
-        /// <param name="tenantId"> Tenant ID of the administrator. </param>
-        /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MySqlFlexibleServerAdministratorType? administratorType = default, string login = default, string sid = default, Guid? tenantId = default, ResourceIdentifier identityResourceId = default)
-        {
-            return new MySqlFlexibleServerAadAdministratorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                administratorType is null && login is null && sid is null && tenantId is null && identityResourceId is null ? default : new AdministratorProperties(
-                    administratorType,
-                    login,
-                    sid,
-                    tenantId,
-                    identityResourceId,
-                    default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
-        /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
-        /// <param name="version"> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </param>
-        /// <param name="fullVersion"> Major version and actual engine version. </param>
-        /// <param name="availabilityZone"> availability Zone information of the server. </param>
-        /// <param name="createMode"> The mode to create a new MySQL server. </param>
-        /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
-        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
-        /// <param name="replicationRole"> The replication role. </param>
-        /// <param name="replicaCapacity"> The maximum number of replicas that a primary server can have. </param>
-        /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
-        /// <param name="state"> The state of a server. </param>
-        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
-        /// <param name="databasePort"> The server database port. Can only be specified when the server is being created. </param>
-        /// <param name="storage"> Storage related properties of a server. </param>
-        /// <param name="backup"> Backup related properties of a server. </param>
-        /// <param name="highAvailability"> High availability related properties of a server. </param>
-        /// <param name="network"> Network related properties of a server. </param>
-        /// <param name="serverPrivateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
-        /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
-        /// <param name="importSourceProperties"> Source properties for import from storage. </param>
-        /// <param name="maintenancePatchStrategy"> The patch strategy of this server. </param>
-        /// <param name="identity"> The cmk identity for the server. </param>
-        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string administratorLogin = default, string administratorLoginPassword = default, MySqlFlexibleServerVersion? version = default, string fullVersion = default, string availabilityZone = default, MySqlFlexibleServerCreateMode? createMode = default, ResourceIdentifier sourceServerResourceId = default, DateTimeOffset? restorePointInOn = default, MySqlFlexibleServerReplicationRole? replicationRole = default, int? replicaCapacity = default, MySqlFlexibleServerDataEncryption dataEncryption = default, MySqlFlexibleServerState? state = default, string fullyQualifiedDomainName = default, int? databasePort = default, MySqlFlexibleServerStorage storage = default, MySqlFlexibleServerBackupProperties backup = default, MySqlFlexibleServerHighAvailability highAvailability = default, MySqlFlexibleServerNetwork network = default, IEnumerable<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections = default, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default, ImportSourceProperties importSourceProperties = default, MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = default, ManagedServiceIdentity identity = default, MySqlFlexibleServerSku sku = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new MySqlFlexibleServerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                administratorLogin is null && administratorLoginPassword is null && version is null && fullVersion is null && availabilityZone is null && createMode is null && sourceServerResourceId is null && restorePointInOn is null && replicationRole is null && replicaCapacity is null && dataEncryption is null && state is null && fullyQualifiedDomainName is null && databasePort is null && storage is null && backup is null && highAvailability is null && network is null && serverPrivateEndpointConnections is null && maintenancePatchStrategy is null && maintenanceWindow is null && importSourceProperties is null ? default : new ServerProperties(
-                    administratorLogin,
-                    administratorLoginPassword,
-                    version,
-                    fullVersion,
-                    availabilityZone,
-                    createMode,
-                    sourceServerResourceId,
-                    restorePointInOn,
-                    replicationRole,
-                    replicaCapacity,
-                    dataEncryption,
-                    state,
-                    fullyQualifiedDomainName,
-                    databasePort,
-                    storage,
-                    backup,
-                    highAvailability,
-                    network,
-                    (serverPrivateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
-                    new MaintenancePolicy(maintenancePatchStrategy, default),
-                    maintenanceWindow,
-                    importSourceProperties,
-                    default),
-                identity,
-                sku,
-                default);
-        }
 
         /// <summary> The date encryption for cmk. </summary>
         /// <param name="primaryUserAssignedIdentityId"> Primary user identity resource id. </param>
@@ -247,6 +150,77 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new ImportSourceProperties(storageType, storageUri, sasToken, dataDirPath, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login (required for server creation). </param>
+        /// <param name="version"> Major version of MySQL. 8.0.21 stands for MySQL 8.0, 5.7.44 stands for MySQL 5.7. </param>
+        /// <param name="fullVersion"> Major version and actual engine version. </param>
+        /// <param name="availabilityZone"> availability Zone information of the server. </param>
+        /// <param name="createMode"> The mode to create a new MySQL server. </param>
+        /// <param name="sourceServerResourceId"> The source MySQL server id. </param>
+        /// <param name="restorePointInOn"> Restore point creation time (ISO8601 format), specifying the time to restore from. </param>
+        /// <param name="replicationRole"> The replication role. </param>
+        /// <param name="replicaCapacity"> The maximum number of replicas that a primary server can have. </param>
+        /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
+        /// <param name="state"> The state of a server. </param>
+        /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of a server. </param>
+        /// <param name="databasePort"> The server database port. Can only be specified when the server is being created. </param>
+        /// <param name="storage"> Storage related properties of a server. </param>
+        /// <param name="backup"> Backup related properties of a server. </param>
+        /// <param name="highAvailability"> High availability related properties of a server. </param>
+        /// <param name="network"> Network related properties of a server. </param>
+        /// <param name="serverPrivateEndpointConnections"> PrivateEndpointConnections related properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a server. Known issue: cannot be set during server creation or updated with other properties during server update; must be updated separately. </param>
+        /// <param name="importSourceProperties"> Source properties for import from storage. </param>
+        /// <param name="maintenancePatchStrategy"> The patch strategy of this server. </param>
+        /// <param name="identity"> The cmk identity for the server. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerData MySqlFlexibleServerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string administratorLogin = default, string administratorLoginPassword = default, MySqlFlexibleServerVersion? version = default, string fullVersion = default, string availabilityZone = default, MySqlFlexibleServerCreateMode? createMode = default, ResourceIdentifier sourceServerResourceId = default, DateTimeOffset? restorePointInOn = default, MySqlFlexibleServerReplicationRole? replicationRole = default, int? replicaCapacity = default, MySqlFlexibleServerDataEncryption dataEncryption = default, MySqlFlexibleServerState? state = default, string fullyQualifiedDomainName = default, int? databasePort = default, MySqlFlexibleServerStorage storage = default, MySqlFlexibleServerBackupProperties backup = default, MySqlFlexibleServerHighAvailability highAvailability = default, MySqlFlexibleServerNetwork network = default, IEnumerable<MySqlFlexibleServersPrivateEndpointConnectionData> serverPrivateEndpointConnections = default, MySqlFlexibleServerMaintenanceWindow maintenanceWindow = default, ImportSourceProperties importSourceProperties = default, MySqlFlexibleServerPatchStrategy? maintenancePatchStrategy = default, ManagedServiceIdentity identity = default, MySqlFlexibleServerSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new MySqlFlexibleServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                administratorLogin is null && administratorLoginPassword is null && version is null && fullVersion is null && availabilityZone is null && createMode is null && sourceServerResourceId is null && restorePointInOn is null && replicationRole is null && replicaCapacity is null && dataEncryption is null && state is null && fullyQualifiedDomainName is null && databasePort is null && storage is null && backup is null && highAvailability is null && network is null && serverPrivateEndpointConnections is null && maintenancePatchStrategy is null && maintenanceWindow is null && importSourceProperties is null ? default : new ServerProperties(
+                    administratorLogin,
+                    administratorLoginPassword,
+                    version,
+                    fullVersion,
+                    availabilityZone,
+                    createMode,
+                    sourceServerResourceId,
+                    restorePointInOn,
+                    replicationRole,
+                    replicaCapacity,
+                    dataEncryption,
+                    state,
+                    fullyQualifiedDomainName,
+                    databasePort,
+                    storage,
+                    backup,
+                    highAvailability,
+                    network,
+                    (serverPrivateEndpointConnections ?? new ChangeTrackingList<MySqlFlexibleServersPrivateEndpointConnectionData>()).ToList(),
+                    new MaintenancePolicy(maintenancePatchStrategy, default),
+                    maintenanceWindow,
+                    importSourceProperties,
+                    default),
+                identity,
+                sku,
+                default);
+        }
+
         /// <summary> Billing information related properties of a server. </summary>
         /// <param name="name"> The name of the sku, e.g. Standard_D32s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. GeneralPurpose. </param>
@@ -254,6 +228,33 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerSku MySqlFlexibleServerSku(string name = default, MySqlFlexibleServerSkuTier tier = default)
         {
             return new MySqlFlexibleServerSku(name, tier, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="administratorType"> Type of the sever administrator. </param>
+        /// <param name="login"> Login name of the server administrator. </param>
+        /// <param name="sid"> SID (object ID) of the server administrator. </param>
+        /// <param name="tenantId"> Tenant ID of the administrator. </param>
+        /// <param name="identityResourceId"> The resource id of the identity used for AAD Authentication. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServerAadAdministratorData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MySqlFlexibleServerAdministratorType? administratorType = default, string login = default, string sid = default, Guid? tenantId = default, ResourceIdentifier identityResourceId = default)
+        {
+            return new MySqlFlexibleServerAadAdministratorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                administratorType is null && login is null && sid is null && tenantId is null && identityResourceId is null ? default : new AdministratorProperties(
+                    administratorType,
+                    login,
+                    sid,
+                    tenantId,
+                    identityResourceId,
+                    default),
+                default);
         }
 
         /// <param name="identity"> The cmk identity for the server. </param>
@@ -611,26 +612,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             return new AdvancedThreatProtectionPatch(state is null ? default : new AdvancedThreatProtectionUpdateProperties(state.GetValueOrDefault(), default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
-        /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
-        /// <param name="supportedServerVersions"> A list of supported server versions. </param>
-        /// <param name="supportedFeatures"> A list of supported features. </param>
-        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServersCapabilityData"/> instance for mocking. </returns>
-        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> supportedGeoBackupRegions = default, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = default, IEnumerable<MySqlFlexibleServerFeatureProperty> supportedFeatures = default)
-        {
-            return new MySqlFlexibleServersCapabilityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                supportedGeoBackupRegions is null && supportedFlexibleServerEditions is null && supportedServerVersions is null && supportedFeatures is null ? default : new CapabilityPropertiesV2((supportedGeoBackupRegions ?? new ChangeTrackingList<string>()).ToList(), (supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>()).ToList(), (supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>()).ToList(), (supportedFeatures ?? new ChangeTrackingList<MySqlFlexibleServerFeatureProperty>()).ToList(), default),
-                default);
-        }
-
         /// <summary> Server edition capabilities. </summary>
         /// <param name="name"> Server edition name. </param>
         /// <param name="defaultSku"> Default Sku name. </param>
@@ -712,6 +693,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static MySqlFlexibleServerFeatureProperty MySqlFlexibleServerFeatureProperty(string featureName = default, string featureValue = default)
         {
             return new MySqlFlexibleServerFeatureProperty(featureName, featureValue, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
+        /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
+        /// <param name="supportedServerVersions"> A list of supported server versions. </param>
+        /// <param name="supportedFeatures"> A list of supported features. </param>
+        /// <returns> A new <see cref="FlexibleServers.MySqlFlexibleServersCapabilityData"/> instance for mocking. </returns>
+        public static MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> supportedGeoBackupRegions = default, IEnumerable<ServerEditionCapabilityV2> supportedFlexibleServerEditions = default, IEnumerable<ServerVersionCapabilityV2> supportedServerVersions = default, IEnumerable<MySqlFlexibleServerFeatureProperty> supportedFeatures = default)
+        {
+            return new MySqlFlexibleServersCapabilityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                supportedGeoBackupRegions is null && supportedFlexibleServerEditions is null && supportedServerVersions is null && supportedFeatures is null ? default : new CapabilityPropertiesV2((supportedGeoBackupRegions ?? new ChangeTrackingList<string>()).ToList(), (supportedFlexibleServerEditions ?? new ChangeTrackingList<ServerEditionCapabilityV2>()).ToList(), (supportedServerVersions ?? new ChangeTrackingList<ServerVersionCapabilityV2>()).ToList(), (supportedFeatures ?? new ChangeTrackingList<MySqlFlexibleServerFeatureProperty>()).ToList(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmNetworkFunctionModelFactory
     {
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -55,33 +56,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="ingestionPolicy"> Ingestion policies. </param>
-        /// <param name="emissionPolicies"> Emission policies. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
-        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
-        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CollectorPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                ingestionPolicy is null && emissionPolicies is null && provisioningState is null ? default : new CollectorPolicyPropertiesFormat(ingestionPolicy, (emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>()).ToList(), provisioningState, default),
-                eTag,
-                default);
         }
 
         /// <summary> Ingestion Policy properties. </summary>
@@ -121,6 +95,33 @@ namespace Azure.ResourceManager.NetworkFunction.Models
         public static EmissionPolicyDestination EmissionPolicyDestination(EmissionDestinationType? destinationType = default)
         {
             return new EmissionPolicyDestination(destinationType, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="ingestionPolicy"> Ingestion policies. </param>
+        /// <param name="emissionPolicies"> Emission policies. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="NetworkFunction.CollectorPolicyData"/> instance for mocking. </returns>
+        public static CollectorPolicyData CollectorPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, IngestionPolicyPropertiesFormat ingestionPolicy = default, IEnumerable<EmissionPoliciesPropertiesFormat> emissionPolicies = default, CollectorProvisioningState? provisioningState = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CollectorPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                ingestionPolicy is null && emissionPolicies is null && provisioningState is null ? default : new CollectorPolicyPropertiesFormat(ingestionPolicy, (emissionPolicies ?? new ChangeTrackingList<EmissionPoliciesPropertiesFormat>()).ToList(), provisioningState, default),
+                eTag,
+                default);
         }
 
         /// <summary> Azure Traffic Collector resource. </summary>

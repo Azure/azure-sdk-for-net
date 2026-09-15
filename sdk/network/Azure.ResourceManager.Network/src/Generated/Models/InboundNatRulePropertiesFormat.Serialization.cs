@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue(BackendIPConfiguration, options);
+                writer.WriteObjectValue<Network.NetworkInterfaceIPConfiguration1Data>(BackendIPConfiguration, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             NetworkSubResource frontendIPConfiguration = default;
-            NetworkInterfaceIPConfigurationData backendIPConfiguration = default;
+            Network.NetworkInterfaceIPConfiguration1Data backendIPConfiguration = default;
             LoadBalancingTransportProtocol? protocol = default;
             int? frontendPort = default;
             int? backendPort = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(prop.Value, options);
+                    backendIPConfiguration = NetworkInterfaceIPConfiguration1Data.DeserializeNetworkInterfaceIPConfiguration1Data(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("protocol"u8))

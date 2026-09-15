@@ -120,13 +120,13 @@ namespace Azure.ResourceManager.Network.Mocking
             return new DdosProtectionPlanResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExpressRouteCircuitAuthorizationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ExpressRouteCircuitAuthorization1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorizationResource"/> object. </returns>
-        public virtual ExpressRouteCircuitAuthorizationResource GetExpressRouteCircuitAuthorizationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ExpressRouteCircuitAuthorization1Resource"/> object. </returns>
+        public virtual ExpressRouteCircuitAuthorization1Resource GetExpressRouteCircuitAuthorization1Resource(ResourceIdentifier id)
         {
-            ExpressRouteCircuitAuthorizationResource.ValidateResourceId(id);
-            return new ExpressRouteCircuitAuthorizationResource(Client, id);
+            ExpressRouteCircuitAuthorization1Resource.ValidateResourceId(id);
+            return new ExpressRouteCircuitAuthorization1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ExpressRouteCircuitResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Network
 {
     /// <summary></summary>
-    public partial class ExpressRouteCircuitAuthorizationResource : IJsonModel<ExpressRouteCircuitAuthorizationData>
+    public partial class ExpressRouteCircuitAuthorization1Resource : IJsonModel<ExpressRouteCircuitAuthorizationData>
     {
         private static IJsonModel<ExpressRouteCircuitAuthorizationData> s_dataDeserializationInstance;
 

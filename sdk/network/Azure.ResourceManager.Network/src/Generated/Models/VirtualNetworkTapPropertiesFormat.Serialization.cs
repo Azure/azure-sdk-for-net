@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DestinationNetworkInterfaceIPConfiguration))
             {
                 writer.WritePropertyName("destinationNetworkInterfaceIPConfiguration"u8);
-                writer.WriteObjectValue(DestinationNetworkInterfaceIPConfiguration, options);
+                writer.WriteObjectValue<Network.NetworkInterfaceIPConfiguration1Data>(DestinationNetworkInterfaceIPConfiguration, options);
             }
             if (Optional.IsDefined(DestinationLoadBalancerFrontEndIPConfiguration))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<NetworkInterfaceTapConfigurationData> networkInterfaceTapConfigurations = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
-            NetworkInterfaceIPConfigurationData destinationNetworkInterfaceIPConfiguration = default;
+            Network.NetworkInterfaceIPConfiguration1Data destinationNetworkInterfaceIPConfiguration = default;
             FrontendIPConfigurationData destinationLoadBalancerFrontEndIPConfiguration = default;
             int? destinationPort = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(prop.Value, options);
+                    destinationNetworkInterfaceIPConfiguration = NetworkInterfaceIPConfiguration1Data.DeserializeNetworkInterfaceIPConfiguration1Data(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("destinationLoadBalancerFrontEndIPConfiguration"u8))

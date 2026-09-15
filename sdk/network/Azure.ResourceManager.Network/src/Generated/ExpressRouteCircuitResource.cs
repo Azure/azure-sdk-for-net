@@ -1245,11 +1245,11 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Gets a collection of ExpressRouteCircuitAuthorizations in the <see cref="ExpressRouteCircuitResource"/>. </summary>
-        /// <returns> An object representing collection of ExpressRouteCircuitAuthorizations and their operations over a ExpressRouteCircuitAuthorizationResource. </returns>
-        public virtual ExpressRouteCircuitAuthorizationCollection GetExpressRouteCircuitAuthorizations()
+        /// <summary> Gets a collection of ExpressRouteCircuitAuthorization1s in the <see cref="ExpressRouteCircuitResource"/>. </summary>
+        /// <returns> An object representing collection of ExpressRouteCircuitAuthorization1s and their operations over a ExpressRouteCircuitAuthorization1Resource. </returns>
+        public virtual ExpressRouteCircuitAuthorization1Collection GetExpressRouteCircuitAuthorization1s()
         {
-            return GetCachedClient(client => new ExpressRouteCircuitAuthorizationCollection(client, Id));
+            return GetCachedClient(client => new ExpressRouteCircuitAuthorization1Collection(client, Id));
         }
 
         /// <summary> Gets the specified authorization from the specified express route circuit. </summary>
@@ -1258,11 +1258,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ExpressRouteCircuitAuthorizationResource>> GetExpressRouteCircuitAuthorizationAsync(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ExpressRouteCircuitAuthorization1Data>> GetExpressRouteCircuitAuthorization1Async(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            return await GetExpressRouteCircuitAuthorizations().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
+            return await GetExpressRouteCircuitAuthorization1s().GetAsync(authorizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the specified authorization from the specified express route circuit. </summary>
@@ -1271,11 +1271,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExpressRouteCircuitAuthorizationResource> GetExpressRouteCircuitAuthorization(string authorizationName, CancellationToken cancellationToken = default)
+        public virtual Response<ExpressRouteCircuitAuthorization1Data> GetExpressRouteCircuitAuthorization1(string authorizationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
-            return GetExpressRouteCircuitAuthorizations().Get(authorizationName, cancellationToken);
+            return GetExpressRouteCircuitAuthorization1s().Get(authorizationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ExpressRouteCircuitPeerings in the <see cref="ExpressRouteCircuitResource"/>. </summary>

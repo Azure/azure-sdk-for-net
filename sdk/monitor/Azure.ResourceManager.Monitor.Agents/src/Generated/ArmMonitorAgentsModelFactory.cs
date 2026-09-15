@@ -18,6 +18,29 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
     public static partial class ArmMonitorAgentsModelFactory
     {
 
+        /// <summary> Properties for an observability agent resource. </summary>
+        /// <param name="provisioningState"> The resource provisioning state. </param>
+        /// <param name="monitoringAccountId"> Resource ID of the Azure Monitor workspace where this agent stores the issues it produces. </param>
+        /// <param name="isEnabled"> Whether the observability agent is enabled. Defaults to true when not specified. </param>
+        /// <param name="operations"> Configuration overrides for agent operations. When omitted, default behavior applies for all operations. </param>
+        /// <returns> A new <see cref="Models.ObservabilityAgentProperties"/> instance for mocking. </returns>
+        public static ObservabilityAgentProperties ObservabilityAgentProperties(MonitorAgentProvisioningState? provisioningState = default, ResourceIdentifier monitoringAccountId = default, bool? isEnabled = default, IEnumerable<ObservabilityAgentOperationInfo> operations = default)
+        {
+            operations ??= new ChangeTrackingList<ObservabilityAgentOperationInfo>();
+
+            return new ObservabilityAgentProperties(provisioningState, monitoringAccountId, isEnabled, (operations ?? new ChangeTrackingList<ObservabilityAgentOperationInfo>()).ToList(), default);
+        }
+
+        /// <summary> Configuration for a specific agent operation. </summary>
+        /// <param name="type"> Type of operation. </param>
+        /// <param name="mode"> Execution mode for this operation. Defaults to Auto when not specified. </param>
+        /// <param name="instructions"> Custom instructions that guide the agent's behavior for this operation. </param>
+        /// <returns> A new <see cref="Models.ObservabilityAgentOperationInfo"/> instance for mocking. </returns>
+        public static ObservabilityAgentOperationInfo ObservabilityAgentOperationInfo(ObservabilityAgentOperationType @type = default, ObservabilityAgentOperationMode? mode = default, string instructions = default)
+        {
+            return new ObservabilityAgentOperationInfo(@type, mode, instructions, default);
+        }
+
         /// <summary> An observability agent resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -42,29 +65,6 @@ namespace Azure.ResourceManager.Monitor.Agents.Models
                 properties,
                 identity,
                 default);
-        }
-
-        /// <summary> Properties for an observability agent resource. </summary>
-        /// <param name="provisioningState"> The resource provisioning state. </param>
-        /// <param name="monitoringAccountId"> Resource ID of the Azure Monitor workspace where this agent stores the issues it produces. </param>
-        /// <param name="isEnabled"> Whether the observability agent is enabled. Defaults to true when not specified. </param>
-        /// <param name="operations"> Configuration overrides for agent operations. When omitted, default behavior applies for all operations. </param>
-        /// <returns> A new <see cref="Models.ObservabilityAgentProperties"/> instance for mocking. </returns>
-        public static ObservabilityAgentProperties ObservabilityAgentProperties(MonitorAgentProvisioningState? provisioningState = default, ResourceIdentifier monitoringAccountId = default, bool? isEnabled = default, IEnumerable<ObservabilityAgentOperationInfo> operations = default)
-        {
-            operations ??= new ChangeTrackingList<ObservabilityAgentOperationInfo>();
-
-            return new ObservabilityAgentProperties(provisioningState, monitoringAccountId, isEnabled, (operations ?? new ChangeTrackingList<ObservabilityAgentOperationInfo>()).ToList(), default);
-        }
-
-        /// <summary> Configuration for a specific agent operation. </summary>
-        /// <param name="type"> Type of operation. </param>
-        /// <param name="mode"> Execution mode for this operation. Defaults to Auto when not specified. </param>
-        /// <param name="instructions"> Custom instructions that guide the agent's behavior for this operation. </param>
-        /// <returns> A new <see cref="Models.ObservabilityAgentOperationInfo"/> instance for mocking. </returns>
-        public static ObservabilityAgentOperationInfo ObservabilityAgentOperationInfo(ObservabilityAgentOperationType @type = default, ObservabilityAgentOperationMode? mode = default, string instructions = default)
-        {
-            return new ObservabilityAgentOperationInfo(@type, mode, instructions, default);
         }
 
         /// <summary> The request body used to update an observability agent resource. </summary>
