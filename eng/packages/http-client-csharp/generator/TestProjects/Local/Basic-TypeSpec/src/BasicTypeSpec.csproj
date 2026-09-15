@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the BasicTypeSpec client library for developing .NET applications with rich experience.</Description>
+    <Description>TODO: Replace this text before publishing BasicTypeSpec. Describe the Azure service this package supports and the main scenarios enabled by this library.</Description>
     <AssemblyTitle>SDK Code Generation BasicTypeSpec</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>BasicTypeSpec</PackageTags>

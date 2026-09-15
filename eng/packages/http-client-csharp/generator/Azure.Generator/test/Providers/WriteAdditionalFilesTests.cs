@@ -6,6 +6,7 @@ using Azure.Generator.Tests.TestHelpers;
 using NUnit.Framework;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Azure.Generator.Tests.Providers
 {
@@ -26,6 +27,32 @@ namespace Azure.Generator.Tests.Providers
             Assert.IsTrue(content.Contains("client library for .NET"));
             Assert.IsTrue(content.Contains("Getting started"));
             Assert.IsTrue(content.Contains("Install the package"));
+        }
+
+        [Test]
+        public void GetReadmeContentPromptsForServiceDescription()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            string content = scaffolding.TestGetReadmeContent("Azure.Test.Package");
+
+            Assert.That(content, Does.Contain("TODO: Replace this paragraph before publishing Azure.Test.Package."));
+            Assert.That(content, Does.Contain("Introduce the Azure service"));
+            Assert.That(content, Does.Contain("main scenarios"));
+            Assert.That(content, Does.Contain("link to the service documentation"));
+            Assert.That(content, Does.Not.Contain("rich experience"));
+        }
+
+        [Test]
+        public void GetSourceProjectFileContentPromptsForServiceDescription()
+        {
+            var scaffolding = new TestableNewAzureProjectScaffolding();
+            var project = XDocument.Parse(scaffolding.TestGetSourceProjectFileContent());
+            string? description = project.Root?.Element("PropertyGroup")?.Element("Description")?.Value;
+
+            Assert.That(description, Does.Contain($"TODO: Replace this text before publishing {AzureClientGenerator.Instance.Configuration.PackageName}."));
+            Assert.That(description, Does.Contain("Describe the Azure service"));
+            Assert.That(description, Does.Contain("main scenarios"));
+            Assert.That(description, Does.Not.Contain("rich experience"));
         }
 
         [Test]
@@ -94,6 +121,7 @@ namespace Azure.Generator.Tests.Providers
         /// </summary>
         private class TestableNewAzureProjectScaffolding : NewAzureProjectScaffolding
         {
+            public string TestGetSourceProjectFileContent() => GetSourceProjectFileContent();
             public string TestGetReadmeContent(string packageName) => GetReadmeContent(packageName);
             public string TestGetChangelogContent(string packageName) => GetChangelogContent(packageName);
             public string TestGetDirectoryBuildPropsContent() => GetDirectoryBuildPropsContent("TestPackage");
