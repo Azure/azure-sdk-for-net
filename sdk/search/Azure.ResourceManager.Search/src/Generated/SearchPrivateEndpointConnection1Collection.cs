@@ -20,28 +20,28 @@ using Azure.ResourceManager.Search.Models;
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SearchPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="SearchPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="SearchServiceResource"/>.
-    /// To get a <see cref="SearchPrivateEndpointConnectionCollection"/> instance call the GetSearchPrivateEndpointConnections method from an instance of <see cref="SearchServiceResource"/>.
+    /// A class representing a collection of <see cref="SearchPrivateEndpointConnection1Resource"/> and their operations.
+    /// Each <see cref="SearchPrivateEndpointConnection1Resource"/> in the collection will belong to the same instance of <see cref="SearchServiceResource"/>.
+    /// To get a <see cref="SearchPrivateEndpointConnection1Collection"/> instance call the GetSearchPrivateEndpointConnection1s method from an instance of <see cref="SearchServiceResource"/>.
     /// </summary>
-    public partial class SearchPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<SearchPrivateEndpointConnectionResource>, IAsyncEnumerable<SearchPrivateEndpointConnectionResource>
+    public partial class SearchPrivateEndpointConnection1Collection : ArmCollection, IEnumerable<SearchPrivateEndpointConnection1Resource>, IAsyncEnumerable<SearchPrivateEndpointConnection1Resource>
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
 
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionCollection for mocking. </summary>
-        protected SearchPrivateEndpointConnectionCollection()
+        /// <summary> Initializes a new instance of SearchPrivateEndpointConnection1Collection for mocking. </summary>
+        protected SearchPrivateEndpointConnection1Collection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnection1Collection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SearchPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SearchPrivateEndpointConnection1Collection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SearchPrivateEndpointConnectionResource.ResourceType, out string searchPrivateEndpointConnectionApiVersion);
-            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchPrivateEndpointConnectionApiVersion ?? "2026-09-01-preview");
+            TryGetApiVersion(SearchPrivateEndpointConnection1Resource.ResourceType, out string searchPrivateEndpointConnection1ApiVersion);
+            _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", SearchPrivateEndpointConnection1Resource.ResourceType.Namespace, Diagnostics);
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchPrivateEndpointConnection1ApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SearchPrivateEndpointConnection1Data>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, SearchPrivateEndpointConnection1Data data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, SearchPrivateEndpointConnectionData.ToRequestContent(data), default, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, SearchPrivateEndpointConnection1Data.ToRequestContent(data), default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SearchArmOperation<SearchPrivateEndpointConnectionResource> operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SearchArmOperation<SearchPrivateEndpointConnection1Data> operation = new SearchArmOperation<SearchPrivateEndpointConnection1Data>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SearchPrivateEndpointConnection1Data> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, SearchPrivateEndpointConnection1Data data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, SearchPrivateEndpointConnectionData.ToRequestContent(data), default, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, SearchPrivateEndpointConnection1Data.ToRequestContent(data), default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SearchArmOperation<SearchPrivateEndpointConnectionResource> operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SearchArmOperation<SearchPrivateEndpointConnection1Data> operation = new SearchArmOperation<SearchPrivateEndpointConnection1Data>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -189,11 +189,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchPrivateEndpointConnection1Data>> GetAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.Get");
             scope.Start();
             try
             {
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.Search
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -239,11 +239,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SearchPrivateEndpointConnectionResource> Get(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchPrivateEndpointConnection1Data> Get(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.Get");
             scope.Start();
             try
             {
@@ -253,12 +253,12 @@ namespace Azure.ResourceManager.Search
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -286,21 +286,21 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SearchPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SearchPrivateEndpointConnectionResource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchPrivateEndpointConnection1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SearchPrivateEndpointConnection1Resource> GetAllAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SearchPrivateEndpointConnectionData, SearchPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServiceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SearchPrivateEndpointConnectionData, SearchPrivateEndpointConnection1Resource>(new PrivateEndpointConnectionsGetByServiceAsyncCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
                 context,
-                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                "SearchPrivateEndpointConnection1Collection.GetAll"), data => new SearchPrivateEndpointConnection1Resource(Client, data));
         }
 
         /// <summary>
@@ -322,21 +322,21 @@ namespace Azure.ResourceManager.Search
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SearchPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SearchPrivateEndpointConnectionResource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SearchPrivateEndpointConnection1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SearchPrivateEndpointConnection1Resource> GetAll(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SearchPrivateEndpointConnectionData, SearchPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByServiceCollectionResultOfT(
+            return new PageableWrapper<SearchPrivateEndpointConnectionData, SearchPrivateEndpointConnection1Resource>(new PrivateEndpointConnectionsGetByServiceCollectionResultOfT(
                 _privateEndpointConnectionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 default,
                 context,
-                "SearchPrivateEndpointConnectionCollection.GetAll"), data => new SearchPrivateEndpointConnectionResource(Client, data));
+                "SearchPrivateEndpointConnection1Collection.GetAll"), data => new SearchPrivateEndpointConnection1Resource(Client, data));
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.Exists");
             scope.Start();
             try
             {
@@ -376,14 +376,14 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SearchPrivateEndpointConnectionData> response = default;
+                Response<SearchPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SearchPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((SearchPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Search
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.Exists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.Exists");
             scope.Start();
             try
             {
@@ -434,14 +434,14 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SearchPrivateEndpointConnectionData> response = default;
+                Response<SearchPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SearchPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((SearchPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -477,11 +477,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SearchPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SearchPrivateEndpointConnection1Resource>> GetIfExistsAsync(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -492,23 +492,23 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SearchPrivateEndpointConnectionData> response = default;
+                Response<SearchPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SearchPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((SearchPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SearchPrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<SearchPrivateEndpointConnection1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchPrivateEndpointConnection1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -539,11 +539,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SearchPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SearchPrivateEndpointConnection1Resource> GetIfExists(string privateEndpointConnectionName, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionCollection.GetIfExists");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Collection.GetIfExists");
             scope.Start();
             try
             {
@@ -554,23 +554,23 @@ namespace Azure.ResourceManager.Search
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, default, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SearchPrivateEndpointConnectionData> response = default;
+                Response<SearchPrivateEndpointConnection1Data> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                        response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SearchPrivateEndpointConnectionData)null, result);
+                        response = Response.FromValue((SearchPrivateEndpointConnection1Data)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SearchPrivateEndpointConnectionResource>(response.GetRawResponse());
+                    return new NoValueResponse<SearchPrivateEndpointConnection1Resource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SearchPrivateEndpointConnection1Resource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Search
             }
         }
 
-        IEnumerator<SearchPrivateEndpointConnectionResource> IEnumerable<SearchPrivateEndpointConnectionResource>.GetEnumerator()
+        IEnumerator<SearchPrivateEndpointConnection1Resource> IEnumerable<SearchPrivateEndpointConnection1Resource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<SearchPrivateEndpointConnectionResource> IAsyncEnumerable<SearchPrivateEndpointConnectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SearchPrivateEndpointConnection1Resource> IAsyncEnumerable<SearchPrivateEndpointConnection1Resource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

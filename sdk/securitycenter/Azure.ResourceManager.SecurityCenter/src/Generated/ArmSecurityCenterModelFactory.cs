@@ -19,6 +19,65 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmSecurityCenterModelFactory
     {
+
+        /// <summary>
+        /// A resource identifier for an alert which can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.).
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceIdentifier"/> and <see cref="Models.LogAnalyticsIdentifier"/>.
+        /// </summary>
+        /// <param name="type"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
+        /// <returns> A new <see cref="Models.SecurityAlertResourceIdentifier"/> instance for mocking. </returns>
+        public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string @type = default)
+        {
+            return new UnknownSecurityAlertResourceIdentifier(default, default);
+        }
+
+        /// <summary> Azure resource identifier. </summary>
+        /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
+        /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
+        public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = default)
+        {
+            return new AzureResourceIdentifier(default, default, azureResourceId);
+        }
+
+        /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
+        /// <param name="workspaceId"> The LogAnalytics workspace id that stores this alert. </param>
+        /// <param name="workspaceSubscriptionId"> The azure subscription id for the LogAnalytics workspace storing this alert. </param>
+        /// <param name="workspaceResourceGroup"> The azure resource group for the LogAnalytics workspace storing this alert. </param>
+        /// <param name="agentId"> (optional) The LogAnalytics agent id reporting the event that this alert is based on. </param>
+        /// <returns> A new <see cref="Models.LogAnalyticsIdentifier"/> instance for mocking. </returns>
+        public static LogAnalyticsIdentifier LogAnalyticsIdentifier(Guid? workspaceId = default, string workspaceSubscriptionId = default, string workspaceResourceGroup = default, Guid? agentId = default)
+        {
+            return new LogAnalyticsIdentifier(
+                default,
+                default,
+                workspaceId,
+                workspaceSubscriptionId,
+                workspaceResourceGroup,
+                agentId);
+        }
+
+        /// <summary> Changing set of properties depending on the entity type. </summary>
+        /// <param name="alertEntityType"> Type of entity. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.SecurityAlertEntity"/> instance for mocking. </returns>
+        public static SecurityAlertEntity SecurityAlertEntity(string alertEntityType = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SecurityAlertEntity(alertEntityType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
+        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
+        /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.SecurityAlertSupportingEvidence"/> instance for mocking. </returns>
+        public static SecurityAlertSupportingEvidence SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SecurityAlertSupportingEvidence(securityAlertSupportingEvidenceType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -90,64 +149,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary>
-        /// A resource identifier for an alert which can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.).
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureResourceIdentifier"/> and <see cref="Models.LogAnalyticsIdentifier"/>.
-        /// </summary>
-        /// <param name="type"> There can be multiple identifiers of different type per alert, this field specify the identifier type. </param>
-        /// <returns> A new <see cref="Models.SecurityAlertResourceIdentifier"/> instance for mocking. </returns>
-        public static SecurityAlertResourceIdentifier SecurityAlertResourceIdentifier(string @type = default)
-        {
-            return new UnknownSecurityAlertResourceIdentifier(default, default);
-        }
-
-        /// <summary> Azure resource identifier. </summary>
-        /// <param name="azureResourceId"> ARM resource identifier for the cloud resource being alerted on. </param>
-        /// <returns> A new <see cref="Models.AzureResourceIdentifier"/> instance for mocking. </returns>
-        public static AzureResourceIdentifier AzureResourceIdentifier(ResourceIdentifier azureResourceId = default)
-        {
-            return new AzureResourceIdentifier(default, default, azureResourceId);
-        }
-
-        /// <summary> Represents a Log Analytics workspace scope identifier. </summary>
-        /// <param name="workspaceId"> The LogAnalytics workspace id that stores this alert. </param>
-        /// <param name="workspaceSubscriptionId"> The azure subscription id for the LogAnalytics workspace storing this alert. </param>
-        /// <param name="workspaceResourceGroup"> The azure resource group for the LogAnalytics workspace storing this alert. </param>
-        /// <param name="agentId"> (optional) The LogAnalytics agent id reporting the event that this alert is based on. </param>
-        /// <returns> A new <see cref="Models.LogAnalyticsIdentifier"/> instance for mocking. </returns>
-        public static LogAnalyticsIdentifier LogAnalyticsIdentifier(Guid? workspaceId = default, string workspaceSubscriptionId = default, string workspaceResourceGroup = default, Guid? agentId = default)
-        {
-            return new LogAnalyticsIdentifier(
-                default,
-                default,
-                workspaceId,
-                workspaceSubscriptionId,
-                workspaceResourceGroup,
-                agentId);
-        }
-
-        /// <summary> Changing set of properties depending on the entity type. </summary>
-        /// <param name="alertEntityType"> Type of entity. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SecurityAlertEntity"/> instance for mocking. </returns>
-        public static SecurityAlertEntity SecurityAlertEntity(string alertEntityType = default, IReadOnlyDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SecurityAlertEntity(alertEntityType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
-        /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SecurityAlertSupportingEvidence"/> instance for mocking. </returns>
-        public static SecurityAlertSupportingEvidence SecurityAlertSupportingEvidence(string securityAlertSupportingEvidenceType = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SecurityAlertSupportingEvidence(securityAlertSupportingEvidenceType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
-        }
-
         /// <summary> Alert Simulator request body. </summary>
         /// <param name="properties"> Alert Simulator request body data. </param>
         /// <returns> A new <see cref="Models.SecurityAlertSimulatorContent"/> instance for mocking. </returns>
@@ -210,55 +211,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 displayName is null && description is null && sourceResourceType is null && conditionSets is null ? default : new ApplicationProperties(displayName, description, sourceResourceType.GetValueOrDefault(), (conditionSets ?? new ChangeTrackingList<BinaryData>()).ToList(), default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> User friendly display name of the assessment. </param>
-        /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
-        /// <param name="description"> Human readable description of the assessment. </param>
-        /// <param name="remediationDescription"> Human readable description of what you should do to mitigate this security issue. </param>
-        /// <param name="categories"> Gets the Categories. </param>
-        /// <param name="severity"> The severity level of the assessment. </param>
-        /// <param name="userImpact"> The user impact of the assessment. </param>
-        /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
-        /// <param name="threats"> Gets the Threats. </param>
-        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
-        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
-        /// <param name="partnerData"> Describes the partner that created the assessment. </param>
-        /// <param name="publishDates"> Gets or sets the PublishDates. </param>
-        /// <param name="plannedDeprecationDate"> Gets or sets the PlannedDeprecationDate. </param>
-        /// <param name="tactics"> Gets the Tactics. </param>
-        /// <param name="techniques"> Gets the Techniques. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentMetadataData"/> instance for mocking. </returns>
-        public static SecurityAssessmentMetadataData SecurityAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? isPreview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentPublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<SecurityAssessmentTactic> tactics = default, IEnumerable<SecurityAssessmentTechnique> techniques = default)
-        {
-            return new SecurityAssessmentMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && isPreview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResult(
-                    displayName,
-                    policyDefinitionId,
-                    description,
-                    remediationDescription,
-                    (categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>()).ToList(),
-                    severity.GetValueOrDefault(),
-                    userImpact,
-                    implementationEffort,
-                    (threats ?? new ChangeTrackingList<SecurityThreat>()).ToList(),
-                    isPreview,
-                    assessmentType.GetValueOrDefault(),
-                    partnerData,
-                    default,
-                    publishDates,
-                    plannedDeprecationDate,
-                    (tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>()).ToList(),
-                    (techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>()).ToList()),
                 default);
         }
 
@@ -365,36 +317,48 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="description"> The security automation description. </param>
-        /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
-        /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
-        /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
-        /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
-        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, string kind = default, ETag? eTag = default)
+        /// <param name="displayName"> User friendly display name of the assessment. </param>
+        /// <param name="policyDefinitionId"> Azure resource ID of the policy definition that turns this assessment calculation on. </param>
+        /// <param name="description"> Human readable description of the assessment. </param>
+        /// <param name="remediationDescription"> Human readable description of what you should do to mitigate this security issue. </param>
+        /// <param name="categories"> Gets the Categories. </param>
+        /// <param name="severity"> The severity level of the assessment. </param>
+        /// <param name="userImpact"> The user impact of the assessment. </param>
+        /// <param name="implementationEffort"> The implementation effort required to remediate this assessment. </param>
+        /// <param name="threats"> Gets the Threats. </param>
+        /// <param name="isPreview"> True if this assessment is in preview release status. </param>
+        /// <param name="assessmentType"> BuiltIn if the assessment based on built-in Azure Policy definition, Custom if the assessment based on custom Azure Policy definition. </param>
+        /// <param name="partnerData"> Describes the partner that created the assessment. </param>
+        /// <param name="publishDates"> Gets or sets the PublishDates. </param>
+        /// <param name="plannedDeprecationDate"> Gets or sets the PlannedDeprecationDate. </param>
+        /// <param name="tactics"> Gets the Tactics. </param>
+        /// <param name="techniques"> Gets the Techniques. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentMetadataData"/> instance for mocking. </returns>
+        public static SecurityAssessmentMetadataData SecurityAssessmentMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier policyDefinitionId = default, string description = default, string remediationDescription = default, IEnumerable<SecurityAssessmentResourceCategory> categories = default, SecurityAssessmentSeverity? severity = default, SecurityAssessmentUserImpact? userImpact = default, ImplementationEffort? implementationEffort = default, IEnumerable<SecurityThreat> threats = default, bool? isPreview = default, SecurityAssessmentType? assessmentType = default, SecurityAssessmentMetadataPartner partnerData = default, SecurityAssessmentPublishDates publishDates = default, string plannedDeprecationDate = default, IEnumerable<SecurityAssessmentTactic> tactics = default, IEnumerable<SecurityAssessmentTechnique> techniques = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecurityAutomationData(
+            return new SecurityAssessmentMetadataData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
+                displayName is null && policyDefinitionId is null && description is null && remediationDescription is null && categories is null && severity is null && userImpact is null && implementationEffort is null && threats is null && isPreview is null && assessmentType is null && partnerData is null && publishDates is null && plannedDeprecationDate is null && tactics is null && techniques is null ? default : new SecurityAssessmentMetadataPropertiesResult(
+                    displayName,
+                    policyDefinitionId,
                     description,
-                    isEnabled,
-                    (scopes ?? new ChangeTrackingList<SecurityAutomationScope>()).ToList(),
-                    (sources ?? new ChangeTrackingList<SecurityAutomationSource>()).ToList(),
-                    (actions ?? new ChangeTrackingList<SecurityAutomationAction>()).ToList(),
-                    default),
-                kind,
-                eTag,
+                    remediationDescription,
+                    (categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>()).ToList(),
+                    severity.GetValueOrDefault(),
+                    userImpact,
+                    implementationEffort,
+                    (threats ?? new ChangeTrackingList<SecurityThreat>()).ToList(),
+                    isPreview,
+                    assessmentType.GetValueOrDefault(),
+                    partnerData,
+                    default,
+                    publishDates,
+                    plannedDeprecationDate,
+                    (tactics ?? new ChangeTrackingList<SecurityAssessmentTactic>()).ToList(),
+                    (techniques ?? new ChangeTrackingList<SecurityAssessmentTechnique>()).ToList()),
                 default);
         }
 
@@ -484,6 +448,43 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SecurityAutomationActionWorkspace(default, default, workspaceResourceId);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="description"> The security automation description. </param>
+        /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
+        /// <param name="scopes"> A collection of scopes on which the security automations logic is applied. Supported scopes are the subscription itself or a resource group under that subscription. The automation will only apply on defined scopes. </param>
+        /// <param name="sources"> A collection of the source event types which evaluate the security automation set of rules. </param>
+        /// <param name="actions"> A collection of the actions which are triggered if all the configured rules evaluations, within at least one rule set, are true. </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityAutomationData"/> instance for mocking. </returns>
+        public static SecurityAutomationData SecurityAutomationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, IEnumerable<SecurityAutomationScope> scopes = default, IEnumerable<SecurityAutomationSource> sources = default, IEnumerable<SecurityAutomationAction> actions = default, string kind = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SecurityAutomationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                description is null && isEnabled is null && scopes is null && sources is null && actions is null ? default : new AutomationProperties(
+                    description,
+                    isEnabled,
+                    (scopes ?? new ChangeTrackingList<SecurityAutomationScope>()).ToList(),
+                    (sources ?? new ChangeTrackingList<SecurityAutomationSource>()).ToList(),
+                    (actions ?? new ChangeTrackingList<SecurityAutomationAction>()).ToList(),
+                    default),
+                kind,
+                eTag,
+                default);
+        }
+
         /// <param name="tags"> A list of key value pairs that describe the resource. </param>
         /// <param name="description"> The security automation description. </param>
         /// <param name="isEnabled"> Indicates whether the security automation is enabled. </param>
@@ -521,33 +522,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityAutomationValidationStatus SecurityAutomationValidationStatus(bool? isValid = default, string message = default)
         {
             return new SecurityAutomationValidationStatus(isValid, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
-        /// <param name="phone"> The security contact's phone number. </param>
-        /// <param name="isEnabled"> Indicates whether the security contact is enabled. </param>
-        /// <param name="notificationsSources"> A collection of sources types which evaluate the email notification. </param>
-        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityContactData"/> instance for mocking. </returns>
-        public static SecurityContactData SecurityContactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string emails = default, string phone = default, bool? isEnabled = default, IEnumerable<NotificationsSource> notificationsSources = default, SecurityContactPropertiesNotificationsByRole notificationsByRole = default)
-        {
-            return new SecurityContactData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                emails is null && phone is null && isEnabled is null && notificationsSources is null && notificationsByRole is null ? default : new SecurityContactProperties(
-                    emails,
-                    phone,
-                    isEnabled,
-                    (notificationsSources ?? new ChangeTrackingList<NotificationsSource>()).ToList(),
-                    notificationsByRole,
-                    default),
-                default);
         }
 
         /// <summary>
@@ -592,6 +566,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="emails"> List of email addresses which will get notifications from Microsoft Defender for Cloud by the configurations defined in this security contact. </param>
+        /// <param name="phone"> The security contact's phone number. </param>
+        /// <param name="isEnabled"> Indicates whether the security contact is enabled. </param>
+        /// <param name="notificationsSources"> A collection of sources types which evaluate the email notification. </param>
+        /// <param name="notificationsByRole"> Defines whether to send email notifications from Microsoft Defender for Cloud to persons with specific RBAC roles on the subscription. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityContactData"/> instance for mocking. </returns>
+        public static SecurityContactData SecurityContactData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string emails = default, string phone = default, bool? isEnabled = default, IEnumerable<NotificationsSource> notificationsSources = default, SecurityContactPropertiesNotificationsByRole notificationsByRole = default)
+        {
+            return new SecurityContactData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                emails is null && phone is null && isEnabled is null && notificationsSources is null && notificationsByRole is null ? default : new SecurityContactProperties(
+                    emails,
+                    phone,
+                    isEnabled,
+                    (notificationsSources ?? new ChangeTrackingList<NotificationsSource>()).ToList(),
+                    notificationsByRole,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="resourceStatus"> The status of the resource regarding a single assessment. </param>
         /// <returns> A new <see cref="SecurityCenter.ComplianceResultData"/> instance for mocking. </returns>
         public static ComplianceResultData ComplianceResultData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentResourceStatus? resourceStatus = default)
@@ -603,6 +604,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 resourceStatus is null ? default : new ComplianceResultProperties(resourceStatus, default),
                 default);
+        }
+
+        /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
+        /// <param name="eta"> ETA for remediation. </param>
+        /// <param name="justification"> Justification for change of Eta. </param>
+        /// <returns> A new <see cref="Models.RemediationEta"/> instance for mocking. </returns>
+        public static RemediationEta RemediationEta(DateTimeOffset eta = default, string justification = default)
+        {
+            return new RemediationEta(eta, justification, default);
+        }
+
+        /// <summary> The governance email weekly notification configuration. </summary>
+        /// <param name="disableManagerEmailNotification"> Exclude manager from weekly email notification. </param>
+        /// <param name="disableOwnerEmailNotification"> Exclude  owner from weekly email notification. </param>
+        /// <returns> A new <see cref="Models.GovernanceEmailNotification"/> instance for mocking. </returns>
+        public static GovernanceEmailNotification GovernanceEmailNotification(bool? disableManagerEmailNotification = default, bool? disableOwnerEmailNotification = default)
+        {
+            return new GovernanceEmailNotification(disableManagerEmailNotification, disableOwnerEmailNotification, default);
+        }
+
+        /// <summary> Describe the additional data of governance assignment - optional. </summary>
+        /// <param name="ticketNumber"> Ticket number associated with this governance assignment. </param>
+        /// <param name="ticketLink"> Ticket link associated with this governance assignment - for example: https://snow.com. </param>
+        /// <param name="ticketStatus"> The ticket status associated with this governance assignment - for example: Active. </param>
+        /// <returns> A new <see cref="Models.GovernanceAssignmentAdditionalInfo"/> instance for mocking. </returns>
+        public static GovernanceAssignmentAdditionalInfo GovernanceAssignmentAdditionalInfo(int? ticketNumber = default, string ticketLink = default, string ticketStatus = default)
+        {
+            return new GovernanceAssignmentAdditionalInfo(ticketNumber, ticketLink, ticketStatus, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -634,32 +663,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> The ETA (estimated time of arrival) for remediation. </summary>
-        /// <param name="eta"> ETA for remediation. </param>
-        /// <param name="justification"> Justification for change of Eta. </param>
-        /// <returns> A new <see cref="Models.RemediationEta"/> instance for mocking. </returns>
-        public static RemediationEta RemediationEta(DateTimeOffset eta = default, string justification = default)
+        /// <summary> Describe the owner source of governance rule. </summary>
+        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
+        /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
+        /// <returns> A new <see cref="Models.GovernanceRuleOwnerSource"/> instance for mocking. </returns>
+        public static GovernanceRuleOwnerSource GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType = default, string value = default)
         {
-            return new RemediationEta(eta, justification, default);
+            return new GovernanceRuleOwnerSource(sourceType, value, default);
         }
 
         /// <summary> The governance email weekly notification configuration. </summary>
-        /// <param name="disableManagerEmailNotification"> Exclude manager from weekly email notification. </param>
-        /// <param name="disableOwnerEmailNotification"> Exclude  owner from weekly email notification. </param>
-        /// <returns> A new <see cref="Models.GovernanceEmailNotification"/> instance for mocking. </returns>
-        public static GovernanceEmailNotification GovernanceEmailNotification(bool? disableManagerEmailNotification = default, bool? disableOwnerEmailNotification = default)
+        /// <param name="disableManagerEmailNotification"> Defines whether manager email notifications are disabled. </param>
+        /// <param name="disableOwnerEmailNotification"> Defines whether owner email notifications are disabled. </param>
+        /// <returns> A new <see cref="Models.GovernanceRuleEmailNotification"/> instance for mocking. </returns>
+        public static GovernanceRuleEmailNotification GovernanceRuleEmailNotification(bool? disableManagerEmailNotification = default, bool? disableOwnerEmailNotification = default)
         {
-            return new GovernanceEmailNotification(disableManagerEmailNotification, disableOwnerEmailNotification, default);
+            return new GovernanceRuleEmailNotification(disableManagerEmailNotification, disableOwnerEmailNotification, default);
         }
 
-        /// <summary> Describe the additional data of governance assignment - optional. </summary>
-        /// <param name="ticketNumber"> Ticket number associated with this governance assignment. </param>
-        /// <param name="ticketLink"> Ticket link associated with this governance assignment - for example: https://snow.com. </param>
-        /// <param name="ticketStatus"> The ticket status associated with this governance assignment - for example: Active. </param>
-        /// <returns> A new <see cref="Models.GovernanceAssignmentAdditionalInfo"/> instance for mocking. </returns>
-        public static GovernanceAssignmentAdditionalInfo GovernanceAssignmentAdditionalInfo(int? ticketNumber = default, string ticketLink = default, string ticketStatus = default)
+        /// <summary> The governance rule metadata. </summary>
+        /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
+        /// <param name="createdOn"> Governance rule creation date. </param>
+        /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
+        /// <param name="updatedOn"> Governance rule last update date. </param>
+        /// <returns> A new <see cref="Models.GovernanceRuleMetadata"/> instance for mocking. </returns>
+        public static GovernanceRuleMetadata GovernanceRuleMetadata(string createdBy = default, DateTimeOffset? createdOn = default, string updatedBy = default, DateTimeOffset? updatedOn = default)
         {
-            return new GovernanceAssignmentAdditionalInfo(ticketNumber, ticketLink, ticketStatus, default);
+            return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -709,35 +739,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> Describe the owner source of governance rule. </summary>
-        /// <param name="sourceType"> The owner type for the governance rule owner source. </param>
-        /// <param name="value"> The source value e.g. tag key like owner name or email address. </param>
-        /// <returns> A new <see cref="Models.GovernanceRuleOwnerSource"/> instance for mocking. </returns>
-        public static GovernanceRuleOwnerSource GovernanceRuleOwnerSource(GovernanceRuleOwnerSourceType? sourceType = default, string value = default)
-        {
-            return new GovernanceRuleOwnerSource(sourceType, value, default);
-        }
-
-        /// <summary> The governance email weekly notification configuration. </summary>
-        /// <param name="disableManagerEmailNotification"> Defines whether manager email notifications are disabled. </param>
-        /// <param name="disableOwnerEmailNotification"> Defines whether owner email notifications are disabled. </param>
-        /// <returns> A new <see cref="Models.GovernanceRuleEmailNotification"/> instance for mocking. </returns>
-        public static GovernanceRuleEmailNotification GovernanceRuleEmailNotification(bool? disableManagerEmailNotification = default, bool? disableOwnerEmailNotification = default)
-        {
-            return new GovernanceRuleEmailNotification(disableManagerEmailNotification, disableOwnerEmailNotification, default);
-        }
-
-        /// <summary> The governance rule metadata. </summary>
-        /// <param name="createdBy"> Governance rule Created by object id (GUID). </param>
-        /// <param name="createdOn"> Governance rule creation date. </param>
-        /// <param name="updatedBy"> Governance rule last updated by object id (GUID). </param>
-        /// <param name="updatedOn"> Governance rule last update date. </param>
-        /// <returns> A new <see cref="Models.GovernanceRuleMetadata"/> instance for mocking. </returns>
-        public static GovernanceRuleMetadata GovernanceRuleMetadata(string createdBy = default, DateTimeOffset? createdOn = default, string updatedBy = default, DateTimeOffset? updatedOn = default)
-        {
-            return new GovernanceRuleMetadata(createdBy, createdOn, updatedBy, updatedOn, default);
-        }
-
         /// <summary> Governance rule execution parameters. </summary>
         /// <param name="override"> Describe if governance rule should be override. </param>
         /// <returns> A new <see cref="Models.ExecuteGovernanceRuleParams"/> instance for mocking. </returns>
@@ -752,39 +753,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterOperationResult SecurityCenterOperationResult(SecurityCenterOperationResultStatus? status = default)
         {
             return new SecurityCenterOperationResult(status, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="resourceDetails"> The resource details of the health report. </param>
-        /// <param name="environmentDetails"> The environment details of the resource. </param>
-        /// <param name="healthDataClassification"> The classification of the health report. </param>
-        /// <param name="status"> The status of the health report. </param>
-        /// <param name="affectedDefendersPlans"> The affected defenders plans by unhealthy report. </param>
-        /// <param name="affectedDefendersSubPlans"> The affected defenders sub plans by unhealthy report. </param>
-        /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
-        /// <param name="issues"> A collection of the issues in the report. </param>
-        /// <returns> A new <see cref="SecurityCenter.HealthReportData"/> instance for mocking. </returns>
-        public static HealthReportData HealthReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCloudResourceDetails resourceDetails = default, SecurityConnectorEnvironmentDetails environmentDetails = default, HealthDataClassification healthDataClassification = default, HealthReportStatus status = default, IEnumerable<string> affectedDefendersPlans = default, IEnumerable<string> affectedDefendersSubPlans = default, IReadOnlyDictionary<string, string> reportAdditionalData = default, IEnumerable<SecurityHealthIssue> issues = default)
-        {
-            return new HealthReportData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                resourceDetails is null && environmentDetails is null && healthDataClassification is null && status is null && affectedDefendersPlans is null && affectedDefendersSubPlans is null && reportAdditionalData is null && issues is null ? default : new HealthReportProperties(
-                    resourceDetails,
-                    environmentDetails,
-                    healthDataClassification,
-                    status,
-                    (affectedDefendersPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    (affectedDefendersSubPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    (issues ?? new ChangeTrackingList<SecurityHealthIssue>()).ToList(),
-                    default),
-                default);
         }
 
         /// <summary> The resource details of the health report. </summary>
@@ -872,19 +840,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="thresholdRules"> The list of custom alert threshold rules. </param>
-        /// <param name="timeWindowRules"> The list of custom alert time-window rules. </param>
-        /// <param name="allowlistRules"> The allow-list custom alert rules. </param>
-        /// <param name="denylistRules"> The deny-list custom alert rules. </param>
-        /// <returns> A new <see cref="SecurityCenter.DeviceSecurityGroupData"/> instance for mocking. </returns>
-        public static DeviceSecurityGroupData DeviceSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ThresholdCustomAlertRule> thresholdRules = default, IEnumerable<TimeWindowCustomAlertRule> timeWindowRules = default, IEnumerable<AllowlistCustomAlertRule> allowlistRules = default, IEnumerable<DenylistCustomAlertRule> denylistRules = default)
+        /// <param name="resourceDetails"> The resource details of the health report. </param>
+        /// <param name="environmentDetails"> The environment details of the resource. </param>
+        /// <param name="healthDataClassification"> The classification of the health report. </param>
+        /// <param name="status"> The status of the health report. </param>
+        /// <param name="affectedDefendersPlans"> The affected defenders plans by unhealthy report. </param>
+        /// <param name="affectedDefendersSubPlans"> The affected defenders sub plans by unhealthy report. </param>
+        /// <param name="reportAdditionalData"> Additional data for the given health report, this field can include more details on the resource and the health scenario. </param>
+        /// <param name="issues"> A collection of the issues in the report. </param>
+        /// <returns> A new <see cref="SecurityCenter.HealthReportData"/> instance for mocking. </returns>
+        public static HealthReportData HealthReportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityCloudResourceDetails resourceDetails = default, SecurityConnectorEnvironmentDetails environmentDetails = default, HealthDataClassification healthDataClassification = default, HealthReportStatus status = default, IEnumerable<string> affectedDefendersPlans = default, IEnumerable<string> affectedDefendersSubPlans = default, IReadOnlyDictionary<string, string> reportAdditionalData = default, IEnumerable<SecurityHealthIssue> issues = default)
         {
-            return new DeviceSecurityGroupData(
+            return new HealthReportData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                thresholdRules is null && timeWindowRules is null && allowlistRules is null && denylistRules is null ? default : new DeviceSecurityGroupProperties((thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>()).ToList(), (timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>()).ToList(), (allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>()).ToList(), (denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>()).ToList(), default),
+                resourceDetails is null && environmentDetails is null && healthDataClassification is null && status is null && affectedDefendersPlans is null && affectedDefendersSubPlans is null && reportAdditionalData is null && issues is null ? default : new HealthReportProperties(
+                    resourceDetails,
+                    environmentDetails,
+                    healthDataClassification,
+                    status,
+                    (affectedDefendersPlans ?? new ChangeTrackingList<string>()).ToList(),
+                    (affectedDefendersSubPlans ?? new ChangeTrackingList<string>()).ToList(),
+                    reportAdditionalData ?? new ChangeTrackingDictionary<string, string>(),
+                    (issues ?? new ChangeTrackingList<SecurityHealthIssue>()).ToList(),
+                    default),
                 default);
         }
 
@@ -1425,6 +1406,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="thresholdRules"> The list of custom alert threshold rules. </param>
+        /// <param name="timeWindowRules"> The list of custom alert time-window rules. </param>
+        /// <param name="allowlistRules"> The allow-list custom alert rules. </param>
+        /// <param name="denylistRules"> The deny-list custom alert rules. </param>
+        /// <returns> A new <see cref="SecurityCenter.DeviceSecurityGroupData"/> instance for mocking. </returns>
+        public static DeviceSecurityGroupData DeviceSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ThresholdCustomAlertRule> thresholdRules = default, IEnumerable<TimeWindowCustomAlertRule> timeWindowRules = default, IEnumerable<AllowlistCustomAlertRule> allowlistRules = default, IEnumerable<DenylistCustomAlertRule> denylistRules = default)
+        {
+            return new DeviceSecurityGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                thresholdRules is null && timeWindowRules is null && allowlistRules is null && denylistRules is null ? default : new DeviceSecurityGroupProperties((thresholdRules ?? new ChangeTrackingList<ThresholdCustomAlertRule>()).ToList(), (timeWindowRules ?? new ChangeTrackingList<TimeWindowCustomAlertRule>()).ToList(), (allowlistRules ?? new ChangeTrackingList<AllowlistCustomAlertRule>()).ToList(), (denylistRules ?? new ChangeTrackingList<DenylistCustomAlertRule>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="autoProvision"> Describes what kind of security agent provisioning action to take. </param>
         /// <returns> A new <see cref="SecurityCenter.AutoProvisioningSettingData"/> instance for mocking. </returns>
         public static AutoProvisioningSettingData AutoProvisioningSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AutoProvisionState? autoProvision = default)
@@ -1436,6 +1437,15 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 autoProvision is null ? default : new AutoProvisioningSettingProperties(autoProvision.GetValueOrDefault(), default),
                 default);
+        }
+
+        /// <summary> A segment of a compliance assessment. </summary>
+        /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
+        /// <param name="percentage"> The size (%) of the segment. </param>
+        /// <returns> A new <see cref="Models.ComplianceSegment"/> instance for mocking. </returns>
+        public static ComplianceSegment ComplianceSegment(string segmentType = default, double? percentage = default)
+        {
+            return new ComplianceSegment(segmentType, percentage, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1454,35 +1464,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 assessmentTimestampUtcOn is null && resourceCount is null && assessmentResult is null ? default : new ComplianceProperties(assessmentTimestampUtcOn, resourceCount, (assessmentResult ?? new ChangeTrackingList<ComplianceSegment>()).ToList(), default),
-                default);
-        }
-
-        /// <summary> A segment of a compliance assessment. </summary>
-        /// <param name="segmentType"> The segment type, e.g. compliant, non-compliance, insufficient coverage, N/A, etc. </param>
-        /// <param name="percentage"> The size (%) of the segment. </param>
-        /// <returns> A new <see cref="Models.ComplianceSegment"/> instance for mocking. </returns>
-        public static ComplianceSegment ComplianceSegment(string segmentType = default, double? percentage = default)
-        {
-            return new ComplianceSegment(segmentType, percentage, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="lastModifiedUtc"> Describes the last UTC time the policy was modified. </param>
-        /// <param name="version"> Describes the version of the policy. </param>
-        /// <param name="labels"> Dictionary of sensitivity labels. </param>
-        /// <param name="informationTypes"> The sensitivity information types. </param>
-        /// <returns> A new <see cref="SecurityCenter.InformationProtectionPolicyData"/> instance for mocking. </returns>
-        public static InformationProtectionPolicyData InformationProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedUtc = default, string version = default, IDictionary<string, SensitivityLabel> labels = default, IDictionary<string, SecurityInformationTypeInfo> informationTypes = default)
-        {
-            return new InformationProtectionPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                lastModifiedUtc is null && version is null && labels is null && informationTypes is null ? default : new InformationProtectionPolicyProperties(lastModifiedUtc, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(), default),
                 default);
         }
 
@@ -1543,6 +1524,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="lastModifiedUtc"> Describes the last UTC time the policy was modified. </param>
+        /// <param name="version"> Describes the version of the policy. </param>
+        /// <param name="labels"> Dictionary of sensitivity labels. </param>
+        /// <param name="informationTypes"> The sensitivity information types. </param>
+        /// <returns> A new <see cref="SecurityCenter.InformationProtectionPolicyData"/> instance for mocking. </returns>
+        public static InformationProtectionPolicyData InformationProtectionPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? lastModifiedUtc = default, string version = default, IDictionary<string, SensitivityLabel> labels = default, IDictionary<string, SecurityInformationTypeInfo> informationTypes = default)
+        {
+            return new InformationProtectionPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                lastModifiedUtc is null && version is null && labels is null && informationTypes is null ? default : new InformationProtectionPolicyProperties(lastModifiedUtc, version, labels ?? new ChangeTrackingDictionary<string, SensitivityLabel>(), informationTypes ?? new ChangeTrackingDictionary<string, SecurityInformationTypeInfo>(), default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="workspaceId"> The full Azure ID of the workspace to save the data in. </param>
         /// <param name="scope"> All the VMs in this scope will send their security data to the mentioned workspace unless overridden by a setting with more specific scope. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityWorkspaceSettingData"/> instance for mocking. </returns>
@@ -1585,6 +1586,28 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new MdeOnboardingDataList((value ?? new ChangeTrackingList<MdeOnboardingData>()).ToList(), default);
         }
 
+        /// <summary> A plan's extension properties. </summary>
+        /// <param name="name"> The extension name. Supported values are: &lt;br&gt;&lt;br&gt;<b>AgentlessDiscoveryForKubernetes</b> - Provides zero footprint, API-based discovery of Kubernetes clusters, their configurations and deployments. The collected data is used to create a contextualized security graph for Kubernetes clusters, provide risk hunting capabilities, and visualize risks and threats to  Kubernetes environments and workloads.&lt;br&gt;Available for CloudPosture plan and Containers plan.&lt;br&gt;&lt;br&gt;<b>OnUploadMalwareScanning</b> - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.&lt;br&gt;Available for StorageAccounts plan (DefenderForStorageV2 sub plans).&lt;br&gt;&lt;br&gt;<b>SensitiveDataDiscovery</b> - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.&lt;br&gt;Available for StorageAccounts plan (DefenderForStorageV2 sub plan) and CloudPosture plan.&lt;br&gt;&lt;br&gt;<b>ContainerRegistriesVulnerabilityAssessments</b> - Provides vulnerability management for images stored in your container registries.&lt;br&gt;Available for CloudPosture plan and Containers plan.&lt;br&gt;&lt;br&gt;<b>MdeDesignatedSubscription</b> - Direct onboarding is a seamless integration between Defender for Endpoint and Defender for Cloud that doesn't require extra software deployment on your servers. The onboarded resources will be presented under a designated Azure Subscription you configure&lt;br&gt;Available for VirtualMachines plan (P1 and P2 sub plans).&lt;br&gt;&lt;br&gt;<b>AgentlessVmScanning</b> - Scans your machines for installed software, vulnerabilities, malware and secret scanning without relying on agents or impacting machine performance. Learn more here https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-agentless-data-collection.&lt;br&gt;Available for CloudPosture plan, VirtualMachines plan (P2 sub plan) and Containers plan.&lt;br&gt;&lt;br&gt;<b>EntraPermissionsManagement</b> - Permissions Management provides Cloud Infrastructure Entitlement Management (CIEM) capabilities that helps organizations to manage and control user access and entitlements in their cloud infrastructure - important attack vector for cloud environments.&lt;br&gt;Permissions Management analyzes all permissions and active usage, and suggests recommendations to reduce permissions to enforce the principle of least privilege. Learn more here https://learn.microsoft.com/en-us/azure/defender-for-cloud/permissions-management.&lt;br&gt;Available for CloudPosture plan. &lt;br&gt;&lt;br&gt;<b>FileIntegrityMonitoring</b> - File integrity monitoring (FIM), examines operating system files.&lt;br&gt;Windows registries, Linux system files, in real time, for changes that might indicate an attack.&lt;br&gt;Available for VirtualMachines plan (P2 sub plan). &lt;br&gt;&lt;br&gt;<b>ContainerSensor</b> - The sensor is based on IG and provides a rich threat detection suite for Kubernetes clusters, nodes, and workloads, powered by Microsoft leading threat intelligence, provides mapping to MITRE ATT&amp;CK framework.&lt;br&gt;Available for Containers plan. &lt;br&gt;&lt;br&gt;<b>AIPromptEvidence</b> - Exposes the prompts passed between the user and the AI model as alert evidence. This helps classify and triage the alerts with relevant user context. The prompt snippets will include only segments of the user prompt or model response that were deemed suspicious and relevant for security classifications. The prompt evidence will be available through Defender portal as part of each alert.&lt;br&gt;Available for AI plan. &lt;br&gt;&lt;br&gt;. </param>
+        /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
+        /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
+        /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
+        /// <returns> A new <see cref="Models.SecurityConnectorExtension"/> instance for mocking. </returns>
+        public static SecurityConnectorExtension SecurityConnectorExtension(string name = default, SecurityCenterExtensionIsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default)
+        {
+            additionalExtensionProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SecurityConnectorExtension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, default);
+        }
+
+        /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
+        /// <param name="code"> The operation status code. </param>
+        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
+        /// <returns> A new <see cref="Models.SecurityCenterOperationStatus"/> instance for mocking. </returns>
+        public static SecurityCenterOperationStatus SecurityCenterOperationStatus(string code = default, string message = default)
+        {
+            return new SecurityCenterOperationStatus(code, message, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1624,47 +1647,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> A plan's extension properties. </summary>
-        /// <param name="name"> The extension name. Supported values are: &lt;br&gt;&lt;br&gt;<b>AgentlessDiscoveryForKubernetes</b> - Provides zero footprint, API-based discovery of Kubernetes clusters, their configurations and deployments. The collected data is used to create a contextualized security graph for Kubernetes clusters, provide risk hunting capabilities, and visualize risks and threats to  Kubernetes environments and workloads.&lt;br&gt;Available for CloudPosture plan and Containers plan.&lt;br&gt;&lt;br&gt;<b>OnUploadMalwareScanning</b> - Limits the GB to be scanned per month for each storage account within the subscription. Once this limit reached on a given storage account, Blobs won't be scanned during current calendar month.&lt;br&gt;Available for StorageAccounts plan (DefenderForStorageV2 sub plans).&lt;br&gt;&lt;br&gt;<b>SensitiveDataDiscovery</b> - Sensitive data discovery identifies Blob storage container with sensitive data such as credentials, credit cards, and more, to help prioritize and investigate security events.&lt;br&gt;Available for StorageAccounts plan (DefenderForStorageV2 sub plan) and CloudPosture plan.&lt;br&gt;&lt;br&gt;<b>ContainerRegistriesVulnerabilityAssessments</b> - Provides vulnerability management for images stored in your container registries.&lt;br&gt;Available for CloudPosture plan and Containers plan.&lt;br&gt;&lt;br&gt;<b>MdeDesignatedSubscription</b> - Direct onboarding is a seamless integration between Defender for Endpoint and Defender for Cloud that doesn't require extra software deployment on your servers. The onboarded resources will be presented under a designated Azure Subscription you configure&lt;br&gt;Available for VirtualMachines plan (P1 and P2 sub plans).&lt;br&gt;&lt;br&gt;<b>AgentlessVmScanning</b> - Scans your machines for installed software, vulnerabilities, malware and secret scanning without relying on agents or impacting machine performance. Learn more here https://learn.microsoft.com/en-us/azure/defender-for-cloud/concept-agentless-data-collection.&lt;br&gt;Available for CloudPosture plan, VirtualMachines plan (P2 sub plan) and Containers plan.&lt;br&gt;&lt;br&gt;<b>EntraPermissionsManagement</b> - Permissions Management provides Cloud Infrastructure Entitlement Management (CIEM) capabilities that helps organizations to manage and control user access and entitlements in their cloud infrastructure - important attack vector for cloud environments.&lt;br&gt;Permissions Management analyzes all permissions and active usage, and suggests recommendations to reduce permissions to enforce the principle of least privilege. Learn more here https://learn.microsoft.com/en-us/azure/defender-for-cloud/permissions-management.&lt;br&gt;Available for CloudPosture plan. &lt;br&gt;&lt;br&gt;<b>FileIntegrityMonitoring</b> - File integrity monitoring (FIM), examines operating system files.&lt;br&gt;Windows registries, Linux system files, in real time, for changes that might indicate an attack.&lt;br&gt;Available for VirtualMachines plan (P2 sub plan). &lt;br&gt;&lt;br&gt;<b>ContainerSensor</b> - The sensor is based on IG and provides a rich threat detection suite for Kubernetes clusters, nodes, and workloads, powered by Microsoft leading threat intelligence, provides mapping to MITRE ATT&amp;CK framework.&lt;br&gt;Available for Containers plan. &lt;br&gt;&lt;br&gt;<b>AIPromptEvidence</b> - Exposes the prompts passed between the user and the AI model as alert evidence. This helps classify and triage the alerts with relevant user context. The prompt snippets will include only segments of the user prompt or model response that were deemed suspicious and relevant for security classifications. The prompt evidence will be available through Defender portal as part of each alert.&lt;br&gt;Available for AI plan. &lt;br&gt;&lt;br&gt;. </param>
-        /// <param name="isEnabled"> Indicates whether the extension is enabled. </param>
-        /// <param name="additionalExtensionProperties"> Property values associated with the extension. </param>
-        /// <param name="operationStatus"> Optional. A status describing the success/failure of the extension's enablement/disablement operation. </param>
-        /// <returns> A new <see cref="Models.SecurityConnectorExtension"/> instance for mocking. </returns>
-        public static SecurityConnectorExtension SecurityConnectorExtension(string name = default, SecurityCenterExtensionIsEnabled isEnabled = default, IDictionary<string, BinaryData> additionalExtensionProperties = default, SecurityCenterOperationStatus operationStatus = default)
-        {
-            additionalExtensionProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SecurityConnectorExtension(name, isEnabled, additionalExtensionProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), operationStatus, default);
-        }
-
-        /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
-        /// <param name="code"> The operation status code. </param>
-        /// <param name="message"> Additional information regarding the success/failure of the operation. </param>
-        /// <returns> A new <see cref="Models.SecurityCenterOperationStatus"/> instance for mocking. </returns>
-        public static SecurityCenterOperationStatus SecurityCenterOperationStatus(string code = default, string message = default)
-        {
-            return new SecurityCenterOperationStatus(code, message, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="SecurityCenter.PrivateLinkGroupData"/> instance for mocking. </returns>
-        public static PrivateLinkGroupData PrivateLinkGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
-        {
-            return new PrivateLinkGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new SecurityCenterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1693,6 +1675,70 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SecurityCenterPrivateLinkServiceConnectionState SecurityCenterPrivateLinkServiceConnectionState(SecurityCenterPrivateEndpointServiceConnectionStatus? status = default, string description = default, string actionsRequired = default)
         {
             return new SecurityCenterPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="SecurityCenter.PrivateLinkGroupData"/> instance for mocking. </returns>
+        public static PrivateLinkGroupData PrivateLinkGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new PrivateLinkGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new SecurityCenterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="provisioningState"> The current provisioning state of the private link resource. Indicates whether the resource is being created, updated, deleted, or has completed successfully. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with this private link. Each connection represents a private endpoint from a customer's virtual network. </param>
+        /// <param name="privateLinkResources"> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is disabled. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static SecurityCenterPrivateLinkResourceData SecurityCenterPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecurityCenterProvisioningState? provisioningState = default, IEnumerable<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<PrivateLinkGroupData> privateLinkResources = default, SecurityCenterPublicNetworkAccess? publicNetworkAccess = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SecurityCenterPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                provisioningState is null && privateEndpointConnections is null && privateLinkResources is null && publicNetworkAccess is null ? default : new PrivateLinkProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), publicNetworkAccess, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.PrivateLinkGroup1Data"/> instance for mocking. </returns>
+        public static PrivateLinkGroup1Data PrivateLinkGroup1Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            return new PrivateLinkGroup1Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId is null && requiredMembers is null && requiredZoneNames is null ? default : new SecurityCenterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1779,43 +1825,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     skippedResources,
                     unsupportedResources,
                     default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
-        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
-        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
-        /// <param name="offerings"> A collection of offerings for the security connector. </param>
-        /// <param name="environmentData"> The security connector environment data. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecurityConnectorData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                hierarchyIdentifier is null && hierarchyIdentifierTrialEndOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
-                    hierarchyIdentifier,
-                    hierarchyIdentifierTrialEndOn,
-                    environmentName,
-                    (offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>()).ToList(),
-                    environmentData,
-                    default),
-                kind,
-                eTag,
                 default);
         }
 
@@ -2673,21 +2682,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new JFrogEnvironmentInfo(default, default, scanInterval);
         }
 
-        /// <summary> Azure DevOps Organization resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Azure DevOps Organization properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsOrgData"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgData AzureDevOpsOrgData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsOrgProperties properties = default)
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
+        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
+        /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
+        /// <param name="offerings"> A collection of offerings for the security connector. </param>
+        /// <param name="environmentData"> The security connector environment data. </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
         {
-            return new AzureDevOpsOrgData(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SecurityConnectorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                hierarchyIdentifier is null && hierarchyIdentifierTrialEndOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
+                    hierarchyIdentifier,
+                    hierarchyIdentifierTrialEndOn,
+                    environmentName,
+                    (offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>()).ToList(),
+                    environmentData,
+                    default),
+                kind,
+                eTag,
                 default);
         }
 
@@ -2778,171 +2806,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new TargetBranchConfiguration((branchNames ?? new ChangeTrackingList<string>()).ToList(), annotateDefaultBranch, default);
         }
 
-        /// <summary> List of RP resources which supports pagination. </summary>
-        /// <param name="value"> The AzureDevOpsOrg items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.AzureDevOpsOrgListResult"/> instance for mocking. </returns>
-        public static AzureDevOpsOrgListResult AzureDevOpsOrgListResult(IEnumerable<AzureDevOpsOrgData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<AzureDevOpsOrgData>();
-
-            return new AzureDevOpsOrgListResult((value ?? new ChangeTrackingList<AzureDevOpsOrgData>()).ToList(), nextLink, default);
-        }
-
-        /// <summary> GitHub Owner resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> GitHub Owner properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.GitHubOwnerData"/> instance for mocking. </returns>
-        public static GitHubOwnerData GitHubOwnerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitHubOwnerProperties properties = default)
-        {
-            return new GitHubOwnerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> GitHub Owner properties. </summary>
-        /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource.
-        /// Pending - Provisioning pending.
-        /// Failed - Provisioning failed.
-        /// Succeeded - Successful provisioning.
-        /// Canceled - Provisioning canceled.
-        /// PendingDeletion - Deletion pending.
-        /// DeletionSuccess - Deletion successful.
-        /// DeletionFailure - Deletion failure.
-        /// </param>
-        /// <param name="ownerUri"> Gets or sets GitHub Owner url. </param>
-        /// <param name="gitHubInternalId"> Gets or sets internal GitHub id. </param>
-        /// <param name="onboardingState">
-        /// Details about resource onboarding status across all connectors.
-        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
-        /// Onboarded - this resource has already been onboarded by the specified connector.
-        /// NotOnboarded - this resource has not been onboarded to any connector.
-        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
-        /// </param>
-        /// <returns> A new <see cref="Models.GitHubOwnerProperties"/> instance for mocking. </returns>
-        public static GitHubOwnerProperties GitHubOwnerProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string ownerUri = default, string gitHubInternalId = default, OnboardingState? onboardingState = default)
-        {
-            return new GitHubOwnerProperties(
-                provisioningStatusMessage,
-                provisioningStatusUpdatedOn,
-                provisioningState,
-                ownerUri,
-                gitHubInternalId,
-                onboardingState,
-                default);
-        }
-
-        /// <summary> List of RP resources which supports pagination. </summary>
-        /// <param name="value"> The GitHubOwner items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.GitHubOwnerListResult"/> instance for mocking. </returns>
-        public static GitHubOwnerListResult GitHubOwnerListResult(IEnumerable<GitHubOwnerData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<GitHubOwnerData>();
-
-            return new GitHubOwnerListResult((value ?? new ChangeTrackingList<GitHubOwnerData>()).ToList(), nextLink, default);
-        }
-
-        /// <summary> GitLab Group resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> GitLab Group properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.GitLabGroupData"/> instance for mocking. </returns>
-        public static GitLabGroupData GitLabGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitLabGroupProperties properties = default)
-        {
-            return new GitLabGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> GitLab Group properties. </summary>
-        /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
-        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the resource.
-        /// Pending - Provisioning pending.
-        /// Failed - Provisioning failed.
-        /// Succeeded - Successful provisioning.
-        /// Canceled - Provisioning canceled.
-        /// PendingDeletion - Deletion pending.
-        /// DeletionSuccess - Deletion successful.
-        /// DeletionFailure - Deletion failure.
-        /// </param>
-        /// <param name="fullyQualifiedName">
-        /// Gets or sets the fully-qualified name of the Group object.
-        /// This contains the entire namespace hierarchy where namespaces are separated by the '$' character.
-        /// </param>
-        /// <param name="fullyQualifiedFriendlyName">
-        /// Gets or sets the human readable fully-qualified name of the Group object.
-        /// This contains the entire namespace hierarchy as seen on GitLab UI where namespaces are separated by the '/' character.
-        /// </param>
-        /// <param name="uri"> Gets or sets the url of the GitLab Group. </param>
-        /// <param name="onboardingState">
-        /// Details about resource onboarding status across all connectors.
-        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
-        /// Onboarded - this resource has already been onboarded by the specified connector.
-        /// NotOnboarded - this resource has not been onboarded to any connector.
-        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
-        /// </param>
-        /// <returns> A new <see cref="Models.GitLabGroupProperties"/> instance for mocking. </returns>
-        public static GitLabGroupProperties GitLabGroupProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string uri = default, OnboardingState? onboardingState = default)
-        {
-            return new GitLabGroupProperties(
-                provisioningStatusMessage,
-                provisioningStatusUpdatedOn,
-                provisioningState,
-                fullyQualifiedName,
-                fullyQualifiedFriendlyName,
-                uri,
-                onboardingState,
-                default);
-        }
-
-        /// <summary> List of RP resources which supports pagination. </summary>
-        /// <param name="value"> The GitLabGroup items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.GitLabGroupListResult"/> instance for mocking. </returns>
-        public static GitLabGroupListResult GitLabGroupListResult(IEnumerable<GitLabGroupData> value = default, Uri nextLink = default)
-        {
-            value ??= new ChangeTrackingList<GitLabGroupData>();
-
-            return new GitLabGroupListResult((value ?? new ChangeTrackingList<GitLabGroupData>()).ToList(), nextLink, default);
-        }
-
-        /// <summary> DevOps Configuration resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> DevOps Configuration properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.DevOpsConfigurationData"/> instance for mocking. </returns>
-        public static DevOpsConfigurationData DevOpsConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevOpsConfigurationProperties properties = default)
-        {
-            return new DevOpsConfigurationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
         /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
         /// <param name="provisioningState">
@@ -3026,22 +2889,187 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new InventoryList(inventoryKind, value, default);
         }
 
-        /// <summary> Azure DevOps Project resource. </summary>
+        /// <summary> DevOps Configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Azure DevOps Project properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsProjectData"/> instance for mocking. </returns>
-        public static AzureDevOpsProjectData AzureDevOpsProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsProjectProperties properties = default)
+        /// <param name="properties"> DevOps Configuration properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.DevOpsConfigurationData"/> instance for mocking. </returns>
+        public static DevOpsConfigurationData DevOpsConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevOpsConfigurationProperties properties = default)
         {
-            return new AzureDevOpsProjectData(
+            return new DevOpsConfigurationData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
                 default);
+        }
+
+        /// <summary> Azure DevOps Organization resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Azure DevOps Organization properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsOrgData"/> instance for mocking. </returns>
+        public static AzureDevOpsOrgData AzureDevOpsOrgData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsOrgProperties properties = default)
+        {
+            return new AzureDevOpsOrgData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> List of RP resources which supports pagination. </summary>
+        /// <param name="value"> The AzureDevOpsOrg items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.AzureDevOpsOrgListResult"/> instance for mocking. </returns>
+        public static AzureDevOpsOrgListResult AzureDevOpsOrgListResult(IEnumerable<AzureDevOpsOrgData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<AzureDevOpsOrgData>();
+
+            return new AzureDevOpsOrgListResult((value ?? new ChangeTrackingList<AzureDevOpsOrgData>()).ToList(), nextLink, default);
+        }
+
+        /// <summary> GitHub Owner properties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="ownerUri"> Gets or sets GitHub Owner url. </param>
+        /// <param name="gitHubInternalId"> Gets or sets internal GitHub id. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <returns> A new <see cref="Models.GitHubOwnerProperties"/> instance for mocking. </returns>
+        public static GitHubOwnerProperties GitHubOwnerProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string ownerUri = default, string gitHubInternalId = default, OnboardingState? onboardingState = default)
+        {
+            return new GitHubOwnerProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdatedOn,
+                provisioningState,
+                ownerUri,
+                gitHubInternalId,
+                onboardingState,
+                default);
+        }
+
+        /// <summary> GitHub Owner resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> GitHub Owner properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitHubOwnerData"/> instance for mocking. </returns>
+        public static GitHubOwnerData GitHubOwnerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitHubOwnerProperties properties = default)
+        {
+            return new GitHubOwnerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> List of RP resources which supports pagination. </summary>
+        /// <param name="value"> The GitHubOwner items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.GitHubOwnerListResult"/> instance for mocking. </returns>
+        public static GitHubOwnerListResult GitHubOwnerListResult(IEnumerable<GitHubOwnerData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<GitHubOwnerData>();
+
+            return new GitHubOwnerListResult((value ?? new ChangeTrackingList<GitHubOwnerData>()).ToList(), nextLink, default);
+        }
+
+        /// <summary> GitLab Group properties. </summary>
+        /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
+        /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the resource.
+        /// Pending - Provisioning pending.
+        /// Failed - Provisioning failed.
+        /// Succeeded - Successful provisioning.
+        /// Canceled - Provisioning canceled.
+        /// PendingDeletion - Deletion pending.
+        /// DeletionSuccess - Deletion successful.
+        /// DeletionFailure - Deletion failure.
+        /// </param>
+        /// <param name="fullyQualifiedName">
+        /// Gets or sets the fully-qualified name of the Group object.
+        /// This contains the entire namespace hierarchy where namespaces are separated by the '$' character.
+        /// </param>
+        /// <param name="fullyQualifiedFriendlyName">
+        /// Gets or sets the human readable fully-qualified name of the Group object.
+        /// This contains the entire namespace hierarchy as seen on GitLab UI where namespaces are separated by the '/' character.
+        /// </param>
+        /// <param name="uri"> Gets or sets the url of the GitLab Group. </param>
+        /// <param name="onboardingState">
+        /// Details about resource onboarding status across all connectors.
+        /// OnboardedByOtherConnector - this resource has already been onboarded to another connector. This is only applicable to top-level resources.
+        /// Onboarded - this resource has already been onboarded by the specified connector.
+        /// NotOnboarded - this resource has not been onboarded to any connector.
+        /// NotApplicable - the onboarding state is not applicable to the current endpoint.
+        /// </param>
+        /// <returns> A new <see cref="Models.GitLabGroupProperties"/> instance for mocking. </returns>
+        public static GitLabGroupProperties GitLabGroupProperties(string provisioningStatusMessage = default, DateTimeOffset? provisioningStatusUpdatedOn = default, DevOpsProvisioningState? provisioningState = default, string fullyQualifiedName = default, string fullyQualifiedFriendlyName = default, string uri = default, OnboardingState? onboardingState = default)
+        {
+            return new GitLabGroupProperties(
+                provisioningStatusMessage,
+                provisioningStatusUpdatedOn,
+                provisioningState,
+                fullyQualifiedName,
+                fullyQualifiedFriendlyName,
+                uri,
+                onboardingState,
+                default);
+        }
+
+        /// <summary> GitLab Group resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> GitLab Group properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitLabGroupData"/> instance for mocking. </returns>
+        public static GitLabGroupData GitLabGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitLabGroupProperties properties = default)
+        {
+            return new GitLabGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> List of RP resources which supports pagination. </summary>
+        /// <param name="value"> The GitLabGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.GitLabGroupListResult"/> instance for mocking. </returns>
+        public static GitLabGroupListResult GitLabGroupListResult(IEnumerable<GitLabGroupData> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<GitLabGroupData>();
+
+            return new GitLabGroupListResult((value ?? new ChangeTrackingList<GitLabGroupData>()).ToList(), nextLink, default);
         }
 
         /// <summary> Azure DevOps Project properties. </summary>
@@ -3081,16 +3109,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> GitLab Project resource. </summary>
+        /// <summary> Azure DevOps Project resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> GitLab Project properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.GitLabProjectData"/> instance for mocking. </returns>
-        public static GitLabProjectData GitLabProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitLabProjectProperties properties = default)
+        /// <param name="properties"> Azure DevOps Project properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsProjectData"/> instance for mocking. </returns>
+        public static AzureDevOpsProjectData AzureDevOpsProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsProjectProperties properties = default)
         {
-            return new GitLabProjectData(
+            return new AzureDevOpsProjectData(
                 id,
                 name,
                 resourceType,
@@ -3144,6 +3172,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 fullyQualifiedParentGroupName,
                 uri,
                 onboardingState,
+                default);
+        }
+
+        /// <summary> GitLab Project resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> GitLab Project properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitLabProjectData"/> instance for mocking. </returns>
+        public static GitLabProjectData GitLabProjectData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitLabProjectProperties properties = default)
+        {
+            return new GitLabProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
 
@@ -3212,29 +3258,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
-                location,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
-        /// <param name="requests"> Gets the Requests. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
-        /// <param name="kind"> Kind of the resource. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
-        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessRequestInfo> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
-        {
-            return new JitNetworkAccessPolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                virtualMachines is null && requests is null && provisioningState is null ? default : new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>()).ToList(), provisioningState, default),
                 kind,
                 location,
                 default);
@@ -3320,6 +3343,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="virtualMachines"> Configurations for Microsoft.Compute/virtualMachines resource type. </param>
+        /// <param name="requests"> Gets the Requests. </param>
+        /// <param name="provisioningState"> Gets the provisioning state of the Just-in-Time policy. </param>
+        /// <param name="kind"> Kind of the resource. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="SecurityCenter.JitNetworkAccessPolicyData"/> instance for mocking. </returns>
+        public static JitNetworkAccessPolicyData JitNetworkAccessPolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<JitNetworkAccessPolicyVirtualMachine> virtualMachines = default, IEnumerable<JitNetworkAccessRequestInfo> requests = default, string provisioningState = default, string kind = default, AzureLocation? location = default)
+        {
+            return new JitNetworkAccessPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualMachines is null && requests is null && provisioningState is null ? default : new JitNetworkAccessPolicyProperties((virtualMachines ?? new ChangeTrackingList<JitNetworkAccessPolicyVirtualMachine>()).ToList(), (requests ?? new ChangeTrackingList<JitNetworkAccessRequestInfo>()).ToList(), provisioningState, default),
+                kind,
+                location,
+                default);
+        }
+
         /// <summary> The JitNetworkAccessPolicyInitiateContent. </summary>
         /// <param name="virtualMachines"> A list of virtual machines &amp; ports to open access for. </param>
         /// <param name="justification"> The justification for making the initiate request. </param>
@@ -3374,26 +3420,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
-        /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityTopologyData"/> instance for mocking. </returns>
-        public static SecurityTopologyData SecurityTopologyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<TopologySingleResource> topologyResources = default, AzureLocation location = default)
-        {
-            return new SecurityTopologyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                calculatedOn is null && topologyResources is null ? default : new TopologyResourceProperties(calculatedOn, (topologyResources ?? new ChangeTrackingList<TopologySingleResource>()).ToList(), default),
-                location,
-                default);
-        }
-
         /// <summary> The TopologySingleResource. </summary>
         /// <param name="resourceId"> Azure resource id. </param>
         /// <param name="severity"> The security severity of the resource. </param>
@@ -3435,6 +3461,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static TopologySingleResourceChild TopologySingleResourceChild(ResourceIdentifier resourceId = default)
         {
             return new TopologySingleResourceChild(resourceId, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="calculatedOn"> The UTC time on which the topology was calculated. </param>
+        /// <param name="topologyResources"> Azure resources which are part of this topology resource. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityTopologyData"/> instance for mocking. </returns>
+        public static SecurityTopologyData SecurityTopologyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<TopologySingleResource> topologyResources = default, AzureLocation location = default)
+        {
+            return new SecurityTopologyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                calculatedOn is null && topologyResources is null ? default : new TopologyResourceProperties(calculatedOn, (topologyResources ?? new ChangeTrackingList<TopologySingleResource>()).ToList(), default),
+                location,
+                default);
         }
 
         /// <summary> The SecuritySolutionsReferenceInfoList. </summary>
@@ -3489,6 +3535,25 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
+        /// <summary> Describes properties of an assessment as related to the standard. </summary>
+        /// <param name="assessmentKey"> The assessment key. </param>
+        /// <returns> A new <see cref="Models.PartialAssessmentProperties"/> instance for mocking. </returns>
+        public static PartialAssessmentProperties PartialAssessmentProperties(string assessmentKey = default)
+        {
+            return new PartialAssessmentProperties(assessmentKey, default);
+        }
+
+        /// <summary> The standard metadata. </summary>
+        /// <param name="createdBy"> Standard Created by object id (GUID). </param>
+        /// <param name="createdOn"> Standard creation date. </param>
+        /// <param name="lastUpdatedBy"> Standard last updated by object id (GUID). </param>
+        /// <param name="lastUpdatedOn"> Standard last update date. </param>
+        /// <returns> A new <see cref="Models.StandardMetadata"/> instance for mocking. </returns>
+        public static StandardMetadata StandardMetadata(string createdBy = default, DateTimeOffset? createdOn = default, string lastUpdatedBy = default, DateTimeOffset? lastUpdatedOn = default)
+        {
+            return new StandardMetadata(createdBy, createdOn, lastUpdatedBy, lastUpdatedOn, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3515,60 +3580,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     (assessments ?? new ChangeTrackingList<PartialAssessmentProperties>()).ToList(),
                     (cloudProviders ?? new ChangeTrackingList<StandardSupportedCloud>()).ToList(),
                     policySetDefinitionId,
-                    metadata,
-                    default),
-                default);
-        }
-
-        /// <summary> Describes properties of an assessment as related to the standard. </summary>
-        /// <param name="assessmentKey"> The assessment key. </param>
-        /// <returns> A new <see cref="Models.PartialAssessmentProperties"/> instance for mocking. </returns>
-        public static PartialAssessmentProperties PartialAssessmentProperties(string assessmentKey = default)
-        {
-            return new PartialAssessmentProperties(assessmentKey, default);
-        }
-
-        /// <summary> The standard metadata. </summary>
-        /// <param name="createdBy"> Standard Created by object id (GUID). </param>
-        /// <param name="createdOn"> Standard creation date. </param>
-        /// <param name="lastUpdatedBy"> Standard last updated by object id (GUID). </param>
-        /// <param name="lastUpdatedOn"> Standard last update date. </param>
-        /// <returns> A new <see cref="Models.StandardMetadata"/> instance for mocking. </returns>
-        public static StandardMetadata StandardMetadata(string createdBy = default, DateTimeOffset? createdOn = default, string lastUpdatedBy = default, DateTimeOffset? lastUpdatedOn = default)
-        {
-            return new StandardMetadata(createdBy, createdOn, lastUpdatedBy, lastUpdatedOn, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Display name of the standardAssignment. </param>
-        /// <param name="description"> Description of the standardAssignment. </param>
-        /// <param name="effect"> Expected effect of this assignment (Audit/Exempt/Attest). </param>
-        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
-        /// <param name="expiresOn"> Expiration date of this assignment as a full ISO date. </param>
-        /// <param name="exemptionData"> Additional data about assignment that has Exempt effect. </param>
-        /// <param name="attestationData"> Additional data about assignment that has Attest effect. </param>
-        /// <param name="metadata"> The standard assignment metadata. </param>
-        /// <param name="assignedStandardId"> Full resourceId of the Microsoft.Security/standard object. </param>
-        /// <returns> A new <see cref="SecurityCenter.StandardAssignmentData"/> instance for mocking. </returns>
-        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, SecurityCenterEffect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentExemptionInfo exemptionData = default, StandardAssignmentAttestationInfo attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
-        {
-            return new StandardAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && description is null && assignedStandardId is null && effect is null && excludedScopes is null && expiresOn is null && exemptionData is null && attestationData is null && metadata is null ? default : new StandardAssignmentProperties(
-                    displayName,
-                    description,
-                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
-                    effect,
-                    (excludedScopes ?? new ChangeTrackingList<string>()).ToList(),
-                    expiresOn,
-                    exemptionData,
-                    attestationData,
                     metadata,
                     default),
                 default);
@@ -3612,6 +3623,41 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static StandardAssignmentMetadata StandardAssignmentMetadata(string createdBy = default, DateTimeOffset? createdOn = default, string lastUpdatedBy = default, DateTimeOffset? lastUpdatedOn = default)
         {
             return new StandardAssignmentMetadata(createdBy, createdOn, lastUpdatedBy, lastUpdatedOn, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> Display name of the standardAssignment. </param>
+        /// <param name="description"> Description of the standardAssignment. </param>
+        /// <param name="effect"> Expected effect of this assignment (Audit/Exempt/Attest). </param>
+        /// <param name="excludedScopes"> Excluded scopes, filter out the descendants of the scope (on management scopes). </param>
+        /// <param name="expiresOn"> Expiration date of this assignment as a full ISO date. </param>
+        /// <param name="exemptionData"> Additional data about assignment that has Exempt effect. </param>
+        /// <param name="attestationData"> Additional data about assignment that has Attest effect. </param>
+        /// <param name="metadata"> The standard assignment metadata. </param>
+        /// <param name="assignedStandardId"> Full resourceId of the Microsoft.Security/standard object. </param>
+        /// <returns> A new <see cref="SecurityCenter.StandardAssignmentData"/> instance for mocking. </returns>
+        public static StandardAssignmentData StandardAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string description = default, SecurityCenterEffect? effect = default, IEnumerable<string> excludedScopes = default, DateTimeOffset? expiresOn = default, StandardAssignmentExemptionInfo exemptionData = default, StandardAssignmentAttestationInfo attestationData = default, StandardAssignmentMetadata metadata = default, string assignedStandardId = default)
+        {
+            return new StandardAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && description is null && assignedStandardId is null && effect is null && excludedScopes is null && expiresOn is null && exemptionData is null && attestationData is null && metadata is null ? default : new StandardAssignmentProperties(
+                    displayName,
+                    description,
+                    assignedStandardId is null ? default : new AssignedStandardItem(assignedStandardId, default),
+                    effect,
+                    (excludedScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    expiresOn,
+                    exemptionData,
+                    attestationData,
+                    metadata,
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3743,6 +3789,33 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 enabled is null ? default : new AlertSyncSettingProperties(enabled.GetValueOrDefault(), default));
         }
 
+        /// <summary> SQL Vulnerability Assessment settings properties. </summary>
+        /// <param name="createdOn"> The creation time of the SQL Vulnerability Assessment settings. </param>
+        /// <param name="state"> Represents the state of a SQL Vulnerability Assessment. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentSettingsProperties"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentSettingsProperties SqlVulnerabilityAssessmentSettingsProperties(DateTimeOffset? createdOn = default, SqlVulnerabilityAssessmentState? state = default)
+        {
+            return new SqlVulnerabilityAssessmentSettingsProperties(createdOn, state, default);
+        }
+
+        /// <summary> SQL Vulnerability Assessment settings resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> SQL Vulnerability Assessment settings properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentSettingsData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentSettingsData SqlVulnerabilityAssessmentSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentSettingsProperties properties = default)
+        {
+            return new SqlVulnerabilityAssessmentSettingsData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Rule results. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -3784,24 +3857,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             results ??= new ChangeTrackingDictionary<string, IList<IList<string>>>();
 
             return new RulesResultsContent(latestScan, results ?? new ChangeTrackingDictionary<string, IList<IList<string>>>(), default);
-        }
-
-        /// <summary> A vulnerability assessment scan result for a single rule. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResult"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanResult SqlVulnerabilityAssessmentScanResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanResultProperties properties = default)
-        {
-            return new SqlVulnerabilityAssessmentScanResult(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> Remediation details. </summary>
@@ -3878,6 +3933,88 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new BenchmarkReference(benchmark, reference, default);
         }
 
+        /// <summary> A vulnerability assessment scan record properties. </summary>
+        /// <param name="triggerType"> The scan trigger type. </param>
+        /// <param name="state"> The scan status. </param>
+        /// <param name="server"> The server name. </param>
+        /// <param name="database"> The database name. </param>
+        /// <param name="sqlVersion"> The SQL version. </param>
+        /// <param name="startOn"> The scan start time (UTC). </param>
+        /// <param name="endOn"> Scan results are valid until end time (UTC). </param>
+        /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
+        /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
+        /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
+        /// <param name="totalPassedRulesCount"> The number of total passed rules. </param>
+        /// <param name="totalFailedRulesCount"> The number of total failed rules. </param>
+        /// <param name="totalRulesCount"> The number of total rules assessed. </param>
+        /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
+        /// <param name="lastScanOn"> Last scan time. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
+        {
+            return new SqlVulnerabilityAssessmentScanProperties(
+                triggerType,
+                state,
+                server,
+                database,
+                sqlVersion,
+                startOn,
+                endOn,
+                highSeverityFailedRulesCount,
+                mediumSeverityFailedRulesCount,
+                lowSeverityFailedRulesCount,
+                totalPassedRulesCount,
+                totalFailedRulesCount,
+                totalRulesCount,
+                isBaselineApplied,
+                lastScanOn,
+                default);
+        }
+
+        /// <summary> A vulnerability assessment scan record. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A vulnerability assessment scan record properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanProperties properties = default)
+        {
+            return new SqlVulnerabilityAssessmentScanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> A vulnerability assessment scan result for a single rule. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> A vulnerability assessment scan result properties for a single rule. </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanResult"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentScanResult SqlVulnerabilityAssessmentScanResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanResultProperties properties = default)
+        {
+            return new SqlVulnerabilityAssessmentScanResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Describes properties of an component as related to the standard. </summary>
+        /// <param name="key"> Component Key matching componentMetadata. </param>
+        /// <returns> A new <see cref="Models.StandardComponentProperties"/> instance for mocking. </returns>
+        public static StandardComponentProperties StandardComponentProperties(string key = default)
+        {
+            return new StandardComponentProperties(key, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3915,14 +4052,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 kind,
                 eTag,
                 default);
-        }
-
-        /// <summary> Describes properties of an component as related to the standard. </summary>
-        /// <param name="key"> Component Key matching componentMetadata. </param>
-        /// <returns> A new <see cref="Models.StandardComponentProperties"/> instance for mocking. </returns>
-        public static StandardComponentProperties StandardComponentProperties(string key = default)
-        {
-            return new StandardComponentProperties(key, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3970,6 +4099,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
+        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
+        /// <param name="taskName"> Name of the task type. </param>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
+        public static SecurityTaskProperties SecurityTaskProperties(string taskName = default, IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new SecurityTaskProperties(taskName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3995,17 +4135,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     subState,
                     default),
                 default);
-        }
-
-        /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        /// <param name="taskName"> Name of the task type. </param>
-        /// <param name="additionalProperties"></param>
-        /// <returns> A new <see cref="Models.SecurityTaskProperties"/> instance for mocking. </returns>
-        public static SecurityTaskProperties SecurityTaskProperties(string taskName = default, IDictionary<string, BinaryData> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new SecurityTaskProperties(taskName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4042,39 +4171,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     numberOfApiEndpointsWithSensitiveDataExposed,
                     sensitivityLabel,
                     default),
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="risk"> External model of risk result. </param>
-        /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
-        /// <param name="displayName"> User friendly display name of the assessment. </param>
-        /// <param name="additionalData"> Additional data regarding the assessment. </param>
-        /// <param name="metadata"> Describes properties of an assessment metadata. </param>
-        /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
-        /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
-        /// <param name="status"> The result of the assessment. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentData"/> instance for mocking. </returns>
-        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartner partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatusResult status = default)
-        {
-            return new SecurityAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                risk is null && resourceDetails is null && displayName is null && additionalData is null && linksAzurePortalUri is null && metadata is null && partnersData is null && status is null ? default : new SecurityAssessmentPropertiesResponse(
-                    risk,
-                    resourceDetails,
-                    displayName,
-                    additionalData ?? new ChangeTrackingDictionary<string, string>(),
-                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
-                    metadata,
-                    partnersData,
-                    default,
-                    status),
                 default);
         }
 
@@ -4240,6 +4336,39 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
         /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
         /// <param name="status"> The result of the assessment. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityAssessmentData"/> instance for mocking. </returns>
+        public static SecurityAssessmentData SecurityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartner partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatusResult status = default)
+        {
+            return new SecurityAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                risk is null && resourceDetails is null && displayName is null && additionalData is null && linksAzurePortalUri is null && metadata is null && partnersData is null && status is null ? default : new SecurityAssessmentPropertiesResponse(
+                    risk,
+                    resourceDetails,
+                    displayName,
+                    additionalData ?? new ChangeTrackingDictionary<string, string>(),
+                    linksAzurePortalUri is null ? default : new AssessmentLinks(linksAzurePortalUri, default),
+                    metadata,
+                    partnersData,
+                    default,
+                    status),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="risk"> External model of risk result. </param>
+        /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
+        /// <param name="displayName"> User friendly display name of the assessment. </param>
+        /// <param name="additionalData"> Additional data regarding the assessment. </param>
+        /// <param name="metadata"> Describes properties of an assessment metadata. </param>
+        /// <param name="partnersData"> Data regarding 3rd party partner integration. </param>
+        /// <param name="linksAzurePortalUri"> Link to assessment in Azure Portal. </param>
+        /// <param name="status"> The result of the assessment. </param>
         /// <returns> A new <see cref="Models.SecurityAssessmentCreateOrUpdateContent"/> instance for mocking. </returns>
         public static SecurityAssessmentCreateOrUpdateContent SecurityAssessmentCreateOrUpdateContent(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SecurityAssessmentPropertiesBaseRisk risk = default, SecurityCenterResourceDetails resourceDetails = default, string displayName = default, IDictionary<string, string> additionalData = default, SecurityAssessmentMetadataProperties metadata = default, SecurityAssessmentPartner partnersData = default, string linksAzurePortalUri = default, SecurityAssessmentStatus status = default)
         {
@@ -4275,24 +4404,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 isEnabled is null ? default : new AdvancedThreatProtectionProperties(isEnabled, default),
-                default);
-        }
-
-        /// <summary> The Defender for Storage resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Defender for Storage resource properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.DefenderForStorageSettingData"/> instance for mocking. </returns>
-        public static DefenderForStorageSettingData DefenderForStorageSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefenderForStorageSettingProperties properties = default)
-        {
-            return new DefenderForStorageSettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
                 default);
         }
 
@@ -4360,6 +4471,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SensitiveDataDiscoveryProperties SensitiveDataDiscoveryProperties(bool? isEnabled = default, SecurityCenterOperationStatus operationStatus = default)
         {
             return new SensitiveDataDiscoveryProperties(isEnabled, operationStatus, default);
+        }
+
+        /// <summary> The Defender for Storage resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Defender for Storage resource properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.DefenderForStorageSettingData"/> instance for mocking. </returns>
+        public static DefenderForStorageSettingData DefenderForStorageSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DefenderForStorageSettingProperties properties = default)
+        {
+            return new DefenderForStorageSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
         }
 
         /// <summary> Describes the state of a malware scan operation. </summary>
@@ -4436,35 +4565,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="metrics"> Security analytics of your IoT Security solution. </param>
-        /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within your IoT Security solution. </param>
-        /// <param name="devicesMetrics"> List of device metrics by the aggregation date. </param>
-        /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
-        /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
-        /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionAnalyticsModelData"/> instance for mocking. </returns>
-        public static IotSecuritySolutionAnalyticsModelData IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotSeverityMetrics metrics = default, long? unhealthyDeviceCount = default, IEnumerable<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default, IEnumerable<IotSecurityAlertedDevice> topAlertedDevices = default, IEnumerable<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default, IEnumerable<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default)
-        {
-            return new IotSecuritySolutionAnalyticsModelData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                metrics is null && unhealthyDeviceCount is null && devicesMetrics is null && topAlertedDevices is null && mostPrevalentDeviceAlerts is null && mostPrevalentDeviceRecommendations is null ? default : new IoTSecuritySolutionAnalyticsModelProperties(
-                    metrics,
-                    unhealthyDeviceCount,
-                    (devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>()).ToList(),
-                    (topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>()).ToList(),
-                    (mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>()).ToList(),
-                    (mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>()).ToList(),
-                    default),
-                default);
-        }
-
         /// <summary> IoT Security solution analytics severity metrics. </summary>
         /// <param name="high"> Count of high severity alerts/recommendations. </param>
         /// <param name="medium"> Count of medium severity alerts/recommendations. </param>
@@ -4513,15 +4613,37 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new IotSecurityDeviceRecommendation(recommendationDisplayName, reportedSeverity, devicesCount, default);
         }
 
-        /// <summary> List of Security analytics of your IoT Security solution. </summary>
-        /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
-        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
+        /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
+        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
+        /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
+        /// <returns> A new <see cref="Models.UserDefinedResourcesProperties"/> instance for mocking. </returns>
+        public static UserDefinedResourcesProperties UserDefinedResourcesProperties(string query = default, IEnumerable<string> querySubscriptions = default)
         {
-            value ??= new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>();
+            querySubscriptions ??= new ChangeTrackingList<string>();
 
-            return new IoTSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
+            return new UserDefinedResourcesProperties(query, (querySubscriptions ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <summary> The type of IoT Security recommendation. </summary>
+        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
+        /// <param name="name"></param>
+        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
+        /// <returns> A new <see cref="Models.RecommendationConfigurationProperties"/> instance for mocking. </returns>
+        public static RecommendationConfigurationProperties RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType = default, string name = default, RecommendationConfigStatus status = default)
+        {
+            return new RecommendationConfigurationProperties(recommendationType, name, status, default);
+        }
+
+        /// <summary> Properties of the additional workspaces. </summary>
+        /// <param name="workspace"> Workspace resource id. </param>
+        /// <param name="type"> Workspace type. </param>
+        /// <param name="dataTypes"> List of data types sent to workspace. </param>
+        /// <returns> A new <see cref="Models.AdditionalWorkspacesProperties"/> instance for mocking. </returns>
+        public static AdditionalWorkspacesProperties AdditionalWorkspacesProperties(string workspace = default, AdditionalWorkspaceType? @type = default, IEnumerable<AdditionalWorkspaceDataType> dataTypes = default)
+        {
+            dataTypes ??= new ChangeTrackingList<AdditionalWorkspaceDataType>();
+
+            return new AdditionalWorkspacesProperties(workspace, @type, (dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4569,37 +4691,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> Properties of the IoT Security solution's user defined resources. </summary>
-        /// <param name="query"> Azure Resource Graph query which represents the security solution's user defined resources. Required to start with "where type != "Microsoft.Devices/IotHubs"". </param>
-        /// <param name="querySubscriptions"> List of Azure subscription ids on which the user defined resources query should be executed. </param>
-        /// <returns> A new <see cref="Models.UserDefinedResourcesProperties"/> instance for mocking. </returns>
-        public static UserDefinedResourcesProperties UserDefinedResourcesProperties(string query = default, IEnumerable<string> querySubscriptions = default)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="metrics"> Security analytics of your IoT Security solution. </param>
+        /// <param name="unhealthyDeviceCount"> Number of unhealthy devices within your IoT Security solution. </param>
+        /// <param name="devicesMetrics"> List of device metrics by the aggregation date. </param>
+        /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
+        /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
+        /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
+        /// <returns> A new <see cref="SecurityCenter.IotSecuritySolutionAnalyticsModelData"/> instance for mocking. </returns>
+        public static IotSecuritySolutionAnalyticsModelData IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IotSeverityMetrics metrics = default, long? unhealthyDeviceCount = default, IEnumerable<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics = default, IEnumerable<IotSecurityAlertedDevice> topAlertedDevices = default, IEnumerable<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts = default, IEnumerable<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations = default)
         {
-            querySubscriptions ??= new ChangeTrackingList<string>();
-
-            return new UserDefinedResourcesProperties(query, (querySubscriptions ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new IotSecuritySolutionAnalyticsModelData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metrics is null && unhealthyDeviceCount is null && devicesMetrics is null && topAlertedDevices is null && mostPrevalentDeviceAlerts is null && mostPrevalentDeviceRecommendations is null ? default : new IoTSecuritySolutionAnalyticsModelProperties(
+                    metrics,
+                    unhealthyDeviceCount,
+                    (devicesMetrics ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelDevicesMetrics>()).ToList(),
+                    (topAlertedDevices ?? new ChangeTrackingList<IotSecurityAlertedDevice>()).ToList(),
+                    (mostPrevalentDeviceAlerts ?? new ChangeTrackingList<IotSecurityDeviceAlert>()).ToList(),
+                    (mostPrevalentDeviceRecommendations ?? new ChangeTrackingList<IotSecurityDeviceRecommendation>()).ToList(),
+                    default),
+                default);
         }
 
-        /// <summary> The type of IoT Security recommendation. </summary>
-        /// <param name="recommendationType"> The type of IoT Security recommendation. </param>
-        /// <param name="name"></param>
-        /// <param name="status"> Recommendation status. When the recommendation status is disabled recommendations are not generated. </param>
-        /// <returns> A new <see cref="Models.RecommendationConfigurationProperties"/> instance for mocking. </returns>
-        public static RecommendationConfigurationProperties RecommendationConfigurationProperties(IotSecurityRecommendationType recommendationType = default, string name = default, RecommendationConfigStatus status = default)
+        /// <summary> List of Security analytics of your IoT Security solution. </summary>
+        /// <param name="value"> The IoTSecuritySolutionAnalyticsModel items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.IoTSecuritySolutionAnalyticsModelList"/> instance for mocking. </returns>
+        public static IoTSecuritySolutionAnalyticsModelList IoTSecuritySolutionAnalyticsModelList(IEnumerable<IotSecuritySolutionAnalyticsModelData> value = default, Uri nextLink = default)
         {
-            return new RecommendationConfigurationProperties(recommendationType, name, status, default);
-        }
+            value ??= new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>();
 
-        /// <summary> Properties of the additional workspaces. </summary>
-        /// <param name="workspace"> Workspace resource id. </param>
-        /// <param name="type"> Workspace type. </param>
-        /// <param name="dataTypes"> List of data types sent to workspace. </param>
-        /// <returns> A new <see cref="Models.AdditionalWorkspacesProperties"/> instance for mocking. </returns>
-        public static AdditionalWorkspacesProperties AdditionalWorkspacesProperties(string workspace = default, AdditionalWorkspaceType? @type = default, IEnumerable<AdditionalWorkspaceDataType> dataTypes = default)
-        {
-            dataTypes ??= new ChangeTrackingList<AdditionalWorkspaceDataType>();
-
-            return new AdditionalWorkspacesProperties(workspace, @type, (dataTypes ?? new ChangeTrackingList<AdditionalWorkspaceDataType>()).ToList(), default);
+            return new IoTSecuritySolutionAnalyticsModelList((value ?? new ChangeTrackingList<IotSecuritySolutionAnalyticsModelData>()).ToList(), nextLink, default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -4621,6 +4750,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SecurityCenterTagsResourceInfo(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
+        /// <param name="deviceId"> Name of the device. </param>
+        /// <param name="alertsCount"> Number of alerts raised for this device. </param>
+        /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
+        /// <returns> A new <see cref="Models.IotSecurityAggregatedAlertTopDevice"/> instance for mocking. </returns>
+        public static IotSecurityAggregatedAlertTopDevice IotSecurityAggregatedAlertTopDevice(string deviceId = default, long? alertsCount = default, string lastOccurrence = default)
+        {
+            return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4668,16 +4807,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
-        }
-
-        /// <summary> The IotSecurityAggregatedAlertTopDevice. </summary>
-        /// <param name="deviceId"> Name of the device. </param>
-        /// <param name="alertsCount"> Number of alerts raised for this device. </param>
-        /// <param name="lastOccurrence"> Most recent time this alert was raised for this device, on this day. </param>
-        /// <returns> A new <see cref="Models.IotSecurityAggregatedAlertTopDevice"/> instance for mocking. </returns>
-        public static IotSecurityAggregatedAlertTopDevice IotSecurityAggregatedAlertTopDevice(string deviceId = default, long? alertsCount = default, string lastOccurrence = default)
-        {
-            return new IotSecurityAggregatedAlertTopDevice(deviceId, alertsCount, lastOccurrence, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -4736,32 +4865,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 resourceType,
                 systemData,
                 properties,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="provisioningState"> The current provisioning state of the private link resource. Indicates whether the resource is being created, updated, deleted, or has completed successfully. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connections associated with this private link. Each connection represents a private endpoint from a customer's virtual network. </param>
-        /// <param name="privateLinkResources"> List of private link resources available for connection. For Defender services, this typically includes the 'containers' group with 'api' and regional data endpoints. </param>
-        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is disabled. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityCenterPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static SecurityCenterPrivateLinkResourceData SecurityCenterPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecurityCenterProvisioningState? provisioningState = default, IEnumerable<SecurityCenterPrivateEndpointConnectionData> privateEndpointConnections = default, IEnumerable<PrivateLinkGroupData> privateLinkResources = default, SecurityCenterPublicNetworkAccess? publicNetworkAccess = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecurityCenterPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                provisioningState is null && privateEndpointConnections is null && privateLinkResources is null && publicNetworkAccess is null ? default : new PrivateLinkProperties(provisioningState, (privateEndpointConnections ?? new ChangeTrackingList<SecurityCenterPrivateEndpointConnectionData>()).ToList(), (privateLinkResources ?? new ChangeTrackingList<PrivateLinkGroupData>()).ToList(), publicNetworkAccess, default),
                 default);
         }
 
@@ -4856,24 +4959,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> Azure DevOps Repository resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Azure DevOps Repository properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsRepositoryData"/> instance for mocking. </returns>
-        public static AzureDevOpsRepositoryData AzureDevOpsRepositoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsRepositoryProperties properties = default)
-        {
-            return new AzureDevOpsRepositoryData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Azure DevOps Repository properties. </summary>
         /// <param name="provisioningStatusMessage"> Gets the resource status message. </param>
         /// <param name="provisioningStatusUpdatedOn"> Gets the time when resource was last checked. </param>
@@ -4917,16 +5002,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
-        /// <summary> GitHub Repository resource. </summary>
+        /// <summary> Azure DevOps Repository resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> GitHub Repository properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.GitHubRepositoryData"/> instance for mocking. </returns>
-        public static GitHubRepositoryData GitHubRepositoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitHubRepositoryProperties properties = default)
+        /// <param name="properties"> Azure DevOps Repository properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.AzureDevOpsRepositoryData"/> instance for mocking. </returns>
+        public static AzureDevOpsRepositoryData AzureDevOpsRepositoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureDevOpsRepositoryProperties properties = default)
         {
-            return new GitHubRepositoryData(
+            return new AzureDevOpsRepositoryData(
                 id,
                 name,
                 resourceType,
@@ -4987,32 +5072,30 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 default);
         }
 
+        /// <summary> GitHub Repository resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> GitHub Repository properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.GitHubRepositoryData"/> instance for mocking. </returns>
+        public static GitHubRepositoryData GitHubRepositoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GitHubRepositoryProperties properties = default)
+        {
+            return new GitHubRepositoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> The issue creation request model. </summary>
         /// <param name="securityAssessmentResourceId"> The security assessment resource id that the issue will be opened based on. </param>
         /// <returns> A new <see cref="Models.IssueCreationContent"/> instance for mocking. </returns>
         public static IssueCreationContent IssueCreationContent(ResourceIdentifier securityAssessmentResourceId = default)
         {
             return new IssueCreationContent(securityAssessmentResourceId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
-        /// <param name="connectableResources"> List of connectable resources. </param>
-        /// <param name="location"> Location where the resource is stored. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecurityCenterAllowedConnectionData"/> instance for mocking. </returns>
-        public static SecurityCenterAllowedConnectionData SecurityCenterAllowedConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<ConnectableResourceInfo> connectableResources = default, AzureLocation location = default)
-        {
-            return new SecurityCenterAllowedConnectionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                calculatedOn is null && connectableResources is null ? default : new AllowedConnectionsResourceProperties(calculatedOn, (connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>()).ToList(), default),
-                location,
-                default);
         }
 
         /// <summary> Describes the allowed inbound and outbound traffic of an Azure resource. </summary>
@@ -5042,6 +5125,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="calculatedOn"> The UTC time on which the allowed connections resource was calculated. </param>
+        /// <param name="connectableResources"> List of connectable resources. </param>
+        /// <param name="location"> Location where the resource is stored. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecurityCenterAllowedConnectionData"/> instance for mocking. </returns>
+        public static SecurityCenterAllowedConnectionData SecurityCenterAllowedConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? calculatedOn = default, IEnumerable<ConnectableResourceInfo> connectableResources = default, AzureLocation location = default)
+        {
+            return new SecurityCenterAllowedConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                calculatedOn is null && connectableResources is null ? default : new AllowedConnectionsResourceProperties(calculatedOn, (connectableResources ?? new ChangeTrackingList<ConnectableResourceInfo>()).ToList(), default),
+                location,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> The provisioningState of the vulnerability assessment capability on the VM. </param>
         /// <returns> A new <see cref="SecurityCenter.ServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static ServerVulnerabilityAssessmentData ServerVulnerabilityAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServerVulnerabilityAssessmentPropertiesProvisioningState? provisioningState = default)
@@ -5063,24 +5166,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             value ??= new ChangeTrackingList<ServerVulnerabilityAssessmentData>();
 
             return new ServerVulnerabilityAssessmentsList((value ?? new ChangeTrackingList<ServerVulnerabilityAssessmentData>()).ToList(), default);
-        }
-
-        /// <summary> Data sensitivity settings for sensitive data discovery. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The sensitivity settings properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SensitivitySettingData"/> instance for mocking. </returns>
-        public static SensitivitySettingData SensitivitySettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SensitivitySettingsProperties properties = default)
-        {
-            return new SensitivitySettingData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
         }
 
         /// <summary> The sensitivity settings properties. </summary>
@@ -5141,6 +5226,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new BuiltInInfoType(name, id, dns, default);
         }
 
+        /// <summary> Data sensitivity settings for sensitive data discovery. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The sensitivity settings properties. </param>
+        /// <returns> A new <see cref="SecurityCenter.SensitivitySettingData"/> instance for mocking. </returns>
+        public static SensitivitySettingData SensitivitySettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SensitivitySettingsProperties properties = default)
+        {
+            return new SensitivitySettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
         /// <summary> Request to update data sensitivity settings for sensitive data discovery. </summary>
         /// <param name="sensitiveInfoTypesIds"> List of selected sensitive info types' IDs. </param>
         /// <param name="sensitivityThresholdLabelOrder"> The order of the sensitivity threshold label. Any label at or above this order will be considered sensitive. If set to -1, sensitivity by labels is turned off. </param>
@@ -5161,33 +5264,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             value ??= new ChangeTrackingList<SensitivitySettingData>();
 
             return new SensitivitySettingsListResult((value ?? new ChangeTrackingList<SensitivitySettingData>()).ToList(), default);
-        }
-
-        /// <summary> SQL Vulnerability Assessment settings resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> SQL Vulnerability Assessment settings properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentSettingsData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentSettingsData SqlVulnerabilityAssessmentSettingsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentSettingsProperties properties = default)
-        {
-            return new SqlVulnerabilityAssessmentSettingsData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> SQL Vulnerability Assessment settings properties. </summary>
-        /// <param name="createdOn"> The creation time of the SQL Vulnerability Assessment settings. </param>
-        /// <param name="state"> Represents the state of a SQL Vulnerability Assessment. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentSettingsProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentSettingsProperties SqlVulnerabilityAssessmentSettingsProperties(DateTimeOffset? createdOn = default, SqlVulnerabilityAssessmentState? state = default)
-        {
-            return new SqlVulnerabilityAssessmentSettingsProperties(createdOn, state, default);
         }
 
         /// <summary> Represents the result of a SQL Vulnerability Assessment scan operation, wrapped in the ARM resource envelope. </summary>
@@ -5215,99 +5291,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public static SqlVulnerabilityAssessmentScanOperationResultProperties SqlVulnerabilityAssessmentScanOperationResultProperties(string operationId = default, SqlVulnerabilityAssessmentScanOperationStatus? scanStatus = default)
         {
             return new SqlVulnerabilityAssessmentScanOperationResultProperties(operationId, scanStatus, default);
-        }
-
-        /// <summary> A vulnerability assessment scan record. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> A vulnerability assessment scan record properties. </param>
-        /// <returns> A new <see cref="SecurityCenter.SqlVulnerabilityAssessmentScanData"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanData SqlVulnerabilityAssessmentScanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SqlVulnerabilityAssessmentScanProperties properties = default)
-        {
-            return new SqlVulnerabilityAssessmentScanData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> A vulnerability assessment scan record properties. </summary>
-        /// <param name="triggerType"> The scan trigger type. </param>
-        /// <param name="state"> The scan status. </param>
-        /// <param name="server"> The server name. </param>
-        /// <param name="database"> The database name. </param>
-        /// <param name="sqlVersion"> The SQL version. </param>
-        /// <param name="startOn"> The scan start time (UTC). </param>
-        /// <param name="endOn"> Scan results are valid until end time (UTC). </param>
-        /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
-        /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
-        /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
-        /// <param name="totalPassedRulesCount"> The number of total passed rules. </param>
-        /// <param name="totalFailedRulesCount"> The number of total failed rules. </param>
-        /// <param name="totalRulesCount"> The number of total rules assessed. </param>
-        /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
-        /// <param name="lastScanOn"> Last scan time. </param>
-        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
-        {
-            return new SqlVulnerabilityAssessmentScanProperties(
-                triggerType,
-                state,
-                server,
-                database,
-                sqlVersion,
-                startOn,
-                endOn,
-                highSeverityFailedRulesCount,
-                mediumSeverityFailedRulesCount,
-                lowSeverityFailedRulesCount,
-                totalPassedRulesCount,
-                totalFailedRulesCount,
-                totalRulesCount,
-                isBaselineApplied,
-                lastScanOn,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
-        /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
-        /// <param name="status"> Status of the sub-assessment. </param>
-        /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
-        /// <param name="impact"> Description of the impact of this sub-assessment. </param>
-        /// <param name="category"> Category of the sub-assessment. </param>
-        /// <param name="description"> Human readable description of the assessment status. </param>
-        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
-        /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
-        /// <param name="additionalData"> Details of the sub-assessment. </param>
-        /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
-        public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vulnerabilityId = default, string displayName = default, SubAssessmentStatus status = default, string remediation = default, string impact = default, string category = default, string description = default, DateTimeOffset? generatedOn = default, SecurityCenterResourceDetails resourceDetails = default, SecuritySubAssessmentAdditionalInfo additionalData = default)
-        {
-            return new SecuritySubAssessmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                vulnerabilityId is null && displayName is null && status is null && remediation is null && impact is null && category is null && description is null && generatedOn is null && resourceDetails is null && additionalData is null ? default : new SecuritySubAssessmentProperties(
-                    vulnerabilityId,
-                    displayName,
-                    status,
-                    remediation,
-                    impact,
-                    category,
-                    description,
-                    generatedOn,
-                    resourceDetails,
-                    additionalData,
-                    default),
-                default);
         }
 
         /// <summary> Status of the sub-assessment. </summary>
@@ -5421,6 +5404,43 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 threat,
                 publishedOn,
                 (vendorReferences ?? new ChangeTrackingList<VendorReference>()).ToList());
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="vulnerabilityId"> Vulnerability ID. </param>
+        /// <param name="displayName"> User friendly display name of the sub-assessment. </param>
+        /// <param name="status"> Status of the sub-assessment. </param>
+        /// <param name="remediation"> Information on how to remediate this sub-assessment. </param>
+        /// <param name="impact"> Description of the impact of this sub-assessment. </param>
+        /// <param name="category"> Category of the sub-assessment. </param>
+        /// <param name="description"> Human readable description of the assessment status. </param>
+        /// <param name="generatedOn"> The date and time the sub-assessment was generated. </param>
+        /// <param name="resourceDetails"> Details of the resource that was assessed. </param>
+        /// <param name="additionalData"> Details of the sub-assessment. </param>
+        /// <returns> A new <see cref="SecurityCenter.SecuritySubAssessmentData"/> instance for mocking. </returns>
+        public static SecuritySubAssessmentData SecuritySubAssessmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string vulnerabilityId = default, string displayName = default, SubAssessmentStatus status = default, string remediation = default, string impact = default, string category = default, string description = default, DateTimeOffset? generatedOn = default, SecurityCenterResourceDetails resourceDetails = default, SecuritySubAssessmentAdditionalInfo additionalData = default)
+        {
+            return new SecuritySubAssessmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vulnerabilityId is null && displayName is null && status is null && remediation is null && impact is null && category is null && description is null && generatedOn is null && resourceDetails is null && additionalData is null ? default : new SecuritySubAssessmentProperties(
+                    vulnerabilityId,
+                    displayName,
+                    status,
+                    remediation,
+                    impact,
+                    category,
+                    description,
+                    generatedOn,
+                    resourceDetails,
+                    additionalData,
+                    default),
+                default);
         }
 
         /// <summary> The AtaExternalSecuritySolution. </summary>

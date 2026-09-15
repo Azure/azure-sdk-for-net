@@ -10,58 +10,76 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
+using Azure.ResourceManager.Search;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> A private link group resource that describes a grouping for the private link. </summary>
-    public partial class PrivateLinkGroupData : ResourceData, IJsonModel<PrivateLinkGroupData>
+    /// <summary> Describes an existing private endpoint connection to the Azure AI Search service. </summary>
+    public partial class SearchPrivateEndpointConnection1Data : ResourceData, IJsonModel<SearchPrivateEndpointConnection1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateLinkGroupData(document.RootElement, options);
+                        return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchPrivateEndpointConnection1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupData IPersistableModel<PrivateLinkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkGroupData)PersistableModelCreateCore(data, options);
+        SearchPrivateEndpointConnection1Data IPersistableModel<SearchPrivateEndpointConnection1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnection1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchPrivateEndpointConnection1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="searchPrivateEndpointConnection1Data"> The <see cref="SearchPrivateEndpointConnection1Data"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SearchPrivateEndpointConnection1Data searchPrivateEndpointConnection1Data)
+        {
+            if (searchPrivateEndpointConnection1Data == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(searchPrivateEndpointConnection1Data, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SearchPrivateEndpointConnection1Data"/> from. </param>
+        internal static SearchPrivateEndpointConnection1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchPrivateEndpointConnection1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +90,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +120,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupData IJsonModel<PrivateLinkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkGroupData)JsonModelCreateCore(ref reader, options);
+        SearchPrivateEndpointConnection1Data IJsonModel<SearchPrivateEndpointConnection1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SearchPrivateEndpointConnection1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPrivateEndpointConnection1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPrivateEndpointConnection1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkGroupData(document.RootElement, options);
+            return DeserializeSearchPrivateEndpointConnection1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateLinkGroupData DeserializePrivateLinkGroupData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchPrivateEndpointConnection1Data DeserializeSearchPrivateEndpointConnection1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            SecurityCenterPrivateLinkResourceProperties properties = default;
+            SearchServicePrivateEndpointConnectionProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSecurityCenterContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerSearchContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -171,7 +189,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         continue;
                     }
-                    properties = SecurityCenterPrivateLinkResourceProperties.DeserializeSecurityCenterPrivateLinkResourceProperties(prop.Value, options);
+                    properties = SearchServicePrivateEndpointConnectionProperties.DeserializeSearchServicePrivateEndpointConnectionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -179,7 +197,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkGroupData(
+            return new SearchPrivateEndpointConnection1Data(
                 id,
                 name,
                 resourceType,

@@ -10,58 +10,66 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityCenter.Models;
+using Azure.ResourceManager.SecurityCenter;
 
-namespace Azure.ResourceManager.SecurityCenter
+namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> A private link group resource that describes a grouping for the private link. </summary>
-    public partial class PrivateLinkGroupData : ResourceData, IJsonModel<PrivateLinkGroupData>
+    public partial class PrivateLinkGroup1Data : ResourceData, IJsonModel<PrivateLinkGroup1Data>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroup1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePrivateLinkGroupData(document.RootElement, options);
+                        return DeserializePrivateLinkGroup1Data(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkGroup1Data)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroup1Data>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkGroup1Data)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PrivateLinkGroupData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateLinkGroup1Data>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupData IPersistableModel<PrivateLinkGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkGroupData)PersistableModelCreateCore(data, options);
+        PrivateLinkGroup1Data IPersistableModel<PrivateLinkGroup1Data>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkGroup1Data)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PrivateLinkGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateLinkGroup1Data>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkGroup1Data"/> from. </param>
+        internal static PrivateLinkGroup1Data FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePrivateLinkGroup1Data(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PrivateLinkGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateLinkGroup1Data>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +80,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroup1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkGroup1Data)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +110,24 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PrivateLinkGroupData IJsonModel<PrivateLinkGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkGroupData)JsonModelCreateCore(ref reader, options);
+        PrivateLinkGroup1Data IJsonModel<PrivateLinkGroup1Data>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkGroup1Data)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkGroup1Data>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkGroupData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkGroup1Data)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkGroupData(document.RootElement, options);
+            return DeserializePrivateLinkGroup1Data(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PrivateLinkGroupData DeserializePrivateLinkGroupData(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateLinkGroup1Data DeserializePrivateLinkGroup1Data(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkGroupData(
+            return new PrivateLinkGroup1Data(
                 id,
                 name,
                 resourceType,

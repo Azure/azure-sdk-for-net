@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.Search
     [ModelReaderWriterBuildable(typeof(SearchNetworkSecurityProfile))]
     [ModelReaderWriterBuildable(typeof(SearchOfferingsByRegion))]
     [ModelReaderWriterBuildable(typeof(SearchOfferingsResult))]
+    [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnection1Data))]
+    [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnection1Resource))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionListResult))]
     [ModelReaderWriterBuildable(typeof(SearchPrivateEndpointConnectionResource))]

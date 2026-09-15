@@ -665,11 +665,11 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Gets a collection of PrivateLinkGroups in the <see cref="PrivateLinkResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkGroups and their operations over a PrivateLinkGroupResource. </returns>
-        public virtual PrivateLinkGroupCollection GetPrivateLinkGroups()
+        /// <summary> Gets a collection of PrivateLinkGroup1s in the <see cref="PrivateLinkResource"/>. </summary>
+        /// <returns> An object representing collection of PrivateLinkGroup1s and their operations over a PrivateLinkGroup1Resource. </returns>
+        public virtual PrivateLinkGroup1Collection GetPrivateLinkGroup1s()
         {
-            return GetCachedClient(client => new PrivateLinkGroupCollection(client, Id));
+            return GetCachedClient(client => new PrivateLinkGroup1Collection(client, Id));
         }
 
         /// <summary> Get the specified private link resource associated with the private link. </summary>
@@ -678,11 +678,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkGroupResource>> GetPrivateLinkGroupAsync(string groupId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkGroup1Data>> GetPrivateLinkGroup1Async(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return await GetPrivateLinkGroups().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateLinkGroup1s().GetAsync(groupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the specified private link resource associated with the private link. </summary>
@@ -691,11 +691,11 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateLinkGroupResource> GetPrivateLinkGroup(string groupId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkGroup1Data> GetPrivateLinkGroup1(string groupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            return GetPrivateLinkGroups().Get(groupId, cancellationToken);
+            return GetPrivateLinkGroup1s().Get(groupId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="PrivateLinkResource"/>. </summary>

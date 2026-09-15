@@ -952,42 +952,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     default));
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> The display name of the automation rule. </param>
-        /// <param name="order"> The order of execution of the automation rule. </param>
-        /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
-        /// <param name="actions"> The actions to execute when the automation rule is triggered. </param>
-        /// <param name="lastModifiedOn"> The last time the automation rule was updated. </param>
-        /// <param name="createdOn"> The time the automation rule was created. </param>
-        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="triggeringLogic"/> or <paramref name="actions"/> is null. </exception>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAutomationRuleData"/> instance for mocking. </returns>
-        public static SecurityInsightsAutomationRuleData SecurityInsightsAutomationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, int order = default, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic = default, IEnumerable<SecurityInsightsAutomationRuleAction> actions = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, SecurityInsightsClientInfo lastModifiedBy = default, SecurityInsightsClientInfo createdBy = default, ETag? etag = default)
-        {
-            return new SecurityInsightsAutomationRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                new AutomationRuleProperties(
-                    displayName,
-                    order,
-                    triggeringLogic,
-                    (actions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleAction>()).ToList(),
-                    lastModifiedOn,
-                    createdOn,
-                    lastModifiedBy,
-                    createdBy,
-                    default),
-                etag,
-                default);
-        }
-
         /// <summary> Describes automation rule triggering logic. </summary>
         /// <param name="isEnabled"> Determines whether the automation rule is enabled or disabled. </param>
         /// <param name="expireOn"> Determines when the automation rule should automatically expire and be disabled. </param>
@@ -1239,6 +1203,90 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name of the automation rule. </param>
+        /// <param name="order"> The order of execution of the automation rule. </param>
+        /// <param name="triggeringLogic"> Describes automation rule triggering logic. </param>
+        /// <param name="actions"> The actions to execute when the automation rule is triggered. </param>
+        /// <param name="lastModifiedOn"> The last time the automation rule was updated. </param>
+        /// <param name="createdOn"> The time the automation rule was created. </param>
+        /// <param name="lastModifiedBy"> Information on the client (user or application) that made some action. </param>
+        /// <param name="createdBy"> Information on the client (user or application) that made some action. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="triggeringLogic"/> or <paramref name="actions"/> is null. </exception>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAutomationRuleData"/> instance for mocking. </returns>
+        public static SecurityInsightsAutomationRuleData SecurityInsightsAutomationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, int order = default, SecurityInsightsAutomationRuleTriggeringLogic triggeringLogic = default, IEnumerable<SecurityInsightsAutomationRuleAction> actions = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, SecurityInsightsClientInfo lastModifiedBy = default, SecurityInsightsClientInfo createdBy = default, ETag? etag = default)
+        {
+            return new SecurityInsightsAutomationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new AutomationRuleProperties(
+                    displayName,
+                    order,
+                    triggeringLogic,
+                    (actions ?? new ChangeTrackingList<SecurityInsightsAutomationRuleAction>()).ToList(),
+                    lastModifiedOn,
+                    createdOn,
+                    lastModifiedBy,
+                    createdBy,
+                    default),
+                etag,
+                default);
+        }
+
+        /// <summary> Incident additional data property bag. </summary>
+        /// <param name="alertsCount"> The number of alerts in the incident. </param>
+        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
+        /// <param name="commentsCount"> The number of comments in the incident. </param>
+        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
+        /// <param name="tactics"> The tactics associated with incident. </param>
+        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
+        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
+        /// <param name="mergedIncidentNumber"> The incident number of the incident that the current incident was merged into. </param>
+        /// <param name="mergedIncidentUri"> The URL to the incident that the current incident was merged into. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/> instance for mocking. </returns>
+        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IEnumerable<string> alertProductNames, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, Uri providerIncidentUri = default, string mergedIncidentNumber = default, string mergedIncidentUri = default)
+        {
+            alertProductNames ??= new ChangeTrackingList<string>();
+            tactics ??= new ChangeTrackingList<SecurityInsightsAttackTactic>();
+            techniques ??= new ChangeTrackingList<string>();
+
+            return new SecurityInsightsIncidentAdditionalInfo(
+                alertsCount,
+                bookmarksCount,
+                commentsCount,
+                (alertProductNames ?? new ChangeTrackingList<string>()).ToList(),
+                (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
+                (techniques ?? new ChangeTrackingList<string>()).ToList(),
+                providerIncidentUri,
+                mergedIncidentNumber,
+                mergedIncidentUri,
+                default);
+        }
+
+        /// <summary> Describes team information. </summary>
+        /// <param name="teamId"> Team ID. </param>
+        /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
+        /// <param name="createdOn"> The time the team was created. </param>
+        /// <param name="name"> The name of the team. </param>
+        /// <param name="description"> The description of the team. </param>
+        /// <returns> A new <see cref="Models.TeamInformation"/> instance for mocking. </returns>
+        public static TeamInformation TeamInformation(string teamId = default, string primaryChannelUri = default, DateTimeOffset? createdOn = default, string name = default, string description = default)
+        {
+            return new TeamInformation(
+                teamId,
+                primaryChannelUri,
+                createdOn,
+                name,
+                description,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="title"> The title of the incident. </param>
         /// <param name="description"> The description of the incident. </param>
         /// <param name="severity"> The severity of the incident. </param>
@@ -1291,54 +1339,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     teamInformation,
                     default),
                 eTag,
-                default);
-        }
-
-        /// <summary> Incident additional data property bag. </summary>
-        /// <param name="alertsCount"> The number of alerts in the incident. </param>
-        /// <param name="bookmarksCount"> The number of bookmarks in the incident. </param>
-        /// <param name="commentsCount"> The number of comments in the incident. </param>
-        /// <param name="alertProductNames"> List of product names of alerts in the incident. </param>
-        /// <param name="tactics"> The tactics associated with incident. </param>
-        /// <param name="techniques"> The techniques associated with incident's tactics. </param>
-        /// <param name="providerIncidentUri"> The provider incident url to the incident in Microsoft 365 Defender portal. </param>
-        /// <param name="mergedIncidentNumber"> The incident number of the incident that the current incident was merged into. </param>
-        /// <param name="mergedIncidentUri"> The URL to the incident that the current incident was merged into. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsIncidentAdditionalInfo"/> instance for mocking. </returns>
-        public static SecurityInsightsIncidentAdditionalInfo SecurityInsightsIncidentAdditionalInfo(int? alertsCount, int? bookmarksCount, int? commentsCount, IEnumerable<string> alertProductNames, IEnumerable<SecurityInsightsAttackTactic> tactics, IEnumerable<string> techniques, Uri providerIncidentUri = default, string mergedIncidentNumber = default, string mergedIncidentUri = default)
-        {
-            alertProductNames ??= new ChangeTrackingList<string>();
-            tactics ??= new ChangeTrackingList<SecurityInsightsAttackTactic>();
-            techniques ??= new ChangeTrackingList<string>();
-
-            return new SecurityInsightsIncidentAdditionalInfo(
-                alertsCount,
-                bookmarksCount,
-                commentsCount,
-                (alertProductNames ?? new ChangeTrackingList<string>()).ToList(),
-                (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
-                (techniques ?? new ChangeTrackingList<string>()).ToList(),
-                providerIncidentUri,
-                mergedIncidentNumber,
-                mergedIncidentUri,
-                default);
-        }
-
-        /// <summary> Describes team information. </summary>
-        /// <param name="teamId"> Team ID. </param>
-        /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
-        /// <param name="createdOn"> The time the team was created. </param>
-        /// <param name="name"> The name of the team. </param>
-        /// <param name="description"> The description of the team. </param>
-        /// <returns> A new <see cref="Models.TeamInformation"/> instance for mocking. </returns>
-        public static TeamInformation TeamInformation(string teamId = default, string primaryChannelUri = default, DateTimeOffset? createdOn = default, string name = default, string description = default)
-        {
-            return new TeamInformation(
-                teamId,
-                primaryChannelUri,
-                createdOn,
-                name,
-                description,
                 default);
         }
 
@@ -2296,6 +2296,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityInsightsIncidentEntitiesMetadata(entityKind, count, default);
         }
 
+        /// <summary> Describes the entity mappings of a single entity. </summary>
+        /// <param name="entityType"> The entity type. </param>
+        /// <param name="fieldMappings"> Array of fields mapping for that entity type. </param>
+        /// <returns> A new <see cref="Models.BookmarkEntityMappings"/> instance for mocking. </returns>
+        public static BookmarkEntityMappings BookmarkEntityMappings(string entityType = default, IEnumerable<EntityFieldMapping> fieldMappings = default)
+        {
+            fieldMappings ??= new ChangeTrackingList<EntityFieldMapping>();
+
+            return new BookmarkEntityMappings(entityType, (fieldMappings ?? new ChangeTrackingList<EntityFieldMapping>()).ToList(), default);
+        }
+
+        /// <summary> Map identifiers of a single entity. </summary>
+        /// <param name="identifier"> Alert V3 identifier. </param>
+        /// <param name="value"> The value of the identifier. </param>
+        /// <returns> A new <see cref="Models.EntityFieldMapping"/> instance for mocking. </returns>
+        public static EntityFieldMapping EntityFieldMapping(string identifier = default, string value = default)
+        {
+            return new EntityFieldMapping(identifier, value, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2345,26 +2365,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     default),
                 eTag,
                 default);
-        }
-
-        /// <summary> Describes the entity mappings of a single entity. </summary>
-        /// <param name="entityType"> The entity type. </param>
-        /// <param name="fieldMappings"> Array of fields mapping for that entity type. </param>
-        /// <returns> A new <see cref="Models.BookmarkEntityMappings"/> instance for mocking. </returns>
-        public static BookmarkEntityMappings BookmarkEntityMappings(string entityType = default, IEnumerable<EntityFieldMapping> fieldMappings = default)
-        {
-            fieldMappings ??= new ChangeTrackingList<EntityFieldMapping>();
-
-            return new BookmarkEntityMappings(entityType, (fieldMappings ?? new ChangeTrackingList<EntityFieldMapping>()).ToList(), default);
-        }
-
-        /// <summary> Map identifiers of a single entity. </summary>
-        /// <param name="identifier"> Alert V3 identifier. </param>
-        /// <param name="value"> The value of the identifier. </param>
-        /// <returns> A new <see cref="Models.EntityFieldMapping"/> instance for mocking. </returns>
-        public static EntityFieldMapping EntityFieldMapping(string identifier = default, string value = default)
-        {
-            return new EntityFieldMapping(identifier, value, default);
         }
 
         /// <summary>
@@ -4084,51 +4084,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new SecurityMLAnalyticsSettingsDataSource(connectorId, (dataTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="sourceControlId"> The id (a Guid) of the source control. </param>
-        /// <param name="version"> The version number associated with the source control. </param>
-        /// <param name="displayName"> The display name of the source control. </param>
-        /// <param name="description"> A description of the source control. </param>
-        /// <param name="repoType"> The repository type of the source control. </param>
-        /// <param name="contentTypes"> Array of source control content types. </param>
-        /// <param name="repository"> Repository metadata. </param>
-        /// <param name="servicePrincipal"> Service principal metadata. </param>
-        /// <param name="workloadIdentityFederation"> Workload Identity metadata. </param>
-        /// <param name="repositoryAccess"> Repository access credentials. This is write-only object and it never returns back to a user. </param>
-        /// <param name="repositoryResourceInfo"> Information regarding the resources created in user's repository. </param>
-        /// <param name="lastDeploymentInfo"> Information regarding the latest deployment for the source control. </param>
-        /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSourceControlData"/> instance for mocking. </returns>
-        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? sourceControlId = default, SourceControlVersion? version = default, string displayName = default, string description = default, SourceControlRepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = default, SourceControlRepository repository = default, SourceControlServicePrincipal servicePrincipal = default, WorkloadIdentityFederation workloadIdentityFederation = default, RepositoryAccess repositoryAccess = default, RepositoryResourceInfo repositoryResourceInfo = default, SourceControlDeploymentInfo lastDeploymentInfo = default, PullRequestInfo pullRequest = default, ETag? eTag = default)
-        {
-            return new SecurityInsightsSourceControlData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                new SourceControlProperties(
-                    sourceControlId,
-                    version,
-                    displayName,
-                    description,
-                    repoType,
-                    (contentTypes ?? new ChangeTrackingList<SourceControlContentType>()).ToList(),
-                    repository,
-                    servicePrincipal,
-                    workloadIdentityFederation,
-                    repositoryAccess,
-                    repositoryResourceInfo,
-                    lastDeploymentInfo,
-                    pullRequest,
-                    default),
-                eTag,
-                default);
-        }
-
         /// <summary> metadata of a repository. </summary>
         /// <param name="uri"> Url of repository. </param>
         /// <param name="branch"> Branch name of repository. </param>
@@ -4253,6 +4208,51 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static PullRequestInfo PullRequestInfo(string uri = default, PullRequestState? state = default)
         {
             return new PullRequestInfo(uri, state, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sourceControlId"> The id (a Guid) of the source control. </param>
+        /// <param name="version"> The version number associated with the source control. </param>
+        /// <param name="displayName"> The display name of the source control. </param>
+        /// <param name="description"> A description of the source control. </param>
+        /// <param name="repoType"> The repository type of the source control. </param>
+        /// <param name="contentTypes"> Array of source control content types. </param>
+        /// <param name="repository"> Repository metadata. </param>
+        /// <param name="servicePrincipal"> Service principal metadata. </param>
+        /// <param name="workloadIdentityFederation"> Workload Identity metadata. </param>
+        /// <param name="repositoryAccess"> Repository access credentials. This is write-only object and it never returns back to a user. </param>
+        /// <param name="repositoryResourceInfo"> Information regarding the resources created in user's repository. </param>
+        /// <param name="lastDeploymentInfo"> Information regarding the latest deployment for the source control. </param>
+        /// <param name="pullRequest"> Information regarding the pull request of the source control. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsSourceControlData"/> instance for mocking. </returns>
+        public static SecurityInsightsSourceControlData SecurityInsightsSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? sourceControlId = default, SourceControlVersion? version = default, string displayName = default, string description = default, SourceControlRepoType repoType = default, IEnumerable<SourceControlContentType> contentTypes = default, SourceControlRepository repository = default, SourceControlServicePrincipal servicePrincipal = default, WorkloadIdentityFederation workloadIdentityFederation = default, RepositoryAccess repositoryAccess = default, RepositoryResourceInfo repositoryResourceInfo = default, SourceControlDeploymentInfo lastDeploymentInfo = default, PullRequestInfo pullRequest = default, ETag? eTag = default)
+        {
+            return new SecurityInsightsSourceControlData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                new SourceControlProperties(
+                    sourceControlId,
+                    version,
+                    displayName,
+                    description,
+                    repoType,
+                    (contentTypes ?? new ChangeTrackingList<SourceControlContentType>()).ToList(),
+                    repository,
+                    servicePrincipal,
+                    workloadIdentityFederation,
+                    repositoryAccess,
+                    repositoryResourceInfo,
+                    lastDeploymentInfo,
+                    pullRequest,
+                    default),
+                eTag,
+                default);
         }
 
         /// <param name="kind"> The kind of repository access credentials. </param>
@@ -4958,6 +4958,35 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new DataTypeDefinitions(dataType, default);
         }
 
+        /// <summary> Represents a file. </summary>
+        /// <param name="fileFormat"> The format of the file. </param>
+        /// <param name="fileName"> The name of the file. </param>
+        /// <param name="fileSize"> The size of the file. </param>
+        /// <param name="fileContentUri"> A URI with a valid SAS token to allow uploading / downloading the file. </param>
+        /// <param name="deleteStatus"> Indicates whether the file was deleted from the storage account. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsFileMetadata"/> instance for mocking. </returns>
+        public static SecurityInsightsFileMetadata SecurityInsightsFileMetadata(SecurityInsightsFileFormat? fileFormat = default, string fileName = default, int? fileSize = default, Uri fileContentUri = default, SecurityInsightsFileDeleteStatus? deleteStatus = default)
+        {
+            return new SecurityInsightsFileMetadata(
+                fileFormat,
+                fileName,
+                fileSize,
+                fileContentUri,
+                deleteStatus,
+                default);
+        }
+
+        /// <summary> Describes an error encountered in the file during validation. </summary>
+        /// <param name="recordIndex"> The number of the record that has the error. </param>
+        /// <param name="errorMessages"> A list of descriptions of the error. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsFileValidationError"/> instance for mocking. </returns>
+        public static SecurityInsightsFileValidationError SecurityInsightsFileValidationError(int? recordIndex = default, IEnumerable<string> errorMessages = default)
+        {
+            errorMessages ??= new ChangeTrackingList<string>();
+
+            return new SecurityInsightsFileValidationError(recordIndex, (errorMessages ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5001,33 +5030,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
-        /// <summary> Represents a file. </summary>
-        /// <param name="fileFormat"> The format of the file. </param>
-        /// <param name="fileName"> The name of the file. </param>
-        /// <param name="fileSize"> The size of the file. </param>
-        /// <param name="fileContentUri"> A URI with a valid SAS token to allow uploading / downloading the file. </param>
-        /// <param name="deleteStatus"> Indicates whether the file was deleted from the storage account. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsFileMetadata"/> instance for mocking. </returns>
-        public static SecurityInsightsFileMetadata SecurityInsightsFileMetadata(SecurityInsightsFileFormat? fileFormat = default, string fileName = default, int? fileSize = default, Uri fileContentUri = default, SecurityInsightsFileDeleteStatus? deleteStatus = default)
+        /// <summary> Describes a user that the hunt is assigned to. </summary>
+        /// <param name="email"> The email of the user the hunt is assigned to. </param>
+        /// <param name="assignedTo"> The name of the user the hunt is assigned to. </param>
+        /// <param name="objectId"> The object id of the user the hunt is assigned to. </param>
+        /// <param name="userPrincipalName"> The user principal name of the user the hunt is assigned to. </param>
+        /// <param name="ownerType"> The type of the owner the hunt is assigned to. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsHuntOwner"/> instance for mocking. </returns>
+        public static SecurityInsightsHuntOwner SecurityInsightsHuntOwner(string email = default, string assignedTo = default, Guid? objectId = default, string userPrincipalName = default, SecurityInsightsIncidentOwnerType? ownerType = default)
         {
-            return new SecurityInsightsFileMetadata(
-                fileFormat,
-                fileName,
-                fileSize,
-                fileContentUri,
-                deleteStatus,
+            return new SecurityInsightsHuntOwner(
+                email,
+                assignedTo,
+                objectId,
+                userPrincipalName,
+                ownerType,
                 default);
-        }
-
-        /// <summary> Describes an error encountered in the file during validation. </summary>
-        /// <param name="recordIndex"> The number of the record that has the error. </param>
-        /// <param name="errorMessages"> A list of descriptions of the error. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsFileValidationError"/> instance for mocking. </returns>
-        public static SecurityInsightsFileValidationError SecurityInsightsFileValidationError(int? recordIndex = default, IEnumerable<string> errorMessages = default)
-        {
-            errorMessages ??= new ChangeTrackingList<string>();
-
-            return new SecurityInsightsFileValidationError(recordIndex, (errorMessages ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5062,24 +5080,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     owner,
                     default),
                 eTag,
-                default);
-        }
-
-        /// <summary> Describes a user that the hunt is assigned to. </summary>
-        /// <param name="email"> The email of the user the hunt is assigned to. </param>
-        /// <param name="assignedTo"> The name of the user the hunt is assigned to. </param>
-        /// <param name="objectId"> The object id of the user the hunt is assigned to. </param>
-        /// <param name="userPrincipalName"> The user principal name of the user the hunt is assigned to. </param>
-        /// <param name="ownerType"> The type of the owner the hunt is assigned to. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsHuntOwner"/> instance for mocking. </returns>
-        public static SecurityInsightsHuntOwner SecurityInsightsHuntOwner(string email = default, string assignedTo = default, Guid? objectId = default, string userPrincipalName = default, SecurityInsightsIncidentOwnerType? ownerType = default)
-        {
-            return new SecurityInsightsHuntOwner(
-                email,
-                assignedTo,
-                objectId,
-                userPrincipalName,
-                ownerType,
                 default);
         }
 
@@ -5279,6 +5279,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
+        /// <summary> An entity describing a content item. </summary>
+        /// <param name="resourceId"> The resource id of the content item. </param>
+        /// <returns> A new <see cref="Models.WorkspaceManagerAssignmentItem"/> instance for mocking. </returns>
+        public static WorkspaceManagerAssignmentItem WorkspaceManagerAssignmentItem(ResourceIdentifier resourceId = default)
+        {
+            return new WorkspaceManagerAssignmentItem(resourceId, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5299,14 +5307,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 targetResourceName is null && lastJobEndsOn is null && lastJobProvisioningState is null && items is null ? default : new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndsOn, lastJobProvisioningState, (items ?? new ChangeTrackingList<WorkspaceManagerAssignmentItem>()).ToList(), default),
                 eTag,
                 default);
-        }
-
-        /// <summary> An entity describing a content item. </summary>
-        /// <param name="resourceId"> The resource id of the content item. </param>
-        /// <returns> A new <see cref="Models.WorkspaceManagerAssignmentItem"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentItem WorkspaceManagerAssignmentItem(ResourceIdentifier resourceId = default)
-        {
-            return new WorkspaceManagerAssignmentItem(resourceId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5435,71 +5435,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new BookmarkConnectedEntity(targetEntityId, additionalData, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="contentId"> The content id of the package. </param>
-        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
-        /// <param name="contentKind"> The package kind. </param>
-        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
-        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
-        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
-        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
-        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
-        /// <param name="version"> the latest version number of the package. </param>
-        /// <param name="displayName"> The display name of the package. </param>
-        /// <param name="description"> The description of the package. </param>
-        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
-        /// <param name="source"> The source of the package. </param>
-        /// <param name="author"> The author of the package. </param>
-        /// <param name="support"> The support tier of the package. </param>
-        /// <param name="dependencies"> The support tier of the package. </param>
-        /// <param name="providers"> Providers for the package item. </param>
-        /// <param name="firstPublishOn"> first publish date package item. </param>
-        /// <param name="lastPublishOn"> last publish date for the package item. </param>
-        /// <param name="categories"> The categories of the package. </param>
-        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
-        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
-        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
-        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsPackageData"/> instance for mocking. </returns>
-        public static SecurityInsightsPackageData SecurityInsightsPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string contentId = default, string contentProductId = default, SecurityInsightsMetadataPackageKind? contentKind = default, string contentSchemaVersion = default, SecurityInsightsMetadataFlag? isNew = default, SecurityInsightsMetadataFlag? isPreview = default, SecurityInsightsMetadataFlag? isFeatured = default, SecurityInsightsMetadataFlag? isDeprecated = default, string version = default, string displayName = default, string description = default, string publisherDisplayName = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, string icon = default, ETag? eTag = default)
-        {
-            return new SecurityInsightsPackageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                contentId is null && contentProductId is null && contentKind is null && contentSchemaVersion is null && isNew is null && isPreview is null && isFeatured is null && isDeprecated is null && version is null && displayName is null && description is null && publisherDisplayName is null && source is null && author is null && support is null && dependencies is null && providers is null && firstPublishOn is null && lastPublishOn is null && categories is null && threatAnalysisTactics is null && threatAnalysisTechniques is null && icon is null ? default : new PackageProperties(
-                    contentId,
-                    contentProductId,
-                    contentKind,
-                    contentSchemaVersion,
-                    isNew,
-                    isPreview,
-                    isFeatured,
-                    isDeprecated,
-                    version,
-                    displayName,
-                    description,
-                    publisherDisplayName,
-                    source,
-                    author,
-                    support,
-                    dependencies,
-                    (providers ?? new ChangeTrackingList<string>()).ToList(),
-                    firstPublishOn,
-                    lastPublishOn,
-                    categories,
-                    (threatAnalysisTactics ?? new ChangeTrackingList<string>()).ToList(),
-                    (threatAnalysisTechniques ?? new ChangeTrackingList<string>()).ToList(),
-                    icon,
-                    default),
-                eTag,
-                default);
-        }
-
         /// <summary> The original source of the content item, where it comes from. </summary>
         /// <param name="kind"> Source type of the content. </param>
         /// <param name="name"> Name of the content source.  The repo name, solution name, LA workspace name etc. </param>
@@ -5563,6 +5498,71 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             verticals ??= new ChangeTrackingList<string>();
 
             return new SecurityInsightsMetadataCategories((domains ?? new ChangeTrackingList<string>()).ToList(), (verticals ?? new ChangeTrackingList<string>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="contentId"> The content id of the package. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId, contentKind and the contentVersion of the package. </param>
+        /// <param name="contentKind"> The package kind. </param>
+        /// <param name="contentSchemaVersion"> The version of the content schema. </param>
+        /// <param name="isNew"> Flag indicates if this is a newly published package. </param>
+        /// <param name="isPreview"> Flag indicates if this package is in preview. </param>
+        /// <param name="isFeatured"> Flag indicates if this package is among the featured list. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="version"> the latest version number of the package. </param>
+        /// <param name="displayName"> The display name of the package. </param>
+        /// <param name="description"> The description of the package. </param>
+        /// <param name="publisherDisplayName"> The publisher display name of the package. </param>
+        /// <param name="source"> The source of the package. </param>
+        /// <param name="author"> The author of the package. </param>
+        /// <param name="support"> The support tier of the package. </param>
+        /// <param name="dependencies"> The support tier of the package. </param>
+        /// <param name="providers"> Providers for the package item. </param>
+        /// <param name="firstPublishOn"> first publish date package item. </param>
+        /// <param name="lastPublishOn"> last publish date for the package item. </param>
+        /// <param name="categories"> The categories of the package. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <returns> A new <see cref="SecurityInsights.SecurityInsightsPackageData"/> instance for mocking. </returns>
+        public static SecurityInsightsPackageData SecurityInsightsPackageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string contentId = default, string contentProductId = default, SecurityInsightsMetadataPackageKind? contentKind = default, string contentSchemaVersion = default, SecurityInsightsMetadataFlag? isNew = default, SecurityInsightsMetadataFlag? isPreview = default, SecurityInsightsMetadataFlag? isFeatured = default, SecurityInsightsMetadataFlag? isDeprecated = default, string version = default, string displayName = default, string description = default, string publisherDisplayName = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, string icon = default, ETag? eTag = default)
+        {
+            return new SecurityInsightsPackageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contentId is null && contentProductId is null && contentKind is null && contentSchemaVersion is null && isNew is null && isPreview is null && isFeatured is null && isDeprecated is null && version is null && displayName is null && description is null && publisherDisplayName is null && source is null && author is null && support is null && dependencies is null && providers is null && firstPublishOn is null && lastPublishOn is null && categories is null && threatAnalysisTactics is null && threatAnalysisTechniques is null && icon is null ? default : new PackageProperties(
+                    contentId,
+                    contentProductId,
+                    contentKind,
+                    contentSchemaVersion,
+                    isNew,
+                    isPreview,
+                    isFeatured,
+                    isDeprecated,
+                    version,
+                    displayName,
+                    description,
+                    publisherDisplayName,
+                    source,
+                    author,
+                    support,
+                    dependencies,
+                    (providers ?? new ChangeTrackingList<string>()).ToList(),
+                    firstPublishOn,
+                    lastPublishOn,
+                    categories,
+                    (threatAnalysisTactics ?? new ChangeTrackingList<string>()).ToList(),
+                    (threatAnalysisTechniques ?? new ChangeTrackingList<string>()).ToList(),
+                    icon,
+                    default),
+                eTag,
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -5707,6 +5707,75 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
+        /// <summary> Template property bag. </summary>
+        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
+        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
+        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
+        /// <param name="displayName"> The display name of the template. </param>
+        /// <param name="contentKind"> The kind of content the template is for. </param>
+        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
+        /// <param name="author"> The creator of the content item. </param>
+        /// <param name="support"> Support information for the template - type, name, contact information. </param>
+        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
+        /// <param name="categories"> Categories for the item. </param>
+        /// <param name="providers"> Providers for the content item. </param>
+        /// <param name="firstPublishOn"> first publish date content item. </param>
+        /// <param name="lastPublishOn"> last publish date for the content item. </param>
+        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
+        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
+        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
+        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
+        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
+        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
+        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
+        /// <param name="packageId"> the package Id contains this template. </param>
+        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
+        /// <param name="packageName"> the name of the package contains this template. </param>
+        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
+        /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
+        /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsContentTemplateProperties"/> instance for mocking. </returns>
+        public static SecurityInsightsContentTemplateProperties SecurityInsightsContentTemplateProperties(string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<SecurityInsightsContentTemplateProperties> dependantTemplates = default)
+        {
+            providers ??= new ChangeTrackingList<string>();
+            threatAnalysisTactics ??= new ChangeTrackingList<string>();
+            threatAnalysisTechniques ??= new ChangeTrackingList<string>();
+            previewImages ??= new ChangeTrackingList<string>();
+            previewImagesDark ??= new ChangeTrackingList<string>();
+            dependantTemplates ??= new ChangeTrackingList<SecurityInsightsContentTemplateProperties>();
+
+            return new SecurityInsightsContentTemplateProperties(
+                contentId,
+                contentProductId,
+                packageVersion,
+                version,
+                displayName,
+                contentKind,
+                source,
+                author,
+                support,
+                dependencies,
+                categories,
+                (providers ?? new ChangeTrackingList<string>()).ToList(),
+                firstPublishOn,
+                lastPublishOn,
+                customVersion,
+                contentSchemaVersion,
+                icon,
+                (threatAnalysisTactics ?? new ChangeTrackingList<string>()).ToList(),
+                (threatAnalysisTechniques ?? new ChangeTrackingList<string>()).ToList(),
+                (previewImages ?? new ChangeTrackingList<string>()).ToList(),
+                (previewImagesDark ?? new ChangeTrackingList<string>()).ToList(),
+                packageId,
+                packageKind,
+                packageName,
+                isDeprecated,
+                mainTemplate,
+                (dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>()).ToList(),
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5777,75 +5846,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     (dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>()).ToList(),
                     default),
                 eTag,
-                default);
-        }
-
-        /// <summary> Template property bag. </summary>
-        /// <param name="contentId"> Static ID for the content.  Used to identify dependencies and content from solutions or community.  Hard-coded/static for out of the box content and solutions. Dynamic for user-created.  This is the resource name. </param>
-        /// <param name="contentProductId"> Unique ID for the content. It should be generated based on the contentId of the package, contentId of the template, contentKind of the template and the contentVersion of the template. </param>
-        /// <param name="packageVersion"> Version of the package.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
-        /// <param name="version"> Version of the content.  Default and recommended format is numeric (e.g. 1, 1.0, 1.0.0, 1.0.0.0), following ARM metadata best practices.  Can also be any string, but then we cannot guarantee any version checks. </param>
-        /// <param name="displayName"> The display name of the template. </param>
-        /// <param name="contentKind"> The kind of content the template is for. </param>
-        /// <param name="source"> Source of the content.  This is where/how it was created. </param>
-        /// <param name="author"> The creator of the content item. </param>
-        /// <param name="support"> Support information for the template - type, name, contact information. </param>
-        /// <param name="dependencies"> Dependencies for the content item, what other content items it requires to work.  Can describe more complex dependencies using a recursive/nested structure. For a single dependency an id/kind/version can be supplied or operator/criteria for complex formats. </param>
-        /// <param name="categories"> Categories for the item. </param>
-        /// <param name="providers"> Providers for the content item. </param>
-        /// <param name="firstPublishOn"> first publish date content item. </param>
-        /// <param name="lastPublishOn"> last publish date for the content item. </param>
-        /// <param name="customVersion"> The custom version of the content. A optional free text. </param>
-        /// <param name="contentSchemaVersion"> Schema version of the content. Can be used to distinguish between different flow based on the schema version. </param>
-        /// <param name="icon"> the icon identifier. this id can later be fetched from the content metadata. </param>
-        /// <param name="threatAnalysisTactics"> the tactics the resource covers. </param>
-        /// <param name="threatAnalysisTechniques"> the techniques the resource covers, these have to be aligned with the tactics being used. </param>
-        /// <param name="previewImages"> preview image file names. These will be taken from the solution artifacts. </param>
-        /// <param name="previewImagesDark"> preview image file names. These will be taken from the solution artifacts. used for dark theme support. </param>
-        /// <param name="packageId"> the package Id contains this template. </param>
-        /// <param name="packageKind"> the packageKind of the package contains this template. </param>
-        /// <param name="packageName"> the name of the package contains this template. </param>
-        /// <param name="isDeprecated"> Flag indicates if this template is deprecated. </param>
-        /// <param name="mainTemplate"> The JSON of the ARM template to deploy active content. Expandable. </param>
-        /// <param name="dependantTemplates"> Dependant templates. Expandable. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsContentTemplateProperties"/> instance for mocking. </returns>
-        public static SecurityInsightsContentTemplateProperties SecurityInsightsContentTemplateProperties(string contentId = default, string contentProductId = default, string packageVersion = default, string version = default, string displayName = default, SecurityInsightsKind? contentKind = default, SecurityInsightsMetadataSource source = default, SecurityInsightsMetadataAuthor author = default, SecurityInsightsMetadataSupport support = default, SecurityInsightsMetadataDependencies dependencies = default, SecurityInsightsMetadataCategories categories = default, IEnumerable<string> providers = default, DateTimeOffset? firstPublishOn = default, DateTimeOffset? lastPublishOn = default, string customVersion = default, string contentSchemaVersion = default, string icon = default, IEnumerable<string> threatAnalysisTactics = default, IEnumerable<string> threatAnalysisTechniques = default, IEnumerable<string> previewImages = default, IEnumerable<string> previewImagesDark = default, string packageId = default, SecurityInsightsMetadataPackageKind? packageKind = default, string packageName = default, SecurityInsightsMetadataFlag? isDeprecated = default, BinaryData mainTemplate = default, IEnumerable<SecurityInsightsContentTemplateProperties> dependantTemplates = default)
-        {
-            providers ??= new ChangeTrackingList<string>();
-            threatAnalysisTactics ??= new ChangeTrackingList<string>();
-            threatAnalysisTechniques ??= new ChangeTrackingList<string>();
-            previewImages ??= new ChangeTrackingList<string>();
-            previewImagesDark ??= new ChangeTrackingList<string>();
-            dependantTemplates ??= new ChangeTrackingList<SecurityInsightsContentTemplateProperties>();
-
-            return new SecurityInsightsContentTemplateProperties(
-                contentId,
-                contentProductId,
-                packageVersion,
-                version,
-                displayName,
-                contentKind,
-                source,
-                author,
-                support,
-                dependencies,
-                categories,
-                (providers ?? new ChangeTrackingList<string>()).ToList(),
-                firstPublishOn,
-                lastPublishOn,
-                customVersion,
-                contentSchemaVersion,
-                icon,
-                (threatAnalysisTactics ?? new ChangeTrackingList<string>()).ToList(),
-                (threatAnalysisTechniques ?? new ChangeTrackingList<string>()).ToList(),
-                (previewImages ?? new ChangeTrackingList<string>()).ToList(),
-                (previewImagesDark ?? new ChangeTrackingList<string>()).ToList(),
-                packageId,
-                packageKind,
-                packageName,
-                isDeprecated,
-                mainTemplate,
-                (dependantTemplates ?? new ChangeTrackingList<SecurityInsightsContentTemplateProperties>()).ToList(),
                 default);
         }
 
@@ -6855,6 +6855,26 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 (techniques ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> What suggestions should be taken to complete the recommendation. </summary>
+        /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
+        /// <param name="title"> Title of the suggestion. </param>
+        /// <param name="description"> Description of the suggestion. </param>
+        /// <param name="action"> Action of the suggestion. </param>
+        /// <param name="additionalProperties"> Collection of additional properties for the suggestion. </param>
+        /// <returns> A new <see cref="Models.RecommendedSuggestion"/> instance for mocking. </returns>
+        public static RecommendedSuggestion RecommendedSuggestion(string suggestionTypeId = default, string title = default, string description = default, string action = default, IDictionary<string, string> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RecommendedSuggestion(
+                suggestionTypeId,
+                title,
+                description,
+                action,
+                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6894,26 +6914,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
-        /// <summary> What suggestions should be taken to complete the recommendation. </summary>
-        /// <param name="suggestionTypeId"> Id of the suggestion type. </param>
-        /// <param name="title"> Title of the suggestion. </param>
-        /// <param name="description"> Description of the suggestion. </param>
-        /// <param name="action"> Action of the suggestion. </param>
-        /// <param name="additionalProperties"> Collection of additional properties for the suggestion. </param>
-        /// <returns> A new <see cref="Models.RecommendedSuggestion"/> instance for mocking. </returns>
-        public static RecommendedSuggestion RecommendedSuggestion(string suggestionTypeId = default, string title = default, string description = default, string action = default, IDictionary<string, string> additionalProperties = default)
-        {
-            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new RecommendedSuggestion(
-                suggestionTypeId,
-                title,
-                description,
-                action,
-                additionalProperties ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <param name="recommendationPatchState"> State of the recommendation. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsRecommendationPatch"/> instance for mocking. </returns>
         public static SecurityInsightsRecommendationPatch SecurityInsightsRecommendationPatch(RecommendationState? recommendationPatchState = default)
@@ -6927,6 +6927,28 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static ReevaluateResult ReevaluateResult(DateTimeOffset? lastEvaluatedOn = default)
         {
             return new ReevaluateResult(lastEvaluatedOn, default);
+        }
+
+        /// <summary> An entity describing the publish status of a content item. </summary>
+        /// <param name="resourceId"> The resource id of the content item. </param>
+        /// <param name="status"> Status of the item publication. </param>
+        /// <param name="executionOn"> The time the item publishing was completed. </param>
+        /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
+        /// <returns> A new <see cref="Models.SecurityInsightsContentJobItem"/> instance for mocking. </returns>
+        public static SecurityInsightsContentJobItem SecurityInsightsContentJobItem(ResourceIdentifier resourceId = default, SecurityInsightsContentStatus? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
+        {
+            errors ??= new ChangeTrackingList<PublicationFailedError>();
+
+            return new SecurityInsightsContentJobItem(resourceId, status, executionOn, (errors ?? new ChangeTrackingList<PublicationFailedError>()).ToList(), default);
+        }
+
+        /// <summary> The error description for why a publication failed. </summary>
+        /// <param name="memberResourceName"> The member resource name for which the publication error occured. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <returns> A new <see cref="Models.PublicationFailedError"/> instance for mocking. </returns>
+        public static PublicationFailedError PublicationFailedError(string memberResourceName = default, string errorMessage = default)
+        {
+            return new PublicationFailedError(memberResourceName, errorMessage, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -6956,28 +6978,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     default),
                 eTag,
                 default);
-        }
-
-        /// <summary> An entity describing the publish status of a content item. </summary>
-        /// <param name="resourceId"> The resource id of the content item. </param>
-        /// <param name="status"> Status of the item publication. </param>
-        /// <param name="executionOn"> The time the item publishing was completed. </param>
-        /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
-        /// <returns> A new <see cref="Models.SecurityInsightsContentJobItem"/> instance for mocking. </returns>
-        public static SecurityInsightsContentJobItem SecurityInsightsContentJobItem(ResourceIdentifier resourceId = default, SecurityInsightsContentStatus? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
-        {
-            errors ??= new ChangeTrackingList<PublicationFailedError>();
-
-            return new SecurityInsightsContentJobItem(resourceId, status, executionOn, (errors ?? new ChangeTrackingList<PublicationFailedError>()).ToList(), default);
-        }
-
-        /// <summary> The error description for why a publication failed. </summary>
-        /// <param name="memberResourceName"> The member resource name for which the publication error occured. </param>
-        /// <param name="errorMessage"> The error message. </param>
-        /// <returns> A new <see cref="Models.PublicationFailedError"/> instance for mocking. </returns>
-        public static PublicationFailedError PublicationFailedError(string memberResourceName = default, string errorMessage = default)
-        {
-            return new PublicationFailedError(memberResourceName, errorMessage, default);
         }
 
         /// <summary> Action for alert rule. </summary>

@@ -45,21 +45,21 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SearchPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SearchPrivateEndpointConnection1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableSearchArmClient.GetSearchPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableSearchArmClient.GetSearchPrivateEndpointConnection1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource"/> object. </returns>
-        public static SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SearchPrivateEndpointConnection1Resource"/> object. </returns>
+        public static SearchPrivateEndpointConnection1Resource GetSearchPrivateEndpointConnection1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableSearchArmClient(client).GetSearchPrivateEndpointConnectionResource(id);
+            return GetMockableSearchArmClient(client).GetSearchPrivateEndpointConnection1Resource(id);
         }
 
         /// <summary>

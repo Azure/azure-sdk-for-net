@@ -19,6 +19,24 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
     public static partial class ArmSecretsStoreExtensionModelFactory
     {
 
+        /// <summary> The properties of the AzureKeyVaultSecretProviderClass. </summary>
+        /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
+        /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
+        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
+        /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
+        /// <param name="provisioningState"> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </param>
+        /// <returns> A new <see cref="Models.KeyVaultSecretProviderClassProperties"/> instance for mocking. </returns>
+        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = default, Guid clientId = default, Guid tenantId = default, string objects = default, SecretsStoreExtensionProvisioningState? provisioningState = default)
+        {
+            return new KeyVaultSecretProviderClassProperties(
+                keyvaultName,
+                clientId,
+                tenantId,
+                objects,
+                provisioningState,
+                default);
+        }
+
         /// <summary> The AzureKeyVaultSecretProviderClass resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -45,24 +63,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 default);
         }
 
-        /// <summary> The properties of the AzureKeyVaultSecretProviderClass. </summary>
-        /// <param name="keyvaultName"> The name of the Azure Key Vault to sync secrets from. </param>
-        /// <param name="clientId"> The user assigned managed identity client ID that should be used to access the Azure Key Vault. </param>
-        /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the Azure Key Vault. </param>
-        /// <param name="objects"> Objects defines the desired state of synced K8s secret objects. </param>
-        /// <param name="provisioningState"> Provisioning state of the AzureKeyVaultSecretProviderClass instance. </param>
-        /// <returns> A new <see cref="Models.KeyVaultSecretProviderClassProperties"/> instance for mocking. </returns>
-        public static KeyVaultSecretProviderClassProperties KeyVaultSecretProviderClassProperties(string keyvaultName = default, Guid clientId = default, Guid tenantId = default, string objects = default, SecretsStoreExtensionProvisioningState? provisioningState = default)
-        {
-            return new KeyVaultSecretProviderClassProperties(
-                keyvaultName,
-                clientId,
-                tenantId,
-                objects,
-                provisioningState,
-                default);
-        }
-
         /// <summary> The type used for update operations of the AzureKeyVaultSecretProviderClass. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -83,32 +83,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
         public static AzureKeyVaultSecretProviderClassUpdateProperties AzureKeyVaultSecretProviderClassUpdateProperties(string keyvaultName = default, Guid? clientId = default, Guid? tenantId = default, string objects = default)
         {
             return new AzureKeyVaultSecretProviderClassUpdateProperties(keyvaultName, clientId, tenantId, objects, default);
-        }
-
-        /// <summary> The SecretSync resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extended location of the resource. </param>
-        /// <returns> A new <see cref="SecretsStoreExtension.SecretSyncData"/> instance for mocking. </returns>
-        public static SecretSyncData SecretSyncData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecretSyncProperties properties = default, ExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SecretSyncData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <summary> The properties of the SecretSync instance. </summary>
@@ -172,6 +146,32 @@ namespace Azure.ResourceManager.SecretsStoreExtension.Models
                 reason,
                 status,
                 @type,
+                default);
+        }
+
+        /// <summary> The SecretSync resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extended location of the resource. </param>
+        /// <returns> A new <see cref="SecretsStoreExtension.SecretSyncData"/> instance for mocking. </returns>
+        public static SecretSyncData SecretSyncData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SecretSyncProperties properties = default, ExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SecretSyncData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
                 default);
         }
 

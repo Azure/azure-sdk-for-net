@@ -532,13 +532,13 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
             return await GetSecurityCenterPricings(scope).GetAsync(pricingName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets an object representing a <see cref="PrivateLinkGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateLinkGroup1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateLinkGroupResource"/> object. </returns>
-        public virtual PrivateLinkGroupResource GetPrivateLinkGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateLinkGroup1Resource"/> object. </returns>
+        public virtual PrivateLinkGroup1Resource GetPrivateLinkGroup1Resource(ResourceIdentifier id)
         {
-            PrivateLinkGroupResource.ValidateResourceId(id);
-            return new PrivateLinkGroupResource(Client, id);
+            PrivateLinkGroup1Resource.ValidateResourceId(id);
+            return new PrivateLinkGroup1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

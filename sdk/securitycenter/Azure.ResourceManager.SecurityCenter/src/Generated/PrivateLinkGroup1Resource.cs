@@ -13,15 +13,16 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a PrivateLinkGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkGroupResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkResource"/> using the GetPrivateLinkGroups method.
+    /// A class representing a PrivateLinkGroup1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateLinkGroup1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateLinkResource"/> using the GetPrivateLinkGroup1s method.
     /// </summary>
-    public partial class PrivateLinkGroupResource : ArmResource
+    public partial class PrivateLinkGroup1Resource : ArmResource
     {
         private readonly ClientDiagnostics _privateLinkResourcesClientDiagnostics;
         private readonly PrivateLinkResources _privateLinkResourcesRestClient;
@@ -29,28 +30,28 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/privateLinks/privateLinkResources";
 
-        /// <summary> Initializes a new instance of PrivateLinkGroupResource for mocking. </summary>
-        protected PrivateLinkGroupResource()
+        /// <summary> Initializes a new instance of PrivateLinkGroup1Resource for mocking. </summary>
+        protected PrivateLinkGroup1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkGroup1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateLinkGroupResource(ArmClient client, PrivateLinkGroupData data) : this(client, data.Id)
+        internal PrivateLinkGroup1Resource(ArmClient client, PrivateLinkGroupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkGroup1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateLinkGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateLinkGroup1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string privateLinkGroupApiVersion);
+            TryGetApiVersion(ResourceType, out string privateLinkGroup1ApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkGroupApiVersion ?? "2026-01-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, privateLinkGroup1ApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -108,14 +109,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkGroupResource"/>. </description>
+        /// <description> <see cref="PrivateLinkGroup1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateLinkGroupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkGroup1Data>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkGroupResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkGroup1Resource.Get");
             scope.Start();
             try
             {
@@ -125,12 +126,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<PrivateLinkGroupData> response = Response.FromValue(PrivateLinkGroupData.FromResponse(result), result);
+                Response<PrivateLinkGroup1Data> response = Response.FromValue(PrivateLinkGroup1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkGroupResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -156,14 +157,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="PrivateLinkGroupResource"/>. </description>
+        /// <description> <see cref="PrivateLinkGroup1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateLinkGroupResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkGroup1Data> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkGroupResource.Get");
+            using DiagnosticScope scope = _privateLinkResourcesClientDiagnostics.CreateScope("PrivateLinkGroup1Resource.Get");
             scope.Start();
             try
             {
@@ -173,12 +174,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 };
                 HttpMessage message = _privateLinkResourcesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<PrivateLinkGroupData> response = Response.FromValue(PrivateLinkGroupData.FromResponse(result), result);
+                Response<PrivateLinkGroup1Data> response = Response.FromValue(PrivateLinkGroup1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new PrivateLinkGroupResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {

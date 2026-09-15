@@ -18,11 +18,11 @@ using Azure.ResourceManager.Search.Models;
 namespace Azure.ResourceManager.Search
 {
     /// <summary>
-    /// A class representing a SearchPrivateEndpointConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SearchPrivateEndpointConnectionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSearchPrivateEndpointConnections method.
+    /// A class representing a SearchPrivateEndpointConnection1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SearchPrivateEndpointConnection1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SearchServiceResource"/> using the GetSearchPrivateEndpointConnection1s method.
     /// </summary>
-    public partial class SearchPrivateEndpointConnectionResource : ArmResource
+    public partial class SearchPrivateEndpointConnection1Resource : ArmResource
     {
         private readonly ClientDiagnostics _privateEndpointConnectionsClientDiagnostics;
         private readonly PrivateEndpointConnections _privateEndpointConnectionsRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.Search
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Search/searchServices/privateEndpointConnections";
 
-        /// <summary> Initializes a new instance of SearchPrivateEndpointConnectionResource for mocking. </summary>
-        protected SearchPrivateEndpointConnectionResource()
+        /// <summary> Initializes a new instance of SearchPrivateEndpointConnection1Resource for mocking. </summary>
+        protected SearchPrivateEndpointConnection1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnection1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SearchPrivateEndpointConnectionResource(ArmClient client, SearchPrivateEndpointConnectionData data) : this(client, data.Id)
+        internal SearchPrivateEndpointConnection1Resource(ArmClient client, SearchPrivateEndpointConnectionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPrivateEndpointConnection1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SearchPrivateEndpointConnectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SearchPrivateEndpointConnection1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string searchPrivateEndpointConnectionApiVersion);
+            TryGetApiVersion(ResourceType, out string searchPrivateEndpointConnection1ApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Search", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchPrivateEndpointConnectionApiVersion ?? "2026-09-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, searchPrivateEndpointConnection1ApiVersion ?? "2026-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SearchPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SearchPrivateEndpointConnectionResource>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SearchPrivateEndpointConnection1Data>> GetAsync(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Get");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.Search
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -158,15 +158,15 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SearchPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SearchPrivateEndpointConnectionResource> Get(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual Response<SearchPrivateEndpointConnection1Data> Get(SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Get");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Get");
             scope.Start();
             try
             {
@@ -176,12 +176,12 @@ namespace Azure.ResourceManager.Search
                 };
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -191,7 +191,115 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Update a SearchPrivateEndpointConnection.
+        /// Disconnects the private endpoint connection and deletes it from the search service.
+        /// Returns 200 (OK) with the deleted connection details on successful deletion, or 404 (Not Found) if the connection does not exist.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SearchArmOperation operation = new SearchArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Disconnects the private endpoint connection and deletes it from the search service.
+        /// Returns 200 (OK) with the deleted connection details on successful deletion, or 404 (Not Found) if the connection does not exist.
+        /// NOTE: The behavior of returning 404 is inconsistent with ARM guidelines. Clients should expect a 204 response in future versions and avoid new dependencies on the 404 response.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Search/searchServices/{searchServiceName}/privateEndpointConnections/{privateEndpointConnectionName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateEndpointConnections_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="searchManagementRequestOptions"></param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, default, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                SearchArmOperation operation = new SearchArmOperation(response, rehydrationToken);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a SearchPrivateEndpointConnection1.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -207,7 +315,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SearchPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,11 +324,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SearchPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SearchPrivateEndpointConnection1Data>> UpdateAsync(WaitUntil waitUntil, SearchPrivateEndpointConnection1Data data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Update");
             scope.Start();
             try
             {
@@ -228,12 +336,12 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SearchPrivateEndpointConnectionData.ToRequestContent(data), default, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SearchPrivateEndpointConnection1Data.ToRequestContent(data), default, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SearchArmOperation<SearchPrivateEndpointConnectionResource> operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SearchArmOperation<SearchPrivateEndpointConnection1Data> operation = new SearchArmOperation<SearchPrivateEndpointConnection1Data>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -248,7 +356,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Update a SearchPrivateEndpointConnection.
+        /// Update a SearchPrivateEndpointConnection1.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -264,7 +372,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="SearchPrivateEndpointConnectionResource"/>. </description>
+        /// <description> <see cref="SearchPrivateEndpointConnection1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,11 +381,11 @@ namespace Azure.ResourceManager.Search
         /// <param name="searchManagementRequestOptions"></param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SearchPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, SearchPrivateEndpointConnectionData data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SearchPrivateEndpointConnection1Data> Update(WaitUntil waitUntil, SearchPrivateEndpointConnection1Data data, SearchManagementRequestOptions searchManagementRequestOptions = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnectionResource.Update");
+            using DiagnosticScope scope = _privateEndpointConnectionsClientDiagnostics.CreateScope("SearchPrivateEndpointConnection1Resource.Update");
             scope.Start();
             try
             {
@@ -285,12 +393,12 @@ namespace Azure.ResourceManager.Search
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SearchPrivateEndpointConnectionData.ToRequestContent(data), default, context);
+                HttpMessage message = _privateEndpointConnectionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, SearchPrivateEndpointConnection1Data.ToRequestContent(data), default, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SearchPrivateEndpointConnectionData> response = Response.FromValue(SearchPrivateEndpointConnectionData.FromResponse(result), result);
+                Response<SearchPrivateEndpointConnection1Data> response = Response.FromValue(SearchPrivateEndpointConnection1Data.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                SearchArmOperation<SearchPrivateEndpointConnectionResource> operation = new SearchArmOperation<SearchPrivateEndpointConnectionResource>(Response.FromValue(new SearchPrivateEndpointConnectionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                SearchArmOperation<SearchPrivateEndpointConnection1Data> operation = new SearchArmOperation<SearchPrivateEndpointConnection1Data>(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
