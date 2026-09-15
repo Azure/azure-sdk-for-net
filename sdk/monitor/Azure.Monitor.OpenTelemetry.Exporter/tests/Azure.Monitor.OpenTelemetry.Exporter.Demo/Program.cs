@@ -31,6 +31,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         /// </summary>
         private const string RouteConnectionStringsVariable = "MULTIENDPOINT_ROUTE_CONNECTION_STRINGS";
 
+        /// <summary>
+        /// The exporter falls back to this on its own, so a 'nohost' run would report that it has no
+        /// connection string while quietly having one.
+        /// </summary>
+        private static bool CanRunWithoutAHost()
+        {
+            if (string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")))
+            {
+                return true;
+            }
+
+            Console.WriteLine("APPLICATIONINSIGHTS_CONNECTION_STRING is set, so the exporter would pick it up and");
+            Console.WriteLine("this run would not exercise the unconfigured path. Clear it and run again.");
+            return false;
+        }
+
         public static void Main(string[] args)
         {
             if (args.Length > 0 && string.Equals(args[0], "multiendpoint", StringComparison.OrdinalIgnoreCase))
@@ -38,6 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                 var faultEndpoints = Array.Exists(args, a => string.Equals(a, "down", StringComparison.OrdinalIgnoreCase));
                 var logs = Array.Exists(args, a => string.Equals(a, "logs", StringComparison.OrdinalIgnoreCase));
                 var metrics = Array.Exists(args, a => string.Equals(a, "metrics", StringComparison.OrdinalIgnoreCase));
+                var noHost = Array.Exists(args, a => string.Equals(a, "nohost", StringComparison.OrdinalIgnoreCase));
                 var count = 1000;
 
                 foreach (var arg in args)
@@ -51,15 +68,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
 
                 if (metrics)
                 {
-                    RunMultiEndpointMetricDemo(count, faultEndpoints);
+                    RunMultiEndpointMetricDemo(count, faultEndpoints, noHost);
                 }
                 else if (logs)
                 {
-                    RunMultiEndpointLogDemo(count, faultEndpoints);
+                    RunMultiEndpointLogDemo(count, faultEndpoints, noHost);
                 }
                 else
                 {
-                    RunMultiEndpointDemo(count, faultEndpoints);
+                    RunMultiEndpointDemo(count, faultEndpoints, noHost);
                 }
 
                 return;
@@ -82,16 +99,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.ReadLine();
         }
 
-        private static void RunMultiEndpointDemo(int activityCount, bool faultEndpoints)
+        private static void RunMultiEndpointDemo(int activityCount, bool faultEndpoints, bool noHost)
         {
-            var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
+            var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 
-            if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
+            if ((!noHost && string.IsNullOrWhiteSpace(hostConnectionString)) || routes.Count == 0)
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
                 Console.WriteLine("string per destination, using components in different regions.");
+                Console.WriteLine("Pass 'nohost' to run with no connection string of the exporter's own.");
                 return;
             }
 
@@ -105,6 +128,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
 
             Console.WriteLine($"Run id     : {runId}");
+            Console.WriteLine($"Host       : {(noHost ? "NONE (no connection string of its own)" : "configured")}");
             Console.WriteLine($"Activities : {activityCount} requests, each with one dependency");
             Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
             Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
@@ -148,16 +172,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
         }
 
-        private static void RunMultiEndpointMetricDemo(int measurementCount, bool faultEndpoints)
+        private static void RunMultiEndpointMetricDemo(int measurementCount, bool faultEndpoints, bool noHost)
         {
-            var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
+            var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 
-            if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
+            if ((!noHost && string.IsNullOrWhiteSpace(hostConnectionString)) || routes.Count == 0)
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
                 Console.WriteLine("string per destination, using components in different regions.");
+                Console.WriteLine("Pass 'nohost' to run with no connection string of the exporter's own.");
                 return;
             }
 
@@ -171,6 +201,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
 
             Console.WriteLine($"Run id       : {runId}");
+            Console.WriteLine($"Host         : {(noHost ? "NONE (no connection string of its own)" : "configured")}");
             Console.WriteLine($"Measurements : {measurementCount} across 2 instruments (counter and histogram)");
             Console.WriteLine($"Routes       : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
             Console.WriteLine($"Groups       : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");
@@ -214,16 +245,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             Console.WriteLine($"Done in {stopwatch.Elapsed.TotalSeconds:F1}s. Query each component for demo.run_id == '{runId}'.");
         }
 
-        private static void RunMultiEndpointLogDemo(int logCount, bool faultEndpoints)
+        private static void RunMultiEndpointLogDemo(int logCount, bool faultEndpoints, bool noHost)
         {
-            var hostConnectionString = Environment.GetEnvironmentVariable(HostConnectionStringVariable);
+            if (noHost && !CanRunWithoutAHost())
+            {
+                return;
+            }
+
+            var hostConnectionString = noHost ? null : Environment.GetEnvironmentVariable(HostConnectionStringVariable);
             var routes = ParseRoutes(Environment.GetEnvironmentVariable(RouteConnectionStringsVariable));
 
-            if (string.IsNullOrWhiteSpace(hostConnectionString) || routes.Count == 0)
+            if ((!noHost && string.IsNullOrWhiteSpace(hostConnectionString)) || routes.Count == 0)
             {
                 Console.WriteLine($"Set {HostConnectionStringVariable} to the exporter's own connection string,");
                 Console.WriteLine($"and {RouteConnectionStringsVariable} to a comma-separated list of one connection");
                 Console.WriteLine("string per destination, using components in different regions.");
+                Console.WriteLine("Pass 'nohost' to run with no connection string of the exporter's own.");
                 return;
             }
 
@@ -237,6 +274,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             var distinctEndpoints = new HashSet<string>(routes.ConvertAll(r => r.IngestionEndpoint), StringComparer.Ordinal).Count;
 
             Console.WriteLine($"Run id     : {runId}");
+            Console.WriteLine($"Host       : {(noHost ? "NONE (no connection string of its own)" : "configured")}");
             Console.WriteLine($"Logs       : {logCount} log records");
             Console.WriteLine($"Routes     : {string.Join(", ", routes.ConvertAll(r => r.Name))}");
             Console.WriteLine($"Groups     : {distinctEndpoints} distinct endpoint(s), so expect {distinctEndpoints} routed POST(s) per export");

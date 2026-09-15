@@ -16,7 +16,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The properties of the occurrence extension. </summary>
+    /// <summary> An occurrence associated with a specific compute resource. </summary>
     public partial class OccurrenceExtensionProperties : IJsonModel<OccurrenceExtensionProperties>
     {
         /// <summary> Initializes a new instance of <see cref="OccurrenceExtensionProperties"/> for deserialization. </summary>

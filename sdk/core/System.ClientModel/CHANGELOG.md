@@ -4,7 +4,11 @@
 
 ### Features Added
 
+- `AsyncStreamingResult` and `AsyncStreamingResult<T>` are now generally available and no longer require suppressing the `SCME0005` experimental diagnostic.
+
 ### Breaking Changes
+
+- Renamed the experimental `AsyncStreamingClientResult` and `AsyncStreamingClientResult<T>` types to `AsyncStreamingResult` and `AsyncStreamingResult<T>`, respectively.
 
 ### Bugs Fixed
 

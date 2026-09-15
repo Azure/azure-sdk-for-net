@@ -105,11 +105,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("defaultDomain"u8);
                 writer.WriteStringValue(DefaultDomain);
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateLinkDefaultDomain))
-            {
-                writer.WritePropertyName("privateLinkDefaultDomain"u8);
-                writer.WriteStringValue(PrivateLinkDefaultDomain);
-            }
             if (options.Format != "W" && Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
@@ -134,21 +129,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
-            }
-            if (Optional.IsCollectionDefined(AvailabilityZones))
-            {
-                writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteStartArray();
-                foreach (string item in AvailabilityZones)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(CustomDomainConfiguration))
             {
@@ -200,6 +180,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("ingressConfiguration"u8);
                 writer.WriteObjectValue(IngressConfiguration, options);
             }
+            if (Optional.IsDefined(EnvironmentMode))
+            {
+                writer.WritePropertyName("environmentMode"u8);
+                writer.WriteStringValue(EnvironmentMode.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
@@ -214,11 +199,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(DiskEncryptionConfiguration))
-            {
-                writer.WritePropertyName("diskEncryptionConfiguration"u8);
-                writer.WriteObjectValue(DiskEncryptionConfiguration, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -268,13 +248,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             ContainerAppVnetConfiguration vnetConfiguration = default;
             string deploymentErrors = default;
             string defaultDomain = default;
-            string privateLinkDefaultDomain = default;
             IPAddress staticIP = default;
             ContainerAppLogsConfiguration appLogsConfiguration = default;
             AppInsightsConfiguration appInsightsConfiguration = default;
             OpenTelemetryConfiguration openTelemetryConfiguration = default;
             bool? isZoneRedundant = default;
-            IList<string> availabilityZones = default;
             ContainerAppCustomDomainConfiguration customDomainConfiguration = default;
             string eventStreamEndpoint = default;
             IList<ContainerAppWorkloadProfile> workloadProfiles = default;
@@ -284,9 +262,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication = default;
             ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration = default;
             ManagedEnvironmentIngressConfiguration ingressConfiguration = default;
+            ManagedEnvironmentMode? environmentMode = default;
             IReadOnlyList<ContainerAppPrivateEndpointConnectionData> privateEndpointConnections = default;
             ContainerAppPublicNetworkAccess? publicNetworkAccess = default;
-            DiskEncryptionConfiguration diskEncryptionConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -326,11 +304,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (prop.NameEquals("defaultDomain"u8))
                 {
                     defaultDomain = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("privateLinkDefaultDomain"u8))
-                {
-                    privateLinkDefaultDomain = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("staticIp"u8))
@@ -376,27 +349,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     isZoneRedundant = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("availabilityZones"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    availabilityZones = array;
                     continue;
                 }
                 if (prop.NameEquals("customDomainConfiguration"u8))
@@ -477,6 +429,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     ingressConfiguration = ManagedEnvironmentIngressConfiguration.DeserializeManagedEnvironmentIngressConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("environmentMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    environmentMode = new ManagedEnvironmentMode(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("privateEndpointConnections"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -500,15 +461,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     publicNetworkAccess = new ContainerAppPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("diskEncryptionConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -521,13 +473,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 vnetConfiguration,
                 deploymentErrors,
                 defaultDomain,
-                privateLinkDefaultDomain,
                 staticIP,
                 appLogsConfiguration,
                 appInsightsConfiguration,
                 openTelemetryConfiguration,
                 isZoneRedundant,
-                availabilityZones ?? new ChangeTrackingList<string>(),
                 customDomainConfiguration,
                 eventStreamEndpoint,
                 workloadProfiles ?? new ChangeTrackingList<ContainerAppWorkloadProfile>(),
@@ -537,9 +487,9 @@ namespace Azure.ResourceManager.AppContainers.Models
                 peerAuthentication,
                 peerTrafficConfiguration,
                 ingressConfiguration,
+                environmentMode,
                 privateEndpointConnections ?? new ChangeTrackingList<ContainerAppPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
-                diskEncryptionConfiguration,
                 additionalBinaryDataProperties);
         }
     }

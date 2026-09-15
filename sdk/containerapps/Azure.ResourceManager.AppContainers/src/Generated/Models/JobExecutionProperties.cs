@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Replicas in the execution. </summary>
         [WirePath("detailedStatus.replicas")]
-        public IList<ReplicaExecutionStatus> DetailedStatusReplicas
+        public IList<ContainerAppJobExecutionReplicaStatus> DetailedStatusReplicas
         {
             get
             {
