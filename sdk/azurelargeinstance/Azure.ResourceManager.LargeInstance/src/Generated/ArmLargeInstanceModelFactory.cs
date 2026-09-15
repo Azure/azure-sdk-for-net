@@ -18,33 +18,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
     public static partial class ArmLargeInstanceModelFactory
     {
 
-        /// <summary>
-        /// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
-        /// properties)
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="LargeInstance.LargeInstanceData"/> instance for mocking. </returns>
-        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeInstanceProperties properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LargeInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                default);
-        }
-
         /// <summary> Describes the properties of an Azure Large Instance. </summary>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the Azure Large Instance. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the Azure Large Instance disks. </param>
@@ -138,6 +111,33 @@ namespace Azure.ResourceManager.LargeInstance.Models
             return new LargeInstanceIPAddress(ipAddress, default);
         }
 
+        /// <summary>
+        /// Azure Large Instance info on Azure (ARM properties and AzureLargeInstance
+        /// properties)
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="LargeInstance.LargeInstanceData"/> instance for mocking. </returns>
+        public static LargeInstanceData LargeInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeInstanceProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LargeInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
         /// <summary> The type used for updating tags in AzureLargeInstance resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.LargeInstancePatch"/> instance for mocking. </returns>
@@ -157,35 +157,6 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static LargeInstanceForceState LargeInstanceForceState(LargeInstanceForcePowerState? forceState = default)
         {
             return new LargeInstanceForceState(forceState, default);
-        }
-
-        /// <summary>
-        /// AzureLargeStorageInstance info on Azure (ARM properties and
-        /// AzureLargeStorageInstance properties)
-        /// </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="LargeInstance.LargeStorageInstanceData"/> instance for mocking. </returns>
-        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeStorageInstanceProperties properties = default, ManagedServiceIdentity identity = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new LargeStorageInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                identity,
-                default);
         }
 
         /// <summary> Describes the properties of an AzureLargeStorageInstance. </summary>
@@ -226,6 +197,35 @@ namespace Azure.ResourceManager.LargeInstance.Models
         public static LargeInstanceStorageBillingProperties LargeInstanceStorageBillingProperties(string billingMode = default, string sku = default)
         {
             return new LargeInstanceStorageBillingProperties(billingMode, sku, default);
+        }
+
+        /// <summary>
+        /// AzureLargeStorageInstance info on Azure (ARM properties and
+        /// AzureLargeStorageInstance properties)
+        /// </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="LargeInstance.LargeStorageInstanceData"/> instance for mocking. </returns>
+        public static LargeStorageInstanceData LargeStorageInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, LargeStorageInstanceProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new LargeStorageInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
         }
 
         /// <summary> The type used for updating tags in AzureLargeStorageInstance resources. </summary>

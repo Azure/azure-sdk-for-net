@@ -18,32 +18,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHciVmModelFactory
     {
-        /// <summary> The gallery images resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmGalleryImageData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
-        }
-
         /// <summary> Properties under the gallery image resource. </summary>
         /// <param name="containerId"> Storage ContainerID of the storage container to be used for gallery image. </param>
         /// <param name="imagePath"> location of the image the gallery image should be created from. </param>
@@ -116,6 +90,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmGalleryImageProvisioningStatus(operationId, status, default);
         }
 
+        /// <summary> The gallery images resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmGalleryImageData"/> instance for mocking. </returns>
+        public static HciVmGalleryImageData HciVmGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmGalleryImageData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The complex type of the extended location. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> The type of the extended location. </param>
@@ -133,32 +133,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmGalleryImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The logical network resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmLogicalNetworkData"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLogicalNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmLogicalNetworkData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <param name="dhcpOptionsDnsServers"> The list of DNS servers IP addresses. </param>
@@ -322,17 +296,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
-        /// <summary> The logical network resource patch definition. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HciVmLogicalNetworkPatch"/> instance for mocking. </returns>
-        public static HciVmLogicalNetworkPatch HciVmLogicalNetworkPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmLogicalNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The marketplace gallery image resource definition. </summary>
+        /// <summary> The logical network resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -341,12 +305,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmMarketplaceGalleryImageData"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmLogicalNetworkData"/> instance for mocking. </returns>
+        public static HciVmLogicalNetworkData HciVmLogicalNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLogicalNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciVmMarketplaceGalleryImageData(
+            return new HciVmLogicalNetworkData(
                 id,
                 name,
                 resourceType,
@@ -356,6 +320,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 properties,
                 extendedLocation,
                 default);
+        }
+
+        /// <summary> The logical network resource patch definition. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmLogicalNetworkPatch"/> instance for mocking. </returns>
+        public static HciVmLogicalNetworkPatch HciVmLogicalNetworkPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLogicalNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Properties under the marketplace gallery image resource. </summary>
@@ -408,17 +382,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmMarketplaceGalleryImageProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> The type used for updating tags in MarketplaceGalleryImage resources. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImagePatch"/> instance for mocking. </returns>
-        public static HciVmMarketplaceGalleryImagePatch HciVmMarketplaceGalleryImagePatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmMarketplaceGalleryImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The network interface resource definition. </summary>
+        /// <summary> The marketplace gallery image resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -427,12 +391,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmNetworkInterfaceData"/> instance for mocking. </returns>
-        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmMarketplaceGalleryImageData"/> instance for mocking. </returns>
+        public static HciVmMarketplaceGalleryImageData HciVmMarketplaceGalleryImageData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmMarketplaceGalleryImageProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciVmNetworkInterfaceData(
+            return new HciVmMarketplaceGalleryImageData(
                 id,
                 name,
                 resourceType,
@@ -442,6 +406,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 properties,
                 extendedLocation,
                 default);
+        }
+
+        /// <summary> The type used for updating tags in MarketplaceGalleryImage resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmMarketplaceGalleryImagePatch"/> instance for mocking. </returns>
+        public static HciVmMarketplaceGalleryImagePatch HciVmMarketplaceGalleryImagePatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmMarketplaceGalleryImagePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="ipConfigurations"> IPConfigurations - A list of IPConfigurations of the network interface. </param>
@@ -515,6 +489,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmNetworkInterfaceProvisioningStatus(operationId, status, default);
         }
 
+        /// <summary> The network interface resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmNetworkInterfaceData"/> instance for mocking. </returns>
+        public static HciVmNetworkInterfaceData HciVmNetworkInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkInterfaceProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNetworkInterfaceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The network interface resource patch definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Defines the resource properties for the update. </param>
@@ -533,34 +533,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmNetworkInterfacePatchProperties HciVmNetworkInterfacePatchProperties(ResourceIdentifier networkSecurityGroupId = default, IEnumerable<string> dnsServers = default, bool? isSdnPoliciesBypassed = default)
         {
             return new HciVmNetworkInterfacePatchProperties(networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default), dnsServers is null ? default : new HciVmInterfaceDnsSettings((dnsServers ?? new ChangeTrackingList<string>()).ToList(), default), isSdnPoliciesBypassed, default);
-        }
-
-        /// <summary> NetworkSecurityGroup resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
-        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmNetworkSecurityGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                eTag,
-                default);
         }
 
         /// <summary> Network Security Group resource. </summary>
@@ -604,6 +576,34 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmNetworkSecurityGroupProvisioningStatus(operationId, status, default);
         }
 
+        /// <summary> NetworkSecurityGroup resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <returns> A new <see cref="Vm.HciVmNetworkSecurityGroupData"/> instance for mocking. </returns>
+        public static HciVmNetworkSecurityGroupData HciVmNetworkSecurityGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNetworkSecurityGroupProperties properties = default, HciVmExtendedLocation extendedLocation = default, ETag? eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNetworkSecurityGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                eTag,
+                default);
+        }
+
         /// <summary> The type used for updating tags in NetworkSecurityGroup resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HciVmNetworkSecurityGroupPatch"/> instance for mocking. </returns>
@@ -612,26 +612,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmNetworkSecurityGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> Security Rule resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmSecurityRuleData"/> instance for mocking. </returns>
-        public static HciVmSecurityRuleData HciVmSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmSecurityRuleProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            return new HciVmSecurityRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <summary> Security rule resource. </summary>
@@ -667,27 +647,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
-        /// <summary> The storage container resource definition. </summary>
+        /// <summary> Security Rule resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmStorageContainerData"/> instance for mocking. </returns>
-        public static HciVmStorageContainerData HciVmStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmStorageContainerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmSecurityRuleData"/> instance for mocking. </returns>
+        public static HciVmSecurityRuleData HciVmSecurityRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmSecurityRuleProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmStorageContainerData(
+            return new HciVmSecurityRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
                 extendedLocation,
                 default);
@@ -730,17 +704,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmStorageContainerProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> The type used for updating tags in StorageContainer resources. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HciVmStorageContainerPatch"/> instance for mocking. </returns>
-        public static HciVmStorageContainerPatch HciVmStorageContainerPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmStorageContainerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The virtual hard disk resource definition. </summary>
+        /// <summary> The storage container resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -749,12 +713,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmVirtualHardDiskData"/> instance for mocking. </returns>
-        public static HciVmVirtualHardDiskData HciVmVirtualHardDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualHardDiskProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmStorageContainerData"/> instance for mocking. </returns>
+        public static HciVmStorageContainerData HciVmStorageContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmStorageContainerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciVmVirtualHardDiskData(
+            return new HciVmStorageContainerData(
                 id,
                 name,
                 resourceType,
@@ -764,6 +728,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 properties,
                 extendedLocation,
                 default);
+        }
+
+        /// <summary> The type used for updating tags in StorageContainer resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmStorageContainerPatch"/> instance for mocking. </returns>
+        public static HciVmStorageContainerPatch HciVmStorageContainerPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmStorageContainerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Properties under the virtual hard disk resource. </summary>
@@ -863,6 +837,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
+        /// <summary> The virtual hard disk resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualHardDiskData"/> instance for mocking. </returns>
+        public static HciVmVirtualHardDiskData HciVmVirtualHardDiskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualHardDiskProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualHardDiskData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <param name="tags"> Resource tags. </param>
         /// <param name="diskSizeGB"> Size of the disk in GB. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualHardDiskPatch"/> instance for mocking. </returns>
@@ -888,28 +888,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmVirtualHardDiskUploadResult HciVmVirtualHardDiskUploadResult(ResourceIdentifier virtualHardDiskId = default, HciVmVirtualHardDiskUploadStatus uploadStatus = default)
         {
             return new HciVmVirtualHardDiskUploadResult(virtualHardDiskId, uploadStatus, default);
-        }
-
-        /// <summary> The virtual machine instance resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmInstanceData"/> instance for mocking. </returns>
-        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmInstanceProperties properties = default, HciVmExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
-        {
-            return new HciVmInstanceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                identity,
-                default);
         }
 
         /// <param name="hardwareProfile"> HardwareProfile - Specifies the hardware settings for the virtual machine instance. </param>
@@ -1178,6 +1156,28 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
+        /// <summary> The virtual machine instance resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmInstanceData"/> instance for mocking. </returns>
+        public static HciVmInstanceData HciVmInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmInstanceProperties properties = default, HciVmExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        {
+            return new HciVmInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                identity,
+                default);
+        }
+
         /// <summary> The virtual machine instance resource patch definition. </summary>
         /// <param name="properties"> Defines the resource properties for the update. </param>
         /// <param name="identity"> Identity for the resource. </param>
@@ -1238,24 +1238,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmOSProfileWindowsConfiguration(shouldProvisionVmAgent, shouldProvisionVmConfigAgent, default);
         }
 
-        /// <summary> Defines the HybridIdentityMetadata. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmHybridIdentityMetadataData"/> instance for mocking. </returns>
-        public static HciVmHybridIdentityMetadataData HciVmHybridIdentityMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmHybridIdentityMetadataProperties properties = default)
-        {
-            return new HciVmHybridIdentityMetadataData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> Defines the resource properties. </summary>
         /// <param name="resourceUid"> The unique identifier for the resource. </param>
         /// <param name="publicKey"> The Public Key. </param>
@@ -1267,16 +1249,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmHybridIdentityMetadataProperties(resourceUid, publicKey, identity, provisioningState, default);
         }
 
-        /// <summary> The attestation status of the virtual machine. </summary>
+        /// <summary> Defines the HybridIdentityMetadata. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmAttestationStatusData"/> instance for mocking. </returns>
-        public static HciVmAttestationStatusData HciVmAttestationStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmAttestationStatusProperties properties = default)
+        /// <returns> A new <see cref="Vm.HciVmHybridIdentityMetadataData"/> instance for mocking. </returns>
+        public static HciVmHybridIdentityMetadataData HciVmHybridIdentityMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmHybridIdentityMetadataProperties properties = default)
         {
-            return new HciVmAttestationStatusData(
+            return new HciVmHybridIdentityMetadataData(
                 id,
                 name,
                 resourceType,
@@ -1313,16 +1295,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
-        /// <summary> Defines the GuestAgent. </summary>
+        /// <summary> The attestation status of the virtual machine. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmGuestAgentData"/> instance for mocking. </returns>
-        public static HciVmGuestAgentData HciVmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmGuestAgentProperties properties = default)
+        /// <returns> A new <see cref="Vm.HciVmAttestationStatusData"/> instance for mocking. </returns>
+        public static HciVmAttestationStatusData HciVmAttestationStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmAttestationStatusProperties properties = default)
         {
-            return new HciVmGuestAgentData(
+            return new HciVmAttestationStatusData(
                 id,
                 name,
                 resourceType,
@@ -1351,29 +1333,21 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmGuestCredential(username, password, default);
         }
 
-        /// <summary> The virtual network resource definition. </summary>
+        /// <summary> Defines the GuestAgent. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkData"/> instance for mocking. </returns>
-        public static HciVmVirtualNetworkData HciVmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmGuestAgentData"/> instance for mocking. </returns>
+        public static HciVmGuestAgentData HciVmGuestAgentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmGuestAgentProperties properties = default)
         {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmVirtualNetworkData(
+            return new HciVmGuestAgentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
                 properties,
-                extendedLocation,
                 default);
         }
 
@@ -1406,6 +1380,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmVirtualNetworkStatusProvisioningStatus(operationId, status, default);
         }
 
+        /// <summary> The virtual network resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkData HciVmVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmVirtualNetworkProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The type used for updating tags in VirtualNetwork resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualNetworkPatch"/> instance for mocking. </returns>
@@ -1414,26 +1414,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmVirtualNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The virtual network resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkSubnetData"/> instance for mocking. </returns>
-        public static HciVmVirtualNetworkSubnetData HciVmVirtualNetworkSubnetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmVirtualNetworkSubnetProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            return new HciVmVirtualNetworkSubnetData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <param name="addressPrefix"> Subnet CIDR. </param>
@@ -1486,6 +1466,26 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmVirtualNetworkSubnetStatusProvisioningStatus(operationId, status, default);
         }
 
+        /// <summary> The virtual network resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmVirtualNetworkSubnetData"/> instance for mocking. </returns>
+        public static HciVmVirtualNetworkSubnetData HciVmVirtualNetworkSubnetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HciVmVirtualNetworkSubnetProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            return new HciVmVirtualNetworkSubnetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                extendedLocation,
+                default);
+        }
+
         /// <summary> The virtual network subnet resource patch definition. </summary>
         /// <param name="properties"> properties to update. </param>
         /// <returns> A new <see cref="Models.HciVmVirtualNetworkSubnetPatch"/> instance for mocking. </returns>
@@ -1500,6 +1500,25 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static VirtualNetworkSubnetUpdateProperties VirtualNetworkSubnetUpdateProperties(ResourceIdentifier networkSecurityGroupId = default, ResourceIdentifier natGatewayResourceId = default)
         {
             return new VirtualNetworkSubnetUpdateProperties(networkSecurityGroupId is null ? default : new NetworkSecurityGroupArmReference(networkSecurityGroupId, default), natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default), default);
+        }
+
+        /// <param name="publicIPAddressVersion"> Whether the public IP is v4 or v6. Defaults to IPv4. </param>
+        /// <param name="ipAllocationScope"> ipAllocationScope: Azure Reference to a particular IP Pool (ALM) or a LogicalNetwork (ALL) for allocating public IP. </param>
+        /// <param name="ipAddress"> IP Address. This is static. If the user specifies, we allocate that otherwise allocate from logical network address space. </param>
+        /// <param name="ipResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
+        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
+        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
+        /// <returns> A new <see cref="Models.HciVmPublicIPAddressProperties"/> instance for mocking. </returns>
+        public static HciVmPublicIPAddressProperties HciVmPublicIPAddressProperties(HciVmPublicIPAddressType? publicIPAddressVersion = default, ResourceIdentifier ipAllocationScope = default, string ipAddress = default, ResourceIdentifier ipResourceId = default, ResourceIdentifier natGatewayResourceId = default, HciVmProvisioningState? provisioningState = default)
+        {
+            return new HciVmPublicIPAddressProperties(
+                publicIPAddressVersion,
+                ipAllocationScope,
+                ipAddress,
+                ipResourceId is null ? default : new HciVmIPConfigurationArmReference(ipResourceId, default),
+                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default),
+                provisioningState,
+                default);
         }
 
         /// <summary> The publicIP resource definition. </summary>
@@ -1528,25 +1547,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 default);
         }
 
-        /// <param name="publicIPAddressVersion"> Whether the public IP is v4 or v6. Defaults to IPv4. </param>
-        /// <param name="ipAllocationScope"> ipAllocationScope: Azure Reference to a particular IP Pool (ALM) or a LogicalNetwork (ALL) for allocating public IP. </param>
-        /// <param name="ipAddress"> IP Address. This is static. If the user specifies, we allocate that otherwise allocate from logical network address space. </param>
-        /// <param name="ipResourceId"> The Azure Resource ID of an IPConfiguration resource. </param>
-        /// <param name="natGatewayResourceId"> The ARM ID for a Network Security Group. </param>
-        /// <param name="provisioningState"> Provisioning state of the public IP. </param>
-        /// <returns> A new <see cref="Models.HciVmPublicIPAddressProperties"/> instance for mocking. </returns>
-        public static HciVmPublicIPAddressProperties HciVmPublicIPAddressProperties(HciVmPublicIPAddressType? publicIPAddressVersion = default, ResourceIdentifier ipAllocationScope = default, string ipAddress = default, ResourceIdentifier ipResourceId = default, ResourceIdentifier natGatewayResourceId = default, HciVmProvisioningState? provisioningState = default)
-        {
-            return new HciVmPublicIPAddressProperties(
-                publicIPAddressVersion,
-                ipAllocationScope,
-                ipAddress,
-                ipResourceId is null ? default : new HciVmIPConfigurationArmReference(ipResourceId, default),
-                natGatewayResourceId is null ? default : new NatGatewayArmReference(natGatewayResourceId, default),
-                provisioningState,
-                default);
-        }
-
         /// <summary> The type used for updating tags in PublicIPAddress resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HciVmPublicIPAddressPatch"/> instance for mocking. </returns>
@@ -1555,32 +1555,6 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new HciVmPublicIPAddressPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The NatGateway resource definition. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmNatGatewayData"/> instance for mocking. </returns>
-        public static HciVmNatGatewayData HciVmNatGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNatGatewayProperties properties = default, HciVmExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmNatGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                extendedLocation,
-                default);
         }
 
         /// <summary> Nat Gateway resource properties. </summary>
@@ -1666,17 +1640,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
             return new HciVmNatGatewayStatusProvisioningStatus(operationId, status, default);
         }
 
-        /// <summary> The type used for updating tags in NatGateway resources. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.HciVmNatGatewayPatch"/> instance for mocking. </returns>
-        public static HciVmNatGatewayPatch HciVmNatGatewayPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new HciVmNatGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> The LoadBalancer resource definition. </summary>
+        /// <summary> The NatGateway resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1685,12 +1649,12 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
-        /// <returns> A new <see cref="Vm.HciVmLoadBalancerData"/> instance for mocking. </returns>
-        public static HciVmLoadBalancerData HciVmLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLoadBalancerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Vm.HciVmNatGatewayData"/> instance for mocking. </returns>
+        public static HciVmNatGatewayData HciVmNatGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmNatGatewayProperties properties = default, HciVmExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new HciVmLoadBalancerData(
+            return new HciVmNatGatewayData(
                 id,
                 name,
                 resourceType,
@@ -1700,6 +1664,16 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 properties,
                 extendedLocation,
                 default);
+        }
+
+        /// <summary> The type used for updating tags in NatGateway resources. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.HciVmNatGatewayPatch"/> instance for mocking. </returns>
+        public static HciVmNatGatewayPatch HciVmNatGatewayPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmNatGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <summary> Load Balancer resource properties. </summary>
@@ -1871,6 +1845,32 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         public static HciVmLoadBalancerStatusProvisioningStatus HciVmLoadBalancerStatusProvisioningStatus(string operationId = default, HciVmOperationStatus? status = default)
         {
             return new HciVmLoadBalancerStatusProvisioningStatus(operationId, status, default);
+        }
+
+        /// <summary> The LoadBalancer resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"> The extendedLocation of the resource. </param>
+        /// <returns> A new <see cref="Vm.HciVmLoadBalancerData"/> instance for mocking. </returns>
+        public static HciVmLoadBalancerData HciVmLoadBalancerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HciVmLoadBalancerProperties properties = default, HciVmExtendedLocation extendedLocation = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new HciVmLoadBalancerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                extendedLocation,
+                default);
         }
 
         /// <summary> The type used for updating tags in LoadBalancer resources. </summary>

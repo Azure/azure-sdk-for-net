@@ -125,13 +125,13 @@ namespace Azure.ResourceManager.Billing.Mocking
             return new DefaultBillingInvoiceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="BillingReservationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BillingReservation1Resource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingReservationResource"/> object. </returns>
-        public virtual BillingReservationResource GetBillingReservationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BillingReservation1Resource"/> object. </returns>
+        public virtual BillingReservation1Resource GetBillingReservation1Resource(ResourceIdentifier id)
         {
-            BillingReservationResource.ValidateResourceId(id);
-            return new BillingReservationResource(Client, id);
+            BillingReservation1Resource.ValidateResourceId(id);
+            return new BillingReservation1Resource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BillingAccountResource"/> along with the instance operations that can be performed on it but with no data. </summary>

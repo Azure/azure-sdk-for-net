@@ -18,42 +18,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     public static partial class ArmBillingBenefitsModelFactory
     {
 
-        /// <summary> Resource definition for Discounts. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Discount properties. </param>
-        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Plan for the resource. </param>
-        /// <returns> A new <see cref="BillingBenefits.DiscountData"/> instance for mocking. </returns>
-        public static DiscountData DiscountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsDiscountProperties properties = default, string managedBy = default, string kind = default, string eTag = default, BillingBenefitsManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new DiscountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                managedBy,
-                kind,
-                eTag,
-                identity,
-                sku,
-                plan,
-                default);
-        }
-
         /// <summary>
         /// Properties belonging to discounts.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EntityTypeAffiliateDiscount"/> and <see cref="Models.EntityTypePrimaryDiscount"/>.
@@ -384,6 +348,42 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 customPriceProperties);
         }
 
+        /// <summary> Resource definition for Discounts. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Discount properties. </param>
+        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="plan"> Plan for the resource. </param>
+        /// <returns> A new <see cref="BillingBenefits.DiscountData"/> instance for mocking. </returns>
+        public static DiscountData DiscountData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsDiscountProperties properties = default, string managedBy = default, string kind = default, string eTag = default, BillingBenefitsManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DiscountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                managedBy,
+                kind,
+                eTag,
+                identity,
+                sku,
+                plan,
+                default);
+        }
+
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
@@ -592,6 +592,86 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 default), default);
         }
 
+        /// <summary> Information describing the type of billing plan for this savings plan. </summary>
+        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
+        /// <param name="startsOn"> Date when the billing plan has started. </param>
+        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
+        /// <param name="transactions"></param>
+        /// <returns> A new <see cref="Models.BillingPlanInformation"/> instance for mocking. </returns>
+        public static BillingPlanInformation BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal = default, DateTimeOffset? startsOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<SavingsPlanOrderPaymentDetail> transactions = default)
+        {
+            transactions ??= new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
+
+            return new BillingPlanInformation(pricingCurrencyTotal, startsOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>()).ToList(), default);
+        }
+
+        /// <summary> Information about payment related to a savings plan order. </summary>
+        /// <param name="dueOn"> Date when the payment needs to be done. </param>
+        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
+        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
+        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
+        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
+        /// <param name="extendedStatusInfo"></param>
+        /// <param name="billingAccount"> Billing account. </param>
+        /// <returns> A new <see cref="Models.SavingsPlanOrderPaymentDetail"/> instance for mocking. </returns>
+        public static SavingsPlanOrderPaymentDetail SavingsPlanOrderPaymentDetail(DateTimeOffset? dueOn = default, DateTimeOffset? payOn = default, BillingBenefitsPrice pricingCurrencyTotal = default, BillingBenefitsPrice billingCurrencyTotal = default, BillingBenefitsPaymentStatus? status = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string billingAccount = default)
+        {
+            return new SavingsPlanOrderPaymentDetail(
+                dueOn,
+                payOn,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                status,
+                extendedStatusInfo,
+                billingAccount,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
+        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </param>
+        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
+        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
+        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
+        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
+        /// <param name="expiresOn"> Expiry date time. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit started. </param>
+        /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
+        /// <param name="savingsPlans"> Gets the SavingsPlans. </param>
+        /// <param name="extendedStatusInfo"> Gets the ExtendedStatusInfo. </param>
+        /// <param name="skuName"> Gets or sets the Name. </param>
+        /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderData"/> instance for mocking. </returns>
+        public static BillingBenefitsSavingsPlanOrderData BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, DateTimeOffset? expiresOn = default, DateTimeOffset? benefitStartsOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string skuName = default)
+        {
+            return new BillingBenefitsSavingsPlanOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && provisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && expiresOn is null && benefitStartsOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null ? default : new SavingsPlanOrderModelProperties(
+                    displayName,
+                    provisioningState,
+                    billingScopeId,
+                    billingProfileId,
+                    customerId,
+                    billingAccountId,
+                    term,
+                    billingPlan,
+                    expiresOn,
+                    benefitStartsOn,
+                    planInformation,
+                    (savingsPlans ?? new ChangeTrackingList<string>()).ToList(),
+                    extendedStatusInfo,
+                    default),
+                skuName is null ? default : new ResourceSku(skuName, default),
+                default);
+        }
+
         /// <summary> Optional field to record suppression reason for automatic shortfall. </summary>
         /// <param name="code"> Code for the suppression reason. </param>
         /// <param name="message"> Message for suppression reason. </param>
@@ -643,6 +723,46 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 status,
                 shortfall,
                 default);
+        }
+
+        /// <summary> The reason for the credit. Not required if not applicable. </summary>
+        /// <param name="code"> The reason code for credit. </param>
+        /// <param name="description"> The free string description of the credit. </param>
+        /// <returns> A new <see cref="Models.CreditReason"/> instance for mocking. </returns>
+        public static CreditReason CreditReason(string code = default, string description = default)
+        {
+            return new CreditReason(code, description, default);
+        }
+
+        /// <summary> Credit breakdown item representing a milestone, line-item, or no-charge service. </summary>
+        /// <param name="redemption"> Redemption policy of the Credit. </param>
+        /// <param name="expiration"> Expiration policy of the Credit. </param>
+        /// <returns> A new <see cref="Models.CreditPolicies"/> instance for mocking. </returns>
+        public static CreditPolicies CreditPolicies(CreditRedemptionPolicy? redemption = default, CreditExpirationPolicy? expiration = default)
+        {
+            return new CreditPolicies(redemption, expiration, default);
+        }
+
+        /// <summary> Credit breakdown item representing a milestone, line-item, or no-charge service. </summary>
+        /// <param name="allocation"> Allocation details including currency and amount for this breakdown item. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
+        /// <param name="dimensions"> Key-value pairs for additional parameters and metadata. </param>
+        /// <returns> A new <see cref="Models.CreditBreakdownItem"/> instance for mocking. </returns>
+        public static CreditBreakdownItem CreditBreakdownItem(BillingBenefitsCommitment allocation = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<CreditDimension> dimensions = default)
+        {
+            dimensions ??= new ChangeTrackingList<CreditDimension>();
+
+            return new CreditBreakdownItem(allocation, startsOn, endsOn, (dimensions ?? new ChangeTrackingList<CreditDimension>()).ToList(), default);
+        }
+
+        /// <summary> Key-value pair for additional credit parameters and metadata. </summary>
+        /// <param name="key"> The dimension key (e.g., productFamily, description, creditType). </param>
+        /// <param name="value"> The dimension value. </param>
+        /// <returns> A new <see cref="Models.CreditDimension"/> instance for mocking. </returns>
+        public static CreditDimension CreditDimension(string key = default, string value = default)
+        {
+            return new CreditDimension(key, value, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -708,46 +828,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 default);
         }
 
-        /// <summary> The reason for the credit. Not required if not applicable. </summary>
-        /// <param name="code"> The reason code for credit. </param>
-        /// <param name="description"> The free string description of the credit. </param>
-        /// <returns> A new <see cref="Models.CreditReason"/> instance for mocking. </returns>
-        public static CreditReason CreditReason(string code = default, string description = default)
-        {
-            return new CreditReason(code, description, default);
-        }
-
-        /// <summary> Credit breakdown item representing a milestone, line-item, or no-charge service. </summary>
-        /// <param name="redemption"> Redemption policy of the Credit. </param>
-        /// <param name="expiration"> Expiration policy of the Credit. </param>
-        /// <returns> A new <see cref="Models.CreditPolicies"/> instance for mocking. </returns>
-        public static CreditPolicies CreditPolicies(CreditRedemptionPolicy? redemption = default, CreditExpirationPolicy? expiration = default)
-        {
-            return new CreditPolicies(redemption, expiration, default);
-        }
-
-        /// <summary> Credit breakdown item representing a milestone, line-item, or no-charge service. </summary>
-        /// <param name="allocation"> Allocation details including currency and amount for this breakdown item. </param>
-        /// <param name="startsOn"> Start DateTime. </param>
-        /// <param name="endsOn"> End DateTime in UTC. </param>
-        /// <param name="dimensions"> Key-value pairs for additional parameters and metadata. </param>
-        /// <returns> A new <see cref="Models.CreditBreakdownItem"/> instance for mocking. </returns>
-        public static CreditBreakdownItem CreditBreakdownItem(BillingBenefitsCommitment allocation = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<CreditDimension> dimensions = default)
-        {
-            dimensions ??= new ChangeTrackingList<CreditDimension>();
-
-            return new CreditBreakdownItem(allocation, startsOn, endsOn, (dimensions ?? new ChangeTrackingList<CreditDimension>()).ToList(), default);
-        }
-
-        /// <summary> Key-value pair for additional credit parameters and metadata. </summary>
-        /// <param name="key"> The dimension key (e.g., productFamily, description, creditType). </param>
-        /// <param name="value"> The dimension value. </param>
-        /// <returns> A new <see cref="Models.CreditDimension"/> instance for mocking. </returns>
-        public static CreditDimension CreditDimension(string key = default, string value = default)
-        {
-            return new CreditDimension(key, value, default);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. Only amount can be modified. </param>
         /// <param name="endsOn"> End DateTime in UTC. </param>
@@ -758,42 +838,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new CreditPatch(tags ?? new ChangeTrackingDictionary<string, string>(), credit is null && endsOn is null && breakdown is null ? default : new CreditPatchProperties(credit, endsOn, (breakdown ?? new ChangeTrackingList<CreditBreakdownItem>()).ToList(), default), default);
-        }
-
-        /// <summary> Resource definition for Conditional Credits. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="properties"> Conditional credit properties. </param>
-        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
-        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
-        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        /// <param name="sku"> The resource model definition representing SKU. </param>
-        /// <param name="plan"> Plan for the resource. </param>
-        /// <returns> A new <see cref="BillingBenefits.ConditionalCreditData"/> instance for mocking. </returns>
-        public static ConditionalCreditData ConditionalCreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsConditionalCreditProperties properties = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConditionalCreditData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                properties,
-                managedBy,
-                kind,
-                eTag,
-                identity,
-                sku,
-                plan,
-                default);
         }
 
         /// <summary>
@@ -981,6 +1025,42 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 default);
         }
 
+        /// <summary> Resource definition for Conditional Credits. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> Conditional credit properties. </param>
+        /// <param name="managedBy"> The fully qualified resource ID of the resource that manages this resource. Indicates if this resource is managed by another Azure resource. If this is present, complete mode deployment will not delete the resource if it is removed from the template since it is managed by another resource. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type. E.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> The etag field is <i>not</i> required. If it is provided in the response body, it must also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
+        /// <param name="plan"> Plan for the resource. </param>
+        /// <returns> A new <see cref="BillingBenefits.ConditionalCreditData"/> instance for mocking. </returns>
+        public static ConditionalCreditData ConditionalCreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, BillingBenefitsConditionalCreditProperties properties = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ConditionalCreditData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                managedBy,
+                kind,
+                eTag,
+                identity,
+                sku,
+                plan,
+                default);
+        }
+
         /// <param name="displayName"> Display name for the conditional credit. </param>
         /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="allowContributors"> Whether this conditional credit allows contributor billing accounts. </param>
@@ -1087,86 +1167,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 balanceVersion,
                 systemId,
                 default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Display name. </param>
-        /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="billingScopeId"> Subscription that will be charged for purchasing the benefit. </param>
-        /// <param name="billingProfileId"> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </param>
-        /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. </param>
-        /// <param name="billingAccountId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
-        /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
-        /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
-        /// <param name="expiresOn"> Expiry date time. </param>
-        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit started. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
-        /// <param name="savingsPlans"> Gets the SavingsPlans. </param>
-        /// <param name="extendedStatusInfo"> Gets the ExtendedStatusInfo. </param>
-        /// <param name="skuName"> Gets or sets the Name. </param>
-        /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderData"/> instance for mocking. </returns>
-        public static BillingBenefitsSavingsPlanOrderData BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, DateTimeOffset? expiresOn = default, DateTimeOffset? benefitStartsOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string skuName = default)
-        {
-            return new BillingBenefitsSavingsPlanOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && provisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && expiresOn is null && benefitStartsOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null ? default : new SavingsPlanOrderModelProperties(
-                    displayName,
-                    provisioningState,
-                    billingScopeId,
-                    billingProfileId,
-                    customerId,
-                    billingAccountId,
-                    term,
-                    billingPlan,
-                    expiresOn,
-                    benefitStartsOn,
-                    planInformation,
-                    (savingsPlans ?? new ChangeTrackingList<string>()).ToList(),
-                    extendedStatusInfo,
-                    default),
-                skuName is null ? default : new ResourceSku(skuName, default),
-                default);
-        }
-
-        /// <summary> Information describing the type of billing plan for this savings plan. </summary>
-        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startsOn"> Date when the billing plan has started. </param>
-        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
-        /// <param name="transactions"></param>
-        /// <returns> A new <see cref="Models.BillingPlanInformation"/> instance for mocking. </returns>
-        public static BillingPlanInformation BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal = default, DateTimeOffset? startsOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<SavingsPlanOrderPaymentDetail> transactions = default)
-        {
-            transactions ??= new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
-
-            return new BillingPlanInformation(pricingCurrencyTotal, startsOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>()).ToList(), default);
-        }
-
-        /// <summary> Information about payment related to a savings plan order. </summary>
-        /// <param name="dueOn"> Date when the payment needs to be done. </param>
-        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
-        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
-        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
-        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
-        /// <param name="extendedStatusInfo"></param>
-        /// <param name="billingAccount"> Billing account. </param>
-        /// <returns> A new <see cref="Models.SavingsPlanOrderPaymentDetail"/> instance for mocking. </returns>
-        public static SavingsPlanOrderPaymentDetail SavingsPlanOrderPaymentDetail(DateTimeOffset? dueOn = default, DateTimeOffset? payOn = default, BillingBenefitsPrice pricingCurrencyTotal = default, BillingBenefitsPrice billingCurrencyTotal = default, BillingBenefitsPaymentStatus? status = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string billingAccount = default)
-        {
-            return new SavingsPlanOrderPaymentDetail(
-                dueOn,
-                payOn,
-                pricingCurrencyTotal,
-                billingCurrencyTotal,
-                status,
-                extendedStatusInfo,
-                billingAccount,
-                default);
         }
 
         /// <param name="id"> Role assignment entity id. </param>

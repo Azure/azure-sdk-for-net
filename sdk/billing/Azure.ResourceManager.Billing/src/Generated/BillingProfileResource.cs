@@ -908,14 +908,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> The number of reservations to return in API response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingReservationResource> GetByBillingProfileAsync(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservation1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BillingReservation1Resource> GetByBillingProfileAsync(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<BillingReservationData, BillingReservation1Resource>(new ReservationsGetByBillingProfileAsyncCollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.Billing
                 selectedState,
                 take,
                 context,
-                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservationResource(Client, data));
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservation1Resource(Client, data));
         }
 
         /// <summary>
@@ -957,14 +957,14 @@ namespace Azure.ResourceManager.Billing
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> The number of reservations to return in API response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingReservationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingReservationResource> GetByBillingProfile(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BillingReservation1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BillingReservation1Resource> GetByBillingProfile(string filter = default, string orderBy = default, float? skiptoken = default, string refreshSummary = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<BillingReservationData, BillingReservationResource>(new ReservationsGetByBillingProfileCollectionResultOfT(
+            return new PageableWrapper<BillingReservationData, BillingReservation1Resource>(new ReservationsGetByBillingProfileCollectionResultOfT(
                 _reservationsRestClient,
                 Id.Parent.Name,
                 Id.Name,
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.Billing
                 selectedState,
                 take,
                 context,
-                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservationResource(Client, data));
+                "BillingProfileResource.GetByBillingProfile"), data => new BillingReservation1Resource(Client, data));
         }
 
         /// <summary>
