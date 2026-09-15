@@ -1,0 +1,45 @@
+parameters:
+  - name: Mode
+    type: string
+    values:
+      - collect
+      - enforce
+
+steps:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+    - ${{ if eq(parameters.Mode, 'collect') }}:
+      - task: PowerShell@2
+        displayName: Collect standalone SDK API change reports
+        condition: succeededOrFailed()
+        # A collector startup failure must not skip the existing validations. The final assertion fails closed.
+        continueOnError: true
+        inputs:
+          pwsh: true
+          filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Invoke-SdkChangesCI.ps1
+          arguments: >-
+            -SdkRepoPath "$(Build.SourcesDirectory)"
+            -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo"
+            -ProjectNames "$(ProjectNames)"
+            -ReportRoot "$(Agent.TempDirectory)/sdk-api-changes"
+            -ReportOnly
+          workingDirectory: $(Build.SourcesDirectory)
+        env:
+          Configuration: Release
+          TargetFramework: ''
+          TargetFrameworks: ''
+    - ${{ if eq(parameters.Mode, 'enforce') }}:
+      - task: PowerShell@2
+        displayName: Enforce standalone SDK API compatibility
+        condition: succeededOrFailed()
+        inputs:
+          pwsh: true
+          filePath: $(Build.SourcesDirectory)/eng/scripts/compatibility/Assert-SdkChangesCI.ps1
+          arguments: >-
+            -ReportDirectory "$(SdkChangesReportDirectory)"
+            -ProjectNames "$(ProjectNames)"
+          workingDirectory: $(Build.SourcesDirectory)
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          ArtifactPath: $(SdkChangesReportDirectory)
+          ArtifactName: sdk-api-changes_$(System.JobName)
+          SbomEnabled: false
