@@ -17,60 +17,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesPolicyModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> The display name of the policy assignment. </param>
-        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
-        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
-        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="scope"> The scope for the policy assignment. </param>
-        /// <param name="notScopes"> The policy's excluded scopes. </param>
-        /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
-        /// <param name="description"> This message will be part of response in case of policy violation. </param>
-        /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </param>
-        /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
-        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
-        /// <param name="overrides"> The policy property value override. </param>
-        /// <param name="assignmentType"> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </param>
-        /// <param name="instanceId"> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </param>
-        /// <param name="selfServeExemptionSettings"> The self-serve exemption settings for the policy assignment. </param>
-        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
-        /// <param name="identity"> The managed identity associated with the policy assignment. </param>
-        /// <returns> A new <see cref="Policy.PolicyAssignmentData"/> instance for mocking. </returns>
-        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string policyDefinitionId = default, string definitionVersion = default, string latestDefinitionVersion = default, string effectiveDefinitionVersion = default, string scope = default, IEnumerable<string> notScopes = default, IDictionary<string, PolicyParameterValue> parameters = default, string description = default, BinaryData metadata = default, PolicyEnforcementMode? enforcementMode = default, IEnumerable<PolicyNonComplianceMessage> nonComplianceMessages = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicyAssignmentType? assignmentType = default, string instanceId = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, AzureLocation? location = default, PolicyAssignmentIdentity identity = default)
-        {
-            return new PolicyAssignmentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && policyDefinitionId is null && definitionVersion is null && latestDefinitionVersion is null && effectiveDefinitionVersion is null && scope is null && notScopes is null && parameters is null && description is null && metadata is null && enforcementMode is null && nonComplianceMessages is null && resourceSelectors is null && overrides is null && assignmentType is null && instanceId is null && selfServeExemptionSettings is null ? default : new PolicyAssignmentProperties(
-                    displayName,
-                    policyDefinitionId,
-                    definitionVersion,
-                    latestDefinitionVersion,
-                    effectiveDefinitionVersion,
-                    scope,
-                    (notScopes ?? new ChangeTrackingList<string>()).ToList(),
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
-                    description,
-                    metadata,
-                    enforcementMode,
-                    (nonComplianceMessages ?? new ChangeTrackingList<PolicyNonComplianceMessage>()).ToList(),
-                    (resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(),
-                    (overrides ?? new ChangeTrackingList<PolicyOverride>()).ToList(),
-                    assignmentType,
-                    instanceId,
-                    selfServeExemptionSettings,
-                    default),
-                location,
-                identity,
-                default);
-        }
 
         /// <summary> The value of a parameter. </summary>
         /// <param name="value"> The value of the parameter. </param>
@@ -136,6 +82,61 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             return new PolicySelfServeExemptionSettings(isEnabled, (policyDefinitionReferenceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name of the policy assignment. </param>
+        /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition being assigned. </param>
+        /// <param name="definitionVersion"> The version of the policy definition to use. </param>
+        /// <param name="latestDefinitionVersion"> The latest version of the policy definition available. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="effectiveDefinitionVersion"> The effective version of the policy definition in use. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="scope"> The scope for the policy assignment. </param>
+        /// <param name="notScopes"> The policy's excluded scopes. </param>
+        /// <param name="parameters"> The parameter values for the assigned policy rule. The keys are the parameter names. </param>
+        /// <param name="description"> This message will be part of response in case of policy violation. </param>
+        /// <param name="metadata"> The policy assignment metadata. Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="enforcementMode"> The policy assignment enforcement mode. Possible values are Default, DoNotEnforce, and Enroll. </param>
+        /// <param name="nonComplianceMessages"> The messages that describe why a resource is non-compliant with the policy. </param>
+        /// <param name="resourceSelectors"> The resource selector list to filter policies by resource properties. </param>
+        /// <param name="overrides"> The policy property value override. </param>
+        /// <param name="assignmentType"> The type of policy assignment. Possible values are NotSpecified, System, SystemHidden, and Custom. Immutable. </param>
+        /// <param name="instanceId"> The instance ID of the policy assignment. This ID only and always changes when the assignment is deleted and recreated. </param>
+        /// <param name="selfServeExemptionSettings"> The self-serve exemption settings for the policy assignment. </param>
+        /// <param name="location"> The location of the policy assignment. Only required when utilizing managed identity. </param>
+        /// <param name="identity"> The managed identity associated with the policy assignment. </param>
+        /// <returns> A new <see cref="Policy.PolicyAssignmentData"/> instance for mocking. </returns>
+        public static PolicyAssignmentData PolicyAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, string policyDefinitionId = default, string definitionVersion = default, string latestDefinitionVersion = default, string effectiveDefinitionVersion = default, string scope = default, IEnumerable<string> notScopes = default, IDictionary<string, PolicyParameterValue> parameters = default, string description = default, BinaryData metadata = default, PolicyEnforcementMode? enforcementMode = default, IEnumerable<PolicyNonComplianceMessage> nonComplianceMessages = default, IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicyAssignmentType? assignmentType = default, string instanceId = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, AzureLocation? location = default, PolicyAssignmentIdentity identity = default)
+        {
+            return new PolicyAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && policyDefinitionId is null && definitionVersion is null && latestDefinitionVersion is null && effectiveDefinitionVersion is null && scope is null && notScopes is null && parameters is null && description is null && metadata is null && enforcementMode is null && nonComplianceMessages is null && resourceSelectors is null && overrides is null && assignmentType is null && instanceId is null && selfServeExemptionSettings is null ? default : new PolicyAssignmentProperties(
+                    displayName,
+                    policyDefinitionId,
+                    definitionVersion,
+                    latestDefinitionVersion,
+                    effectiveDefinitionVersion,
+                    scope,
+                    (notScopes ?? new ChangeTrackingList<string>()).ToList(),
+                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterValue>(),
+                    description,
+                    metadata,
+                    enforcementMode,
+                    (nonComplianceMessages ?? new ChangeTrackingList<PolicyNonComplianceMessage>()).ToList(),
+                    (resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(),
+                    (overrides ?? new ChangeTrackingList<PolicyOverride>()).ToList(),
+                    assignmentType,
+                    instanceId,
+                    selfServeExemptionSettings,
+                    default),
+                location,
+                identity,
+                default);
+        }
+
         /// <summary> Identity for the resource.  Policy assignments support a maximum of one identity.  That is either a system assigned identity or a single user assigned identity. </summary>
         /// <param name="principalId"> The principal ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the resource identity.  This property will only be provided for a system assigned identity. </param>
@@ -167,38 +168,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static PolicyAssignmentPatch PolicyAssignmentPatch(IEnumerable<PolicyResourceSelector> resourceSelectors = default, IEnumerable<PolicyOverride> overrides = default, PolicySelfServeExemptionSettings selfServeExemptionSettings = default, AzureLocation? location = default, PolicyAssignmentIdentity identity = default)
         {
             return new PolicyAssignmentPatch(resourceSelectors is null && overrides is null && selfServeExemptionSettings is null ? default : new PolicyAssignmentUpdateProperties((resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(), (overrides ?? new ChangeTrackingList<PolicyOverride>()).ToList(), selfServeExemptionSettings, default), location, identity, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
-        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
-        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
-        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
-        /// <param name="effects"> The effect definition. </param>
-        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
-        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
-        /// <param name="custom"> An array of data manifest custom resource definitions. </param>
-        /// <returns> A new <see cref="Policy.DataPolicyManifestData"/> instance for mocking. </returns>
-        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> namespaces = default, string policyMode = default, bool? isBuiltInOnly = default, IEnumerable<PolicyResourceTypeAliases> resourceTypeAliases = default, IEnumerable<PolicyDataEffect> effects = default, IEnumerable<string> fieldValues = default, IEnumerable<string> standard = default, IEnumerable<PolicyDataManifestCustomResourceFunctionDetail> custom = default)
-        {
-            return new DataPolicyManifestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                namespaces is null && policyMode is null && isBuiltInOnly is null && resourceTypeAliases is null && effects is null && fieldValues is null && standard is null && custom is null ? default : new DataPolicyManifestProperties(
-                    (namespaces ?? new ChangeTrackingList<string>()).ToList(),
-                    policyMode,
-                    isBuiltInOnly,
-                    (resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>()).ToList(),
-                    (effects ?? new ChangeTrackingList<PolicyDataEffect>()).ToList(),
-                    (fieldValues ?? new ChangeTrackingList<string>()).ToList(),
-                    standard is null && custom is null ? default : new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), default),
-                    default),
-                default);
         }
 
         /// <summary> The resource type aliases definition. </summary>
@@ -292,35 +261,30 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
-        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
-        /// <param name="displayName"> The display name of the policy definition. </param>
-        /// <param name="description"> The policy definition description. </param>
-        /// <param name="policyRule"> The policy rule. </param>
-        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
-        /// <param name="version"> The policy definition version in #.#.# format. </param>
-        /// <param name="versions"> A list of available versions for this policy definition. </param>
-        /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
-        /// <returns> A new <see cref="Policy.PolicyDefinitionData"/> instance for mocking. </returns>
-        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyType? policyType = default, string mode = default, string displayName = default, string description = default, BinaryData policyRule = default, BinaryData metadata = default, IDictionary<string, PolicyParameterMetadata> parameters = default, string version = default, IEnumerable<string> versions = default, PolicyExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = default)
+        /// <param name="namespaces"> The list of namespaces for the data policy manifest. </param>
+        /// <param name="policyMode"> The policy mode of the data policy manifest. </param>
+        /// <param name="isBuiltInOnly"> A value indicating whether policy mode is allowed only in built-in definitions. </param>
+        /// <param name="resourceTypeAliases"> An array of resource type aliases. </param>
+        /// <param name="effects"> The effect definition. </param>
+        /// <param name="fieldValues"> The non-alias field accessor values that can be used in the policy rule. </param>
+        /// <param name="standard"> The standard resource functions (subscription and/or resourceGroup). </param>
+        /// <param name="custom"> An array of data manifest custom resource definitions. </param>
+        /// <returns> A new <see cref="Policy.DataPolicyManifestData"/> instance for mocking. </returns>
+        public static DataPolicyManifestData DataPolicyManifestData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> namespaces = default, string policyMode = default, bool? isBuiltInOnly = default, IEnumerable<PolicyResourceTypeAliases> resourceTypeAliases = default, IEnumerable<PolicyDataEffect> effects = default, IEnumerable<string> fieldValues = default, IEnumerable<string> standard = default, IEnumerable<PolicyDataManifestCustomResourceFunctionDetail> custom = default)
         {
-            return new PolicyDefinitionData(
+            return new DataPolicyManifestData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                policyType is null && mode is null && displayName is null && description is null && policyRule is null && metadata is null && parameters is null && version is null && versions is null && externalEvaluationEnforcementSettings is null ? default : new PolicyDefinitionProperties(
-                    policyType,
-                    mode,
-                    displayName,
-                    description,
-                    policyRule,
-                    metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
-                    version,
-                    (versions ?? new ChangeTrackingList<string>()).ToList(),
-                    externalEvaluationEnforcementSettings,
+                namespaces is null && policyMode is null && isBuiltInOnly is null && resourceTypeAliases is null && effects is null && fieldValues is null && standard is null && custom is null ? default : new DataPolicyManifestProperties(
+                    (namespaces ?? new ChangeTrackingList<string>()).ToList(),
+                    policyMode,
+                    isBuiltInOnly,
+                    (resourceTypeAliases ?? new ChangeTrackingList<PolicyResourceTypeAliases>()).ToList(),
+                    (effects ?? new ChangeTrackingList<PolicyDataEffect>()).ToList(),
+                    (fieldValues ?? new ChangeTrackingList<string>()).ToList(),
+                    standard is null && custom is null ? default : new DataManifestResourceFunctionsDefinition((standard ?? new ChangeTrackingList<string>()).ToList(), (custom ?? new ChangeTrackingList<PolicyDataManifestCustomResourceFunctionDetail>()).ToList(), default),
                     default),
                 default);
         }
@@ -379,6 +343,43 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         public static PolicyExternalEvaluationEndpointSettings PolicyExternalEvaluationEndpointSettings(string kind = default, BinaryData details = default)
         {
             return new PolicyExternalEvaluationEndpointSettings(kind, details, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="mode"> The policy definition mode. Some examples are All, Indexed, Microsoft.KeyVault.Data. </param>
+        /// <param name="displayName"> The display name of the policy definition. </param>
+        /// <param name="description"> The policy definition description. </param>
+        /// <param name="policyRule"> The policy rule. </param>
+        /// <param name="metadata"> The policy definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The parameter definitions for parameters used in the policy rule. The keys are the parameter names. </param>
+        /// <param name="version"> The policy definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy definition. </param>
+        /// <param name="externalEvaluationEnforcementSettings"> The details of the source of external evaluation results required by the policy during enforcement evaluation. </param>
+        /// <returns> A new <see cref="Policy.PolicyDefinitionData"/> instance for mocking. </returns>
+        public static PolicyDefinitionData PolicyDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyType? policyType = default, string mode = default, string displayName = default, string description = default, BinaryData policyRule = default, BinaryData metadata = default, IDictionary<string, PolicyParameterMetadata> parameters = default, string version = default, IEnumerable<string> versions = default, PolicyExternalEvaluationEnforcementSettings externalEvaluationEnforcementSettings = default)
+        {
+            return new PolicyDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType is null && mode is null && displayName is null && description is null && policyRule is null && metadata is null && parameters is null && version is null && versions is null && externalEvaluationEnforcementSettings is null ? default : new PolicyDefinitionProperties(
+                    policyType,
+                    mode,
+                    displayName,
+                    description,
+                    policyRule,
+                    metadata,
+                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    version,
+                    (versions ?? new ChangeTrackingList<string>()).ToList(),
+                    externalEvaluationEnforcementSettings,
+                    default),
+                default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -459,41 +460,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             return new PolicyExemptionPatch(resourceSelectors is null && assignmentScopeValidation is null ? default : new PolicyExemptionUpdateProperties((resourceSelectors ?? new ChangeTrackingList<PolicyResourceSelector>()).ToList(), assignmentScopeValidation, default), default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="policyType"> The type of policy set definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
-        /// <param name="displayName"> The display name of the policy set definition. </param>
-        /// <param name="description"> The policy set definition description. </param>
-        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
-        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
-        /// <param name="policyDefinitions"> An array of policy definition references. </param>
-        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
-        /// <param name="version"> The policy set definition version in #.#.# format. </param>
-        /// <param name="versions"> A list of available versions for this policy set definition. </param>
-        /// <returns> A new <see cref="Policy.PolicySetDefinitionData"/> instance for mocking. </returns>
-        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyType? policyType = default, string displayName = default, string description = default, BinaryData metadata = default, IDictionary<string, PolicyParameterMetadata> parameters = default, IEnumerable<PolicyDefinitionReference> policyDefinitions = default, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = default, string version = default, IEnumerable<string> versions = default)
-        {
-            return new PolicySetDefinitionData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                policyType is null && displayName is null && description is null && metadata is null && parameters is null && policyDefinitions is null && policyDefinitionGroups is null && version is null && versions is null ? default : new PolicySetDefinitionProperties(
-                    policyType,
-                    displayName,
-                    description,
-                    metadata,
-                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
-                    (policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>()).ToList(),
-                    (policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>()).ToList(),
-                    version,
-                    (versions ?? new ChangeTrackingList<string>()).ToList(),
-                    default),
-                default);
-        }
-
         /// <summary> The policy definition reference. </summary>
         /// <param name="policyDefinitionId"> The ID of the policy definition or policy set definition. </param>
         /// <param name="definitionVersion"> The version of the policy definition to use. </param>
@@ -541,6 +507,41 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="policyType"> The type of policy set definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
+        /// <param name="displayName"> The display name of the policy set definition. </param>
+        /// <param name="description"> The policy set definition description. </param>
+        /// <param name="metadata"> The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs. </param>
+        /// <param name="parameters"> The policy set definition parameters that can be used in policy definition references. </param>
+        /// <param name="policyDefinitions"> An array of policy definition references. </param>
+        /// <param name="policyDefinitionGroups"> The metadata describing groups of policy definition references within the policy set definition. </param>
+        /// <param name="version"> The policy set definition version in #.#.# format. </param>
+        /// <param name="versions"> A list of available versions for this policy set definition. </param>
+        /// <returns> A new <see cref="Policy.PolicySetDefinitionData"/> instance for mocking. </returns>
+        public static PolicySetDefinitionData PolicySetDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyType? policyType = default, string displayName = default, string description = default, BinaryData metadata = default, IDictionary<string, PolicyParameterMetadata> parameters = default, IEnumerable<PolicyDefinitionReference> policyDefinitions = default, IEnumerable<PolicyDefinitionGroup> policyDefinitionGroups = default, string version = default, IEnumerable<string> versions = default)
+        {
+            return new PolicySetDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                policyType is null && displayName is null && description is null && metadata is null && parameters is null && policyDefinitions is null && policyDefinitionGroups is null && version is null && versions is null ? default : new PolicySetDefinitionProperties(
+                    policyType,
+                    displayName,
+                    description,
+                    metadata,
+                    parameters ?? new ChangeTrackingDictionary<string, PolicyParameterMetadata>(),
+                    (policyDefinitions ?? new ChangeTrackingList<PolicyDefinitionReference>()).ToList(),
+                    (policyDefinitionGroups ?? new ChangeTrackingList<PolicyDefinitionGroup>()).ToList(),
+                    version,
+                    (versions ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="policyType"> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </param>
         /// <param name="displayName"> The display name of the policy set definition. </param>
         /// <param name="description"> The policy set definition description. </param>
@@ -570,6 +571,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 default);
         }
 
+        /// <summary> The variable column. </summary>
+        /// <param name="columnName"> The name of this policy variable column. </param>
+        /// <returns> A new <see cref="Models.PolicyVariableColumn"/> instance for mocking. </returns>
+        public static PolicyVariableColumn PolicyVariableColumn(string columnName = default)
+        {
+            return new PolicyVariableColumn(columnName, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -587,12 +596,13 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 default);
         }
 
-        /// <summary> The variable column. </summary>
-        /// <param name="columnName"> The name of this policy variable column. </param>
-        /// <returns> A new <see cref="Models.PolicyVariableColumn"/> instance for mocking. </returns>
-        public static PolicyVariableColumn PolicyVariableColumn(string columnName = default)
+        /// <summary> The name value tuple for this variable value column. </summary>
+        /// <param name="columnName"> Column name for the variable value. </param>
+        /// <param name="columnValue"> Column value for the variable value; this can be an integer, double, boolean, null or a string. </param>
+        /// <returns> A new <see cref="Models.PolicyVariableValueColumnValue"/> instance for mocking. </returns>
+        public static PolicyVariableValueColumnValue PolicyVariableValueColumnValue(string columnName = default, BinaryData columnValue = default)
         {
-            return new PolicyVariableColumn(columnName, default);
+            return new PolicyVariableValueColumnValue(columnName, columnValue, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -610,15 +620,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 systemData,
                 values is null ? default : new PolicyVariableValueProperties((values ?? new ChangeTrackingList<PolicyVariableValueColumnValue>()).ToList(), default),
                 default);
-        }
-
-        /// <summary> The name value tuple for this variable value column. </summary>
-        /// <param name="columnName"> Column name for the variable value. </param>
-        /// <param name="columnValue"> Column value for the variable value; this can be an integer, double, boolean, null or a string. </param>
-        /// <returns> A new <see cref="Models.PolicyVariableValueColumnValue"/> instance for mocking. </returns>
-        public static PolicyVariableValueColumnValue PolicyVariableValueColumnValue(string columnName = default, BinaryData columnValue = default)
-        {
-            return new PolicyVariableValueColumnValue(columnName, columnValue, default);
         }
 
         /// <summary> The policy token request properties. </summary>

@@ -133,26 +133,6 @@ namespace Azure.ResourceManager.Reservations.Models
             return new AppliedReservationList((value ?? new ChangeTrackingList<string>()).ToList(), nextLink, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningState"> The quota request status. </param>
-        /// <param name="message"> User friendly status message. </param>
-        /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="quotaRequestValue"> The quotaRequests. </param>
-        /// <returns> A new <see cref="Reservations.QuotaRequestDetailData"/> instance for mocking. </returns>
-        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<SubContent> quotaRequestValue = default)
-        {
-            return new QuotaRequestDetailData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                provisioningState is null && message is null && requestSubmitOn is null && quotaRequestValue is null ? default : new QuotaRequestProperties(provisioningState, message, requestSubmitOn, (quotaRequestValue ?? new ChangeTrackingList<SubContent>()).ToList(), default),
-                default);
-        }
-
         /// <summary> The sub-request submitted with the quota request. </summary>
         /// <param name="limit"> Quota (resource limit). </param>
         /// <param name="name"> The resource name. </param>
@@ -184,21 +164,23 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationResourceName(value, localizedValue, default);
         }
 
-        /// <summary> Quota properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Quota properties for the resource. </param>
-        /// <returns> A new <see cref="Reservations.ReservationQuotaData"/> instance for mocking. </returns>
-        public static ReservationQuotaData ReservationQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaProperties properties = default)
+        /// <param name="provisioningState"> The quota request status. </param>
+        /// <param name="message"> User friendly status message. </param>
+        /// <param name="requestSubmitOn"> The time when the quota request was submitted using format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="quotaRequestValue"> The quotaRequests. </param>
+        /// <returns> A new <see cref="Reservations.QuotaRequestDetailData"/> instance for mocking. </returns>
+        public static QuotaRequestDetailData QuotaRequestDetailData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaRequestState? provisioningState = default, string message = default, DateTimeOffset? requestSubmitOn = default, IEnumerable<SubContent> quotaRequestValue = default)
         {
-            return new ReservationQuotaData(
+            return new QuotaRequestDetailData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                properties,
+                provisioningState is null && message is null && requestSubmitOn is null && quotaRequestValue is null ? default : new QuotaRequestProperties(provisioningState, message, requestSubmitOn, (quotaRequestValue ?? new ChangeTrackingList<SubContent>()).ToList(), default),
                 default);
         }
 
@@ -224,28 +206,21 @@ namespace Azure.ResourceManager.Reservations.Models
                 default);
         }
 
+        /// <summary> Quota properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The properties associated to this reservation . </param>
-        /// <param name="location"> The Azure region where the reserved resource lives. </param>
-        /// <param name="version"></param>
-        /// <param name="skuName"> Gets or sets the Name. </param>
-        /// <param name="kind"> Resource Provider type to be reserved. </param>
-        /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
-        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationProperties properties, AzureLocation? location, int? version, string skuName, ReservationKind? kind)
+        /// <param name="properties"> Quota properties for the resource. </param>
+        /// <returns> A new <see cref="Reservations.ReservationQuotaData"/> instance for mocking. </returns>
+        public static ReservationQuotaData ReservationQuotaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaProperties properties = default)
         {
-            return new ReservationDetailData(
+            return new ReservationQuotaData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 properties,
-                location,
-                version,
-                skuName is null ? default : new ReservationsSkuName(skuName, default),
-                kind,
                 default);
         }
 
@@ -470,6 +445,136 @@ namespace Azure.ResourceManager.Reservations.Models
             return new ReservationUtilizationAggregates(grain, grainUnit, value, valueUnit, default);
         }
 
+        /// <summary> Information describing the type of billing plan for this reservation. </summary>
+        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
+        /// <param name="startOn"> Date when the billing plan has started. </param>
+        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
+        /// <param name="transactions"></param>
+        /// <returns> A new <see cref="Models.ReservationOrderBillingPlanInformation"/> instance for mocking. </returns>
+        public static ReservationOrderBillingPlanInformation ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal = default, DateTimeOffset? startOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<PaymentDetail> transactions = default)
+        {
+            transactions ??= new ChangeTrackingList<PaymentDetail>();
+
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<PaymentDetail>()).ToList(), default);
+        }
+
+        /// <summary> Information about payment related to a reservation order. </summary>
+        /// <param name="dueOn"> Date when the payment needs to be done. </param>
+        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
+        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
+        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
+        /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
+        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
+        /// <param name="extendedStatusInfo"></param>
+        /// <returns> A new <see cref="Models.PaymentDetail"/> instance for mocking. </returns>
+        public static PaymentDetail PaymentDetail(DateTimeOffset? dueOn = default, DateTimeOffset? payOn = default, PurchasePrice pricingCurrencyTotal = default, PurchasePrice billingCurrencyTotal = default, string billingAccount = default, PaymentStatus? status = default, ExtendedStatusInfo extendedStatusInfo = default)
+        {
+            return new PaymentDetail(
+                dueOn,
+                payOn,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                billingAccount,
+                status,
+                extendedStatusInfo,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties associated to this reservation . </param>
+        /// <param name="location"> The Azure region where the reserved resource lives. </param>
+        /// <param name="version"></param>
+        /// <param name="skuName"> Gets or sets the Name. </param>
+        /// <param name="kind"> Resource Provider type to be reserved. </param>
+        /// <returns> A new <see cref="Reservations.ReservationDetailData"/> instance for mocking. </returns>
+        public static ReservationDetailData ReservationDetailData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationProperties properties, AzureLocation? location, int? version, string skuName, ReservationKind? kind)
+        {
+            return new ReservationDetailData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                version,
+                skuName is null ? default : new ReservationsSkuName(skuName, default),
+                kind,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> Friendly name for user to easily identified the reservation. </param>
+        /// <param name="requestOn"> This is the DateTime when the reservation was initially requested for purchase. </param>
+        /// <param name="createdOn"> This is the DateTime when the reservation was created. </param>
+        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
+        /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
+        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="originalQuantity"> Total Quantity of the skus purchased in the reservation. </param>
+        /// <param name="term"> Represent the term of reservation. </param>
+        /// <param name="provisioningState"> Current state of the reservation. </param>
+        /// <param name="billingPlan"> Represent the billing plans. </param>
+        /// <param name="planInformation"> Information describing the type of billing plan for this reservation. </param>
+        /// <param name="reservations"> Gets the Reservations. </param>
+        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
+        /// <param name="version"></param>
+        /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
+        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IEnumerable<ReservationDetailData> reservations, DateTimeOffset? reviewOn, int? version)
+        {
+            return new ReservationOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
+                    displayName,
+                    requestOn,
+                    createdOn,
+                    reservationExpireOn,
+                    expireOn,
+                    benefitStartOn,
+                    originalQuantity,
+                    term,
+                    provisioningState,
+                    billingPlan,
+                    planInformation,
+                    (reservations ?? new ChangeTrackingList<ReservationDetailData>()).ToList(),
+                    reviewOn,
+                    default),
+                version,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The properties associated to this reservation . </param>
+        /// <param name="location"> The Azure region where the reserved resource lives. </param>
+        /// <param name="version"></param>
+        /// <param name="skuName"> Gets or sets the Name. </param>
+        /// <param name="kind"> Resource Provider type to be reserved. </param>
+        /// <returns> A new <see cref="Models.ReservationDetail1Data"/> instance for mocking. </returns>
+        public static ReservationDetail1Data ReservationDetail1Data(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ReservationProperties properties = default, AzureLocation? location = default, int? version = default, string skuName = default, ReservationKind? kind = default)
+        {
+            return new ReservationDetail1Data(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                version,
+                skuName is null ? default : new ReservationsSkuName(skuName, default),
+                kind,
+                default);
+        }
+
         /// <param name="appliedScopeType"> Type of the Applied Scope. </param>
         /// <param name="appliedScopes"> List of the subscriptions that the benefit will be applied. Do not specify if AppliedScopeType is Shared. This property will be deprecated and replaced by appliedScopeProperties instead for Single AppliedScopeType. </param>
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. Required and need to provide tenantId and managementGroupId if AppliedScopeType is ManagementGroup. </param>
@@ -529,86 +634,6 @@ namespace Azure.ResourceManager.Reservations.Models
         public static MergeContent MergeContent(IEnumerable<string> sources = default)
         {
             return new MergeContent(sources is null ? default : new MergeProperties((sources ?? new ChangeTrackingList<string>()).ToList(), default), default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> Friendly name for user to easily identified the reservation. </param>
-        /// <param name="requestOn"> This is the DateTime when the reservation was initially requested for purchase. </param>
-        /// <param name="createdOn"> This is the DateTime when the reservation was created. </param>
-        /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
-        /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
-        /// <param name="originalQuantity"> Total Quantity of the skus purchased in the reservation. </param>
-        /// <param name="term"> Represent the term of reservation. </param>
-        /// <param name="provisioningState"> Current state of the reservation. </param>
-        /// <param name="billingPlan"> Represent the billing plans. </param>
-        /// <param name="planInformation"> Information describing the type of billing plan for this reservation. </param>
-        /// <param name="reservations"> Gets the Reservations. </param>
-        /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
-        /// <param name="version"></param>
-        /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
-        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, DateTimeOffset? requestOn, DateTimeOffset? createdOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? benefitStartOn, int? originalQuantity, ReservationTerm? term, ReservationProvisioningState? provisioningState, ReservationBillingPlan? billingPlan, ReservationOrderBillingPlanInformation planInformation, IEnumerable<ReservationDetailData> reservations, DateTimeOffset? reviewOn, int? version)
-        {
-            return new ReservationOrderData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
-                    displayName,
-                    requestOn,
-                    createdOn,
-                    reservationExpireOn,
-                    expireOn,
-                    benefitStartOn,
-                    originalQuantity,
-                    term,
-                    provisioningState,
-                    billingPlan,
-                    planInformation,
-                    (reservations ?? new ChangeTrackingList<ReservationDetailData>()).ToList(),
-                    reviewOn,
-                    default),
-                version,
-                default);
-        }
-
-        /// <summary> Information describing the type of billing plan for this reservation. </summary>
-        /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startOn"> Date when the billing plan has started. </param>
-        /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
-        /// <param name="transactions"></param>
-        /// <returns> A new <see cref="Models.ReservationOrderBillingPlanInformation"/> instance for mocking. </returns>
-        public static ReservationOrderBillingPlanInformation ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal = default, DateTimeOffset? startOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<PaymentDetail> transactions = default)
-        {
-            transactions ??= new ChangeTrackingList<PaymentDetail>();
-
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<PaymentDetail>()).ToList(), default);
-        }
-
-        /// <summary> Information about payment related to a reservation order. </summary>
-        /// <param name="dueOn"> Date when the payment needs to be done. </param>
-        /// <param name="payOn"> Date when the transaction is completed. Is null when it is scheduled. </param>
-        /// <param name="pricingCurrencyTotal"> Amount in pricing currency. Tax not included. </param>
-        /// <param name="billingCurrencyTotal"> Amount charged in Billing currency. Tax not included. Is null for future payments. </param>
-        /// <param name="billingAccount"> Shows the Account that is charged for this payment. </param>
-        /// <param name="status"> Describes whether the payment is completed, failed, cancelled or scheduled in the future. </param>
-        /// <param name="extendedStatusInfo"></param>
-        /// <returns> A new <see cref="Models.PaymentDetail"/> instance for mocking. </returns>
-        public static PaymentDetail PaymentDetail(DateTimeOffset? dueOn = default, DateTimeOffset? payOn = default, PurchasePrice pricingCurrencyTotal = default, PurchasePrice billingCurrencyTotal = default, string billingAccount = default, PaymentStatus? status = default, ExtendedStatusInfo extendedStatusInfo = default)
-        {
-            return new PaymentDetail(
-                dueOn,
-                payOn,
-                pricingCurrencyTotal,
-                billingCurrencyTotal,
-                billingAccount,
-                status,
-                extendedStatusInfo,
-                default);
         }
 
         /// <summary> Request body for change directory of a reservation. </summary>

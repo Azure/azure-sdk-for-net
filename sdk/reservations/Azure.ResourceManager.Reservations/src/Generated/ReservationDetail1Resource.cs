@@ -18,11 +18,11 @@ using Azure.ResourceManager.Reservations.Models;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary>
-    /// A class representing a ReservationDetail along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationDetailResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReservationOrderResource"/> using the GetReservationDetails method.
+    /// A class representing a ReservationDetail1 along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReservationDetail1Resource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ReservationOrderResource"/> using the GetReservationDetail1s method.
     /// </summary>
-    public partial class ReservationDetailResource : ArmResource
+    public partial class ReservationDetail1Resource : ArmResource
     {
         private readonly ClientDiagnostics _reservationClientDiagnostics;
         private readonly Reservation _reservationRestClient;
@@ -30,28 +30,28 @@ namespace Azure.ResourceManager.Reservations
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Capacity/reservationOrders/reservations";
 
-        /// <summary> Initializes a new instance of ReservationDetailResource for mocking. </summary>
-        protected ReservationDetailResource()
+        /// <summary> Initializes a new instance of ReservationDetail1Resource for mocking. </summary>
+        protected ReservationDetail1Resource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReservationDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationDetail1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReservationDetailResource(ArmClient client, ReservationDetailData data) : this(client, data.Id)
+        internal ReservationDetail1Resource(ArmClient client, ReservationDetailData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReservationDetailResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationDetail1Resource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReservationDetailResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ReservationDetail1Resource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string reservationDetailApiVersion);
+            TryGetApiVersion(ResourceType, out string reservationDetail1ApiVersion);
             _reservationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Reservations", ResourceType.Namespace, Diagnostics);
-            _reservationRestClient = new Reservation(_reservationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationDetailApiVersion ?? "2022-11-01");
+            _reservationRestClient = new Reservation(_reservationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, reservationDetail1ApiVersion ?? "2022-11-01");
             ValidateResourceId(id);
         }
 
@@ -69,6 +69,15 @@ namespace Azure.ResourceManager.Reservations
                 }
                 return _data;
             }
+        }
+
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
+        /// <param name="reservationId"> The reservationId. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId, Guid reservationId)
+        {
+            string resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}";
+            return new ResourceIdentifier(resourceId);
         }
 
         /// <param name="id"></param>
@@ -98,15 +107,15 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReservationDetailResource>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReservationDetail1Data>> GetAsync(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Get");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Get");
             scope.Start();
             try
             {
@@ -116,12 +125,12 @@ namespace Azure.ResourceManager.Reservations
                 };
                 HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ReservationDetailData> response = Response.FromValue(ReservationDetailData.FromResponse(result), result);
+                Response<ReservationDetail1Data> response = Response.FromValue(ReservationDetail1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -147,15 +156,15 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Supported value of this query is renewProperties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReservationDetailResource> Get(string expand = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReservationDetail1Data> Get(string expand = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Get");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Get");
             scope.Start();
             try
             {
@@ -165,12 +174,12 @@ namespace Azure.ResourceManager.Reservations
                 };
                 HttpMessage message = _reservationRestClient.CreateGetRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), expand, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ReservationDetailData> response = Response.FromValue(ReservationDetailData.FromResponse(result), result);
+                Response<ReservationDetail1Data> response = Response.FromValue(ReservationDetail1Data.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ReservationDetailResource(Client, response.Value), response.GetRawResponse());
+                return response;
             }
             catch (Exception e)
             {
@@ -196,7 +205,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,11 +213,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReservationDetailResource>> UpdateAsync(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ReservationDetail1Data>> UpdateAsync(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Update");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Update");
             scope.Start();
             try
             {
@@ -218,8 +227,8 @@ namespace Azure.ResourceManager.Reservations
                 };
                 HttpMessage message = _reservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), ReservationDetailPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ReservationsArmOperation<ReservationDetailResource> operation = new ReservationsArmOperation<ReservationDetailResource>(
-                    new ReservationDetailResourceOperationSource(Client),
+                ReservationsArmOperation<ReservationDetail1Data> operation = new ReservationsArmOperation<ReservationDetail1Data>(
+                    new ReservationDetail1DataOperationSource(),
                     _reservationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -255,7 +264,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,11 +272,11 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="patch"> Information needed to patch a reservation item. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<ReservationDetailResource> Update(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ReservationDetail1Data> Update(WaitUntil waitUntil, ReservationDetailPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Update");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Update");
             scope.Start();
             try
             {
@@ -277,8 +286,8 @@ namespace Azure.ResourceManager.Reservations
                 };
                 HttpMessage message = _reservationRestClient.CreateUpdateRequest(Guid.Parse(Id.Parent.Name), Guid.Parse(Id.Name), ReservationDetailPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ReservationsArmOperation<ReservationDetailResource> operation = new ReservationsArmOperation<ReservationDetailResource>(
-                    new ReservationDetailResourceOperationSource(Client),
+                ReservationsArmOperation<ReservationDetail1Data> operation = new ReservationsArmOperation<ReservationDetail1Data>(
+                    new ReservationDetail1DataOperationSource(),
                     _reservationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -314,14 +323,14 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> ArchiveAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Archive");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Archive");
             scope.Start();
             try
             {
@@ -357,14 +366,14 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Archive(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Archive");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Archive");
             scope.Start();
             try
             {
@@ -400,7 +409,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -412,7 +421,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.GetAvailableScopes");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.GetAvailableScopes");
             scope.Start();
             try
             {
@@ -459,7 +468,7 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +480,7 @@ namespace Azure.ResourceManager.Reservations
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.GetAvailableScopes");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.GetAvailableScopes");
             scope.Start();
             try
             {
@@ -518,14 +527,14 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> UnarchiveAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Unarchive");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Unarchive");
             scope.Start();
             try
             {
@@ -561,14 +570,14 @@ namespace Azure.ResourceManager.Reservations
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ReservationDetailResource"/>. </description>
+        /// <description> <see cref="ReservationDetail1Resource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Unarchive(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetailResource.Unarchive");
+            using DiagnosticScope scope = _reservationClientDiagnostics.CreateScope("ReservationDetail1Resource.Unarchive");
             scope.Start();
             try
             {

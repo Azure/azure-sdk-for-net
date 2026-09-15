@@ -17,24 +17,6 @@ namespace Azure.ResourceManager.Relationships.Models
     public static partial class ArmRelationshipsModelFactory
     {
 
-        /// <summary> Defines a dependencyOf relationship resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Relationships.DependencyOfRelationshipData"/> instance for mocking. </returns>
-        public static DependencyOfRelationshipData DependencyOfRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DependencyOfRelationshipProperties properties = default)
-        {
-            return new DependencyOfRelationshipData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
         /// <summary> dependencyOf relationship properties. </summary>
         /// <param name="sourceId"> The relationship source resource id. </param>
         /// <param name="targetId"> The relationship target resource id. </param>
@@ -73,16 +55,16 @@ namespace Azure.ResourceManager.Relationships.Models
             return new RelationshipMetadata(sourceType, targetType, default);
         }
 
-        /// <summary> Defines a ServiceGroupMember relationship resource. </summary>
+        /// <summary> Defines a dependencyOf relationship resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Relationships.ServiceGroupMemberRelationshipData"/> instance for mocking. </returns>
-        public static ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupMemberRelationshipProperties properties = default)
+        /// <returns> A new <see cref="Relationships.DependencyOfRelationshipData"/> instance for mocking. </returns>
+        public static DependencyOfRelationshipData DependencyOfRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DependencyOfRelationshipProperties properties = default)
         {
-            return new ServiceGroupMemberRelationshipData(
+            return new DependencyOfRelationshipData(
                 id,
                 name,
                 resourceType,
@@ -108,6 +90,24 @@ namespace Azure.ResourceManager.Relationships.Models
                 originInformation,
                 metadata,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> Defines a ServiceGroupMember relationship resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Relationships.ServiceGroupMemberRelationshipData"/> instance for mocking. </returns>
+        public static ServiceGroupMemberRelationshipData ServiceGroupMemberRelationshipData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ServiceGroupMemberRelationshipProperties properties = default)
+        {
+            return new ServiceGroupMemberRelationshipData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
                 default);
         }
     }

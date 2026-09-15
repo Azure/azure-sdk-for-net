@@ -19,30 +19,6 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesModelFactory
     {
-        /// <summary> Deployment information. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> Deployment properties. </param>
-        /// <param name="location"> the location of the deployment. </param>
-        /// <param name="tags"> Deployment tags. </param>
-        /// <returns> A new <see cref="Deployments.ArmDeploymentData"/> instance for mocking. </returns>
-        public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArmDeploymentPropertiesExtended properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ArmDeploymentData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default);
-        }
-
         /// <param name="provisioningState"> Denotes the state of provisioning. </param>
         /// <param name="correlationId"> The correlation ID of the deployment. </param>
         /// <param name="timestamp"> The timestamp of the template deployment. </param>
@@ -241,6 +217,30 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 message,
                 target,
                 (additionalInfo ?? new ChangeTrackingList<ErrorAdditionalInfo>()).ToList(),
+                default);
+        }
+
+        /// <summary> Deployment information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Deployment properties. </param>
+        /// <param name="location"> the location of the deployment. </param>
+        /// <param name="tags"> Deployment tags. </param>
+        /// <returns> A new <see cref="Deployments.ArmDeploymentData"/> instance for mocking. </returns>
+        public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArmDeploymentPropertiesExtended properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ArmDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
 

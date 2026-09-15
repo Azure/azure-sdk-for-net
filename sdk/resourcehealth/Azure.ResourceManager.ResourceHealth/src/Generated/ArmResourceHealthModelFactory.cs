@@ -138,26 +138,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ServiceImpactingEventIncidentProperties(title, service, region, incidentType, default);
         }
 
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
-        /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
-        /// <param name="targetRegion"> Impacted resource region name. </param>
-        /// <param name="info"> Additional information. </param>
-        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceType? targetResourceType = default, ResourceIdentifier targetResourceId = default, string targetRegion = default, IEnumerable<ResourceHealthKeyValueItem> info = default)
-        {
-            return new ResourceHealthEventImpactedResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), default),
-                default);
-        }
-
         /// <summary> Key value tuple. </summary>
         /// <param name="key"> Key of tuple. </param>
         /// <param name="value"> Value of tuple. </param>
@@ -165,139 +145,6 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static ResourceHealthKeyValueItem ResourceHealthKeyValueItem(string key = default, string value = default)
         {
             return new ResourceHealthKeyValueItem(key, value, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
-        /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
-        /// <param name="supportedValues"> The list of supported values. </param>
-        /// <returns> A new <see cref="ResourceHealth.ResourceHealthMetadataEntityData"/> instance for mocking. </returns>
-        public static ResourceHealthMetadataEntityData ResourceHealthMetadataEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> dependsOn = default, IEnumerable<MetadataEntityScenario> applicableScenarios = default, IEnumerable<MetadataSupportedValueDetail> supportedValues = default)
-        {
-            return new ResourceHealthMetadataEntityData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                displayName is null && dependsOn is null && applicableScenarios is null && supportedValues is null ? default : new MetadataEntityProperties(displayName, (dependsOn ?? new ChangeTrackingList<string>()).ToList(), (applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>()).ToList(), (supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>()).ToList(), default),
-                default);
-        }
-
-        /// <summary> The metadata supported value detail. </summary>
-        /// <param name="id"> The id of the metadata value. </param>
-        /// <param name="previousId"> The previous value of the id field in case the data has changed. </param>
-        /// <param name="serviceGuid"> The permanent guid for the service. Used when the id is a service name. </param>
-        /// <param name="displayName"> The display name. </param>
-        /// <param name="resourceTypes"> The list of associated resource types. </param>
-        /// <param name="priority"> Priority of this metadata supported value. Lower number is given higher preference. </param>
-        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
-        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string previousId = default, string serviceGuid = default, string displayName = default, IEnumerable<ResourceType> resourceTypes = default, int? priority = default)
-        {
-            resourceTypes ??= new ChangeTrackingList<ResourceType>();
-
-            return new MetadataSupportedValueDetail(
-                id,
-                previousId,
-                serviceGuid,
-                displayName,
-                (resourceTypes ?? new ChangeTrackingList<ResourceType>()).ToList(),
-                priority,
-                default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eventType"> Type of event. </param>
-        /// <param name="eventSubType"> Sub-type of event. </param>
-        /// <param name="eventSource"> Source of event. </param>
-        /// <param name="status"> Current status of event. </param>
-        /// <param name="title"> Title text of event. </param>
-        /// <param name="summary"> Summary text of event. Use fetchEventDetails endpoint to get summary of sensitive events. </param>
-        /// <param name="header"> Header text of event. </param>
-        /// <param name="level"> Level of insight. </param>
-        /// <param name="eventLevel"> Level of event. </param>
-        /// <param name="isEventSensitive"> If true the event may contains sensitive data. Use the post events/{trackingId}/fetchEventDetails endpoint to fetch sensitive data see https://learn.microsoft.com/en-us/azure/service-health/security-advisories-elevated-access. </param>
-        /// <param name="externalIncidentId"> The id of the Incident. </param>
-        /// <param name="reason"> The reason for the Incident. </param>
-        /// <param name="article"> Article of event. </param>
-        /// <param name="links"> Useful links of event. </param>
-        /// <param name="impactStartOn"> It provides the Timestamp for when the health impacting event started. </param>
-        /// <param name="impactMitigationOn"> It provides the Timestamp for when the health impacting event resolved. </param>
-        /// <param name="impact"> List services impacted by the service health event. </param>
-        /// <param name="recommendedActions"> Recommended actions of event. </param>
-        /// <param name="faqs"> Frequently asked questions for the service health event. </param>
-        /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
-        /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
-        /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. Use fetchEventDetails endpoint to get description of sensitive events. </param>
-        /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
-        /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
-        /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
-        /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
-        /// <param name="hirStage"> Stage for HIR Document. </param>
-        /// <param name="duration"> duration in seconds. </param>
-        /// <param name="impactType"> The type of the impact. </param>
-        /// <param name="eventTags">
-        /// A list of metadata tags associated with the event. Possible values include:
-        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
-        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
-        /// </param>
-        /// <param name="newRate"> Billing rate change information - new rate. </param>
-        /// <param name="oldRate"> Billing rate change information - old rate. </param>
-        /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
-        /// <param name="billingId"> Billing identifier information. </param>
-        /// <param name="additionalInformationMessage"> Additional information Message. </param>
-        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValue? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
-        {
-            return new ResourceHealthEventData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
-                    eventType,
-                    eventSubType,
-                    eventSource,
-                    status,
-                    title,
-                    summary,
-                    header,
-                    level,
-                    eventLevel,
-                    isEventSensitive,
-                    externalIncidentId,
-                    reason,
-                    article,
-                    (links ?? new ChangeTrackingList<ResourceHealthEventLink>()).ToList(),
-                    impactStartOn,
-                    impactMitigationOn,
-                    (impact ?? new ChangeTrackingList<ResourceHealthEventImpact>()).ToList(),
-                    recommendedActions,
-                    (faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>()).ToList(),
-                    isHirEvent,
-                    isMicrosoftSupportEnabled,
-                    description,
-                    isPlatformInitiated,
-                    isChatWithUsEnabled,
-                    priority,
-                    lastUpdateOn,
-                    hirStage,
-                    additionalInformationMessage is null ? default : new ResourceHealthEventAdditionalInformation(additionalInformationMessage, default),
-                    duration,
-                    impactType,
-                    (eventTags ?? new ChangeTrackingList<string>()).ToList(),
-                    newRate,
-                    oldRate,
-                    currencyType,
-                    billingId,
-                    default),
-                default);
         }
 
         /// <summary> Article of event. </summary>
@@ -424,18 +271,152 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
-        /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
-        /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
-        /// <returns> A new <see cref="ResourceHealth.ServiceEmergingIssueData"/> instance for mocking. </returns>
-        public static ServiceEmergingIssueData ServiceEmergingIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? refreshedOn = default, IEnumerable<EmergingIssueBannerType> statusBanners = default, IEnumerable<EmergingIssueActiveEventType> statusActiveEvents = default)
+        /// <param name="eventType"> Type of event. </param>
+        /// <param name="eventSubType"> Sub-type of event. </param>
+        /// <param name="eventSource"> Source of event. </param>
+        /// <param name="status"> Current status of event. </param>
+        /// <param name="title"> Title text of event. </param>
+        /// <param name="summary"> Summary text of event. Use fetchEventDetails endpoint to get summary of sensitive events. </param>
+        /// <param name="header"> Header text of event. </param>
+        /// <param name="level"> Level of insight. </param>
+        /// <param name="eventLevel"> Level of event. </param>
+        /// <param name="isEventSensitive"> If true the event may contains sensitive data. Use the post events/{trackingId}/fetchEventDetails endpoint to fetch sensitive data see https://learn.microsoft.com/en-us/azure/service-health/security-advisories-elevated-access. </param>
+        /// <param name="externalIncidentId"> The id of the Incident. </param>
+        /// <param name="reason"> The reason for the Incident. </param>
+        /// <param name="article"> Article of event. </param>
+        /// <param name="links"> Useful links of event. </param>
+        /// <param name="impactStartOn"> It provides the Timestamp for when the health impacting event started. </param>
+        /// <param name="impactMitigationOn"> It provides the Timestamp for when the health impacting event resolved. </param>
+        /// <param name="impact"> List services impacted by the service health event. </param>
+        /// <param name="recommendedActions"> Recommended actions of event. </param>
+        /// <param name="faqs"> Frequently asked questions for the service health event. </param>
+        /// <param name="isHirEvent"> It provides information if the event is High incident rate event or not. </param>
+        /// <param name="isMicrosoftSupportEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="description"> Contains the communication message for the event, that could include summary, root cause and other details. Use fetchEventDetails endpoint to get description of sensitive events. </param>
+        /// <param name="isPlatformInitiated"> Is true if the event is platform initiated. </param>
+        /// <param name="isChatWithUsEnabled"> Tells if we want to enable or disable Microsoft Support for this event. </param>
+        /// <param name="priority"> Priority level of the event. Has value from 0 to 23. 0 is the highest priority. Service issue events have higher priority followed by planned maintenance and health advisory. Critical events have higher priority followed by error, warning and informational. Furthermore, active events have higher priority than resolved. </param>
+        /// <param name="lastUpdateOn"> It provides the Timestamp for when the health impacting event was last updated. </param>
+        /// <param name="hirStage"> Stage for HIR Document. </param>
+        /// <param name="duration"> duration in seconds. </param>
+        /// <param name="impactType"> The type of the impact. </param>
+        /// <param name="eventTags">
+        /// A list of metadata tags associated with the event. Possible values include:
+        /// -Action Recommended: Action may be required by you to avoid possible disruptions or mitigate risks for your services. It is recommended to evaluate these actions and the potential impact on your services.
+        /// <list type="bullet"><item><description>False Positive: After investigation, we've determined your service is healthy and service issues did not impact your services as originally communicated.</description></item><item><description>Preliminary PIR: For our largest, most impactful service issues a Preliminary Post Incident Review (PIR) is published generally within 72 hours of mitigation, to summarize what we have learned so far from the still-in-progress investigation.</description></item><item><description>Final PIR: For service issues, a Final Post Incident Review (PIR) may be published to provide additional details or learnings. Sometimes this requires us to complete an internal retrospective, generally within 14 days of mitigation.</description></item></list>
+        /// </param>
+        /// <param name="newRate"> Billing rate change information - new rate. </param>
+        /// <param name="oldRate"> Billing rate change information - old rate. </param>
+        /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
+        /// <param name="billingId"> Billing identifier information. </param>
+        /// <param name="additionalInformationMessage"> Additional information Message. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceHealthEventTypeValue? eventType = default, EventSubTypeValue? eventSubType = default, ResourceHealthEventSourceValue? eventSource = default, ResourceHealthEventStatusValue? status = default, string title = default, string summary = default, string header = default, ResourceHealthEventInsightLevelValue? level = default, ResourceHealthEventLevelValue? eventLevel = default, bool? isEventSensitive = default, string externalIncidentId = default, string reason = default, ResourceHealthEventArticle article = default, IEnumerable<ResourceHealthEventLink> links = default, DateTimeOffset? impactStartOn = default, DateTimeOffset? impactMitigationOn = default, IEnumerable<ResourceHealthEventImpact> impact = default, ResourceHealthEventRecommendedActions recommendedActions = default, IEnumerable<ResourceHealthEventFaq> faqs = default, bool? isHirEvent = default, bool? isMicrosoftSupportEnabled = default, string description = default, bool? isPlatformInitiated = default, bool? isChatWithUsEnabled = default, int? priority = default, DateTimeOffset? lastUpdateOn = default, string hirStage = default, int? duration = default, string impactType = default, IEnumerable<string> eventTags = default, double? newRate = default, double? oldRate = default, string currencyType = default, string billingId = default, string additionalInformationMessage = default)
         {
-            return new ServiceEmergingIssueData(
+            return new ResourceHealthEventData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                refreshedOn is null && statusBanners is null && statusActiveEvents is null ? default : new EmergingIssue(refreshedOn, (statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>()).ToList(), (statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>()).ToList(), default),
+                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
+                    eventType,
+                    eventSubType,
+                    eventSource,
+                    status,
+                    title,
+                    summary,
+                    header,
+                    level,
+                    eventLevel,
+                    isEventSensitive,
+                    externalIncidentId,
+                    reason,
+                    article,
+                    (links ?? new ChangeTrackingList<ResourceHealthEventLink>()).ToList(),
+                    impactStartOn,
+                    impactMitigationOn,
+                    (impact ?? new ChangeTrackingList<ResourceHealthEventImpact>()).ToList(),
+                    recommendedActions,
+                    (faqs ?? new ChangeTrackingList<ResourceHealthEventFaq>()).ToList(),
+                    isHirEvent,
+                    isMicrosoftSupportEnabled,
+                    description,
+                    isPlatformInitiated,
+                    isChatWithUsEnabled,
+                    priority,
+                    lastUpdateOn,
+                    hirStage,
+                    additionalInformationMessage is null ? default : new ResourceHealthEventAdditionalInformation(additionalInformationMessage, default),
+                    duration,
+                    impactType,
+                    (eventTags ?? new ChangeTrackingList<string>()).ToList(),
+                    newRate,
+                    oldRate,
+                    currencyType,
+                    billingId,
+                    default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
+        /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
+        /// <param name="targetRegion"> Impacted resource region name. </param>
+        /// <param name="info"> Additional information. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
+        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceType? targetResourceType = default, ResourceIdentifier targetResourceId = default, string targetRegion = default, IEnumerable<ResourceHealthKeyValueItem> info = default)
+        {
+            return new ResourceHealthEventImpactedResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                targetResourceType is null && targetResourceId is null && targetRegion is null && info is null ? default : new EventImpactedResourceProperties(targetResourceType, targetResourceId, targetRegion, (info ?? new ChangeTrackingList<ResourceHealthKeyValueItem>()).ToList(), default),
+                default);
+        }
+
+        /// <summary> The metadata supported value detail. </summary>
+        /// <param name="id"> The id of the metadata value. </param>
+        /// <param name="previousId"> The previous value of the id field in case the data has changed. </param>
+        /// <param name="serviceGuid"> The permanent guid for the service. Used when the id is a service name. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <param name="resourceTypes"> The list of associated resource types. </param>
+        /// <param name="priority"> Priority of this metadata supported value. Lower number is given higher preference. </param>
+        /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
+        public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = default, string previousId = default, string serviceGuid = default, string displayName = default, IEnumerable<ResourceType> resourceTypes = default, int? priority = default)
+        {
+            resourceTypes ??= new ChangeTrackingList<ResourceType>();
+
+            return new MetadataSupportedValueDetail(
+                id,
+                previousId,
+                serviceGuid,
+                displayName,
+                (resourceTypes ?? new ChangeTrackingList<ResourceType>()).ToList(),
+                priority,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="displayName"> The display name. </param>
+        /// <param name="dependsOn"> The list of keys on which this entity depends on. </param>
+        /// <param name="applicableScenarios"> The list of scenarios applicable to this metadata entity. </param>
+        /// <param name="supportedValues"> The list of supported values. </param>
+        /// <returns> A new <see cref="ResourceHealth.ResourceHealthMetadataEntityData"/> instance for mocking. </returns>
+        public static ResourceHealthMetadataEntityData ResourceHealthMetadataEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, IEnumerable<string> dependsOn = default, IEnumerable<MetadataEntityScenario> applicableScenarios = default, IEnumerable<MetadataSupportedValueDetail> supportedValues = default)
+        {
+            return new ResourceHealthMetadataEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName is null && dependsOn is null && applicableScenarios is null && supportedValues is null ? default : new MetadataEntityProperties(displayName, (dependsOn ?? new ChangeTrackingList<string>()).ToList(), (applicableScenarios ?? new ChangeTrackingList<MetadataEntityScenario>()).ToList(), (supportedValues ?? new ChangeTrackingList<MetadataSupportedValueDetail>()).ToList(), default),
                 default);
         }
 
@@ -499,6 +480,25 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static EmergingIssueImpactedRegion EmergingIssueImpactedRegion(string id = default, string name = default)
         {
             return new EmergingIssueImpactedRegion(id, name, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="refreshedOn"> Timestamp for when last time refreshed for ongoing emerging issue. </param>
+        /// <param name="statusBanners"> The list of emerging issues of banner type. </param>
+        /// <param name="statusActiveEvents"> The list of emerging issues of active event type. </param>
+        /// <returns> A new <see cref="ResourceHealth.ServiceEmergingIssueData"/> instance for mocking. </returns>
+        public static ServiceEmergingIssueData ServiceEmergingIssueData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? refreshedOn = default, IEnumerable<EmergingIssueBannerType> statusBanners = default, IEnumerable<EmergingIssueActiveEventType> statusActiveEvents = default)
+        {
+            return new ServiceEmergingIssueData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                refreshedOn is null && statusBanners is null && statusActiveEvents is null ? default : new EmergingIssue(refreshedOn, (statusBanners ?? new ChangeTrackingList<EmergingIssueBannerType>()).ToList(), (statusActiveEvents ?? new ChangeTrackingList<EmergingIssueActiveEventType>()).ToList(), default),
+                default);
         }
     }
 }

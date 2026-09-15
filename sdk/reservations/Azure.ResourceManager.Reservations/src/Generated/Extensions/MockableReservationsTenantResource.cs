@@ -89,14 +89,14 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetail1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ReservationDetail1Resource> GetReservationDetailsAsync(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ReservationDetailData, ReservationDetail1Resource>(new ReservationGetReservationDetailsAsyncCollectionResultOfT(
                 ReservationRestClient,
                 filter,
                 @orderby,
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 selectedState,
                 take,
                 context,
-                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetailResource(Client, data));
+                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetail1Resource(Client, data));
         }
 
         /// <summary>
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.Reservations.Mocking
         /// <param name="selectedState"> The selected provisioning state. </param>
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReservationDetailResource> GetReservationDetails(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetail1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ReservationDetail1Resource> GetReservationDetails(string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ReservationDetailData, ReservationDetailResource>(new ReservationGetReservationDetailsCollectionResultOfT(
+            return new PageableWrapper<ReservationDetailData, ReservationDetail1Resource>(new ReservationGetReservationDetailsCollectionResultOfT(
                 ReservationRestClient,
                 filter,
                 @orderby,
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Reservations.Mocking
                 selectedState,
                 take,
                 context,
-                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetailResource(Client, data));
+                "MockableReservationsTenantResource.GetReservationDetails"), data => new ReservationDetail1Resource(Client, data));
         }
 
         /// <summary>

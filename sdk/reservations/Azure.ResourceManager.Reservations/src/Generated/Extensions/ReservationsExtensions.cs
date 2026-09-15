@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.Reservations
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReservationDetailResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ReservationDetail1Resource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableReservationsArmClient.GetReservationDetailResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableReservationsArmClient.GetReservationDetail1Resource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ReservationDetailResource"/> object. </returns>
-        public static ReservationDetailResource GetReservationDetailResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ReservationDetail1Resource"/> object. </returns>
+        public static ReservationDetail1Resource GetReservationDetail1Resource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableReservationsArmClient(client).GetReservationDetailResource(id);
+            return GetMockableReservationsArmClient(client).GetReservationDetail1Resource(id);
         }
 
         /// <summary>
@@ -351,8 +351,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ReservationDetailResource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetail1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ReservationDetail1Resource> GetReservationDetailsAsync(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -375,8 +375,8 @@ namespace Azure.ResourceManager.Reservations
         /// <param name="take"> To number of reservations to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ReservationDetailResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ReservationDetailResource> GetReservationDetails(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ReservationDetail1Resource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ReservationDetail1Resource> GetReservationDetails(this TenantResource tenantResource, string filter = default, string @orderby = default, string refreshSummary = default, float? skiptoken = default, string selectedState = default, float? take = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

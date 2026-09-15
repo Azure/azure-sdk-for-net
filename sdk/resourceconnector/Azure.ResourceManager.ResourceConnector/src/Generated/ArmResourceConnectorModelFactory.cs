@@ -17,6 +17,36 @@ namespace Azure.ResourceManager.ResourceConnector.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourceConnectorModelFactory
     {
+
+        /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
+        /// <param name="type"> The type of event is used to classify how the event was initiated. </param>
+        /// <param name="code"> Code is used to break down the event further to identify why it occurred. </param>
+        /// <param name="status"> Status is used to represent the outcome of the event. </param>
+        /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
+        /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
+        /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
+        /// <returns> A new <see cref="Models.ApplianceEvent"/> instance for mocking. </returns>
+        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
+        {
+            return new ApplianceEvent(
+                @type,
+                code,
+                status,
+                message,
+                severity,
+                timestamp,
+                default);
+        }
+
+        /// <param name="proxyVersion"> Version of the proxy configuration. </param>
+        /// <param name="dnsVersion"> Version of the DNS configuration. </param>
+        /// <param name="gatewayVersion"> Version of the Arc Gateway configuration. </param>
+        /// <returns> A new <see cref="Models.ApplianceNetworkProfile"/> instance for mocking. </returns>
+        public static ApplianceNetworkProfile ApplianceNetworkProfile(string proxyVersion = default, string dnsVersion = default, string gatewayVersion = default)
+        {
+            return new ApplianceNetworkProfile(proxyVersion is null ? default : new ProxyConfiguration(proxyVersion, default), dnsVersion is null ? default : new DnsConfiguration(dnsVersion, default), gatewayVersion is null ? default : new GatewayConfiguration(gatewayVersion, default), default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -56,35 +86,6 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     default),
                 identity,
                 default);
-        }
-
-        /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
-        /// <param name="type"> The type of event is used to classify how the event was initiated. </param>
-        /// <param name="code"> Code is used to break down the event further to identify why it occurred. </param>
-        /// <param name="status"> Status is used to represent the outcome of the event. </param>
-        /// <param name="message"> Message is intended to be actionable and should be used to inform the user of the event. </param>
-        /// <param name="severity"> Severity is the classification of the event to relay the importance of the event. </param>
-        /// <param name="timestamp"> Timestamp is the time the event occurred. </param>
-        /// <returns> A new <see cref="Models.ApplianceEvent"/> instance for mocking. </returns>
-        public static ApplianceEvent ApplianceEvent(string @type = default, string code = default, string status = default, string message = default, string severity = default, DateTimeOffset? timestamp = default)
-        {
-            return new ApplianceEvent(
-                @type,
-                code,
-                status,
-                message,
-                severity,
-                timestamp,
-                default);
-        }
-
-        /// <param name="proxyVersion"> Version of the proxy configuration. </param>
-        /// <param name="dnsVersion"> Version of the DNS configuration. </param>
-        /// <param name="gatewayVersion"> Version of the Arc Gateway configuration. </param>
-        /// <returns> A new <see cref="Models.ApplianceNetworkProfile"/> instance for mocking. </returns>
-        public static ApplianceNetworkProfile ApplianceNetworkProfile(string proxyVersion = default, string dnsVersion = default, string gatewayVersion = default)
-        {
-            return new ApplianceNetworkProfile(proxyVersion is null ? default : new ProxyConfiguration(proxyVersion, default), dnsVersion is null ? default : new DnsConfiguration(dnsVersion, default), gatewayVersion is null ? default : new GatewayConfiguration(gatewayVersion, default), default);
         }
 
         /// <summary> The Appliances patchable resource definition. </summary>

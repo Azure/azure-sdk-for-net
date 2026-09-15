@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ResourceManager.Reservations
 {
     /// <summary></summary>
-    public partial class ReservationDetailResource : IJsonModel<ReservationDetailData>
+    public partial class ReservationDetail1Resource : IJsonModel<ReservationDetailData>
     {
         private static IJsonModel<ReservationDetailData> s_dataDeserializationInstance;
 
